@@ -36,7 +36,7 @@ const [formData, setFormData] = useState(initialFormData);
   };
 
   return (
-    <div className="container">
+    <div className="container-cust-inquiry">
       <div className="form">
   <div className=" pt-4  mb-2 grid-gap-2  col-6">
   <label htmlFor="customerid" className="form-label">Customer Id:</label>

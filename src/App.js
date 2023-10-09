@@ -7,6 +7,7 @@ import TripDetails from './Components/TripDetails';
 import UpdateDuty from './Components/UpdateDuty';
 import AddPayment from './Components/AddPayment'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
+import Login from './Components/LogIn';
 
 
 
@@ -24,6 +25,7 @@ function App() {
     <Route path='/tripdetails' element={<TripDetails/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
+    <Route path='/login'  element={<Login/>}/>
   </Routes>
   </Router>
     </>
