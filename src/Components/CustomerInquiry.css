@@ -1,0 +1,17 @@
+.container{
+     background-color:skyblue;
+     /* rgb(109, 135, 146); */ 
+     margin-top: 50px !important;
+}
+
+button{
+    color:red;
+}
+
+.form{
+    display: flex;
+    gap: 5px;
+}
+.heading {
+    display: flex;
+}
