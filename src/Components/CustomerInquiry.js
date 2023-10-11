@@ -1,5 +1,6 @@
 import React, {useState } from 'react';
 import  './CustomerInquiry.css';
+import Sidebar from './Sidebar';
 
 const CustomerInquiry = () => {
   const initialFormData = {
@@ -36,6 +37,10 @@ const [formData, setFormData] = useState(initialFormData);
   };
 
   return (
+    <>
+    
+      <Sidebar/>
+    
     <div className="container-cust-inquiry">
       <div className="form">
   <div className=" pt-4  mb-2 grid-gap-2  col-6">
@@ -121,6 +126,7 @@ const [formData, setFormData] = useState(initialFormData);
          Submit
      </button>
     </div>
+    </>
 )};
 
 export default CustomerInquiry;

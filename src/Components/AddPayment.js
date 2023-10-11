@@ -1,7 +1,11 @@
 import React from 'react'
 import './Payment.css';
+import Sidebar from './Sidebar';
 function AddPayment() {
   return (
+
+    <>
+    <Sidebar/>
     <div className="container ">
    
   <div class="form-body" >
@@ -259,6 +263,7 @@ Save
 </div>
 </div>
 </div>
+</>
   )
 }
 

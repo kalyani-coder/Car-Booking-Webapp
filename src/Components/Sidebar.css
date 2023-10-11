@@ -1,0 +1,213 @@
+.sidebar {
+    width: 250px;
+    background-color: #f4f4f4;
+    height: 100%;
+    position: fixed;
+    overflow-y: auto;
+  }
+  
+  .sidebar-header {
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+  }
+  
+  .sidebar-menu ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  /* Keep your existing CSS for the sidebar */
+
+.toggle-btn {
+    display: none;
+  }
+  
+  .hamburger-icon {
+    width: 30px;
+    height: 3px;
+    background-color: #333;
+    margin: 6px auto;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .toggle-btn {
+      display: block;
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+    }
+  
+    .toggle-btn:hover {
+      background-color: #555;
+    }
+  
+    .sidebar.closed {
+      width: 0;
+    }
+  
+    .sidebar.open.closed {
+      width: 250px;
+    }
+  }
+  
+  
+  .sidebar-menu li {
+    padding: 10px 20px;
+  }
+  
+  .sidebar-menu a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+  
+  .sidebar-menu a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #c53a3a;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  /* Keep your existing CSS for the sidebar */
+
+.toggle-btn {
+    display: none;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .toggle-btn {
+      display: block;
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #ef1818;
+      text-align: center;
+    }
+  
+    .toggle-btn:hover {
+      background-color: #555;
+    }
+  
+    .sidebar.closed {
+      width: 0;
+    }
+  
+    .sidebar.open.closed {
+      width: 250px;
+    }
+  }
+  
+/* Keep your existing CSS for the sidebar */
+
+.toggle-btn {
+    display: none;
+  }
+  
+  .hamburger-icon, .close-icon {
+    color: red;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .toggle-btn {
+      display: block;
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+    }
+  
+    .toggle-btn:hover {
+      background-color: #555;
+    }
+  
+    .sidebar.closed {
+      width: 0;
+    }
+  
+    .sidebar.open.closed {
+      width: 250px;
+    }
+  }
+  /* Keep your existing CSS for the sidebar */
+
+.toggle-btn {
+    display: none;
+  }
+  
+  .hamburger-icon, .close-icon {
+    color: red;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .toggle-btn {
+      display: block;
+      cursor: pointer;
+      padding: 10px 20px;
+      background-color: #fffcfc;
+      color: #fff;
+      text-align: center;
+      position: fixed;
+      top: 20px;
+      left: 20px; /* Adjust the position as needed */
+    }
+  
+    .sidebar {
+      width: 250px;
+      background-color: #f4f4f4;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      transition: all 0.3s ease;
+    }
+  
+    .sidebar.open {
+      left: 0;
+    }
+  
+    .sidebar-header {
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+  
+    .sidebar-menu ul {
+      list-style-type: none;
+      padding: 0;
+    }
+  
+    .sidebar-menu li {
+      padding: 10px 20px;
+    }
+  
+    .sidebar-menu a {
+      text-decoration: none;
+      color: #333;
+      display: block;
+    }
+  
+    .sidebar-menu a:hover {
+      background-color: #ddd;
+    }
+  }
+  
+  
+  

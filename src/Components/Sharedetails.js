@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CustomerInquiry.css';
+import Sidebar from './Sidebar';
 
 const ShareDetails = ()=> {
 const initialFormData = {
@@ -32,6 +33,8 @@ const handleShare =(event) => {
     console.log('form data:',formData);
 };
 return(
+  <>
+      <Sidebar/>
     <div className='container'>
       <div className="form">
         <div className="mb-2  pt-4 grid gap-0 column-gap-3 col-6">
@@ -107,6 +110,7 @@ return(
         Share
       </button>
     </div>
+  </>
 )};
 
 export default ShareDetails;

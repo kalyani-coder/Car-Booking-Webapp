@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CustomerInquiry.css';
+import Sidebar from './Sidebar';
 
 function TripDetailsPage() {
   const [tripDetails, setTripDetails] = useState({
@@ -41,6 +42,8 @@ function TripDetailsPage() {
   // };
 
   return (
+    <>
+    <Sidebar/>
     <div className="container mt-4">
             <div className="heading">
               <div className="col-6">
@@ -126,6 +129,7 @@ function TripDetailsPage() {
         </button>
       </div>
       </div>
+      </>
     // </div>
   );
 }

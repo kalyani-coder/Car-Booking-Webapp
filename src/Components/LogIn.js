@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react';
 import './LogIn.css';
+import { Link } from 'react-router-dom';
 
 const LogIn = () => {
   const initialFormData = {
@@ -35,7 +36,10 @@ const LogIn = () => {
                         <label htmlFor="password" class="form-label">Password:</label>
                         <input type="password" class="form-control" id="password" placeholder="Enter your password"/>
                     </div>
+                    <Link to='/home'>
                     <button type="submit" class="btn btn-primary">Login</button>
+                    </Link>
+                      
                 </form>
             </div>
         </div>

@@ -8,6 +8,8 @@ import UpdateDuty from './Components/UpdateDuty';
 import AddPayment from './Components/AddPayment'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Login from './Components/LogIn';
+import Home from './Components/Home'
+import Sidebar from './Components/Sidebar';
 
 
 
@@ -18,14 +20,18 @@ function App() {
   <ShareDetails/>
   <Startenddetails /> */}
   <Router>
+   
   <Routes>
-    <Route path='/' element={<CustomerInquiry/>}/>
+    <Route path='/' element={<Login/>}/>
+    <Route path='/home' element={<Home/>} />
     <Route path='/sharedetails' element={<ShareDetails/>}/>
     <Route path='/startenddetails' element={<Startenddetails/>}/>
     <Route path='/tripdetails' element={<TripDetails/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
-    <Route path='/login'  element={<Login/>}/>
+    <Route path='/customerenquire'  element={<CustomerInquiry/>}/>
+    <Route path='/sidebar'  element={<Sidebar/>}/>
+
   </Routes>
   </Router>
     </>

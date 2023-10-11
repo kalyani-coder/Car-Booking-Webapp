@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CustomerInquiry.css';
+import Sidebar from './Sidebar';
 
 const Startenddetails = () => {
   const initialFormData = {
@@ -34,6 +35,8 @@ const Startenddetails = () => {
 
 
   return (
+    <>
+    <Sidebar/>
     <div className="container">
 
       <div className="form">
@@ -113,7 +116,7 @@ const Startenddetails = () => {
             Add
           </button>
         </div>
-
+        </>
   );
 }
 
