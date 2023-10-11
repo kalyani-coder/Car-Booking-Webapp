@@ -15,7 +15,7 @@ const UpdateDuty = () => {
     closingkm:'',
     closingtime:'',
     startingkm:'',
-    reportingkm:'',
+    startingtime:'',
     totalkm: '',
     totalhours: '',
     title:'',
@@ -59,15 +59,15 @@ const [formData, setFormData] = useState(initialFormData);
   <input className="form-control" type="date" id="reportingaddress" name="date" onChange={handleChange} value={formData.date}/>
   </div>
   </div>
-  <div className="  grid-gap-2  col-12">
+  <div className="grid-gap-2  col-12">
   <label htmlFor="name" className="form-label">Name:</label>
   <input className="form-control" type="text" id="name" name="name" onChange={handleChange}value={formData.name}/>
   </div>
 
   <div className="form">
-  <div className=" mb-2 grid-gap-2  col-6">
+  <div className="grid-gap-2  col-6">
   <label htmlFor="vehicle" className="form-label">Vehicle:</label>
-        <select className="form-control mb-2" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle} >
+        <select className="form-control " name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle} >
           <option value="">Vehicle</option>
           <option value="Sedan Car">Sedan Car</option>
           <option value="Mini Car">Mini Car</option>
@@ -85,8 +85,18 @@ const [formData, setFormData] = useState(initialFormData);
         <label htmlFor="totalkm" className="form-label">Total KM:</label>
         <input className="form-control" type="text" id="totalkm" name="totalkm" onChange={handleChange}value={formData.totalkm}/>
         </div>
+        <div className="grid-gap-2  col-6">
+    <label htmlFor="vehiclenumber" className="form-label">Vehicle Number:</label>
+  <input className="form-control" type="text" id="vehiclenumber" name="vehiclenumber" onChange={handleChange} value={formData.vehiclenumber}/>
+  <label htmlFor="to" className="form-label">To:</label>
+  <input className="form-control" type="text" id="to" name="to" onChange={handleChange} value={formData.to}/>
+  <label htmlFor="closingtime" className="form-label">Closing Time:</label>
+  <input className="form-control" type="text" id="closingtime" name="closingtimer" onChange={handleChange} value={formData.closingtime}/>
+  <label htmlFor="startingtime" className="form-label">Starting Time:</label>
+  <input className="form-control" type="text" id="startingtime" name="startingtime" onChange={handleChange} value={formData.startingtime}/>
+  </div>
         </div>
-         </div>
+       </div>
   )
 }
 export default UpdateDuty;
