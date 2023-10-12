@@ -18,7 +18,7 @@ const UpdateDuty = () => {
     startingkm:'',
     startingtime:'',
     totalkm: '',
-    totalhours: '',
+    totalhour: '',
     title:'',
     amount:'',
     extrakm:'',
@@ -76,9 +76,19 @@ const [formData, setFormData] = useState(initialFormData);
           <option value="Sedan Car">Sedan Car</option>
           <option value="Mini Car">Mini Car</option>
           <option value="SUV Car">SUV Car</option>
-          <option value="Tempo Traveller">Tempo Traveller</option>
-          <option value="AC Bus">AC Bus</option>
-          <option value="Non-AC Bus">Non-AC Bus</option>
+          <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+          <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+          <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+          <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+          <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+          <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+          <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+          <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+          <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+          <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+          <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+          <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+          <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
         </select>
         <label htmlFor="From" className="form-label">From:</label>
         <input className="form-control" type="text" id="From" name="From" onChange={handleChange}value={formData.from}/>
@@ -88,6 +98,16 @@ const [formData, setFormData] = useState(initialFormData);
         <input className="form-control" type="text" id="startingkm" name="startingkm" onChange={handleChange}value={formData.startingkm}/>
         <label htmlFor="totalkm" className="form-label">Total KM:</label>
         <input className="form-control" type="text" id="totalkm" name="totalkm" onChange={handleChange}value={formData.totalkm}/>
+        <label htmlFor="title" className="form-label">Title:</label>
+        <input className="form-control" type="text" id="title" name="title" onChange={handleChange}value={formData.title}/>
+        <label htmlFor="extrakm" className="form-label">Extra KM:</label>
+        <input className="form-control" type="text" id="extrakm" name="extrakm" onChange={handleChange}value={formData.extrakm}/>
+        <label htmlFor="extrahours" className="form-label">Extra Hour:</label>
+        <input className="form-control" type="text" id="extrahour" name="extrahour" onChange={handleChange}value={formData.extrahour}/>
+        <label htmlFor="totalamount" className="form-label">Total Amount:</label>
+        <input className="form-control" type="text" id="totalamount" name="totalamount" onChange={handleChange}value={formData.totalamount}/>
+        <label htmlFor="remningamount" className="form-label">Remaining Amount:</label>
+        <input className="form-control" type="text" id="remningamount" name="remainingamount" onChange={handleChange}value={formData.remainingamount}/>
         </div>
         <div className="grid-gap-2  col-6">
     <label htmlFor="vehiclenumber" className="form-label">Vehicle Number:</label>
@@ -95,13 +115,38 @@ const [formData, setFormData] = useState(initialFormData);
   <label htmlFor="to" className="form-label">To:</label>
   <input className="form-control" type="text" id="to" name="to" onChange={handleChange} value={formData.to}/>
   <label htmlFor="closingtime" className="form-label">Closing Time:</label>
-  <input className="form-control" type="text" id="closingtime" name="closingtimer" onChange={handleChange} value={formData.closingtime}/>
+  <input className="form-control" type="text" id="closingtime" name="closingtime" onChange={handleChange} value={formData.closingtime}/>
   <label htmlFor="startingtime" className="form-label">Starting Time:</label>
   <input className="form-control" type="text" id="startingtime" name="startingtime" onChange={handleChange} value={formData.startingtime}/>
-  </div>
+  <label htmlFor="totalhour" className="form-label">Total Hour:</label>
+  <input className="form-control" type="text" id="totalhour" name="totalhour" onChange={handleChange} value={formData.totalhour}/>
+  <label htmlFor="amount" className="form-label">Amount:</label>
+  <input className="form-control" type="text" id="amount" name="amount" onChange={handleChange} value={formData.amount}/>
+  <label htmlFor="amount1" className="form-label">Amount:</label>
+  <input className="form-control" type="text" id="amount1" name="amount1" onChange={handleChange} value={formData.amount1}/>
+  <label htmlFor="amount2" className="form-label">Amount:</label>
+  <input className="form-control" type="text" id="amount2" name="amount2" onChange={handleChange} value={formData.amount2}/>
+  <label htmlFor="advanceamount" className="form-label">Advanced Amount:</label>
+        <input className="form-control" type="text" id="advanceamount" name="advanceamount" onChange={handleChange}value={formData.advanceamount}/>
+        <label htmlFor="paymentmethod" className="form-label">Payment Method:</label>
+        <select className="form-control " name="paymentmethod" id="paymentmethod" onChange={handleChange} value={formData.paymentmethod} >
+          <option value="">Payment Method</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="Cash">Cash</option>
+          <option value="Google Pay">Google Pay</option>
+          <option value="Paytm">Paytm</option>
+          <option value="Phone Pay">Phone Pay</option>
+          </select>
+          </div>
         </div>
+        <button  type="button" className="btn btn-danger" onClick={handleSubmit}>
+         Save
+     </button>
+     <button  type="button" className="btn btn-danger" onClick={handleSubmit}>
+         Print
+     </button>
        </div>
        </>
   )
 }
-export default UpdateDuty
+export default UpdateDuty;

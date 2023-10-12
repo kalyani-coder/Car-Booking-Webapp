@@ -40,22 +40,27 @@ const Sidebar = () => {
 
           <li><a href="#">tripdetails</a></li>
         </Link>
-
+        <li>
         <Link to="/updateduty">
+          update duty 
 
-          <li><a href="#">updateduty</a></li>
-        </Link>
+          
+</Link>
+
+        </li>
+      
 
 
         <Link to="/addpayment">
 
           <li><a href="#">addpayment</a></li>
         </Link>
+        <li>
+        <Link to="/customerenquiry">
 
-        <Link to="/customerenquire">
-
-          <li><a href="#">customerenquire</a></li>
+          customer Enquiry 
         </Link>
+        </li>
 
 
         </ul>
