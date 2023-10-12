@@ -20,41 +20,48 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-menu">
       <ul>
-
+      
+      <li>
       <Link to="/home">
-
-<li><a>Home</a></li>
-</Link>
-
+       Home
+       </Link>
+          </li>
+          <li>
         <Link to="/sharedetails">
 
-          <li><a href="#">sharedetails</a></li>
+          sharedetails
         </Link>
-
+        </li>
+        
+        <li>
         <Link to="/startenddetails">
 
-          <li><a href="#">sharedetails</a></li>
+          startenddetails
         </Link>
-
+        </li>
+        
+        <li>
         <Link to="/tripdetails">
 
-          <li><a href="#">tripdetails</a></li>
+          tripdetails
         </Link>
+        </li>
+
         <li>
         <Link to="/updateduty">
           update duty 
 
-          
-</Link>
-
-        </li>
+          </Link>
+          </li>
       
 
-
+        <li>
         <Link to="/addpayment">
 
-          <li><a href="#">addpayment</a></li>
+          addpayment
         </Link>
+        </li>
+
         <li>
         <Link to="/customerenquiry">
 
