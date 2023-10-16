@@ -10,7 +10,7 @@ import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Login from './Components/LogIn';
 import Home from './Components/Home'
 import Sidebar from './Components/Sidebar';
-import VendorPayment from '/.Components/VendorPayment';
+import VendorPayment from './Components/VendorPayment';
 
 
 

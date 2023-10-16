@@ -1,5 +1,5 @@
 import React from 'react'
-import './.css';
+import './VendorPayment.css';
 import Sidebar from './Sidebar';
 function VendorPayment() {
   return (
