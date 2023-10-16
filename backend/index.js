@@ -21,12 +21,20 @@ mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.
 // apiRouter handle all api's in one route 
 apiRouter = express.Router()
 
+
 const CustomerEnquiry = require('./src/routes/CustomerEnquiry')
+const user = require('./src/routes/User')
+const ShareDetails = require('./src/routes/ShareDetails')
+const TripDetails = require('./src/routes/TripDetails')
+const UpdateDuty = require('./src/routes/UpdateDuty')
 
 
 // define here api path 
-
 apiRouter.use('/customer-enquiry' , CustomerEnquiry)
+apiRouter.use('/users' , user)
+apiRouter.use('/share-details' , ShareDetails)
+apiRouter.use('/trip-details' , TripDetails)
+apiRouter.use('/update-duty' , UpdateDuty)
 
 
 
