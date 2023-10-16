@@ -10,6 +10,7 @@ import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Login from './Components/LogIn';
 import Home from './Components/Home'
 import Sidebar from './Components/Sidebar';
+import VendorPayment from '/.Components/VendorPayment';
 
 
 
@@ -31,6 +32,7 @@ function App() {
     <Route path='/addpayment'  element={<AddPayment/>}/>
     <Route path='/customerenquire'  element={<CustomerInquiry/>}/>
     <Route path='/sidebar'  element={<Sidebar/>}/>
+    <Route path='/vendorpayment' element={<VendorPayment/>} />
 
   </Routes>
   </Router>

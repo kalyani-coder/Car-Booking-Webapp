@@ -1,0 +1,24 @@
+.card-1{
+    background-color:skyblue;
+    width:90%;
+    margin:auto;
+}
+.form-body{
+    height:300vh;
+
+
+}
+.container-fluid{
+    background-color:skyblue;
+
+}
+#btn1{
+    margin-left: 26%;
+
+}
+#btn2{
+    margin-left: 2%;
+}
+#btn3{
+    margin-left: 2%;
+}
