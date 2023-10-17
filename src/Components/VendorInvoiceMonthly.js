@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './VendorInvoiceMonthly.css';
+import Sidebar from './Sidebar';
 
 
 function VendorInvoiceMonthly() {
@@ -56,6 +57,9 @@ function VendorInvoiceMonthly() {
   };
 
   return (
+    <>
+    <Sidebar/>
+    
     <div className="container">
       <div className="form">
   <div className=" pt-4  grid-gap-2  col-6">
@@ -149,6 +153,7 @@ function VendorInvoiceMonthly() {
       </div>
   </div>
 
+  </>
  
 
 )};

@@ -12,6 +12,7 @@ button{
 .form{
    display: flex;
    gap: 5px;
+   margin-left: 313px;
 }
 .heading {
    display: flex;

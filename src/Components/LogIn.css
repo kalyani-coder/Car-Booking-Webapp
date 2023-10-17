@@ -16,4 +16,5 @@ button{
 .form{
     display: flex;
     gap: 5px;
+    margin-left: 188px;
 }

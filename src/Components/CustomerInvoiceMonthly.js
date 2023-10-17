@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './CustomerInvoiceMonthly.css';
+import Sidebar from './Sidebar';
+// import './CustomerInvoiceMonthly.css';
 
 
 function CustomerInvoiceMonthly() {
@@ -56,6 +57,9 @@ function CustomerInvoiceMonthly() {
   };
 
   return (
+    <>
+    <Sidebar/>
+  
     <div className="container">
       <div className="form">
   <div className=" pt-4  grid-gap-2  col-6">
@@ -149,7 +153,7 @@ function CustomerInvoiceMonthly() {
       </div>
   </div>
 
- 
+  </>
 
 )};
 export default CustomerInvoiceMonthly;

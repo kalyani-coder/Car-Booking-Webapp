@@ -63,12 +63,32 @@ const Sidebar = () => {
         </li>
 
         <li>
-        <Link to="/customerenquiry">
+        <Link to="/customerenquire">
 
           customer Enquiry 
         </Link>
         </li>
 
+        <li>
+        <Link to="/customerinvoice">
+
+          customer Invoice
+        </Link>
+        </li>
+
+        <li>
+        <Link to="/customerinvoicemonthly">
+
+          CustomerInvoice Montholy 
+        </Link>
+        </li>
+
+        <li>
+        <Link to="/vendorinvoicemonthly">
+
+         VenderInvoice Montholy 
+        </Link>
+        </li>
 
         </ul>
       </div>
