@@ -11,6 +11,7 @@ import Login from './Components/LogIn';
 import Home from './Components/Home'
 import Sidebar from './Components/Sidebar';
 import VendorPayment from './Components/VendorPayment';
+import CustomerInvoice from './Components/CustomerInvoice';
 
 
 
@@ -33,6 +34,8 @@ function App() {
     <Route path='/customerenquire'  element={<CustomerInquiry/>}/>
     <Route path='/sidebar'  element={<Sidebar/>}/>
     <Route path='/vendorpayment' element={<VendorPayment/>} />
+    <Route path='/customerinvoice' element={<CustomerInvoice/>} />
+
 
   </Routes>
   </Router>

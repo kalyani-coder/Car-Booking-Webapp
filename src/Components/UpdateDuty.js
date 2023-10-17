@@ -39,7 +39,7 @@ const [formData, setFormData] = useState(initialFormData);
     }));
   };
 
-  const handleSubmit = (event) => {
+    const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Form data:', formData);
   };
