@@ -1,15 +1,15 @@
 .card-1{
     background-color:skyblue;
-    width:90%;
+    width:100%;
     margin:auto;
 }
 .form-body{
-    height:100vh;
+    height:auto;
 
 
 }
-.container-fluid{
-    background-color:grey;
+.container-container-adpayment{
+    background-color:skyblue;
 
 }
 #btn1{

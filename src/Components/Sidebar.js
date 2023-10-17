@@ -29,27 +29,27 @@ const Sidebar = () => {
           <li>
         <Link to="/sharedetails">
 
-          sharedetails
+          Share Details
         </Link>
         </li>
         
         <li>
         <Link to="/startenddetails">
 
-          startenddetails
+          Get Details From Driver
         </Link>
         </li>
         
         <li>
         <Link to="/tripdetails">
 
-          tripdetails
+          Allocate Trip
         </Link>
         </li>
 
         <li>
         <Link to="/updateduty">
-          update duty 
+          Update Duty Slip
 
           </Link>
           </li>
@@ -58,35 +58,35 @@ const Sidebar = () => {
         <li>
         <Link to="/addpayment">
 
-          addpayment
+          Add Payment
         </Link>
         </li>
 
         <li>
         <Link to="/customerenquire">
 
-          customer Enquiry 
+          Customer Enquiry 
         </Link>
         </li>
 
         <li>
         <Link to="/customerinvoice">
 
-          customer Invoice
+          Customer Invoice
         </Link>
         </li>
 
         <li>
         <Link to="/customerinvoicemonthly">
 
-          CustomerInvoice Montholy 
+          Customer Invoice Monthly 
         </Link>
         </li>
 
         <li>
         <Link to="/vendorinvoicemonthly">
 
-         VenderInvoice Montholy 
+         Vender Invoice Monthly 
         </Link>
         </li>
 
