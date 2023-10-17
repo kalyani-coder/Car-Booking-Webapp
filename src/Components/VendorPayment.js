@@ -42,7 +42,7 @@ function VendorPayment() {
     <div className="col-md">
       <div className="form-group">
       <label >Vendor  Number</label>
-        <input type="Number" className="form-control"  placeholder="Enter your Vendor Number" />
+        <input type="text" className="form-control"  placeholder="Enter your Vendor Number" />
 
       </div>
     </div>
@@ -58,7 +58,7 @@ function VendorPayment() {
     <div className="col-md">
       <div className="form-group">
       <label >Amount</label>
-        <input type="number" className="form-control"  placeholder="Enter your Amount" />
+        <input type="text" className="form-control"  placeholder="Enter your Amount" />
 
       </div>
     </div>
@@ -75,7 +75,7 @@ function VendorPayment() {
     <div className="col-md">
       <div className="form-group">
       <label >Amount</label>
-        <input type="number" className="form-control"  placeholder="Enter your Amount" />
+        <input type="text" className="form-control"  placeholder="Enter your Amount" />
 
       </div>
     </div>

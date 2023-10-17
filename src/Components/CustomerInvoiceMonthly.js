@@ -147,7 +147,7 @@ function CustomerInvoiceMonthly() {
   <input className="form-control" type="text" id="micrcode"/>
     </div>
   </div>
-  <button type="button" className="btn btn-danger" onClick={handleGenerate}>
+  <button type="button" className="btn btn-danger abc" onClick={handleGenerate}>
          Generate
      </button>
       </div>

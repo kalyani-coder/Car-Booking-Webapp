@@ -1,12 +1,12 @@
 import React from 'react'
-import './Payment.css';
+import './AddPayment.css';
 import Sidebar from './Sidebar';
 function AddPayment() {
   return (
 
     <>
     <Sidebar/>
-    <div className="container ">
+    <div className="container-container-adpayment ">
    
   <div className="form-body" >
 <div className="card-1">
