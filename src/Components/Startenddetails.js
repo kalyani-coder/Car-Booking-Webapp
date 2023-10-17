@@ -1,8 +1,10 @@
+// StartEndDetails.js
+
 import React, { useState } from 'react';
-import './CustomerInquiry.css';
+import "./StartEndDeteails.css"
 import Sidebar from './Sidebar';
 
-const Startenddetails = () => {
+const StartEndDetails = () => {
   const initialFormData = {
     pickuplocation: '',
     date: '',
@@ -15,7 +17,7 @@ const Startenddetails = () => {
     triptype: '',
     subtype: '',
     drivername: '',
-    mobileno:'',
+    mobileno: '',
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -33,91 +35,223 @@ const Startenddetails = () => {
     console.log('Form data:', formData);
   };
 
-
   return (
     <>
-    <Sidebar/>
-    <div className="container">
+      <Sidebar />
+      <div className="start-end-details-container">
+        <div className="start-end-details-form">
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="pickuplocation" className="start-end-details-label">
+                  Pickup Location:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="pickuplocation"
+                  value={formData.pickuplocation}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
 
-      <div className="form">
-      <div className=" pt-4  mb-2 grid-gap-2  col-4">
-          <label htmlFor="pickuplocation" className="form-label">Pickup Location:</label>
-          <input className="form-control" type="text" name="pickuplocation" value={formData.pickuplocation} onChange={handleChange}/>
-        </div>
-        <div className="pt-4  mb-2 grid-gap-2  col-4">
-          <label htmlFor="date" className="form-label">Date:</label>
-          <input className="form-control" type="date" name="date" value={formData.date} onChange={handleChange}/>
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="date" className="start-end-details-label">
+                  Date:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
           </div>
-          <div className="pt-4  mb-2 grid-gap-2  col-4">
-          <label htmlFor="time" className="form-label">Time:</label>
-          <input className="form-control" type="time" name="time" value={formData.time} onChange={handleChange} />
-          </div>
-        </div>
-        <div className="form">
-      <div className=" mb-2 grid-gap-2  col-4">
-          <label htmlFor="dropofflocation" className="form-label">Dropoff Location:</label>
-          <input className="form-control" type="text" name="dropofflocation" value={formData.dropofflocation} onChange={handleChange}/>
-        </div>
-        <div className="mb-2 grid-gap-2  col-4">
-          <label htmlFor="date1" className="form-label">Date:</label>
-          <input className="form-control" type="date" name="date1" value={formData.date1} onChange={handleChange}/>
-          </div>
-          <div className="mb-2 grid-gap-2  col-4">
-          <label htmlFor="time1" className="form-label">Time:</label>
-          <input className="form-control" type="time" name="time1" value={formData.time1} onChange={handleChange} />
-          </div>
-        </div>
-        <div className="form">
-        <div className="mb-2 grid-gap-2 col-6">
-          <label htmlFor="totaldays" className="form-label">Total Days:</label>
-          <input className="form-control" type="number" name="totaldays" value={formData.totaldays} onChange={handleChange} />
-        </div>
-        <div className="mb-2 grid-gap-2 col-6">
-          <label htmlFor="totalhours" className="form-label">Total Hours:</label>
-          <input className="form-control" type="text" name="totalHours" value={formData.totalhours} onChange={handleChange} />
-        </div>
-        </div>
-        <div className="form">
-  <div className="mb-2  grid gap-0 column-gap-3 col-6">
-    <label htmlFor="triptype" className="form-label">Trip Type:</label>
-        <select className="form-control mb-2  " name="Trip type" onChange={handleChange} value={formData.triptype} >
-          <option value="">Trip Type</option>
-          <option value="One Way Trip">One Way Trip</option>
-          <option value="Return Trip">Return Trip</option>
-        </select>
-        </div>
-        <div className=" mb-2  grid gap-0 column-gap-3 col-6">
-        <label htmlFor="subtype" className="form-label">Sub Type:</label>
-        <select className="form-control mb-2 " name="subtype"  onChange={handleChange} value={formData.subtype} >
-          <option value="">Sub Type</option>
-          <option value="Local Trip">Local Trip</option>
-          <option value="Outstaion Trip">Outstation Trip</option>
-          <option value="Outstaion Local Trip">Outstation Local Trip</option>
-          <option value="Outstaion Outstation Trip">Outstation Outstation Trip</option>
-        </select>
-        </div>
-        </div>
-        <div className="form">
-        <div className="  mb-2 grid-gap-2  col-6">
-  <label htmlFor="customerid" className="form-label">Customer Id:</label>
-  <input className="form-control" type="text" name="customername"onChange={handleChange} value={formData.customername}/>
-  </div>
-  <div className="  mb-2 grid-gap-2  col-6">
-  <label htmlFor="mobileno" className="form-label">  Mobile No:</label>
-  <input className="form-control" type="text" name="mobileno" onChange={handleChange} value={formData.mobileno} />
-  </div>
-  </div>
 
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="time" className="start-end-details-label">
+                  Time:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="time"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
 
-          <button type="button" className="btn btn-danger" onClick={handlePrint}>
-            Print
-          </button>
-          <button type="button" className="btn btn-danger mx-2" onClick={() => alert('Add')}>
-            Add
-          </button>
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="dropofflocation" className="start-end-details-label">
+                  Dropoff Location:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="dropofflocation"
+                  value={formData.dropofflocation}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="date1" className="start-end-details-label">
+                  Date:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="date"
+                  name="date1"
+                  value={formData.date1}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="time1" className="start-end-details-label">
+                  Time:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="time"
+                  name="time1"
+                  value={formData.time1}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="totaldays" className="start-end-details-label">
+                  Total Days:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="number"
+                  name="totaldays"
+                  value={formData.totaldays}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="totalhours" className="start-end-details-label">
+                  Total Hours:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="totalHours"
+                  value={formData.totalhours}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="triptype" className="start-end-details-label">
+                  Trip Type:
+                </label>
+                <select
+                  className="start-end-details-input"
+                  name="Trip type"
+                  onChange={handleChange}
+                  value={formData.triptype}
+                >
+                  <option value="">Trip Type</option>
+                  <option value="One Way Trip">One Way Trip</option>
+                  <option value="Return Trip">Return Trip</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="subtype" className="start-end-details-label">
+                  Sub Type:
+                </label>
+                <select
+                  className="start-end-details-input"
+                  name="subtype"
+                  onChange={handleChange}
+                  value={formData.subtype}
+                >
+                  <option value="">Sub Type</option>
+                  <option value="Local Trip">Local Trip</option>
+                  <option value="Outstation Trip">Outstation Trip</option>
+                  <option value="Outstation Local Trip">Outstation Local Trip</option>
+                  <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="customerid" className="start-end-details-label">
+                  Customer Id:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="customername"
+                  onChange={handleChange}
+                  value={formData.customername}
+                />
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="mobileno" className="start-end-details-label">
+                  Mobile No:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="mobileno"
+                  onChange={handleChange}
+                  value={formData.mobileno}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-button-row">
+            <button type="button" className="start-end-details-button" onClick={handlePrint}>
+              Print
+            </button>
+            <button type="button" className="start-end-details-button mx-2" onClick={() => alert('Add')}>
+              Add
+            </button>
+          </div>
         </div>
-        </>
+      </div>
+    </>
   );
-}
+};
 
-export default Startenddetails;
+export default StartEndDetails;

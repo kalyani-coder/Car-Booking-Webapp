@@ -1,0 +1,94 @@
+/* TripDetailsPage.css */
+
+/* Container for the entire page */
+.trip-details-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between;
+    padding: 20px;
+    margin-left: 300px;
+  }
+  
+  /* Styling for Trip Details Section */
+  .trip-details-section {
+    flex: 1; /* Take up all available space */
+    width: 100%; /* Full width on small screens */
+    margin-bottom: 20px; /* Add space between sections */
+  }
+  
+  /* Styling for Driver Details Section */
+  .driver-details-section {
+    flex: 1; /* Take up all available space */
+    width: 100%; /* Full width on small screens */
+  }
+  
+  /* Styling for Headings */
+  .trip-details-heading,
+  .driver-details-heading {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for Forms */
+  .trip-details-form,
+  .driver-details-form {
+    display: flex;
+    flex-wrap: wrap; /* Allow form fields to wrap to the next line */
+  }
+  
+  /* Styling for Form Labels */
+  .trip-details-label,
+  .driver-details-label {
+    flex: 1; /* Take up equal width */
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Styling for Form Inputs */
+  .trip-details-input,
+  .driver-details-input {
+    flex: 1; /* Take up equal width */
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Styling for Buttons */
+  .custom-button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .custom-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .custom-print-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .custom-allocate-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+
+  @media (max-width:768px) {
+
+    .trip-details-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between;
+    padding: 20px;
+    margin-left: 10px;
+    margin-top: 50px;
+  }
+  }
