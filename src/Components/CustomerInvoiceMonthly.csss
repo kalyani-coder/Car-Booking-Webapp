@@ -1,0 +1,31 @@
+.container-cust-invoice{
+    background-color:skyblue;
+    height: auto;
+    
+}
+
+button{
+   color:red;
+   margin-top: 10px;
+}
+
+.form{
+   display: flex;
+   gap: 5px;
+}
+.heading {
+   display: flex;
+}
+
+
+.to-design {
+    color: rgb(12, 12, 12);
+    /* background-color: white; */
+    margin-top: 15px;
+}
+td{
+    width: 100%;
+}
+table{
+    color: #111;
+}
