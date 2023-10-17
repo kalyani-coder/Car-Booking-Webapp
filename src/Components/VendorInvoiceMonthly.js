@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import './CustomerInvoice.css';
-import Sidebar from './Sidebar';
+import './VendorInvoiceMonthly.css';
 
 
-function CustomerInvoice() {
+function VendorInvoiceMonthly() {
   const [formData, setFormData] = useState({
     tripid:'',
     invoiceno:'',
@@ -16,7 +15,7 @@ function CustomerInvoice() {
     to: '',
     customerName: '',
     customerAddress: '',
-    GSTNo: '',
+    customerGSTNo: '',
     customerContactNo: '',
     discount: '',
     kms: '',
@@ -34,6 +33,12 @@ function CustomerInvoice() {
   const invoiceItems = [
     { description: 'Item 1', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
     { description: 'Item 2', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 3', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
+    { description: 'Item 4', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 5', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
+    { description: 'Item 6', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 7', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
+    { description: 'Item 8', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
     // Add more items as needed
   ];
 
@@ -51,9 +56,6 @@ function CustomerInvoice() {
   };
 
   return (
-    <>
-    <Sidebar/>
-
     <div className="container">
       <div className="form">
   <div className=" pt-4  grid-gap-2  col-6">
@@ -115,8 +117,9 @@ function CustomerInvoice() {
               <td className="border px-4 py-2">{item.cgst}</td>
               <td className="border px-4 py-2">{item.sgst}</td>
               <td className="border px-4 py-2">{item.totalAmount}</td>
-            </tr>
+     </tr>
           ))}
+           
         </tbody>
       </table>
       <div>
@@ -140,13 +143,13 @@ function CustomerInvoice() {
   <input className="form-control" type="text" id="micrcode"/>
     </div>
   </div>
-<button  type="button" className="btn btn-danger" onClick={handleGenerate}>
+  <button type="button" className="btn btn-danger" onClick={handleGenerate}>
          Generate
      </button>
-  </div>
+      </div>
   </div>
 
- </>
+ 
 
 )};
-export default CustomerInvoice;
+export default VendorInvoiceMonthly;

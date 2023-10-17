@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CustomerInvoiceMonthly.css';
 
 
-function InvoiceVendor() {
+function CustomerInvoiceMonthly() {
   const [formData, setFormData] = useState({
     tripid:'',
     invoiceno:'',
@@ -152,4 +152,4 @@ function InvoiceVendor() {
  
 
 )};
-export default InvoiceVendor;
+export default CustomerInvoiceMonthly;

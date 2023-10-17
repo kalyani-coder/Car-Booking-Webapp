@@ -12,6 +12,9 @@ import Home from './Components/Home'
 import Sidebar from './Components/Sidebar';
 import VendorPayment from './Components/VendorPayment';
 import CustomerInvoice from './Components/CustomerInvoice';
+import CustomerInvoiceMonthly from './Components/CustomerInvoiceMonthly';
+import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly';
+
 
 
 
@@ -35,6 +38,8 @@ function App() {
     <Route path='/sidebar'  element={<Sidebar/>}/>
     <Route path='/vendorpayment' element={<VendorPayment/>} />
     <Route path='/customerinvoice' element={<CustomerInvoice/>} />
+    <Route path='/customerinvoicemonthly' element={<CustomerInvoiceMonthly/>} />
+    <Route path='/vendorinvoicemonthly' element={<VendorInvoiceMonthly/>} />
 
 
   </Routes>
