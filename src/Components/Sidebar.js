@@ -70,6 +70,13 @@ const Sidebar = () => {
         </li>
 
         <li>
+        <Link to="/vendorinvoice">
+
+          Vender Invoice
+        </Link>
+        </li>
+
+        <li>
         <Link to="/customerinvoice">
 
           Customer Invoice
