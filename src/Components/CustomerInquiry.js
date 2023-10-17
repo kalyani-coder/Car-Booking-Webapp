@@ -113,13 +113,23 @@ const [formData, setFormData] = useState(initialFormData);
   <div className="mb-2grid gap-0 column-gap-3 col-12">
   <label htmlFor="vehicle" className="form-label">Vehicle:</label>
         <select className="form-control mb-2" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle} >
-          <option value="">Vehicle</option>
+        <option value="">Vehicle</option>
           <option value="Sedan Car">Sedan Car</option>
           <option value="Mini Car">Mini Car</option>
           <option value="SUV Car">SUV Car</option>
-          <option value="Tempo Traveller">Tempo Traveller</option>
-          <option value="AC Bus">AC Bus</option>
-          <option value="Non-AC Bus">Non-AC Bus</option>
+          <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+          <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+          <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+          <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+          <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+          <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+          <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+          <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+          <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+          <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+          <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+          <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+          <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
         </select>
     </div>
  <button  type="button" className="btn btn-danger" onClick={handleSubmit}>
