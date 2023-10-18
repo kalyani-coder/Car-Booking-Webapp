@@ -75,9 +75,9 @@ const Login = () => {
           {/* using ternary operator ? for onclick hide and show  */}
           <span className='flex text-xl cursor-pointer' onClick={handleShowPassword}>{showPassword ? <VscEye/> : <VscEyeClosed/>}</span>
           </div>
-          
+          <Link to='/home'>
           <button  className='w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer text-white text-xl font-medium text-center py-1 rounded-full mt-4'>Login</button>
-
+           </Link>
        </form>
 
           <p className='text-left text-sm mt-2'>Don't have an account ? <Link to={'/signup'} className='text-red-500 underline'>Sign Up</Link></p>

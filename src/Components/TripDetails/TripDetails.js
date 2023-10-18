@@ -1,8 +1,8 @@
 // TripDetailsPage.js
 
 import React, { useState } from 'react';
-import './TripDetailsPage.css'; // Import the custom CSS
-import Sidebar from './Sidebar';
+import './TripDetails.css'; // Import the custom CSS
+import Sidebar from '../Sidebar/Sidebar';
 
 function TripDetailsPage() {
   const [tripDetails, setTripDetails] = useState({

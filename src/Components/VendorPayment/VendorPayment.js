@@ -1,6 +1,6 @@
 import React from 'react'
 import './VendorPayment.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 function VendorPayment() {
   return (
     <>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CustomerInvoice.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 
 function CustomerInvoice() {

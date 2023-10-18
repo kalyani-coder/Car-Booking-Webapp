@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import './UpdateDuty.css';
 
 // Import Sidebar component
-import Sidebar from '../Components/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 // Functional component definition
 const UpdateDuty = () => {

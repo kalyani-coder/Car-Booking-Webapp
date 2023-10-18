@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './VendorInvoiceMonthly.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
+// import './CustomerInvoiceMonthly.css';
 
 
-function VendorInvoiceMonthly() {
+function CustomerInvoiceMonthly() {
   const [formData, setFormData] = useState({
     tripid:'',
     invoiceno:'',
@@ -59,7 +59,7 @@ function VendorInvoiceMonthly() {
   return (
     <>
     <Sidebar/>
-    
+  
     <div className="container">
       <div className="form">
   <div className=" pt-4  grid-gap-2  col-6">
@@ -147,14 +147,13 @@ function VendorInvoiceMonthly() {
   <input className="form-control" type="text" id="micrcode"/>
     </div>
   </div>
-  <button type="button" className="btn btn-danger" onClick={handleGenerate}>
+  <button type="button" className="btn btn-danger abc" onClick={handleGenerate}>
          Generate
      </button>
       </div>
   </div>
 
   </>
- 
 
 )};
-export default VendorInvoiceMonthly;
+export default CustomerInvoiceMonthly;
