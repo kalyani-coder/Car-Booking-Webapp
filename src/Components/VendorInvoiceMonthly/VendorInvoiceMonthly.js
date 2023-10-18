@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './VendorInvoice.css';
-import Sidebar from './Sidebar';
+import './VendorInvoiceMonthly.css';
+import Sidebar from '../Sidebar/Sidebar';
 
 
-function InvoiceVendor() {
+function VendorInvoiceMonthly() {
   const [formData, setFormData] = useState({
     tripid:'',
     invoiceno:'',
@@ -34,6 +34,12 @@ function InvoiceVendor() {
   const invoiceItems = [
     { description: 'Item 1', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
     { description: 'Item 2', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 3', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
+    { description: 'Item 4', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 5', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
+    { description: 'Item 6', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 7', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
+    { description: 'Item 8', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
     // Add more items as needed
   ];
 
@@ -51,8 +57,9 @@ function InvoiceVendor() {
   };
 
   return (
-        <>
-        <Sidebar/>
+    <>
+    <Sidebar/>
+    
     <div className="container">
       <div className="form">
   <div className=" pt-4  grid-gap-2  col-6">
@@ -81,14 +88,14 @@ function InvoiceVendor() {
   </div>
   <div className="form">
   <div className="   grid-gap-2  col-6">
-  <label htmlFor="vendorname" className="form-label">Vendor Name:</label>
-  <input className="form-control" type="text" id="vendorname"/>
+  <label htmlFor="customername" className="form-label">Customer Name:</label>
+  <input className="form-control" type="text" id="customername"/>
   <label htmlFor="gastno" className="form-label">GST No:</label>
   <input className="form-control" type="text" id="gstno"/>
   </div>
   <div className="  mb-2 grid-gap-2  col-6">
-  <label htmlFor="vendoraddress" className="form-label">Vendor Address:</label>
-  <input className="form-control" type="text" id="vendoraddress"/>
+  <label htmlFor="customeraddress" className="form-label">Customer Address:</label>
+  <input className="form-control" type="text" id="address"/>
   <label htmlFor="contactno" className="form-label">Contact No</label>
   <input className="form-control" type="text" id="contactno"/>
   </div>
@@ -114,8 +121,9 @@ function InvoiceVendor() {
               <td className="border px-4 py-2">{item.cgst}</td>
               <td className="border px-4 py-2">{item.sgst}</td>
               <td className="border px-4 py-2">{item.totalAmount}</td>
-            </tr>
+     </tr>
           ))}
+           
         </tbody>
       </table>
       <div>
@@ -139,14 +147,14 @@ function InvoiceVendor() {
   <input className="form-control" type="text" id="micrcode"/>
     </div>
   </div>
-{/* </div> */}
-<button  type="button" className="btn btn-danger" onClick={handleGenerate}>
+  <button type="button" className="btn btn-danger" onClick={handleGenerate}>
          Generate
      </button>
-  </div>
+      </div>
   </div>
 
- </>
+  </>
+ 
 
 )};
-export default InvoiceVendor;
+export default VendorInvoiceMonthly;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {VscEye,VscEyeClosed} from 'react-icons/vsc'
 import {Link,useNavigate} from 'react-router-dom'
-import LoginSignupImage from '../images/login-animation.gif'
+import LoginSignupImage from '../../images/login-animation.gif'
 
 // to handle password icons show and hide 
 const Signup = () => {

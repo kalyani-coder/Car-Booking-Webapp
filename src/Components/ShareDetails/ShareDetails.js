@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 // import './CustomerInquiry.css'; // Assuming this is your main CSS file
 import './SharedDetails.css'; // Your custom CSS file
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 const ShareDetails = () => {
   const initialFormData = {
