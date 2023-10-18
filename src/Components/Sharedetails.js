@@ -46,22 +46,6 @@ const ShareDetails = () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="tripid" className="share-details-label">
-                  Trip Id:
-                </label>
-                <input
-                  type="text"
-                  className="share-details-input"
-                  name="tripid"
-                  placeholder="Trip Id"
-                  onChange={handleChange}
-                  value={formData.tripid}
-                />
-              </div>
-            </div>
-
-            <div className="share-details-column">
-              <div className="share-details-form-group">
               <label htmlFor="vehicle" className="share-details-label">
                   Vehicle:
                 </label>
