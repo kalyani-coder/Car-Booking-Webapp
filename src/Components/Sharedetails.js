@@ -7,8 +7,8 @@ import Sidebar from './Sidebar';
 
 const ShareDetails = () => {
   const initialFormData = {
-    tripid: '',
     vehicle: '',
+    vehiclenumber:'',
     triptype: '',
     subtype: '',
     pickup: '',
@@ -46,23 +46,7 @@ const ShareDetails = () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="tripid" className="share-details-label">
-                  Trip Id:
-                </label>
-                <input
-                  type="text"
-                  className="share-details-input"
-                  name="tripid"
-                  placeholder="Trip Id"
-                  onChange={handleChange}
-                  value={formData.tripid}
-                />
-              </div>
-            </div>
-
-            <div className="share-details-column">
-              <div className="share-details-form-group">
-                <label htmlFor="vehicle" className="share-details-label">
+              <label htmlFor="vehicle" className="share-details-label">
                   Vehicle:
                 </label>
                 <select
@@ -90,6 +74,22 @@ const ShareDetails = () => {
                   <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
                   <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
                 </select>
+              </div>
+            </div>
+
+            <div className="share-details-column">
+              <div className="share-details-form-group">
+              <label htmlFor="vehiclenumber" className="share-details-label">
+                  Vehicle Number:
+                </label>
+                <input
+                  type="text"
+                  className="share-details-input"
+                  name="vehiclenumber"
+                  placeholder="Vehicle Number"
+                  onChange={handleChange}
+                  value={formData.vehiclenumber}
+                />
               </div>
             </div>
           </div>
@@ -174,7 +174,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="date" className="share-details-label">
-                  Date:
+                  Pickup Date:
                 </label>
                 <input
                   type="date"
@@ -189,7 +189,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="date1" className="share-details-label">
-                  Date:
+                   Dropoff Date:
                 </label>
                 <input
                   type="date"
@@ -206,7 +206,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="time" className="share-details-label">
-                  Time:
+                  Pickup Time:
                 </label>
                 <input
                   type="time"
@@ -221,7 +221,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="time1" className="share-details-label">
-                  Time:
+                   Dropoff Time:
                 </label>
                 <input
                   type="time"

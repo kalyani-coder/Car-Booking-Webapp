@@ -198,7 +198,7 @@ const UpdateDuty = () => {
               </label>
                 <input
                   className="update-duty-form-control"
-                  type="text"
+                  type="time"
                   id="closingtime"
                   name="closingtime"
                   onChange={handleChange}
@@ -223,7 +223,7 @@ const UpdateDuty = () => {
                 </label>
                 <input
                   className="update-duty-form-control"
-                  type="text"
+                  type="time"
                   id="startingtime"
                   name="startingtime"
                   onChange={handleChange}
