@@ -20,7 +20,7 @@ const ShareDetails = () => {
     drivername: '',
     drivermail: '',
     mobileno: '',
-    mobileno1: '',
+    driveraddress:''
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -44,6 +44,22 @@ const ShareDetails = () => {
       <div className='share-details-container'>
         <div className="share-details-form">
           <div className="share-details-row">
+            <div className="share-details-column">
+              <div className="share-details-form-group">
+                <label htmlFor="tripid" className="share-details-label">
+                  Trip Id:
+                </label>
+                <input
+                  type="text"
+                  className="share-details-input"
+                  name="tripid"
+                  placeholder="Trip Id"
+                  onChange={handleChange}
+                  value={formData.tripid}
+                />
+              </div>
+            </div>
+
             <div className="share-details-column">
               <div className="share-details-form-group">
               <label htmlFor="vehicle" className="share-details-label">
@@ -287,23 +303,23 @@ const ShareDetails = () => {
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="mobileno1" className="share-details-label">
-                  Mobile No:
+                <label htmlFor="driveraddress" className="share-details-label">
+                Driver Address:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="mobileno1"
-                  placeholder="Mobile No"
+                  name="driveraddress"
+                  placeholder="Driver Address"
                   onChange={handleChange}
-                  value={formData.mobileno1}
+                  value={formData.driveraddress}
                 />
               </div>
             </div>
           </div>
 
           <button type="button" className="share-details-button" onClick={handleShare}>
-            Share
+            Share With Customer
           </button>
         </div>
       </div>
