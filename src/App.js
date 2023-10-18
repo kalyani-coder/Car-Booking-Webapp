@@ -15,6 +15,7 @@ import CustomerInvoice from './Components/CustomerInvoice';
 import VendorInvoice from './Components/VendorInvoice';
 import CustomerInvoiceMonthly from './Components/CustomerInvoiceMonthly';
 import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly';
+import Signup from './Components/SignUp';
 
 
 
@@ -29,6 +30,7 @@ function App() {
    
   <Routes>
     <Route path='/' element={<Login/>}/>
+    <Route path='/signup' element={< Signup/>} />
     <Route path='/home' element={<Home/>} />
     <Route path='/sharedetails' element={<ShareDetails/>}/>
     <Route path='/startenddetails' element={<Startenddetails/>}/>
