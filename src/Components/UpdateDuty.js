@@ -198,7 +198,7 @@ const UpdateDuty = () => {
               </label>
                 <input
                   className="update-duty-form-control"
-                  type="text"
+                  type="time"
                   id="closingtime"
                   name="closingtime"
                   onChange={handleChange}
@@ -223,12 +223,13 @@ const UpdateDuty = () => {
                 </label>
                 <input
                   className="update-duty-form-control"
-                  type="text"
+                  type="time"
                   id="startingtime"
                   name="startingtime"
                   onChange={handleChange}
                   value={formData.startingtime}
                 />
+                
               </div>
               <div>  <label htmlFor="totalkm" className="update-duty-form-label">
                 Total KM:
@@ -255,21 +256,21 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.totalhour}
                 /></div>
-              <div><label htmlFor="title" className="update-duty-form-label">
-                Title:
+              <div><label htmlFor="amount" className="update-duty-form-label">
+              Amount:
               </label>
                 <input
                   className="update-duty-form-control"
                   type="text"
-                  id="title"
-                  name="title"
+                  id="amount"
+                  name="amount"
                   onChange={handleChange}
-                  value={formData.title}
+                  value={formData.amount}
                 /></div>
             </div>
             <div className='d-flex gap-5'>
-              <div>   <label htmlFor="amount" className="update-duty-form-label">
-                Amount:
+              {/* <div>   <label htmlFor="title" className="update-duty-form-label">
+                Title:
               </label>
                 <input
                   className="update-duty-form-control"
@@ -279,7 +280,22 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.amount}
                 />
-              </div>
+              </div> */}
+              <div>   <label htmlFor="title" className="update-duty-form-label">
+                Title:
+              </label>
+                <select
+                  className="update-duty-form-control"
+                  name="title"
+                  id="title"
+                  onChange={handleChange}
+                  value={formData.title}
+                >
+                  <option value="">Title</option>
+                  <option value="One Day / 80km">One Day /80km</option>
+                  <option value="One Day / 300km">One Day /300km</option>
+                  {/* Add other vehicle options */}
+                </select></div>
               <div> <label htmlFor="amount1" className="update-duty-form-label">
                 Amount:
               </label>
@@ -294,9 +310,21 @@ const UpdateDuty = () => {
               </div>
             </div>
             <div className='d-flex gap-5'>
-              <div> <label htmlFor="amount2" className="update-duty-form-label">
-                Amount:
+              <div> <label htmlFor="extrakm" className="update-duty-form-label">
+              Extra KM:
               </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="extrakm"
+                  name="extrakm"
+                  onChange={handleChange}
+                  value={formData.amount2}
+                /></div>
+              <div>
+                <label htmlFor="amount2" className="update-duty-form-label">
+                  Amount:
+                </label>
                 <input
                   className="update-duty-form-control"
                   type="text"
@@ -304,18 +332,6 @@ const UpdateDuty = () => {
                   name="amount2"
                   onChange={handleChange}
                   value={formData.amount2}
-                /></div>
-              <div>
-                <label htmlFor="extrakm" className="update-duty-form-label">
-                  Extra KM:
-                </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="extrakm"
-                  name="extrakm"
-                  onChange={handleChange}
-                  value={formData.extrakm}
                 /></div>
             </div>
             <div className='d-flex gap-5'>

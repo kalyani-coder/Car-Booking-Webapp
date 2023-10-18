@@ -1,16 +1,18 @@
 /* SharedDetails.css */
 
 .share-details-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+  /* width: 100%; */
+  /* max-width: 800px; */
+  margin-left: 250px; /* Leave 300px from the left side */
   padding: 20px;
+  background-color: skyblue;
 }
 
 .share-details-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 8px;
+  padding-left: 20px;
 }
 
 .share-details-row {
@@ -36,7 +38,7 @@
 }
 
 .share-details-input {
-  width: 100%;
+  width: 450px; /* Make all inputs and selects full width */
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid #ccc;
