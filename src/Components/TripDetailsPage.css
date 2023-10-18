@@ -6,7 +6,8 @@
     flex-wrap: wrap; /* Allow items to wrap to the next line */
     justify-content: space-between;
     padding: 20px;
-    margin-left: 300px;
+    margin-left: 250px;
+    background-color: skyblue;
   }
   
   /* Styling for Trip Details Section */
@@ -20,6 +21,7 @@
   .driver-details-section {
     flex: 1; /* Take up all available space */
     width: 100%; /* Full width on small screens */
+    margin-left: 20px;
   }
   
   /* Styling for Headings */

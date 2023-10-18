@@ -28,34 +28,45 @@ function TripDetailsPage() {
         <div className="trip-details-section">
           <h2 className="trip-details-heading">Trip Details</h2>
           <div className="trip-details-form">
-            <div className="pt-4 mb-2 grid-gap-2 col-6">
-              <label htmlFor='pickuplocation' className="trip-details-label">Pickup Location:</label>
-              <input type="text" className="trip-details-input" value={tripDetails.pickupLocation} onChange={(e) => setTripDetails({ ...tripDetails, pickupLocation: e.target.value })} />
-
-              <label htmlFor="date" className="trip-details-label"> Pickup Date:</label>
-              <input type="date" className="trip-details-input" value={tripDetails.date} onChange={(e) => setTripDetails({ ...tripDetails, date: e.target.value })} />
-
-              <label htmlFor='time' className="trip-details-label"> Pickup Time:</label>
-              <input type="time" className="trip-details-input" value={tripDetails.time} onChange={(e) => setTripDetails({ ...tripDetails, time: e.target.value })} />
-
-              <label className="trip-details-label">Drop-off Location:</label>
-              <input
-                type="text"
-                className="trip-details-input"
-                value={tripDetails.dropoffLocation} onChange={(e) => setTripDetails({ ...tripDetails, dropoffLocation: e.target.value })}
-              />
-
-              <label htmlFor='dropoffdate' className="trip-details-label">Drop-off Date:</label>
-              <input
-                type="date" className="trip-details-input" value={tripDetails.date1} onChange={(e) => setTripDetails({ ...tripDetails, date1: e.target.value })}
-              />
-
-              <label htmlFor='time' className="trip-details-label">Drop-off Time:</label>
-              <input
-                type="time"
-                className="trip-details-input" value={tripDetails.time1} onChange={(e) => setTripDetails({ ...tripDetails, time1: e.target.value })}
-              />
-
+            <div className="pt-4 mb-2 grid-gap-2">
+              <div className="d-flex gap-5">
+                <div>
+                  <label htmlFor='pickuplocation' className="trip-details-label">Pickup Location:</label>
+                  <input type="text" className="trip-details-input" placeholder="Pickup Location"  value={tripDetails.pickupLocation} onChange={(e) => setTripDetails({ ...tripDetails, pickupLocation: e.target.value })} />
+                </div>
+                <div>
+                  <label htmlFor="date" className="trip-details-label"> Pickup Date:</label>
+                  <input type="date" className="trip-details-input" value={tripDetails.date} onChange={(e) => setTripDetails({ ...tripDetails, date: e.target.value })} />
+                </div>
+                <div>
+                  <label htmlFor='time' className="trip-details-label"> Pickup Time:</label>
+                  <input type="time" className="trip-details-input" value={tripDetails.time} onChange={(e) => setTripDetails({ ...tripDetails, time: e.target.value })} />
+                </div>
+              </div>
+              <div className="d-flex gap-5">
+              <div>
+                <label className="trip-details-label">Drop-off Location:</label>
+                <input
+                  type="text"
+                  className="trip-details-input"
+                  placeholder="Drop-off Location"
+                  value={tripDetails.dropoffLocation} onChange={(e) => setTripDetails({ ...tripDetails, dropoffLocation: e.target.value })}
+                />
+              </div>
+              <div>
+                <label htmlFor='dropoffdate' className="trip-details-label">Drop-off Date:</label>
+                <input
+                  type="date" className="trip-details-input" value={tripDetails.date1} onChange={(e) => setTripDetails({ ...tripDetails, date1: e.target.value })}
+                />
+              </div>
+              <div>
+                <label htmlFor='time' className="trip-details-label">Drop-off Time:</label>
+                <input
+                  type="time"
+                  className="trip-details-input" value={tripDetails.time1} onChange={(e) => setTripDetails({ ...tripDetails, time1: e.target.value })}
+                />
+              </div>
+              </div>
               <label htmlFor="vehicle" className="trip-details-label">Vehicle Preference:</label>
               <select className="trip-details-input" name="vehicle" id="vehicle" >
                 <option value="">Vehicle</option>
@@ -99,7 +110,7 @@ function TripDetailsPage() {
         <div className="driver-details-section">
           <h2 className="driver-details-heading">Driver Details</h2>
           <div className="driver-details-form">
-            <div className="grid-gap-2 col-6">
+            <div className="pt-4 mb-2 grid-gap-2">
               <label htmlFor="drivername" className="driver-details-label">Driver Name:</label>
               <input type="text" className="driver-details-input" name="drivername" placeholder="Driver Name" />
 
@@ -107,10 +118,10 @@ function TripDetailsPage() {
               <input type="text" className="driver-details-input" name="drivermail" placeholder="Mail Id" />
 
               <label htmlFor="mobileno" className="driver-details-label">Mobile No:</label>
-              <input className="driver-details-input" type="text" id="mobileno" />
+              <input className="driver-details-input" type="text" id="mobileno" placeholder="Mobile No." />
 
-              <label htmlFor="email" className="driver-details-label">Email:</label>
-              <input className="driver-details-input" type="text" id="email" />
+              <label htmlFor="driveraddress" className="driver-details-label">Driver Address:</label>
+              <input className="driver-details-input" type="text" id="driveraddress" placeholder="Driver Address" />
             </div>
           </div>
         </div>
