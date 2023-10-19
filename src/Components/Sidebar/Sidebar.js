@@ -96,7 +96,7 @@ const Sidebar = () => {
             <ul className="sub-menu">
               <li>
                 <a>
-                  <Link to={'/'}>
+                  <Link to={'/addvendor'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">Add Vendor</span>
                   </Link>
