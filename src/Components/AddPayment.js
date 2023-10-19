@@ -1,280 +1,178 @@
-import React from 'react'
+import React from 'react';
 import './AddPayment.css';
 import Sidebar from './Sidebar';
+
 function AddPayment() {
   return (
-
     <>
-    <Sidebar/>
-    <div className="container-container-adpayment ">
-   
-  <div className="form-body" >
-<div className="card-1">
-<div className="row justify-content-center">
-<div className="col-md-10">
-<div className="card-body mt-5">
-<form>
+      <Sidebar />
+      <div className="add-payment-container">
+        <div className="add-payment-form-body">
+          <div className="add-payment-card">
+            <div className="add-payment-content">
+              <div className="add-payment-content-wrapper">
+                <form className="add-payment-form">
+                  {/* First Column */}
+                  <div className="add-payment-column">
+                    {/* Company Name */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Company Name</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Company name" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Company Name</label>
-      <input type="text" className="form-control" placeholder="Enter your Company name" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Duty Slip No</label>
-      <input type="text" className="form-control"  placeholder="Enter your Duty slip" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Duty Slip No */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Duty Slip No</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Duty slip" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Reporting Address</label>
-      <input type="text" className="form-control" placeholder="Enter your Reporting Address" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Date</label>
-      <input type="date" className="form-control"  placeholder="Enter your Date" />
-      
-    </div>
-  </div>
-</div>
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Name</label>
-      <input type="text" className="form-control" placeholder="Enter your Name" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Vehicle Number</label>
-      <input type="number" className="form-control"  placeholder="Enter your Vehicle Number" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Reporting Address */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Reporting Address</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Reporting Address" />
+                    </div>
 
+                    {/* Date */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Date</label>
+                      <input type="date" className="add-payment-input" placeholder="Enter your Date" />
+                    </div>
 
+                    {/* Name */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Name</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Name" />
+                    </div>
 
+                    {/* Vehicle Number */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Vehicle Number</label>
+                      <input type="number" className="add-payment-input" placeholder="Enter your Vehicle Number" />
+                    </div>
+                  </div>
 
+                  {/* Second Column */}
+                  <div className="add-payment-column">
+                    {/* Vehicle Type */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Vehicle Type:</label>
+                      <select className="add-payment-input" name="vehicle" id="vehicle">
+                        <option value="">Vehicle</option>
+                        <option value="Sedan Car">Sedan Car</option>
+                        <option value="Mini Car">Mini Car</option>
+                        {/* ... other options ... */}
+                      </select>
+                    </div>
 
-<div className="form-group">
-<label> Vehicle Type :</label>
-{/* <label htmlFor="vehicle" className="form-label">Vehicle:</label> */}
-        <select className="form-control mb-2" name="vehicle" id="vehicle">
-        <option value="">Vehicle</option>
-          <option value="Sedan Car">Sedan Car</option>
-          <option value="Mini Car">Mini Car</option>
-          <option value="SUV Car">SUV Car</option>
-          <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-          <option value="AC Bus 17-seater">AC Bus 17-seater</option>
-          <option value="AC Bus 20-seater">AC Bus 20-seater</option>
-          <option value="AC Bus 32-seater">AC Bus 32-seater</option>
-          <option value="AC Bus 35-seater">AC Bus 35-seater</option>
-          <option value="AC Bus 40-seater">AC Bus 40-seater</option>
-          <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-          <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-          <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-          <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-          <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-          <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-          <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
-        </select>
+                    {/* From */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">From</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your From" />
+                    </div>
 
-</div>
+                    {/* To */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">To</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your To" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >From</label>
-      <input type="text" className="form-control" placeholder="Enter your From" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >To</label>
-      <input type="text" className="form-control"  placeholder="Enter your To" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Closing Kms */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Closing Kms</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Closing Kms" />
+                    </div>
 
+                    {/* Closing Time */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Closing Time</label>
+                      <input type="Time" className="add-payment-input" placeholder="Enter your Closing Time" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Closing Kms</label>
-      <input type="text" className="form-control" placeholder="Enter your Closing Kms" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Closing Time</label>
-      <input type="Time" className="form-control"  placeholder="Enter your Closing Time" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Starting Kms */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Starting Kms</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Starting Kms" />
+                    </div>
 
+                    {/* Reporting Kms */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Reporting Kms</label>
+                      <input type="Text" className="add-payment-input" placeholder="Enter your Reporting Kms" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Starting Kms</label>
-      <input type="text" className="form-control" placeholder="Enter your Starting Kms" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Reporting Kms</label>
-      <input type="Text" className="form-control"  placeholder="Enter your Reporting Kms" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Total Kms */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Total Kms</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Total Kms" />
+                    </div>
 
+                    {/* Total Hours */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Total Hours</label>
+                      <input type="Text" className="add-payment-input" placeholder="Enter your Total Hours" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Total Kms</label>
-      <input type="text" className="form-control" placeholder="Enter your Total Kms" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Total Hours</label>
-      <input type="Text" className="form-control"  placeholder="Enter your Total Hours" />
-      
-    </div>
-  </div>
-</div>
+                    {/* 8 Hrs. 80Kms.@ */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">8 Hrs. 80Kms.@</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your 8 Hrs. 80Kms.@" />
+                    </div>
 
+                    {/* Amount */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Amount</label>
+                      <input type="number" className="add-payment-input" placeholder="Enter your Amount" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >8 Hrs.  80Kms.@</label>
-      <input type="text" className="form-control" placeholder="Enter your 8 Hrs.  80Kms.@" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Amount</label>
-      <input type="number" className="form-control"  placeholder="Enter your Amount" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Extra Kms */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Extra Kms</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Extra Kms" />
+                    </div>
 
+                    {/* Extra Hours */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Extra Hours</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Extra Kms" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Extra Kms</label>
-      <input type="text" className="form-control" placeholder="Enter your Extra Kms" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Amount</label>
-      <input type="number" className="form-control"  placeholder="Enter your Amount" />
-      
-    </div>
-  </div>
-</div>
+                    {/* 1 Day 300 kms */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">1 Day 300 kms</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your 1 Day 300 kms" />
+                    </div>
 
+                    {/* Total Amount */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Total Amount</label>
+                      <input type="text" className="add-payment-input" placeholder="Enter your Total Amount" />
+                    </div>
 
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Extra Hours</label>
-      <input type="text" className="form-control" placeholder="Enter your Extra Kms" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Amount</label>
-      <input type="number" className="form-control"  placeholder="Enter your Amount" />
-      
-    </div>
-  </div>
-</div>
+                    {/* Advance Payment */}
+                    <div className="add-payment-field-group">
+                      <label className="add-payment-label">Advance Payment</label>
+                      <input type="number" className="add-payment-input" placeholder="Enter your Advance Payment" />
+                    </div>
+                  </div>
 
+                  {/* Buttons */}
 
+                </form>
 
-
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >1 Day 300 kms</label>
-      <input type="text" className="form-control" placeholder="Enter your 1 Day 300 kms" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Amount</label>
-      <input type="number" className="form-control"  placeholder="Enter your Amount" />
-      
-    </div>
-  </div>
-</div>
-
-
-
-<div className="row g-2">
-  <div className="col-md">
-    <div className="form-group">
-    <label >Total Amount</label>
-      <input type="text" className="form-control" placeholder="Enter your Total Amount" />
-      
-    </div>
-  </div>
-  <div className="col-md">
-    <div className="form-group">
-    <label >Advance Payment</label>
-      <input type="number" className="form-control"  placeholder="Enter your Advance Payment" />
-      
-    </div>
-  </div>
-</div>
-
-<br></br>
-<button id="btn1" className="btn btn-danger " >
-Edit
-</button>
-<button id="btn2" className="btn btn-danger " >
-Save
-</button>
-
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</>
-  )
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <button className="add-payment-btn" id="btn1">
+        Edit
+      </button>
+      <button className="add-payment-btn" id="btn2">
+        Save
+      </button>
+    </>
+  );
 }
 
-export default AddPayment
+export default AddPayment;
