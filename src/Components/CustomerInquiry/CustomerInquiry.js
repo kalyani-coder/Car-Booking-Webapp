@@ -1,27 +1,27 @@
-import React, {useState } from 'react';
-import  './CustomerInquiry.css';
-import Sidebar from '../Sidebar/Sidebar';
+import React, { useState } from "react";
+import "./CustomerInquiry.css";
+import Sidebar from "../Sidebar/Sidebar";
 
 const CustomerInquiry = () => {
   const initialFormData = {
-    customerid: '',
-    customername: '',
-    mobileno: '', 
-    email: '',
-    address: '',
-    triptype: '',
-    subtype: '',
-    pickup:'',
-    date:'',
-    time:'',
-    dropoff:'',
-    date1:'',
-    time1:'',
-    days: '',
-    hours: '',
-    vehicle:'',
+    customerid: "",
+    customername: "",
+    mobileno: "",
+    email: "",
+    address: "",
+    triptype: "",
+    subtype: "",
+    pickup: "",
+    date: "",
+    time: "",
+    dropoff: "",
+    date1: "",
+    time1: "",
+    totaldays: "",
+    hours: "",
+    vehicle: "",
   };
-const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,110 +33,165 @@ const [formData, setFormData] = useState(initialFormData);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Form data:', formData);
+    console.log("Form data:", formData);
   };
 
   return (
     <>
+    <Sidebar />
+    <div className="customer-inquiry-container">
     
-      <Sidebar/>
-    
-    <div className="container-cust-inquiry">
-      <div className="form">
-  <div className=" pt-4  mb-2 grid-gap-2  col-6">
-  <label htmlFor="customerid" className="form-label">Customer Id:</label>
-  <input className="form-control" type="text" id="customerid"/>
-  <label htmlFor="customername" className="form-label">Customer Name:</label>
-  <input className="form-control" type="text" id="customername"/>
-  </div>
-   <div className=" pt-4 mb-2 grid-gap-2  col-6">
-  <label htmlFor="mobileno" className="form-label">  Mobile No:</label>
-  <input className="form-control" type="text" id="mobileno"/>
-  <label htmlFor="emailid" className="form-label">Email Id:</label>
-  <input className="form-control" type="text" id="email"/>
-  </div>
-  </div>
-  <div className="  col-12">
-  <label htmlFor="address" className="form-label">Address:</label>
-  <input className="form-control" type="text" id="address" onChange={handleChange} value={formData.address}/>
-  </div>
-  <div className="form">
-  <div className="mb-2  grid gap-0 column-gap-3 col-6">
-    <label htmlFor="triptype" className="form-label">Trip Type:</label>
-        <select className="form-control mb-2 my-4 mt-1 " id="Trip type" onChange={handleChange} value={formData.triptype} >
-          <option value="">Trip Type</option>
-          <option value="One Way Trip">One Way Trip</option>
-          <option value="Return Trip">Return Trip</option>
-        </select>
+      <div className="main-container">
+        <div className="form-container">
+          <div className="form-group">
+            <label htmlFor="customerid" className="form-label">
+              Customer Id:
+            </label>
+            <input className="form-control-cust-inq-input" type="text" id="customerid" name="customerid" placeholder="Customer id" onChange={handleChange} value={formData.customerid} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="customername" className="form-label">
+              Customer Name:
+            </label>
+            <input className="form-control-cust-inq-input" type="text" id="customername" name="customername" placeholder="Customer Name" onChange={handleChange} value={formData.customername} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="mobileno" className="form-label">
+              Mobile No:
+            </label>
+            <input className="form-control-cust-inq-input" type="text" id="mobileno" name="mobileno" placeholder="Mobile No." onChange={handleChange} value={formData.mobileno} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">
+              Email Id:
+            </label>
+            <input className="form-control-cust-inq-input" type="text" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="address" className="form-label">
+              Address:
+            </label>
+            <input className="form-control-cust-inq-input" type="text" id="address" name="address" placeholder="Address" onChange={handleChange} value={formData.address} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="triptype" className="form-label">
+              Trip Type:
+            </label>
+            <select className="form-control-cust-inq-input" id="triptype" name="triptype" onChange={handleChange} value={formData.triptype}>
+              <option value="">Trip Type</option>
+              <option value="One Way Trip">One Way Trip</option>
+              <option value="Return Trip">Return Trip</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="subtype" className="form-label">
+              Sub Type:
+            </label>
+            <select className="form-control-cust-inq-input" id="subtype" name="subtype" onChange={handleChange} value={formData.subtype}>
+              <option value="">Sub Type</option>
+              <option value="Local Trip">Local Trip</option>
+              <option value="Outstation Trip">Outstation Trip</option>
+              <option value="Outstation Local Trip">Outstation Local Trip</option>
+              <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
+            </select>
+          </div>
+          <div className="d-flex gap-5">
+            <div>
+          <div className="form-group">
+            <label htmlFor="pickup" className="form-label">
+              Pickup Location:
+            </label>
+            <input type="text" className="form-control cust-inq-input" name="pickup" placeholder="Pickup Location" onChange={handleChange} value={formData.pickup} />
+          </div>
+          </div>
+          <div>
+          <div className="form-group">
+            <label htmlFor="date1" className="form-label">
+              Date:
+            </label>
+            <input type="date" className="form-control cust-inq-input" name="date1" onChange={handleChange} value={formData.date1} />
+          </div>
+          </div>
+          <div>
+          <div className="form-group">
+            <label htmlFor="time" className="form-label">
+              Time:
+            </label>
+            <input type="time" className="form-control cust-inq-input" name="time" onChange={handleChange} value={formData.time} />
+          </div>
+          </div>
+          </div>
+          <div className="d-flex gap-5">
+            <div>
+          <div className="form-group">
+            <label htmlFor="dropoff" className="form-label">
+              Dropoff Location:
+            </label>
+            <input type="text" className="form-control cust-inq-input" name="dropoff" placeholder="Enter Dropoff Location" onChange={handleChange} value={formData.dropoff} />
+          </div>
+          </div>
+          <div>
+          <div className="form-group">
+            <label htmlFor="date" className="form-label">
+              Date:
+            </label>
+            <input type="date" className="form-control cust-inq-input" name="date" onChange={handleChange} value={formData.date} />
+          </div>
+          </div>
+          <div>
+          <div className="form-group">
+            <label htmlFor="time1" className="form-label">
+              Time:
+            </label>
+            <input type="time" className="form-control cust-inq-input" name="time1" onChange={handleChange} value={formData.time1} />
+          </div>
+          </div>
+          </div>
+         
+          <div className="form-group">
+            <label htmlFor="totaldays" className="form-label">
+              Total Days:
+            </label>
+            <input type="number" className="form-control-cust-inq-input" name="totaldays" placeholder="Total Days" onChange={handleChange} value={formData.totaldays} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="hours" className="form-label">
+              Total Hours:
+            </label>
+            <input type="text" className="form-control-cust-inq-input" name="hours" placeholder="Hours" onChange={handleChange} value={formData.hours} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="vehicle" className="form-label">
+              Vehicle:
+            </label>
+            <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
+              <option value="">Vehicle</option>
+              <option value="Sedan Car">Sedan Car</option>
+              <option value="Mini Car">Mini Car</option>
+              <option value="SUV Car">SUV Car</option>
+              <option value="AC Bus 13-Seater">AC Bus 13-Seater</option>
+              <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
+              <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
+              <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
+              <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
+              <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
+              <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
+              <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
+              <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
+              <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
+              <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
+              <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
+              <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
+            </select>
+          </div>
+          <button type="button" className="btn-submit" onClick={handleSubmit}>
+            Submit
+          </button>
         </div>
-        <div className=" mb-2  grid gap-0 column-gap-3 col-6">
-        <label htmlFor="subtype" className="form-label">Sub Type:</label>
-        <select className="form-control mb-2 my-4 mt-1" id="subtype"  onChange={handleChange} value={formData.subtype} >
-          <option value="">Sub Type</option>
-          <option value="Local Trip">Local Trip</option>
-          <option value="Outstaion Trip">Outstation Trip</option>
-          <option value="Outstaion Local Trip">Outstation Local Trip</option>
-          <option value="Outstaion Outstation Trip">Outstation Outstation Trip</option>
-        </select>
-        </div>
-        </div>
-        <div className="form">
-        <div className="mb-2  grid gap-0 column-gap-3 col-4">
-        <label htmlFor="pickup" className="form-label">Pickup Location:</label>
-  <input type="text" className="form-control" name="pickup" placeholder="Pickup Location" onChange={handleChange} value={formData.pickup}/>
-  <label htmlFor="dropoff" className="form-label">Dropoff Location:</label>
-  <input type="text" className="form-control"  name="dropoff" placeholder="Enter Dropoff Location" onChange={handleChange} value={formData.dropoff} />
-  </div>
-  <div className="mb-2  grid gap-0 column-gap-3 col-4">
-  <label htmlFor="date" className="form-label">Date:</label>
-  <input type="date" className="form-control"  name="date" placeholder="Date" onChange={handleChange} value={formData.date} />
-  <label htmlFor="date1" className="form-label">Date:</label>
-  <input type="date" className="form-control"  name="date1" placeholder="Date" onChange={handleChange} value={formData.date1} />
-  </div>
-  <div className="mb-2  grid gap-0 column-gap-3 col-4">
-  <label htmlFor="time" className="form-label">Time:</label>
-  <input type="time" className="form-control"  name="time" placeholder="Time" onChange={handleChange} value={formData.time} />
-  <label htmlFor="time1" className="form-label">Time:</label>
-  <input type="time" className="form-control"  name="time1" placeholder="Time" onChange={handleChange} value={formData.time1} />
-  </div>
-  </div>
-   <div className="form">
-  <div className="mb-2 grid gap-0 column-gap-3 col-6">
-  <label htmlFor="time" className="form-label">Total Day:</label>
-  <input type="number" className="form-control" name="totaldays" placeholder="Total Days" onChange={handleChange} value={formData.totaldays}/>
-  </div>
-  <div className=" mb-2 grid gap-0 column-gap-3 col-6">
-  <label htmlFor="hours" className="form-label">Total Hours:</label>
-  <input type="text" className="form-control"  name="hours" placeholder="Hours" onChange={handleChange} value={formData.hours} />
-  </div>
-  </div>
-  <div className="mb-2grid gap-0 column-gap-3 col-12">
-  <label htmlFor="vehicle" className="form-label">Vehicle:</label>
-        <select className="form-control mb-2" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle} >
-        <option value="">Vehicle</option>
-          <option value="Sedan Car">Sedan Car</option>
-          <option value="Mini Car">Mini Car</option>
-          <option value="SUV Car">SUV Car</option>
-          <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-          <option value="AC Bus 17-seater">AC Bus 17-seater</option>
-          <option value="AC Bus 20-seater">AC Bus 20-seater</option>
-          <option value="AC Bus 32-seater">AC Bus 32-seater</option>
-          <option value="AC Bus 35-seater">AC Bus 35-seater</option>
-          <option value="AC Bus 40-seater">AC Bus 40-seater</option>
-          <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-          <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-          <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-          <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-          <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-          <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-          <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
-        </select>
-    </div>
- <button  type="button" className="btn btn-danger" onClick={handleSubmit}>
-         Submit
-     </button>
+      </div>
     </div>
     </>
-)};
+  );
+};
 
 export default CustomerInquiry;
