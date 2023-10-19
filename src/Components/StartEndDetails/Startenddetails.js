@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import "./StartEndDeteails.css"
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 const StartEndDetails = () => {
   const initialFormData = {

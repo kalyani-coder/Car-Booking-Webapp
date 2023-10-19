@@ -1,20 +1,21 @@
 // import logo from './logo.svg';
 import './App.css';
-import CustomerInquiry from './Components/CustomerInquiry';
-import ShareDetails from './Components/Sharedetails';
-import Startenddetails from './Components/Startenddetails';
-import TripDetails from './Components/TripDetails';
-import UpdateDuty from './Components/UpdateDuty';
-import AddPayment from './Components/AddPayment'
+import CustomerInquiry from './Components/CustomerInquiry/CustomerInquiry';
+import ShareDetails from './Components/ShareDetails/ShareDetails';
+import Startenddetails from './Components/StartEndDetails/Startenddetails';
+import TripDetails from './Components/TripDetails/TripDetails';
+import UpdateDuty from './Components/UpdateDutySlip/UpdateDuty';
+import AddPayment from './Components/AddPayment/AddPayment'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
-import Login from './Components/LogIn';
-import Home from './Components/Home'
-import Sidebar from './Components/Sidebar';
-import VendorPayment from './Components/VendorPayment';
-import CustomerInvoice from './Components/CustomerInvoice';
-import VendorInvoice from './Components/VendorInvoice';
-import CustomerInvoiceMonthly from './Components/CustomerInvoiceMonthly';
-import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly';
+import Login from './Components/Login/LogIn';
+import Home from './Components/Home/Home';
+import Sidebar from './Components/Sidebar/Sidebar';
+import VendorPayment from './Components/VendorPayment/VendorPayment';
+import CustomerInvoice from './Components/CustomerInvoice/CustomerInvoice';
+import VendorInvoice from './Components/VendorInvoice/VendorInvoice';
+import CustomerInvoiceMonthly from './Components/CustomerInvoiceMonthly/CustomerInvoiceMonthly';
+import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly/VendorInvoiceMonthly';
+import Signup from './Components/SignUp/SignUp';
 
 
 
@@ -29,6 +30,7 @@ function App() {
    
   <Routes>
     <Route path='/' element={<Login/>}/>
+    <Route path='/signup' element={< Signup/>} />
     <Route path='/home' element={<Home/>} />
     <Route path='/sharedetails' element={<ShareDetails/>}/>
     <Route path='/startenddetails' element={<Startenddetails/>}/>

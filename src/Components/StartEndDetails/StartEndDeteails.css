@@ -1,10 +1,11 @@
 /* StartEndDetails.css */
 
 .start-end-details-container {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    /* width: 100%; */
+    /* max-width: 800px; */
+    margin-left: 250px; /* Leave 300px from the left side */
     padding: 20px;
+    background-color: skyblue;
   }
   
   .start-end-details-form {
@@ -24,9 +25,9 @@
     min-width: 250px; /* Minimum width for each column */
   }
   
-  .start-end-details-form-group {
+  /* .start-end-details-form-group {
     margin-bottom: 20px;
-  }
+  } */
   
   .start-end-details-label {
     color: #333;

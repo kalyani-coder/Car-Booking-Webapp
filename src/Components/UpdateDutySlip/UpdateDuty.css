@@ -2,14 +2,17 @@
 
 /* Style for the container div */
 .update-duty-container {
-  margin-left: 300px; /* Leave 300px from the left side */
+  margin-left: 250px; /* Leave 300px from the left side */
   padding: 20px;
+  background-color: skyblue;
 }
 
 /* Style for the form div */
 .update-duty-form {
   display: flex;
   flex-wrap: wrap; /* Allow form items to wrap to the next line on smaller screens */
+  gap: 8px;
+  padding-left: 20px;
 }
 
 /* Style for each row in the form */
@@ -28,7 +31,7 @@
 
 /* Style for form inputs and select */
 .update-duty-form-control {
-  width: 250px; /* Make all inputs and selects full width */
+  width: 450px; /* Make all inputs and selects full width */
   padding: 8px;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
   margin-bottom: 10px; /* Add some space between input fields */
@@ -41,18 +44,20 @@
   /* justify-content: space-between; */
   margin-top: 20px;
   gap: 30px;
+  margin-left: 325px;
 }
 
 /* Style for Save and Print buttons */
 .btn-save,
 .btn-print {
-  width: 250px; /* Each button takes up 48% of the container with a small gap between columns */
+  width: 150px; /* Each button takes up 48% of the container with a small gap between columns */
   padding: 10px 20px;
   background-color: #dc3545; /* Red color, you can change it */
   color: #fff; /* White text */
   border: none;
   cursor: pointer;
   border-radius: 5px;
+
 }
 
 /* Hover effect for buttons */

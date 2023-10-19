@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 import  './CustomerInquiry.css';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 const CustomerInquiry = () => {
   const initialFormData = {
