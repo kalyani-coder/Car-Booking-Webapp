@@ -18,6 +18,9 @@ import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly/VendorInvoic
 import Signup from './Components/SignUp/SignUp';
 import AddCustomer from './Components/AddCustomer/AddCustomer';
 import AddVendor from './Components/AddVendor/AddVendor';
+import ViewCustomer from './Components/ViewCustomer';
+import ViewVendor from './Components/ViewVendor';
+import ViewCustomerInquiry from './Components/ViewCustomerInquiry';
 
 
 
@@ -39,7 +42,7 @@ function App() {
     <Route path='/tripdetails' element={<TripDetails/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
-    <Route path='/customerenquire'  element={<CustomerInquiry/>}/>
+    <Route path='/customerenquiry'  element={<CustomerInquiry/>}/>
     <Route path='/sidebar'  element={<Sidebar/>}/>
     <Route path='/vendorpayment' element={<VendorPayment/>} />
     <Route path='/customerinvoice' element={<CustomerInvoice/>} />
@@ -48,6 +51,9 @@ function App() {
     <Route path='/vendorinvoicemonthly' element={<VendorInvoiceMonthly/>} />
     <Route path='/addcustomer' element={<AddCustomer/>} />
     <Route path='/addvendor' element={<AddVendor/>} />
+    <Route path='/viewcustomer' element={<ViewCustomer/>} />
+    <Route path='/viewvendor' element={<ViewVendor/>} />
+    <Route path='/viewcustomerinquiry' element={<ViewCustomerInquiry/>} />
 
 
   </Routes>

@@ -79,8 +79,10 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
+                  <Link to={'/viewcustomer'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">View Customer</span>
+                  </Link>
                 </a>
               </li>
             </ul>
@@ -104,8 +106,10 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
+                  <Link to={'/viewvendor'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">View Vendor</span>
+                  </Link>
                 </a>
               </li>
             </ul>
@@ -123,7 +127,7 @@ const Sidebar = () => {
             <ul className="sub-menu">
               <li>
                 <a>
-                  <Link to={'/customerenquire'}>
+                  <Link to={'/customerenquiry'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">Add Customer Inquiry</span>
                   </Link>
@@ -131,8 +135,10 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
+                  <Link to={'/viewcustomerinquiry'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">View Customer Inquiry</span>
+                  </Link>
                 </a>
               </li>
             </ul>
