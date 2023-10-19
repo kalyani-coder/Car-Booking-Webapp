@@ -17,7 +17,8 @@ const ShareDetailsSchema = new mongoose.Schema({
         drivername : String,
         drivermail : String,
         mobileno : Number,
-        mobilrno1 : Number
+        vehicleno : String,
+        driveradderss : String
     
 })
 

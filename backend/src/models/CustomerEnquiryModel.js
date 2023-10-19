@@ -17,7 +17,10 @@ const CustomerSchema = new mongoose.Schema({
     time : String,
     days : String,
     hours : String,
-    vehicle : String
+    vehicle : String,
+    address : String,
+    time1 : String,
+    totaldays : String,
     
 })
 

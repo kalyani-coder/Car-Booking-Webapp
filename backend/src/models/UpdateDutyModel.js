@@ -28,6 +28,7 @@ const UpdateDutySchema = new mongoose.Schema({
     amount2:String,
     totalamount:String,
     advanceamount:String,
+    paymentmethod :String,
     
 })
  
