@@ -5,7 +5,7 @@ import ShareDetails from './Components/ShareDetails/ShareDetails';
 import Startenddetails from './Components/StartEndDetails/Startenddetails';
 import TripDetails from './Components/TripDetails/TripDetails';
 import UpdateDuty from './Components/UpdateDutySlip/UpdateDuty';
-import AddPayment from './Components/AddPayment/AddPayment';
+import AddPayment from './Components/AddPayment/AddPayment'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Login from './Components/Login/LogIn';
 import Home from './Components/Home/Home';
@@ -16,6 +16,7 @@ import VendorInvoice from './Components/VendorInvoice/VendorInvoice';
 import CustomerInvoiceMonthly from './Components/CustomerInvoiceMonthly/CustomerInvoiceMonthly';
 import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly/VendorInvoiceMonthly';
 import Signup from './Components/SignUp/SignUp';
+import AddCustomer from './Components/AddCustomer/AddCustomer';
 
 
 
@@ -44,6 +45,7 @@ function App() {
     <Route path='/vendorinvoice' element={<VendorInvoice/>} />
     <Route path='/customerinvoicemonthly' element={<CustomerInvoiceMonthly/>} />
     <Route path='/vendorinvoicemonthly' element={<VendorInvoiceMonthly/>} />
+    <Route path='/addcustomer' element={<AddCustomer/>} />
 
 
   </Routes>

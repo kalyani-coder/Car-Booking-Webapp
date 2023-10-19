@@ -61,24 +61,78 @@ const Sidebar = () => {
           </li>
 
 
+          {/* Customer */}
+
           <li className="has-submenu">
             <a>
               <i className="bx bx-user"></i>
-              <span className="link_name">Cus Inqury</span>
+              <span className="link_name">Customer </span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
-                  <Link to={'/customerenquire'}>
+                  <Link to={'/addcustomer'}>
                   <i className="bx bx-user"></i>
-                  <span className="link_name">Add Cus IN</span>
+                  <span className="link_name">Add Customer</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
                   <i className="bx bx-user"></i>
-                  <span className="link_name">View Cus IN</span>
+                  <span className="link_name">View Customer</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Vendor</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Add Vendor</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Vendor</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+            {/* Customer inquiry */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Customer Inquiry</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/customerenquire'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Add Customer Inquiry</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Customer Inquiry</span>
                 </a>
               </li>
             </ul>
@@ -97,7 +151,7 @@ const Sidebar = () => {
                 <a>
                   <Link to={'/tripdetails'}>
                   <i className="bx bx-user"></i>
-                  <span className="link_name">Allocate Trip Details</span>
+                  <span className="link_name">Allocate Trip</span>
                   </Link>
                 </a>
               </li>
@@ -110,6 +164,166 @@ const Sidebar = () => {
             </ul>
           </li>
 
+          {/* Share Details to Customer */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Share Details</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/sharedetails'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Share Trip Details</span>
+                  </Link>
+                </a>
+              </li>
+              {/* <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Shared Details</span>
+                </a>
+              </li> */}
+            </ul>
+          </li>
+
+              {/* Get Details from Driver */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Get Details From Driver</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/Startenddetails'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Get Trip Details</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Get Trip Details</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+              {/* Update Duty Slip */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Update Duty Slip</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/updateduty'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Add Duty Slip</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Duty Slip</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Payment </span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Customer Payment</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Customer Payment</span>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <Link to={'/'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Vendor Payment</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Vendor Payment</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+         {/* Generate Invoice */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Generate Invoice</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/customerinvoice'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Customer Invoice</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+              <li>
+                <a>
+                  <Link to={'/vendorinvoice'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Vendor Invoice</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <Link to={'/customerinvoicemonthly'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Customer Monthly Invoice</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <Link to={'/vendorinvoicemonthly' }>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Vendor Monthly Invoice</span>
+                  </Link>
+                </a>
+                </li>
+              </li>
+            </ul>
+          </li>
 
 
 
