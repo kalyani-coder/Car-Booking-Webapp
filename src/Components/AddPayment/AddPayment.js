@@ -70,9 +70,9 @@ function AddPayment() {
 
 
 <div className="form-group">
-<label> Vehicle Type :</label>
+<label className='addpayment-lable'> Vehicle Type :</label>
 {/* <label htmlFor="vehicle" className="form-label">Vehicle:</label> */}
-        <select className="form-control mb-2" name="vehicle" id="vehicle">
+        <select className="form-control mb-2 addpayment-lable" name="vehicle" id="vehicle">
         <option value="">Vehicle</option>
           <option value="Sedan Car">Sedan Car</option>
           <option value="Mini Car">Mini Car</option>

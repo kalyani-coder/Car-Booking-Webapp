@@ -22,11 +22,14 @@ mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.
 apiRouter = express.Router()
 
 
+// handle routes here 
 const CustomerEnquiry = require('./src/routes/CustomerEnquiry')
 const user = require('./src/routes/User')
 const ShareDetails = require('./src/routes/ShareDetails')
 const TripDetails = require('./src/routes/TripDetails')
 const UpdateDuty = require('./src/routes/UpdateDuty')
+const NewGetDetailsFromDriver = require('./src/routes/GetDetailsfromDriver')
+const NewAddPaymentSchema = require('./src/routes/AddPayment')
 
 
 // define here api path 
@@ -35,6 +38,8 @@ apiRouter.use('/users' , user)
 apiRouter.use('/share-details' , ShareDetails)
 apiRouter.use('/trip-details' , TripDetails)
 apiRouter.use('/update-duty' , UpdateDuty)
+apiRouter.use('/getDetails-fromDriver' , NewGetDetailsFromDriver)
+apiRouter.use('/payment-details' , NewAddPaymentSchema)
 
 
 

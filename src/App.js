@@ -5,7 +5,7 @@ import ShareDetails from './Components/ShareDetails/ShareDetails';
 import Startenddetails from './Components/StartEndDetails/Startenddetails';
 import TripDetails from './Components/TripDetails/TripDetails';
 import UpdateDuty from './Components/UpdateDutySlip/UpdateDuty';
-import AddPayment from './Components/AddPayment/AddPayment'
+import AddPayment from './Components/AddPayment/AddPayment';
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Login from './Components/Login/LogIn';
 import Home from './Components/Home/Home';
