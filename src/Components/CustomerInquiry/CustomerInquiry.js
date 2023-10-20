@@ -4,7 +4,6 @@ import Sidebar from "../Sidebar/Sidebar";
 
 const CustomerInquiry = () => {
   const initialFormData = {
-    customerid: "",
     customername: "",
     mobileno: "",
     email: "",
@@ -22,6 +21,7 @@ const CustomerInquiry = () => {
     vehicle: "",
   };
   const [formData, setFormData] = useState(initialFormData);
+  const [error, setError] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,9 +31,56 @@ const CustomerInquiry = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form data:", formData);
+
+    // Map form field names to API field names
+    const apiData = {
+      customer_name: formData.customername,
+      mobileno: formData.mobileno,
+      email: formData.email,
+      tripe_type: formData.triptype,
+      sub_type: formData.subtype,
+      pic_up: formData.pickup,
+      date: formData.date,
+      time: formData.time,
+      drop_of: formData.dropoff,
+      date1: formData.date1,
+      days: formData.totaldays,
+      hours: formData.hours,
+      vehicle: formData.vehicle,
+    };
+
+    // Check if all fields are filled
+    for (const key in apiData) {
+      if (apiData[key] === '') {
+        setError('All fields are required.');
+        return;
+      }
+    }
+
+    // Reset error if all fields are filled
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:7000/api/customer-enquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiData),
+      });
+
+      if (response.ok) {
+        alert('Data saved successfully!');
+        setFormData(initialFormData); // Reset the form
+      } else {
+        alert('Failed to save data. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to save data. Please try again.');
+    }
   };
 
   return (
@@ -43,11 +90,12 @@ const CustomerInquiry = () => {
     
       <div className="main-container">
         <div className="form-container">
+        {error && <p className="text-red-500">{error}</p>}
           <div className="form-group">
-            <label htmlFor="customerid" className="form-label">
+            {/* <label htmlFor="customerid" className="form-label">
               Customer Id:
             </label>
-            <input className="form-control-cust-inq-input" type="text" id="customerid" name="customerid" placeholder="Customer id" onChange={handleChange} value={formData.customerid} />
+            <input className="form-control-cust-inq-input" type="text" id="customerid" name="customerid" placeholder="Customer id" onChange={handleChange} value={formData.customerid} /> */}
           </div>
           <div className="form-group">
             <label htmlFor="customername" className="form-label">
