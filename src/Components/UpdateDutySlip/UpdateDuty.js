@@ -330,7 +330,8 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.totalhour}
                 /></div>
-              <div><label htmlFor="amount" className="update-duty-form-label">
+              <div>
+                <label htmlFor="amount" className="update-duty-form-label">
               Amount:
               </label>
                 <input

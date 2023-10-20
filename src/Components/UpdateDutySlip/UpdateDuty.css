@@ -2,9 +2,9 @@
 
 /* Style for the container div */
 .update-duty-container {
-  margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
   background-color: skyblue;
+  width: 100vw;
 }
 
 /* Style for the form div */
@@ -12,7 +12,9 @@
   display: flex;
   flex-wrap: wrap; /* Allow form items to wrap to the next line on smaller screens */
   gap: 8px;
-  padding-left: 20px;
+  margin-left: 300px; /* Leave 300px from the left side */
+
+  /* padding-left: 20px; */
 }
 
 /* Style for each row in the form */
