@@ -8,7 +8,7 @@
     padding: 20px;
     margin-left: 300px;
     background-color: skyblue;
-    height: 100vh;
+    height: 120vh;
   }
   
   /* Styling for Trip Details Section */
@@ -70,13 +70,16 @@
   }
   
   .custom-btn {
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     margin: 0 10px;
+    width: 130px;
+    height: 50px;
+    background-color: red;
     cursor: pointer;
   }
   
   .custom-print-btn {
-    background-color: #4caf50;
+    background-color: #c73636;
     color: white;
   }
   
