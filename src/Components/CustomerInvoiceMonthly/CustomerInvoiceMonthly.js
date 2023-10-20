@@ -61,27 +61,28 @@ function VendorInvoiceMonthly() {
       <Sidebar />
 
       <div className="container-customer-invoice-monthly">
-        <div className="form-customer-invoice-monthly">
+      <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Monthly Customer Invoice </h2>
+        <div className="form-customer-invoice-monthly">    
           <div className=" pt-4  grid-gap-2  col-6">
             {/* <label htmlFor="tripid" className="form-label">Trip Id:</label> */}
             {/* <input className="form-control-customer-invoice-monthly" type="text" id="tripid" /> */}
             <label htmlFor="companyname" className="form-label">Company Name:</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="companyname" />
+            <input className="form-control-customer-invoice-monthly" placeholder="Company Name" type="text" id="companyname" />
             <label htmlFor="companyaddress" className="form-label">Company Address:</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="companyaddress" />
+            <input className="form-control-customer-invoice-monthly" placeholder="Company Address" type="text" id="companyaddress" />
             <label htmlFor="date" className="form-label">Date</label>
             <input className="form-control-customer-invoice-monthly" type="date" id="date" />
             <br />
             <label htmlFor="contactno" className="form-label">Contact No</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="contactno" />
+            <input className="form-control-customer-invoice-monthly" placeholder="Contact No." type="text" id="contactno" />
           </div>
           <div className=" pt-4  grid-gap-2  col-6">
             <label htmlFor="invoiceno" className="form-label">Invoice No:</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="gstno" />
+            <input className="form-control-customer-invoice-monthly" placeholder="Invoice No." type="text" id="gstno" />
             <label htmlFor="gstno" className="form-label">GST No</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="gstno" />
+            <input className="form-control-customer-invoice-monthly" placeholder="GST No." type="text" id="gstno" />
             <label htmlFor="mail" className="form-label">Mail</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="mail" />
+            <input className="form-control-customer-invoice-monthly" placeholder="Mail" type="text" id="mail" />
 
 
 
@@ -96,16 +97,16 @@ function VendorInvoiceMonthly() {
 
 
           <div className="   grid-gap-2  col-6">
-            <label htmlFor="customername" className="form-label">Vendor Name:</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="customername" />
+            <label htmlFor="customername" className="form-label">Customer Name:</label>
+            <input className="form-control-customer-invoice-monthly" placeholder="Customer Name" type="text" id="customername" />
             <label htmlFor="gastno" className="form-label">GST No:</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="gstno" />
+            <input className="form-control-customer-invoice-monthly" type="text" placeholder="GST No." id="gstno" />
           </div>
           <div className="  mb-2 grid-gap-2  col-6">
-            <label htmlFor="customeraddress" className="form-label">Vendor Address:</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="address" />
+            <label htmlFor="customeraddress" className="form-label">Customer Address:</label>
+            <input className="form-control-customer-invoice-monthly" type="text" placeholder="Customer Address" id="address" />
             <label htmlFor="contactno" className="form-label">Contact No</label>
-            <input className="form-control-customer-invoice-monthly" type="text" id="contactno" />
+            <input className="form-control-customer-invoice-monthly" placeholder="Conatct No." type="text" id="contactno" />
           </div>
         </div>
         <div>
@@ -149,19 +150,19 @@ function VendorInvoiceMonthly() {
           <div className="form-customer-invoice-monthly">
             <div className="   grid-gap-2  col-6">
               <label htmlFor="bankname" className="form-label">Bank Name:</label>
-              <input className="form-control-customer-invoice-monthly" type="text" id="bankname" />
+              <input className="form-control-customer-invoice-monthly" placeholder="Bank Name" type="text" id="bankname" />
               <label htmlFor="acnumber" className="form-label">Account Number:</label>
-              <input className="form-control-customer-invoice-monthly" type="text" id="acnumber" />
+              <input className="form-control-customer-invoice-monthly" placeholder="Account Number" type="text" id="acnumber" />
               <label htmlFor="ifsccode" className="form-label">IFSC Code:</label>
-              <input className="form-control-customer-invoice-monthly" type="text" id="ifsccode" />
+              <input className="form-control-customer-invoice-monthly" placeholder="IFSC Code" type="text" id="ifsccode" />
             </div>
             <div className="grid-gap-2 col-6">
               <label htmlFor="branchname" className="form-label">Branch Name:</label>
-              <input className="form-control-customer-invoice-monthly" type="text" id="branchname" />
+              <input className="form-control-customer-invoice-monthly" placeholder="Branch Name" type="text" id="branchname" />
               <label htmlFor="acholdername" className="form-label">Account Holder Name:</label>
-              <input className="form-control-customer-invoice-monthly" type="text" id="acholdername" />
+              <input className="form-control-customer-invoice-monthly" placeholder="Account Holder Name" type="text" id="acholdername" />
               <label htmlFor="micrcode" className="form-label">MICR Code:</label>
-              <input className="form-control-customer-invoice-monthly" type="text" id="micrcode" />
+              <input className="form-control-customer-invoice-monthly" type="text" placeholder="MICR Code" id="micrcode" />
             </div>
           </div>
           <button type="button-customer" className="btn btn-danger" onClick={handleGenerate}>

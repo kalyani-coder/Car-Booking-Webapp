@@ -28,12 +28,13 @@ const AddCustomer = () => {
   };
 
   return (
-    <>
+    <>~
     <Sidebar />
     <div className="customer-Add-container">
     
       <div className="customer-main-container">
         <div className="customer-form-container">
+          <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Customer</h2>
           <div className="customer-form-group">
             <label htmlFor="customername" className="form-label">
               Customer Name:

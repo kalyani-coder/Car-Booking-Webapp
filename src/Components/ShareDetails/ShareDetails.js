@@ -91,6 +91,7 @@ const ShareDetails = () => {
       <div className='share-details-container'>
         {error && <p className="text-red-500">{error}</p>}
         <div className="share-details-form">
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Share Details</h2>
           <div className="share-details-row">
             <div className="share-details-column">
 
