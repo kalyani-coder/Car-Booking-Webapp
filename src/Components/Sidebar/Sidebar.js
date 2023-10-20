@@ -39,7 +39,7 @@ const Sidebar = () => {
   return (
     <>
 
-      <div className="sidebar" style={{ overflowY: 'auto' }}>
+<div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '100vh' }}>
 
         <div className='logo'>
 
@@ -299,7 +299,7 @@ const Sidebar = () => {
             <ul className="sub-menu">
               <li>
                 <a>
-                  <Link to={'/'}>
+                  <Link to={'/addpayment'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">Customer Payment</span>
                   </Link>

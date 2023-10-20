@@ -319,10 +319,10 @@ body{
 /* Add this media query to keep the sidebar open on larger screens */
 @media (min-width: 769px) {
   .sidebar {
-    width: 250px; /* Set the width to your desired width */
+    width: 280px; /* Set the width to your desired width */
   }
   .sidebar.open {
-    width: 250px; /* Keep the width fixed when open */
+    width: 220px; /* Keep the width fixed when open */
   }
   .sidebar .nav-list li a .link_name {
     opacity: 1; /* Ensure link names are always visible */
