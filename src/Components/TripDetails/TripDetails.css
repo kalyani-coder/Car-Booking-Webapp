@@ -15,7 +15,7 @@
 .trip-details-section {
   flex: 1; /* Take up all available space */
   width: 100%; /* Full width on small screens */
-  margin-bottom: 20px; /* Add space between sections */
+  /* margin-bottom: 20px; Add space between sections */
 }
 
 /* Styling for Driver Details Section */
