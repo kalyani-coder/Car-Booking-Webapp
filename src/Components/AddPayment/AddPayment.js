@@ -25,8 +25,8 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Duty Slip No</label>
-                          <input type="text" className="form-control" placeholder="Enter your Duty slip" />
+                          <label >Gst No</label>
+                          <input type="text" className="form-control" placeholder="Enter GST No" />
 
                         </div>
                       </div>
@@ -51,8 +51,8 @@ function AddPayment() {
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Name</label>
-                          <input type="text" className="form-control" placeholder="Enter your Name" />
+                          <label >Customer Name</label>
+                          <input type="text" className="form-control" placeholder="Enter Customer Name" />
 
                         </div>
                       </div>

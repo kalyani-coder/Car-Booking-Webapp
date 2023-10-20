@@ -319,7 +319,7 @@ body{
 /* Add this media query to keep the sidebar open on larger screens */
 @media (min-width: 769px) {
   .sidebar {
-    width: 280px; /* Set the width to your desired width */
+    width: 300px; /* Set the width to your desired width */
   }
   .sidebar.open {
     width: 220px; /* Keep the width fixed when open */
