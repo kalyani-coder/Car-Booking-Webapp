@@ -49,6 +49,9 @@ const CustomerInquiry = () => {
       days: formData.totaldays,
       hours: formData.hours,
       vehicle: formData.vehicle,
+      address:formData.address,
+      time1:formData.time1,
+      totaldays: formData.totaldays,
     };
 
     // Check if all fields are filled

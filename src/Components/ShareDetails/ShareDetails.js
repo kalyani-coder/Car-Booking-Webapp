@@ -38,7 +38,7 @@ const ShareDetails = () => {
     // Map form field names to API field names
     const apiData = {
       vehicle: formData.vehicle,
-      // vehiclenumber: formData.vehiclenumber,
+      vehiclenumber: formData.vehiclenumber,
       triptype: formData.triptype,
       subtype: formData.subtype,
       pickup: formData.pickup,
@@ -50,7 +50,7 @@ const ShareDetails = () => {
       drivername: formData.drivername,
       drivermail: formData.drivermail,
       mobileno: formData.mobileno,
-      // driveraddress: formData.driveraddress,
+      driveraddress: formData.driveraddress,
     };
 
     // Check if all fields are filled
