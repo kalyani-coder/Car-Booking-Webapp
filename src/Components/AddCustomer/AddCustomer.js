@@ -22,9 +22,48 @@ const AddCustomer = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form data:", formData);
+    if (
+      formData.customername.trim() === "" ||
+      formData.companyname.trim() === "" ||
+      formData.gstno.trim() === "" ||
+      formData.mobileno.trim() === "" ||
+      formData.email.trim() === "" ||
+      formData.address.trim() === ""
+    ) {
+      alert("All fields are required.");
+      return;
+    }
+    try {
+      const requestBody = {
+        Cus_name: formData.customername,
+        company_name: formData.companyname,
+        gst_no: formData.gstno,
+        Cus_Mobile: formData.mobileno,
+        Cus_Email: formData.email,
+        address: formData.address,
+      };
+
+  
+      const response = await fetch("http://localhost:7000/api/add-customers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        alert("Data added successfully!");
+        setFormData(initialFormData); // Clear the form fields
+      } else {
+        alert("Failed to add data. Please try again.");
+      }
+    } catch (error) {
+      console.error("API request error:", error);
+      alert("Failed to add data. Please try again.");
+    }
   };
 
   return (
