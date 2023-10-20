@@ -8,7 +8,7 @@ import Sidebar from '../Sidebar/Sidebar';
 const ShareDetails = () => {
   const initialFormData = {
     vehicle: '',
-    vehiclenumber:'',
+    vehiclenumber: '',
     triptype: '',
     subtype: '',
     pickup: '',
@@ -20,10 +20,11 @@ const ShareDetails = () => {
     drivername: '',
     drivermail: '',
     mobileno: '',
-    driveraddress:''
+    driveraddress: ''
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [error, setError] = useState('');
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,21 +34,70 @@ const ShareDetails = () => {
     }));
   };
 
-  const handleShare = (event) => {
-    event.preventDefault();
-    console.log('form data:', formData);
+  const handleShare = async () => {
+    // Map form field names to API field names
+    const apiData = {
+      vehicle: formData.vehicle,
+      vehiclenumber: formData.vehiclenumber,
+      triptype: formData.triptype,
+      subtype: formData.subtype,
+      pickup: formData.pickup,
+      date: formData.date,
+      time: formData.time,
+      Dropoff: formData.dropoff,
+      date1: formData.date1,
+      time1: formData.time1,
+      drivername: formData.drivername,
+      drivermail: formData.drivermail,
+      mobileno: formData.mobileno,
+      driveraddress: formData.driveraddress,
+    };
+
+    // Check if all fields are filled
+    for (const key in apiData) {
+      if (apiData[key] === '') {
+        setError('All fields are required.');
+        return;
+      }
+    }
+
+    // Reset error if all fields are filled
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:7000/api/share-details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiData),
+      });
+
+      if (response.ok) {
+        alert('Data saved successfully!');
+        setFormData(initialFormData); // Reset the form
+      } else {
+        alert('Failed to save data. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to save data. Please try again.');
+    }
   };
 
   return (
     <>
       <Sidebar />
       <div className='share-details-container'>
+        {error && <p className="text-red-500">{error}</p>}
         <div className="share-details-form">
         <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Share Details</h2>
           <div className="share-details-row">
             <div className="share-details-column">
+
               <div className="share-details-form-group">
-              <label htmlFor="vehicle" className="share-details-label">
+
+                <label htmlFor="vehicle" className="share-details-label">
                   Vehicle:
                 </label>
                 <select
@@ -80,7 +130,7 @@ const ShareDetails = () => {
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-              <label htmlFor="vehiclenumber" className="share-details-label">
+                <label htmlFor="vehiclenumber" className="share-details-label">
                   Vehicle Number:
                 </label>
                 <input
@@ -190,7 +240,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="date1" className="share-details-label">
-                   Dropoff Date:
+                  Dropoff Date:
                 </label>
                 <input
                   type="date"
@@ -222,7 +272,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="time1" className="share-details-label">
-                   Dropoff Time:
+                  Dropoff Time:
                 </label>
                 <input
                   type="time"
@@ -289,7 +339,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="driveraddress" className="share-details-label">
-                Driver Address:
+                  Driver Address:
                 </label>
                 <input
                   type="text"

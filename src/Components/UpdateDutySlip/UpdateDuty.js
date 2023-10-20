@@ -52,10 +52,70 @@ const UpdateDuty = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (event) => {
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log('Form data:', formData);
+   
+  // };
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form data:', formData);
-    // Additional logic for form submission can be added here
+
+    // Check if all fields are filled
+    const requiredFields = [
+      'companyname',
+      'dutyslipno',
+      'reportingaddress',
+      'date',
+      'name',
+      'vehicle',
+      'vehiclenumber',
+      'from',
+      'to',
+      'closingkm',
+      'closingtime',
+      'startingkm',
+      'startingtime',
+      'totalkm',
+      'totalhour',
+      'title',
+      'amount',
+      'extrakm',
+      'amount1',
+      'extrahour',
+      'amount2',
+      'totalamount',
+      'advanceamount',
+      'paymentmethod',
+    ];
+
+    if (requiredFields.some((field) => !formData[field])) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    // Prepare the data to be sent to the API
+    const data = { ...formData };
+
+    try {
+      // Send the data to the API
+      const response = await fetch('http://localhost:7000/api/update-duty', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert('Data added successfully!');
+        setFormData(initialFormData); // Reset the form
+      } else {
+        alert('Failed to add data. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to add data. Please try again.');
+    }
   };
 
   // Return JSX representing the component structure
@@ -336,7 +396,7 @@ const UpdateDuty = () => {
                   name="extrakm"
                   placeholder="Extra KM"
                   onChange={handleChange}
-                  value={formData.amount2}
+                  value={formData.extrakm}
                 /></div>
               <div>
                 <label htmlFor="amount2" className="update-duty-form-label">
@@ -421,7 +481,7 @@ const UpdateDuty = () => {
           <button type="button" className="btn btn-save" onClick={handleSubmit}>
             Save
           </button>
-          <button type="button" className="btn btn-print" onClick={handleSubmit}>
+          <button type="button" className="btn btn-print">
             Print
           </button>
         </div>

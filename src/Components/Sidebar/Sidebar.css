@@ -88,7 +88,7 @@ body{
 }
 
 .sidebar .nav-list{
-  margin-top: 20px;
+  margin-top: -38px;
   height: 100%;
 }
 
@@ -367,4 +367,10 @@ body{
 .sidebar .sub-menu li a:hover {
   color: var(--color-default);
   transition: all ease 0.9s;
+}
+.car-heading{
+
+  font-weight: bold;
+  font-size: 30px;
+  color: #e4e9f7;
 }

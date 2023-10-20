@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Sidebar.css';
 import { FiMenu, FiX } from 'react-icons/fi'; // Import menu and close icons
 import { Link } from 'react-router-dom';
+import { AiFillCar } from 'react-icons/ai';
+
 
 const Sidebar = () => {
 
@@ -37,7 +39,16 @@ const Sidebar = () => {
   return (
     <>
 
-      <div class="sidebar">
+      <div className="sidebar" style={{ overflowY: 'auto' }}>
+
+        <div className='logo'>
+
+        <h3 className='car-heading'>Car Booking</h3>
+       
+
+        </div>
+
+
         <div class="logo_details">
           <i class="bx bxl-audible icon"></i>
           <div class="logo_name">Car Booking</div>
@@ -121,7 +132,7 @@ const Sidebar = () => {
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+            <i className="bx bx-user"></i>
               <span className="link_name">Customer Inquiry</span>
             </a>
             <ul className="sub-menu">
@@ -144,13 +155,44 @@ const Sidebar = () => {
             </ul>
           </li>
 
-          {/* trip details  */}
+
+          {/* Trip */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Trip </span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/addtrip'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">Add Trip</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <Link to={'/viewtrip'}>
+                  <i className="bx bx-user"></i>
+                  <span className="link_name">View Trip</span>
+                  </Link>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+
+           {/* Allocate Trip */}
 
 
           <li className="has-submenu">
             <a>
               <i className="bx bx-user"></i>
-              <span className="link_name">Trip Details</span>
+              <span className="link_name">Allocate Trip</span>
             </a>
             <ul className="sub-menu">
               <li>
@@ -163,8 +205,10 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
+                  <Link to={'/viewallocatetrip'}>
                   <i className="bx bx-user"></i>
-                  <span className="link_name">View Trip Details</span>
+                  <span className="link_name">View Allocate Trip </span>
+                  </Link>
                 </a>
               </li>
             </ul>
@@ -332,50 +376,13 @@ const Sidebar = () => {
           </li>
 
 
-
-          <li>
-            <a href="#">
-              <i class="bx bx-chat"></i>
-              <span class="link_name">Message</span>
-            </a>
-            <span class="tooltip">Message</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-pie-chart-alt-2"></i>
-              <span class="link_name">Analytics</span>
-            </a>
-            <span class="tooltip">Analytics</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-folder"></i>
-              <span class="link_name">File Manger</span>
-            </a>
-            <span class="tooltip">File Manger</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-cart-alt"></i>
-              <span class="link_name">Order</span>
-            </a>
-            <span class="tooltip">Order</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="bx bx-cog"></i>
-              <span class="link_name">Settings</span>
-            </a>
-            <span class="tooltip">Settings</span>
-          </li>
-
-          <li class="profile">
+          {/* <li class="profile">
             <div class="profile_details">
               <div class="profile_content">
               </div>
             </div>
             <i class="bx bx-log-out" id="log_out"></i>
-          </li>
+          </li> */}
 
           {/* for addign profile and logout button  */}
 

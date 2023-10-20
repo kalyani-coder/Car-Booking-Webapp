@@ -30,6 +30,8 @@ const TripDetails = require('./src/routes/TripDetails')
 const UpdateDuty = require('./src/routes/UpdateDuty')
 const NewGetDetailsFromDriver = require('./src/routes/GetDetailsfromDriver')
 const NewAddPaymentSchema = require('./src/routes/AddPayment')
+const AddVenders = require('./src/routes/AddVenders')
+const AddCustomer = require('./src/routes/AddCustomer')
 
 
 // define here api path 
@@ -40,7 +42,8 @@ apiRouter.use('/trip-details' , TripDetails)
 apiRouter.use('/update-duty' , UpdateDuty)
 apiRouter.use('/getDetails-fromDriver' , NewGetDetailsFromDriver)
 apiRouter.use('/payment-details' , NewAddPaymentSchema)
-
+apiRouter.use('/add-venders' , AddVenders)
+apiRouter.use('/add-customers' , AddCustomer)
 
 
 // handle here all api routes 
