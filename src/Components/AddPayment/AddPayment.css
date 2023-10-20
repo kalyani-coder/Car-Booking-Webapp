@@ -3,6 +3,8 @@
 /* Overall container */
 .add-payment-container {
     display: flex;
+    margin-left: 300px; /* Leave 300px on the left for the sidebar */
+
   }
   
   /* Sidebar styling (assuming a fixed width of 300px) */
@@ -15,7 +17,6 @@
   .add-payment-form-body {
     flex: 1; /* Take the remaining space */
     padding: 20px;
-    margin-left: 300px; /* Leave 300px on the left for the sidebar */
   }
   
   /* Card styling */
