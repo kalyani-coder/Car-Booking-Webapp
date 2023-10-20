@@ -5,13 +5,13 @@ import Sidebar from '../Sidebar/Sidebar';
 
 function VendorInvoiceMonthly() {
   const [formData, setFormData] = useState({
-    tripid:'',
-    invoiceno:'',
+    tripid: '',
+    invoiceno: '',
     companyName: '',
-    gstno:'',
+    gstno: '',
     companyAddress: '',
-    mail:'',
-    date:'',
+    mail: '',
+    date: '',
     contactno: '',
     to: '',
     customerName: '',
@@ -24,11 +24,11 @@ function VendorInvoiceMonthly() {
     cgst: '',
     sgst: '',
     totalAmount: '',
-    bankname:'',
-    branch:'',
-    accountNumber:'',
-    ifsccode:'',
-    micrcode:''
+    bankname: '',
+    branch: '',
+    accountNumber: '',
+    ifsccode: '',
+    micrcode: ''
   });
 
   const invoiceItems = [
@@ -50,7 +50,7 @@ function VendorInvoiceMonthly() {
   };
   const handlePrint = () => {
     setShowInvoiceData(true);
-    window.print(); 
+    window.print();
   };
 
   const handleGenerate = () => {
@@ -58,103 +58,119 @@ function VendorInvoiceMonthly() {
 
   return (
     <>
-    <Sidebar/>
-    
-    <div className="container">
-      <div className="form">
-  <div className=" pt-4  grid-gap-2  col-6">
-  <label htmlFor="tripid" className="form-label">Trip Id:</label>
-  <input className="form-control" type="text" id="tripid"/>
-  <label htmlFor="companyname" className="form-label">Company Name:</label>
-  <input className="form-control" type="text" id="companyname"/>
-  <label htmlFor="companyaddress" className="form-label">Company Address:</label>
-  <input className="form-control" type="text" id="companyaddress"/>
-  <label htmlFor="date" className="form-label">Date</label>
-  <input className="form-control" type="text" id="date"/>
-  <div className="to-design ">
-   <label>Invoice To :</label>
-  </div>
-  </div>
-  <div className=" pt-4  grid-gap-2  col-6">
-  <label htmlFor="invoiceno" className="form-label">Invoice No:</label>
-  <input className="form-control" type="text" id="gstno"/>
-  <label htmlFor="gstno" className="form-label">GST No</label>
-  <input className="form-control" type="text" id="gstno"/>
-  <label htmlFor="mail" className="form-label">Mail</label>
-  <input className="form-control" type="text" id="mail"/>
-  <label htmlFor="contactno" className="form-label">Contact No</label>
-  <input className="form-control" type="text" id="contactno"/>
-  </div>
-  </div>
-  <div className="form">
-  <div className="   grid-gap-2  col-6">
-  <label htmlFor="customername" className="form-label">Customer Name:</label>
-  <input className="form-control" type="text" id="customername"/>
-  <label htmlFor="gastno" className="form-label">GST No:</label>
-  <input className="form-control" type="text" id="gstno"/>
-  </div>
-  <div className="  mb-2 grid-gap-2  col-6">
-  <label htmlFor="customeraddress" className="form-label">Customer Address:</label>
-  <input className="form-control" type="text" id="address"/>
-  <label htmlFor="contactno" className="form-label">Contact No</label>
-  <input className="form-control" type="text" id="contactno"/>
-  </div>
-  </div>
-  <div>
-  <table className="min-w-full">
-        <thead>
-          <tr>
-            <th className="border px-4 py-2">Description</th>
-            <th className="border px-4 py-2">Kms</th>
-            <th className="border px-4 py-2">Amount</th>
-            <th className="border px-4 py-2">CGST (2.5%)</th>
-            <th className="border px-4 py-2">SGST (2.5%)</th>
-            <th className="border px-4 py-2">Total Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {invoiceItems.map((item, index) => (
-            <tr key={index}>
-              <td className="border px-4 py-2">{item.description}</td>
-              <td className="border px-4 py-2">{item.kms}</td>
-              <td className="border px-4 py-2">{item.amount}</td>
-              <td className="border px-4 py-2">{item.cgst}</td>
-              <td className="border px-4 py-2">{item.sgst}</td>
-              <td className="border px-4 py-2">{item.totalAmount}</td>
-     </tr>
-          ))}
-           
-        </tbody>
-      </table>
-      <div>
-        <label>Bank Details:</label>
-      </div>
-      <div className="form">
-  <div className="   grid-gap-2  col-6">
-  <label htmlFor="bankname" className="form-label">Bank Name:</label>
-  <input className="form-control" type="text" id="bankname"/>
-  <label htmlFor="acnumber" className="form-label">Account Number:</label>
-  <input className="form-control" type="text" id="acnumber"/>
-  <label htmlFor="ifsccode" className="form-label">IFSC Code:</label>
-  <input className="form-control" type="text" id="ifsccode"/>
-    </div>
-    <div className="grid-gap-2 col-6">
-    <label htmlFor="branchname" className="form-label">Branch Name:</label>
-  <input className="form-control" type="text" id="branchname"/>
-  <label htmlFor="acholdername" className="form-label">Account Holder Name:</label>
-  <input className="form-control" type="text" id="acholdername"/>
-  <label htmlFor="micrcode" className="form-label">MICR Code:</label>
-  <input className="form-control" type="text" id="micrcode"/>
-    </div>
-  </div>
-  <button type="button" className="btn btn-danger" onClick={handleGenerate}>
-         Generate
-     </button>
-      </div>
-  </div>
+      <Sidebar />
 
-  </>
- 
+      <div className="container-vendor-invoice-monthly">
+        <div className="form-vendor-invoice-monthly">
+          <div className=" pt-4  grid-gap-2  col-6">
+            {/* <label htmlFor="tripid" className="form-label">Trip Id:</label> */}
+            {/* <input className="form-control-vendor-invoice-monthly" type="text" id="tripid" /> */}
+            <label htmlFor="companyname" className="form-label">Company Name:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="companyname" />
+            <label htmlFor="companyaddress" className="form-label">Company Address:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="companyaddress" />
+            <label htmlFor="date" className="form-label">Date</label>
+            <input className="form-control-vendor-invoice-monthly" type="date" id="date" />
+            <br />
+            <label htmlFor="contactno" className="form-label">Contact No</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="contactno" />
+          </div>
+          <div className=" pt-4  grid-gap-2  col-6">
+            <label htmlFor="invoiceno" className="form-label">Invoice No:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="gstno" />
+            <label htmlFor="gstno" className="form-label">GST No</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="gstno" />
+            <label htmlFor="mail" className="form-label">Mail</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="mail" />
 
-)};
+
+
+
+          </div>
+        </div>
+
+
+        <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "5px" }}>Invoice To :</h2>
+
+        <div className="form-vendor-invoice-monthly">
+
+
+          <div className="   grid-gap-2  col-6">
+            <label htmlFor="customername" className="form-label">Vendor Name:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="customername" />
+            <label htmlFor="gastno" className="form-label">GST No:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="gstno" />
+          </div>
+          <div className="  mb-2 grid-gap-2  col-6">
+            <label htmlFor="customeraddress" className="form-label">Vendor Address:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="address" />
+            <label htmlFor="contactno" className="form-label">Contact No</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" id="contactno" />
+          </div>
+        </div>
+        <div>
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Kms</th>
+                <th>Amount</th>
+                <th>CGST</th>
+                <th>SGST</th>
+                <th>Total Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td>Item 1</td>
+                <td>100</td>
+                <td>50</td>
+                <td>2.5%</td>
+                <td>2.5%</td>
+                <td>55</td>
+              </tr>
+              <tr>
+                <td>Item 2</td>
+                <td>200</td>
+                <td>75</td>
+                <td>3.75%</td>
+                <td>3.75%</td>
+                <td>82.5</td>
+              </tr>
+
+            </tbody>
+          </table>
+          <div>
+            <label>Bank Details:</label>
+          </div>
+          <div className="form-vendor-invoice-monthly">
+            <div className="   grid-gap-2  col-6">
+              <label htmlFor="bankname" className="form-label">Bank Name:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" id="bankname" />
+              <label htmlFor="acnumber" className="form-label">Account Number:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" id="acnumber" />
+              <label htmlFor="ifsccode" className="form-label">IFSC Code:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" id="ifsccode" />
+            </div>
+            <div className="grid-gap-2 col-6">
+              <label htmlFor="branchname" className="form-label">Branch Name:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" id="branchname" />
+              <label htmlFor="acholdername" className="form-label">Account Holder Name:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" id="acholdername" />
+              <label htmlFor="micrcode" className="form-label">MICR Code:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" id="micrcode" />
+            </div>
+          </div>
+          <button type="button-vendor" className="btn btn-danger" onClick={handleGenerate}>
+            Generate
+          </button>
+        </div>
+      </div>
+
+    </>
+
+
+  )
+};
 export default VendorInvoiceMonthly;
