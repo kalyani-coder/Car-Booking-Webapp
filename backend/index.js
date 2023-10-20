@@ -32,6 +32,7 @@ const NewGetDetailsFromDriver = require('./src/routes/GetDetailsfromDriver')
 const NewAddPaymentSchema = require('./src/routes/AddPayment')
 const AddVenders = require('./src/routes/AddVenders')
 const AddCustomers = require('./src/routes/AddCustomer')
+const addTrip = require('./src/routes/AddTrip')
 
 
 
@@ -45,6 +46,7 @@ apiRouter.use('/getDetails-fromDriver' , NewGetDetailsFromDriver)
 apiRouter.use('/payment-details' , NewAddPaymentSchema)
 apiRouter.use('/add-venders' , AddVenders)
 apiRouter.use('/add-customers' , AddCustomers)
+apiRouter.use('/add-trip' , addTrip)
 
 
 
