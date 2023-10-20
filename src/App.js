@@ -18,9 +18,9 @@ import VendorInvoiceMonthly from './Components/VendorInvoiceMonthly/VendorInvoic
 import Signup from './Components/SignUp/SignUp';
 import AddCustomer from './Components/AddCustomer/AddCustomer';
 import AddVendor from './Components/AddVendor/AddVendor';
-import ViewCustomer from './Components/ViewCustomer';
-import ViewVendor from './Components/ViewVendor';
-import ViewCustomerInquiry from './Components/ViewCustomerInquiry';
+import ViewCustomer from './Components/AddCustomer/ViewCustomer';
+import ViewVendor from './Components/AddVendor/ViewVendor';
+import ViewCustomerInquiry from './Components/CustomerInquiry/ViewCustomerInquiry';
 
 
 
