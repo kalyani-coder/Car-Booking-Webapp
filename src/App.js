@@ -21,6 +21,9 @@ import AddVendor from './Components/AddVendor/AddVendor';
 import ViewCustomer from './Components/AddCustomer/ViewCustomer';
 import ViewVendor from './Components/AddVendor/ViewVendor';
 import ViewCustomerInquiry from './Components/CustomerInquiry/ViewCustomerInquiry';
+import AddTrip from './Components/Trip/Add Trip';
+import ViewTrip from './Components/Trip/ViewTrip';
+import ViewAllocateTrip from './Components/ShareDetails/ViewAllocateTrip';
 
 
 
@@ -54,6 +57,9 @@ function App() {
     <Route path='/viewcustomer' element={<ViewCustomer/>} />
     <Route path='/viewvendor' element={<ViewVendor/>} />
     <Route path='/viewcustomerinquiry' element={<ViewCustomerInquiry/>} />
+    <Route path='/addtrip' element={<AddTrip/>} />
+    <Route path='/viewtrip' element={<ViewTrip/>} />
+    <Route path='/viewallocatetrip' element={<ViewAllocateTrip/>} />
 
 
   </Routes>
