@@ -43,6 +43,7 @@ const CustomerInquiry = () => {
     
       <div className="main-container">
         <div className="form-container">
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Customer Enquiry</h2>
           <div className="form-group">
             <label htmlFor="customerid" className="form-label">
               Customer Id:

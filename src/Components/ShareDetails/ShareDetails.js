@@ -43,6 +43,7 @@ const ShareDetails = () => {
       <Sidebar />
       <div className='share-details-container'>
         <div className="share-details-form">
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Share Details</h2>
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">

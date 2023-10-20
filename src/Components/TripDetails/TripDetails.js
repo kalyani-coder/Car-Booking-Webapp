@@ -25,7 +25,11 @@ function TripDetailsPage() {
     <>
       <Sidebar />
       <div className="trip-details-container">
+      {/* <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Allocate Trip Details</h2> */}
+    <span className='aaaaaa text-center'>Allocate Trip Details</span>
+        
         <div className="trip-details-section">
+        {/* <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Trip Details</h2> */}
           <h2 className="trip-details-heading">Trip Details</h2>
           <div className="trip-details-form">
             <div className="pt-4 mb-2 grid-gap-2">
@@ -124,17 +128,31 @@ function TripDetailsPage() {
               <input className="driver-details-input" type="text" id="driveraddress" placeholder="Driver Address" />
             </div>
           </div>
-        </div>
+         
+          
+          <div className="custom-button-container text-center mt-3">
+       
       </div>
-
-      <div className="custom-button-container text-center mt-3">
-        <button className="custom-btn custom-print-btn" onClick={() => window.print()}>
+      <button className="custom-btn custom-print-btn" onClick={() => window.print()}>
           Print
         </button>
         <button className="custom-btn custom-allocate-btn" onClick={() => alert('Trip Allocated')}>
           Allocate
         </button>
+        </div>
+        
+          {/* <div className="button">
+            <button type="button" className="custom-btn custom-print-btn" onClick={() => alert}>
+              Print
+            </button>
+            <button type="button" className="custom-btn custom-print-btn mx-2" onClick={() => alert('Add')}>
+              Allocate
+            </button>
+          </div> */}
+          
       </div>
+
+      
     </>
   );
 }

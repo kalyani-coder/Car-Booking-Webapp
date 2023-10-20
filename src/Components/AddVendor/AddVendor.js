@@ -34,6 +34,7 @@ const AddVendor = () => {
     
       <div className="vendor-main-container">
         <div className="vendor-form-container">
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor</h2>
           <div className="vendor-form-group">
             <label htmlFor="vendorname" className="form-label">
               Vendor Name:

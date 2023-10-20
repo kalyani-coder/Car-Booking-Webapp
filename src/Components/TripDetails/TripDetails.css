@@ -8,6 +8,7 @@
     padding: 20px;
     margin-left: 300px;
     background-color: skyblue;
+    height: 100vh;
   }
   
   /* Styling for Trip Details Section */
@@ -29,6 +30,8 @@
   .driver-details-heading {
     color: #333;
     margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
   
   /* Styling for Forms */
@@ -92,5 +95,14 @@
     padding: 20px;
     margin-left: 10px;
     margin-top: 50px;
+    
   }
   }
+
+  .aaaaaa {
+    margin-top: -22px;
+    color: black;
+    font-size: 35px;
+    margin-bottom: 28px;
+    margin-left: 343px;
+}

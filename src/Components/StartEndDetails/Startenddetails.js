@@ -39,6 +39,7 @@ const StartEndDetails = () => {
     <>
       <Sidebar />
       <div className="start-end-details-container">
+      <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Get Start And End Details</h2>
         <div className="start-end-details-form">
           <div className="start-end-details-row">
             <div className="start-end-details-column">
