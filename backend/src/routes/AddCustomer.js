@@ -38,7 +38,7 @@ router.post('/' , async(req, res) => {
 
     try{
         const AddVenders = new NewAddCustomer(req.body)
-        const NewAddCustomer = await AddVenders.save()
+        await AddVenders.save()
         res.status(201).json({message : "Data post Successfully"})
 
     }catch(e){
