@@ -19,7 +19,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Company Name</label>
-                          <input type="text" className="form-control" placeholder="Enter your Company name" />
+                          <input type="text" className="form-control" placeholder="Enter Company name" />
 
                         </div>
                       </div>
@@ -36,14 +36,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Reporting Address</label>
-                          <input type="text" className="form-control" placeholder="Enter your Reporting Address" />
+                          <input type="text" className="form-control" placeholder="Enter Reporting Address" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Date</label>
-                          <input type="date" className="form-control" placeholder="Enter your Date" />
+                          <input type="date" className="form-control" placeholder="Enter Date" />
 
                         </div>
                       </div>
@@ -59,7 +59,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Vehicle Number</label>
-                          <input type="number" className="form-control" placeholder="Enter your Vehicle Number" />
+                          <input type="number" className="form-control" placeholder="Enter  Vehicle Number" />
 
                         </div>
                       </div>
@@ -98,14 +98,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >From</label>
-                          <input type="text" className="form-control" placeholder="Enter your From" />
+                          <input type="text" className="form-control" placeholder="Enter Boarding Location" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >To</label>
-                          <input type="text" className="form-control" placeholder="Enter your To" />
+                          <input type="text" className="form-control" placeholder="Enter Destination Location" />
 
                         </div>
                       </div>
@@ -116,14 +116,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Closing Kms</label>
-                          <input type="text" className="form-control" placeholder="Enter your Closing Kms" />
+                          <input type="text" className="form-control" placeholder="Enter  Closing Kms" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Closing Time</label>
-                          <input type="Time" className="form-control" placeholder="Enter your Closing Time" />
+                          <input type="Time" className="form-control" placeholder="Enter  Closing Time" />
 
                         </div>
                       </div>
@@ -134,14 +134,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Starting Kms</label>
-                          <input type="text" className="form-control" placeholder="Enter your Starting Kms" />
+                          <input type="text" className="form-control" placeholder="Enter  Starting Kms" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Reporting Kms</label>
-                          <input type="Text" className="form-control" placeholder="Enter your Reporting Kms" />
+                          <label >Starting Time</label>
+                          <input type="time" className="form-control" placeholder="Enter Starting Time" />
 
                         </div>
                       </div>
@@ -152,14 +152,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Kms</label>
-                          <input type="text" className="form-control" placeholder="Enter your Total Kms" />
+                          <input type="text" className="form-control" placeholder="Enter  Total Kms" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Hours</label>
-                          <input type="Text" className="form-control" placeholder="Enter your Total Hours" />
+                          <input type="Text" className="form-control" placeholder="Enter  Total Hours" />
 
                         </div>
                       </div>
@@ -169,15 +169,28 @@ function AddPayment() {
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >8 Hrs.  80Kms.@</label>
-                          <input type="text" className="form-control" placeholder="Enter your 8 Hrs.  80Kms.@" />
+                        <label>
+                Title:
+              </label>
+                <select
+                  className="form-control"
+                  name="title"
+                  id="title"
+                  // onChange={handleChange}
+                  // value={formData.title}
+                >
+                  <option value="">Title</option>
+                  <option value="One Day / 80km">One Day /80km</option>
+                  <option value="One Day / 300km">One Day /300km</option>
+                  {/* Add other vehicle options */}
+                </select>
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter your Amount" />
+                          <input type="text" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -188,14 +201,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Extra Kms</label>
-                          <input type="text" className="form-control" placeholder="Enter your Extra Kms" />
+                          <input type="text" className="form-control" placeholder="Enter  Extra Kms" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter your Amount" />
+                          <input type="text" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -206,38 +219,19 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Extra Hours</label>
-                          <input type="text" className="form-control" placeholder="Enter your Extra Kms" />
+                          <input type="text" className="form-control" placeholder="Enter  Extra Kms" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter your Amount" />
+                          <input type="text" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
                     </div>
 
-
-
-
-                    <div className="row g-2">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >1 Day 300 kms</label>
-                          <input type="text" className="form-control" placeholder="Enter your 1 Day 300 kms" />
-
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter your Amount" />
-
-                        </div>
-                      </div>
-                    </div>
 
 
 
@@ -245,14 +239,46 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter your Total Amount" />
+                          <input type="text" className="form-control" placeholder="Enter Total Amount" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Advance Payment</label>
-                          <input type="number" className="form-control" placeholder="Enter your Advance Payment" />
+                          <label > AQdvanced Amount</label>
+                          <input type="text" className="form-control" placeholder="Enter Advance Amount" />
+
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div className="row g-2">
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Remaining Amount</label>
+                          <input type="text" className="form-control" placeholder="Enter  Remaining Amount" />
+
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Payment Method</label>
+                <select
+                  className="form-control"
+                  name="paymentmethod"
+                  id="paymentmethod"
+                  // onChange={handleChange}
+                  // value={formData.paymentmethod}
+                >
+                  <option value="">Payment Method</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Google Pay">Google Pay</option>
+                  <option value="Paytm">Paytm</option>
+                  <option value="Phone Pay">Phone Pay</option>
+                </select>
 
                         </div>
                       </div>

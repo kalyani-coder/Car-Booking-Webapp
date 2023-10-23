@@ -17,32 +17,32 @@ function VendorPayment() {
   <div className="row g-2">
     <div className="col-md">
       <div className="form-group">
+      <label >Company Name</label>
+        <input type="text" className="form-control" placeholder="Enter Company Name" />
+
+      </div>
+    </div>
+    <div className="col-md">
+      <div className="form-group">
+      <label >GST No</label>
+        <input type="text" className="form-control"  placeholder="Enter GST No" />
+
+      </div>
+    </div>
+  </div>
+
+  <div className="row g-2">
+    <div className="col-md">
+      <div className="form-group">
       <label >Vendor Name</label>
-        <input type="text" className="form-control" placeholder="Enter your Vendor Name" />
+        <input type="text" className="form-control" placeholder="Enter Vendor Name" />
 
       </div>
     </div>
     <div className="col-md">
       <div className="form-group">
-      <label >Vendor Address</label>
-        <input type="text" className="form-control"  placeholder="Enter your Vendor Address" />
-
-      </div>
-    </div>
-  </div>
-
-  <div className="row g-2">
-    <div className="col-md">
-      <div className="form-group">
-      <label >Vendor Mail</label>
-        <input type="text" className="form-control" placeholder="Enter your Vendor Mail" />
-
-      </div>
-    </div>
-    <div className="col-md">
-      <div className="form-group">
-      <label >Vendor  Number</label>
-        <input type="text" className="form-control"  placeholder="Enter your Vendor Number" />
+      <label >Mobile Number</label>
+        <input type="text" className="form-control"  placeholder="Enter Mobile Number" />
 
       </div>
     </div>
@@ -50,8 +50,19 @@ function VendorPayment() {
   <div className="row g-2">
     <div className="col-md">
       <div className="form-group">
-      <label >Partial Payment</label>
-        <input type="text" className="form-control" placeholder="Enter your Partial Payment" />
+      <label >Payment</label>
+      <select
+                  className="form-control"
+                  name="title"
+                  id="title"
+                  // onChange={handleChange}
+                  // value={formData.title}
+                > 
+                <option value="Payment">Payment</option>
+                  <option value="Partial">Partial</option>
+                  <option value="Full Payment">Full Payment</option>
+                  {/* Add other vehicle options */}
+                </select>
 
       </div>
     </div>
@@ -68,31 +79,14 @@ function VendorPayment() {
     <div className="col-md">
       <div className="form-group">
       <label >TDS 1%</label>
-        <input type="text" className="form-control" placeholder="Enter your TDS 1%" />
+        <input type="text" className="form-control" placeholder="Enter  TDS 1% Amonut" />
 
       </div>
     </div>
     <div className="col-md">
       <div className="form-group">
-      <label >Amount</label>
-        <input type="text" className="form-control"  placeholder="Enter your Amount" />
-
-      </div>
-    </div>
-  </div>
-
-  <div className="row g-2">
-    <div className="col-md">
-      <div className="form-group">
-      <label >Total Amount</label>
-        <input type="text" className="form-control" placeholder="Enter your Total Amount" />
-
-      </div>
-    </div>
-    <div className="col-md">
-      <div className="form-group">
-      <label >Amount</label>
-        <input type="number" className="form-control"  placeholder="Enter your Amount" />
+      <label > Total Amount</label>
+        <input type="text" className="form-control"  placeholder="Enter total Amount" />
 
       </div>
     </div>
@@ -102,21 +96,37 @@ function VendorPayment() {
     <div className="col-md">
       <div className="form-group">
       <label >Paid Amount</label>
-        <input type="text" className="form-control" placeholder="Enter your Paid Amount" />
+        <input type="text" className="form-control" placeholder="Enter Paid Amount" />
 
       </div>
     </div>
     <div className="col-md">
       <div className="form-group">
-      <label >Amount</label>
-        <input type="text" className="form-control"  placeholder="Enter your Amount" />
+      <label >Remaining Amount</label>
+        <input type="text" className="form-control"  placeholder="Enter Remaining Amount" />
 
       </div>
     </div>
   </div>
+
+  
+  {/* </div> */}
   <div className="form-group">
   <label> Payment Method </label>
-  <input type="text" className="form-control"  placeholder="Enter your Payment Method" />
+  <select
+                  className="form-control"
+                  name="paymentmethod"
+                  id="paymentmethod"
+                  // onChange={handleChange}
+                  // value={formData.paymentmethod}
+                >
+                  <option value="">Payment Method</option>
+                  <option value="Bank Transfer">Bank Transfer</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Google Pay">Google Pay</option>
+                  <option value="Paytm">Paytm</option>
+                  <option value="Phone Pay">Phone Pay</option>
+                </select>
 
   </div>
   <br></br>
