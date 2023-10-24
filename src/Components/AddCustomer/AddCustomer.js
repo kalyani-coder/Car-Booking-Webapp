@@ -67,7 +67,7 @@ const AddCustomer = () => {
   };
 
   return (
-    <>~
+    <>
     <Sidebar />
     <div className="customer-Add-container">
     

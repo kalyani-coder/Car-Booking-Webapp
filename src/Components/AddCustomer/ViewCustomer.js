@@ -28,7 +28,7 @@ const ViewCustomer = () => {
       <div className="customer-Add-container">
         <div className="customer-main-container">
           <h1>Customers</h1>
-          {customers.map(customer => (
+          {customers.map((customer) => (
             <div key={customer._id} className="custom-card">
               <div className="custom-card-body">
                 <h5 className="custom-card-title">Customer Name: {customer.customer_Name}</h5>
@@ -39,13 +39,13 @@ const ViewCustomer = () => {
                   GST No: {customer.GST_No}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  Mobile: {customer.customer_Mobile}
+                  Mobile: {customer.Mobile}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  Email: {customer.customer_Email}
+                  Email: {customer.email} {/* Corrected field name */}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  Address: {customer.address}
+                  Address: {customer.address} {/* Corrected field name */}
                 </h6>
               </div>
             </div>
