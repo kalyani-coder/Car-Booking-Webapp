@@ -31,7 +31,7 @@ const AddRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="gstno" className="form-label">
-                  GST No.:
+                  GST No:
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -85,26 +85,25 @@ const AddRate = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="d-flex gap-2">
+                <div>
+                <div className="form-group">
                 <label htmlFor="title" className="form-label">
                   Title:
                 </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="text"
-                  id="title"
-                  name="title"
-                  placeholder="title"
-              
-                  required
-                />
+                <select class="rate-form-control" name="title" id="title"><option value="">
+                Title</option>
+                <option value="One Day / 80km">One Day /80km</option>
+                <option value="One Day / 300km">One Day /300km</option></select>
               </div>
-              <div className="form-group">
+                </div>
+                <div>
+                <div className="form-group">
                 <label htmlFor="rate" className="form-label">
                   Rate:
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="rate-form-control"
                   type="text"
                   id="rate"
                   name="rate"
@@ -113,6 +112,10 @@ const AddRate = () => {
                   required
                 />
               </div>
+                </div>
+              </div>
+              
+              
 
               <button
                 type="submit"
