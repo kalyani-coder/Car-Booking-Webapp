@@ -307,7 +307,7 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
-                  <Link to={'/'}>
+                  <Link to={'/vendorpayment'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">Vendor Payment</span>
                   </Link>
