@@ -17,7 +17,7 @@ const TripDetailsSchema = new mongoose.Schema({
     drivername: String,
     mail: String,
     mobileno: Number,
-    mobileno1: Number,
+    address: String,
     
 })
 
