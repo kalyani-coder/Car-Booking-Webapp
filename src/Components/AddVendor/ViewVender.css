@@ -22,4 +22,8 @@
     font-size: 1rem;
     margin-bottom: 4px;
   }
+  .vendorbutton{
+    margin-bottom: 0px !important;
+    padding-bottom: 0px;
+  }
   
