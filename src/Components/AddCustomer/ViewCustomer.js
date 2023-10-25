@@ -31,18 +31,18 @@ const ViewCustomer = () => {
           {customers.map((customer) => (
             <div key={customer._id} className="custom-card">
               <div className="custom-card-body">
-                <h5 className="custom-card-title">Customer Name: {customer.customer_Name}</h5>
+                <h5 className="custom-card-title">Customer Name: {customer.Cus_name}</h5>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  Company Name: {customer.company_Name}
+                  Company Name: {customer.company_name}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  GST No: {customer.GST_No}
+                  GST No: {customer.gst_no}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  Mobile: {customer.Mobile}
+                  Mobile: {customer.Cus_Mobile}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
-                  Email: {customer.email} {/* Corrected field name */}
+                  Email: {customer.Cus_Email} {/* Corrected field name */}
                 </h6>
                 <h6 className="custom-card-subtitle mb-2 text-muted">
                   Address: {customer.address} {/* Corrected field name */}

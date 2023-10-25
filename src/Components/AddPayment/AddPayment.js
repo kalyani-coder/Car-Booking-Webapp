@@ -245,7 +245,7 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label > AQdvanced Amount</label>
+                          <label > Advanced Amount</label>
                           <input type="text" className="form-control" placeholder="Enter Advance Amount" />
 
                         </div>
