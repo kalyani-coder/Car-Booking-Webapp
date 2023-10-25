@@ -31,11 +31,41 @@ const AddTrip = () => {
     }));
   };
 
+  
+
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
-  }
+    // Check if all fields in initialFormData are filled
+    if (Object.values(formData).some((value) => value === '')) {
+      alert('Please fill in all required fields.');
+      return;
+    }
 
-  
+    const data = { ...formData };
+
+    try {
+      // Send the data to the API
+      const response = await fetch('http://localhost:7000/api/add-trip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert('Data added successfully!');
+        setFormData(initialFormData); // Reset the form
+      } else {
+        alert('Failed to add data. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to add data. Please try again.');
+    }
+  };
+
 
   return (
     <>

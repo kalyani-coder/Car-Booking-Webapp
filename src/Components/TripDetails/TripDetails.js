@@ -57,7 +57,7 @@ function TripDetailsPage() {
       mobileno: tripDetails.mobileno,
       address: tripDetails.address,
     };
-console.log("sdfgbn", {apiData})
+    console.log("sdfgbn", { apiData })
     try {
       // Make the API request
       const response = await fetch('http://localhost:7000/api/trip-details', {

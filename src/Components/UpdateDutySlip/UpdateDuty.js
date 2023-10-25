@@ -14,7 +14,7 @@ const UpdateDuty = () => {
   // Initial form data state
   const initialFormData = {
     companyname: '',
-    gstno:'',
+    gstno: '',
     reportingaddress: '',
     date: '',
     name: '',
@@ -51,49 +51,17 @@ const UpdateDuty = () => {
     }));
   };
 
-  // Handle form submission
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log('Form data:', formData);
-   
+
+
   // };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Check if all fields are filled
-    const requiredFields = [
-      'companyname',
-      'gstno',
-      'reportingaddress',
-      'date',
-      'name',
-      'vehicle',
-      'vehiclenumber',
-      'from',
-      'to',
-      'closingkm',
-      'closingtime',
-      'startingkm',
-      'startingtime',
-      'totalkm',
-      'totalhour',
-      'title',
-      'amount',
-      'extrakm',
-      'amount1',
-      'extrahour',
-      'amount2',
-      'totalamount',
-      'advanceamount',
-      'paymentmethod',
-    ];
-
-    if (requiredFields.some((field) => !formData[field])) {
+    // Check if all fields in initialFormData are filled
+    if (Object.values(formData).some((value) => value === '')) {
       alert('Please fill in all required fields.');
       return;
     }
 
-    // Prepare the data to be sent to the API
     const data = { ...formData };
 
     try {
@@ -125,7 +93,7 @@ const UpdateDuty = () => {
 
       <div className="update-duty-container">
         <div className="update-duty-form">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Duty Slip</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Duty Slip</h2>
           <div className="form-group">
             <div className='d-flex gap-5'>
               <div>  <label htmlFor="companyname" className="update-duty-form-label">
@@ -274,17 +242,17 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.startingtime}
                 /></div>
-              <div> <label htmlFor="Closingkm" className="update-duty-form-label">
+              <div> <label htmlFor="closingkm" className="update-duty-form-label">
                 Closing KM:
               </label>
                 <input
                   className="update-duty-form-control"
                   type="text"
-                  id="Closingkm"
-                  name="Closingkm"
+                  id="closingkm"
+                  name="closingkm"
                   placeholder="Closing KM"
                   onChange={handleChange}
-                  value={formData.Closingkm}
+                  value={formData.closingkm}
                 /></div>
             </div>
             <div className='d-flex gap-5'>
@@ -299,9 +267,9 @@ const UpdateDuty = () => {
                   name="closingtime"
                   placeholder="Closingtime Time"
                   onChange={handleChange}
-                  value={formData.Closingtime}
+                  value={formData.closingtime}
                 />
-                
+
               </div>
               <div>  <label htmlFor="totalkm" className="update-duty-form-label">
                 Total KM:
@@ -332,8 +300,8 @@ const UpdateDuty = () => {
                 /></div>
               <div>
                 <label htmlFor="amount" className="update-duty-form-label">
-              Amount:
-              </label>
+                  Amount:
+                </label>
                 <input
                   className="update-duty-form-control"
                   type="text"
@@ -388,7 +356,7 @@ const UpdateDuty = () => {
             </div>
             <div className='d-flex gap-5'>
               <div> <label htmlFor="extrakm" className="update-duty-form-label">
-              Extra KM:
+                Extra KM:
               </label>
                 <input
                   className="update-duty-form-control"

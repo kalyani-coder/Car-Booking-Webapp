@@ -21,13 +21,13 @@ const UpdateDutySchema = new mongoose.Schema({
     totalkm: String,
     totalhour: String,
     title:String,
-    amount:String,
+    amount:Number,
     extrakm:String,
-    amount1:String,
+    amount1:Number,
     extrahour:String,
-    amount2:String,
-    totalamount:String,
-    advanceamount:String,
+    amount2:Number,
+    totalamount:Number,
+    advanceamount:Number,
     paymentmethod :String,
     
 })
