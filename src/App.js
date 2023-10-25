@@ -24,7 +24,7 @@ import AddRate from './Components/AddRate/AddRate';
 import ViewCustomerInquiry from './Components/CustomerInquiry/ViewCustomerInquiry';
 import AddTrip from './Components/Trip/Add Trip';
 import ViewTrip from './Components/Trip/ViewTrip';
-import ViewAllocateTrip from './Components/ShareDetails/ViewAllocateTrip';
+import ViewShareDetails from './Components/ShareDetails/ViewShareDetails';
 
 
 
@@ -42,6 +42,7 @@ function App() {
     <Route path='/signup' element={< Signup/>} />
     <Route path='/home' element={<Home/>} />
     <Route path='/sharedetails' element={<ShareDetails/>}/>
+    <Route path='/viewsharedetails' element={<ViewShareDetails/>} />
     <Route path='/startenddetails' element={<Startenddetails/>}/>
     <Route path='/tripdetails' element={<TripDetails/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
@@ -61,7 +62,6 @@ function App() {
     <Route path='/viewcustomerinquiry' element={<ViewCustomerInquiry/>} />
     <Route path='/addtrip' element={<AddTrip/>} />
     <Route path='/viewtrip' element={<ViewTrip/>} />
-    <Route path='/viewallocatetrip' element={<ViewAllocateTrip/>} />
 
 
   </Routes>
