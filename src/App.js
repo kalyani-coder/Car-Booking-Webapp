@@ -3,7 +3,8 @@ import './App.css';
 import CustomerInquiry from './Components/CustomerInquiry/CustomerInquiry';
 import ShareDetails from './Components/ShareDetails/ShareDetails';
 import Startenddetails from './Components/StartEndDetails/Startenddetails';
-import TripDetails from './Components/TripDetails/TripDetails';
+import AllocateTrip from './Components/AllocateTrip/AllocateTrip';
+import ViewAllocateTrip from './Components/AllocateTrip/ViewAllocateTrip';
 import UpdateDuty from './Components/UpdateDutySlip/UpdateDuty';
 import AddPayment from './Components/AddPayment/AddPayment'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
@@ -45,7 +46,8 @@ function App() {
     <Route path='/sharedetails' element={<ShareDetails/>}/>
     <Route path='/viewsharedetails' element={<ViewShareDetails/>} />
     <Route path='/startenddetails' element={<Startenddetails/>}/>
-    <Route path='/tripdetails' element={<TripDetails/>} />
+    <Route path='/allocatetrip' element={<AllocateTrip/>} />
+    <Route path='/viewallocatetrip' element={<ViewAllocateTrip/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
     <Route path='/customerrate'  element={<CustomerRate/>}/>

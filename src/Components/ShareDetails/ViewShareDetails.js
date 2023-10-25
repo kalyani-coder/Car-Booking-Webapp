@@ -48,16 +48,18 @@ const ViewShareDetails = () => {
       <div className="share-details-container">
         <div className="share-details-main-container">
           <h1>Share Details</h1>
-          <div className="search-bar">
+          <div className="p-4 space-y-4">
             <input
               type="text"
               placeholder="Search by date"
+              className="w-full p-2 rounded border"
               value={searchDate}
               onChange={(e) => setSearchDate(e.target.value)}
             />
             <input
               type="text"
               placeholder="Search by driver name"
+              className="w-full p-2 rounded border"
               value={searchDriverName}
               onChange={(e) => setSearchDriverName(e.target.value)}
             />
@@ -65,25 +67,24 @@ const ViewShareDetails = () => {
           {error ? (
             <p>Error: {error}</p>
           ) : (
-            <div className="row">
+            <div className="grid grid-cols-3 gap-4">
               {filteredShareDetails.map((shareDetail) => (
-                <div key={shareDetail._id} className="col-4">
-                  <div className="card mb-3">
-                    <div className="card-body">
-                      <h5 className="card-title">Vehicle: {shareDetail.vehicle}</h5>
-                      <p className="card-text">Trip Type: {shareDetail.triptype}</p>
-                      <p className="card-text">Subtype: {shareDetail.subtype}</p>
-                      <p className="card-text">Pickup: {shareDetail.pickup}</p>
-                      <p className="card-text">Date: {shareDetail.date}</p>
-                      <p className="card-text">Time: {shareDetail.time}</p>
-                      <p className="card-text">Dropoff: {shareDetail.Dropoff}</p>
-                      <p className="card-text">Date1: {shareDetail.date1}</p>
-                      <p className="card-text">Time1: {shareDetail.time1}</p>
-                      <p className="card-text">Driver Name: {shareDetail.drivername}</p>
-                      <p className="card-text">Driver Email: {shareDetail.drivermail}</p>
-                      <p className="card-text">Mobile No: {shareDetail.mobileno}</p>
-                      <p className="card-text">Mobile No1: {shareDetail.mobilrno1}</p>
-                    </div>
+                <div key={shareDetail._id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                  <div className="p-4">
+                    <h5 className="font-semibold text-lg mb-2">Vehicle: {shareDetail.vehicle}</h5>
+                    <p className="mb-2">Trip Type: {shareDetail.triptype}</p>
+                    <p className="mb-2">Subtype: {shareDetail.subtype}</p>
+                    <p className="mb-2">Pickup: {shareDetail.pickup}</p>
+                    <p className="mb-2">Date: {shareDetail.date}</p>
+                    <p className="mb-2">Time: {shareDetail.time}</p>
+                    <p className="mb-2">Dropoff: {shareDetail.Dropoff}</p>
+                    <p className="mb-2">Date1: {shareDetail.date1}</p>
+                    <p className="mb-2">Time1: {shareDetail.time1}</p>
+                    <p className="mb-2">Driver Name: {shareDetail.drivername}</p>
+                    <p className="mb-2">Driver Email: {shareDetail.drivermail}</p>
+                    <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
+                    <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p>
+                    {/* Add other fields as needed */}
                   </div>
                 </div>
               ))}

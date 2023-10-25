@@ -197,7 +197,7 @@ const Sidebar = () => {
             <ul className="sub-menu">
               <li>
                 <a>
-                  <Link to={'/tripdetails'}>
+                  <Link to={'/allocatetrip'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">Allocate Trip</span>
                   </Link>

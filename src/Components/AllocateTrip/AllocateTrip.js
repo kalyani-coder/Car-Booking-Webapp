@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './TripDetails.css'; // Import the custom CSS
+import './AllocateTrip.css'; // Import the custom CSS
 import Sidebar from '../Sidebar/Sidebar';
 
 function TripDetailsPage() {
@@ -116,7 +116,7 @@ function TripDetailsPage() {
                     />
                   </div>
                   <div>
-                    <label htmlFor='time' className="trip-details-label">Pickup Time:</label>
+                    <label htmlFor='time' className="trip-details-label">Time:</label>
                     <input
                       type="time"
                       className="trip-details-input"
@@ -146,7 +146,7 @@ function TripDetailsPage() {
                     />
                   </div>
                   <div>
-                    <label htmlFor='time1' className="trip-details-label">Drop-off Time:</label>
+                    <label htmlFor='time1' className="trip-details-label"> Time:</label>
                     <input
                       type="time"
                       className="trip-details-input"
