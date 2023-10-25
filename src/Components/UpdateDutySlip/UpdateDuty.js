@@ -63,7 +63,7 @@ const UpdateDuty = () => {
     // Check if all fields are filled
     const requiredFields = [
       'companyname',
-      'dutyslipno',
+      'gstno',
       'reportingaddress',
       'date',
       'name',
@@ -140,7 +140,7 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.companyname}
                 /></div>
-              <div> <label htmlFor="dutyslipno" className="update-duty-form-label">
+              <div> <label htmlFor="gstno" className="update-duty-form-label">
                 GST No:
               </label>
                 <input
@@ -249,21 +249,21 @@ const UpdateDuty = () => {
                   value={formData.to}
                 /></div>
               <div>
-                <label htmlFor="closingkm" className="update-duty-form-label">
+                <label htmlFor="startingkm" className="update-duty-form-label">
                   Starting KM:
                 </label>
                 <input
                   className="update-duty-form-control"
                   type="text"
                   id="startingkm"
-                  name="startinggkm"
+                  name="startingkm"
                   placeholder="Starting KM"
                   onChange={handleChange}
                   value={formData.startingkm}
                 /></div>
             </div>
             <div className='d-flex gap-5'>
-              <div><label htmlFor="closingtime" className="update-duty-form-label">
+              <div><label htmlFor="startingtime" className="update-duty-form-label">
                 Starting Time:
               </label>
                 <input
@@ -274,7 +274,7 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.startingtime}
                 /></div>
-              <div> <label htmlFor="startingkm" className="update-duty-form-label">
+              <div> <label htmlFor="Closingkm" className="update-duty-form-label">
                 Closing KM:
               </label>
                 <input
@@ -289,7 +289,7 @@ const UpdateDuty = () => {
             </div>
             <div className='d-flex gap-5'>
               <div>
-                <label htmlFor="startingtime" className="update-duty-form-label">
+                <label htmlFor="closingtime" className="update-duty-form-label">
                   Closing Time:
                 </label>
                 <input
