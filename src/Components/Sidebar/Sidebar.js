@@ -71,6 +71,21 @@ const Sidebar = () => {
             </li>
           </ul>
         </li>
+         {/* Rate */}
+         <li className="has-submenu">
+          <a>
+            <i className="bx bx-user"></i>
+            <span className="link_name">Rate</span>
+          </a>
+          <ul className="sub-menu">
+            <li>
+              <Link to="/addrate">
+                <i className="bx bx-user"></i>
+                <span className="link_name">Add Rate</span>
+              </Link>
+            </li>
+          </ul>
+        </li>
 
         {/* Customer Inquiry */}
         <li className="has-submenu">
