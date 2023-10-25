@@ -19,7 +19,6 @@ const CustomerRate = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   
-  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
