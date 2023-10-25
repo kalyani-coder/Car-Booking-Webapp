@@ -16,7 +16,7 @@ function TripDetailsPage() {
     drivername: '',
     mail: '',
     mobileno: '',
-    mobileno1: '',
+    address: '',
   };
 
   const [tripDetails, setTripDetails] = useState(initialTripDetails);
@@ -55,9 +55,9 @@ function TripDetailsPage() {
       drivername: tripDetails.drivername,
       mail: tripDetails.mail,
       mobileno: tripDetails.mobileno,
-      mobileno1: tripDetails.mobileno1,
+      address: tripDetails.address,
     };
-
+console.log("sdfgbn", {apiData})
     try {
       // Make the API request
       const response = await fetch('http://localhost:7000/api/trip-details', {
@@ -245,14 +245,14 @@ function TripDetailsPage() {
                   onChange={(e) => handleFieldChange('mobileno', e.target.value)}
                 />
 
-                <label htmlFor="driveraddress" className="driver-details-label">Driver Address:</label>
+                <label htmlFor="address" className="driver-details-label">Driver Address:</label>
                 <input
                   type="text"
                   className="driver-details-input"
-                  name="driveraddress"
+                  name="address"
                   placeholder="Driver Address"
-                  value={tripDetails.mobileno1}
-                  onChange={(e) => handleFieldChange('mobileno1', e.target.value)}
+                  value={tripDetails.address}
+                  onChange={(e) => handleFieldChange('address', e.target.value)}
                 />
               </div>
             </div>
