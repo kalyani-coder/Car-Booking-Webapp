@@ -213,7 +213,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="customerid" className="start-end-details-label">
-                  Customer Id:
+                  Customer Name:
                 </label>
                 <input
                   className="start-end-details-input"
@@ -221,6 +221,38 @@ const StartEndDetails = () => {
                   name="customername"
                   onChange={handleChange}
                   value={formData.customername}
+                />
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="mobileno" className="start-end-details-label">
+                  Mobile No:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="mobileno"
+                  onChange={handleChange}
+                  value={formData.mobileno}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="customerid" className="start-end-details-label">
+                  Driver Name:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="customername"
+                  onChange={handleChange}
+                  value={formData.drivername}
                 />
               </div>
             </div>
