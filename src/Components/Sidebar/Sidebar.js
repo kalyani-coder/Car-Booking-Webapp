@@ -128,9 +128,15 @@ const Sidebar = () => {
           </a>
           <ul className="sub-menu">
             <li>
-              <Link to="/addrate">
+              <Link to="/customerrate">
                 <i className="bx bx-user"></i>
-                <span className="link_name">Add Rate</span>
+                <span className="link_name">Customer Rate</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/vendorrate">
+                <i className="bx bx-user"></i>
+                <span className="link_name">Vendor Rate</span>
               </Link>
             </li>
           </ul>

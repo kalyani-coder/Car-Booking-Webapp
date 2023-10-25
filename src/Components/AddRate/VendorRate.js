@@ -13,7 +13,7 @@ const AddRate = () => {
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container">
-          <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Rate</h2>
+          <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Vendor Rate</h2>
             <form>
               <div className="rate-form-group">
                 <label htmlFor="companyname" className="form-label">
@@ -44,15 +44,15 @@ const AddRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="customername" className="form-label">
-                  Customer Name:
+                <label htmlFor="vendorname" className="form-label">
+                  Vendor Name:
                 </label>
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="customername"
-                  name="customername"
-                  placeholder="Customer Name"
+                  id="vendorname"
+                  name="vendorname"
+                  placeholder="Vendor Name"
                 
                   required
                 />
