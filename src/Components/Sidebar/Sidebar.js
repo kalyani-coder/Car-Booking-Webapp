@@ -224,12 +224,14 @@ const Sidebar = () => {
                   </Link>
                 </a>
               </li>
-              {/* <li>
+              <li>
                 <a>
+                  <Link to={'/viewsharedetails'}>
                   <i className="bx bx-user"></i>
-                  <span className="link_name">View Shared Details</span>
+                  <span className="link_name">View Share Details </span>
+                  </Link>
                 </a>
-              </li> */}
+              </li>
             </ul>
           </li>
 
