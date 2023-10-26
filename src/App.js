@@ -27,6 +27,7 @@ import ViewCustomerInquiry from './Components/CustomerInquiry/ViewCustomerInquir
 import AddTrip from './Components/Trip/Add Trip';
 import ViewTrip from './Components/Trip/ViewTrip';
 import ViewShareDetails from './Components/ShareDetails/ViewShareDetails';
+import ViewUpdateDuty from './Components/UpdateDutySlip/ViewUpdateDuty';
 
 
 
@@ -49,6 +50,7 @@ function App() {
     <Route path='/allocatetrip' element={<AllocateTrip/>} />
     <Route path='/viewallocatetrip' element={<ViewAllocateTrip/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
+    <Route path='/viewupdateduty'  element={<ViewUpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
     <Route path='/customerrate'  element={<CustomerRate/>}/>
     <Route path='/vendorrate'  element={<VendorRate/>}/>
