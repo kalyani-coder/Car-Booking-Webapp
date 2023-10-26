@@ -5,7 +5,7 @@ const ViewUpdateDuty = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [error, setError] = useState(null);
-  const [searchCustomerName, setSearchCustomerName] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -26,23 +26,21 @@ const ViewUpdateDuty = () => {
     fetchCustomers();
   }, []);
 
-  // Function to filter customer inquiries based on search criteria
-  const filterCustomerInquiries = () => {
+  // Function to filter customers based on search criteria
+  const filterCustomers = () => {
     const filteredData = customers.filter((customer) => {
-      // Check if customer.customer_name is defined before calling toLowerCase()
-      if (customer.customer_name) {
-        return customer.customer_name.toLowerCase().includes(searchCustomerName.toLowerCase());
-      } else {
-        return false; // Return false if customer.customer_name is undefined
-      }
+      const customerNameMatches = customer.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const companyNameMatches = customer.companyname.toLowerCase().includes(searchQuery.toLowerCase());
+      return customerNameMatches || companyNameMatches;
     });
 
     setFilteredCustomers(filteredData);
   };
 
   useEffect(() => {
-    filterCustomerInquiries();
-  }, [searchCustomerName]);
+    filterCustomers();
+  }, [searchQuery]);
+
 
   return (
     <>
@@ -50,13 +48,13 @@ const ViewUpdateDuty = () => {
       <div className="customer-Add-container">
         <div className="customer-main-container">
           <h1>View Update Duty Slip</h1>
-          <div className="search-bar p-4 space-y-4">
+          <div className="search-bar">
             <input
               type="text"
-              placeholder="Search by Customer Name"
+              placeholder="Search by Customer Name / Company Name"
               className="w-full p-2 rounded border"
-              value={searchCustomerName}
-              onChange={(e) => setSearchCustomerName(e.target.value)}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
