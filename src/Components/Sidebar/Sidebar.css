@@ -226,6 +226,10 @@ body{
   opacity: 1;
   pointer-events: auto;
 }
+.has-submenu a .link_name:hover{
+  transition: 0.9s all ease !important;
+
+}
 
 .sidebar li i{
   height: 35px;
