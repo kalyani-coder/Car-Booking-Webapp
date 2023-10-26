@@ -354,7 +354,7 @@ const ShareDetails = () => {
           </div>
 
           <button type="button" className="share-details-button" onClick={handleShare}>
-            Share With Customer
+            Save
           </button>
         </div>
       </div>
