@@ -58,22 +58,24 @@ const ViewCustomer = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <div className="results">
+          <div className="grid-view">
             {filteredCustomers.length === 0 ? (
               <p>No results found.</p>
             ) : (
-              filteredCustomers.map((customer) => (
-                <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
-                  <div className="custom-card-body p-4">
-                    <h5 className="custom-card-title text-lg font-semibold mb-2">Customer Name: {customer.Cus_name}</h5>
-                    <p className="custom-card-subtitle mb-2">Company Name: {customer.company_name}</p>
-                    <p className="custom-card-subtitle mb-2">GST No: {customer.gst_no}</p>
-                    <p className="custom-card-subtitle mb-2">Mobile: {customer.Cus_Mobile}</p>
-                    <p className="custom-card-subtitle mb-2">Email: {customer.Cus_Email}</p>
-                    <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>
+              <div className="grid">
+                {filteredCustomers.map((customer) => (
+                  <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
+                    <div className="custom-card-body p-4">
+                      <h5 className="custom-card-title text-lg font-semibold mb-2">Customer Name: {customer.Cus_name}</h5>
+                      <p className="custom-card-subtitle mb-2">Company Name: {customer.company_name}</p>
+                      <p className="custom-card-subtitle mb-2">GST No: {customer.gst_no}</p>
+                      <p className="custom-card-subtitle mb-2">Mobile: {customer.Cus_Mobile}</p>
+                      <p className="custom-card-subtitle mb-2">Email: {customer.Cus_Email}</p>
+                      <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
         </div>
