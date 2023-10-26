@@ -35,6 +35,8 @@ const AddCustomers = require('./src/routes/AddCustomer')
 const addTrip = require('./src/routes/AddTrip')
 const VenderPayment = require('./src/routes/VenderPayment')
 const rateSchema = require('./src/routes/Rate')
+const venderRate = require('./src/routes/VenderRate')
+
 
 
 
@@ -51,6 +53,7 @@ apiRouter.use('/add-customers' , AddCustomers)
 apiRouter.use('/add-trip' , addTrip)
 apiRouter.use('/vender-payment' , VenderPayment)
 apiRouter.use('/rate' , rateSchema)
+apiRouter.use('/vender-rate' , venderRate)
 
 
 // handle here all api routes 
