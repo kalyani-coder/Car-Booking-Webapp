@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AllocateTrip.css'; // Import the custom CSS
 import Sidebar from '../Sidebar/Sidebar';
 
-function TripDetailsPage() {
+function AllocateTrip() {
   const initialTripDetails = {
     pickupLocation: '',
     date: '',
@@ -60,7 +60,7 @@ function TripDetailsPage() {
     console.log("sdfgbn", { apiData })
     try {
       // Make the API request
-      const response = await fetch('http://localhost:7000/api/trip-details', {
+      const response = await fetch('http://localhost:7000/api/allocate-trip', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -274,4 +274,4 @@ function TripDetailsPage() {
   );
 }
 
-export default TripDetailsPage;
+export default AllocateTrip;

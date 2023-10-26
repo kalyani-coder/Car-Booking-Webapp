@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-import './ViewShareDetails.css'; // You can create a CSS file for this component
+import './ViewShareDetails.css';
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
   const [filteredShareDetails, setFilteredShareDetails] = useState([]);
   const [error, setError] = useState(null);
-  const [searchDate, setSearchDate] = useState('');
-  const [searchDriverName, setSearchDriverName] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const fetchShareDetails = async () => {
@@ -18,7 +17,8 @@ const ViewShareDetails = () => {
         }
         const data = await response.json();
         setShareDetails(data);
-        setFilteredShareDetails(data); // Initialize filtered data with all share details
+        setFilteredShareDetails(data);
+        setError(null); // Reset the error state
       } catch (error) {
         setError('Error fetching share details: ' + error.message);
       }
@@ -27,12 +27,13 @@ const ViewShareDetails = () => {
     fetchShareDetails();
   }, []);
 
-  // Function to filter share details based on search criteria
   const filterShareDetails = () => {
     const filteredData = shareDetails.filter((shareDetail) => {
-      const dateMatches = shareDetail.date.includes(searchDate);
-      const driverNameMatches = shareDetail.drivername.toLowerCase().includes(searchDriverName.toLowerCase());
-      return dateMatches && driverNameMatches;
+      const searchTextLower = searchText.toLowerCase();
+      return (
+        shareDetail.date.includes(searchTextLower) ||
+        shareDetail.drivername.toLowerCase().includes(searchTextLower)
+      );
     });
 
     setFilteredShareDetails(filteredData);
@@ -40,7 +41,7 @@ const ViewShareDetails = () => {
 
   useEffect(() => {
     filterShareDetails();
-  }, [searchDate, searchDriverName]);
+  }, [searchText]);
 
   return (
     <>
@@ -51,17 +52,10 @@ const ViewShareDetails = () => {
           <div className="p-4 space-y-4">
             <input
               type="text"
-              placeholder="Search by date"
+              placeholder="Search by date or driver name"
               className="w-full p-2 rounded border"
-              value={searchDate}
-              onChange={(e) => setSearchDate(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Search by driver name"
-              className="w-full p-2 rounded border"
-              value={searchDriverName}
-              onChange={(e) => setSearchDriverName(e.target.value)}
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
           {error ? (
