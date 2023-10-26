@@ -283,10 +283,13 @@ const Sidebar = () => {
                   </Link>
                 </a>
               </li>
+
               <li>
                 <a>
+                <Link to={'/viewupdateduty'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">View Duty Slip</span>
+                  </Link>
                 </a>
               </li>
             </ul>

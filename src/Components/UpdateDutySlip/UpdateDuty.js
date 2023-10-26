@@ -93,8 +93,8 @@ const UpdateDuty = () => {
 
       <div className="update-duty-container">
         <div className="update-duty-form">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Duty Slip</h2>
           <div className="form-group">
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Duty Slip</h2>
             <div className='d-flex gap-5'>
               <div>  <label htmlFor="companyname" className="update-duty-form-label">
                 Company Name:
