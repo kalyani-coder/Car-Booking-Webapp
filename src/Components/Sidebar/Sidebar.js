@@ -205,7 +205,7 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
-                  <Link to={'/viewallocatetrip'}>
+                  <Link to={'/ViewAllocateTrip'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">View Allocate Trip </span>
                   </Link>

@@ -52,7 +52,7 @@ apiRouter.use('/add-venders' , AddVenders)
 apiRouter.use('/add-customers' , AddCustomers)
 apiRouter.use('/add-trip' , addTrip)
 apiRouter.use('/vender-payment' , VenderPayment)
-apiRouter.use('/rate' , rateSchema)
+apiRouter.use('/customer-rate' , rateSchema)
 apiRouter.use('/vender-rate' , venderRate)
 
 

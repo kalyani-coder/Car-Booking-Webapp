@@ -1,11 +1,51 @@
-
-
 import React, { useState } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddRate = () => {
-  
+  const [formData, setFormData] = useState({
+    company_Name: "",
+    GST_No: "",
+    vender_Name: "",
+    mobile_Number: "",
+    rate_per_Km: "",
+    title: "",
+    rate: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+
+    for (const key in formData) {
+      if (formData[key] === "") {
+        window.alert("All fields are required");
+        return;
+      }
+    }
+
+    const response = await fetch("http://localhost:7000/api/vender-rate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (response.ok) {
+      console.log("Data posted successfully!");
+      window.alert('Data post Successfully')
+    } else {
+      console.error("Error posting data:", response.statusText);
+    }
+  };
 
   return (
     <>
@@ -13,8 +53,10 @@ const AddRate = () => {
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container">
-          <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Vendor Rate</h2>
-            <form>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+              Vendor Rate
+            </h2>
+            <form onSubmit={handleSubmit}>
               <div className="rate-form-group">
                 <label htmlFor="companyname" className="form-label">
                   Company Name:
@@ -22,10 +64,11 @@ const AddRate = () => {
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="companyname"
-                  name="companyname"
+                  id="company_Name"
+                  name="company_Name"
                   placeholder="Company Name"
-                 
+                  value={formData.company_Name}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -36,10 +79,11 @@ const AddRate = () => {
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="gstno"
-                  name="gstno"
+                  id="GST_No"
+                  name="GST_No"
                   placeholder="GST No."
-                
+                  value={formData.GST_No}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -50,11 +94,12 @@ const AddRate = () => {
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="vendorname"
-                  name="vendorname"
+                  id="vender_Name"
+                  name="vender_Name"
                   placeholder="Vendor Name"
-                
-                  required
+                  value={formData.vender_Name}
+                  onChange={handleChange}
+                  
                 />
               </div>
               <div className="form-group">
@@ -64,10 +109,11 @@ const AddRate = () => {
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="mobileno"
-                  name="mobileno"
+                  id="mobile_Number"
+                  name="mobile_Number"
                   placeholder="Mobile No."
-               
+                  value={formData.mobile_Number}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -78,50 +124,53 @@ const AddRate = () => {
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="rateperkm"
-                  name="rateperkm"
+                  id="rate_per_Km"
+                  name="rate_per_Km"
                   placeholder="Rate Per KM"
-                
+                  value={formData.rate_per_Km}
+                  onChange={handleChange}
                   required
                 />
               </div>
               <div className="d-flex gap-2">
                 <div>
-                <div className="form-group">
-                <label htmlFor="title" className="form-label">
-                  Title:
-                </label>
-                <select class="rate-form-control" name="title" id="title"><option value="">
-                Title</option>
-                <option value="One Day / 80km">One Day /80km</option>
-                <option value="One Day / 300km">One Day /300km</option></select>
-              </div>
+                  <div className="form-group">
+                    <label htmlFor="title" className="form-label">
+                      Title:
+                    </label>
+                    <select
+                      className="rate-form-control"
+                      name="title"
+                      id="title"
+                      value={formData.title}
+                      onChange={handleChange}
+                    >
+                      <option value="">Title</option>
+                      <option value="One Day / 80km">One Day /80km</option>
+                      <option value="One Day / 300km">One Day /300km</option>
+                    </select>
+                  </div>
                 </div>
                 <div>
-                <div className="form-group">
-                <label htmlFor="rate" className="form-label">
-                  Rate:
-                </label>
-                <input
-                  className="rate-form-control"
-                  type="text"
-                  id="rate"
-                  name="rate"
-                  placeholder="rate"
-               
-                  required
-                />
-              </div>
+                  <div className="form-group">
+                    <label htmlFor="rate" className="form-label">
+                      Rate:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="text"
+                      id="rate"
+                      name="rate"
+                      placeholder="rate"
+                      value={formData.rate}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
-              
-              
 
-              <button
-                type="submit"
-                className="rate-btn-submit"
-                
-              >
+              <button type="submit" className="rate-btn-submit">
                 Save
               </button>
             </form>
@@ -133,4 +182,3 @@ const AddRate = () => {
 };
 
 export default AddRate;
-

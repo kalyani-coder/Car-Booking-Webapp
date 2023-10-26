@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 
 const venderRateSchema = new mongoose.Schema({
-    compamy_Name :String,
+    company_Name :String,
     GST_No : String,
     vender_Name : String,
     mobile_Number : Number,

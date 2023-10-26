@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 
 const rateSchema = new mongoose.Schema({
-    compamy_Name :String,
+    company_Name :String,
     GST_No : String,
     customer_Name : String,
     mobile_Number : Number,
