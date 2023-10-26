@@ -58,11 +58,12 @@ const ViewCustomer = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
+          
           <div className="grid-view">
             {filteredCustomers.length === 0 ? (
               <p>No results found.</p>
             ) : (
-              <div className="grid">
+              <div className="grid grid-cols-3 gap-4">
                 {filteredCustomers.map((customer) => (
                   <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
                     <div className="custom-card-body p-4">
