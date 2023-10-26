@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';  // Import jsPDF
+import 'jspdf-autotable';
 import './VendorInvoiceMonthly.css';
 import Sidebar from '../Sidebar/Sidebar';
 
@@ -51,13 +52,30 @@ function VendorInvoiceMonthly() {
 
   const handleGenerate = () => {
     const doc = new jsPDF();
+    
 
-    // Add content to the PDF
-    doc.text('Monthly Vendor Invoice', 10, 10);
-    doc.text('Company Name: ' + formData.companyName, 10, 20);
-    doc.text('Company Address: ' + formData.companyAddress, 10, 30);
-    doc.text('GST No: ' + formData.gstno, 10, 40);
-    // Add more content as needed...
+   // Sample data for your invoice
+const invoiceData = [
+  ['Company Name:', formData.companyName],
+  ['GST No:', formData.gstno],
+  ['Vendor Name:', formData.vendorname],
+  ['Vendor Address:', formData.vendoraddress],
+  ['Bank Name:', formData.bankname],
+  ['Account Number:', formData.accountnumber],
+];
+
+// Define table styles
+const tableStyles = {
+  theme: 'striped', // 'striped', 'grid', or 'plain'
+  startY: 40, // Y position from which the table should start
+  headStyles: { fillColor: [51, 51, 255], textColor: 255 },
+  bodyStyles: { textColor: 0,fillColor:[50,50,251] },
+  head: [['Label', 'Value']], // Table headers
+};
+
+// Add the table to the PDF
+doc.autoTable(tableStyles);
+doc.autoTable({ body: invoiceData });
 
     // Save the PDF
     doc.save('invoice.pdf');
@@ -86,13 +104,13 @@ function VendorInvoiceMonthly() {
         <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "5px" }}>Invoice To :</h2>
         <div className="form-vendor-invoice-monthly">
           <div className="grid-gap-2 col-6">
-            <label htmlFor="customerName" className="form-label">Vendor Name:</label>
-            <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Vendor Name" id="customerName" name="customerName" onChange={handleChange} />
+            <label htmlFor="vendorname" className="form-label">Vendor Name:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Vendor Name" id="vendorname" name="vendorname" onChange={handleChange} />
             {/* Add similar input elements for other fields */}
           </div>
           <div className="mb-2 grid-gap-2 col-6">
-            <label htmlFor="customerAddress" className="form-label">Vendor Address:</label>
-            <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Vendor Address" id="customerAddress" name="customerAddress" onChange={handleChange} />
+            <label htmlFor="vendoraddress" className="form-label">Vendor Address:</label>
+            <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Vendor Address" id="vendoraddress" name="vendoraddress" onChange={handleChange} />
             {/* Add similar input elements for other fields */}
           </div>
           {/* Add more input elements */}
@@ -135,8 +153,8 @@ function VendorInvoiceMonthly() {
               {/* Add similar input elements for other fields */}
             </div>
             <div className="grid-gap-2 col-6">
-              <label htmlFor="accountNumber" className="form-label">Account Number:</label>
-              <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Account Number" id="accountNumber" name="accountNumber" onChange={handleChange} />
+              <label htmlFor="accountnumber" className="form-label">Account Number:</label>
+              <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Account Number" id="accountnumber" name="accountnumber" onChange={handleChange} />
               {/* Add similar input elements for other fields */}
             </div>
             {/* Add more input elements */}
