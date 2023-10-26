@@ -38,7 +38,7 @@ router.post('/' , async(req, res) => {
 
     try{
         const AddVenders = new newRateSchemaVender(req.body)
-        const newRateSchemaVender = await AddVenders.save()
+      await AddVenders.save()
         res.status(201).json({message : "Data post Successfully"})
 
     }catch(e){

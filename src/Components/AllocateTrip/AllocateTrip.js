@@ -60,7 +60,7 @@ function AllocateTrip() {
     console.log("sdfgbn", { apiData })
     try {
       // Make the API request
-      const response = await fetch('http://localhost:7000/api/allocate-trip', {
+      const response = await fetch('http://localhost:7000/api/trip-details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
