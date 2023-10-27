@@ -239,10 +239,11 @@ function VendorPayment() {
                     </div>
 
                     <br />
-                    <button type="submit" className="btn btn-danger">
+                    <button className="btn btn-danger" type="submit">
                       Save
                     </button>
 
+                   
                   </form>
                 </div>
               </div>
