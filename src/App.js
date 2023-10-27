@@ -12,6 +12,7 @@ import Login from './Components/Login/LogIn';
 import Home from './Components/Home/Home';
 import Sidebar from './Components/Sidebar/Sidebar';
 import VendorPayment from './Components/VendorPayment/VendorPayment';
+import ViewVendorPayment from './Components/VendorPayment/ViewVendorPayment';
 import CustomerInvoice from './Components/CustomerInvoice/CustomerInvoice';
 import VendorInvoice from './Components/VendorInvoice/VendorInvoice';
 import CustomerInvoiceMonthly from './Components/CustomerInvoiceMonthly/CustomerInvoiceMonthly';
@@ -57,6 +58,7 @@ function App() {
     <Route path='/customerenquiry'  element={<CustomerInquiry/>}/>
     <Route path='/sidebar'  element={<Sidebar/>}/>
     <Route path='/vendorpayment' element={<VendorPayment/>} />
+    <Route path='/Viewvendorpayment' element={<ViewVendorPayment/>} />
     <Route path='/customerinvoice' element={<CustomerInvoice/>} />
     <Route path='/vendorinvoice' element={<VendorInvoice/>} />
     <Route path='/customerinvoicemonthly' element={<CustomerInvoiceMonthly/>} />

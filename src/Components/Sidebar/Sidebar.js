@@ -326,8 +326,10 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
+                <Link to={'/viewvendorpayment'}>
                   <i className="bx bx-user"></i>
                   <span className="link_name">View Vendor Payment</span>
+                  </Link>
                 </a>
               </li>
             </ul>
