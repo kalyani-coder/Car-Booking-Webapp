@@ -48,7 +48,7 @@ const ViewShareDetails = () => {
       <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h1>Share Details</h1>
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Share Details</h2>
           <div className="p-4 space-y-4">
             <input
               type="text"

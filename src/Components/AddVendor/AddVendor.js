@@ -72,6 +72,7 @@ const AddVendor = () => {
       <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor</h2>
           <div className="vendor-form-container">
             <form>
               <div className="vendor-form-group">

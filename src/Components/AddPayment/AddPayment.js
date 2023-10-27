@@ -7,6 +7,7 @@ function AddPayment() {
     <>
       <Sidebar />
       <div className="container-container-adpayment ">
+      
 
         <div className="form-body" >
           <div className="card-1">
@@ -14,6 +15,7 @@ function AddPayment() {
               <div className="col-md-10">
                 <div className="card-body mt-5">
                   <form>
+                  <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Customer Payment</h2>
 
                     <div className="row g-2">
                       <div className="col-md">

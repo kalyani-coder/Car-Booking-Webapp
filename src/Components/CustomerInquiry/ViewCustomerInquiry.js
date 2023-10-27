@@ -49,7 +49,7 @@ const ViewCustomerInquiry = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h1>Customer Inquiries</h1>
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Customer Inquries</h2>
           <div className="search-bar p-4 space-y-4">
             <input
               type="text"

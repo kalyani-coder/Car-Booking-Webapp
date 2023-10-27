@@ -49,7 +49,7 @@ const ViewTrip = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h1>View Trip</h1>
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Trips</h2>
           <div className="p-4 space-y-4">
             <input
               type="text"

@@ -73,6 +73,7 @@ const AddTrip = () => {
     <div className="add-trip-container">
     
       <div className="trip-main-container">
+      <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Trip</h2>
         <div className="trip-form-container">
         {error && <p className="trip-text-red-500">{error}</p>}
           <div className="trip-form-group">

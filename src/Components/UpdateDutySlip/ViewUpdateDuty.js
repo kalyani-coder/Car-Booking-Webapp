@@ -47,7 +47,7 @@ const ViewUpdateDuty = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h1>View Update Duty Slip</h1>
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Duty Slip</h2>
           <div className="search-bar">
             <input
               type="text"
