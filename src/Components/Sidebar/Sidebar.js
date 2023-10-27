@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Sidebar.css';
-import { FiMenu, FiX } from 'react-icons/fi'; // Import menu and close icons
+// import { FiMenu, FiX } from 'react-icons/fi'; 
 import { Link } from 'react-router-dom';
-import { AiFillCar } from 'react-icons/ai';
+// import { AiFillCar } from 'react-icons/ai';
 
 
 const Sidebar = () => {
@@ -34,17 +34,17 @@ const Sidebar = () => {
     }
   }
 
- 
+
 
   return (
     <>
 
-<div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '100vh' }}>
+      <div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '100vh' }}>
 
         <div className='logo'>
 
-        <h3 className='car-heading'>Car Booking</h3>
-       
+          <h3 className='car-heading'>Car Booking</h3>
+
 
         </div>
 
@@ -64,10 +64,10 @@ const Sidebar = () => {
 
           <li>
             <Link to={'/home'}>
-            <a >
-              <i className="bx bx-grid-alt"></i>
-              <span className="link_name">Home</span>
-            </a>
+              <a >
+                <i className="bx bx-grid-alt"></i>
+                <span className="link_name">Home</span>
+              </a>
             </Link>
           </li>
 
@@ -83,131 +83,131 @@ const Sidebar = () => {
               <li>
                 <a>
                   <Link to={'/addcustomer'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Add Customer</span>
+                    <i className="bx bx-user"></i>
+                    <span className="link_name">Add Customer</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
                   <Link to={'/viewcustomer'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">View Customer</span>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View Customer</span>
                   </Link>
                 </a>
               </li>
             </ul>
           </li>
 
-        {/* Vendor */}
-        <li className="has-submenu">
-          <a>
-            <i className="bx bx-user"></i>
-            <span className="link_name">Vendor</span>
-          </a>
-          <ul className="sub-menu">
-            <li>
-              <Link to="/addvendor">
-                <i className="bx bx-user"></i>
-                <span className="link_name">Add Vendor</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/viewvendor">
-                <i className="bx bx-user"></i>
-                <span className="link_name">View Vendor</span>
-              </Link>
-            </li>
-          </ul>
-        </li>
-         {/* Rate */}
-         <li className="has-submenu">
-          <a>
-            <i className="bx bx-user"></i>
-            <span className="link_name">Rate</span>
-          </a>
-          <ul className="sub-menu">
-            <li>
-              <Link to="/customerrate">
-                <i className="bx bx-user"></i>
-                <span className="link_name">Customer Rate</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/vendorrate">
-                <i className="bx bx-user"></i>
-                <span className="link_name">Vendor Rate</span>
-              </Link>
-            </li>
-          </ul>
-        </li>
+          {/* Vendor */}
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-store"></i>
+              <span className="link_name">Vendor</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <Link to="/addvendor">
+                  <i className="bx bx-store"></i>
+                  <span className="link_name">Add Vendor</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/viewvendor">
+                  <i className="bx bx-detail"></i>
+                  <span className="link_name">View Vendor</span>
+                </Link>
+              </li>
+            </ul>
+          </li>
+          {/* Rate */}
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-rupee"></i>
+              <span className="link_name">Rate</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <Link to="/customerrate">
+                  <i className="bx bx-rupee"></i>
+                  <span className="link_name">Customer Rate</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/vendorrate">
+                  <i className="bx bx-rupee"></i>
+                  <span className="link_name">Vendor Rate</span>
+                </Link>
+              </li>
+            </ul>
+          </li>
 
-        {/* Customer Inquiry */}
-        <li className="has-submenu">
-          <a>
-            <i className="bx bx-user"></i>
-            <span className="link_name">Customer Inquiry</span>
-          </a>
-          <ul className="sub-menu">
-            <li>
-              <Link to="/customerenquiry">
-                <i className="bx bx-user"></i>
-                <span className="link_name">Add Customer Inquiry</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/viewcustomerinquiry">
-                <i className="bx bx-user"></i>
-                <span className="link_name">View Customer Inquiry</span>
-              </Link>
-            </li>
-          </ul>
-        </li>
+          {/* Customer Inquiry */}
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-envelope"></i>
+              <span className="link_name">Customer Inquiry</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <Link to="/customerenquiry">
+                  <i className="bx bx-envelope"></i>
+                  <span className="link_name">Add Customer Inquiry</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/viewcustomerinquiry">
+                  <i className="bx bx-detail"></i>
+                  <span className="link_name">View Customer Inquiry</span>
+                </Link>
+              </li>
+            </ul>
+          </li>
 
-        {/* Trip */}
-        <li className="has-submenu">
-          <a>
-            <i className="bx bx-user"></i>
-            <span className="link_name">Trip</span>
-          </a>
-          <ul className="sub-menu">
-            <li>
-              <Link to="/addtrip">
-                <i className="bx bx-user"></i>
-                <span className="link_name">Add Trip</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/viewtrip">
-                <i className="bx bx-user"></i>
-                <span className="link_name">View Trip</span>
-              </Link>
-            </li>
-          </ul>
-        </li>
+          {/* Trip */}
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-map"></i>
+              <span className="link_name">Trip</span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <Link to="/addtrip">
+                  <i className="bx bx-map"></i>
+                  <span className="link_name">Add Trip</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/viewtrip">
+                  <i className="bx bx-detail"></i>
+                  <span className="link_name">View Trip</span>
+                </Link>
+              </li>
+            </ul>
+          </li>
 
-           {/* Allocate Trip */}
+          {/* Allocate Trip */}
 
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+              <i className="bx bx-car"></i>
               <span className="link_name">Allocate Trip</span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
                   <Link to={'/allocatetrip'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Allocate Trip</span>
+                    <i className="bx bx-car"></i>
+                    <span className="link_name">Allocate Trip</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
                   <Link to={'/ViewAllocateTrip'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">View Allocate Trip </span>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View Allocate Trip </span>
                   </Link>
                 </a>
               </li>
@@ -218,48 +218,48 @@ const Sidebar = () => {
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+              <i className="bx bx-paper-plane"></i>
               <span className="link_name">Share Details</span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
                   <Link to={'/sharedetails'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Share Trip Details</span>
+                    <i className="bx bx-paper-plane"></i>
+                    <span className="link_name">Share Trip Details</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
                   <Link to={'/viewsharedetails'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">View Share Details </span>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View Share Details </span>
                   </Link>
                 </a>
               </li>
             </ul>
           </li>
 
-              {/* Get Details from Driver */}
+          {/* Get Details from Driver */}
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+              <i className="bx bx-info-circle"></i>
               <span className="link_name">Get Details From Driver</span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
                   <Link to={'/Startenddetails'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Get Trip Details</span>
+                    <i className="bx bx-info-circle"></i>
+                    <span className="link_name">Get Trip Details</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
-                  <i className="bx bx-user"></i>
+                  <i className="bx bx-detail"></i>
                   <span className="link_name">View Get Trip Details</span>
                 </a>
               </li>
@@ -267,28 +267,28 @@ const Sidebar = () => {
           </li>
 
 
-              {/* Update Duty Slip */}
+          {/* Update Duty Slip */}
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+              <i className="bx bx-pencil"></i>
               <span className="link_name">Update Duty Slip</span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
                   <Link to={'/updateduty'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Add Duty Slip</span>
+                    <i className="bx bx-pencil"></i>
+                    <span className="link_name">Add Duty Slip</span>
                   </Link>
                 </a>
               </li>
 
               <li>
                 <a>
-                <Link to={'/viewupdateduty'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">View Duty Slip</span>
+                  <Link to={'/viewupdateduty'}>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View Duty Slip</span>
                   </Link>
                 </a>
               </li>
@@ -298,35 +298,35 @@ const Sidebar = () => {
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+              <i className="bx bx-credit-card"></i>
               <span className="link_name">Payment </span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
                   <Link to={'/addpayment'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Customer Payment</span>
+                    <i className="bx bx-credit-card"></i>
+                    <span className="link_name">Customer Payment</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
-                  <i className="bx bx-user"></i>
+                  <i className="bx bx-detail"></i>
                   <span className="link_name">View Customer Payment</span>
                 </a>
               </li>
               <li>
                 <a>
                   <Link to={'/vendorpayment'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Vendor Payment</span>
+                    <i className="bx bx-credit-card"></i>
+                    <span className="link_name">Vendor Payment</span>
                   </Link>
                 </a>
               </li>
               <li>
                 <a>
-                  <i className="bx bx-user"></i>
+                  <i className="bx bx-detail"></i>
                   <span className="link_name">View Vendor Payment</span>
                 </a>
               </li>
@@ -335,46 +335,46 @@ const Sidebar = () => {
 
 
 
-         {/* Generate Invoice */}
+          {/* Generate Invoice */}
 
           <li className="has-submenu">
             <a>
-              <i className="bx bx-user"></i>
+              <i className="bx bx-save"></i>
               <span className="link_name">Generate Invoice</span>
             </a>
             <ul className="sub-menu">
               <li>
                 <a>
                   <Link to={'/customerinvoice'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Customer Invoice</span>
+                    <i className="bx bx-save"></i>
+                    <span className="link_name">Customer Invoice</span>
                   </Link>
                 </a>
               </li>
               <li>
-              <li>
-                <a>
-                  <Link to={'/vendorinvoice'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Vendor Invoice</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/customerinvoicemonthly'}>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Customer Monthly Invoice</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/vendorinvoicemonthly' }>
-                  <i className="bx bx-user"></i>
-                  <span className="link_name">Vendor Monthly Invoice</span>
-                  </Link>
-                </a>
+                <li>
+                  <a>
+                    <Link to={'/vendorinvoice'}>
+                      <i className="bx bx-save"></i>
+                      <span className="link_name">Vendor Invoice</span>
+                    </Link>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <Link to={'/customerinvoicemonthly'}>
+                      <i className="bx bx-save"></i>
+                      <span className="link_name">Customer Monthly Invoice</span>
+                    </Link>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <Link to={'/vendorinvoicemonthly'}>
+                      <i className="bx bx-save"></i>
+                      <span className="link_name">Vendor Monthly Invoice</span>
+                    </Link>
+                  </a>
                 </li>
               </li>
             </ul>
