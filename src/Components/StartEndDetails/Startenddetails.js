@@ -16,8 +16,10 @@ const StartEndDetails = () => {
     totalhours: '',
     triptype: '',
     subtype: '',
+    customername:'',
+    mobileno:'',
     drivername: '',
-    mobileno: '',
+    mobileno1: '',
   };
 
   const [formData, setFormData] = useState(initialFormData);
