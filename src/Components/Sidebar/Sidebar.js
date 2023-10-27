@@ -34,6 +34,13 @@ const Sidebar = () => {
     }
   }
 
+  // logout 
+  const handleLogout = () => {
+    // Clear user data from local storage
+    localStorage.removeItem('user');
+    // Redirect to login page
+    window.location.href = '/';
+  };
 
 
   return (
@@ -388,7 +395,7 @@ const Sidebar = () => {
               <div className="profile_content">
               </div>
             </div>
-            <i className="bx bx-log-out fw-bold" id="log_out"></i>
+            <i className="bx bx-log-out fw-bold" id="log_out" onClick={handleLogout}></i>
           </li>
 
           {/* for addign profile and logout button  */}

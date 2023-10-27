@@ -1,252 +1,122 @@
-import React, { useState } from 'react'
-import { VscEye, VscEyeClosed } from 'react-icons/vsc'
-import { Link, useNavigate } from 'react-router-dom'
-import LoginSignupImage from '../../images/login-animation.gif'
 
-// to handle password icons show and hide 
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 const Signup = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        
+    });
 
-  // for navigate our page using hook 
-  const navigate = useNavigate()
-  //for password
-  const [showPassword, setShowPassword] = useState(false)
-  //for Confirm password
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const { name, email, password } = formData;
 
-  //for handle input value
-  const [data, setData] = useState({
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-    image: ""
-  })
-  console.log(data)
+    const handleSubmit = async (e) => {
+        // e.preventDefault();
 
+        try {
+            const response = await fetch('http://localhost:7000/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password
+                    
+                })
+            });
 
-  const [blankFieldsError, setBlankFieldsError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+            const data = await response.json();
 
-  const handleShowPassword = () => {
-
-    setShowPassword(preve => !preve)
-  }
-
-  const handleConfirmShowPassword = () => {
-
-    setShowConfirmPassword(preve => !preve)
-
-  }
-
-  // to access your inputs value
-  const handleOnChange = (e) => {
-
-    const { name, value } = e.target
-    setData((preve) => {
-
-      return {
-        ...preve,
-        [name]: value
-      }
-    })
-  }
-
-  //to uploaad your profile image 
-
-  //password is checked similer using if else condition
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   const{firstname,email,password,confirmpassword} = data
-  //   if(firstname && email && password && confirmpassword){
-
-  //     if(password === confirmpassword){
-  //       alert('Successfull')
-  //       navigate('/login')
-
-  //     }
-  //     else{
-  //       alert('Password Not Match')
-  //     }
-
-  //   }
-  //   else{
-  //     alert('Please fill require fields')
-  //   }
-  // }
-
-
-  const checkEmailExists = async (email) => {
-    try {
-      const response = await fetch(`http://localhost:7000/api/users?email=${email}`);
-  
-      if (response.ok) {
-        const data = await response.json();
-        return data.exists; // Assumes the response contains a field 'exists' for email
-      } else {
-        // Handle API error
-        console.error('Email check failed.');
-        return false;
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-      return false;
-    }
-  };
-  
-  const checkPasswordExists = async (password) => {
-    try {
-      const response = await fetch(`http://localhost:7000/api/users?password=${password}`);
-      console.log(response)
-      if (response.ok) {
-        const data = await response.json();
-        return data.exists; // Assumes the response contains a field 'exists' for password
-       
-      } else {
-        // Handle API error
-        console.error('Password check failed.');
-        return false;
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-      return false;
-    }
-  };
-  
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { firstname, lastname, email, password, confirmpassword } = data;
-
-    if (!firstname || !lastname || !email || !password || !confirmpassword) {
-      setBlankFieldsError('All fields are required.');
-      setEmailError('');
-      setPasswordError('');
-      return;
-    }
-
-    if (password === confirmpassword) {
-      setBlankFieldsError('');
-
-      const isEmailExists = await checkEmailExists(email);
-      if (isEmailExists) {
-        setEmailError('Email is already registered. Choose a different email.');
-        setPasswordError('');
-        return;
-      }
-
-      const isPasswordExists = await checkPasswordExists(password);
-      if (isPasswordExists) {
-        setPasswordError('Password is not unique. Choose a different password.');
-        setEmailError('');
-        return;
-      }
-
-      // Continue with registration if both email and password are unique
-      // Prepare the data to be sent to the API for registration
-      const userData = {
-        user_Name: firstname + ' ' + lastname,
-        email,
-        password,
-      };
-
-      try {
-        // Replace this with your API endpoint for user registration
-        const registrationResponse = await fetch('http://localhost:7000/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        });
-
-        if (registrationResponse.ok) {
-          alert('Data added successfully!');
-          setData({
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            confirmpassword: '',
-          });
-          navigate('/');
-        } else {
-          alert('Failed to register user. Please try again.');
+            // Handle response from the server as needed
+            console.log(data);
+            window.alert('Register successfull')
+        } catch (error) {
+            console.error('Error:', error);
         }
-      } catch (error) {
-        console.error('API request error:', error);
-        alert('Failed to register user. Please try again.');
-      }
-    } else {
-      setPasswordError('Password does not match.');
-      setEmailError('');
-    }
-  };
-  return (
+    };
 
-    <div className='p-3 md:p-4'>
-      <div className='w-full max-w-sm  bg-white m-auto flex  flex-col p-4'>
-        {/* <h1 className='text-center text-2xl font-bold'>Sign up</h1> */}
-        <div className='w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative'>
-          <img src={data.image ? data.image : LoginSignupImage} className='w-full h-full' alt='userlogo' />
+    return (
+        <>
+            <div className="flex justify-center min-h-screen bg-gray-100">
+                <div className="px-8 py-6 mx-4 text-left bg-white shadow-lg md:w-1/3 lg:w-1/3 sm:w-1/3 h-3/4 mt-20 rounded-5">
+                    <div className="flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-teal-600" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                        </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-center">Register</h3>
+                    <form onSubmit={handleSubmit}>
+                        <div className="mt-4">
+                            <div>
+                                <label className="block" htmlFor="Name">Name</label>
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600"
+                                    name="name"
+                                    value={name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            
+
+                            <div className="mt-4">
+                                <label className="block" htmlFor="email">Email</label>
+                                <input type="email" placeholder="Email"
+                                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600"
+                                    name="email"
+                                    value={email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="mt-4">
+                                <label className="block">Password</label>
+                                <input type="password" placeholder="Password"
+                                    className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600"
+                                    name="password"
+                                    value={password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                           
 
 
-        </div>
+                        </div>
+                        <div className="flex">
+                            <button
+                                type="submit"
+                                className="w-full px-6 py-2 mt-4 text-white bg-dark rounded-lg hover:bg-teal-700 transition duration-200"
+                            >
+                                Create Account
+                            </button>
+                        </div>
+                    </form>
+                    <div className="mt-6 text-grey-dark">
+                        <span className="mr-2">Already have an account?</span>
+                        <Link to='/' className="text-teal-600 hover:underline font-bold">
+                            Log in
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
 
-        <form className='w-full py-3 flex flex-col' onSubmit={handleSubmit}>
-        {blankFieldsError && <p className="text-red-500 text-sm mt-2 text-center">{blankFieldsError}</p>}
-          <label for="name">First Name</label>
-          <input type='text' id='firstname' name='firstname' className='mb-2 mt-1 w-full bg-slate-200 p-1 px-2 py-1 rounded focus-within:outline-blue-300'
-            value={data.firstname}
-            onChange={handleOnChange}
-
-          />
-
-          <label for="lastname">Last Name</label>
-          <input type='text' id='lastname' name='lastname' className='mb-2 mt-1 w-full bg-slate-200 p-1 px-2 py-1 rounded focus-within:outline-blue-300'
-            value={data.lastname}
-            onChange={handleOnChange}
-
-          />
-
-          <label for="email">Email</label>
-          <input type='email' id='email' name='email' className='mb-2 mt-1 w-full bg-slate-200 p-1 px-2 py-1 rounded focus-within:outline-blue-300'
-            value={data.email}
-            onChange={handleOnChange}
-          />
-          {emailError && <p className='text-red-500 text-sm'>{emailError}</p>}
-
-          <label for="password">Password</label>
-          <div className='flex px-2 py-1 bg-slate-200 rounded mb-2 mt-1 focus-within:outline focus-within:outline-blue-300'>
-            <input type={showPassword ? "text" : 'password'} id='password' name='password' className=' w-full bg-slate-200 border-none outline-none '
-              value={data.password}
-              onChange={handleOnChange}
-            />
-            {/* using ternary operator ? for onclick hide and show  */}
-            <span className='flex text-xl cursor-pointer' onClick={handleShowPassword}>{showPassword ? <VscEye /> : <VscEyeClosed />}</span>
-          </div>
-
-
-          <label for="confirmpassword">Confirm Password</label>
-          <div className='flex px-2 py-1 bg-slate-200 rounded mb-2 mt-1 focus-within:outline focus-within:outline-blue-300'>
-            <input type={showConfirmPassword ? "text" : 'password'} id='confirmpassword' name='confirmpassword' className=' w-full bg-slate-200  border-none outline-none '
-              value={data.confirmpassword}
-              onChange={handleOnChange}
-            />
-            {/* using ternary operator ? for onclick hide and show  */}
-            <span className='flex text-xl cursor-pointer' onClick={handleConfirmShowPassword}>{showConfirmPassword ? <VscEye /> : <VscEyeClosed />}</span>
-          </div>
-          {passwordError && <p className='text-red-500 text-sm'>{passwordError}</p>} {/* Display password error below password field */}
-
-          <button className='w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer text-white text-xl font-medium text-center py-1 rounded-full mt-4'>Sign Up</button>
-
-        </form>
-        <p className='text-left text-sm mt-2'>Already have an account ? <Link to={'/'} className='text-red-500 underline'>Login</Link></p>
-      </div>
-    </div>
-  )
-}
-
-export default Signup
+export default Signup;

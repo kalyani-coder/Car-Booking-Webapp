@@ -1,91 +1,104 @@
-import React, {useState} from 'react'
-import {VscEye,VscEyeClosed} from 'react-icons/vsc'
-import {Link} from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
- 
-  //for password
-  const [showPassword, setShowPassword] = useState(false)
-  //for handle input value
-  const [data, setData] = useState({
-
-    firstname : "",
-    lastname : "",
-    email : "",
-    password : "",
-    confirmpassword : ""
-  })
-  console.log(data)
-
-  const handleShowPassword = () => {
-
-    setShowPassword(preve => !preve)
-  }
-  
-  const handleOnChange = (e) => {
-
-    const {name,value} = e.target
-      setData((preve) => {
-
-        return{
-          ...preve,
-          [name] : value
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+      });
+    
+      const { email, password } = formData;
+    
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+          const response = await fetch('http://localhost:7000/api/users');
+          const data = await response.json();
+    
+          const user = data.find(user => user.email === email && user.password === password);
+    
+          if (user) {
+            // User found, do something (e.g., log in the user)
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log('Login successful:', user);
+            window.location.href = '/home';
+            // Redirect to home page or perform other actions as needed
+          } else {
+            // User not found or credentials don't match
+            console.log('Invalid credentials');
+            alert('Invalid credentials')
+          }
+        } catch (error) {
+          console.error('Error:', error);
         }
-      })
-  }
-
-  //password is checked similer using if else condition
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const{email,password} = data
-    if(email && password){
-        alert('Successfull')
-        
-    }
-
-    else{
-      alert('Please fill require fields')
-    }
-
-  }
+      };
 
   return (
-    
-    <div className='p-3 md:p-4'>
-      <div className='w-full max-w-sm  bg-white m-auto flex  flex-col p-4'>
-       {/* <h1 className='text-center text-2xl font-bold'>Sign up</h1> */}
-       <div className='w-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto'>
-        <img src='https://raw.githubusercontent.com/IsAmitprajapati/-Build-a-COMPLETE-Fullstack-ecommerce-Responsive-MERN-App-React-Redux-Nodejs-MongoDB-Express/main/frontend/src/assest/login-animation.gif'className='w-full' alt='userlogo'/>
-       </div>
-
-       <form className='w-full py-3 flex flex-col' onSubmit={handleSubmit}>
-
-          <label for="email">Email</label>
-          <input type='email' id='email' name='email' className='mb-2 mt-1 w-full bg-slate-200 p-1 px-2 py-1 rounded focus-within:outline-blue-300' 
-          value={data.email} 
-          onChange={handleOnChange}
-          />
-
-          <label for="password">Password</label>
-          <div className='flex px-2 py-1 bg-slate-200 rounded mb-2 mt-1 focus-within:outline focus-within:outline-blue-300'>
-          <input type={showPassword ? "text" :'password'} id='password' name='password' className=' w-full bg-slate-200  border-none outline-none ' 
-          value={data.password} 
-          onChange={handleOnChange}
-          />
-          {/* using ternary operator ? for onclick hide and show  */}
-          <span className='flex text-xl cursor-pointer' onClick={handleShowPassword}>{showPassword ? <VscEye/> : <VscEyeClosed/>}</span>
+    <>
+      <div className="flex justify-center min-h-screen bg-gray-100">
+        <div className="px-8 py-6 mx-4 text-left bg-white shadow-lg md:w-1/3 lg:w-1/3 sm:w-1/3 h-3/4 mt-28 rounded-5">
+          <div className="flex justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-20 h-20 text-teal-600" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path
+                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                        </svg>
           </div>
-          <Link to='/home'>
-          <button  className='w-full max-w-[150px] m-auto  bg-red-500 hover:bg-red-600 cursor-pointer text-white text-xl font-medium text-center py-1 rounded-full mt-4'>Login</button>
-           </Link>
-       </form>
-
-          <p className='text-left text-sm mt-2'>Don't have an account ? <Link to={'/signup'} className='text-red-500 underline'>Sign Up</Link></p>
-
+          <h3 className="text-2xl font-bold text-center">Login In</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mt-4">
+              <div className="mt-4">
+                <label className="block" htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600"
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mt-4">
+                <label className="block">Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-teal-600"
+                  name="password"
+                  value={password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="flex">
+                <button
+                  type='submit'
+                  className="loggin-btn w-full px-6 py-2 mt-4 text-white bg-dark rounded-lg hover:bg-teal-700 transition duration-200"
+                >
+                  Login In
+                </button>
+              </div>
+            </div>
+          </form>
+          <div className="mt-6 text-grey-dark">
+            <span className="mr-2">Don't have an account?</span>
+            <Link to='/signup' className="text-teal-600 hover:underline font-bold">
+              Register
+            </Link>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
+  );
+};
 
-  )
-}
-
-export default Login
+export default Login;
