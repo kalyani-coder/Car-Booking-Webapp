@@ -383,13 +383,13 @@ const Sidebar = () => {
           </li>
 
 
-          {/* <li className="profile">
+          <li className="profile">
             <div className="profile_details">
               <div className="profile_content">
               </div>
             </div>
-            <i className="bx bx-log-out" id="log_out"></i>
-          </li> */}
+            <i className="bx bx-log-out fw-bold" id="log_out"></i>
+          </li>
 
           {/* for addign profile and logout button  */}
 
