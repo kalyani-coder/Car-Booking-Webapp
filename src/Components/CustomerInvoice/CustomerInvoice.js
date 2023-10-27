@@ -164,7 +164,7 @@ function CustomerInvoice() {
               value={formData.date}
               onChange={handleChange}
             />
-            <br />
+            {/* <br /> */}
             <label htmlFor="contactno" className="form-label">Contact No</label>
             <input
               className="form-control-customer-invoice"
