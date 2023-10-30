@@ -227,7 +227,7 @@ function AllocateTrip() {
 
                 <label htmlFor="drivermail" className="driver-details-label">Mail:</label>
                 <input
-                  type="text"
+                  type="email"
                   className="driver-details-input"
                   name="drivermail"
                   placeholder="Mail Id"
@@ -237,7 +237,7 @@ function AllocateTrip() {
 
                 <label htmlFor="mobileno" className="driver-details-label">Mobile No:</label>
                 <input
-                  type="text"
+                  type="number"
                   className="driver-details-input"
                   name="mobileno"
                   placeholder="Mobile No."

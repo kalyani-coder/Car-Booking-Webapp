@@ -126,7 +126,7 @@ const AddVendor = () => {
                 </label>
                 <input
                   className="form-control-ven-add-input"
-                  type="text"
+                  type="number"
                   id="mobileno"
                   name="mobileno"
                   placeholder="Mobile No."
@@ -141,7 +141,7 @@ const AddVendor = () => {
                 </label>
                 <input
                   className="form-control-ven-add-input"
-                  type="text"
+                  type="email"
                   id="email"
                   name="email"
                   placeholder="Email"

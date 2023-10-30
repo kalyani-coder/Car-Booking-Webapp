@@ -165,10 +165,10 @@ function CustomerInvoice() {
               onChange={handleChange}
             />
             {/* <br /> */}
-            <label htmlFor="contactno" className="form-label">Contact No</label>
+            <label htmlFor="contactno" className="form-label">Mobile No</label>
             <input
               className="form-control-customer-invoice"
-              type="text"
+              type="number"
               id="contactno"
               name="contactno"
               value={formData.contactno}
@@ -197,7 +197,7 @@ function CustomerInvoice() {
             <label htmlFor="mail" className="form-label">Mail</label>
             <input
               className="form-control-customer-invoice"
-              type="text"
+              type="email"
               id="mail"
               name="mail"
               value={formData.mail}

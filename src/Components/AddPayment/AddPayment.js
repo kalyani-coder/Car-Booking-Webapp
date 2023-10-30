@@ -175,7 +175,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Quantity</label>
-                          <input type="text" className="form-control" id="quantity" name="quantity" placeholder="Add Quantity" onChange={handleChange} value={formData.quantity} />
+                          <input type="number" className="form-control" placeholder="Add Quantity" />
 
                         </div>
                       </div>
@@ -308,7 +308,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="text" className="form-control" id="title_Amount" name="title_Amount" placeholder="Enter  Amount" onChange={handleChange} value={formData.title_Amount} />
+                          <input type="number" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -326,7 +326,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="text" className="form-control" id="extramkm_Amount" name="extramkm_Amount" placeholder="Enter Amount" onChange={handleChange} value={formData.extramkm_Amount} />
+                          <input type="number" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -344,7 +344,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="text" className="form-control" id="extrahours_Amount" name="extrahours_Amount" placeholder="Enter Amount" onChange={handleChange} value={formData.extrahours_Amount} />
+                          <input type="number" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -354,14 +354,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >SGST 2.5%</label>
-                          <input type="text" className="form-control" id="SGST" name="SGST" placeholder="Enter  SGST Amount" onChange={handleChange} value={formData.SGST} />
+                          <input type="number" className="form-control" placeholder="Enter  SGST Amount" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >CGST 2.5%</label>
-                          <input type="text" className="form-control" id="CGST" name="CGST" placeholder="Enter CGST  Amount" onChange={handleChange} value={formData.CGST} />
+                          <input type="number" className="form-control" placeholder="Enter CGST  Amount" />
 
                         </div>
                       </div>
@@ -372,14 +372,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Amount</label>
-                          <input type="text" className="form-control" id="total_Amount" name="total_Amount" placeholder="Enter Total Amount" onChange={handleChange} value={formData.total_Amount} />
+                          <input type="number" className="form-control" placeholder="Enter Total Amount" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label > Advanced Amount</label>
-                          <input type="text" className="form-control" id="advance_Amount" name="advance_Amount" placeholder="Enter Advance Amount" onChange={handleChange} value={formData.advance_Amount} />
+                          <input type="number" className="form-control" placeholder="Enter Advance Amount" />
 
                         </div>
                       </div>
@@ -391,7 +391,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Remaining Amount</label>
-                          <input type="text" className="form-control" id="remaining_Amount" name="remaining_Amount" placeholder="Enter  Remaining Amount" onChange={handleChange} value={formData.remaining_Amount} />
+                          <input type="number" className="form-control" placeholder="Enter  Remaining Amount" />
 
                         </div>
                       </div>
