@@ -67,6 +67,7 @@ const CustomerInquiry = () => {
     event.preventDefault();
 
     const apiData = {
+      customer_id: selectedCustomer ? selectedCustomer._id : '',
       customer_name: formData.customername,
       mobileno: formData.mobileno,
       email: formData.email,

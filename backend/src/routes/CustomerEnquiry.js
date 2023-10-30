@@ -33,6 +33,23 @@ router.get('/:id' , async(req, res) => {
     
 })
 
+// GET BY CUSTOMER ID 
+router.get('/customer_id/:id', async(req, res) => {
+    const customerId = req.params.id;
+
+    try {
+        const customerEnquiry = await newCustomerSchema.findOne({ customer_id: customerId });
+        if (!customerEnquiry) {
+            return res.status(404).json({ message: "Customer Not found" });
+        }
+        res.json(customerEnquiry);
+
+    } catch (e) {
+        res.status(404).json({ message: "Customer Enquiry Not Found" });
+    }
+});
+
+
 // POST METHOD 
 router.post('/' , async(req, res) => {
 
