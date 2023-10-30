@@ -305,4 +305,4 @@ function AddPayment() {
   )
 }
 
-export default AddPayment
+export default AddPayment;
