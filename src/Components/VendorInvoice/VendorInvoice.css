@@ -1,12 +1,12 @@
 /* .container-cust-invoice{
-    background-color:skyblue;
+     background-color:rgb(200, 205, 122);
     height: auto;
     
 } */
 .container-vendor-invoice{
     margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
-  background-color: skyblue;
+     background-color:rgb(200, 205, 122);
 }
 button-vendor{
    color:red;
