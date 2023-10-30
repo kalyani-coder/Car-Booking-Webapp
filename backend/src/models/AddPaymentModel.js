@@ -5,56 +5,84 @@ const mongoose = require('mongoose')
 const AddPaymentSchema = new mongoose.Schema({
 
     company_Name : String,
-    duty_SlipNo : String,
+    GST_No : String,
     reporting_Address : String,
     Date : String,
-    name : String,
+    customer_Name : String,
     vehicle_Number : String,
     vehicle_Type : String,
-    trip_Details : {
+    quantity : Number,
+    from :String,
+    to : String,
+    closing_km : String,
+    closing_Time : String,
+    starting_Km : String,
+    starting_Time :String,
+    total_Km :String,
+    total_hours :String,
+    title : String,
+    title_Amount :Number,
+    extra_Km :String,
+    extramkm_Amount :Number,
+    extra_Hours :String,
+    extrahours_Amount :String,
+    SGST : Number,
+    CGST :Number,
+    total_Amount :Number,
+    advance_Amount :Number,
+    remaining_Amount :Number,
+    payment_Method :String
 
-        from : String,
-        to : String
-    },
-    trip_Time : {
+    
+    
+    
+    
+    
+    // name : String,
+    // trip_Details : {
 
-        closing_kms :String,
-        closing_Time : String,
+    //     from : String,
+    //     to : String
+    // },
+    // trip_Time : {
 
-    },
-    trip_Distance : {
+    //     closing_kms :String,
+    //     closing_Time : String,
 
-        starting_kms : String,
-        reporting_kms :String,
-    },
-    trip_Totalkm : {
-        total_kms : String,
-        total_hours : String,
-    },
-    trip_title : {
-        title : String,
-        amount : Number,
-    },
-    extra_tripDetails : {
-        extra_kms : String,
-        amount : Number,
+    // },
+    // trip_Distance : {
 
-    },
-    extra_tripHours : {
-        extra_Hours : String,
-        payment : Number,
-    },
-    trip_bydays : {
-        oneDaykm_rate : String,
-        amount : Number,
-    },
-    trip_Total : {
-        total_Amount : Number,
-        advance_Payment : Number
-    },
+    //     starting_kms : String,
+    //     reporting_kms :String,
+    // },
+    // trip_Totalkm : {
+    //     total_kms : String,
+    //     total_hours : String,
+    // },
+    // trip_title : {
+    //     title : String,
+    //     amount : Number,
+    // },
+    // extra_tripDetails : {
+    //     extra_kms : String,
+    //     amount : Number,
+
+    // },
+    // extra_tripHours : {
+    //     extra_Hours : String,
+    //     payment : Number,
+    // },
+    // trip_bydays : {
+    //     oneDaykm_rate : String,
+    //     amount : Number,
+    // },
+    // trip_Total : {
+    //     total_Amount : Number,
+    //     advance_Payment : Number
+    // },
 
 })
 
-const NewAddPaymentDetails = new mongoose.model('/payment-details' , AddPaymentSchema)
+const NewAddPaymentDetails = new mongoose.model('/Customer-payment-details' , AddPaymentSchema)
 
 module.exports = NewAddPaymentDetails
