@@ -52,7 +52,7 @@ const ViewVendorPayment = () => {
                 className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
               >
                 <div className="custom-card-body p-4">
-                  <h5 className="custom-card-title text-lg font-semibold mb-2">
+                  <h5 className="custom-card- font-semibold ">
                     Vendor Name: {vendor.company_Name}
                   </h5>
                   <p className="custom-card-subtitle mb-2">

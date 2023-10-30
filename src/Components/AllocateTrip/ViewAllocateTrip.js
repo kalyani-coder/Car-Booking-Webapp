@@ -65,7 +65,7 @@ const ViewAllocateTrip = () => {
               {filteredShareDetails.map((shareDetail) => (
                 <div key={shareDetail._id} className="bg-white shadow-md rounded-lg overflow-hidden">
                   <div className="p-4">
-                    <h5 className="font-semibold text-lg mb-2">Vehicle: {shareDetail.vehicle}</h5>
+                    <h5 className="font-semibold ">Vehicle: {shareDetail.vehicle}</h5>
                     <p className="mb-2">Trip Type: {shareDetail.triptype}</p>
                     <p className="mb-2">Subtype: {shareDetail.subtype}</p>
                     <p className="mb-2">Pickup: {shareDetail.pickup}</p>

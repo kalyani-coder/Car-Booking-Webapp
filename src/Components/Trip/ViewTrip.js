@@ -66,7 +66,7 @@ const ViewTrip = () => {
               {filteredCustomers.map((customer) => (
                 <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
                   <div className="custom-card-body p-4">
-                    <h5 className="custom-card-title text-lg font-semibold mb-2">Customer Name: {customer.customername}</h5>
+                    <h5 className="font-semibold">Customer Name: {customer.customername}</h5>
                     <p className="custom-card-subtitle mb-2">Mobile No: {customer.mobileno}</p>
                     <p className="custom-card-subtitle mb-2">Email: {customer.email}</p>
                     <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>

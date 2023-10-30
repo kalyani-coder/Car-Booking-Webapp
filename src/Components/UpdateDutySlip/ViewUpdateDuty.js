@@ -65,7 +65,7 @@ const ViewUpdateDuty = () => {
                 {filteredCustomers.map((customer) => (
                   <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
                     <div className="custom-card-body p-4">
-                      <h5 className="custom-card-title text-lg font-semibold mb-2">Company Name: {customer.companyname}</h5>
+                      <h5 className="custom-card font-semibold ">Company Name: {customer.companyname}</h5>
                       <p className="custom-card-subtitle mb-2">GST No: {customer.gstno}</p>
                       <p className="custom-card-subtitle mb-2">Reporting Address: {customer.reportingaddress}</p>
                       <p className="custom-card-subtitle mb-2">Date: {customer.date}</p>
