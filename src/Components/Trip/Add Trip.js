@@ -128,7 +128,7 @@ const AddTrip = () => {
               <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
             </select>
           </div>
-          <div className="d-flex gap-5">
+          <div className="d-flex gap-3">
             <div>
           <div className="trip-form-group">
             <label htmlFor="pickup" className="trip-form-label">
@@ -154,7 +154,7 @@ const AddTrip = () => {
           </div>
           </div>
           </div>
-          <div className="d-flex gap-5">
+          <div className="d-flex gap-3">
             <div>
           <div className="trip-form-group">
             <label htmlFor="dropoff" className="trip-form-label">

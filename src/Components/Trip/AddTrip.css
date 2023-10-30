@@ -52,14 +52,15 @@
   
   /* Form input and select styles */
   .form-control-add-trip-input {
-    width: 100%;
+    width: 80%;
+    height: 42px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
   }
   .add-trip-input{
-    width: 275px;
+    width: 234px;
   }
   .form-control-date,
   .form-control-time,
@@ -73,7 +74,7 @@
   
   /* Custom submit button styles */
   .trip-btn-submit {
-    background-color: #007bff;
+    background-color: #004f83;
     color: #fff;
     padding: 10px 20px;
     border: none;
