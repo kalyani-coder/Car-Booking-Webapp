@@ -8,9 +8,13 @@
   padding: 20px;
      background-color:rgb(200, 205, 122);
 }
-button-customer{
+/* button-customer{
    color:red;
    margin-top: 10px;
+} */
+.cibtn{
+background-color: rgb(247, 126, 126);
+color: white;
 }
 
 .form-customer-invoice{
