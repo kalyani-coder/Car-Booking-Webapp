@@ -52,7 +52,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="pickuplocation"
+                  name="pickuplocation" placeholder="Enter Pickup Location"
                   value={formData.pickuplocation}
                   onChange={handleChange}
                 />
@@ -99,7 +99,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="dropofflocation"
+                  name="dropofflocation"placeholder='Enter Drop-off Location'
                   value={formData.dropofflocation}
                   onChange={handleChange}
                 />
@@ -148,7 +148,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="number"
-                  name="totaldays"
+                  name="totaldays"placeholder='Enter Total Days'
                   value={formData.totaldays}
                   onChange={handleChange}
                 />
@@ -162,8 +162,8 @@ const StartEndDetails = () => {
                 </label>
                 <input
                   className="start-end-details-input"
-                  type="text"
-                  name="totalHours"
+                  type="number"
+                  name="totalhours"placeholder='Enter Total Hours'
                   value={formData.totalhours}
                   onChange={handleChange}
                 />
@@ -220,7 +220,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="customername"
+                  name="customername"placeholder='Enter Customer Name'
                   onChange={handleChange}
                   value={formData.customername}
                 />
@@ -235,7 +235,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="mobileno"
+                  name="mobileno" placeholder='Enter Customer Mobile Number'
                   onChange={handleChange}
                   value={formData.mobileno}
                 />
@@ -246,13 +246,13 @@ const StartEndDetails = () => {
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="customerid" className="start-end-details-label">
+                <label htmlFor="drivername" className="start-end-details-label">
                   Driver Name:
                 </label>
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="customername"
+                  name="drivername"placeholder='Enter Driver Name'
                   onChange={handleChange}
                   value={formData.drivername}
                 />
@@ -261,15 +261,15 @@ const StartEndDetails = () => {
 
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="mobileno" className="start-end-details-label">
+                <label htmlFor="mobileno1" className="start-end-details-label">
                   Mobile No:
                 </label>
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="mobileno"
+                  name="mobileno1"placeholder='Enter Driver Mobile Number'
                   onChange={handleChange}
-                  value={formData.mobileno}
+                  value={formData.mobileno1}
                 />
               </div>
             </div>

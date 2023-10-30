@@ -96,13 +96,13 @@ const AddCustomer = () => {
             <label htmlFor="mobileno" className="form-label">
               Mobile No:
             </label>
-            <input className="form-control-cust-add-input" type="text" id="mobileno" name="mobileno" placeholder="Mobile No." onChange={handleChange} value={formData.mobileno} />
+            <input className="form-control-cust-add-input" type="number" id="mobileno" name="mobileno" placeholder="Mobile No." onChange={handleChange} value={formData.mobileno} />
           </div>
           <div className="form-group">
             <label htmlFor="email" className="form-label">
               Email Id:
             </label>
-            <input className="form-control-cust-add-input" type="text" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
+            <input className="form-control-cust-add-input" type="email" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
           </div>
           <div className="form-group">
             <label htmlFor="address" className="form-label">

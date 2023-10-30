@@ -108,7 +108,7 @@ const CustomerRate = () => {
                 </label>
                 <input
                   className="form-control-rate-add-input"
-                  type="text"
+                  type="number"
                   id="mobile_Number"
                   name="mobile_Number"
                   placeholder="Mobile No."
@@ -122,7 +122,7 @@ const CustomerRate = () => {
                 </label>
                 <input
                   className="form-control-rate-add-input"
-                  type="text"
+                  type="number"
                   id="rate_per_km"
                   name="rate_per_km"
                   placeholder="Rate Per KM"
@@ -157,7 +157,7 @@ const CustomerRate = () => {
                     </label>
                     <input
                       className="rate-form-control"
-                      type="text"
+                      type="number"
                       id="rate"
                       name="rate"
                       placeholder="rate"

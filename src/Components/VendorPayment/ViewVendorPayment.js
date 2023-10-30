@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-// import './ViewVender.css'; // Make sure you have a CSS file for this component
+import ReactToPrint from 'react-to-print';
+import jsPDF from 'jspdf';
 
 const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const componentRef = useRef();
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -23,11 +25,29 @@ const ViewVendorPayment = () => {
     fetchVendors();
   }, []);
 
+  const handleGenerateInvoice = (vendor) => {
+    const doc = new jsPDF();
+    doc.text(`Vendor Name: ${vendor.company_Name}`, 10, 10);
+    doc.text(`Company Name: ${vendor.vender_Name}`, 10, 20);
+    doc.text(`GST No: ${vendor.GST_No}`, 10, 30);
+    doc.text(`Mobile Number: ${vendor.mobile_Number}`, 10, 40);
+    doc.text(`Payment: ${vendor.payment}`, 10, 50);
+    doc.text(`Amount: ${vendor.amount}`, 10, 60);
+    doc.text(`tds: ${vendor.tds}`, 10, 70);
+    doc.text(`Total Amount: ${vendor.total_Amount}`, 10, 80);
+    doc.text(`Paid Amount: ${vendor.paid_Amount}`, 10, 90);
+    doc.text(`Remaining Amount: ${vendor.remaining_Amount}`, 10, 100);
+    doc.text(`Payment Method: ${vendor.payment_Method}`, 10, 110);
+
+    // Save the PDF or open in a new tab
+    doc.save(`Invoice_${vendor._id}.pdf`);
+  };
+
   const filteredVendors = vendors.filter((vendor) => {
-    const venderName = vendor.vender_Name || '';
+    const vendorName = vendor.vender_Name || '';
     const companyName = vendor.company_Name || '';
     return (
-      venderName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      vendorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       companyName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
@@ -52,7 +72,7 @@ const ViewVendorPayment = () => {
                 className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
               >
                 <div className="custom-card-body p-4">
-                  <h5 className="custom-card- font-semibold ">
+                  <h5 className="custom-card- font-semibold">
                     Vendor Name: {vendor.company_Name}
                   </h5>
                   <p className="custom-card-subtitle mb-2">
@@ -68,11 +88,15 @@ const ViewVendorPayment = () => {
                   <p className="custom-card-subtitle mb-2">Remaining Amount: {vendor.remaining_Amount}</p>
                   <p className="custom-card-subtitle mb-2">Payment Method: {vendor.payment_Method}</p>
                 </div>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleGenerateInvoice(vendor)}
+                >
+                  Generate
+                </button>
               </div>
             ))}
-            
           </div>
-          
         </div>
       </div>
     </>
