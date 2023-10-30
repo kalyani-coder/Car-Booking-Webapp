@@ -61,7 +61,7 @@ function VendorPayment() {
             <div className="row justify-content-center">
               <div className="col-md-10">
                 <div className="card-body mt-5">
-                <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Vendor Payment</h2>
+                <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor Payment</h2>
                   <form onSubmit={handleSubmit}>
 
                     <div className="row g-2">
