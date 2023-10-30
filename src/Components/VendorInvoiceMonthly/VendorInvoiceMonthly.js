@@ -54,6 +54,9 @@ function VendorInvoiceMonthly() {
     const doc = new jsPDF();
     
 
+    doc.text('Monthly Vendor Invoice', 10, 10);
+    
+
    // Sample data for your invoice
 const invoiceData = [
   ['Company Name:', formData.companyName],

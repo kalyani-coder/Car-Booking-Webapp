@@ -7,6 +7,7 @@
     margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
   background-color: skyblue;
+  height: 100vh;
 }
 button-vendor{
    color:red;

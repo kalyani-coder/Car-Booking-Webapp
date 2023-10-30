@@ -62,7 +62,7 @@ function VendorInvoiceMonthly() {
       item.totalAmount,
     ]);
 
-    doc.text('Monthly Vendor Invoice', 10, 10);
+    doc.text('Monthly Customer Invoice', 10, 10);
 
     doc.autoTable({
       startY: 20,
