@@ -130,7 +130,7 @@ const CustomerRate = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="d-flex gap-2">
+              <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">

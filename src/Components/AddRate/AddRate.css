@@ -52,15 +52,20 @@
   
   /* Form input and select styles */
   .form-control-rate-add-input {
-    width: 100%;
+    width: 80%;
+    height: 40px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
   }
   .rate-form-control {
-    width: 450px; /* Make all inputs and selects full width */
-    padding: 8px;
+    width: 358px;
+    height: 40px; /* Make all inputs and selects full width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
     margin-bottom: 10px; /* Add some space between input fields */
   }
@@ -71,7 +76,7 @@
   
   /* Custom submit button styles */
   .rate-btn-submit {
-    background-color: #007bff;
+    background-color: #004F83;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -79,7 +84,7 @@
     cursor: pointer;
   }
   
-  .vendor-btn-submit:hover {
+  .rate-btn-submit:hover {
     background-color: #0056b3;
   }
   
