@@ -70,6 +70,7 @@ const ViewCustomerInquiry = () => {
                       <h5 className="custom-card-title text-lg font-semibold mb-2">Customer Name: {customer.customer_name}</h5>
                       <p className="custom-card-subtitle mb-2">Mobile: {customer.mobileno}</p>
                       <p className="custom-card-subtitle mb-2">Email: {customer.email}</p>
+                      <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>
                       <p className="custom-card-subtitle mb-2">Trip Type: {customer.tripe_type}</p>
                       <p className="custom-card-subtitle mb-2">Sub Type: {customer.sub_type}</p>
                       <p className="custom-card-subtitle mb-2">Pickup Location: {customer.pic_up}</p>
@@ -77,10 +78,19 @@ const ViewCustomerInquiry = () => {
                       <p className="custom-card-subtitle mb-2">Time: {customer.time}</p>
                       <p className="custom-card-subtitle mb-2">Drop Off Location: {customer.drop_of}</p>
                       <p className="custom-card-subtitle mb-2">Date: {customer.date1}</p>
+                      <p className="custom-card-subtitle mb-2">Time: {customer.time}</p>
                       <p className="custom-card-subtitle mb-2">Days: {customer.days}</p>
                       <p className="custom-card-subtitle mb-2">Hours: {customer.hours}</p>
                       <p className="custom-card-subtitle mb-2">Vehicle: {customer.vehicle}</p>
-                      {/* Add other fields as needed */}
+                      
+                      <div className="flex justify-between">
+                        
+
+                        <button className='btn btn-info'>Edit</button>
+                        <button className='btn btn-danger'>Save</button>
+                        <button className='btn btn-success'>Delete</button>
+                     
+                      </div>
                     </div>
                   </div>
                 ))}

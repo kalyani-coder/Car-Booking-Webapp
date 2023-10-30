@@ -90,6 +90,14 @@ const ViewUpdateDuty = () => {
                       <p className="custom-card-subtitle mb-2">Advance Amount: {customer.advanceamount}</p>
                       <p className="custom-card-subtitle mb-2">Payment Method: {customer.paymentmethod}</p>
                       {/* Add other fields as needed */}
+                      <div className="flex justify-between">
+                        
+
+                        <button className='btn btn-info'>Edit</button>
+                        <button className='btn btn-danger'>Save</button>
+                        <button className='btn btn-success'>Delete</button>
+                     
+                      </div>
                     </div>
                   </div>
                 ))}

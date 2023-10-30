@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar'; // Make sure the path is correct
 import './ViewCustomer.css'; // Make sure you have a CSS file for this component
 
 const ViewCustomer = () => {
@@ -42,13 +42,31 @@ const ViewCustomer = () => {
     filterCustomers();
   }, [searchQuery]);
 
+  // Function to edit a customer (example implementation)
+  const editCustomer = (customerId) => {
+    // Implement your edit logic here
+    console.log(`Edit customer with ID: ${customerId}`);
+  };
+
+  // Function to save a customer (example implementation)
+  const saveCustomer = (customerId) => {
+    // Implement your save logic here
+    console.log(`Save customer with ID: ${customerId}`);
+  };
+
+  // Function to delete a customer (example implementation)
+  const deleteCustomer = (customerId) => {
+    // Implement your delete logic here
+    console.log(`Delete customer with ID: ${customerId}`);
+  };
+
   return (
     <>
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Customer</h2>
-  
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Customer</h2>
+
           <div className="search-bar">
             <input
               type="text"
@@ -58,7 +76,7 @@ const ViewCustomer = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <div className="grid-view">
             {filteredCustomers.length === 0 ? (
               <p>No results found.</p>
@@ -73,6 +91,32 @@ const ViewCustomer = () => {
                       <p className="custom-card-subtitle mb-2">Mobile: {customer.Cus_Mobile}</p>
                       <p className="custom-card-subtitle mb-2">Email: {customer.Cus_Email}</p>
                       <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>
+                      <div className="flex justify-between">
+                        {/* <button
+                          className="viewcus-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-10"
+                          onClick={() => editCustomer(customer._id)}
+                        >
+                          Edit
+                        </button> */}
+                        {/* <button
+                          className="viewcus-btn bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-10 "
+                          onClick={() => saveCustomer(customer._id)}
+                        >
+                          Save
+                        </button> */}
+                        {/* <button
+                          className="viewcus-btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-10"
+                          onClick={() => deleteCustomer(customer._id)}
+                        >
+                          Delete
+                        </button> */}
+                        {/* <div className='customer-btn mt-5 '> */}
+
+                        <button className='btn btn-info'>Edit</button>
+                        <button className='btn btn-danger'>Save</button>
+                        <button className='btn btn-success'>Delete</button>
+                        {/* </div> */}
+                      </div>
                     </div>
                   </div>
                 ))}

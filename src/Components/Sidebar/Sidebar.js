@@ -389,7 +389,8 @@ const Sidebar = () => {
             </ul>
           </li>
 
-
+<br/>
+<br/>
           <li className="profile">
             <div className="profile_details">
               <div className="profile_content">

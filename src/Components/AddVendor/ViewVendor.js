@@ -52,9 +52,9 @@ const ViewVendor = () => {
                 className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
               >
                 <div className="custom-card-body p-4">
-                  <h5 className="custom-card-title text-lg font-semibold mb-2">
+                  <p className=" font-semibold ">
                     Vendor Name: {vendor.vender_Name}
-                  </h5>
+                  </p>
                   <p className="custom-card-subtitle mb-2">
                     Company Name: {vendor.company_Name}
                   </p>
@@ -62,6 +62,14 @@ const ViewVendor = () => {
                   <p className="custom-card-subtitle mb-2">Mobile: {vendor.vender_Mobile}</p>
                   <p className="custom-card-subtitle mb-2">Email: {vendor.Vender_Email}</p>
                   <p className="custom-card-subtitle mb-2">Address: {vendor.address}</p>
+                  <div className="flex justify-between">
+                        
+
+                        <button className='btn btn-info'>Edit</button>
+                        <button className='btn btn-danger'>Save</button>
+                        <button className='btn btn-success'>Delete</button>
+                     
+                      </div>
                 </div>
               </div>
             ))}

@@ -79,6 +79,14 @@ const ViewShareDetails = () => {
                     <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
                     <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p>
                     {/* Add other fields as needed */}
+                    <div className="flex justify-between">
+                        
+
+                        <button className='btn btn-info'>Edit</button>
+                        <button className='btn btn-danger'>Save</button>
+                        <button className='btn btn-success'>Delete</button>
+                     
+                      </div>
                   </div>
                 </div>
               ))}
