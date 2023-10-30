@@ -7,6 +7,8 @@ import Sidebar from '../Sidebar/Sidebar';
 
 const ShareDetails = () => {
   const initialFormData = {
+    customername:'',
+    mobileno:'',
     vehicle: '',
     vehiclenumber: '',
     triptype: '',
@@ -18,9 +20,8 @@ const ShareDetails = () => {
     date1: '',
     time1: '',
     drivername: '',
-    drivermail: '',
     mobileno: '',
-    driveraddress: ''
+    
   };
 
   const [formData, setFormData] = useState(initialFormData);
