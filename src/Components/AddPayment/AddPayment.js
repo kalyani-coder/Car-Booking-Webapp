@@ -99,7 +99,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Quantity</label>
-                          <input type="text" className="form-control" placeholder="Add Quantity" />
+                          <input type="number" className="form-control" placeholder="Add Quantity" />
 
                         </div>
                       </div>
@@ -233,7 +233,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter  Amount" />
+                          <input type="number" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -251,7 +251,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter  Amount" />
+                          <input type="number" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -269,7 +269,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter  Amount" />
+                          <input type="number" className="form-control" placeholder="Enter  Amount" />
 
                         </div>
                       </div>
@@ -279,14 +279,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >SGST 2.5%</label>
-                          <input type="text" className="form-control" placeholder="Enter  SGST Amount" />
+                          <input type="number" className="form-control" placeholder="Enter  SGST Amount" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >CGST 2.5%</label>
-                          <input type="text" className="form-control" placeholder="Enter CGST  Amount" />
+                          <input type="number" className="form-control" placeholder="Enter CGST  Amount" />
 
                         </div>
                       </div>
@@ -297,14 +297,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter Total Amount" />
+                          <input type="number" className="form-control" placeholder="Enter Total Amount" />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label > Advanced Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter Advance Amount" />
+                          <input type="number" className="form-control" placeholder="Enter Advance Amount" />
 
                         </div>
                       </div>
@@ -316,7 +316,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Remaining Amount</label>
-                          <input type="text" className="form-control" placeholder="Enter  Remaining Amount" />
+                          <input type="number" className="form-control" placeholder="Enter  Remaining Amount" />
 
                         </div>
                       </div>

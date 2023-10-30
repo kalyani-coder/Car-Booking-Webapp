@@ -116,7 +116,7 @@ const CustomerInquiry = () => {
             <label htmlFor="email" className="form-label">
               Email Id:
             </label>
-            <input className="form-control-cust-inq-input" type="text" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
+            <input className="form-control-cust-inq-input" type="email" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
           </div>
           <div className="form-group">
             <label htmlFor="address" className="form-label">
