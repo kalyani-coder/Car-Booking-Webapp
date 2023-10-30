@@ -346,7 +346,7 @@ function AddPayment() {
                     <button id="btn1" className="btn btn-danger " >
                       Edit
                     </button>
-                    <button id="btn2" className="btn btn-danger " >
+                    <button id="btn2" className="add-payment-submit" >
                       Save
                     </button>
 
