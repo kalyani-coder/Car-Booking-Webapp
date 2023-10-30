@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CustomerInquiry.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const CustomerInquiry = () => {
   const initialFormData = {
     customername: "",
+    cus_Id : '',
     mobileno: "",
     email: "",
     address: "",
@@ -22,6 +23,37 @@ const CustomerInquiry = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('http://localhost:7000/api/add-customers');
+        if (response.ok) {
+          const data = await response.json();
+          setCustomerList(data);
+        } else {
+          console.error('Failed to fetch customers');
+        }
+      } catch (error) {
+        console.error('API request error:', error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+    if (selectedCustomer) {
+      setFormData((prevData) => ({
+        ...prevData,
+        mobileno: selectedCustomer.Cus_Mobile ,
+        email: selectedCustomer.Cus_Email,
+        address: selectedCustomer.address,
+      }));
+    }
+  }, [selectedCustomer]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,7 +66,6 @@ const CustomerInquiry = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Map form field names to API field names
     const apiData = {
       customer_name: formData.customername,
       mobileno: formData.mobileno,
@@ -54,7 +85,6 @@ const CustomerInquiry = () => {
       totaldays: formData.totaldays,
     };
 
-    // Check if all fields are filled
     for (const key in apiData) {
       if (apiData[key] === '') {
         setError('All fields are required.');
@@ -62,7 +92,6 @@ const CustomerInquiry = () => {
       }
     }
 
-    // Reset error if all fields are filled
     setError('');
 
     try {
@@ -76,7 +105,7 @@ const CustomerInquiry = () => {
 
       if (response.ok) {
         alert('Data saved successfully!');
-        setFormData(initialFormData); // Reset the form
+        setFormData(initialFormData);
       } else {
         alert('Failed to save data. Please try again.');
       }
@@ -88,43 +117,80 @@ const CustomerInquiry = () => {
 
   return (
     <>
-    <Sidebar />
-    <div className="customer-inquiry-container">
-    
-      <div className="main-container">
-        <div className="form-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Customer Enquiry</h2>
-          <div className="form-group">
-            {/* <label htmlFor="customerid" className="form-label">
-              Customer Id:
-            </label>
-            <input className="form-control-cust-inq-input" type="text" id="customerid" name="customerid" placeholder="Customer id" onChange={handleChange} value={formData.customerid} /> */}
-          </div>
-          <div className="form-group">
-            <label htmlFor="customername" className="form-label">
-              Customer Name:
-            </label>
-            <input className="form-control-cust-inq-input" type="text" id="customername" name="customername" placeholder="Customer Name" onChange={handleChange} value={formData.customername} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="mobileno" className="form-label">
-              Mobile No:
-            </label>
-            <input className="form-control-cust-inq-input" type="text" id="mobileno" name="mobileno" placeholder="Mobile No." onChange={handleChange} value={formData.mobileno} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email Id:
-            </label>
-            <input className="form-control-cust-inq-input" type="text" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="address" className="form-label">
-              Address:
-            </label>
-            <input className="form-control-cust-inq-input" type="text" id="address" name="address" placeholder="Address" onChange={handleChange} value={formData.address} />
-          </div>
-          <div className="form-group">
+      <Sidebar />
+      <div className="customer-inquiry-container">
+        <div className="main-container">
+          <div className="form-container">
+            <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Customer Enquiry</h2>
+            <div className="form-group">
+              <label htmlFor="customername" className="form-label">
+                Customer Name:
+              </label>
+              <select
+                className="form-control-cust-inq-input"
+                id="customername"
+                name="customername"
+                onChange={(e) => {
+                  const selectedCustomer = customerList.find(
+                    (customer) => customer.Cus_name === e.target.value
+                  );
+                  setSelectedCustomer(selectedCustomer);
+                  handleChange(e);
+                }}
+                value={formData.customername}
+              >
+                <option value="">Select Customer</option>
+                {customerList.map((customer) => (
+                  <option key={customer._id} value={customer.Cus_name}>
+                    {customer.Cus_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="mobileno" className="form-label">
+                Mobile No:
+              </label>
+              <input
+                className="form-control-cust-inq-input"
+                type="text"
+                id="mobileno"
+                name="mobileno"
+                placeholder="Mobile No."
+                onChange={handleChange}
+                value={formData.mobileno}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                Email Id:
+              </label>
+              <input
+                className="form-control-cust-inq-input"
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={formData.email}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="address" className="form-label">
+                Address:
+              </label>
+              <input
+                className="form-control-cust-inq-input"
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Address"
+                onChange={handleChange}
+                value={formData.address}
+              />
+            </div>
+
+            <div className="form-group">
             <label htmlFor="triptype" className="form-label">
               Trip Type:
             </label>
