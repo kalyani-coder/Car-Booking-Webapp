@@ -92,10 +92,46 @@ const ShareDetails = () => {
         {error && <p className="text-red-500">{error}</p>}
         <div className="share-details-form">
         <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Share Details</h2>
-          <div className="share-details-row">
-            <div className="share-details-column">
 
+
+        <div className="share-details-row">
+            <div className="share-details-column">
               <div className="share-details-form-group">
+                <label htmlFor="customername" className="share-details-label">
+                  Customer Name:
+                </label>
+                <input
+                  type="text"
+                  className="share-details-input"
+                  name="customername"
+                  placeholder="Customer Name"
+                  onChange={handleChange}
+                  value={formData.customername}
+                />
+              </div>
+            </div>
+
+            <div className="share-details-column">
+              <div className="share-details-form-group">
+                <label htmlFor="mobileno" className="share-details-label">
+                  Mobile No:
+                </label>
+                <input
+                  type="number"
+                  className="share-details-input"
+                  name="mobileno"
+                  placeholder="Enter Mobile Number"
+                  onChange={handleChange}
+                  value={formData.mobileno}
+                />
+              </div>
+            </div>
+          </div>
+
+
+          <div className="share-details-row">
+          <div className="share-details-column">
+          <div className="share-details-form-group">
 
                 <label htmlFor="vehicle" className="share-details-label">
                   Vehicle:
@@ -304,54 +340,21 @@ const ShareDetails = () => {
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="drivermail" className="share-details-label">
-                  Mail:
-                </label>
-                <input
-                  type="text"
-                  className="share-details-input"
-                  name="drivermail"
-                  placeholder="Mail Id"
-                  onChange={handleChange}
-                  value={formData.drivermail}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="share-details-row">
-            <div className="share-details-column">
-              <div className="share-details-form-group">
                 <label htmlFor="mobileno" className="share-details-label">
                   Mobile No:
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="share-details-input"
                   name="mobileno"
-                  placeholder="Mobile No"
+                  placeholder="Mobile Number"
                   onChange={handleChange}
                   value={formData.mobileno}
                 />
               </div>
             </div>
-
-            <div className="share-details-column">
-              <div className="share-details-form-group">
-                <label htmlFor="driveraddress" className="share-details-label">
-                  Driver Address:
-                </label>
-                <input
-                  type="text"
-                  className="share-details-input"
-                  name="driveraddress"
-                  placeholder="Driver Address"
-                  onChange={handleChange}
-                  value={formData.driveraddress}
-                />
-              </div>
-            </div>
           </div>
+
 
           <button type="button" className="share-details-button" onClick={handleShare}>
             Save
