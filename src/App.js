@@ -23,7 +23,9 @@ import AddVendor from './Components/AddVendor/AddVendor';
 import ViewCustomer from './Components/AddCustomer/ViewCustomer';
 import ViewVendor from './Components/AddVendor/ViewVendor';
 import CustomerRate from './Components/AddRate/CustomerRate';
+import ViewCustomerRate from './Components/AddRate/ViewCustomerRate';
 import VendorRate from './Components/AddRate/VendorRate'
+import ViewVendorRate from './Components/AddRate/ViewVendorRate';
 import ViewCustomerInquiry from './Components/CustomerInquiry/ViewCustomerInquiry';
 import AddTrip from './Components/Trip/Add Trip';
 import ViewTrip from './Components/Trip/ViewTrip';
@@ -58,7 +60,9 @@ function App() {
     <Route path='/addpayment'  element={<AddPayment/>}/>
     <Route path='/viewcustomerpayment'  element={<ViewCustomerPayment/>}/>
     <Route path='/customerrate'  element={<CustomerRate/>}/>
+    <Route path='/viewcustomerrate'  element={<ViewCustomerRate/>}/>
     <Route path='/vendorrate'  element={<VendorRate/>}/>
+    <Route path='/viewvendorrate'  element={<ViewVendorRate/>}/>
     <Route path='/customerenquiry'  element={<CustomerInquiry/>}/>
     <Route path='/sidebar'  element={<Sidebar/>}/>
     <Route path='/vendorpayment' element={<VendorPayment/>} />

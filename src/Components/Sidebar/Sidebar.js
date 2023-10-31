@@ -140,7 +140,7 @@ const Sidebar = () => {
               <li>
                 <a>
                   <Link to={'/adddriver'}>
-                    <i className="bx bx-driver"></i>
+                    <i className="bx bx-user"></i>
                     <span className="link_name">Add Driver</span>
                   </Link>
                 </a>
@@ -152,12 +152,15 @@ const Sidebar = () => {
                     <span className="link_name">View driver</span>
                   </Link>
                 </a>
+                </li>
+                </ul>
               </li>
-            </ul>
-          </li>
+            
 
 
           {/* Rate */}
+
+
           <li className="has-submenu">
             <a>
               <i className="bx bx-rupee"></i>
@@ -165,19 +168,43 @@ const Sidebar = () => {
             </a>
             <ul className="sub-menu">
               <li>
+                <a>
                 <Link to="/customerrate">
                   <i className="bx bx-rupee"></i>
                   <span className="link_name">Customer Rate</span>
                 </Link>
+                </a>
               </li>
               <li>
-                <Link to="/vendorrate">
-                  <i className="bx bx-rupee"></i>
-                  <span className="link_name">Vendor Rate</span>
-                </Link>
+                <a>
+                  <Link to={'/viewcustomerrate'}>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View Customer Rate</span>
+                  </Link>
+                </a>
               </li>
-            </ul>
-          </li>
+              <li>
+                <a>
+                  <Link to={'/vendorrate'}>
+                    <i className="bx bx-rupee"></i>
+                    <span className="link_name">Vendor Rate</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <Link to={'/viewvendorrate'}>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View Vendor Rate</span>
+                  </Link>
+                </a>
+              </li>
+              </ul>
+              </li>
+
+
+
+              
 
           {/* Customer Inquiry */}
           <li className="has-submenu">

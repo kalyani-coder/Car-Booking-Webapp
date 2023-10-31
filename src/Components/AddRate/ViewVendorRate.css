@@ -1,0 +1,30 @@
+
+
+.custom-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .custom-card-body {
+    padding: 0;
+  }
+  
+  .custom-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+  }
+  
+  .custom-card-subtitle {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .add-vendor-btn{
+    margin-bottom: 10px !important;
+  }
+  .add-vendor-btn{
+    color: white;
+  }
