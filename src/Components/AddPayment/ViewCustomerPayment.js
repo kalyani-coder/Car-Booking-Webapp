@@ -4,29 +4,29 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 const ViewCustomerPayment = () => {
-  const [vendors, setVendors] = useState([]);
+  const [customers, setcustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchVendors = async () => {
+    const fetchcustomers = async () => {
       try {
         const response = await fetch('http://localhost:7000/api/customer-payment');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
         const data = await response.json();
-        setVendors(data);
+        setcustomers(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
-    fetchVendors();
+    fetchcustomers();
   }, []);
 
   const handleGenerateInvoice = (customerId) => {
     // Fetch customer data for the specified customer ID
-    const customer = vendors.find((vendor) => vendor._id === customerId);
+    const customer = customers.find((customer) => customer._id === customerId);
 
     if (customer) {
       const doc = new jsPDF();
@@ -37,15 +37,31 @@ const ViewCustomerPayment = () => {
       // Define the columns and rows for the table
       const columns = ['Field', 'Value'];
       const rows = [
-        ['Vendor Name', customer.company_Name],
-        ['Company Name', customer.vender_Name],
+        ['Company Name', customer.company_Name],
         ['GST No', customer.GST_No],
-        ['Mobile Number', customer.mobile_Number],
-        ['Payment', customer.payment],
-        ['Amount', customer.amount],
-        ['tds', customer.tds],
+        ['Reporting Address', customer.reporting_Address],
+        ['Date', customer.date],
+        ['Customer Name', customer.customer_Name],
+        ['Vehicle Number', customer.vehicle_Number],
+        ['Vehicle Type', customer.vehicle_Type],
+        ['Quantity', customer.quantity],
+        ['From', customer.from],
+        ['To', customer.to],
+        ['Closing KM', customer.closing_km],
+        ['Closing Time', customer.closing_Time],
+        ['Starting KM', customer.starting_Km],
+        ['Starting Time', customer.starting_Time],
+        ['Total KM', customer.total_Km],
+        ['Title', customer.title],
+        ['Title Amount', customer.title_Amount],
+        ['Extra KM', customer.extra_Km],
+        ['ExtraKM Amount', customer.extramkm_Amount],
+        ['Extra Hours', customer.extra_Hours],
+        ['ExtraHours Amount', customer.extrahours_Amount],
+        ['SGST', customer.SGST],
+        ['CGST', customer.CGST],
         ['Total Amount', customer.total_Amount],
-        ['Paid Amount', customer.paid_Amount],
+        ['Advance Amount', customer.advance_Amount],
         ['Remaining Amount', customer.remaining_Amount],
         ['Payment Method', customer.payment_Method],
       ];
@@ -68,11 +84,11 @@ const ViewCustomerPayment = () => {
     }
   };
 
-  const filteredVendors = vendors.filter((vendor) => {
-    const vendorName = vendor.vender_Name || '';
-    const companyName = vendor.company_Name || '';
+  const filteredcustomers = customers.filter((customer) => {
+    const customerName = customer.vender_Name || '';
+    const companyName = customer.company_Name || '';
     return (
-      vendorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       companyName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
@@ -80,8 +96,8 @@ const ViewCustomerPayment = () => {
   return (
     <>
       <Sidebar />
-      <div className="vendor-Add-container">
-        <div className="vendor-main-container">
+      <div className="customer-Add-container">
+        <div className="customer-main-container">
           <h1 className="text-2xl font-semibold mb-4">View Customer Payment</h1>
           <input
             type="search"
@@ -91,31 +107,48 @@ const ViewCustomerPayment = () => {
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
           <div className="grid grid-cols-3 gap-4">
-            {filteredVendors.map((vendor) => (
+            {filteredcustomers.map((customer) => (
               <div
-                key={vendor._id}
+                key={customer._id}
                 className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
               >
                 <div className="custom-card-body p-4">
                   <h5 className="custom-card- font-semibold">
-                    Vendor Name: {vendor.company_Name}
+                    customer Name: {customer.customer_Name}
                   </h5>
                   <p className="custom-card-subtitle mb-2">
-                    Company Name: {vendor.vender_Name}
+                    Company Name: {customer.company_Name}
                   </p>
-                  <p className="custom-card-subtitle mb-2">GST No: {vendor.GST_No}</p>
-                  <p className="custom-card-subtitle mb-2">Mobile Number: {vendor.mobile_Number}</p>
-                  <p className="custom-card-subtitle mb-2">Payment: {vendor.payment}</p>
-                  <p className="custom-card-subtitle mb-2">Amount: {vendor.amount}</p>
-                  <p className="custom-card-subtitle mb-2">tds: {vendor.tds}</p>
-                  <p className="custom-card-subtitle mb-2">Total Amount: {vendor.total_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Paid Amount: {vendor.paid_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Remaining Amount: {vendor.remaining_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Payment Method: {vendor.payment_Method}</p>
+                 
+                  <p className="custom-card-subtitle mb-2">GST No: {customer.GST_No}</p>
+                  <p className="custom-card-subtitle mb-2">Reporting Address: {customer.reporting_Address}</p>
+                  <p className="custom-card-subtitle mb-2">Date: {customer.date}</p>
+                  <p className="custom-card-subtitle mb-2">Vehicle Number: {customer.vehicle_Number}</p>
+                  <p className="custom-card-subtitle mb-2">Vehicle Type: {customer.vehicle_Type}</p>
+                  <p className="custom-card-subtitle mb-2">quantity: {customer.quantity}</p>
+                  <p className="custom-card-subtitle mb-2">From: {customer.from}</p>
+                  <p className="custom-card-subtitle mb-2">To: {customer.to}</p>
+                  <p className="custom-card-subtitle mb-2">Closing KM: {customer.closing_km}</p>
+                  <p className="custom-card-subtitle mb-2">Closing Time: {customer.closing_Time}</p>
+                  <p className="custom-card-subtitle mb-2">Starting KM: {customer.starting_Km}</p>
+                  <p className="custom-card-subtitle mb-2">Starting Time: {customer.starting_Time}</p>
+                  <p className="custom-card-subtitle mb-2">Total KM: {customer.total_Km}</p>
+                  <p className="custom-card-subtitle mb-2">Title: {customer.title}</p>
+                  <p className="custom-card-subtitle mb-2">Title Amount: {customer.title_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Extra KM: {customer.extra_Km}</p>
+                  <p className="custom-card-subtitle mb-2">Extramkm Amount: {customer.extramkm_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Extra Hours: {customer.extra_Hours}</p>
+                  <p className="custom-card-subtitle mb-2">Extrahours Amount: {customer.extrahours_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">SGST: {customer.SGST}</p>
+                  <p className="custom-card-subtitle mb-2">CGST: {customer.CGST}</p>
+                  <p className="custom-card-subtitle mb-2">Total Amount: {customer.total_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Advance Amount: {customer.advance_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Remaining Amount: {customer.remaining_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Payment Method: {customer.payment_Method}</p>
                 </div>
                 <button
                   className="btn btn-danger"
-                  onClick={() => handleGenerateInvoice(vendor._id)}
+                  onClick={() => handleGenerateInvoice(customer._id)}
                 >
                   Generate
                 </button>
