@@ -40,7 +40,7 @@ const ViewCustomerPayment = () => {
         ['Company Name', customer.company_Name],
         ['GST No', customer.GST_No],
         ['Reporting Address', customer.reporting_Address],
-        ['Date', customer.date],
+        ['Date', customer.Date],
         ['Customer Name', customer.customer_Name],
         ['Vehicle Number', customer.vehicle_Number],
         ['Vehicle Type', customer.vehicle_Type],
@@ -106,7 +106,7 @@ const ViewCustomerPayment = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {filteredcustomers.map((customer) => (
               <div
                 key={customer._id}
@@ -114,18 +114,17 @@ const ViewCustomerPayment = () => {
               >
                 <div className="custom-card-body p-4">
                   <h5 className="custom-card- font-semibold">
-                    customer Name: {customer.customer_Name}
+                    Customer Name: {customer.customer_Name}
                   </h5>
                   <p className="custom-card-subtitle mb-2">
                     Company Name: {customer.company_Name}
                   </p>
-                 
                   <p className="custom-card-subtitle mb-2">GST No: {customer.GST_No}</p>
                   <p className="custom-card-subtitle mb-2">Reporting Address: {customer.reporting_Address}</p>
-                  <p className="custom-card-subtitle mb-2">Date: {customer.date}</p>
+                  <p className="custom-card-subtitle mb-2">Date: {customer.Date}</p>
                   <p className="custom-card-subtitle mb-2">Vehicle Number: {customer.vehicle_Number}</p>
                   <p className="custom-card-subtitle mb-2">Vehicle Type: {customer.vehicle_Type}</p>
-                  <p className="custom-card-subtitle mb-2">quantity: {customer.quantity}</p>
+                  <p className="custom-card-subtitle mb-2">Quantity: {customer.quantity}</p>
                   <p className="custom-card-subtitle mb-2">From: {customer.from}</p>
                   <p className="custom-card-subtitle mb-2">To: {customer.to}</p>
                   <p className="custom-card-subtitle mb-2">Closing KM: {customer.closing_km}</p>
@@ -136,9 +135,9 @@ const ViewCustomerPayment = () => {
                   <p className="custom-card-subtitle mb-2">Title: {customer.title}</p>
                   <p className="custom-card-subtitle mb-2">Title Amount: {customer.title_Amount}</p>
                   <p className="custom-card-subtitle mb-2">Extra KM: {customer.extra_Km}</p>
-                  <p className="custom-card-subtitle mb-2">Extramkm Amount: {customer.extramkm_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Extra KM Amount: {customer.extramkm_Amount}</p>
                   <p className="custom-card-subtitle mb-2">Extra Hours: {customer.extra_Hours}</p>
-                  <p className="custom-card-subtitle mb-2">Extrahours Amount: {customer.extrahours_Amount}</p>
+                  <p className="custom-card-subtitle mb-2">Extra Hours Amount: {customer.extrahours_Amount}</p>
                   <p className="custom-card-subtitle mb-2">SGST: {customer.SGST}</p>
                   <p className="custom-card-subtitle mb-2">CGST: {customer.CGST}</p>
                   <p className="custom-card-subtitle mb-2">Total Amount: {customer.total_Amount}</p>

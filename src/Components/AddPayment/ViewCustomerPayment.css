@@ -1,0 +1,5 @@
+.customer-main-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* This sets two columns per row */
+    gap: 16px; /* Adjust the gap between cards as needed */
+  }
