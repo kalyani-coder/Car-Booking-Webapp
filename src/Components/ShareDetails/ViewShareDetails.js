@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-import './ViewShareDetails.css';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -43,12 +44,62 @@ const ViewShareDetails = () => {
     filterShareDetails();
   }, [searchText]);
 
+  const generateInvoice = (shareDetail) => {
+    const doc = new jsPDF();
+
+    // Add your code to generate the invoice in a table format here
+    // For simplicity, we'll just add a sample table with the data
+    doc.text('Sample Invoice', 10, 10);
+
+    const columns = ['Field', 'Value'];
+    const rows = [
+      ['Vehicle', shareDetail.vehicle],
+      ['Trip Type', shareDetail.triptype],
+      ['Subtype', shareDetail.subtype],
+      ['Pickup', shareDetail.pickup],
+      ['Date', shareDetail.date],
+      ['Time', shareDetail.time],
+      ['Droff Location', shareDetail.Dropoff],
+      ['Drop Off Date', shareDetail.date1],
+      ['Drop Off Time', shareDetail.time1],
+      ['Driver Name', shareDetail.drivername],
+      ['Driver Email', shareDetail.drivermail],
+      ['Mobile Number', shareDetail.mobileno],
+      ['Mobile Number', shareDetail.mobileno1],
+      // Add other fields as needed
+    ];
+
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 20,
+    });
+
+    // Save the PDF or open in a new tab
+    doc.save(`Invoice_${shareDetail._id}.pdf`);
+  };
+
+  const handleEditShareDetail = (shareDetail) => {
+    // Implement your edit functionality here
+    console.log(`Editing share detail with ID: ${shareDetail._id}`);
+  };
+
+  const handleSaveShareDetail = (shareDetail) => {
+    // Implement your save functionality here
+    console.log(`Saving share detail with ID: ${shareDetail._id}`);
+  };
+
+  const handleDeleteShareDetail = (shareDetail) => {
+    // Implement your delete functionality here
+    console.log(`Deleting share detail with ID: ${shareDetail._id}`);
+  };
+
   return (
     <>
       <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Share Details</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Share Details</h2>
           <div className="p-4 space-y-4">
             <input
               type="text"
@@ -78,15 +129,32 @@ const ViewShareDetails = () => {
                     <p className="mb-2">Driver Email: {shareDetail.drivermail}</p>
                     <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
                     <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p>
-                    {/* Add other fields as needed */}
                     <div className="flex justify-between">
-                        
-
-                        <button className='btn btn-info'>Edit</button>
-                        <button className='btn btn-danger'>Save</button>
-                        <button className='btn btn-success'>Delete</button>
-                     
-                      </div>
+                      <button
+                        className='btn btn-primary btn-sm'
+                        onClick={() => generateInvoice(shareDetail)}
+                      >
+                        Generate
+                      </button>
+                      <button
+                        className='btn btn-info btn-sm'
+                        onClick={() => handleEditShareDetail(shareDetail)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className='btn btn-success btn-sm'
+                        onClick={() => handleSaveShareDetail(shareDetail)}
+                      >
+                        Save
+                      </button>
+                      <button
+                        className='btn btn-danger btn-sm'
+                        onClick={() => handleDeleteShareDetail(shareDetail)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
