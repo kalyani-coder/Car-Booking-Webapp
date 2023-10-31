@@ -349,8 +349,10 @@ const Sidebar = () => {
               </li>
               <li>
                 <a>
+                <Link to={'/viewcustomerpayment'}>
                   <i className="bx bx-detail"></i>
                   <span className="link_name">View Customer Payment</span>
+                  </Link>
                 </a>
               </li>
               <li>

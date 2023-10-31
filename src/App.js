@@ -6,7 +6,7 @@ import Startenddetails from './Components/StartEndDetails/Startenddetails';
 import AllocateTrip from './Components/AllocateTrip/AllocateTrip';
 import ViewAllocateTrip from './Components/AllocateTrip/ViewAllocateTrip';
 import UpdateDuty from './Components/UpdateDutySlip/UpdateDuty';
-import AddPayment from './Components/AddPayment/AddPayment'
+import AddPayment from './Components/AddPayment/AddPayment';
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import Login from './Components/Login/LogIn';
 import Home from './Components/Home/Home';
@@ -30,6 +30,7 @@ import ViewTrip from './Components/Trip/ViewTrip';
 import ViewShareDetails from './Components/ShareDetails/ViewShareDetails';
 import ViewUpdateDuty from './Components/UpdateDutySlip/ViewUpdateDuty';
 import AddDriver from './Components/Driver/AddDriver';
+import ViewCustomerPayment from './Components/AddPayment/ViewCustomerPayment';
 
 
 
@@ -54,6 +55,7 @@ function App() {
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
     <Route path='/viewupdateduty'  element={<ViewUpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
+    <Route path='/viewcustomerpayment'  element={<ViewCustomerPayment/>}/>
     <Route path='/customerrate'  element={<CustomerRate/>}/>
     <Route path='/vendorrate'  element={<VendorRate/>}/>
     <Route path='/customerenquiry'  element={<CustomerInquiry/>}/>

@@ -85,7 +85,7 @@ const ViewCustomerPayment = () => {
           <h1 className="text-2xl font-semibold mb-4">View Customer Payment</h1>
           <input
             type="search"
-            placeholder="Search By Vendor Name"
+            placeholder="Search By Customer Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
@@ -117,7 +117,7 @@ const ViewCustomerPayment = () => {
                   className="btn btn-danger"
                   onClick={() => handleGenerateInvoice(vendor._id)}
                 >
-                  Generate Invoice
+                  Generate
                 </button>
               </div>
             ))}
