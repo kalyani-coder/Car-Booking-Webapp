@@ -43,12 +43,30 @@ const ViewAllocateTrip = () => {
     filterShareDetails();
   }, [searchText]);
 
+  // Delete Allocate trips 
+  const handleDelete = async (_id) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/trip-details/${_id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      setShareDetails((prevDetails) => prevDetails.filter(detail => detail._id !== _id));
+      alert('Trip deleted')
+    } catch (error) {
+      setError('Error deleting allocate trip: ' + error.message);
+    }
+  };
+
   return (
     <>
       <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Allocate Trips</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Allocate Trips</h2>
           <div className="p-4 space-y-4">
             <input
               type="text"
@@ -68,25 +86,25 @@ const ViewAllocateTrip = () => {
                     <h5 className="font-semibold ">Vehicle: {shareDetail.vehicle}</h5>
                     <p className="mb-2">Trip Type: {shareDetail.triptype}</p>
                     <p className="mb-2">Subtype: {shareDetail.subtype}</p>
-                    <p className="mb-2">Pickup: {shareDetail.pickup}</p>
+                    <p className="mb-2">Pickup: {shareDetail.pickuplocation}</p>
                     <p className="mb-2">Date: {shareDetail.date}</p>
                     <p className="mb-2">Time: {shareDetail.time}</p>
-                    <p className="mb-2">Dropoff: {shareDetail.Dropoff}</p>
+                    <p className="mb-2">Dropoff: {shareDetail.dropofflocation}</p>
                     <p className="mb-2">Date1: {shareDetail.date1}</p>
                     <p className="mb-2">Time1: {shareDetail.time1}</p>
                     <p className="mb-2">Driver Name: {shareDetail.drivername}</p>
-                    <p className="mb-2">Driver Email: {shareDetail.drivermail}</p>
+                    <p className="mb-2">Driver Email: {shareDetail.mail}</p>
                     <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
-                    <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p>
+                    {/* <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p> */}
                     {/* Add other fields as needed */}
                     <div className="flex justify-between">
-                        
 
-                        <button className='btn btn-info'>Edit</button>
-                        <button className='btn btn-danger'>Save</button>
-                        <button className='btn btn-success'>Delete</button>
-                     
-                      </div>
+
+                      <button className='btn btn-info'>Edit</button>
+                      <button className='btn btn-danger'>Save</button>
+                      <button className='btn btn-success' onClick={() => handleDelete(shareDetail._id)}>Delete</button>
+
+                    </div>
                   </div>
                 </div>
               ))}
