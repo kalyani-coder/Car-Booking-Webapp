@@ -1,6 +1,6 @@
 
 const express = require('express')
-const NewAddPaymentSchema = require('../models/AddPaymentModel')
+const NewAddPaymentSchema = require('../models/AddCusPaymentModel')
 const router = express.Router()
 
 // GET METHOD 

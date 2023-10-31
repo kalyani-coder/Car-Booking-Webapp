@@ -33,11 +33,14 @@ const AddPaymentSchema = new mongoose.Schema({
     remaining_Amount :Number,
     payment_Method :String
 
-    
-    
-    
-    
-    
+})
+
+const NewAddPaymentDetails = new mongoose.model('/Customer-payment-details' , AddPaymentSchema)
+
+module.exports = NewAddPaymentDetails
+
+
+
     // name : String,
     // trip_Details : {
 
@@ -80,9 +83,3 @@ const AddPaymentSchema = new mongoose.Schema({
     //     total_Amount : Number,
     //     advance_Payment : Number
     // },
-
-})
-
-const NewAddPaymentDetails = new mongoose.model('/Customer-payment-details' , AddPaymentSchema)
-
-module.exports = NewAddPaymentDetails
