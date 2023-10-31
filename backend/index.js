@@ -32,6 +32,7 @@ const NewGetDetailsFromDriver = require('./src/routes/GetDetailsfromDriver')
 const NewAddPaymentSchema = require('./src/routes/AddPayment')
 const AddVenders = require('./src/routes/AddVenders')
 const AddCustomers = require('./src/routes/AddCustomer')
+const AddDriver = require('./src/routes/AddDriver')
 const addTrip = require('./src/routes/AddTrip')
 const VenderPayment = require('./src/routes/VenderPayment')
 const rateSchema = require('./src/routes/Rate')
@@ -54,6 +55,7 @@ apiRouter.use('/add-trip' , addTrip)
 apiRouter.use('/vender-payment' , VenderPayment)
 apiRouter.use('/customer-rate' , rateSchema)
 apiRouter.use('/vender-rate' , venderRate)
+apiRouter.use('/add-drivers' , AddDriver)
 
 
 // handle here all api routes 
