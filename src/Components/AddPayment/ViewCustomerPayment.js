@@ -85,7 +85,7 @@ const ViewCustomerPayment = () => {
   };
 
   const filteredcustomers = customers.filter((customer) => {
-    const customerName = customer.vender_Name || '';
+    const customerName = customer.customer_Name || '';
     const companyName = customer.company_Name || '';
     return (
       customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
