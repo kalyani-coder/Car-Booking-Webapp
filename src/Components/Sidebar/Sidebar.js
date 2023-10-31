@@ -127,6 +127,36 @@ const Sidebar = () => {
               </li>
             </ul>
           </li>
+
+
+              {/* Add Driver */}
+
+          <li className="has-submenu">
+            <a>
+              <i className="bx bx-user"></i>
+              <span className="link_name">Driver </span>
+            </a>
+            <ul className="sub-menu">
+              <li>
+                <a>
+                  <Link to={'/adddriver'}>
+                    <i className="bx bx-driver"></i>
+                    <span className="link_name">Add Driver</span>
+                  </Link>
+                </a>
+              </li>
+              <li>
+                <a>
+                  <Link to={'/viewdriver'}>
+                    <i className="bx bx-detail"></i>
+                    <span className="link_name">View driver</span>
+                  </Link>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
           {/* Rate */}
           <li className="has-submenu">
             <a>
