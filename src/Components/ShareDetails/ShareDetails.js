@@ -7,8 +7,8 @@ import Sidebar from '../Sidebar/Sidebar';
 
 const ShareDetails = () => {
   const initialFormData = {
-    customername:'',
-    mobileno:'',
+    cus_Name:'',
+    cus_Mobile:'',
     vehicle: '',
     vehiclenumber: '',
     triptype: '',
@@ -38,6 +38,8 @@ const ShareDetails = () => {
   const handleShare = async () => {
     // Map form field names to API field names
     const apiData = {
+      cus_Name : formData.cus_Name,
+      cus_Mobile : formData.cus_Mobile,
       vehicle: formData.vehicle,
       vehiclenumber: formData.vehiclenumber,
       triptype: formData.triptype,
@@ -98,32 +100,32 @@ const ShareDetails = () => {
         <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="customername" className="share-details-label">
+                <label htmlFor="cus_Name" className="share-details-label">
                   Customer Name:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="customername"
+                  name="cus_Name"
                   placeholder="Customer Name"
                   onChange={handleChange}
-                  value={formData.customername}
+                  value={formData.cus_Name}
                 />
               </div>
             </div>
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="mobileno" className="share-details-label">
+                <label htmlFor="cus_Mobile" className="share-details-label">
                   Mobile No:
                 </label>
                 <input
                   type="number"
                   className="share-details-input"
-                  name="mobileno"
+                  name="cus_Mobile"
                   placeholder="Enter Mobile Number"
                   onChange={handleChange}
-                  value={formData.mobileno}
+                  value={formData.cus_Mobile}
                 />
               </div>
             </div>
