@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-import ReactToPrint from 'react-to-print';
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const componentRef = useRef();
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -27,17 +26,36 @@ const ViewVendorPayment = () => {
 
   const handleGenerateInvoice = (vendor) => {
     const doc = new jsPDF();
-    doc.text(`Vendor Name: ${vendor.company_Name}`, 10, 10);
-    doc.text(`Company Name: ${vendor.vender_Name}`, 10, 20);
-    doc.text(`GST No: ${vendor.GST_No}`, 10, 30);
-    doc.text(`Mobile Number: ${vendor.mobile_Number}`, 10, 40);
-    doc.text(`Payment: ${vendor.payment}`, 10, 50);
-    doc.text(`Amount: ${vendor.amount}`, 10, 60);
-    doc.text(`tds: ${vendor.tds}`, 10, 70);
-    doc.text(`Total Amount: ${vendor.total_Amount}`, 10, 80);
-    doc.text(`Paid Amount: ${vendor.paid_Amount}`, 10, 90);
-    doc.text(`Remaining Amount: ${vendor.remaining_Amount}`, 10, 100);
-    doc.text(`Payment Method: ${vendor.payment_Method}`, 10, 110);
+
+    // Set the document title
+    doc.text('Vendor Payment Invoice', 10, 10);
+
+    // Define the columns and rows for the table
+    const columns = ['Field', 'Value'];
+    const rows = [
+      ['Vendor Name', vendor.company_Name],
+      ['Company Name', vendor.vender_Name],
+      ['GST No', vendor.GST_No],
+      ['Mobile Number', vendor.mobile_Number],
+      ['Payment', vendor.payment],
+      ['Amount', vendor.amount],
+      ['tds', vendor.tds],
+      ['Total Amount', vendor.total_Amount],
+      ['Paid Amount', vendor.paid_Amount],
+      ['Remaining Amount', vendor.remaining_Amount],
+      ['Payment Method', vendor.payment_Method],
+    ];
+
+    // Set the table position and dimensions
+    const tableY = 20;
+
+    // Add the table to the PDF
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: tableY,
+      theme: 'grid',
+    });
 
     // Save the PDF or open in a new tab
     doc.save(`Invoice_${vendor._id}.pdf`);
