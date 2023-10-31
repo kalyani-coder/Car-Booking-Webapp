@@ -46,7 +46,7 @@ const AddTrip = () => {
 
     try {
       // Send the data to the API
-      const response = await fetch('http://localhost:7000/api/add-trip', {
+      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-trip', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -66,7 +66,7 @@ const UpdateDuty = () => {
 
     try {
       // Send the data to the API
-      const response = await fetch('http://localhost:7000/api/update-duty', {
+      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/update-duty', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

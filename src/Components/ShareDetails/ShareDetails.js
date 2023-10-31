@@ -68,7 +68,7 @@ const ShareDetails = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:7000/api/share-details', {
+      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/share-details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
