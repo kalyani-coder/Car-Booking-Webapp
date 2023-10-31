@@ -35,15 +35,15 @@ const AddDriver = () => {
     }
     try {
       const requestBody = {
-        Dri_name: formData.customername,
-        Dri_Email: formData.email,
+        driver_Name: formData.drivername,
+        driver_Email: formData.email,
         address: formData.address,
-        Dri_Mobile: formData.mobileno,
-        Dri_Mobile: formData.mobileno,
+        driver_Mo1: formData.mobileno,
+        driver_Mo2: formData.mobileno,
       };
 
   
-      const response = await fetch("http://localhost:7000/api/add-driver", {
+      const response = await fetch("http://localhost:7000/api/add-drivers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const AddDriver = () => {
             <input className="form-control-dri-add-input" type="number" id="mobileno1" name="mobileno1" placeholder="Alternate Mobile No." onChange={handleChange} value={formData.mobileno1} />
           </div>
           
-          <button type="button" className="driver-btn-submit" >
+          <button type="button" className="driver-btn-submit" onClick={handleSubmit} >
             Add
           </button>
         </div>

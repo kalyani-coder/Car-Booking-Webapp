@@ -58,7 +58,7 @@ function AddPayment() {
     setError('');
 
     try {
-      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/customer-payment', {
+      const response = await fetch('http://localhost:7000/api/customer-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,8 @@ function AddPayment() {
       });
 
       if (response.ok) {
-        alert('Data saved successfully!');
+        // alert('Data saved successfully!');
+        window.alert("Data Add")
         setFormData(initialFormData); // Reset the form
       } else {
         alert('Failed to save data. Please try again.');
@@ -320,6 +321,13 @@ function AddPayment() {
                         </div>
                       </div>
                     </div>
+                    <div className="col-md">
+                        <div className="form-group">
+                          <label >SubTotal</label>
+                          <input type="number" className="form-control" placeholder="Enter  SubTotal Amount" />
+
+                        </div>
+                        </div>
 
                     <div className="row g-2">
                       <div className="col-md">
