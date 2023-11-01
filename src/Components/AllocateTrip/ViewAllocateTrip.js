@@ -44,20 +44,26 @@ const ViewAllocateTrip = () => {
   }, [searchText]);
 
   // Delete Allocate trips 
-  const handleDelete = async (_id) => {
-    try {
-      const response = await fetch(`http://localhost:7000/api/trip-details/${_id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+  const handleDelete = (_id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this trip?");
+    if (confirmed) {
+      try {
+        fetch(`http://localhost:7000/api/trip-details/${_id}`, {
+          method: 'DELETE',
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          setShareDetails((prevDetails) => prevDetails.filter(detail => detail._id !== _id));
+          alert('Trip successfully deleted');
+        })
+        .catch(error => {
+          setError('Error deleting allocate trip: ' + error.message);
+        });
+      } catch (error) {
+        setError('Error deleting allocate trip: ' + error.message);
       }
-
-      setShareDetails((prevDetails) => prevDetails.filter(detail => detail._id !== _id));
-      alert('Trip deleted')
-    } catch (error) {
-      setError('Error deleting allocate trip: ' + error.message);
     }
   };
 

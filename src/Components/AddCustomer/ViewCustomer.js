@@ -42,22 +42,27 @@ const ViewCustomer = () => {
     filterCustomers();
   }, [searchQuery]);
 
-  // Function to edit a customer (example implementation)
-  const editCustomer = (customerId) => {
-    // Implement your edit logic here
-    console.log(`Edit customer with ID: ${customerId}`);
-  };
 
-  // Function to save a customer (example implementation)
-  const saveCustomer = (customerId) => {
-    // Implement your save logic here
-    console.log(`Save customer with ID: ${customerId}`);
-  };
-
-  // Function to delete a customer (example implementation)
-  const deleteCustomer = (customerId) => {
-    // Implement your delete logic here
-    console.log(`Delete customer with ID: ${customerId}`);
+  const deleteCustomer = async (customerId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this customers?");
+    if (confirmed) {
+    try {
+      const response = await fetch(`http://localhost:7000/api/add-customers/${customerId}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      // Filter out the deleted customer from the state
+      setFilteredCustomers((prevCustomers) => prevCustomers.filter((customer) => customer._id !== customerId));
+      alert('Customer deleted successfully');
+    } catch (error) {
+      console.error('Error deleting customer:', error);
+      setError('Error deleting customer: ' + error.message);
+    }
+  }
   };
 
   return (
@@ -114,7 +119,7 @@ const ViewCustomer = () => {
 
                         <button className='btn btn-info'>Edit</button>
                         <button className='btn btn-danger'>Save</button>
-                        <button className='btn btn-success'>Delete</button>
+                        <button className='btn btn-success' onClick={() => deleteCustomer(customer._id)}>Delete</button>
                         {/* </div> */}
                       </div>
                     </div>

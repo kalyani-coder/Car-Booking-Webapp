@@ -32,6 +32,26 @@ const ViewVendor = () => {
     );
   });
 
+  const handleDelete = async (vendorId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this vendor?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:7000/api/add-venders/${vendorId}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
+        alert('Vendor deleted successfully');
+      } catch (error) {
+        console.error('Error deleting vendor:', error);
+      }
+    }
+  };
+
   return (
     <>
       <Sidebar />
@@ -67,7 +87,7 @@ const ViewVendor = () => {
 
                         <button className='btn btn-info'>Edit</button>
                         <button className='btn btn-danger'>Save</button>
-                        <button className='btn btn-success'>Delete</button>
+                        <button className='btn btn-success' onClick={() => handleDelete(vendor._id)}>Delete</button>
                      
                       </div>
                 </div>
