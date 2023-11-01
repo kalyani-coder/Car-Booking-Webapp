@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
-const AddRate = () => {
-  const [formData, setFormData] = useState({
+const VendorRate = () => {
+  const initialFormData = {
     company_Name: "",
     GST_No: "",
     vender_Name: "",
@@ -11,7 +11,9 @@ const AddRate = () => {
     rate_per_Km: "",
     title: "",
     rate: ""
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +24,7 @@ const AddRate = () => {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault(); // Prevent the form from submitting and causing a page reload
 
     for (const key in formData) {
       if (formData[key] === "") {
@@ -41,9 +43,11 @@ const AddRate = () => {
 
     if (response.ok) {
       console.log("Data posted successfully!");
-      window.alert('Data post Successfully')
+      window.alert('Data posted Successfully');
+      setFormData(initialFormData); // Reset the form fields to their initial values
     } else {
       console.error("Error posting data:", response.statusText);
+      window.alert('Error posting data: ' + response.statusText);
     }
   };
 
@@ -103,7 +107,7 @@ const AddRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="mobileno" className="form-label">
+                <label htmlFor="mobileno" className="form-label" >
                   Mobile No:
                 </label>
                 <input
@@ -181,4 +185,4 @@ const AddRate = () => {
   );
 };
 
-export default AddRate;
+export default VendorRate;

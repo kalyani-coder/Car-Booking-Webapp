@@ -11,7 +11,7 @@ const ViewCustomerRate = () => {
   useEffect(() => {
     const fetchCustomerRates = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/customer-rate');
+        const response = await fetch('http://localhost:7000/api/customer-rate');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -29,10 +29,11 @@ const ViewCustomerRate = () => {
 
   const filterCustomerRates = () => {
     const filteredData = customerRates.filter((customerRate) => {
-      const customerNameMatches = customerRate.customerName.toLowerCase().includes(searchQuery.toLowerCase());
-     
+      const customerNameMatches = customerRate.customer_Name && customerRate.customer_Name.toLowerCase().includes(searchQuery.toLowerCase());
+      // Check if customerRate.customer_Name is defined before using toLowerCase
+
       // Add more criteria as needed
-      return customerNameMatches ;
+      return customerNameMatches;
     });
 
     setFilteredCustomerRates(filteredData);
@@ -40,7 +41,7 @@ const ViewCustomerRate = () => {
 
   useEffect(() => {
     filterCustomerRates();
-  }, [searchQuery]);
+  }, [searchQuery, customerRates]);
 
   // Function to edit a customer rate (example implementation)
   const editCustomerRate = (customerRateId) => {
@@ -85,13 +86,13 @@ const ViewCustomerRate = () => {
                 {filteredCustomerRates.map((customerRate) => (
                   <div key={customerRate._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
                     <div className="custom-card-body p-4">
-                    <h5 className="font-semibold">company_Name: {customerRate.company_Name}</h5>
-                      <p className="font-semibold">Customer Name: {customerRate.customerName}</p>
+                      <h5 className="font-semibold">Company Name: {customerRate.company_Name}</h5>
+                      <p className="font-semibold">Customer Name: {customerRate.customer_Name}</p>
                       <p className="custom-card-subtitle mb-2">GST_No: {customerRate.GST_No}</p>
-                      <p className="custom-card-subtitle mb-2">mobile_Number: {customerRate.mobile_Number}</p>
-                      <p className="custom-card-subtitle mb-2">rate_per_km: {customerRate.rate_per_km}</p>
-                      <p className="custom-card-subtitle mb-2">title: {customerRate.title}</p>
-                      <p className="custom-card-subtitle mb-2">rate: {customerRate.rate}</p>
+                      <p className="custom-card-subtitle mb-2">Mobile Number: {customerRate.mobile_Number}</p>
+                      <p className="custom-card-subtitle mb-2">Rate Per KM: {customerRate.rate_per_km}</p>
+                      <p className="custom-card-subtitle mb-2">Title: {customerRate.title}</p>
+                      <p className="custom-card-subtitle mb-2">Rate: {customerRate.rate}</p>
                       {/* Add more fields as needed */}
                       <div className="flex justify-between">
                         <button className='btn btn-info' onClick={() => editCustomerRate(customerRate._id)}>Edit</button>

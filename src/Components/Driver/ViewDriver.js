@@ -43,7 +43,7 @@ const ViewDriver = () => {
         <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Drivers</h2>
           <input
             type="search"
-            placeholder="Search"
+            placeholder="Search By Driver Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"

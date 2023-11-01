@@ -25,10 +25,10 @@ const ViewVendor = () => {
 
   const filteredVendors = vendors.filter((vendor) => {
     const venderName = vendor.vender_Name || '';
-    const companyName = vendor.company_Name || '';
+    // const companyName = vendor.company_Name || '';
     return (
-      venderName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      companyName.toLowerCase().includes(searchTerm.toLowerCase())
+      venderName.toLowerCase().includes(searchTerm.toLowerCase()) 
+      // companyName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
@@ -40,7 +40,7 @@ const ViewVendor = () => {
         <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Vendors</h2>
           <input
             type="search"
-            placeholder="Search"
+            placeholder="Search By Vendor Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
