@@ -26,6 +26,7 @@ const AddPaymentSchema = new mongoose.Schema({
     extramkm_Amount :Number,
     extra_Hours :String,
     extrahours_Amount :String,
+    subtotal_Amount:Number,
     SGST : Number,
     CGST :Number,
     total_Amount :Number,

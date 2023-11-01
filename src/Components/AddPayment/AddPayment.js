@@ -1,36 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import './AddPayment.css';
 import Sidebar from '../Sidebar/Sidebar';
+
 function AddPayment() {
   const initialFormData = {
-    company_Name: "",
-    GST_No: "",
-    reporting_Address: "",
-    Date: "",
-    customer_Name: "",
-    vehicle_Number: "",
-    vehicle_Type: "",
-    quantity: "",
-    from: "",
-    to: "",
-    closing_km: "",
-    closing_Time: "",
-    starting_Km: "",
-    starting_Time: "",
-    total_Km: "",
-    total_hours:"",
-    title: "",
-    title_Amount: "",
-    extra_Km: "",
-    extramkm_Amount: "",
-    extra_Hours: "",
-    extrahours_Amount: "",
-    SGST: "",
-    CGST: "",
-    total_Amount: "",
-    advance_Amount: "",
-    remaining_Amount: "",
-    payment_Method: "",
+    company_Name: '',
+    GST_No: '',
+    reporting_Address: '',
+    Date: '',
+    customer_Name: '',
+    vehicle_Number: '',
+    vehicle_Type: '',
+    quantity: '',
+    from: '',
+    to: '',
+    closing_km: '',
+    closing_Time: '',
+    starting_Km: '',
+    starting_Time: '',
+    total_Km: '',
+    total_hours: '',
+    title: '',
+    title_Amount: 0,
+    extra_Km: '',
+    extramkm_Amount: 0,
+    extra_Hours: '',
+    extrahours_Amount: 0,
+    subtotal_Amount: 0,
+    SGST: 0,
+    CGST: 0,
+    total_Amount: 0,
+    advance_Amount: 0,
+    remaining_Amount: 0,
+    payment_Method: '',
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
@@ -43,18 +45,59 @@ function AddPayment() {
     }));
   };
 
+  const calculateSubTotal = () => {
+    const {
+      title_Amount,
+      extramkm_Amount,
+      extrahours_Amount,
+    } = formData;
+
+    const subtotal = parseFloat(title_Amount) + parseFloat(extramkm_Amount) + parseFloat(extrahours_Amount);
+
+    return subtotal;
+  };
+
+  const calculateSGST_CGST = (subtotal) => {
+    const taxRate = 2.5; // 2.5% tax rate
+    const sgst = (subtotal * taxRate) / 100;
+    const cgst = (subtotal * taxRate) / 100;
+  
+    return {
+      SGST: sgst,
+      CGST: cgst,
+    };
+  };
+
+  
+  
+
+  const handleSubtotalChange = () => {
+    const subtotal = calculateSubTotal();
+    const { SGST, CGST } = calculateSGST_CGST(subtotal);
+    const totalAmount = subtotal + SGST + CGST;
+    const remainingAmount = totalAmount - formData.advance_Amount;
+    setFormData((prevData) => ({
+      ...prevData,
+      subtotal_Amount: subtotal,
+      SGST: SGST,
+      CGST: CGST,
+      total_Amount: totalAmount,
+      remaining_Amount: remainingAmount,
+      
+    }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('Form Data:', formData);
 
-    // Check if all fields are filled
     for (const key in formData) {
-      if (formData[key] === '') {
-        setError('All fields are required.');
+      if (formData[key] === '' || (typeof formData[key] === 'number' && isNaN(formData[key]))) {
+        setError('All fields are required and must be valid numbers.');
         return;
       }
     }
 
-    // Reset error if all fields are filled
     setError('');
 
     try {
@@ -63,14 +106,14 @@ function AddPayment() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // Use formData directly
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        // alert('Data saved successfully!');
-        window.alert("Data Add")
-        setFormData(initialFormData); // Reset the form
+        window.alert('Data Added');
+        setFormData(initialFormData);
       } else {
+        console.error('Failed to save data:', response.status, response.statusText);
         alert('Failed to save data. Please try again.');
       }
     } catch (error) {
@@ -80,71 +123,105 @@ function AddPayment() {
   };
 
   return (
-
     <>
       <Sidebar />
-      <div className="container-container-adpayment ">
-
-
-        <div className="form-body" >
+      <div className="container-container-adpayment">
+        <div className="form-body">
           <div className="card-1">
             <div className="row justify-content-center">
               <div className="col-md-10">
                 <div className="card-body mt-5">
                   <form>
-                    <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer Payment</h2>
+                    <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>Add Customer Payment</h2>
 
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
                           <label>Company Name</label>
-                          <input type="text" className="form-control" id="company_Name" name="company_Name" placeholder="Enter Company name" onChange={handleChange} value={formData.company_Name} />
-
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="company_Name"
+                            placeholder="Enter Company name"
+                            value={formData.company_Name}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Gst No</label>
-                          <input type="text" className="form-control" id="GST_No" name="GST_No" placeholder="Enter GST No" onChange={handleChange} value={formData.GST_No} />
-
+                          <label>GST No</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="GST_No"
+                            placeholder="Enter GST No"
+                            value={formData.GST_No}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                     </div>
+                  
+                    <div className="row g-2">
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label>Reporting Address</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="reporting_Address"
+                            placeholder="Enter Reporting Address"
+                            value={formData.reporting_Address}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label>Date</label>
+                          <input
+                            type="Date"
+                            className="form-control"
+                            name="Date"
+                            placeholder="Date"
+                            value={formData.Date}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
 
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Reporting Address</label>
-                          <input type="text" className="form-control" id="reporting_Address" name="reporting_Address" placeholder="Enter Reporting Address" onChange={handleChange} value={formData.reporting_Address} />
-
+                          <label>Customer Name</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="customer_Name"
+                            placeholder="Enter Customer Name"
+                            value={formData.customer_Name}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Date</label>
-                          <input type="date" className="form-control" id="Date" name="Date" placeholder="Enter Date" onChange={handleChange} value={formData.Date} />
-
+                          <label>Vehicle Number</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="vehicle_Number"
+                            placeholder="Enter Vehicle Number"
+                            value={formData.vehicle_Number}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                     </div>
-                    <div className="row g-2">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >Customer Name</label>
-                          <input type="text" className="form-control" id="customer_Name" name="customer_Name" placeholder="Enter Customer Name" onChange={handleChange} value={formData.customer_Name} />
-
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >Vehicle Number</label>
-                          <input type="text" className="form-control" id="vehicle_Number" name="vehicle_Number" placeholder="Enter  Vehicle Number" onChange={handleChange} value={formData.vehicle_Number} />
-
-                        </div>
-                      </div>
-                    </div>
-
-
+                   
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
@@ -176,32 +253,40 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Quantity</label>
-                          <input type="number" className="form-control" placeholder="Add Quantity" />
+                          <input type="number" className="form-control" name='quantity' placeholder="Add Quantity" onChange={handleChange} value={formData.quantity} />
 
                         </div>
                       </div>
                     </div>
-
-
-
 
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
                           <label>From</label>
-                          <input type="text" className="form-control" id="from" name="from" placeholder="Enter Boarding Location" onChange={handleChange} value={formData.from} />
-
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="from"
+                            placeholder="From"
+                            value={formData.from}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >To</label>
-                          <input type="text" className="form-control" id="to" name="to" placeholder="Enter Destination Location" onChange={handleChange} value={formData.to} />
-
+                          <label>To</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="to"
+                            placeholder="To"
+                            value={formData.to}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                     </div>
-
 
                     <div className="row g-2">
                       <div className="col-md">
@@ -225,42 +310,43 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Starting Kms</label>
-                          <input type="text" className="form-control" id="starting_Km" name="starting_Km" placeholder="Enter  Starting Kms" onChange={handleChange} value={formData.starting_Km} />
+                          <input type="text" className="form-control"  name="starting_Km" placeholder="Enter  Starting Kms" onChange={handleChange} value={formData.starting_Km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Starting Time</label>
-                          <input type="time" className="form-control" id="starting_Time" name="starting_Time" placeholder="Enter Starting Time" onChange={handleChange} value={formData.starting_Time} />
+                          <input type="time" className="form-control"  name="starting_Time" placeholder="Enter Starting Time" onChange={handleChange} value={formData.starting_Time} />
 
                         </div>
                       </div>
                     </div>
 
-
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Kms</label>
-                          <input type="text" className="form-control" id="total_Km" name="total_Km" placeholder="Enter  Total Kms" onChange={handleChange} value={formData.total_Km} />
+                          <input type="text" className="form-control"  name="total_Km" placeholder="Enter  Total Kms" onChange={handleChange} value={formData.total_Km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Hours</label>
-                          <input type="Text" className="form-control" id="total_hours" name="total_hours" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hours} />
+                          <input type="Text" className="form-control" name="total_hours" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hours} />
 
                         </div>
                       </div>
                     </div>
 
 
+
+                    
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>
+                        <label>
                             Title:
                           </label>
                           <select
@@ -272,34 +358,46 @@ function AddPayment() {
                             <option value="">Title</option>
                             <option value="One Day / 80km">One Day /80km</option>
                             <option value="One Day / 300km">One Day /300km</option>
-                            {/* Add other vehicle options */}
                           </select>
+                          </div>
+                          </div>
 
+                          <div className="col-md">
+                         <div className="form-group">
+                          <label>Title Amount</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="title_Amount"
+                            placeholder="Enter Title Amount"
+                            value={formData.title_Amount}
+                            onChange={handleChange}
+                            onBlur={handleSubtotalChange}
+                          />
                         </div>
                       </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter  Amount" />
-
-                        </div>
                       </div>
-                    </div>
-
-
-                    <div className="row g-2">
+                 
+                         <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Extra Kms</label>
+                        <label >Extra Kms</label>
                           <input type="text" className="form-control" id="extra_Km" name="extra_Km" placeholder="Enter  Extra Kms" onChange={handleChange} value={formData.extra_Km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter  Amount" />
-
+                          <label>Extra Kms Amount</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="extramkm_Amount"
+                            placeholder="Enter Extra Kms Amount"
+                            value={formData.extramkm_Amount}
+                            onChange={handleChange}
+                            onBlur={handleSubtotalChange}
+                          />
                         </div>
                       </div>
                     </div>
@@ -309,38 +407,53 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Extra Hours</label>
-                          <input type="text" className="form-control" id="extra_Hours" name="extra_Hours" placeholder="Enter  Extra Kms" onChange={handleChange} value={formData.extra_Hours} />
+                          <input type="text" className="form-control" id="extra_Hours" name="extra_Hours" placeholder="Enter  Extra Hours" onChange={handleChange} value={formData.extra_Hours} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter  Amount" />
+                          <label > Extra Hours Amount</label>
+                          <input type="number" className="form-control" name='extrahours_Amount' placeholder="Enter Extra Hours Amount"
+                           value={formData.extrahours_Amount}
+                           onChange={handleChange}
+                           onBlur={handleSubtotalChange}
+                         />
 
                         </div>
                       </div>
                     </div>
-                    <div className="col-md">
-                        <div className="form-group">
-                          <label >SubTotal</label>
-                          <input type="number" className="form-control" placeholder="Enter  SubTotal Amount" />
 
-                        </div>
-                        </div>
+                    {/* Display the SubTotal */}
+                    <div className="col-md">
+                      <div className="form-group">
+                        <label>SubTotal</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="subtotal_Amount"
+                          placeholder="SubTotal Amount"
+                          value={formData.subtotal_Amount}
+                          readOnly
+                        />
+                      </div>
+                    </div>
 
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
                           <label >SGST 2.5%</label>
-                          <input type="number" className="form-control" placeholder="Enter  SGST Amount" />
+                          <input type="number" className="form-control"  name='SGST'  placeholder="Enter  SGST Amount" value={formData.SGST}
+        onChange={handleChange}
+      /> 
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >CGST 2.5%</label>
-                          <input type="number" className="form-control" placeholder="Enter CGST  Amount" />
+                          <label >CGST 2.5%</label> 
+                          <input type="number" className="form-control" name='CGST' placeholder="Enter CGST  Amount" value={formData.CGST}
+        onChange={handleChange} />
 
                         </div>
                       </div>
@@ -350,39 +463,54 @@ function AddPayment() {
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter Total Amount" />
-
+                          <label>Total Amount</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="total_Amount"
+                            placeholder="Total Amount"
+                            value={formData.total_Amount}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label > Advanced Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter Advance Amount" />
-
+                          <label>Advance Amount</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="advance_Amount"
+                            placeholder="Enter Advance Amount"
+                            value={formData.advance_Amount}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                     </div>
 
-
-
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Remaining Amount</label>
-                          <input type="number" className="form-control" placeholder="Enter  Remaining Amount" />
-
+                          <label>Remaining Amount</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="remaining_Amount"
+                            placeholder="Enter Remaining Amount"
+                            value={formData.remaining_Amount}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Payment Method</label>
+                          <label>Payment Method</label>
                           <select
                             className="form-control"
                             name="payment_Method"
-                            id="payment_Method"
-
-                            onChange={handleChange} value={formData.payment_Method}
+                            value={formData.payment_Method}
+                            onChange={handleChange}
                           >
                             <option value="">Payment Method</option>
                             <option value="Bank Transfer">Bank Transfer</option>
@@ -391,19 +519,17 @@ function AddPayment() {
                             <option value="Paytm">Paytm</option>
                             <option value="Phone Pay">Phone Pay</option>
                           </select>
-
                         </div>
                       </div>
                     </div>
 
-                    <br></br>
-                    <button id="btn1" className="btn btn-danger " >
+                    <br />
+                    <button id="btn1" className="btn btn-danger">
                       Edit
                     </button>
                     <button id="btn2" className="add-payment-submit" onClick={handleSubmit}>
                       Save
                     </button>
-
                   </form>
                 </div>
               </div>
@@ -412,7 +538,7 @@ function AddPayment() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export default AddPayment;
