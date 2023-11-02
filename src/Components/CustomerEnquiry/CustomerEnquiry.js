@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./CustomerInquiry.css";
+import "./CustomerEnquiry.css";
 import Sidebar from "../Sidebar/Sidebar";
 
-const CustomerInquiry = () => {
+const CustomerEnquiry = () => {
   const initialFormData = {
     customername: "",
     cus_Id : '',
@@ -312,4 +312,4 @@ const CustomerInquiry = () => {
   );
 };
 
-export default CustomerInquiry;
+export default CustomerEnquiry;

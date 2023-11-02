@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import CustomerInquiry from './Components/CustomerInquiry/CustomerInquiry';
+import CustomerEnquiry from './Components/CustomerEnquiry/CustomerEnquiry';
 import ShareDetails from './Components/ShareDetails/ShareDetails';
 import Startenddetails from './Components/StartEndDetails/Startenddetails';
 import AllocateTrip from './Components/AllocateTrip/AllocateTrip';
@@ -26,7 +26,7 @@ import CustomerRate from './Components/AddRate/CustomerRate';
 import ViewCustomerRate from './Components/AddRate/ViewCustomerRate';
 import VendorRate from './Components/AddRate/VendorRate'
 import ViewVendorRate from './Components/AddRate/ViewVendorRate';
-import ViewCustomerInquiry from './Components/CustomerInquiry/ViewCustomerInquiry';
+import ViewCustomerEnquiry from './Components/CustomerEnquiry/ViewCustomerEnquiry';
 import AddTrip from './Components/Trip/Add Trip';
 import ViewTrip from './Components/Trip/ViewTrip';
 import ViewShareDetails from './Components/ShareDetails/ViewShareDetails';
@@ -63,7 +63,7 @@ function App() {
     <Route path='/viewcustomerrate'  element={<ViewCustomerRate/>}/>
     <Route path='/vendorrate'  element={<VendorRate/>}/>
     <Route path='/viewvendorrate'  element={<ViewVendorRate/>}/>
-    <Route path='/customerenquiry'  element={<CustomerInquiry/>}/>
+    <Route path='/customerenquiry'  element={<CustomerEnquiry/>}/>
     <Route path='/sidebar'  element={<Sidebar/>}/>
     <Route path='/vendorpayment' element={<VendorPayment/>} />
     <Route path='/Viewvendorpayment' element={<ViewVendorPayment/>} />
@@ -75,7 +75,7 @@ function App() {
     <Route path='/addvendor' element={<AddVendor/>} />
     <Route path='/viewcustomer' element={<ViewCustomer/>} />
     <Route path='/viewvendor' element={<ViewVendor/>} />
-    <Route path='/viewcustomerinquiry' element={<ViewCustomerInquiry/>} />
+    <Route path='/viewcustomerenquiry' element={<ViewCustomerEnquiry/>} />
     <Route path='/addtrip' element={<AddTrip/>} />
     <Route path='/viewtrip' element={<ViewTrip/>} />
     <Route path='/adddriver' element={<AddDriver/>} />

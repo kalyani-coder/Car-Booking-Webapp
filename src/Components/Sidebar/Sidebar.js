@@ -210,19 +210,19 @@ const Sidebar = () => {
           <li className="has-submenu">
             <a>
               <i className="bx bx-envelope"></i>
-              <span className="link_name">Customer Inquiry</span>
+              <span className="link_name">Customer Enquiry</span>
             </a>
             <ul className="sub-menu">
               <li>
                 <Link to="/customerenquiry">
                   <i className="bx bx-envelope"></i>
-                  <span className="link_name">Add Customer Inquiry</span>
+                  <span className="link_name">Add Customer Enquiry</span>
                 </Link>
               </li>
               <li>
-                <Link to="/viewcustomerinquiry">
+                <Link to="/viewcustomerenquiry">
                   <i className="bx bx-detail"></i>
-                  <span className="link_name">View Customer Inquiry</span>
+                  <span className="link_name">View Customer Enquiry</span>
                 </Link>
               </li>
             </ul>

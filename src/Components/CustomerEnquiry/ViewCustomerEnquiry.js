@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 
-const ViewCustomerInquiry = () => {
+const ViewCustomerEnquiry = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [error, setError] = useState(null);
@@ -49,7 +49,7 @@ const ViewCustomerInquiry = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Customer Inquries</h2>
+        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Customer Enquiry</h2>
           <div className="search-bar p-4 space-y-4">
             <input
               type="text"
@@ -103,4 +103,4 @@ const ViewCustomerInquiry = () => {
   );
 };
 
-export default ViewCustomerInquiry;
+export default ViewCustomerEnquiry;
