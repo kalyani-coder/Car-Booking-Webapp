@@ -61,6 +61,43 @@ function AddPayment() {
     }
 
   }
+
+
+if (name === 'closing_Time' || name === 'starting_Time') {
+  // Calculate the total hours
+  const closingTime = formData.closing_Time;
+  const startingTime = formData.starting_Time;
+  
+  if (closingTime && startingTime) {
+    const closingTimeParts = closingTime.split(':');
+    const startingTimeParts = startingTime.split(':');
+    
+    const closingHours = parseInt(closingTimeParts[0], 10);
+    const closingMinutes = parseInt(closingTimeParts[1], 10);
+    const startingHours = parseInt(startingTimeParts[0], 10);
+    const startingMinutes = parseInt(startingTimeParts[1], 10);
+
+    // Calculate the total hours and minutes
+    let totalHours = closingHours - startingHours;
+    let totalMinutes = closingMinutes - startingMinutes;
+
+    // Adjust for negative minutes
+    if (totalMinutes < 0) {
+      totalHours -= 1;
+      totalMinutes += 60;
+    }
+
+    // Format the total hours and minutes as a string (HH:MM)
+    const totalHoursStr = totalHours < 10 ? `0${totalHours}` : totalHours.toString();
+    const totalMinutesStr = totalMinutes < 10 ? `0${totalMinutes}` : totalMinutes.toString();
+    
+    // Update the total_hours field
+    setFormData((prevData) => ({
+      ...prevData,
+      total_hours: `${totalHoursStr}:${totalMinutesStr}`,
+    }));
+  }
+}
 };
 
     
@@ -95,7 +132,7 @@ function AddPayment() {
     const subtotal = calculateSubTotal();
     const { SGST, CGST } = calculateSGST_CGST(subtotal);
     const totalAmount = subtotal + SGST + CGST;
-    const remainingAmount = totalAmount - formData.advance_Amount;
+    const remainingAmount = totalAmount - parseFloat(formData.advance_Amount); 
     setFormData((prevData) => ({
       ...prevData,
       subtotal_Amount: subtotal,
@@ -308,23 +345,6 @@ function AddPayment() {
                       </div>
                     </div>
 
-                    <div className="row g-2">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >Closing Kms</label>
-                          <input type="text" className="form-control" id="closing_km" name="closing_km" placeholder="Enter  Closing Kms" onChange={handleChange} value={formData.closing_km} />
-
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label >Closing Time</label>
-                          <input type="Time" className="form-control" id="closing_Time" name="closing_Time"  placeholder="Enter  Closing Time" onChange={handleChange} value={formData.closing_Time} />
-
-                        </div>
-                      </div>
-                    </div>
-
 
                     <div className="row g-2">
                       <div className="col-md">
@@ -346,6 +366,24 @@ function AddPayment() {
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
+                          <label >Closing Kms</label>
+                          <input type="text" className="form-control" id="closing_km" name="closing_km" placeholder="Enter  Closing Kms" onChange={handleChange} value={formData.closing_km} />
+
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Closing Time</label>
+                          <input type="Time" className="form-control" id="closing_Time" name="closing_Time"  placeholder="Enter  Closing Time" onChange={handleChange} value={formData.closing_Time} />
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div className="row g-2">
+                      <div className="col-md">
+                        <div className="form-group">
                           <label >Total Kms</label>
                           <input type="text" className="form-control"  name="total_Km" placeholder="Enter  Total Kms" onChange={handleChange} value={formData.total_Km} />
 
@@ -354,7 +392,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label >Total Hours</label>
-                          <input type="Text" className="form-control" name="total_hours" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hours} />
+                          <input type="Text" className="form-control" name="total_hours" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hours}readOnly />
 
                         </div>
                       </div>
@@ -519,7 +557,7 @@ function AddPayment() {
                             name="remaining_Amount"
                             placeholder="Enter Remaining Amount"
                             value={formData.remaining_Amount}
-                            onChange={handleChange}
+                            onChange={handleChange}readOnly
                           />
                         </div>
                       </div>
