@@ -434,11 +434,11 @@ const UpdateDuty = () => {
                   value={formData.paymentmethod}
                 >
                   <option value="">Payment Method</option>
-                  <option value="Bank Transfer">Bank Transfer</option>
-                  <option value="Cash">Cash</option>
-                  <option value="Google Pay">Google Pay</option>
-                  <option value="Paytm">Paytm</option>
-                  <option value="Phone Pay">Phone Pay</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cheque ">Cheque </option>
+                            <option value="UPI / Wallet Payment">UPI /Wallet Payment</option>
+                            <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
+                            
                 </select></div>
             </div>
 

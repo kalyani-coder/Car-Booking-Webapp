@@ -364,7 +364,7 @@ function VendorInvoiceMonthly() {
               />
             </div>
           </div>
-          <button type="button" className="btn btn-danger" onClick={handleGenerate}>
+          <button  className="btn btn-danger" onClick={handleGenerate}>
             Generate
           </button>
         </div>

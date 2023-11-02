@@ -163,8 +163,8 @@ doc.autoTable({ body: invoiceData });
             {/* Add more input elements */}
           </div>
 
-          <button type="button" className="btn btn-danger" onClick={handleGenerate}>
-            Generate PDF
+          <button className="btn btn-danger" onClick={handleGenerate}>
+            Generate
           </button>
         </div>
       </div>

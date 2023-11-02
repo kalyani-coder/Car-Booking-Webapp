@@ -233,7 +233,7 @@ function VendorPayment() {
                          <option value="">Payment Method</option>
                             <option value="Cash">Cash</option>
                             <option value="Cheque ">Cheque </option>
-                            <option value="UPI / Wallet Payment">UPI / Wallet Payment</option>
+                            <option value="UPI / Wallet Payment">UPI /Wallet Payment</option>
                             <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
                             
                       </select>
