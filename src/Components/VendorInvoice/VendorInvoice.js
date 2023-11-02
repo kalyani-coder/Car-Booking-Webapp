@@ -382,7 +382,6 @@ function VendorInvoice() {
             </div>
           </div>
           <button
-            type="button"
             className="btn btn-danger"
             onClick={handleGenerate}
           >
