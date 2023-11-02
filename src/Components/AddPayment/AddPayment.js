@@ -533,10 +533,11 @@ function AddPayment() {
                             onChange={handleChange}
                           >
                             <option value="">Payment Method</option>
-                            <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
                             <option value="Cash">Cash</option>
-                            <option value="Check">Check</option>
+                            <option value="Cheque ">Cheque </option>
                             <option value="UPI / Wallet Payment">UPI / Wallet Payment</option>
+                            <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
+                            
                             {/* <option value="Paytm">Paytm</option> */}
                             {/* <option value="Phone Pay">Phone Pay</option> */}
                           </select>
