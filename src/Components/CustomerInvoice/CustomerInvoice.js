@@ -143,6 +143,7 @@ function CustomerInvoice() {
               type="text"
               id="companyName"
               name="companyName"
+              placeholder="Company Name"
               value={formData.companyName}
               onChange={handleChange}
             />
@@ -152,6 +153,7 @@ function CustomerInvoice() {
               type="text"
               id="companyAddress"
               name="companyAddress"
+              placeholder="Company Address"
               value={formData.companyAddress}
               onChange={handleChange}
             />
@@ -171,6 +173,7 @@ function CustomerInvoice() {
               type="number"
               id="contactno"
               name="contactno"
+              placeholder="Contact No"
               value={formData.contactno}
               onChange={handleChange}
             />
@@ -182,6 +185,7 @@ function CustomerInvoice() {
               type="text"
               id="invoiceno"
               name="invoiceno"
+              placeholder="Invoice No"
               value={formData.invoiceno}
               onChange={handleChange}
             />
@@ -191,6 +195,7 @@ function CustomerInvoice() {
               type="text"
               id="gstno"
               name="gstno"
+              placeholder="Gst No"
               value={formData.gstno}
               onChange={handleChange}
             />
@@ -200,6 +205,7 @@ function CustomerInvoice() {
               type="email"
               id="mail"
               name="mail"
+              placeholder="Mail"
               value={formData.mail}
               onChange={handleChange}
             />
@@ -214,6 +220,7 @@ function CustomerInvoice() {
               type="text"
               id="customerName"
               name="customerName"
+              placeholder="Customer Name"
               value={formData.customerName}
               onChange={handleChange}
             />
@@ -223,6 +230,7 @@ function CustomerInvoice() {
               type="text"
               id="customerGSTNo"
               name="customerGSTNo"
+              placeholder="Customer GST No"
               value={formData.customerGSTNo}
               onChange={handleChange}
             />
@@ -234,6 +242,7 @@ function CustomerInvoice() {
               type="text"
               id="customerAddress"
               name="customerAddress"
+              placeholder="Customer Address"
               value={formData.customerAddress}
               onChange={handleChange}
             />
@@ -243,6 +252,7 @@ function CustomerInvoice() {
               type="text"
               id="customerContactNo"
               name="customerContactNo"
+              placeholder="Customer Contact No"
               value={formData.customerContactNo}
               onChange={handleChange}
             />
@@ -285,6 +295,7 @@ function CustomerInvoice() {
                 type="text"
                 id="bankname"
                 name="bankname"
+                placeholder="Bank Name"
                 value={formData.bankname}
                 onChange={handleChange}
               />
@@ -294,6 +305,7 @@ function CustomerInvoice() {
                 type="text"
                 id="branchname"
                 name="branchname"
+                placeholder="Branch Name"
                 value={formData.branchname}
                 onChange={handleChange}
               />
@@ -303,6 +315,7 @@ function CustomerInvoice() {
                 type="text"
                 id="accountNumber"
                 name="accountNumber"
+                placeholder="Account Number"
                 value={formData.accountNumber}
                 onChange={handleChange}
               />
@@ -314,6 +327,7 @@ function CustomerInvoice() {
                 type="text"
                 id="accountHoldername"
                 name="accountHoldername"
+                placeholder="Account Holder Name"
                 value={formData.accountHoldername}
                 onChange={handleChange}
               />
@@ -323,6 +337,7 @@ function CustomerInvoice() {
                 type="text"
                 id="ifsccode"
                 name="ifsccode"
+                placeholder="IFSC Code"
                 value={formData.ifsccode}
                 onChange={handleChange}
               />
@@ -332,14 +347,13 @@ function CustomerInvoice() {
                 type="text"
                 id="micrcode"
                 name="micrcode"
+                placeholder="MICR Code"
                 value={formData.micrcode}
                 onChange={handleChange}
               />
             </div>
           </div>
-          <button type="button" className="btn btn-danger" onClick={handleGenerate}>
-            Generate
-          </button>
+          <button className="btn btn-danger"  onClick={handleGenerate}>Generate</button>
         </div>
       </div>
     </>
