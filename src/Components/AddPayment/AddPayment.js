@@ -43,7 +43,27 @@ function AddPayment() {
       ...prevData,
       [name]: value,
     }));
-  };
+  // };
+
+
+  if (name === 'closing_km' || name === 'starting_Km') {
+    // Parse values as floats
+    const closingKm = parseFloat(name === 'closing_km' ? value : formData.closing_km);
+    const startingKm = parseFloat(name === 'starting_Km' ? value : formData.starting_Km);
+
+    // Calculate the total kilometers
+    if (!isNaN(closingKm) && !isNaN(startingKm)) {
+      const totalKm = closingKm - startingKm;
+      setFormData((prevData) => ({
+        ...prevData,
+        total_Km: totalKm.toString(), // Update the total_Km field
+      }));
+    }
+
+  }
+};
+
+    
 
   const calculateSubTotal = () => {
     const {
