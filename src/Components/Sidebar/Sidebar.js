@@ -220,7 +220,7 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/viewcustomerenquiry">
+                <Link to="/viewcustomerinquiry">
                   <i className="bx bx-detail"></i>
                   <span className="link_name">View Customer Enquiry</span>
                 </Link>
