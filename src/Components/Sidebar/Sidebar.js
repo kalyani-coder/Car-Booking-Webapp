@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Sidebar.css';
 // import { FiMenu, FiX } from 'react-icons/fi'; 
 import { Link } from 'react-router-dom';
-// import { AiFillCar } from 'react-icons/ai';
+import { AiOutlineUserAdd } from 'react-icons/ai';
 
 
 const Sidebar = () => {
@@ -17,13 +17,6 @@ const Sidebar = () => {
       sidebar.classList.toggle("open")
       menuBtnChange()
     })
-
-    // searchBtn.addEventListener("click", function () {
-    //   sidebar.classList.toggle("open")
-    //   menuBtnChange()
-    // })
-
-
 
     function menuBtnChange() {
       if (sidebar.classList.contains("open")) {
@@ -47,14 +40,9 @@ const Sidebar = () => {
     <>
 
       <div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '100vh' }}>
-
         <div className='logo'>
-
           <h3 className='car-heading'>Car Booking</h3>
-
-
         </div>
-
 
         <div className="logo_details">
           <i className="bx bxl-audible icon"></i>
@@ -62,12 +50,6 @@ const Sidebar = () => {
           <i className="bx bx-menu" id="btn"></i>
         </div>
         <ul className="nav-list" >
-
-          {/* <li>
-            <i className="bx bx-search" ></i>
-            <input type="text" placeholder="Search..." />
-            <span className="tooltip">Search</span>
-          </li> */}
 
           <li>
             <Link to={'/home'}>
@@ -79,405 +61,306 @@ const Sidebar = () => {
           </li>
 
 
-          {/* Customer */}
-
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-user"></i>
-              <span className="link_name">Customer </span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/addcustomer'}>
-                    <i className="bx bx-user"></i>
-                    <span className="link_name">Add Customer</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/viewcustomer'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View Customer</span>
-                  </Link>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          {/* Vendor */}
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-store"></i>
-              <span className="link_name">Vendor</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/addvendor">
-                  <i className="bx bx-store"></i>
-                  <span className="link_name">Add Vendor</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/viewvendor">
-                  <i className="bx bx-detail"></i>
-                  <span className="link_name">View Vendor</span>
-                </Link>
-              </li>
-            </ul>
-          </li>
-
-
-              {/* Add Driver */}
-
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-user"></i>
-              <span className="link_name">Driver </span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/adddriver'}>
-                    <i className="bx bx-user"></i>
-                    <span className="link_name">Add Driver</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/viewdriver'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View driver</span>
-                  </Link>
-                </a>
-                </li>
-                </ul>
-              </li>
+  {/* Customer */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
+             <AiOutlineUserAdd className='user-icon'/> Customers
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/addcustomer'}>
+                  Add Customer
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewcustomer'}>
+                  View Customer
+                </Link>
+              </a></li>
+            </ul>
+          </div> <br/>
+  {/* Customer */}
+
+
+ {/* Vendor */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Vendor
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/addvendor'}>
+                Add Vendor
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewvendor'}>
+                  View Vendor
+                </Link>
+              </a></li>
+            </ul>
+          </div><br></br>
+ {/* Vendor */}
+
+{/* Add Driver */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Driver
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/adddriver'}>
+                Add Driver
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewdriver'}>
+                  View Driver
+                </Link>
+              </a></li>
+            </ul>
+          </div><br/>
+{/* Add Driver */}
 
 
           {/* Rate */}
 
-
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-rupee"></i>
-              <span className="link_name">Rate</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                <Link to="/customerrate">
-                  <i className="bx bx-rupee"></i>
-                  <span className="link_name">Customer Rate</span>
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Rate
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/customerrate'}>
+                Customer Rate
                 </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/viewcustomerrate'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View Customer Rate</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/vendorrate'}>
-                    <i className="bx bx-rupee"></i>
-                    <span className="link_name">Vendor Rate</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/viewvendorrate'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View Vendor Rate</span>
-                  </Link>
-                </a>
-              </li>
-              </ul>
-              </li>
-
-
-
-              
-
-          {/* Customer Inquiry */}
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-envelope"></i>
-              <span className="link_name">Customer Enquiry</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/customerenquiry">
-                  <i className="bx bx-envelope"></i>
-                  <span className="link_name">Add Customer Enquiry</span>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewcustomerrate'}>
+                View Customer Rate
                 </Link>
-              </li>
-              <li>
-                <Link to="/viewcustomerinquiry">
-                  <i className="bx bx-detail"></i>
-                  <span className="link_name">View Customer Enquiry</span>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/vendorrate'}>
+                Vendor Rate
                 </Link>
-              </li>
-            </ul>
-          </li>
-
-          {/* Trip */}
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-map"></i>
-              <span className="link_name">Trip</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <Link to="/addtrip">
-                  <i className="bx bx-map"></i>
-                  <span className="link_name">Add Trip</span>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewvendorrate'}>
+                View Vendor Rate
                 </Link>
-              </li>
-              <li>
-                <Link to="/viewtrip">
-                  <i className="bx bx-detail"></i>
-                  <span className="link_name">View Trip</span>
+              </a></li>
+            </ul>
+          </div>
+{/* Rate */}
+
+
+{/* Customer Inquiry */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Customer Enquiry
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/customerenquiry'}>
+                Add Customer Enquiry
                 </Link>
-              </li>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewcustomerenquiry'}>
+                View Customer Enquiry
+                </Link>
+              </a></li>
             </ul>
-          </li>
+          </div><br/>
+{/* Customer Inquiry */}
 
-          {/* Allocate Trip */}
 
-
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-car"></i>
-              <span className="link_name">Allocate Trip</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/allocatetrip'}>
-                    <i className="bx bx-car"></i>
-                    <span className="link_name">Allocate Trip</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/ViewAllocateTrip'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View Allocate Trip </span>
-                  </Link>
-                </a>
-              </li>
+{/* Trip */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Trip
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/addtrip'}>
+                Add Trip
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewtrip'}>
+                View Trip
+                </Link>
+              </a></li>
             </ul>
-          </li>
+          </div><br/>
 
-          {/* Share Details to Customer */}
 
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-paper-plane"></i>
-              <span className="link_name">Share Details</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/sharedetails'}>
-                    <i className="bx bx-paper-plane"></i>
-                    <span className="link_name">Share Trip Details</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/viewsharedetails'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View Share Details </span>
-                  </Link>
-                </a>
-              </li>
+
+ {/* Allocate Trip */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Allocate Trip
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/allocatetrip'}>
+                Allocate Trip
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/ViewAllocateTrip'}>
+                View Allocate Trip
+                </Link>
+              </a></li>
             </ul>
-          </li>
+          </div><br/>
 
-          {/* Get Details from Driver */}
 
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-info-circle"></i>
-              <span className="link_name">Get Details From Driver</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/startenddetails'}>
-                    <i className="bx bx-info-circle"></i>
-                    <span className="link_name">Get Trip Details</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <i className="bx bx-detail"></i>
-                  <span className="link_name">View Get Trip Details</span>
-                </a>
-              </li>
+{/* Share Details to Customer */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Share Details
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/sharedetails'}>
+                Share Trip Details
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewsharedetails'}>
+                View Share Details
+                </Link>
+              </a></li>
             </ul>
-          </li>
+          </div><br/>
 
 
-          {/* Update Duty Slip */}
-
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-pencil"></i>
-              <span className="link_name">Update Duty Slip</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/updateduty'}>
-                    <i className="bx bx-pencil"></i>
-                    <span className="link_name">Add Duty Slip</span>
-                  </Link>
-                </a>
-              </li>
-
-              <li>
-                <a>
-                  <Link to={'/viewupdateduty'}>
-                    <i className="bx bx-detail"></i>
-                    <span className="link_name">View Duty Slip</span>
-                  </Link>
-                </a>
-              </li>
+{/* Get Details from Driver */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Get Details From Driver
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/startenddetails'}>
+                Get Trip Details
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                View Get Trip Details
+              </a></li>
             </ul>
-          </li>
+          </div><br/>
 
 
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-credit-card"></i>
-              <span className="link_name">Payment </span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/addpayment'}>
-                    <i className="bx bx-credit-card"></i>
-                    <span className="link_name">Customer Payment</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
+
+
+{/* Update Duty Slip */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/> Update Duty Slip
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/updateduty'}>
+                Add Duty Slip
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewupdateduty'}>
+                View Duty Slip
+                </Link>
+              </a></li>
+            </ul>
+          </div><br/>
+
+
+ 
+
+{/* payment for all  */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/>Payment
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/addpayment'}>
+                Customer Payment
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcustomerpayment'}>
-                  <i className="bx bx-detail"></i>
-                  <span className="link_name">View Customer Payment</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <Link to={'/vendorpayment'}>
-                    <i className="bx bx-credit-card"></i>
-                    <span className="link_name">Vendor Payment</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <a>
+                View Customer Payment
+                </Link>
+              </a></li><hr/>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/vendorpayment'}>
+                Vendor Payment
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
                 <Link to={'/viewvendorpayment'}>
-                  <i className="bx bx-detail"></i>
-                  <span className="link_name">View Vendor Payment</span>
-                  </Link>
-                </a>
-              </li>
+                View Vendor Payment
+                </Link>
+              </a></li>
             </ul>
-          </li>
-
+          </div><br/>
 
 
           {/* Generate Invoice */}
 
-          <li className="has-submenu">
-            <a>
-              <i className="bx bx-save"></i>
-              <span className="link_name">Generate Invoice</span>
-            </a>
-            <ul className="sub-menu">
-              <li>
-                <a>
-                  <Link to={'/customerinvoice'}>
-                    <i className="bx bx-save"></i>
-                    <span className="link_name">Customer Invoice</span>
-                  </Link>
-                </a>
-              </li>
-              <li>
-                <li>
-                  <a>
-                    <Link to={'/vendorinvoice'}>
-                      <i className="bx bx-save"></i>
-                      <span className="link_name">Vendor Invoice</span>
-                    </Link>
-                  </a>
-                </li>
-                <li>
-                  <a>
-                    <Link to={'/customerinvoicemonthly'}>
-                      <i className="bx bx-save"></i>
-                      <span className="link_name">Customer Monthly Invoice</span>
-                    </Link>
-                  </a>
-                </li>
-                <li>
-                  <a>
-                    <Link to={'/vendorinvoicemonthly'}>
-                      <i className="bx bx-save"></i>
-                      <span className="link_name">Vendor Monthly Invoice</span>
-                    </Link>
-                  </a>
-                </li>
-              </li>
+         <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            
+             <AiOutlineUserAdd className='user-icon'/>Generate Invoice
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/customerinvoice'}>
+                Customer Invoice
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/vendorinvoice'}>
+                Vendor Invoice
+                </Link>
+              </a></li><hr/>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/customerinvoicemonthly'}>
+                Customer Monthly Invoice
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/vendorinvoicemonthly'}>
+                Vendor Monthly Invoice
+                </Link>
+              </a></li>
             </ul>
-          </li>
-
-<br/>
-<br/>
-          <li className="profile">
-            <div className="profile_details">
-              <div className="profile_content">
-              </div>
-            </div>
-            <i className="bx bx-log-out fw-bold" id="log_out" onClick={handleLogout}></i>
-          </li>
-
+          </div><br/>
+          <br/>
+          
           {/* for addign profile and logout button  */}
-
-          {/* <li className="profile">
-        <div className="profile_details">
-          <img src="profile.jpeg" alt="profile image"/>
-          <div className="profile_content">
-            <div className="name">Anna Jhon</div>
-            <div className="designation">Admin</div>
-          </div>
-        </div>
-        <i className="bx bx-log-out" id="log_out"></i>
-      </li> */}
-
+          <button 
+          className='btn btn-primary bg-danger' 
+          onClick={handleLogout}> 
+            Logout
+            </button>
         </ul>
-
       </div>
-
     </>
-
-
   );
 }
 
