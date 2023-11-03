@@ -269,11 +269,13 @@ const Sidebar = () => {
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
-                View Get Trip Details
+                <Link to={'/viewdetailsfromdriver'}>
+                View Driver Trip Details 
+                </Link>
               </a></li>
             </ul>
           </div><br/>
-
+          
 
 
 

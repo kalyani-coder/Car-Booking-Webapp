@@ -34,6 +34,7 @@ import ViewUpdateDuty from './Components/UpdateDutySlip/ViewUpdateDuty';
 import AddDriver from './Components/Driver/AddDriver';
 import ViewDriver from './Components/Driver/ViewDriver';
 import ViewCustomerPayment from './Components/AddPayment/ViewCustomerPayment';
+import ViewDriverDetails from './Components/StartEndDetails/ViewDriverDetails'
 
 
 
@@ -80,6 +81,7 @@ function App() {
     <Route path='/viewtrip' element={<ViewTrip/>} />
     <Route path='/adddriver' element={<AddDriver/>} />
     <Route path='/viewdriver' element={<ViewDriver/>} />
+    <Route path='/viewdetailsfromdriver' element={<ViewDriverDetails/>} />
 
 
   </Routes>
