@@ -44,6 +44,7 @@ function AddPayment() {
       [name]: value,
     }));
   // };
+  
 
 
   if (name === 'closing_km' || name === 'starting_Km') {
@@ -59,46 +60,35 @@ function AddPayment() {
         total_Km: totalKm.toString(), // Update the total_Km field
       }));
     }
-
   }
+  if (name === 'closing_Time' || name === 'starting_Time') {
+    // Calculate the total hours
+    const closingTime = formData.closing_Time;
+    const startingTime = formData.starting_Time;
 
+    if (closingTime && startingTime) {
+      const closingDateTime = new Date(`2000-01-01T${closingTime}`);
+      const startingDateTime = new Date(`2000-01-01T${startingTime}`);
+      const timeDiff = closingDateTime - startingDateTime;
 
-if (name === 'closing_Time' || name === 'starting_Time') {
-  // Calculate the total hours
-  const closingTime = formData.closing_Time;
-  const startingTime = formData.starting_Time;
-  
-  if (closingTime && startingTime) {
-    const closingTimeParts = closingTime.split(':');
-    const startingTimeParts = startingTime.split(':');
-    
-    const closingHours = parseInt(closingTimeParts[0], 10);
-    const closingMinutes = parseInt(closingTimeParts[1], 10);
-    const startingHours = parseInt(startingTimeParts[0], 10);
-    const startingMinutes = parseInt(startingTimeParts[1], 10);
-
-    // Calculate the total hours and minutes
-    let totalHours = closingHours - startingHours;
-    let totalMinutes = closingMinutes - startingMinutes;
-
-    // Adjust for negative minutes
-    if (totalMinutes < 0) {
-      totalHours -= 1;
-      totalMinutes += 60;
+      if (timeDiff > 0) {
+        const totalHours = (timeDiff / 3600000).toFixed(2); // 3600000 milliseconds in an hour
+        setFormData((prevData) => ({
+          ...prevData,
+          total_hours: totalHours,
+        }));
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          total_hours: 'Invalid Time',
+        }));
+      }
     }
-
-    // Format the total hours and minutes as a string (HH:MM)
-    const totalHoursStr = totalHours < 10 ? `0${totalHours}` : totalHours.toString();
-    const totalMinutesStr = totalMinutes < 10 ? `0${totalMinutes}` : totalMinutes.toString();
-    
-    // Update the total_hours field
-    setFormData((prevData) => ({
-      ...prevData,
-      total_hours: `${totalHoursStr}:${totalMinutesStr}`,
-    }));
   }
-}
+
 };
+
+
 
     
 
@@ -114,6 +104,7 @@ if (name === 'closing_Time' || name === 'starting_Time') {
     return subtotal;
   };
 
+
   const calculateSGST_CGST = (subtotal) => {
     const taxRate = 2.5; // 2.5% tax rate
     const sgst = (subtotal * taxRate) / 100;
@@ -125,8 +116,6 @@ if (name === 'closing_Time' || name === 'starting_Time') {
     };
   };
 
-  
-  
 
   const handleSubtotalChange = () => {
     const subtotal = calculateSubTotal();
@@ -142,6 +131,7 @@ if (name === 'closing_Time' || name === 'starting_Time') {
       remaining_Amount: remainingAmount,
       
     }));
+    
   };
 
   const handleSubmit = async (event) => {
@@ -528,7 +518,7 @@ if (name === 'closing_Time' || name === 'starting_Time') {
                             name="total_Amount"
                             placeholder="Total Amount"
                             value={formData.total_Amount}
-                            onChange={handleChange}
+                            onChange={handleChange}readOnly
                           />
                         </div>
                       </div>

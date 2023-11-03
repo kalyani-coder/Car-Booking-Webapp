@@ -116,6 +116,35 @@ const CustomerEnquiry = () => {
     }
   };
 
+  const handleDateChange = (event) => {
+    handleChange(event);
+  
+    // Calculate the "Total Days" and "Total Hours" based on date and time
+    const { pickup, date, time, dropoff, date1, time1 } = formData;
+  
+    if (pickup && date && time && dropoff && date1 && time1) {
+      const pickupDateTime = new Date(`${date}T${time}`);
+      const dropoffDateTime = new Date(`${date1}T${time1}`);
+  
+      // Calculate the time difference in milliseconds
+      const timeDifference = dropoffDateTime - pickupDateTime;
+  
+      // Calculate "Total Days" by dividing the time difference by milliseconds in a day
+      const totalDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  
+      // Calculate "Total Hours" by dividing the time difference by milliseconds in an hour
+      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        totaldays: totalDays,
+        hours: totalHours,
+      }));
+    }
+  };
+  
+
+
   return (
     <>
       <Sidebar />
@@ -227,7 +256,7 @@ const CustomerEnquiry = () => {
             <label htmlFor="date1" className="form-label">
               Date:
             </label>
-            <input type="date" className="form-control cust-inq-input" name="date1" onChange={handleChange} value={formData.date1} />
+            <input type="date" className="form-control cust-inq-input" name="date" onChange={handleDateChange} value={formData.date} />
           </div>
           </div>
           <div>
@@ -253,7 +282,7 @@ const CustomerEnquiry = () => {
             <label htmlFor="date" className="form-label">
               Date:
             </label>
-            <input type="date" className="form-control cust-inq-input" name="date" onChange={handleChange} value={formData.date} />
+            <input type="date" className="form-control cust-inq-input" name="date1" onChange={handleDateChange} value={formData.date1} />
           </div>
           </div>
           <div>
