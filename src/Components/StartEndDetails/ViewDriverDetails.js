@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 const ViewStartEndDetails = () => {
@@ -44,40 +44,40 @@ const ViewStartEndDetails = () => {
     filterShareDetails();
   }, [searchText]);
 
-  const generateInvoice = (shareDetail) => {
-    const doc = new jsPDF();
+  // const generateInvoice = (shareDetail) => {
+  //   const doc = new jsPDF();
 
-    // Add your code to generate the invoice in a table format here
-    // For simplicity, we'll just add a sample table with the data
-    doc.text('Sample Invoice', 10, 10);
+  //   // Add your code to generate the invoice in a table format here
+  //   // For simplicity, we'll just add a sample table with the data
+  //   doc.text('Sample Invoice', 10, 10);
 
-    const columns = ['Field', 'Value'];
-    const rows = [
-      ['Vehicle', shareDetail.vehicle],
-      ['Trip Type', shareDetail.triptype],
-      ['Subtype', shareDetail.subtype],
-      ['Pickup', shareDetail.pickup],
-      ['Date', shareDetail.date],
-      ['Time', shareDetail.time],
-      ['Droff Location', shareDetail.totalDays],
-      ['Drop Off Date', shareDetail.date1],
-      ['Drop Off Time', shareDetail.time1],
-      ['Driver Name', shareDetail.drivername],
-      ['Driver Email', shareDetail.drivermail],
-      ['Mobile Number', shareDetail.mobileno],
-      ['Mobile Number', shareDetail.mobileno1],
-      // Add other fields as needed
-    ];
+  //   const columns = ['Field', 'Value'];
+  //   const rows = [
+  //     ['Vehicle', shareDetail.vehicle],
+  //     ['Trip Type', shareDetail.triptype],
+  //     ['Subtype', shareDetail.subtype],
+  //     ['Pickup', shareDetail.pickup],
+  //     ['Date', shareDetail.date],
+  //     ['Time', shareDetail.time],
+  //     ['Droff Location', shareDetail.totalDays],
+  //     ['Drop Off Date', shareDetail.date1],
+  //     ['Drop Off Time', shareDetail.time1],
+  //     ['Driver Name', shareDetail.drivername],
+  //     ['Driver Email', shareDetail.drivermail],
+  //     ['Mobile Number', shareDetail.mobileno],
+  //     ['Mobile Number', shareDetail.mobileno1],
+  //     // Add other fields as needed
+  //   ];
 
-    doc.autoTable({
-      head: [columns],
-      body: rows,
-      startY: 20,
-    });
+  //   doc.autoTable({
+  //     head: [columns],
+  //     body: rows,
+  //     startY: 20,
+  //   });
 
-    // Save the PDF or open in a new tab
-    doc.save(`Invoice_${shareDetail._id}.pdf`);
-  };
+  //   // Save the PDF or open in a new tab
+  //   doc.save(`Invoice_${shareDetail._id}.pdf`);
+  // };
 
   const handleEditShareDetail = (shareDetail) => {
     // Implement your edit functionality here
@@ -116,7 +116,8 @@ const ViewStartEndDetails = () => {
               {filteredShareDetails.map((shareDetail) => (
                 <div key={shareDetail._id} className="bg-white shadow-md rounded-lg overflow-hidden">
                   <div className="p-4">
-                    <h5 className="font-semibold  ">Pickup Location : {shareDetail.pickuplocation}</h5>
+                  <h5 className="font-semibold">Driver Name : {shareDetail.drivername}</h5>
+                    <p className="mb-2">Pickup Location : {shareDetail.pickuplocation}</p>
                     <p className="mb-2">Date : {shareDetail.date}</p>
                     <p className="mb-2">Time : {shareDetail.time}</p>
                     <p className="mb-2">Drop Location : {shareDetail.totalDaysLocation}</p>
@@ -126,16 +127,16 @@ const ViewStartEndDetails = () => {
                     <p className="mb-2">Total Hours : {shareDetail.totalHours}</p>
                     <p className="mb-2">Trip Type : {shareDetail.triptype}</p>
                     <p className="mb-2">Trip Sub Type : {shareDetail.tripsubtype}</p>
-                    <p className="mb-2">Driver Name : {shareDetail.drivername}</p>
+                    
                     <p className="mb-2">Mobile No : {shareDetail.mobileNumber}</p>
                     {/* <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p> */}
                     <div className="flex justify-between">
-                      <button
+                      {/* <button
                         className='btn btn-primary btn-sm'
                         onClick={() => generateInvoice(shareDetail)}
                       >
                         Generate
-                      </button>
+                      </button> */}
                       <button
                         className='btn btn-info btn-sm'
                         onClick={() => handleEditShareDetail(shareDetail)}
