@@ -3,6 +3,17 @@ import './Sidebar.css';
 // import { FiMenu, FiX } from 'react-icons/fi'; 
 import { Link } from 'react-router-dom';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import { BiUserVoice } from 'react-icons/bi';
+import { MdDriveEta } from 'react-icons/md';
+import { MdPriceCheck } from 'react-icons/md';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { BsPinMap } from 'react-icons/bs';
+import { BiTrip } from 'react-icons/bi';
+import { BsFillShareFill } from 'react-icons/bs';
+import { CgDetailsMore } from 'react-icons/cg';
+import { MdUpdate } from 'react-icons/md';
+import { AiFillBank } from 'react-icons/ai';
+import { FaFileInvoiceDollar } from 'react-icons/fa';
 
 
 const Sidebar = () => {
@@ -87,7 +98,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Vendor
+             <BiUserVoice className='user-icon'/> Vendor
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -108,7 +119,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Driver
+             <MdDriveEta className='user-icon'/> Driver
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -131,7 +142,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Rate
+             <MdPriceCheck className='user-icon'/> Rate
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -163,7 +174,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Customer Enquiry
+             <AiOutlineCheckCircle className='user-icon'/> Customer Enquiry
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -185,7 +196,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Trip
+             <BiTrip className='user-icon'/> Trip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -207,7 +218,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Allocate Trip
+             <BsPinMap className='user-icon'/> Allocate Trip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -228,7 +239,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Share Details
+             <BsFillShareFill className='user-icon'/> Share Details
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -249,7 +260,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Get Details From Driver
+             <CgDetailsMore className='user-icon'/> Get Details From Driver
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -270,7 +281,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/> Update Duty Slip
+             <MdUpdate className='user-icon'/> Update Duty Slip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -293,7 +304,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/>Payment
+             <AiFillBank className='user-icon'/>Payment
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -325,7 +336,7 @@ const Sidebar = () => {
          <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             
-             <AiOutlineUserAdd className='user-icon'/>Generate Invoice
+             <FaFileInvoiceDollar className='user-icon'/>Generate Invoice
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
