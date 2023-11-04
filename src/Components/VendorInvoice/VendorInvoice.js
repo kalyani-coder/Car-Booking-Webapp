@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./VendorInvoice.css";
-import jsPDF from "jspdf"; // Import jsPDF
+import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
 
@@ -36,19 +36,21 @@ function VendorInvoice() {
   const invoiceItems = [
     {
       description: "Item 1",
+      saccode: "996601",
       kms: 100,
       amount: 50,
+      total: 55,
       cgst: 2.5,
       sgst: 2.5,
-      totalAmount: 55,
     },
     {
       description: "Item 2",
+      saccode: "886602",
       kms: 200,
       amount: 75,
+      total: 82.5,
       cgst: 3.75,
       sgst: 3.75,
-      totalAmount: 82.5,
     },
     // Add more items as needed
   ];
@@ -58,6 +60,7 @@ function VendorInvoice() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   const handlePrint = () => {
     setShowInvoiceData(true);
     window.print();
@@ -68,22 +71,24 @@ function VendorInvoice() {
 
     const columns = [
       "Description",
+      "SAC Code",
       "Kms",
       "Amount",
-      "CGST",
-      "SGST",
-      "Total Amount",
+      "Total",
+      "CGST 2.5%",
+      "SGST 2.5%",
     ];
     const data = invoiceItems.map((item) => [
       item.description,
+      item.saccode,
       item.kms,
       item.amount,
+      item.total,
       item.cgst + "%",
       item.sgst + "%",
-      item.totalAmount,
     ]);
 
-    doc.text("Vendor Invoice", 10, 10);
+    doc.text("SHIVKRUPA TRAVELS INVOICE", 10, 10);
 
     doc.autoTable({
       startY: 20,
@@ -132,9 +137,7 @@ function VendorInvoice() {
       <Sidebar />
 
       <div className="container-vendor-invoice">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
-        >
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
           Vendor Invoice
         </h2>
         <div className="form-vendor-invoice">
@@ -286,22 +289,24 @@ function VendorInvoice() {
             <thead>
               <tr>
                 <th>Description</th>
+                <th>SAC Code</th>
                 <th>Kms</th>
                 <th>Amount</th>
-                <th>CGST</th>
-                <th>SGST</th>
-                <th>Total Amount</th>
+                <th>Total</th>
+                <th>CGST 2.5%</th>
+                <th>SGST 2.5%</th>
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.description}</td>
+                  <td>{item.saccode}</td>
                   <td>{item.kms}</td>
                   <td>{item.amount}</td>
+                  <td>{item.total}</td>
                   <td>{item.cgst + "%"}</td>
                   <td>{item.sgst + "%"}</td>
-                  <td>{item.totalAmount}</td>
                 </tr>
               ))}
             </tbody>
@@ -381,11 +386,8 @@ function VendorInvoice() {
               />
             </div>
           </div>
-          <button
-            className="btn btn-danger"
-            onClick={handleGenerate}
-          >
-            Generate 
+          <button className="btn btn-danger" onClick={handleGenerate}>
+            Generate
           </button>
         </div>
       </div>
