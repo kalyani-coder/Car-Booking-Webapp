@@ -59,7 +59,7 @@ function VendorInvoiceMonthly() {
     doc.text(formData.companyAddress, 10, 20);
     doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
     doc.text('GST No: ' + formData.gstno, 10, 40);
-    doc.text('Date: ' + formData.date, 10, 50);
+    // doc.text('Date: ' + formData.date, 10, 50);
     doc.text('Mail: ' + formData.mail, 10, 60);
 
     // Add content to the right side

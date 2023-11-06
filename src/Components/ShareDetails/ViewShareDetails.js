@@ -28,6 +28,27 @@ const ViewShareDetails = () => {
     fetchShareDetails();
   }, []);
 
+  const fetchAdditionalInfo = async (shareDetail) => {
+    try {
+      // Make an API call to fetch additional information based on the share trip details ID
+      const additionalInfoResponse = await fetch(`http://localhost:7000/api/additional-info/${shareDetail.sharetripdetailsId}`);
+      if (!additionalInfoResponse.ok) {
+        throw Error('Error fetching additional info');
+      }
+      const additionalInfoData = await additionalInfoResponse.json();
+
+      // Update the share detail with additional info
+      const updatedShareDetails = shareDetails.map((detail) =>
+        detail._id === shareDetail._id ? { ...detail, ...additionalInfoData } : detail
+      );
+
+      setShareDetails(updatedShareDetails);
+      setFilteredShareDetails(updatedShareDetails);
+    } catch (error) {
+      console.error('Error fetching additional info: ' + error.message);
+    }
+  };
+
   const filterShareDetails = () => {
     const filteredData = shareDetails.filter((shareDetail) => {
       const searchTextLower = searchText.toLowerCase();
@@ -49,10 +70,17 @@ const ViewShareDetails = () => {
 
     // Add your code to generate the invoice in a table format here
     // For simplicity, we'll just add a sample table with the data
-    doc.text('Sample Invoice', 10, 10);
+    doc.text('Shivpushpa Travels Invoice', 10, 10);
 
     const columns = ['Field', 'Value'];
     const rows = [
+      ['Company Name', shareDetail.companyName],
+      ['Company Address', shareDetail.companyAddress],
+      ['Invoice No', shareDetail.invoiceNo],
+      ['Contact No', shareDetail.contactNo],
+      ['Email', shareDetail.email],
+      ['PO No', shareDetail.poNo],
+      ['Customer ID', shareDetail.customerId],
       ['Vehicle', shareDetail.vehicle],
       ['Trip Type', shareDetail.triptype],
       ['Subtype', shareDetail.subtype],
@@ -64,8 +92,8 @@ const ViewShareDetails = () => {
       ['Drop Off Time', shareDetail.time1],
       ['Driver Name', shareDetail.drivername],
       ['Driver Email', shareDetail.drivermail],
-      ['Mobile Number', shareDetail.mobileno],
-      ['Mobile Number', shareDetail.mobileno1],
+      ['Mobile No', shareDetail.mobileno],
+      ['Mobile No1', shareDetail.mobileno1],
       // Add other fields as needed
     ];
 
@@ -128,7 +156,7 @@ const ViewShareDetails = () => {
                     <p className="mb-2">Driver Name: {shareDetail.drivername}</p>
                     <p className="mb-2">Driver Email: {shareDetail.drivermail}</p>
                     <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
-                    <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p>
+                    <p className="mb-2">Mobile No1: {shareDetail.mobileno1}</p>
                     <div className="flex justify-between">
                       <button
                         className='btn btn-primary btn-sm'
