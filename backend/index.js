@@ -19,7 +19,7 @@ app.use(session({
     store: MongoStore.create({
       mongoUrl: 'mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority'
     }),
-    cookie: { maxAge: 3600000, sameSite: "lax", secure: false },
+    cookie: { maxAge: 99999999999999, sameSite: "lax", secure: false },
   }))
 
 // database connectivity on mongoDB Atlas

@@ -16,3 +16,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+mg, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  /* vertical-align: middle; */
+  margin-left: 300px;
+}
+

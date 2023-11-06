@@ -38,17 +38,17 @@ function VendorInvoice() {
     // Add more items as needed
   ];
 
-  const [showInvoiceData, setShowInvoiceData] = useState(false);
+  // const [showInvoiceData, setShowInvoiceData] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePrint = () => {
-    setShowInvoiceData(true);
-    window.print();
-  };
+  // const handlePrint = () => {
+  //   setShowInvoiceData(true);
+  //   window.print();
+  // };
 
   const handleGenerate = () => {
     const doc = new jsPDF();
