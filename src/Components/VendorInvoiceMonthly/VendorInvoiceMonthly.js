@@ -8,10 +8,10 @@ function VendorInvoiceMonthly() {
   const [formData, setFormData] = useState({
     tripid: '',
     invoiceno: '',
-    companyName: '',
+    companyName: 'Shivpushpa Travels Invoice',
     gstno: '',
-    companyAddress: '',
-    mail: '',
+    companyAddress: '332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111',
+    mail: 'travelshivpushpa@gmail.com',
     date: '',
     contactno: '',
     to: '',
@@ -25,16 +25,16 @@ function VendorInvoiceMonthly() {
     cgst: '',
     sgst: '',
     totalAmount: '',
-    bankname: '',
-    branch: '',
-    accountNumber: '',
-    ifsccode: '',
-    micrcode: ''
+    bankname: 'The Cosmos Co-operative Bank Ltd',
+    branchname: 'Kasba Raviwar Branch, Pune 411 002',
+    accountNumber: '015204301220061',
+    accountHoldername: '',
+    ifsccode: 'COSB0000015',
+    micrcode: '411164014',
   });
 
   const invoiceItems = [
-    { description: 'Item 1', kms: 100, amount: 50, cgst: 2.5, sgst: 2.5, totalAmount: 55 },
-    { description: 'Item 2', kms: 200, amount: 75, cgst: 3.75, sgst: 3.75, totalAmount: 82.5 },
+    { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
     // Add more items as needed
   ];
 
@@ -52,35 +52,67 @@ function VendorInvoiceMonthly() {
 
   const handleGenerate = () => {
     const doc = new jsPDF();
+
+    // Add content to the PDF
+    doc.setFontSize(12);
     
+    doc.text(formData.companyName, 10, 10);
+    doc.text(formData.companyAddress, 10, 20);
+    doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
+    doc.text('GST No: ' + formData.gstno, 10, 40);
+    doc.text('Date: ' + formData.date, 10, 50);
+    doc.text('Mail: ' + formData.mail, 10, 60);
 
-    doc.text('Monthly Vendor Invoice', 10, 10);
-    
+    // Add content to the right side
+    doc.text('PO No: ', 150, 30);
+    doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
+    doc.text('Date: ' + formData.date, 150, 50);
+    doc.text('Customer ID GST No: 27AABTS4503R1Z1', 150, 60);
 
-   // Sample data for your invoice
-const invoiceData = [
-  ['Company Name:', formData.companyName],
-  ['GST No:', formData.gstno],
-  ['Vendor Name:', formData.vendorname],
-  ['Vendor Address:', formData.vendoraddress],
-  ['Bank Name:', formData.bankname],
-  ['Account Number:', formData.accountnumber],
-];
+    doc.text('Vendor Name: ' + formData.vendorName, 10, 80);
+    doc.text('Vendor Address: ' + formData.vendorAddress, 10, 90);
+    doc.text('Vendor GST No: ' + formData.vendorGSTNo, 10, 100);
+    doc.text('Contact No: ' + formData.vendorContactNo, 10, 110);
 
-// Define table styles
-const tableStyles = {
-  theme: 'striped', // 'striped', 'grid', or 'plain'
-  startY: 40, // Y position from which the table should start
-  headStyles: { fillColor: [51, 51, 255], textColor: 255 },
-  bodyStyles: { textColor: 0,fillColor:[50,50,251] },
-  head: [['Label', 'Value']], // Table headers
-};
+    // Add table
+    const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
+    const data = invoiceItems.map((item) => [
+      item.description,
+      item.kms,
+      item.amount,
+      item.total,
+      item.cgst + '%',
+      item.sgst + '%',
+    ]);
 
-// Add the table to the PDF
-doc.autoTable(tableStyles);
-doc.autoTable({ body: invoiceData });
+    doc.autoTable({
+      startY: 120,
+      head: [columns],
+      body: data,
+      headStyles: {
+        fillColor: [51, 51, 255],
+        textColor: 255,
+      },
+      bodyStyles: {
+        textColor: 0,
+        fillColor: [50, 50, 251],
+        valign: 'middle',
+      },
+    });
 
-    // Save the PDF
+    // Add Bank Details
+    doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
+    doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 30);
+    doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 40);
+    doc.text('Account Holder Name: ' + formData.accountHoldername, 10, doc.autoTable.previous.finalY + 50);
+    doc.text('Account Number: ' + formData.accountNumber, 10, doc.autoTable.previous.finalY + 60);
+    doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 70);
+    doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 80);
+
+    // Add Shivpushpa Travels and Authorized Signatory
+    doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 30);
+    doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
+
     doc.save('invoice.pdf');
   };
 
