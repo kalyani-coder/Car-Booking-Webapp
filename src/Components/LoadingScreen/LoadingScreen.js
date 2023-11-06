@@ -1,22 +1,27 @@
 import axios from 'axios'
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 const LoadingScreen = ({ children }) => {
 
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => { 
-        try{
-            axios.get('http://localhost:7000/api/user-login' , {withCredentials : true})
-            .then((res) => {if (res.data.loggedIn){
-                localStorage.setItem('user', JSON.stringify(res.data));
-                setLoading(false)
-                
-            } else{
-                console.log(res.data.loggedIn)
-                // window.location.href = '/';
-            }})
-        }catch(e){
+    useEffect(() => {
+        try {
+            axios.get('http://localhost:7000/api/user-login', { withCredentials: true })
+                .then((res) => {
+
+                    console.log("ls", res.data)
+
+                    if (res.data.loggedIn) {
+                        localStorage.setItem('user', JSON.stringify(res.data));
+                        setLoading(false)
+
+                    } else {
+                        console.log(res.data.loggedIn)
+                        window.location.href = '/';
+                    }
+                })
+        } catch (e) {
             console.log(e)
         }
     }, [])

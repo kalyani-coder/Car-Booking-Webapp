@@ -45,6 +45,7 @@ const Login = () => {
 
     }
     try {
+      // http://localhost:7000/api/user-login/logout
       axios.post('http://localhost:7000/api/user-login', formData, { withCredentials: true })
         .then((res) => {
           console.log(res.data)

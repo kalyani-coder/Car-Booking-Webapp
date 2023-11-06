@@ -40,14 +40,16 @@ const Sidebar = () => {
   }
 
   // logout 
-  const handleLogout =  () => {
+  const handleLogout = () => {
     try {
-       axios.post('http://localhost:7000/api/user-login', { withCredentials: true }) // Assuming your server is running on the same host
-      .then((res) => {
-        localStorage.removeItem('user');
-        window.location.href = '/';
+      // http://localhost:7000/api/user-login/logout
+      axios.get('http://localhost:7000/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
+        .then((res) => {
+          console.log(res)
+          localStorage.removeItem('user');
+          window.location.href = '/';
 
-      })
+        })
       // Clear user data from local storage
 
       // Redirect to login page
