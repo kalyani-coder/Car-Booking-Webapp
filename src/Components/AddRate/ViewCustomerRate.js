@@ -7,6 +7,8 @@ const ViewCustomerRate = () => {
   const [filteredCustomerRates, setFilteredCustomerRates] = useState([]);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCustomerRate, setEditedCustomerRate] = useState({});
 
   useEffect(() => {
     const fetchCustomerRates = async () => {
@@ -43,16 +45,34 @@ const ViewCustomerRate = () => {
     filterCustomerRates();
   }, [searchQuery, customerRates]);
 
-  // Function to edit a customer rate (example implementation)
-  const editCustomerRate = (customerRateId) => {
-    // Implement your edit logic here
-    console.log(`Edit customer rate with ID: ${customerRateId}`);
+  const handleEditCustomerRate = (customerRate) => {
+    setEditedCustomerRate(customerRate);
+    setIsEditing(true);
   };
 
-  // Function to save a customer rate (example implementation)
-  const saveCustomerRate = (customerRateId) => {
-    // Implement your save logic here
-    console.log(`Save customer rate with ID: ${customerRateId}`);
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/customer-rate/${editedCustomerRate._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedCustomerRate),
+      });
+
+      if (response.ok) {
+        setCustomerRates(prevCustomerRates =>
+          prevCustomerRates.map(customerRate =>
+            customerRate._id === editedCustomerRate._id ? editedCustomerRate : customerRate
+          )
+        );
+        setIsEditing(false);
+      } else {
+        console.error('Error updating customer rate:', response.status);
+      }
+    } catch (error) {
+      console.error('Error updating customer rate:', error);
+    }
   };
 
   // Function to delete a customer rate (example implementation)
@@ -95,8 +115,8 @@ const ViewCustomerRate = () => {
                       <p className="custom-card-subtitle mb-2">Rate: {customerRate.rate}</p>
                       {/* Add more fields as needed */}
                       <div className="flex justify-between">
-                        <button className='btn btn-info' onClick={() => editCustomerRate(customerRate._id)}>Edit</button>
-                        <button className='btn btn-danger' onClick={() => saveCustomerRate(customerRate._id)}>Save</button>
+                        <button className='btn btn-info' onClick={() => handleEditCustomerRate(customerRate)}>Edit</button>
+                        <button className='btn btn-danger' onClick={() => handleSave(customerRate._id)}>Save</button>
                         <button className='btn btn-success' onClick={() => deleteCustomerRate(customerRate._id)}>Delete</button>
                       </div>
                     </div>
@@ -107,6 +127,58 @@ const ViewCustomerRate = () => {
           </div>
         </div>
       </div>
+
+      {isEditing && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-lg">
+            <h2 className="text-2xl font-bold mb-2">Edit Customer Rate</h2>
+            <input
+              type="text"
+              value={editedCustomerRate.company_Name}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, company_Name: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedCustomerRate.customer_Name}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, customer_Name: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedCustomerRate.GST_No}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, GST_No: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedCustomerRate.mobile_Number}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, mobile_Number: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedCustomerRate.rate_per_km}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, rate_per_km: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedCustomerRate.title}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, title: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedCustomerRate.rate}
+              onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, rate: e.target.value })}
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+            <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
+            <button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Sidebar.css';
+import axios from 'axios'
 // import { FiMenu, FiX } from 'react-icons/fi'; 
 import { Link } from 'react-router-dom';
 import { AiOutlineUserAdd } from 'react-icons/ai';
@@ -39,11 +40,20 @@ const Sidebar = () => {
   }
 
   // logout 
-  const handleLogout = () => {
-    // Clear user data from local storage
-    localStorage.removeItem('user');
-    // Redirect to login page
-    window.location.href = '/';
+  const handleLogout =  () => {
+    try {
+       axios.post('http://localhost:7000/api/user-login', { withCredentials: true }) // Assuming your server is running on the same host
+      .then((res) => {
+        localStorage.removeItem('user');
+        window.location.href = '/';
+
+      })
+      // Clear user data from local storage
+
+      // Redirect to login page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
 
@@ -72,11 +82,11 @@ const Sidebar = () => {
           </li>
 
 
-  {/* Customer */}
+          {/* Customer */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <AiOutlineUserAdd className='user-icon'/> Customers
+
+              <AiOutlineUserAdd className='user-icon' /> Customers
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -90,20 +100,20 @@ const Sidebar = () => {
                 </Link>
               </a></li>
             </ul>
-          </div> <br/>
-  {/* Customer */}
+          </div> <br />
+          {/* Customer */}
 
 
- {/* Vendor */}
+          {/* Vendor */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <BiUserVoice className='user-icon'/> Vendor
+
+              <BiUserVoice className='user-icon' /> Vendor
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/addvendor'}>
-                Add Vendor
+                  Add Vendor
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
@@ -113,18 +123,18 @@ const Sidebar = () => {
               </a></li>
             </ul>
           </div><br></br>
- {/* Vendor */}
+          {/* Vendor */}
 
-{/* Add Driver */}
+          {/* Add Driver */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <MdDriveEta className='user-icon'/> Driver
+
+              <MdDriveEta className='user-icon' /> Driver
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/adddriver'}>
-                Add Driver
+                  Add Driver
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
@@ -133,244 +143,244 @@ const Sidebar = () => {
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
-{/* Add Driver */}
+          </div><br />
+          {/* Add Driver */}
 
 
           {/* Rate */}
 
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <MdPriceCheck className='user-icon'/> Rate
+
+              <MdPriceCheck className='user-icon' /> Rate
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/customerrate'}>
-                Customer Rate
+                  Customer Rate
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcustomerrate'}>
-                View Customer Rate
+                  View Customer Rate
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/vendorrate'}>
-                Vendor Rate
+                  Vendor Rate
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewvendorrate'}>
-                View Vendor Rate
+                  View Vendor Rate
                 </Link>
               </a></li>
             </ul>
           </div>
-{/* Rate */}
+          {/* Rate */}
 
 
-{/* Customer Inquiry */}
+          {/* Customer Inquiry */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <AiOutlineCheckCircle className='user-icon'/> Customer Enquiry
+
+              <AiOutlineCheckCircle className='user-icon' /> Customer Enquiry
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/customerenquiry'}>
-                Add Customer Enquiry
+                  Add Customer Enquiry
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcustomerenquiry'}>
-                View Customer Enquiry
+                  View Customer Enquiry
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
-{/* Customer Inquiry */}
+          </div><br />
+          {/* Customer Inquiry */}
 
 
-{/* Trip */}
+          {/* Trip */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <BiTrip className='user-icon'/> Trip
+
+              <BiTrip className='user-icon' /> Trip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/addtrip'}>
-                Add Trip
+                  Add Trip
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewtrip'}>
-                View Trip
+                  View Trip
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
+          </div><br />
 
 
 
- {/* Allocate Trip */}
+          {/* Allocate Trip */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <BsPinMap className='user-icon'/> Allocate Trip
+
+              <BsPinMap className='user-icon' /> Allocate Trip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/allocatetrip'}>
-                Allocate Trip
+                  Allocate Trip
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/ViewAllocateTrip'}>
-                View Allocate Trip
+                  View Allocate Trip
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
+          </div><br />
 
 
-{/* Share Details to Customer */}
+          {/* Share Details to Customer */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <BsFillShareFill className='user-icon'/> Share Details
+
+              <BsFillShareFill className='user-icon' /> Share Details
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/sharedetails'}>
-                Share Trip Details
+                  Share Trip Details
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewsharedetails'}>
-                View Share Details
+                  View Share Details
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
+          </div><br />
 
 
-{/* Get Details from Driver */}
+          {/* Get Details from Driver */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <CgDetailsMore className='user-icon'/> Get Details From Driver
+
+              <CgDetailsMore className='user-icon' /> Get Details From Driver
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/startenddetails'}>
-                Get Trip Details
+                  Get Trip Details
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewdetailsfromdriver'}>
-                View Driver Trip Details 
+                  View Driver Trip Details
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
-          
+          </div><br />
 
 
 
-{/* Update Duty Slip */}
+
+          {/* Update Duty Slip */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <MdUpdate className='user-icon'/> Update Duty Slip
+
+              <MdUpdate className='user-icon' /> Update Duty Slip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/updateduty'}>
-                Add Duty Slip
+                  Add Duty Slip
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewupdateduty'}>
-                View Duty Slip
+                  View Duty Slip
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
+          </div><br />
 
 
- 
 
-{/* payment for all  */}
+
+          {/* payment for all  */}
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <AiFillBank className='user-icon'/>Payment
+
+              <AiFillBank className='user-icon' />Payment
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/addpayment'}>
-                Customer Payment
+                  Customer Payment
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcustomerpayment'}>
-                View Customer Payment
+                  View Customer Payment
                 </Link>
-              </a></li><hr/>
+              </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/vendorpayment'}>
-                Vendor Payment
+                  Vendor Payment
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewvendorpayment'}>
-                View Vendor Payment
+                  View Vendor Payment
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
+          </div><br />
 
 
           {/* Generate Invoice */}
 
-         <div class="btn-group">
+          <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            
-             <FaFileInvoiceDollar className='user-icon'/>Generate Invoice
+
+              <FaFileInvoiceDollar className='user-icon' />Generate Invoice
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/customerinvoice'}>
-                Customer Invoice
+                  Customer Invoice
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/vendorinvoice'}>
-                Vendor Invoice
+                  Vendor Invoice
                 </Link>
-              </a></li><hr/>
+              </a></li><hr />
               <li><a class="dropdown-item" href="#">
                 <Link to={'/customerinvoicemonthly'}>
-                Customer Monthly Invoice
+                  Customer Monthly Invoice
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/vendorinvoicemonthly'}>
-                Vendor Monthly Invoice
+                  Vendor Monthly Invoice
                 </Link>
               </a></li>
             </ul>
-          </div><br/>
-          <br/>
-          
+          </div><br />
+          <br />
+
           {/* for addign profile and logout button  */}
-          <button 
-          className='btn btn-primary bg-danger' 
-          onClick={handleLogout}> 
+          <button
+            className='btn btn-primary bg-danger'
+            onClick={handleLogout}>
             Logout
-            </button>
+          </button>
         </ul>
       </div>
     </>

@@ -1,15 +1,19 @@
 import React from 'react'
 import Sidebar from '../Sidebar/Sidebar';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 const Home = () => {
   return (
-    <>
-    
-    <Sidebar/>
+    <LoadingScreen>
 
-    <h1 className='text-center'>Welcome to Admin Dashboard</h1>
-    
-    </>
+      <>
+
+        <Sidebar />
+
+        <h1 className='text-center'>Welcome to Admin Dashboard</h1>
+
+      </>
+    </LoadingScreen>
   )
 }
 

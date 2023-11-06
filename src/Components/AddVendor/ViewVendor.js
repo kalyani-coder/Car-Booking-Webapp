@@ -5,6 +5,8 @@ import './ViewVender.css'; // Make sure you have a CSS file for this component
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedVendor, setEditedVendor] = useState({});
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -25,11 +27,7 @@ const ViewVendor = () => {
 
   const filteredVendors = vendors.filter((vendor) => {
     const venderName = vendor.vender_Name || '';
-    // const companyName = vendor.company_Name || '';
-    return (
-      venderName.toLowerCase().includes(searchTerm.toLowerCase()) 
-      // companyName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    return venderName.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const handleDelete = async (vendorId) => {
@@ -52,12 +50,42 @@ const ViewVendor = () => {
     }
   };
 
+  const handleEditVendor = (vendor) => {
+    setEditedVendor(vendor);
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/add-venders/${editedVendor._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedVendor),
+      });
+
+      if (response.ok) {
+        setVendors(prevVendors =>
+          prevVendors.map(vendor =>
+            vendor._id === editedVendor._id ? editedVendor : vendor
+          )
+        );
+        setIsEditing(false);
+      } else {
+        console.error('Error updating vendor:', response.status);
+      }
+    } catch (error) {
+      console.error('Error updating vendor:', error);
+    }
+  };
+
   return (
     <>
       <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Vendors</h2>
+          <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Vendors</h2>
           <input
             type="search"
             placeholder="Search By Vendor Name"
@@ -83,19 +111,62 @@ const ViewVendor = () => {
                   <p className="custom-card-subtitle mb-2">Email: {vendor.Vender_Email}</p>
                   <p className="custom-card-subtitle mb-2">Address: {vendor.address}</p>
                   <div className="flex justify-between">
-                        
-
-                        <button className='btn btn-info'>Edit</button>
-                        <button className='btn btn-danger'>Save</button>
-                        <button className='btn btn-success' onClick={() => handleDelete(vendor._id)}>Delete</button>
-                     
-                      </div>
+                    <button className='btn btn-info' onClick={() => handleEditVendor(vendor)}>Edit</button>
+                    {/* <button className='btn btn-danger'>Save</button> */}
+                    <button className='btn btn-success' onClick={() => handleDelete(vendor._id)}>Delete</button>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {isEditing && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-lg">
+            <h2 className="text-2xl font-bold mb-2">Edit Vendor</h2>
+            <input
+              type="text"
+              value={editedVendor.vender_Name}
+              onChange={(e) => setEditedVendor({ ...editedVendor, vender_Name: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedVendor.company_Name}
+              onChange={(e) => setEditedVendor({ ...editedVendor, company_Name: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <textarea
+              value={editedVendor.GST_No}
+              onChange={(e) => setEditedVendor({ ...editedVendor, GST_No: e.target.value })}
+              rows="4"
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedVendor.vender_Mobile}
+              onChange={(e) => setEditedVendor({ ...editedVendor, vender_Mobile: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedVendor.Vender_Email}
+              onChange={(e) => setEditedVendor({ ...editedVendor, Vender_Email: e.target.value })}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+            <input
+              type="text"
+              value={editedVendor.address}
+              onChange={(e) => setEditedVendor({ ...editedVendor, address: e.target.value })}
+              className="w-full p-2 mb-4 border border-gray-300 rounded"
+            />
+            <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
+            <button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
