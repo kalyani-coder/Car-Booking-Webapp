@@ -181,18 +181,77 @@ function VendorInvoiceMonthly() {
             <label>Bank Details:</label>
           </div>
 
-          <div className="form-vendor-invoice-monthly">
+          <div className="form-vendor-invoice">
             <div className="grid-gap-2 col-6">
-              <label htmlFor="bankname" className="form-label">Bank Name:</label>
-              <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Bank Name" id="bankname" name="bankname" onChange={handleChange} />
-              {/* Add similar input elements for other fields */}
+              <label htmlFor="bankname" className="form-label">
+                Bank Name:
+              </label>
+              <input
+                className="form-control-vendor-invoice"
+                type="text"
+                placeholder="Bank Name"
+                name="bankname"
+                value={formData.bankname}
+                onChange={handleChange}
+              />
+              <label htmlFor="accountNumber" className="form-label">
+                Account Number:
+              </label>
+              <input
+                className="form-control-vendor-invoice"
+                type="text"
+                placeholder="Account Number"
+                name="accountNumber"
+                value={formData.accountNumber}
+                onChange={handleChange}
+              />
+              <label htmlFor="ifsccode" className="form-label">
+                IFSC Code:
+              </label>
+              <input
+                className="form-control-vendor-invoice"
+                type="text"
+                placeholder="IFSC Code"
+                name="ifsccode"
+                value={formData.ifsccode}
+                onChange={handleChange}
+              />
             </div>
             <div className="grid-gap-2 col-6">
-              <label htmlFor="accountnumber" className="form-label">Account Number:</label>
-              <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Account Number" id="accountnumber" name="accountnumber" onChange={handleChange} />
-              {/* Add similar input elements for other fields */}
+              <label htmlFor="branch" className="form-label">
+                Branch Name:
+              </label>
+              <input
+                className="form-control-vendor-invoice"
+                type="text"
+                placeholder="Branch Name"
+                name="branchname"
+                value={formData.branchname}
+                onChange={handleChange}
+              />
+              <label htmlFor="accountHolderName" className="form-label">
+                Account Holder Name:
+              </label>
+              <input
+                className="form-control-vendor-invoice"
+                type="text"
+                placeholder="Account Holder Name"
+                name="accountHolderName"
+                value={formData.accountHolderName}
+                onChange={handleChange}
+              />
+              <label htmlFor="micrcode" className="form-label">
+                MICR Code:
+              </label>
+              <input
+                className="form-control-vendor-invoice"
+                type="text"
+                placeholder="MICR Code"
+                name="micrcode"
+                value={formData.micrcode}
+                onChange={handleChange}
+              />
             </div>
-            {/* Add more input elements */}
           </div>
 
           <button className="btn btn-danger" onClick={handleGenerate}>

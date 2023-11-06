@@ -342,8 +342,8 @@ function VendorInvoice() {
                 className="form-control-vendor-invoice"
                 type="text"
                 placeholder="Branch Name"
-                name="branch"
-                value={formData.branch}
+                name="branchname"
+                value={formData.branchname}
                 onChange={handleChange}
               />
               <label htmlFor="accountHolderName" className="form-label">
