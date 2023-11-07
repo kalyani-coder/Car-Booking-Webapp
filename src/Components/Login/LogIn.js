@@ -24,8 +24,8 @@ const Login = () => {
 
       if (user) {
         // User found, do something (e.g., log in the user)
-        localStorage.setItem('user', JSON.stringify(user));
-        console.log('Login successful:', user);
+        // localStorage.setItem('user', JSON.stringify(user));
+        // console.log('Login successful:', user);
         window.location.href = '/home';
         // Redirect to home page or perform other actions as needed
       } else {
