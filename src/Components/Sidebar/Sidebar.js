@@ -39,24 +39,32 @@ const Sidebar = () => {
     }
   }
 
-  // logout 
+  // normal logout 
   const handleLogout = () => {
-    try {
-      // http://localhost:7000/api/user-login/logout
-      axios.get('http://localhost:7000/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
-        .then((res) => {
-          console.log(res)
-          localStorage.removeItem('user');
-          window.location.href = '/';
-
-        })
-      // Clear user data from local storage
-
-      // Redirect to login page
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
+    // Perform any necessary logout logic here
+  
+    // Redirect to the login page
+    window.location.href = '/'; // Assuming '/login' is the route for your login page
   };
+
+  // logout 
+  // const handleLogout = () => {
+  //   try {
+  //     // http://localhost:7000/api/user-login/logout
+  //     axios.get('http://localhost:7000/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
+  //       .then((res) => {
+  //         console.log(res)
+  //         localStorage.removeItem('user');
+  //         window.location.href = '/';
+
+  //       })
+  //     // Clear user data from local storage
+
+  //     // Redirect to login page
+  //   } catch (error) {
+  //     console.error('Error logging out:', error);
+  //   }
+  // };
 
 
   return (

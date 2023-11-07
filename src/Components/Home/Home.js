@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from '../Sidebar/Sidebar';
-import LoadingScreen from '../LoadingScreen/LoadingScreen';
+// import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import './Home.css'
 
@@ -15,7 +15,7 @@ const Home = () => {
   ];
 
   return (
-    <LoadingScreen>
+    // <LoadingScreen>
       <>
         <Sidebar />
         <h1 className='text-center fs-2 fw-bold text-primary dashboard'>Welcome to Admin Dashboard</h1>
@@ -30,7 +30,7 @@ const Home = () => {
           </BarChart>
         </div>
       </>
-    </LoadingScreen>
+    // </LoadingScreen>
   );
 };
 

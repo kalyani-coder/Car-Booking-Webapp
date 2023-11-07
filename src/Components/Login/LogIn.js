@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+// import axios from 'axios'
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -13,69 +13,69 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   try {
-  //     const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/users');
-  //     const data = await response.json();
+    try {
+      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/users');
+      const data = await response.json();
 
-  //     const user = data.find(user => user.email === email && user.password === password);
+      const user = data.find(user => user.email === email && user.password === password);
 
-  //     if (user) {
-  //       // User found, do something (e.g., log in the user)
-  //       localStorage.setItem('user', JSON.stringify(user));
-  //       console.log('Login successful:', user);
-  //       window.location.href = '/home';
-  //       // Redirect to home page or perform other actions as needed
-  //     } else {
-  //       // User not found or credentials don't match
-  //       console.log('Invalid credentials');
-  //       alert('Invalid credentials')
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
+      if (user) {
+        // User found, do something (e.g., log in the user)
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('Login successful:', user);
+        window.location.href = '/home';
+        // Redirect to home page or perform other actions as needed
+      } else {
+        // User not found or credentials don't match
+        console.log('Invalid credentials');
+        alert('Invalid credentials')
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   if (formData.email.length * formData.password.length === 0) {
+  //     return;
+
   //   }
-  // };
+  //   try {
+  //     // http://localhost:7000/api/user-login/logout
+  //     axios.post('http://localhost:7000/api/user-login', formData, { withCredentials: true })
+  //       .then((res) => {
+  //         console.log(res.data)
+  //         localStorage.setItem('user', JSON.stringify(res.data));
+  //         window.location.href = '/home';
+  //       })
+  //   }
+  //   catch (e) {
+  //     console.log("error", e)
+  //   }
+  // }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (formData.email.length * formData.password.length === 0) {
-      return;
-
-    }
-    try {
-      // http://localhost:7000/api/user-login/logout
-      axios.post('http://localhost:7000/api/user-login', formData, { withCredentials: true })
-        .then((res) => {
-          console.log(res.data)
-          localStorage.setItem('user', JSON.stringify(res.data));
-          window.location.href = '/home';
-        })
-    }
-    catch (e) {
-      console.log("error", e)
-    }
-  }
-
-  useEffect(() => {
-    try {
-      axios.get('http://localhost:7000/api/user-login', { withCredentials: true })
-        .then((res) => {
-          if (res.data.loggedIn) {
-            localStorage.setItem('user', JSON.stringify(res.data));
-            window.location.href = '/home';
+  // useEffect(() => {
+  //   try {
+  //     axios.get('http://localhost:7000/api/user-login', { withCredentials: true })
+  //       .then((res) => {
+  //         if (res.data.loggedIn) {
+  //           localStorage.setItem('user', JSON.stringify(res.data));
+  //           window.location.href = '/home';
 
             
 
-          } else {
-            console.log(res.data.loggedIn)
-          }
-        })
-    } catch (e) {
-      console.log(e)
-    }
-  }, [])
+  //         } else {
+  //           console.log(res.data.loggedIn)
+  //         }
+  //       })
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }, [])
 
 
 
@@ -130,12 +130,12 @@ const Login = () => {
               </div>
             </div>
           </form>
-          <div className="mt-6 text-grey-dark">
+          {/* <div className="mt-6 text-grey-dark">
             <span className="mr-2">Don't have an account?</span>
             <Link to='/signup' className="text-teal-600 hover:underline font-bold">
               Register
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

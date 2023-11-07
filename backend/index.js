@@ -5,22 +5,22 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const app = express()
 const cors =require('cors')
-const session = require('express-session')
-const MongoStore = require('connect-mongo')
+// const session = require('express-session')
+// const MongoStore = require('connect-mongo')
 const port = process.env.PORT || 7000
 
 // middleware 
 app.use(bodyParser.json({limit : "10mb"}))
 app.use(cors({origin : 'http://localhost:3000' , credentials : true}))
-app.use(session({
-    secret: 'jsdghsdf781324gubfy7bf',
-    resave: true,
-    saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority'
-    }),
-    cookie: { maxAge: 99999999999999, sameSite: "lax", secure: false },
-  }))
+// app.use(session({
+//     secret: 'jsdghsdf781324gubfy7bf',
+//     resave: true,
+//     saveUninitialized: false,
+//     store: MongoStore.create({
+//       mongoUrl: 'mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority'
+//     }),
+//     cookie: { maxAge: 99999999999999, sameSite: "lax", secure: false },
+//   }))
 
 // database connectivity on mongoDB Atlas
 
