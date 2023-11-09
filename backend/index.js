@@ -12,6 +12,8 @@ const port = process.env.PORT || 7000
 // middleware 
 app.use(bodyParser.json({limit : "10mb"}))
 app.use(cors({origin : 'http://localhost:3000' , credentials : true}))
+
+// session tracking with login 
 // app.use(session({
 //     secret: 'jsdghsdf781324gubfy7bf',
 //     resave: true,
@@ -19,7 +21,7 @@ app.use(cors({origin : 'http://localhost:3000' , credentials : true}))
 //     store: MongoStore.create({
 //       mongoUrl: 'mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority'
 //     }),
-//     cookie: { maxAge: 99999999999999, sameSite: "lax", secure: false },
+//     cookie: { maxAge: 9000000, sameSite: "lax", secure: false },
 //   }))
 
 // database connectivity on mongoDB Atlas
@@ -48,7 +50,7 @@ const addTrip = require('./src/routes/AddTrip')
 const VenderPayment = require('./src/routes/VenderPayment')
 const rateSchema = require('./src/routes/Rate')
 const venderRate = require('./src/routes/VenderRate')
-const userLogin  = require('./src/routes/UserLogin')
+// const userLogin  = require('./src/routes/UserLogin')
 
 
 
@@ -68,7 +70,7 @@ apiRouter.use('/vender-payment' , VenderPayment)
 apiRouter.use('/customer-rate' , rateSchema)
 apiRouter.use('/vender-rate' , venderRate)
 apiRouter.use('/add-drivers' , AddDriver)
-apiRouter.use('/user-login' , userLogin)
+// apiRouter.use('/user-login' , userLogin)
 
 
 // handle here all api routes 
