@@ -30,7 +30,7 @@ const AddVendor = () => {
     }));
 
     if (name === "mobileno") {
-      // Validate mobile number (exactly 10 digits)
+      // Validate mobile number (10 digits)
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
       } else {
@@ -38,7 +38,6 @@ const AddVendor = () => {
       }
     }
   };
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
