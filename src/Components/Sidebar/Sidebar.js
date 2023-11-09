@@ -47,7 +47,8 @@ const Sidebar = () => {
     window.location.href = '/'; // Assuming '/login' is the route for your login page
   };
 
-  // logout 
+// session tracking with login logout 
+  
   // const handleLogout = () => {
   //   try {
   //     // http://localhost:7000/api/user-login/logout

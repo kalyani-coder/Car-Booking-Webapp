@@ -1,6 +1,5 @@
-.container{
+/* .container{
      background-color:rgb(200, 205, 122);
-     /* margin-top: 50px !important; */
      height: auto;
      justify-content: center;
      align-items: center;
@@ -21,3 +20,9 @@ button{
 .loggin-btn{
     background-color: #004f83 ;
 }
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    margin-left: 300px;
+    width: 30%;
+} */
