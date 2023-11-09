@@ -32,17 +32,52 @@ function CustomerInvoice() {
     micrcode: '411164014',
   });
 
-  const invoiceItems = [
-    { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
+  const [invoiceItems, setInvoiceItems] = useState([
+    // { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
     // Add more items as needed
-  ];
+  ]);
 
-  const [showInvoiceData, setShowInvoiceData] = useState(false);
+  const [showInvoiceData, setShowInvoiceData] = useState([
+    {
+      description:'',
+      kms:'',
+      amount:'',
+      total:'',
+      cgst:'',
+      sgst:''
+    }
+  ]);
 
-  const handleChange = (e) => {
+  const handleChange = (e, index) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const updatedItems = [...invoiceItems];
+    updatedItems[index][name] = value;
+
+    if (name === 'kms' || name === 'amount') {
+      const kms = parseFloat(updatedItems[index]['kms']) || 0;
+      const amount = parseFloat(updatedItems[index]['amount']) || 0;
+      updatedItems[index]['total'] = (kms * amount).toFixed(2);
+
+      // Update CGST and SGST as numbers
+      const total = parseFloat(updatedItems[index]['total']) || 0;
+      updatedItems[index]['cgst'] = ((total * 2.5) / 100).toFixed(2);
+      updatedItems[index]['sgst'] = ((total * 2.5) / 100).toFixed(2);
+    }
+
+    setInvoiceItems(updatedItems);
   };
+
+  const handleAddItem = () => {
+    setInvoiceItems([...invoiceItems, { description: '', kms: '', amount: '', total: '', cgst: '', sgst: '' }]);
+  };
+
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...invoiceItems];
+    updatedItems.splice(index, 1);
+    setInvoiceItems(updatedItems);
+  };
+
+  
 
   const handlePrint = () => {
     setShowInvoiceData(true);
@@ -58,15 +93,18 @@ function CustomerInvoice() {
     doc.text(formData.companyName, 10, 10);
     doc.text(formData.companyAddress, 10, 20);
     doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
-    doc.text('GST No: ' + formData.gstno, 10, 40);
+   
     // doc.text('Date: ' + formData.date, 10, 50);
     doc.text('Mail: ' + formData.mail, 10, 60);
 
     // Add content to the right side
     doc.text('PO No: ', 150, 30);
     doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
+    doc.text('GST No: ' + formData.gstno, 10, 40);
     doc.text('Date: ' + formData.date, 150, 50);
-    doc.text('Customer ID GST No: 27AABTS4503R1Z1', 150, 60);
+    doc.text('Customer ID:', 150, 60);
+
+
 
     doc.text('Customer Name: ' + formData.customerName, 10, 80);
     doc.text('Customer Address: ' + formData.customerAddress, 10, 90);
@@ -80,8 +118,8 @@ function CustomerInvoice() {
       item.kms,
       item.amount,
       item.total,
-      item.cgst + '%',
-      item.sgst + '%',
+      item.cgst,
+      item.sgst,
     ]);
 
     doc.autoTable({
@@ -89,12 +127,12 @@ function CustomerInvoice() {
       head: [columns],
       body: data,
       headStyles: {
-        fillColor: [51, 51, 255],
+        // fillColor: [51, 51, 255],
         textColor: 255,
       },
       bodyStyles: {
         textColor: 0,
-        fillColor: [50, 50, 251],
+        // fillColor: [50, 50, 251],
         valign: 'middle',
       },
     });
@@ -277,17 +315,43 @@ function CustomerInvoice() {
             <tbody>
               {invoiceItems.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.description}</td>
-                  <td>{item.kms}</td>
-                  <td>{item.amount}</td>
+                  <td>
+                    <input
+                      type="text"
+                      name="description"
+                      value={item.description}
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="kms"
+                      value={item.kms}
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={item.amount}
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </td>
                   <td>{item.total}</td>
-                  <td>{item.cgst}%</td>
-                  <td>{item.sgst}%</td>
-                 
+                  <td>{item.cgst}</td>
+                  <td>{item.sgst}</td>
+                  {/* <td>
+                    <button onClick={() => handleRemoveItem(index)}>Remove</button>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
           </table>
+          <button className="btn btn-primary" onClick={handleAddItem}>
+            Add Item
+          </button>
           <div>
             <br />
             <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Bank Details:</h2>
