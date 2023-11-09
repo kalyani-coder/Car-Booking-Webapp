@@ -52,20 +52,36 @@ function CustomerInvoice() {
     const { name, value } = e.target;
     const updatedItems = [...invoiceItems];
     updatedItems[index][name] = value;
-
+  
     if (name === 'kms' || name === 'amount') {
       const kms = parseFloat(updatedItems[index]['kms']) || 0;
-      const amount = parseFloat(updatedItems[index]['amount']) || 0;
-      updatedItems[index]['total'] = (kms * amount).toFixed(2);
-
+      const standardRate = 20;
+      const extraRate = 18;
+  
+      if (kms > 80) {
+        const baseKms = 80;
+        const extraKms = kms - baseKms;
+  
+        // Calculate the total amount as (base amount + (extra kilometers * rate))
+        updatedItems[index]['amount'] = standardRate * baseKms;
+        updatedItems[index]['total'] = (updatedItems[index]['amount'] + extraRate * extraKms).toFixed(2);
+      } else {
+        // Calculate the total amount as (rate * kms)
+        updatedItems[index]['amount'] = standardRate * kms;
+        updatedItems[index]['total'] = updatedItems[index]['amount'].toFixed(2);
+      }
+  
       // Update CGST and SGST as numbers
       const total = parseFloat(updatedItems[index]['total']) || 0;
       updatedItems[index]['cgst'] = ((total * 2.5) / 100).toFixed(2);
       updatedItems[index]['sgst'] = ((total * 2.5) / 100).toFixed(2);
     }
-
+  
     setInvoiceItems(updatedItems);
   };
+  
+  
+  
 
   const handleAddItem = () => {
     setInvoiceItems([...invoiceItems, { description: '', kms: '', amount: '', total: '', cgst: '', sgst: '' }]);
