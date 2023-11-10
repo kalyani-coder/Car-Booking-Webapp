@@ -41,12 +41,19 @@ function CustomerInvoice() {
       amount: '',
       total: '',
       cgst: '',
-      sgst: ''
-    }
+      sgst: '',
+    },
   ]);
 
   // State for total amount
   const [totalAmount, setTotalAmount] = useState(0);
+
+  // New state for overall totals
+  const [overallTotals, setOverallTotals] = useState({
+    totalAmount: 0,
+    totalCGST: 0,
+    totalSGST: 0,
+  });
 
   // Function to calculate the total amount
   const calculateTotalAmount = () => {
@@ -76,17 +83,14 @@ function CustomerInvoice() {
       if (kms > 80) {
         const baseKms = 80;
         const extraKms = kms - baseKms;
-        
-        // Calculate the total amount as (base amount + (extra kilometers * rate))
+
         updatedItems[index]['amount'] = standardRate * baseKms;
         updatedItems[index]['total'] = (updatedItems[index]['amount'] + extraRate * extraKms).toFixed(2);
       } else {
-        // Calculate the total amount as (rate * kms)
         updatedItems[index]['amount'] = standardRate * kms;
         updatedItems[index]['total'] = updatedItems[index]['amount'].toFixed(2);
       }
 
-      // Update CGST and SGST as numbers
       const total = parseFloat(updatedItems[index]['total']) || 0;
       updatedItems[index]['cgst'] = ((total * 2.5) / 100).toFixed(2);
       updatedItems[index]['sgst'] = ((total * 2.5) / 100).toFixed(2);
@@ -97,7 +101,28 @@ function CustomerInvoice() {
 
   // Function to add a new item
   const handleAddItem = () => {
-    setInvoiceItems([...invoiceItems, { description: '', kms: '', amount: '', total: '', cgst: '', sgst: '' }]);
+    const newItem = {
+      description: '',
+      kms: '',
+      amount: '',
+      total: '',
+      cgst: '',
+      sgst: '',
+    };
+
+    setInvoiceItems([...invoiceItems, newItem]);
+
+    // Calculate the overall total amounts for CGST, SGST, and grand total
+    const totalCGST = invoiceItems.reduce((acc, item) => acc + parseFloat(item.cgst) || 0, 0);
+    const totalSGST = invoiceItems.reduce((acc, item) => acc + parseFloat(item.sgst) || 0, 0);
+    const totalAmount =
+      invoiceItems.reduce((acc, item) => acc + parseFloat(item.total) || 0, 0) + totalCGST + totalSGST;
+
+    setOverallTotals({
+      totalAmount: totalAmount.toFixed(2),
+      totalCGST: totalCGST.toFixed(2),
+      totalSGST: totalSGST.toFixed(2),
+    });
   };
 
   // Function to remove an item
@@ -139,6 +164,10 @@ function CustomerInvoice() {
       item.cgst,
       item.sgst,
     ]);
+     // Add overall totals to the PDF
+  doc.text('Total CGST: ' + overallTotals.totalCGST, 10, doc.autoTable.previous.finalY + 80);
+  doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
+  doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
 
     doc.autoTable({
       startY: 120,
@@ -360,6 +389,27 @@ function CustomerInvoice() {
                   <td>{item.sgst}</td>
                 </tr>
               ))}
+              <tr>
+              <td colSpan="2">Total CGST</td>
+              <td></td>
+              <td></td>
+              <td>{overallTotals.totalCGST}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colSpan="2">Total SGST</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{overallTotals.totalSGST}</td>
+            </tr>
+            <tr>
+              <td colSpan="2">Grand Total</td>
+              <td></td>
+              <td>{overallTotals.totalAmount}</td>
+              <td></td>
+              <td></td>
+            </tr>
             </tbody>
           </table>
           <button className="btn btn-primary" onClick={handleAddItem}>
