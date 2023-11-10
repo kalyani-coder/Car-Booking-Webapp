@@ -5,7 +5,6 @@ import 'jspdf-autotable';
 import Sidebar from '../Sidebar/Sidebar';
 
 function CustomerInvoice() {
-  // State for form data
   const [formData, setFormData] = useState({
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
@@ -33,7 +32,6 @@ function CustomerInvoice() {
     micrcode: '411164014',
   });
 
-  // State for invoice items
   const [invoiceItems, setInvoiceItems] = useState([
     {
       description: '',
@@ -45,17 +43,14 @@ function CustomerInvoice() {
     },
   ]);
 
-  // State for total amount
   const [totalAmount, setTotalAmount] = useState(0);
 
-  // New state for overall totals
   const [overallTotals, setOverallTotals] = useState({
     totalAmount: 0,
     totalCGST: 0,
     totalSGST: 0,
   });
 
-  // Function to calculate the total amount
   const calculateTotalAmount = () => {
     let total = 0;
     invoiceItems.forEach((item) => {
@@ -65,11 +60,22 @@ function CustomerInvoice() {
   };
 
   useEffect(() => {
-    // Update the total amount whenever invoiceItems change
     calculateTotalAmount();
   }, [invoiceItems]);
 
-  // Function to handle changes in the input fields
+  const recalculateOverallTotals = (items) => {
+    const totalCGST = items.reduce((acc, item) => acc + parseFloat(item.cgst) || 0, 0);
+    const totalSGST = items.reduce((acc, item) => acc + parseFloat(item.sgst) || 0, 0);
+    const totalAmount =
+      items.reduce((acc, item) => acc + parseFloat(item.total) || 0, 0) + totalCGST + totalSGST;
+
+    setOverallTotals({
+      totalAmount: totalAmount.toFixed(2),
+      totalCGST: totalCGST.toFixed(2),
+      totalSGST: totalSGST.toFixed(2),
+    });
+  };
+
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     const updatedItems = [...invoiceItems];
@@ -97,9 +103,9 @@ function CustomerInvoice() {
     }
 
     setInvoiceItems(updatedItems);
+    recalculateOverallTotals(updatedItems);
   };
 
-  // Function to add a new item
   const handleAddItem = () => {
     const newItem = {
       description: '',
@@ -111,38 +117,24 @@ function CustomerInvoice() {
     };
 
     setInvoiceItems([...invoiceItems, newItem]);
-
-    // Calculate the overall total amounts for CGST, SGST, and grand total
-    const totalCGST = invoiceItems.reduce((acc, item) => acc + parseFloat(item.cgst) || 0, 0);
-    const totalSGST = invoiceItems.reduce((acc, item) => acc + parseFloat(item.sgst) || 0, 0);
-    const totalAmount =
-      invoiceItems.reduce((acc, item) => acc + parseFloat(item.total) || 0, 0) + totalCGST + totalSGST;
-
-    setOverallTotals({
-      totalAmount: totalAmount.toFixed(2),
-      totalCGST: totalCGST.toFixed(2),
-      totalSGST: totalSGST.toFixed(2),
-    });
+    recalculateOverallTotals([...invoiceItems, newItem]);
   };
 
-  // Function to remove an item
   const handleRemoveItem = (index) => {
     const updatedItems = [...invoiceItems];
     updatedItems.splice(index, 1);
     setInvoiceItems(updatedItems);
+    recalculateOverallTotals(updatedItems);
   };
 
-  // Function to generate the PDF
   const handleGenerate = () => {
     const doc = new jsPDF();
 
-    // Add content to the PDF
     doc.setFontSize(12);
     doc.text(formData.companyName, 10, 10);
     doc.text(formData.companyAddress, 10, 20);
     doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
-    
-    // Add content to the right side
+
     doc.text('PO No: ', 150, 30);
     doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
     doc.text('GST No: ' + formData.gstno, 10, 40);
@@ -154,7 +146,6 @@ function CustomerInvoice() {
     doc.text('Customer GST No: ' + formData.customerGSTNo, 10, 100);
     doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
 
-    // Add table
     const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
     const data = invoiceItems.map((item) => [
       item.description,
@@ -164,10 +155,6 @@ function CustomerInvoice() {
       item.cgst,
       item.sgst,
     ]);
-     // Add overall totals to the PDF
-  doc.text('Total CGST: ' + overallTotals.totalCGST, 10, doc.autoTable.previous.finalY + 80);
-  doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
-  doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
 
     doc.autoTable({
       startY: 120,
@@ -182,7 +169,6 @@ function CustomerInvoice() {
       },
     });
 
-    // Add Bank Details
     doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
     doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 30);
     doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 40);
@@ -191,9 +177,12 @@ function CustomerInvoice() {
     doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 70);
     doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 80);
 
-    // Add Shivpushpa Travels and Authorized Signatory
     doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 30);
     doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
+
+    doc.text('Total CGST: ' + overallTotals.totalCGST, 10, doc.autoTable.previous.finalY + 80);
+    doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
+    doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
 
     doc.save('invoice.pdf');
   };
@@ -389,7 +378,7 @@ function CustomerInvoice() {
                   <td>{item.sgst}</td>
                 </tr>
               ))}
-              <tr>
+                    <tr>
               <td colSpan="2">Total CGST</td>
               <td></td>
               <td></td>
