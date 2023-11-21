@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CustomerInvoice.css';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -9,7 +9,7 @@ function CustomerInvoice() {
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
     gstno: '',
-    companyAddress: '332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111',
+    companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
     date: '',
     contactno: '',
@@ -32,56 +32,128 @@ function CustomerInvoice() {
     micrcode: '411164014',
   });
 
-  const invoiceItems = [
-    { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
-    // Add more items as needed
-  ];
+  const [invoiceItems, setInvoiceItems] = useState([
+    {
+      description: '',
+      kms: '',
+      amount: '',
+      total: '',
+      cgst: '',
+      sgst: '',
+    },
+  ]);
 
-  const [showInvoiceData, setShowInvoiceData] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const [overallTotals, setOverallTotals] = useState({
+    totalAmount: 0,
+    totalCGST: 0,
+    totalSGST: 0,
+  });
+
+  const calculateTotalAmount = () => {
+    let total = 0;
+    invoiceItems.forEach((item) => {
+      total += parseFloat(item.total) || 0;
+    });
+    setTotalAmount(total.toFixed(2));
   };
 
-  const handlePrint = () => {
-    setShowInvoiceData(true);
-    window.print();
+  useEffect(() => {
+    calculateTotalAmount();
+  }, [invoiceItems]);
+
+  const recalculateOverallTotals = (items) => {
+    const totalCGST = items.reduce((acc, item) => acc + parseFloat(item.cgst) || 0, 0);
+    const totalSGST = items.reduce((acc, item) => acc + parseFloat(item.sgst) || 0, 0);
+    const totalAmount =
+      items.reduce((acc, item) => acc + parseFloat(item.total) || 0, 0) + totalCGST + totalSGST;
+
+    setOverallTotals({
+      totalAmount: totalAmount.toFixed(2),
+      totalCGST: totalCGST.toFixed(2),
+      totalSGST: totalSGST.toFixed(2),
+    });
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    const updatedItems = [...invoiceItems];
+    updatedItems[index][name] = value;
+
+    if (name === 'kms' || name === 'amount') {
+      const kms = parseFloat(updatedItems[index]['kms']) || 0;
+      const standardRate = 20;
+      const extraRate = 18;
+
+      if (kms > 80) {
+        const baseKms = 80;
+        const extraKms = kms - baseKms;
+
+        updatedItems[index]['amount'] = standardRate * baseKms;
+        updatedItems[index]['total'] = (updatedItems[index]['amount'] + extraRate * extraKms).toFixed(2);
+      } else {
+        updatedItems[index]['amount'] = standardRate * kms;
+        updatedItems[index]['total'] = updatedItems[index]['amount'].toFixed(2);
+      }
+
+      const total = parseFloat(updatedItems[index]['total']) || 0;
+      updatedItems[index]['cgst'] = ((total * 2.5) / 100).toFixed(2);
+      updatedItems[index]['sgst'] = ((total * 2.5) / 100).toFixed(2);
+    }
+
+    setInvoiceItems(updatedItems);
+    recalculateOverallTotals(updatedItems);
+  };
+
+  const handleAddItem = () => {
+    const newItem = {
+      description: '',
+      kms: '',
+      amount: '',
+      total: '',
+      cgst: '',
+      sgst: '',
+    };
+
+    setInvoiceItems([...invoiceItems, newItem]);
+    recalculateOverallTotals([...invoiceItems, newItem]);
+  };
+
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...invoiceItems];
+    updatedItems.splice(index, 1);
+    setInvoiceItems(updatedItems);
+    recalculateOverallTotals(updatedItems);
   };
 
   const handleGenerate = () => {
     const doc = new jsPDF();
 
-    // Add content to the PDF
     doc.setFontSize(12);
-    // doc.setFontSize(50);
     doc.text(formData.companyName, 10, 10);
     doc.text(formData.companyAddress, 10, 20);
     doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
-    doc.text('GST No: ' + formData.gstno, 10, 40);
-    // doc.text('Date: ' + formData.date, 10, 50);
-    doc.text('Mail: ' + formData.mail, 10, 60);
 
-    // Add content to the right side
     doc.text('PO No: ', 150, 30);
     doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
+    doc.text('GST No: ' + formData.gstno, 10, 40);
     doc.text('Date: ' + formData.date, 150, 50);
-    doc.text('Customer ID GST No: 27AABTS4503R1Z1', 150, 60);
+    doc.text('Customer ID:', 150, 60);
 
     doc.text('Customer Name: ' + formData.customerName, 10, 80);
     doc.text('Customer Address: ' + formData.customerAddress, 10, 90);
     doc.text('Customer GST No: ' + formData.customerGSTNo, 10, 100);
     doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
 
-    // Add table
     const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
     const data = invoiceItems.map((item) => [
       item.description,
       item.kms,
       item.amount,
       item.total,
-      item.cgst + '%',
-      item.sgst + '%',
+      item.cgst,
+      item.sgst,
     ]);
 
     doc.autoTable({
@@ -89,17 +161,14 @@ function CustomerInvoice() {
       head: [columns],
       body: data,
       headStyles: {
-        fillColor: [51, 51, 255],
         textColor: 255,
       },
       bodyStyles: {
         textColor: 0,
-        fillColor: [50, 50, 251],
         valign: 'middle',
       },
     });
 
-    // Add Bank Details
     doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
     doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 30);
     doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 40);
@@ -108,12 +177,16 @@ function CustomerInvoice() {
     doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 70);
     doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 80);
 
-    // Add Shivpushpa Travels and Authorized Signatory
     doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 30);
     doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
+    doc.text('Total CGST: ' + overallTotals.totalCGST, 10, doc.autoTable.previous.finalY + 80);
+    doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
+    doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
+
     doc.save('invoice.pdf');
   };
+
 
   return (
     <>
@@ -262,7 +335,7 @@ function CustomerInvoice() {
           </div>
         </div>
         <div>
-          <table className="invoice-table">
+        <table className="invoice-table">
             <thead>
               <tr>
                 <th>Description</th>
@@ -271,23 +344,66 @@ function CustomerInvoice() {
                 <th>Total</th>
                 <th>CGST 2.5%</th>
                 <th>SGST 2.5%</th>
-                
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.description}</td>
-                  <td>{item.kms}</td>
-                  <td>{item.amount}</td>
+                  <td>
+                    <input
+                      type="text"
+                      name="description"
+                      value={item.description}
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="kms"
+                      value={item.kms}
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={item.amount}
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </td>
                   <td>{item.total}</td>
-                  <td>{item.cgst}%</td>
-                  <td>{item.sgst}%</td>
-                 
+                  <td>{item.cgst}</td>
+                  <td>{item.sgst}</td>
                 </tr>
               ))}
+                    <tr>
+              <td colSpan="2">Total CGST</td>
+              <td></td>
+              <td></td>
+              <td>{overallTotals.totalCGST}</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colSpan="2">Total SGST</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{overallTotals.totalSGST}</td>
+            </tr>
+            <tr>
+              <td colSpan="2">Grand Total</td>
+              <td></td>
+              <td>{overallTotals.totalAmount}</td>
+              <td></td>
+              <td></td>
+            </tr>
             </tbody>
           </table>
+          <button className="btn btn-primary" onClick={handleAddItem}>
+            Add Item
+          </button>
           <div>
             <br />
             <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Bank Details:</h2>
@@ -368,6 +484,11 @@ function CustomerInvoice() {
           <button  className="btn btn-danger" onClick={handleGenerate}>
             Generate
           </button>
+          {totalAmount && (
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Total Amount: {totalAmount}</h2>
+            </div>
+          )}
         </div>
       </div>
     </>

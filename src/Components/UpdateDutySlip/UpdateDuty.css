@@ -4,7 +4,8 @@
 .update-duty-container {
   padding: 20px;
      background-color:rgb(200, 205, 122);
-  width: 100vw;
+  /* width: 100vw; */
+  overflow-x: hidden;
 }
 
 /* Style for the form div */

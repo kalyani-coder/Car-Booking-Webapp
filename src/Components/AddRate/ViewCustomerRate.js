@@ -86,7 +86,7 @@ const ViewCustomerRate = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Customer Rate</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Company Rate</h2>
 
           <div className="search-bar">
             <input

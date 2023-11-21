@@ -55,7 +55,7 @@ const CustomerRate = () => {
         <div className="rate-main-container">
           <div className="rate-form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
-              Customer Rate
+              Company Rate
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="rate-form-group">

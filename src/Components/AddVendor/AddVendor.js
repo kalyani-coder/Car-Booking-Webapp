@@ -14,13 +14,29 @@ const AddVendor = () => {
     address: "",
   };
   const [formData, setFormData] = useState(initialFormData);
+  const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    if (name === "mobileno" && value.length > 10) {
+      // Prevent further input if more than 10 digits
+      return;
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    if (name === "mobileno") {
+      // Validate mobile number (10 digits)
+      if (!/^\d{10}$/.test(value)) {
+        setMobilenoError("Mobile number must be 10 digits");
+      } else {
+        setMobilenoError("");
+      }
+    }
   };
 
   const handleSubmit = async (event) => {

@@ -60,8 +60,8 @@ function App() {
     <Route path='/viewupdateduty'  element={<ViewUpdateDuty/>}/>
     <Route path='/addpayment'  element={<AddPayment/>}/>
     <Route path='/viewcustomerpayment'  element={<ViewCustomerPayment/>}/>
-    <Route path='/customerrate'  element={<CustomerRate/>}/>
-    <Route path='/viewcustomerrate'  element={<ViewCustomerRate/>}/>
+    <Route path='/companyrate'  element={<CustomerRate/>}/>
+    <Route path='/viewcompanyrate'  element={<ViewCustomerRate/>}/>
     <Route path='/vendorrate'  element={<VendorRate/>}/>
     <Route path='/viewvendorrate'  element={<ViewVendorRate/>}/>
     <Route path='/customerenquiry'  element={<CustomerEnquiry/>}/>

@@ -39,24 +39,122 @@ const UpdateDuty = () => {
     paymentmethod: '',
   };
 
-  // State to manage form data
   const [formData, setFormData] = useState(initialFormData);
 
-  // Handle changes in form fields
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    //calculate the total km
+    if (name === 'closingkm' || name === 'startingkm') {
+      // Parse values as floats
+      const closingKm = parseFloat(name === 'closingkm' ? value : formData.closingkm);
+      const startingKm = parseFloat(name === 'startingkm' ? value : formData.startingkm);
+  
+      // Calculate the total kilometers
+      if (!isNaN(closingKm) && !isNaN(startingKm)) {
+        const totalKm = closingKm - startingKm;
+        setFormData((prevData) => ({
+          ...prevData,
+          totalkm: totalKm.toString(), // Update the total_Km field
+        }));
+      }
+    }
+
+    //calculate the time
+
+    if (name === 'startingtime' || name === 'closingtime') {
+      const startingTimeStr = formData.startingtime;
+      const closingTimeStr = formData.closingtime;
+    
+      const timeFormatRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+    
+      if (!timeFormatRegex.test(startingTimeStr) || !timeFormatRegex.test(closingTimeStr)) {
+        console.log('Invalid time format');
+        return;
+      }
+    
+      const [startingHour, startingMinute] = startingTimeStr.split(':').map(Number);
+      const [closingHour, closingMinute] = closingTimeStr.split(':').map(Number);
+    
+      // Calculate the time difference in minutes
+      let timeDiffMinutes = (closingHour - startingHour) * 60 + (closingMinute - startingMinute);
+    
+      // Handle negative time difference (e.g., closing time is before starting time)
+      if (timeDiffMinutes < 0) {
+        console.log('Invalid time range');
+        return;
+      }
+    
+      // Convert minutes to hours and format with two decimal places
+      const timeDiffHours = timeDiffMinutes / 60;
+      const formattedTimeDiff = timeDiffHours.toFixed(2);
+    
+      setFormData((prevData) => ({
+        ...prevData,
+        totalhour: formattedTimeDiff,
+      }));
+    }
+    
+
+    if (name === 'title') {
+      // Calculate rate per km based on the selected title
+      const ratePerKm = value === 'One Day / 80km' ? 80 : 300;
+      setFormData((prevData) => ({
+        ...prevData,
+        rateperkm: ratePerKm,
+      }));
+
+      // Calculate the total amount
+      const totalkm = parseFloat(formData.totalkm) || 0;
+      const totalamount = (totalkm * ratePerKm).toFixed(2);
+      setFormData((prevData) => ({
+        ...prevData,
+        amount: totalamount,
+      }));
+    }
+
+    if (name === 'extrakm') {
+      // Calculate extra kilometers amount
+      const extrakm = parseFloat(value) || 0;
+      const ratePerKm = formData.rateperkm || 0;
+      const amount1 = (extrakm * ratePerKm).toFixed(2);
+      setFormData((prevData) => ({
+        ...prevData,
+        amount1,
+      }));
+
+      // Update the total amount
+      const totalamount = (parseFloat(formData.amount) || 0) + parseFloat(amount1);
+      setFormData((prevData) => ({
+        ...prevData,
+        totalamount: totalamount.toFixed(2),
+      }));
+    }
+
+    if (name === 'extrahour') {
+      // Calculate extra hours amount
+      const extrahour = parseFloat(value) || 0;
+      const amount2 = (extrahour * 100).toFixed(2);
+      setFormData((prevData) => ({
+        ...prevData,
+        amount2,
+      }));
+
+      // Update the total amount
+      const totalamount = (parseFloat(formData.totalamount) || 0) + parseFloat(amount2);
+      setFormData((prevData) => ({
+        ...prevData,
+        totalamount: totalamount.toFixed(2),
+      }));
+    }
   };
 
-
-
-  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Check if all fields in initialFormData are filled
     if (Object.values(formData).some((value) => value === '')) {
       alert('Please fill in all required fields.');
       return;
@@ -65,7 +163,6 @@ const UpdateDuty = () => {
     const data = { ...formData };
 
     try {
-      // Send the data to the API
       const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/update-duty', {
         method: 'POST',
         headers: {
@@ -76,7 +173,7 @@ const UpdateDuty = () => {
 
       if (response.ok) {
         alert('Data added successfully!');
-        setFormData(initialFormData); // Reset the form
+        setFormData(initialFormData);
       } else {
         alert('Failed to add data. Please try again.');
       }
@@ -85,6 +182,7 @@ const UpdateDuty = () => {
       alert('Failed to add data. Please try again.');
     }
   };
+
 
   // Return JSX representing the component structure
   return (
@@ -189,6 +287,20 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.vehiclenumber}
                 /></div>
+              <div><label htmlFor="rate" className="update-duty-form-label">
+                Rate:
+              </label>
+                <input
+                  className="update-duty-form-control"
+                  type="number"
+                  id="rate"
+                  name="rate"
+                  // placeholder="rate"
+                  onChange={handleChange}
+                  value={formData.rate}
+                /></div>
+            </div>
+            <div className='d-flex gap-5'>
               <div><label htmlFor="from" className="update-duty-form-label">
                 From:
               </label>
@@ -197,16 +309,13 @@ const UpdateDuty = () => {
                   type="text"
                   id="from"
                   name="from"
-                  placeholder="From"
+                  placeholder="from"
                   onChange={handleChange}
                   value={formData.from}
                 /></div>
-            </div>
-            <div className='d-flex gap-5'>
-              <div>
-                <label htmlFor="to" className="update-duty-form-label">
-                  To:
-                </label>
+              <div><label htmlFor="To" className="update-duty-form-label">
+                To:
+              </label>
                 <input
                   className="update-duty-form-control"
                   type="text"
@@ -216,22 +325,10 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.to}
                 /></div>
-              <div>
-                <label htmlFor="startingkm" className="update-duty-form-label">
-                  Starting KM:
-                </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="startingkm"
-                  name="startingkm"
-                  placeholder="Starting KM"
-                  onChange={handleChange}
-                  value={formData.startingkm}
-                /></div>
             </div>
+            {/* starting Time */}
             <div className='d-flex gap-5'>
-              <div><label htmlFor="startingtime" className="update-duty-form-label">
+            <div><label htmlFor="startingtime" className="update-duty-form-label">
                 Starting Time:
               </label>
                 <input
@@ -242,20 +339,6 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.startingtime}
                 /></div>
-              <div> <label htmlFor="closingkm" className="update-duty-form-label">
-                Closing KM:
-              </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="closingkm"
-                  name="closingkm"
-                  placeholder="Closing KM"
-                  onChange={handleChange}
-                  value={formData.closingkm}
-                /></div>
-            </div>
-            <div className='d-flex gap-5'>
               <div>
                 <label htmlFor="closingtime" className="update-duty-form-label">
                   Closing Time:
@@ -271,18 +354,6 @@ const UpdateDuty = () => {
                 />
 
               </div>
-              <div>  <label htmlFor="totalkm" className="update-duty-form-label">
-                Total KM:
-              </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="totalkm"
-                  name="totalkm"
-                  placeholder="Total KM"
-                  onChange={handleChange}
-                  value={formData.totalkm}
-                /></div>
             </div>
             <div className='d-flex gap-5'>
               <div>
@@ -300,7 +371,7 @@ const UpdateDuty = () => {
                 /></div>
               <div>
                 <label htmlFor="amount" className="update-duty-form-label">
-                  Amount:
+                  Total Hour Amount:
                 </label>
                 <input
                   className="update-duty-form-control"
@@ -312,6 +383,131 @@ const UpdateDuty = () => {
                   value={formData.amount}
                 /></div>
             </div>
+            <div className='d-flex gap-5'>
+              <div>
+                <label htmlFor="extrahour" className="update-duty-form-label">
+                  Extra Hour:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="extrahour"
+                  name="extrahour"
+                  placeholder="Extra Hour"
+                  onChange={handleChange}
+                  value={formData.extrahour}
+                /></div>
+              <div>
+                <label htmlFor="totalamount" className="update-duty-form-label">
+                  Total Amount:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="totalamount"
+                  name="totalamount"
+                  placeholder="Amount"
+                  onChange={handleChange}
+                  value={formData.totalamount}
+                /></div>
+            </div>
+            <div className='d-flex gap-5'>
+              {/* <div>
+                <label htmlFor="to" className="update-duty-form-label">
+                  To:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="to"
+                  name="to"
+                  placeholder="To"
+                  onChange={handleChange}
+                  value={formData.to}
+                /></div> */}
+              <div>
+                <label htmlFor="startingkm" className="update-duty-form-label">
+                  Starting KM:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="startingkm"
+                  name="startingkm"
+                  placeholder="Starting KM"
+                  onChange={handleChange}
+                  value={formData.startingkm}
+                /></div>
+                   <div> <label htmlFor="closingkm" className="update-duty-form-label">
+                Closing KM:
+              </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="closingkm"
+                  name="closingkm"
+                  placeholder="Closing KM"
+                  onChange={handleChange}
+                  value={formData.closingkm}
+                /></div>
+            </div>
+            <div className='d-flex gap-5'>
+            <div>  <label htmlFor="totalkm" className="update-duty-form-label">
+                Total KM:
+              </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="totalkm"
+                  name="totalkm"
+                  placeholder="Total KM"
+                  onChange={handleChange}
+                  value={formData.totalkm}
+                /></div>
+                 <div> <label htmlFor="extrakm" className="update-duty-form-label">
+                Extra KMS:
+              </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="extrakm"
+                  name="extrakm"
+                  placeholder="Extra KM"
+                  onChange={handleChange}
+                  value={formData.extrakm}
+                /></div>
+            </div>
+            <div className='d-flex gap-5'>
+             
+              {/* <div> <label htmlFor="closingkm" className="update-duty-form-label">
+                Closing KM:
+              </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="closingkm"
+                  name="closingkm"
+                  placeholder="Closing KM"
+                  onChange={handleChange}
+                  value={formData.closingkm}
+                /></div> */}
+            </div>
+            <div className='d-flex gap-5'>
+              
+              {/* <div>  <label htmlFor="totalkm" className="update-duty-form-label">
+                Total KM:
+              </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="totalkm"
+                  name="totalkm"
+                  placeholder="Total KM"
+                  onChange={handleChange}
+                  value={formData.totalkm}
+                /></div> */}
+            </div>
+           
             <div className='d-flex gap-5'>
               {/* <div>   <label htmlFor="title" className="update-duty-form-label">
                 Title:
@@ -356,7 +552,7 @@ const UpdateDuty = () => {
             </div>
             <div className='d-flex gap-5'>
               <div> <label htmlFor="extrakm" className="update-duty-form-label">
-                Extra KM:
+                Extra KMS:
               </label>
                 <input
                   className="update-duty-form-control"
@@ -369,7 +565,7 @@ const UpdateDuty = () => {
                 /></div>
               <div>
                 <label htmlFor="amount2" className="update-duty-form-label">
-                  Amount:
+                  Extra KMS Amount:
                 </label>
                 <input
                   className="update-duty-form-control"
@@ -381,34 +577,7 @@ const UpdateDuty = () => {
                   value={formData.amount2}
                 /></div>
             </div>
-            <div className='d-flex gap-5'>
-              <div>
-                <label htmlFor="extrahour" className="update-duty-form-label">
-                  Extra Hour:
-                </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="extrahour"
-                  name="extrahour"
-                  placeholder="Extra Hour"
-                  onChange={handleChange}
-                  value={formData.extrahour}
-                /></div>
-              <div>
-                <label htmlFor="totalamount" className="update-duty-form-label">
-                  Total Amount:
-                </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="totalamount"
-                  name="totalamount"
-                  placeholder="Amount"
-                  onChange={handleChange}
-                  value={formData.totalamount}
-                /></div>
-            </div>
+           
             <div className='d-flex gap-5'>
               <div>
                 <label htmlFor="advanceamount" className="update-duty-form-label">
