@@ -39,11 +39,27 @@ function AddPayment() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  // };
+  
+    if (name === 'advance_Amount') {
+      // Parse advance amount as a float
+      const advanceAmount = parseFloat(value);
+  
+      // Calculate remaining amount
+      const remainingAmount = formData.total_Amount - advanceAmount;
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+        remaining_Amount: remainingAmount,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  
+  
   
 
 
@@ -526,13 +542,14 @@ function AddPayment() {
                         <div className="form-group">
                           <label>Advance Amount</label>
                           <input
-                            type="number"
-                            className="form-control"
-                            name="advance_Amount"
-                            placeholder="Enter Advance Amount"
-                            value={formData.advance_Amount}
-                            onChange={handleChange}
-                          />
+  type="number"
+  className="form-control"
+  name="advance_Amount"
+  placeholder="Enter Advance Amount"
+  value={formData.advance_Amount}
+  onChange={handleChange}
+/>
+
                         </div>
                       </div>
                     </div>
