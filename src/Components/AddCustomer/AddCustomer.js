@@ -3,6 +3,7 @@ import "./AddCustomer.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddCustomer = () => {
+  
   const initialFormData = {
     customername: "",
     companyname: "",
@@ -74,6 +75,8 @@ const AddCustomer = () => {
     }
   };
 
+
+
   return (
     <>
       <Sidebar />
@@ -124,20 +127,21 @@ const AddCustomer = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="mobileno" className="form-label">
-                Mobile No:
-              </label>
-              <input
-                className="form-control-cust-add-input"
-                type="number"
-                id="mobileno"
-                name="mobileno"
-                placeholder="Mobile No."
-                onChange={handleChange}
-                value={formData.mobileno}
-              />
-              {mobilenoError && <p className="error-message">{mobilenoError}</p>}
-            </div>
+  <label htmlFor="mobileno" className="form-label">
+    Mobile No:
+  </label>
+  <input
+    className="form-control-cust-add-input"
+    type="tel"
+    id="mobileno"
+    name="mobileno"
+    placeholder="Mobile No."
+    onChange={handleChange}
+    value={formData.mobileno}
+  />
+  {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+</div>
+
             <div className="form-group">
               <label htmlFor="email" className="form-label">
                 Email Id:

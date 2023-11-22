@@ -3,11 +3,12 @@ import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const CustomerRate = () => {
+  const [mobilenoError, setMobilenoError] = useState('');
   const [formData, setFormData] = useState({
     company_Name: "",
     GST_No: "",
     customer_Name: "",
-    mobile_Number: "",
+    mobile_Number: "", // Adjusted field name
     rate_per_km: "",
     title: "",
     rate: ""
@@ -15,11 +16,25 @@ const CustomerRate = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+
+    // Prevent further input if more than 10 digits
+    if (name === "mobile_Number" && value.length > 10) {
+      return;
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value
-    });
+    }));
+
+    // Reset mobile number error when user corrects the input
+    if (name === "mobile_Number" && mobilenoError) {
+      setMobilenoError('');
+    }
   };
+
+  // ... (rest of the code)
+
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -103,19 +118,20 @@ const CustomerRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="mobile_Number" className="form-label">
-                  Mobile No:
-                </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="number"
-                  id="mobile_Number"
-                  name="mobile_Number"
-                  placeholder="Mobile No."
-                  value={formData.mobile_Number}
-                  onChange={handleChange}
-                />
-              </div>
+  <label htmlFor="mobileno" className="form-label">
+    Mobile No:
+  </label>
+  <input
+    className="form-control-cust-add-input"
+    type="tel"
+    id="mobile_Number"
+    name="mobile_Number"
+    placeholder="Mobile No."
+    onChange={handleChange}
+    value={formData.mobile_Number}
+  />
+  {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+</div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
                   Rate Per KM:
