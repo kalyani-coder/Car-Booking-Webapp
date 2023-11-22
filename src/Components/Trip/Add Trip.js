@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 
@@ -20,8 +20,61 @@ const AddTrip = () => {
     hours: "",
     vehicle: "",
   };
+
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  // Fetch customer data from the API using useEffect hook
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        // Make a GET request to the API endpoint for customers
+        const response = await fetch('http://localhost:7000/api/add-customers');
+        
+        if (response.ok) {
+          // If the response is successful, parse the JSON data and set the customer list
+          const data = await response.json();
+          setCustomerList(data);
+        } else {
+          // If there is an error in the response, log an error message
+          console.error('Failed to fetch customers');
+        }
+      } catch (error) {
+        // If there is an error in making the request, log an error message
+        console.error('API request error:', error);
+      }
+    };
+
+    // Call the fetchCustomers function when the component mounts
+    fetchCustomers();
+  }, []);  // The empty dependency array ensures that this effect runs only once on mount
+
+  // Use useEffect to update form data when a customer is selected
+  useEffect(() => {
+    if (selectedCustomer) {
+      // Assuming selectedCustomer contains additional details like Cus_GSTIN, address, Cus_Mobile
+      setFormData({
+        customername: selectedCustomer.Cus_name || '',
+        mobileno: selectedCustomer.Cus_Mobile || '',
+        email: selectedCustomer.Cus_Email || '',
+        address: selectedCustomer.address || '',
+        triptype: "",
+        subtype: "",
+        pickup: "",
+        date: "",
+        time: "",
+        dropoff: "",
+        date1: "",
+        time1: "",
+        totaldays: "",
+        hours: "",
+        vehicle: "",  
+        // Add other fields based on your customer details
+      });
+    }
+  }, [selectedCustomer]);  // Run this effect whenever selectedCustomer changes
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,9 +84,6 @@ const AddTrip = () => {
     }));
   };
 
-  
-
-  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Check if all fields in initialFormData are filled
@@ -86,7 +136,27 @@ const AddTrip = () => {
             <label htmlFor="customername" className="trip-form-label">
               Customer Name:
             </label>
-            <input className="form-control-add-trip-input" type="text" id="customername" name="customername" placeholder="Customer Name" onChange={handleChange} value={formData.customername} />
+            <select
+                className="form-control-add-trip-input"
+                id="customername"
+                name="customername"
+                onChange={(e) => {
+                  // Find the selected customer from the list
+                  const selectedCustomer = customerList.find(
+                    (customer) => customer.Cus_name === e.target.value
+                  );
+                  // Set the selected customer to state
+                  setSelectedCustomer(selectedCustomer);
+                }}      
+                value={selectedCustomer ? selectedCustomer.Cus_name : ''}
+              >
+                <option value="">Select Customer</option>
+                {customerList.map((customer) => (
+                  <option key={customer._id} value={customer.Cus_name} onClick={() => setSelectedCustomer(customer)}>
+                    {customer.Cus_name}
+                  </option>
+                ))}
+              </select>
           </div>
           <div className="trip-form-group">
             <label htmlFor="mobileno" className="trip-form-label">

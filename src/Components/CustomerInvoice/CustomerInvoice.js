@@ -60,7 +60,7 @@ const initialFormData = {
         setFormData((prevData) => ({
           ...prevData,
           customerName: selectedCustomer.Cus_name || '',
-          customerGSTNo: selectedCustomer.Cus_GSTIN || '',
+          customerGSTNo: selectedCustomer.gst_no || '',
           customerAddress: selectedCustomer.address || '',
           customerContactNo: selectedCustomer.Cus_Mobile || '',
         }));
