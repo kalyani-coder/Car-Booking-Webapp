@@ -4,8 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Sidebar from '../Sidebar/Sidebar';
 
-function CustomerInvoice() {
-  const [formData, setFormData] = useState({
+const initialFormData = {
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
     gstno: '',
@@ -30,7 +29,45 @@ function CustomerInvoice() {
     accountHoldername: '',
     ifsccode: 'COSB0000015',
     micrcode: '411164014',
-  });
+  };
+
+  function CustomerInvoice() {
+    const [formData, setFormData] = useState(initialFormData);
+    const [error, setError] = useState('');
+    const [customerList, setCustomerList] = useState([]);
+    const [selectedCustomer, setSelectedCustomer] = useState(null);
+  
+    useEffect(() => {
+      const fetchCustomers = async () => {
+        try {
+          const response = await fetch('http://localhost:7000/api/add-customers');
+          if (response.ok) {
+            const data = await response.json();
+            setCustomerList(data);
+          } else {
+            console.error('Failed to fetch customers');
+          }
+        } catch (error) {
+          console.error('API request error:', error);
+        }
+      };
+  
+      fetchCustomers();
+    }, []);
+  
+    useEffect(() => {
+      if (selectedCustomer) {
+        setFormData((prevData) => ({
+          ...prevData,
+          customerName: selectedCustomer.Cus_name || '',
+          customerGSTNo: selectedCustomer.Cus_GSTIN || '',
+          customerAddress: selectedCustomer.address || '',
+          customerContactNo: selectedCustomer.Cus_Mobile || '',
+        }));
+      }
+    }, [selectedCustomer]);
+  
+  
 
   const [invoiceItems, setInvoiceItems] = useState([
     {
@@ -51,6 +88,10 @@ function CustomerInvoice() {
     totalSGST: 0,
   });
 
+  useEffect(() => {
+    calculateTotalAmount();
+  }, [invoiceItems]);
+
   const calculateTotalAmount = () => {
     let total = 0;
     invoiceItems.forEach((item) => {
@@ -58,6 +99,8 @@ function CustomerInvoice() {
     });
     setTotalAmount(total.toFixed(2));
   };
+  
+  
 
   useEffect(() => {
     calculateTotalAmount();
@@ -266,17 +309,7 @@ function CustomerInvoice() {
               value={formData.gstno}
               onChange={handleChange}
             />
-            {/* <label htmlFor="mail" className="form-label">
-              Mail
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="mail"
-              name="mail"
-              value={formData.mail}
-              onChange={handleChange}
-            /> */}
+         
           </div>
         </div>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Invoice To:</h2>
@@ -285,15 +318,30 @@ function CustomerInvoice() {
             <label htmlFor="customerName" className="form-label">
               Customer Name:
             </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerName"
+             {/* Dropdown to select a customer */}
+             <select
+              className="form-control-cust-inq-input"
+              id="customername"
               name="customerName"
-              placeholder="Customer Name"
-              value={formData.customerName}
-              onChange={handleChange}
-            />
+              onChange={(e) => {
+                // Find the selected customer from the list
+                const selectedCustomer = customerList.find(
+                  (customer) => customer.Cus_name === e.target.value
+                );
+                // Set the selected customer to state
+                setSelectedCustomer(selectedCustomer);
+              }}
+              value={selectedCustomer ? selectedCustomer.Cus_name : ''}
+            >
+              <option value="">Select Customer</option>
+              {customerList.map((customer) => (
+                <option key={customer._id} value={customer.Cus_name}>
+                  {customer.Cus_name}
+                </option>
+              ))}
+            </select>
+
+
             <label htmlFor="customerGSTNo" className="form-label">
               GST No:
             </label>
@@ -484,11 +532,11 @@ function CustomerInvoice() {
           <button  className="btn btn-danger" onClick={handleGenerate}>
             Generate
           </button>
-          {totalAmount && (
+          {/* {totalAmount && (
             <div>
               <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Total Amount: {totalAmount}</h2>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
