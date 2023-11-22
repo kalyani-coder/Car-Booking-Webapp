@@ -5,7 +5,7 @@ import Sidebar from "../Sidebar/Sidebar";
 const CustomerEnquiry = () => {
   const initialFormData = {
     customername: "",
-    cus_Id : '',
+    cus_Id: '',
     mobileno: "",
     email: "",
     address: "",
@@ -21,6 +21,7 @@ const CustomerEnquiry = () => {
     hours: "",
     vehicle: "",
   };
+
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
   const [customerList, setCustomerList] = useState([]);
@@ -48,7 +49,7 @@ const CustomerEnquiry = () => {
     if (selectedCustomer) {
       setFormData((prevData) => ({
         ...prevData,
-        mobileno: selectedCustomer.Cus_Mobile ,
+        mobileno: selectedCustomer.Cus_Mobile,
         email: selectedCustomer.Cus_Email,
         address: selectedCustomer.address,
       }));
@@ -81,8 +82,8 @@ const CustomerEnquiry = () => {
       days: formData.totaldays,
       hours: formData.hours,
       vehicle: formData.vehicle,
-      address:formData.address,
-      time1:formData.time1,
+      address: formData.address,
+      time1: formData.time1,
       totaldays: formData.totaldays,
     };
 
@@ -96,7 +97,7 @@ const CustomerEnquiry = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:7000/api/add-customers', {
+      const response = await fetch('http://localhost:7000/api/customer-enquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,33 +117,30 @@ const CustomerEnquiry = () => {
     }
   };
 
-  const handleDateChange = (event) => {
-    handleChange(event);
-  
-    // Calculate the "Total Days" and "Total Hours" based on date and time
-    const { pickup, date, time, dropoff, date1, time1 } = formData;
-  
-    if (pickup && date && time && dropoff && date1 && time1) {
-      const pickupDateTime = new Date(`${date}T${time}`);
-      const dropoffDateTime = new Date(`${date1}T${time1}`);
-  
-      // Calculate the time difference in milliseconds
-      const timeDifference = dropoffDateTime - pickupDateTime;
-  
-      // Calculate "Total Days" by dividing the time difference by milliseconds in a day
-      const totalDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
-      // Calculate "Total Hours" by dividing the time difference by milliseconds in an hour
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  
-      setFormData((prevData) => ({
-        ...prevData,
-        totaldays: totalDays,
-        hours: totalHours,
-      }));
-    }
-  };
-  
+const handleDateChange = (event) => {
+  handleChange(event);
+
+  const { date1, time, date2, time2 } = formData;
+
+  if (date1 && time && date2 && time2) {
+    const pickupDateTime = new Date(`${date1}T${time}`);
+    const dropoffDateTime = new Date(`${date2}T${time2}`);
+
+    console.log('Selected Pickup Date and Time:', pickupDateTime);
+    console.log('Selected Dropoff Date and Time:', dropoffDateTime);
+
+    const timeDifference = dropoffDateTime - pickupDateTime;
+
+    const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+    const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    setFormData((prevData) => ({
+      ...prevData,
+      totaldays: totalDays,
+      hours: totalHours,
+    }));
+  }
+};
 
 
   return (
@@ -151,7 +149,7 @@ const CustomerEnquiry = () => {
       <div className="customer-inquiry-container">
         <div className="main-container">
           <div className="form-container">
-            <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Customer Enquiry</h2>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer Enquiry</h2>
             <div className="form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name:
@@ -221,122 +219,137 @@ const CustomerEnquiry = () => {
             </div>
 
             <div className="form-group">
-            <label htmlFor="triptype" className="form-label">
-              Trip Type:
-            </label>
-            <select className="form-control-cust-inq-input" id="triptype" name="triptype" onChange={handleChange} value={formData.triptype}>
-              <option value="">Trip Type</option>
-              <option value="One Way Trip">One Way Trip</option>
-              <option value="Return Trip">Return Trip</option>
-            </select>
+              <label htmlFor="triptype" className="form-label">
+                Trip Type:
+              </label>
+              <select className="form-control-cust-inq-input" id="triptype" name="triptype" onChange={handleChange} value={formData.triptype}>
+                <option value="">Trip Type</option>
+                <option value="One Way Trip">One Way Trip</option>
+                <option value="Return Trip">Return Trip</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="subtype" className="form-label">
+                Sub Type:
+              </label>
+              <select className="form-control-cust-inq-input" id="subtype" name="subtype" onChange={handleChange} value={formData.subtype}>
+                <option value="">Sub Type</option>
+                <option value="Local Trip">Local Trip</option>
+                <option value="Outstation Trip">Outstation Trip</option>
+                <option value="Outstation Local Trip">Outstation Local Trip</option>
+                <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
+              </select>
+            </div>
+            <div className="d-flex gap-3">
+              <div>
+                <div className="form-group">
+                  <label htmlFor="pickup" className="form-label">
+                    Pickup Location:
+                  </label>
+                  <input type="text" className="form-control cust-inq-input" name="pickup" placeholder="Pickup Location" onChange={handleChange} value={formData.pickup} />
+                </div>
+              </div>
+              <div>
+                <div className="form-group">
+                  <label htmlFor="date1" className="form-label">
+                    Date 1:
+                  </label>
+                  <input type="date" className="form-control cust-inq-input" name="date" onChange={handleDateChange} value={formData.date} />
+                </div>
+              </div>
+              <div>
+                <div className="form-group">
+                  <label htmlFor="time" className="form-label">
+                    Time:
+                  </label>
+                  <input type="time" className="form-control cust-inq-input" name="time" onChange={handleChange} value={formData.time} />
+                </div>
+              </div>
+            </div>
+            <div className="d-flex gap-3">
+              <div>
+                <div className="form-group">
+                  <label htmlFor="dropoff" className="form-label">
+                    Dropoff Location:
+                  </label>
+                  <input type="text" className="form-control cust-inq-input" name="dropoff" placeholder="Enter Dropoff Location" onChange={handleChange} value={formData.dropoff} />
+                </div>
+              </div>
+              <div>
+                <div className="form-group">
+                  <label htmlFor="date1" className="form-label">
+                    Date 2:
+                  </label>
+                  <input type="date" className="form-control cust-inq-input" name="date1" onChange={handleDateChange} value={formData.date1} />
+                </div>
+              </div>
+              <div>
+                <div className="form-group">
+                  <label htmlFor="time1" className="form-label">
+                    Time 2:
+                  </label>
+                  <input type="time" className="form-control cust-inq-input" name="time1" onChange={handleChange} value={formData.time1} />
+                </div>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="totaldays" className="form-label">
+                Total Days:
+              </label>
+              <input
+                type="number"
+                className="form-control-cust-inq-input"
+                name="totaldays"
+                placeholder="Total Days"
+                onChange={handleChange}
+                value={formData.totaldays}
+            
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="hours" className="form-label">
+                Total Hours:
+              </label>
+              <input
+                type="text"
+                className="form-control-cust-inq-input"
+                name="hours"
+                placeholder="Hours"
+                onChange={handleChange}
+                value={formData.hours}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="vehicle" className="form-label">
+                Vehicle:
+              </label>
+              <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
+                <option value="">Vehicle</option>
+                <option value="Sedan Car">Sedan Car</option>
+                <option value="Mini Car">Mini Car</option>
+                <option value="SUV Car">SUV Car</option>
+                <option value="AC Bus 13-Seater">AC Bus 13-Seater</option>
+                <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
+                <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
+                <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
+                <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
+                <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
+                <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
+                <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
+                <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
+                <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
+                <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
+                <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
+                <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
+              </select>
+            </div>
+            <button type="button" className="btn-submit" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
-          <div className="form-group">
-            <label htmlFor="subtype" className="form-label">
-              Sub Type:
-            </label>
-            <select className="form-control-cust-inq-input" id="subtype" name="subtype" onChange={handleChange} value={formData.subtype}>
-              <option value="">Sub Type</option>
-              <option value="Local Trip">Local Trip</option>
-              <option value="Outstation Trip">Outstation Trip</option>
-              <option value="Outstation Local Trip">Outstation Local Trip</option>
-              <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
-            </select>
-          </div>
-          <div className="d-flex gap-3">
-            <div>
-          <div className="form-group">
-            <label htmlFor="pickup" className="form-label">
-              Pickup Location:
-            </label>
-            <input type="text" className="form-control cust-inq-input" name="pickup" placeholder="Pickup Location" onChange={handleChange} value={formData.pickup} />
-          </div>
-          </div>
-          <div>
-          <div className="form-group">
-            <label htmlFor="date1" className="form-label">
-              Date:
-            </label>
-            <input type="date" className="form-control cust-inq-input" name="date" onChange={handleDateChange} value={formData.date} />
-          </div>
-          </div>
-          <div>
-          <div className="form-group">
-            <label htmlFor="time" className="form-label">
-              Time:
-            </label>
-            <input type="time" className="form-control cust-inq-input" name="time" onChange={handleChange} value={formData.time} />
-          </div>
-          </div>
-          </div>
-          <div className="d-flex gap-3">
-            <div>
-          <div className="form-group">
-            <label htmlFor="dropoff" className="form-label">
-              Dropoff Location:
-            </label>
-            <input type="text" className="form-control cust-inq-input" name="dropoff" placeholder="Enter Dropoff Location" onChange={handleChange} value={formData.dropoff} />
-          </div>
-          </div>
-          <div>
-          <div className="form-group">
-            <label htmlFor="date" className="form-label">
-              Date:
-            </label>
-            <input type="date" className="form-control cust-inq-input" name="date1" onChange={handleDateChange} value={formData.date1} />
-          </div>
-          </div>
-          <div>
-          <div className="form-group">
-            <label htmlFor="time1" className="form-label">
-              Time:
-            </label>
-            <input type="time" className="form-control cust-inq-input" name="time1" onChange={handleChange} value={formData.time1} />
-          </div>
-          </div>
-          </div>
-         
-          <div className="form-group">
-            <label htmlFor="totaldays" className="form-label">
-              Total Days:
-            </label>
-            <input type="number" className="form-control-cust-inq-input" name="totaldays" placeholder="Total Days" onChange={handleChange} value={formData.totaldays} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="hours" className="form-label">
-              Total Hours:
-            </label>
-            <input type="text" className="form-control-cust-inq-input" name="hours" placeholder="Hours" onChange={handleChange} value={formData.hours} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="vehicle" className="form-label">
-              Vehicle:
-            </label>
-            <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
-              <option value="">Vehicle</option>
-              <option value="Sedan Car">Sedan Car</option>
-              <option value="Mini Car">Mini Car</option>
-              <option value="SUV Car">SUV Car</option>
-              <option value="AC Bus 13-Seater">AC Bus 13-Seater</option>
-              <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
-              <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
-              <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
-              <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
-              <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
-              <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
-              <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
-              <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
-              <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
-              <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
-              <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
-              <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
-            </select>
-          </div>
-          <button type="button" className="btn-submit" onClick={handleSubmit}>
-            Submit
-          </button>
         </div>
       </div>
-    </div>
     </>
   );
 };
