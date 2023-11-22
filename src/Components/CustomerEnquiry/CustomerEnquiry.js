@@ -5,40 +5,42 @@ import Sidebar from "../Sidebar/Sidebar";
 const CustomerEnquiry = () => {
   const initialFormData = {
     customername: "",
-    cus_Id: '',
+    cus_Id: "",
     mobileno: "",
     email: "",
     address: "",
     triptype: "",
     subtype: "",
     pickup: "",
-    date: "",
-    time: "",
-    dropoff: "",
     date1: "",
     time1: "",
+    dropoff: "",
+    date2: "",
+    time2: "",
     totaldays: "",
-    hours: "",
+    totalhours: "",
     vehicle: "",
+
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [apiResponse, setApiResponse] = useState(null);
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/add-customers');
+        const response = await fetch("http://localhost:7000/api/add-customers");
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
         } else {
-          console.error('Failed to fetch customers');
+          console.error("Failed to fetch customers");
         }
       } catch (error) {
-        console.error('API request error:', error);
+        console.error("API request error:", error);
       }
     };
 
@@ -56,98 +58,130 @@ const CustomerEnquiry = () => {
     }
   }, [selectedCustomer]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    // Prevent further input if more than 10 digits
-    if (name === "mobileno" && value.length > 10) {
-      return;
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const apiData = {
-      customer_id: selectedCustomer ? selectedCustomer._id : '',
+      customer_id: selectedCustomer ? selectedCustomer._id : "",
       customer_name: formData.customername,
       mobileno: formData.mobileno,
       email: formData.email,
       tripe_type: formData.triptype,
       sub_type: formData.subtype,
       pic_up: formData.pickup,
-      date: formData.date,
-      time: formData.time,
-      drop_of: formData.dropoff,
       date1: formData.date1,
+      time1: formData.time1,
+      drop_of: formData.dropoff,
+      date2: formData.date2,
+      time2: formData.time2,
       days: formData.totaldays,
-      hours: formData.hours,
+      hours: formData.totalhours,
       vehicle: formData.vehicle,
       address: formData.address,
-      time1: formData.time1,
-      totaldays: formData.totaldays,
     };
 
     for (const key in apiData) {
-      if (apiData[key] === '') {
-        setError('All fields are required.');
+      if (apiData[key] === "") {
+        setError("All fields are required.");
         return;
       }
     }
 
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('http://localhost:7000/api/customer-enquiry', {
-        method: 'POST',
+      const response = await fetch("http://localhost:7000/api/customer-enquiry", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(apiData),
       });
 
       if (response.ok) {
-        alert('Data saved successfully!');
+        const responseData = await response.json();
+        setApiResponse(responseData);
+        alert("Data saved successfully!");
         setFormData(initialFormData);
       } else {
-        alert('Failed to save data. Please try again.');
+        alert("Failed to save data. Please try again.");
       }
     } catch (error) {
-      console.error('API request error:', error);
-      alert('Failed to save data. Please try again.');
+      console.error("API request error:", error);
+      alert("Failed to save data. Please try again.");
     }
   };
 
-const handleDateChange = (event) => {
-  handleChange(event);
+  const handleDateChange = (event) => {
+    handleChange(event);
 
-  const { date1, time, date2, time2 } = formData;
+    const { date1, time1, date2, time2 } = formData;
 
-  if (date1 && time && date2 && time2) {
-    const pickupDateTime = new Date(`${date1}T${time}`);
-    const dropoffDateTime = new Date(`${date2}T${time2}`);
+    if (date1 && time1 && date2 && time2) {
+      const pickupDateTime = new Date(`${date1}T${time1}`);
+      const dropoffDateTime = new Date(`${date2}T${time2}`);
 
-    console.log('Selected Pickup Date and Time:', pickupDateTime);
-    console.log('Selected Dropoff Date and Time:', dropoffDateTime);
+      console.log("Selected Pickup Date and Time:", pickupDateTime);
+      console.log("Selected Dropoff Date and Time:", dropoffDateTime);
 
-    const timeDifference = dropoffDateTime - pickupDateTime;
+      const timeDifference = dropoffDateTime - pickupDateTime;
 
-    const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-    const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
+      setFormData((prevData) => ({
+        ...prevData,
+        totaldays: totalDays,
+        totalhours: totalHours,
+      }));
+    }
+  };
+
+  const updateTotal = () => {
+    const selectedDate1 = new Date(`${formData.date1}T${formData.time1}`);
+    const selectedDate2 = new Date(`${formData.date2}T${formData.time2}`);
+
+    if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
+      const timeDifference = selectedDate2 - selectedDate1;
+      const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+      const formattedDate1 = selectedDate1.toLocaleDateString("en-US");
+      const formattedDate2 = selectedDate2.toLocaleDateString("en-US");
+
+      setFormData((prevData) => ({
+        ...prevData,
+        totaldays: totalDays,
+        totalhours: totalHours,
+        formattedDate1: formattedDate1,
+        formattedDate2: formattedDate2,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        totaldays: "",
+        totalhours: "",
+        formattedDate1: "",
+        formattedDate2: "",
+      }));
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      totaldays: totalDays,
-      hours: totalHours,
+      [name]: value,
     }));
-  }
-};
 
+    if (name === "date1" || name === "date2" || name === "time1" || name === "time2") {
+      updateTotal();
+    }
+  };
+
+  const handleBlur = () => {
+    updateTotal();
+  };
 
   return (
     <>
@@ -156,6 +190,12 @@ const handleDateChange = (event) => {
         <div className="main-container">
           <div className="form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer Enquiry</h2>
+            {error && <div className="error-message">{error}</div>}
+            {apiResponse && (
+              <div className={`api-response-message ${apiResponse.success ? "success" : "error"}`}>
+                {apiResponse.message}
+              </div>
+            )}
             <div className="form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name:
@@ -165,9 +205,7 @@ const handleDateChange = (event) => {
                 id="customername"
                 name="customername"
                 onChange={(e) => {
-                  const selectedCustomer = customerList.find(
-                    (customer) => customer.Cus_name === e.target.value
-                  );
+                  const selectedCustomer = customerList.find((customer) => customer.Cus_name === e.target.value);
                   setSelectedCustomer(selectedCustomer);
                   handleChange(e);
                 }}
@@ -182,19 +220,19 @@ const handleDateChange = (event) => {
               </select>
             </div>
             <div className="form-group">
-                <label htmlFor="mobileno" className="form-label">
-                  Mobile No:
-                </label>
-                <input
-                  className="form-control-cust-inq-input"
-                  type="text"
-                  id="mobileno"
-                  name="mobileno"
-                  placeholder="Mobile No."
-                  onChange={handleChange}
-                  value={formData.mobileno}
-                />
-              </div>
+              <label htmlFor="mobileno" className="form-label">
+                Mobile No:
+              </label>
+              <input
+                className="form-control-cust-inq-input"
+                type="text"
+                id="mobileno"
+                name="mobileno"
+                placeholder="Mobile No."
+                onChange={handleChange}
+                value={formData.mobileno}
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="email" className="form-label">
                 Email Id:
@@ -228,7 +266,13 @@ const handleDateChange = (event) => {
               <label htmlFor="triptype" className="form-label">
                 Trip Type:
               </label>
-              <select className="form-control-cust-inq-input" id="triptype" name="triptype" onChange={handleChange} value={formData.triptype}>
+              <select
+                className="form-control-cust-inq-input"
+                id="triptype"
+                name="triptype"
+                onChange={handleChange}
+                value={formData.triptype}
+              >
                 <option value="">Trip Type</option>
                 <option value="One Way Trip">One Way Trip</option>
                 <option value="Return Trip">Return Trip</option>
@@ -238,7 +282,13 @@ const handleDateChange = (event) => {
               <label htmlFor="subtype" className="form-label">
                 Sub Type:
               </label>
-              <select className="form-control-cust-inq-input" id="subtype" name="subtype" onChange={handleChange} value={formData.subtype}>
+              <select
+                className="form-control-cust-inq-input"
+                id="subtype"
+                name="subtype"
+                onChange={handleChange}
+                value={formData.subtype}
+              >
                 <option value="">Sub Type</option>
                 <option value="Local Trip">Local Trip</option>
                 <option value="Outstation Trip">Outstation Trip</option>
@@ -252,7 +302,14 @@ const handleDateChange = (event) => {
                   <label htmlFor="pickup" className="form-label">
                     Pickup Location:
                   </label>
-                  <input type="text" className="form-control cust-inq-input" name="pickup" placeholder="Pickup Location" onChange={handleChange} value={formData.pickup} />
+                  <input
+                    type="text"
+                    className="form-control cust-inq-input"
+                    name="pickup"
+                    placeholder="Pickup Location"
+                    onChange={handleChange}
+                    value={formData.pickup}
+                  />
                 </div>
               </div>
               <div>
@@ -260,15 +317,32 @@ const handleDateChange = (event) => {
                   <label htmlFor="date1" className="form-label">
                     Date 1:
                   </label>
-                  <input type="date" className="form-control cust-inq-input" name="date" onChange={handleDateChange} value={formData.date} />
+                  <input
+                    type="date"
+                    className="form-control cust-inq-input"
+                    name="date1"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={formData.date1}
+                  />
+                  {formData.formattedDate1 && (
+                    <p>Formatted Date 1: {formData.formattedDate1}</p>
+                  )}
                 </div>
               </div>
               <div>
                 <div className="form-group">
-                  <label htmlFor="time" className="form-label">
-                    Time:
+                  <label htmlFor="time1" className="form-label">
+                    Time 1:
                   </label>
-                  <input type="time" className="form-control cust-inq-input" name="time" onChange={handleChange} value={formData.time} />
+                  <input
+                    type="time"
+                    className="form-control cust-inq-input"
+                    name="time1"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={formData.time1}
+                  />
                 </div>
               </div>
             </div>
@@ -278,23 +352,47 @@ const handleDateChange = (event) => {
                   <label htmlFor="dropoff" className="form-label">
                     Dropoff Location:
                   </label>
-                  <input type="text" className="form-control cust-inq-input" name="dropoff" placeholder="Enter Dropoff Location" onChange={handleChange} value={formData.dropoff} />
+                  <input
+                    type="text"
+                    className="form-control cust-inq-input"
+                    name="dropoff"
+                    placeholder="Enter Dropoff Location"
+                    onChange={handleChange}
+                    value={formData.dropoff}
+                  />
                 </div>
               </div>
               <div>
                 <div className="form-group">
-                  <label htmlFor="date1" className="form-label">
-                    Date 2:
-                  </label>
-                  <input type="date" className="form-control cust-inq-input" name="date1" onChange={handleDateChange} value={formData.date1} />
+                <label htmlFor="date2" className="form-label">
+              Date 2:
+            </label>
+            <input
+              type="date"
+              className="form-control cust-inq-input"
+              name="date2"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={formData.date2}
+            />
+            {formData.formattedDate2 && (
+              <p>Formatted Date 2: {formData.formattedDate2}</p>
+            )}
                 </div>
               </div>
               <div>
                 <div className="form-group">
-                  <label htmlFor="time1" className="form-label">
+                <label htmlFor="time2" className="form-label">
                     Time 2:
                   </label>
-                  <input type="time" className="form-control cust-inq-input" name="time1" onChange={handleChange} value={formData.time1} />
+                  <input
+                    type="time"
+                    className="form-control cust-inq-input"
+                    name="time2"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={formData.time2}
+                  />
                 </div>
               </div>
             </div>
@@ -302,29 +400,32 @@ const handleDateChange = (event) => {
             <div className="form-group">
               <label htmlFor="totaldays" className="form-label">
                 Total Days:
+                <span className="days" >Days</span>
               </label>
               <input
                 type="number"
                 className="form-control-cust-inq-input"
                 name="totaldays"
-                placeholder="Total Days"
+                // placeholder="Total Days"
                 onChange={handleChange}
                 value={formData.totaldays}
+                readOnly
             
               />
             </div>
             <div className="form-group">
               <label htmlFor="hours" className="form-label">
                 Total Hours:
+                <span className="days" >Hours</span>
               </label>
               <input
-                type="text"
-                className="form-control-cust-inq-input"
-                name="hours"
-                placeholder="Hours"
-                onChange={handleChange}
-                value={formData.hours}
-              />
+                  type="text"
+                  className="form-control-cust-inq-input"
+                  name="totalhours"
+                  // placeholder="Total Hours"
+                  value={formData.totalhours}
+                  readOnly
+                />
             </div>
             <div className="form-group">
               <label htmlFor="vehicle" className="form-label">

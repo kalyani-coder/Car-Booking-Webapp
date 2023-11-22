@@ -107,4 +107,9 @@
       padding: 8px 16px;
     }
   }
-  
+  .days {
+    color: rgb(12, 12, 12);
+    position: absolute;
+    margin-left: -50px;
+    margin-top: 39px;
+}

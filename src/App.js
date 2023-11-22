@@ -35,6 +35,7 @@ import AddDriver from './Components/Driver/AddDriver';
 import ViewDriver from './Components/Driver/ViewDriver';
 import ViewCustomerPayment from './Components/AddPayment/ViewCustomerPayment';
 import ViewDriverDetails from './Components/StartEndDetails/ViewDriverDetails'
+import Customer from './Components/CustomerEnquiry/Customer';
 
 
 
@@ -82,6 +83,7 @@ function App() {
     <Route path='/adddriver' element={<AddDriver/>} />
     <Route path='/viewdriver' element={<ViewDriver/>} />
     <Route path='/viewdetailsfromdriver' element={<ViewDriverDetails/>} />
+    <Route path='/Customer' element={<Customer/>} />
 
 
   </Routes>
