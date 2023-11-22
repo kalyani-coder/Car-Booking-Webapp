@@ -68,6 +68,22 @@ const AddCustomer = () => {
         address: formData.address,
       };
 
+      const response = await fetch("https://carbooking-backend-fo78.onrender.com/api/add-customers", {
+                                     
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        alert("Data added successfully!");
+        setFormData(initialFormData); // Clear the form fields
+      } else {
+        alert("Failed to add data. Please try again.");
+      }
+
       // ... (API request and success handling)
     } catch (error) {
       console.error("API request error:", error);
