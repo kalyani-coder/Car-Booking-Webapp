@@ -127,23 +127,31 @@ const initialFormData = {
     if (name === 'kms' || name === 'amount') {
       const kms = parseFloat(updatedItems[index]['kms']) || 0;
       const standardRate = 20;
-      const extraRate = 18;
-
-      if (kms > 80) {
-        const baseKms = 80;
-        const extraKms = kms - baseKms;
-
-        updatedItems[index]['amount'] = standardRate * baseKms;
-        updatedItems[index]['total'] = (updatedItems[index]['amount'] + extraRate * extraKms).toFixed(2);
+      const extraRate1 = 18; // Rate for kilometers beyond 80 up to 300
+      const extraRate2 = 15; // Rate for kilometers beyond 300
+  
+      let baseKms, extraRate;
+      if (kms <= 80) {
+        baseKms = kms;
+        extraRate = 0;
+      } else if (kms <= 300) {
+        baseKms = 80;
+        extraRate = extraRate1;
       } else {
-        updatedItems[index]['amount'] = standardRate * kms;
-        updatedItems[index]['total'] = updatedItems[index]['amount'].toFixed(2);
+        baseKms = 300;
+        extraRate = extraRate2;
       }
-
+  
+      const extraKms = kms - baseKms;
+  
+      updatedItems[index]['amount'] = standardRate * baseKms + extraRate * extraKms;
+      updatedItems[index]['total'] = updatedItems[index]['amount'].toFixed(2);
+  
       const total = parseFloat(updatedItems[index]['total']) || 0;
       updatedItems[index]['cgst'] = ((total * 2.5) / 100).toFixed(2);
       updatedItems[index]['sgst'] = ((total * 2.5) / 100).toFixed(2);
     }
+  
 
     setInvoiceItems(updatedItems);
     recalculateOverallTotals(updatedItems);
