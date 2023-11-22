@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import './VendorPayment.css';
 import Sidebar from '../Sidebar/Sidebar';
 
 function VendorPayment() {
-
   const [formData, setFormData] = useState({
     company_Name: "",
     GST_No: "",
@@ -11,7 +10,7 @@ function VendorPayment() {
     mobile_Number: "",
     payment: "",
     amount: "",
-    tds: "",
+    tds: "0.00",
     total_Amount: "",
     paid_Amount: "",
     remaining_Amount: "",
@@ -20,14 +19,51 @@ function VendorPayment() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+
+    
+
+    if (name === 'paid_Amount') {
+      // Parse advance amount and total amount as floats
+      const paidAmount = parseFloat(value) || 0;
+      const totalAmount = parseFloat(formData.total_Amount) || 0;
+
+      // Calculate remaining amount
+      const remainingAmount = totalAmount - paidAmount;
+
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+        remaining_Amount: remainingAmount.toFixed(2),
+      }));
+    } else if (name === "amount") {
+      const tdsData = calculateTDS(parseFloat(value) || 0);
+      const totalAmount = (parseFloat(value) || 0) + tdsData.TDS;
+
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+        tds: tdsData.TDS.toFixed(2),
+        total_Amount: totalAmount.toFixed(2),
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const calculateTDS = (amount) => {
+    const taxRate = 1; // 1 % tax rate
+    const tds = (amount * taxRate) / 100;
+
+    return {
+      TDS: tds,
+    };
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     for (const key in formData) {
       if (formData[key] === "") {
@@ -61,9 +97,8 @@ function VendorPayment() {
             <div className="row justify-content-center">
               <div className="col-md-10">
                 <div className="card-body mt-5">
-                <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor Payment</h2>
+                  <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor Payment</h2>
                   <form onSubmit={handleSubmit}>
-
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
@@ -168,9 +203,10 @@ function VendorPayment() {
                             className="form-control"
                             id="tds"
                             name="tds"
-                            placeholder="Enter TDS 1% Amount"
+                            placeholder="TDS 1% Amount"
                             value={formData.tds}
                             onChange={handleChange}
+                            readOnly
                           />
                         </div>
                       </div>
@@ -185,6 +221,7 @@ function VendorPayment() {
                             placeholder="Enter Total Amount"
                             value={formData.total_Amount}
                             onChange={handleChange}
+                            
                           />
                         </div>
                       </div>
