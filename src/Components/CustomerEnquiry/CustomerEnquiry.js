@@ -58,6 +58,12 @@ const CustomerEnquiry = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    // Prevent further input if more than 10 digits
+    if (name === "mobileno" && value.length > 10) {
+      return;
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -176,19 +182,19 @@ const handleDateChange = (event) => {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="mobileno" className="form-label">
-                Mobile No:
-              </label>
-              <input
-                className="form-control-cust-inq-input"
-                type="text"
-                id="mobileno"
-                name="mobileno"
-                placeholder="Mobile No."
-                onChange={handleChange}
-                value={formData.mobileno}
-              />
-            </div>
+                <label htmlFor="mobileno" className="form-label">
+                  Mobile No:
+                </label>
+                <input
+                  className="form-control-cust-inq-input"
+                  type="text"
+                  id="mobileno"
+                  name="mobileno"
+                  placeholder="Mobile No."
+                  onChange={handleChange}
+                  value={formData.mobileno}
+                />
+              </div>
             <div className="form-group">
               <label htmlFor="email" className="form-label">
                 Email Id:
