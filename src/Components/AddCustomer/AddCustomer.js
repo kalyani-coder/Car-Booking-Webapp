@@ -3,6 +3,7 @@ import "./AddCustomer.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddCustomer = () => {
+  
   const initialFormData = {
     customername: "",
     companyname: "",
@@ -12,12 +13,14 @@ const AddCustomer = () => {
     address: "",
   };
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState("");
+
+  const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     if (name === "mobileno" && value.length > 10) {
+      // Prevent further input if more than 10 digits
       return;
     }
 
@@ -27,6 +30,7 @@ const AddCustomer = () => {
     }));
 
     if (name === "mobileno") {
+      // Validate mobile number (10 digits)
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
       } else {
@@ -37,7 +41,23 @@ const AddCustomer = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+    if (
+      formData.customername.trim() === "" ||
+      formData.companyname.trim() === "" ||
+      formData.gstno.trim() === "" ||
+      formData.mobileno.trim() === "" ||
+      formData.email.trim() === "" ||
+      formData.address.trim() === ""
+    ) {
+      alert("All fields are required.");
+      return;
+    }
+
+    if (mobilenoError) {
+      alert("Mobile number is not valid.");
+      return;
+    }
+
     try {
       const requestBody = {
         Cus_name: formData.customername,
@@ -47,27 +67,31 @@ const AddCustomer = () => {
         Cus_Email: formData.email,
         address: formData.address,
       };
-  
+
       const response = await fetch("https://carbooking-backend-fo78.onrender.com/api/add-customers", {
+                                     
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       if (response.ok) {
-        alert("Customer added successfully!");
+        alert("Data added successfully!");
         setFormData(initialFormData); // Clear the form fields
       } else {
-        alert("Failed to add Customer. Please try again.");
+        alert("Failed to add data. Please try again.");
       }
+
+      // ... (API request and success handling)
     } catch (error) {
       console.error("API request error:", error);
       alert("Failed to add data. Please try again.");
     }
   };
-  
+
+
 
   return (
     <>
@@ -119,20 +143,21 @@ const AddCustomer = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="mobileno" className="form-label">
-                Mobile No:
-              </label>
-              <input
-                className="form-control-cust-add-input"
-                type="tel"
-                id="mobileno"
-                name="mobileno"
-                placeholder="Mobile No."
-                onChange={handleChange}
-                value={formData.mobileno}
-              />
-              {mobilenoError && <p className="error-message">{mobilenoError}</p>}
-            </div>
+  <label htmlFor="mobileno" className="form-label">
+    Mobile No:
+  </label>
+  <input
+    className="form-control-cust-add-input"
+    type="tel"
+    id="mobileno"
+    name="mobileno"
+    placeholder="Mobile No."
+    onChange={handleChange}
+    value={formData.mobileno}
+  />
+  {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+</div>
+
             <div className="form-group">
               <label htmlFor="email" className="form-label">
                 Email Id:
