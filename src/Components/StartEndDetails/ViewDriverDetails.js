@@ -12,7 +12,7 @@ const ViewStartEndDetails = () => {
   useEffect(() => {
     const fetchShareDetails = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/getDetails-fromDriver');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/getDetails-fromDriver');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }

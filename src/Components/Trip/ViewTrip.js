@@ -10,7 +10,7 @@ const ViewTrip = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/add-trip');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-trip');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

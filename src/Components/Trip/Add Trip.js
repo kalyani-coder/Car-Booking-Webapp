@@ -31,7 +31,7 @@ const AddTrip = () => {
     const fetchCustomers = async () => {
       try {
         // Make a GET request to the API endpoint for customers
-        const response = await fetch('http://localhost:7000/api/add-customers');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
         
         if (response.ok) {
           // If the response is successful, parse the JSON data and set the customer list

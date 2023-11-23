@@ -51,8 +51,8 @@ const Sidebar = () => {
   
   // const handleLogout = () => {
   //   try {
-  //     // http://localhost:7000/api/user-login/logout
-  //     axios.get('http://localhost:7000/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
+  //     // https://carbooking-backend-fo78.onrender.com/api/user-login/logout
+  //     axios.get('https://carbooking-backend-fo78.onrender.com/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
   //       .then((res) => {
   //         console.log(res)
   //         localStorage.removeItem('user');

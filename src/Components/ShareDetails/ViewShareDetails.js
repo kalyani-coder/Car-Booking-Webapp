@@ -12,7 +12,7 @@ const ViewShareDetails = () => {
   useEffect(() => {
     const fetchShareDetails = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/share-details');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/share-details');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -31,7 +31,7 @@ const ViewShareDetails = () => {
   const fetchAdditionalInfo = async (shareDetail) => {
     try {
       // Make an API call to fetch additional information based on the share trip details ID
-      const additionalInfoResponse = await fetch(`http://localhost:7000/api/additional-info/${shareDetail.sharetripdetailsId}`);
+      const additionalInfoResponse = await fetch(`https://carbooking-backend-fo78.onrender.com/api/additional-info/${shareDetail.sharetripdetailsId}`);
       if (!additionalInfoResponse.ok) {
         throw Error('Error fetching additional info');
       }

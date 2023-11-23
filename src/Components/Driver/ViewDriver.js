@@ -11,7 +11,7 @@ const ViewDriver = () => {
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/add-Drivers');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-Drivers');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -44,7 +44,7 @@ const ViewDriver = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:7000/api/add-Drivers/${editedDriver._id}`, {
+      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/add-Drivers/${editedDriver._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -11,7 +11,7 @@ const ViewVenderRate = () => {
   useEffect(() => {
     const fetchCustomerRates = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/vender-rate');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/vender-rate');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

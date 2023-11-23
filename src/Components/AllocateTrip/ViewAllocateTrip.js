@@ -11,7 +11,7 @@ const ViewAllocateTrip = () => {
   useEffect(() => {
     const fetchShareDetails = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/trip-details');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/trip-details');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -48,7 +48,7 @@ const ViewAllocateTrip = () => {
     const confirmed = window.confirm("Are you sure you want to delete this trip?");
     if (confirmed) {
       try {
-        fetch(`http://localhost:7000/api/trip-details/${_id}`, {
+        fetch(`https://carbooking-backend-fo78.onrender.com/api/trip-details/${_id}`, {
           method: 'DELETE',
         })
         .then(response => {

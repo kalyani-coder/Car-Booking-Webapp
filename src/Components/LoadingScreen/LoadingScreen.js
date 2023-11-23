@@ -7,7 +7,7 @@ const LoadingScreen = ({ children }) => {
 
     useEffect(() => {
         try {
-            axios.get('http://localhost:7000/api/user-login', { withCredentials: true })
+            axios.get('https://carbooking-backend-fo78.onrender.com/api/user-login', { withCredentials: true })
                 .then((res) => {
 
                     console.log("ls", res.data)

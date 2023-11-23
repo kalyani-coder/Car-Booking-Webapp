@@ -10,7 +10,7 @@ const ViewUpdateDuty = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/update-duty');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/update-duty');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
