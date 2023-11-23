@@ -268,7 +268,7 @@ const initialFormData = {
               value={formData.companyAddress}
               onChange={handleChange}
             /> */}
-            <label htmlFor="date" className="form-label">
+            {/* <label htmlFor="date" className="form-label">
               Date
             </label>
             <input
@@ -278,7 +278,7 @@ const initialFormData = {
               name="date"
               value={formData.date}
               onChange={handleChange}
-            />
+            /> */}
             <br />
             {/* <label htmlFor="contactno" className="form-label">
               Contact No
