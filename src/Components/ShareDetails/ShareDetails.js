@@ -1,14 +1,13 @@
-// ShareDetails.js
-
-import React, { useState } from 'react';
-// import './CustomerInquiry.css'; // Assuming this is your main CSS file
+import React, { useState, useEffect } from 'react';
 import './SharedDetails.css'; // Your custom CSS file
 import Sidebar from '../Sidebar/Sidebar';
 
+// Functional component for ShareDetails
 const ShareDetails = () => {
+  // Initial form data state
   const initialFormData = {
-    cus_Name:'',
-    cus_Mobile:'',
+    cus_Name: '',
+    cus_Mobile: '',
     vehicle: '',
     vehiclenumber: '',
     triptype: '',
@@ -21,12 +20,47 @@ const ShareDetails = () => {
     time1: '',
     drivername: '',
     mobileno: '',
-    
   };
 
+  // State variables
   const [formData, setFormData] = useState(initialFormData);
-  const [error, setError] = useState('');
+  const [mobilenoError, setMobilenoError] = useState('');
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
 
+  // Fetch customers on component mount
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched Customers:', data); // Log the fetched data
+          setCustomerList(data);
+        } else {
+          console.error('Failed to fetch customers');
+        }
+      } catch (error) {
+        console.error('API request error:', error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  // Update form data when a customer is selected
+  useEffect(() => {
+    if (selectedCustomer) {
+      setFormData({
+        cus_Name: selectedCustomer.cus_Name || '',
+        cus_Mobile: selectedCustomer.cus_Mobile || '',
+        // ... (other fields)
+      });
+    }
+  }, [selectedCustomer]);
+
+  // Handle form field changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -35,11 +69,12 @@ const ShareDetails = () => {
     }));
   };
 
+  // Handle form submission
   const handleShare = async () => {
     // Map form field names to API field names
     const apiData = {
-      cus_Name : formData.cus_Name,
-      cus_Mobile : formData.cus_Mobile,
+      cus_Name: formData.cus_Name,
+      cus_Mobile: formData.cus_Mobile,
       vehicle: formData.vehicle,
       vehiclenumber: formData.vehiclenumber,
       triptype: formData.triptype,
@@ -59,13 +94,13 @@ const ShareDetails = () => {
     // Check if all fields are filled
     for (const key in apiData) {
       if (apiData[key] === '') {
-        setError('All fields are required.');
+        setMobilenoError('All fields are required.');
         return;
       }
     }
 
     // Reset error if all fields are filled
-    setError('');
+    setMobilenoError('');
 
     try {
       const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/share-details', {
@@ -92,7 +127,7 @@ const ShareDetails = () => {
     <>
       <Sidebar />
       <div className='share-details-container'>
-        {error && <p className="text-red-500">{error}</p>}
+      {mobilenoError && <p className="text-red-500">{mobilenoError}</p>}
         <div className="share-details-form">
         <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Share Details</h2>
 
@@ -103,14 +138,24 @@ const ShareDetails = () => {
                 <label htmlFor="cus_Name" className="share-details-label">
                   Customer Name:
                 </label>
-                <input
-                  type="text"
-                  className="share-details-input"
+                {/* Dropdown to select a customer */}
+                <select
+                  className="form-control-rate-add-input"
                   name="cus_Name"
-                  placeholder="Customer Name"
-                  onChange={handleChange}
-                  value={formData.cus_Name}
-                />
+                  id="cus_Name"
+                  onChange={(e) => {
+                    const selectedCustomer = customerList.find((customer) => customer.cus_Name === e.target.value);
+                    setSelectedCustomer(selectedCustomer);
+                  }}
+                  value={selectedCustomer ? selectedCustomer.cus_Name : ''}
+                >
+                  <option value="">Select Customer</option>
+                  {customerList.map((customer) => (
+                    <option key={customer._id} value={customer.cus_Name}>
+                      {customer.cus_Name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 

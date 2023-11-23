@@ -1,18 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const CustomerRate = () => {
-  const [mobilenoError, setMobilenoError] = useState('');
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     company_Name: "",
     GST_No: "",
     customer_Name: "",
-    mobile_Number: "", // Adjusted field name
+    mobile_Number: "",
     rate_per_km: "",
     title: "",
     rate: ""
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [mobilenoError, setMobilenoError] = useState('');
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
+  
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Fetched Customers:", data); // Log the fetched data
+          setCustomerList(data);
+        } else {
+          console.error('Failed to fetch customers');
+        }
+      } catch (error) {
+        console.error('API request error:', error);
+      }
+    };
+  
+    fetchCustomers();
+  }, []);
+  
+
+  useEffect(() => {
+    if (selectedCustomer) {
+      setFormData({
+        company_Name: "",
+        GST_No: "",
+        customer_Name: selectedCustomer.customer_Name || '',
+        mobile_Number: selectedCustomer.mobile_Number || '',
+        rate_per_km: "",
+        title: "",
+        rate: ""
+      });
+    }
+  }, [selectedCustomer]);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,15 +148,26 @@ const CustomerRate = () => {
                 <label htmlFor="customer_Name" className="form-label">
                   Customer Name:
                 </label>
-                <input
+                {/* Dropdown to select a customer */}
+                <select
                   className="form-control-rate-add-input"
-                  type="text"
-                  id="customer_Name"
                   name="customer_Name"
-                  placeholder="Customer Name"
-                  value={formData.customer_Name}
-                  onChange={handleChange}
-                />
+                  id="customer_Name"
+                  onChange={(e) => {
+                    const selectedCustomer = customerList.find(
+                      (customer) => customer.customer_Name === e.target.value
+                    );
+                    setSelectedCustomer(selectedCustomer);
+                  }}
+                  value={selectedCustomer ? selectedCustomer.customer_Name : ''}
+                >
+                  <option value="">Select Customer</option>
+                  {customerList.map((customer) => (
+                    <option key={customer._id} value={customer.customer_Name}>
+                      {customer.customer_Name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-group">
   <label htmlFor="mobileno" className="form-label">
