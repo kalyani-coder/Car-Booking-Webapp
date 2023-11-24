@@ -2,83 +2,80 @@ import React, { useState, useEffect } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
-const CustomerRate = () => {
-  const initialFormData = {
-    company_Name: "",
-    GST_No: "",
-    customer_Name: "",
-    mobile_Number: "",
-    rate_per_km: "",
-    title: "",
-    rate: ""
-  };
+const initialFormData = {
+  company_Name: "",
+  GST_No: "",
+  customer_Name: "",
+  mobile_Number: "",
+  rate_per_km: "",
+  title: "",
+  rate: "",
+};
 
+const CustomerRate = () => {
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState('');
+  const [mobilenoError, setMobilenoError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
-  
+        const response = await fetch("https://carbooking-backend-fo78.onrender.com/api/add-customers");
+
         if (response.ok) {
           const data = await response.json();
-          console.log("Fetched Customers:", data); // Log the fetched data
+          console.log("Fetched Customers:", data);
           setCustomerList(data);
         } else {
-          console.error('Failed to fetch customers');
+          console.error("Failed to fetch customers");
         }
       } catch (error) {
-        console.error('API request error:', error);
+        console.error("API request error:", error);
       }
     };
-  
+
     fetchCustomers();
   }, []);
-  
 
   useEffect(() => {
     if (selectedCustomer) {
       setFormData({
-        company_Name: "",
-        GST_No: "",
-        customer_Name: selectedCustomer.customer_Name || '',
-        mobile_Number: selectedCustomer.mobile_Number || '',
+        company_Name: selectedCustomer.company_Name || "",
+        GST_No: selectedCustomer.GST_No || "",
+        customer_Name: selectedCustomer.customer_Name || "",
+        mobile_Number: selectedCustomer.mobile_Number || "",
         rate_per_km: "",
         title: "",
-        rate: ""
+        rate: "",
       });
     }
   }, [selectedCustomer]);
 
-
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Prevent further input if more than 10 digits
     if (name === "mobile_Number" && value.length > 10) {
       return;
     }
 
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
 
-    // Reset mobile number error when user corrects the input
     if (name === "mobile_Number" && mobilenoError) {
-      setMobilenoError('');
+      setMobilenoError("");
     }
   };
 
-  // ... (rest of the code)
-
-
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+
+    if (!selectedCustomer) {
+      window.alert("Please select a customer");
+      return;
+    }
 
     for (const key in formData) {
       if (formData[key] === "") {
@@ -87,18 +84,25 @@ const CustomerRate = () => {
       }
     }
 
+    const formDataWithCustomer = {
+      ...formData,
+      company_Name: selectedCustomer.company_Name,
+      GST_No: selectedCustomer.GST_No,
+      customer_Name: selectedCustomer.customer_Name,
+      mobile_Number: selectedCustomer.mobile_Number,
+    };
 
     const response = await fetch("https://carbooking-backend-fo78.onrender.com/api/customer-rate", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formDataWithCustomer),
     });
 
     if (response.ok) {
       console.log("Data posted successfully!");
-      window.alert('Data post Successfully')
+      window.alert("Data post Successfully");
     } else {
       console.error("Error posting data:", response.statusText);
     }
@@ -110,9 +114,7 @@ const CustomerRate = () => {
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
-              Company Rate
-            </h2>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Company Rate</h2>
             <form onSubmit={handleSubmit}>
               <div className="rate-form-group">
                 <label htmlFor="company_Name" className="form-label">
@@ -148,7 +150,6 @@ const CustomerRate = () => {
                 <label htmlFor="customer_Name" className="form-label">
                   Customer Name:
                 </label>
-                {/* Dropdown to select a customer */}
                 <select
                   className="form-control-rate-add-input"
                   name="customer_Name"
@@ -168,22 +169,21 @@ const CustomerRate = () => {
                     </option>
                   ))}
                 </select>
+              </div>              <div className="form-group">
+                <label htmlFor="mobile_Number" className="form-label">
+                  Mobile No:
+                </label>
+                <input
+                  className="form-control-cust-add-input"
+                  type="tel"
+                  id="mobile_Number"
+                  name="mobile_Number"
+                  placeholder="Mobile No."
+                  onChange={handleChange}
+                  value={formData.mobile_Number}
+                />
+                {mobilenoError && <p className="error-message">{mobilenoError}</p>}
               </div>
-              <div className="form-group">
-  <label htmlFor="mobileno" className="form-label">
-    Mobile No:
-  </label>
-  <input
-    className="form-control-cust-add-input"
-    type="tel"
-    id="mobile_Number"
-    name="mobile_Number"
-    placeholder="Mobile No."
-    onChange={handleChange}
-    value={formData.mobile_Number}
-  />
-  {mobilenoError && <p className="error-message">{mobilenoError}</p>}
-</div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
                   Rate Per KM:
@@ -219,7 +219,7 @@ const CustomerRate = () => {
                   </div>
                 </div>
                 <div>
-                  <div className="form-group">
+                <div className="form-group">
                     <label htmlFor="rate" className="form-label">
                       Rate:
                     </label>
@@ -236,10 +236,7 @@ const CustomerRate = () => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                className="rate-btn-submit"
-              >
+              <button type="submit" className="rate-btn-submit">
                 Save
               </button>
             </form>
@@ -248,6 +245,6 @@ const CustomerRate = () => {
       </div>
     </>
   );
-};
+}
 
 export default CustomerRate;
