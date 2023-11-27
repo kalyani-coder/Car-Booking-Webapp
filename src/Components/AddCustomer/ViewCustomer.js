@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import './ViewCustomer.css';
-import { FaEdit, FaTrash } from 'react-icons/fa'; // Import icons
+import { FaEdit, FaTrash,FaTimes  } from 'react-icons/fa'; // Import icons
 
 const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
@@ -166,8 +166,13 @@ const ViewCustomer = () => {
       {/* Rest of the component remains unchanged */}
       {isEditing && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">Edit Customer</h2>
+          <div className="bg-white p-4 rounded shadow-lg w-96">
+          <div className="flex justify-between items-center mb-2">
+        <h2 className="text-2xl font-bold">Edit Customer</h2>
+        <button onClick={() => setIsEditing(false)} className="close-icon">
+          <FaTimes />
+        </button>
+      </div>
             <h5 className='fw-bold'>Customer Name</h5>
             <input
               type="text"
