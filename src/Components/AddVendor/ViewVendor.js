@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import './ViewVender.css'; // Make sure you have a CSS file for this component
+import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
+import { Table, Button, Modal, Form } from 'react-bootstrap';
 
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editedVendor, setEditedVendor] = useState({});
+  const [viewType, setViewType] = useState('table');
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -26,8 +29,8 @@ const ViewVendor = () => {
   }, []);
 
   const filteredVendors = vendors.filter((vendor) => {
-    const venderName = vendor.vender_Name || '';
-    return venderName.toLowerCase().includes(searchTerm.toLowerCase());
+    const vendorName = vendor.vender_Name || '';
+    return vendorName.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
   const handleDelete = async (vendorId) => {
@@ -66,8 +69,8 @@ const ViewVendor = () => {
       });
 
       if (response.ok) {
-        setVendors(prevVendors =>
-          prevVendors.map(vendor =>
+        setVendors((prevVendors) =>
+          prevVendors.map((vendor) =>
             vendor._id === editedVendor._id ? editedVendor : vendor
           )
         );
@@ -85,7 +88,7 @@ const ViewVendor = () => {
       <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Vendors</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Vendors</h2>
           <input
             type="search"
             placeholder="Search By Vendor Name"
@@ -93,80 +96,112 @@ const ViewVendor = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
-          <div className="grid grid-cols-3 gap-4">
-            {filteredVendors.map((vendor) => (
-              <div
-                key={vendor._id}
-                className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
-              >
-                <div className="custom-card-body p-4">
-                  <p className=" font-semibold ">
-                    Vendor Name: {vendor.vender_Name}
-                  </p>
-                  <p className="custom-card-subtitle mb-2">
-                    Company Name: {vendor.company_Name}
-                  </p>
-                  <p className="custom-card-subtitle mb-2">GST No: {vendor.GST_No}</p>
-                  <p className="custom-card-subtitle mb-2">Mobile: {vendor.vender_Mobile}</p>
-                  <p className="custom-card-subtitle mb-2">Email: {vendor.Vender_Email}</p>
-                  <p className="custom-card-subtitle mb-2">Address: {vendor.address}</p>
-                  <div className="flex justify-between">
-                    <button className='btn btn-info' onClick={() => handleEditVendor(vendor)}>Edit</button>
-                    {/* <button className='btn btn-danger'>Save</button> */}
-                    <button className='btn btn-success' onClick={() => handleDelete(vendor._id)}>Delete</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+
+          <Table>
+            <thead>
+              <tr>
+                <th>Vendor Name</th>
+                <th>Company Name</th>
+                <th>GST No</th>
+                <th>Mobile</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredVendors.map((vendor) => (
+                <tr key={vendor._id}>
+                  <td>{vendor.vender_Name}</td>
+                  <td>{vendor.company_Name}</td>
+                  <td>{vendor.GST_No}</td>
+                  <td>{vendor.vender_Mobile}</td>
+                  <td>{vendor.Vender_Email}</td>
+                  <td>{vendor.address}</td>
+                  <td>
+                    <button className="btn btn-info" onClick={() => handleEditVendor(vendor)}>
+                      <FaEdit /> 
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(vendor._id)}>
+                      <FaTrash /> 
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
       </div>
 
-      {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">Edit Vendor</h2>
-            <input
-              type="text"
-              value={editedVendor.vender_Name}
-              onChange={(e) => setEditedVendor({ ...editedVendor, vender_Name: e.target.value })}
-              className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
-            <input
-              type="text"
-              value={editedVendor.company_Name}
-              onChange={(e) => setEditedVendor({ ...editedVendor, company_Name: e.target.value })}
-              className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
-            <textarea
-              value={editedVendor.GST_No}
-              onChange={(e) => setEditedVendor({ ...editedVendor, GST_No: e.target.value })}
-              rows="4"
-              className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
-            <input
-              type="text"
-              value={editedVendor.vender_Mobile}
-              onChange={(e) => setEditedVendor({ ...editedVendor, vender_Mobile: e.target.value })}
-              className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
-            <input
-              type="text"
-              value={editedVendor.Vender_Email}
-              onChange={(e) => setEditedVendor({ ...editedVendor, Vender_Email: e.target.value })}
-              className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
-            <input
-              type="text"
-              value={editedVendor.address}
-              onChange={(e) => setEditedVendor({ ...editedVendor, address: e.target.value })}
-              className="w-full p-2 mb-4 border border-gray-300 rounded"
-            />
-            <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
-            <button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
-          </div>
-        </div>
-      )}
+      <Modal show={isEditing} onHide={() => setIsEditing(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Vendor</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formVendorName">
+              <Form.Label>Vendor Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedVendor.vender_Name}
+                onChange={(e) => setEditedVendor({ ...editedVendor, vender_Name: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formCompanyName">
+              <Form.Label>Company Name</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedVendor.company_Name}
+                onChange={(e) => setEditedVendor({ ...editedVendor, company_Name: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formGSTNo">
+              <Form.Label>GST No</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedVendor.GST_No}
+                onChange={(e) => setEditedVendor({ ...editedVendor, GST_No: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formMobile">
+              <Form.Label>Mobile</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedVendor.vender_Mobile}
+                onChange={(e) => setEditedVendor({ ...editedVendor, vender_Mobile: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedVendor.Vender_Email}
+                onChange={(e) => setEditedVendor({ ...editedVendor, Vender_Email: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formAddress">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                type="text"
+                value={editedVendor.address}
+                onChange={(e) => setEditedVendor({ ...editedVendor, address: e.target.value })}
+              />
+            </Form.Group>
+
+            <button  onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
+              Save
+            </button>
+            <button  onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">
+              Cancel
+            </button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
