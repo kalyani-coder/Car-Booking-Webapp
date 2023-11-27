@@ -114,7 +114,7 @@ const CustomerRate = () => {
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Company Rate</h2>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Corporate Client</h2>
             <form onSubmit={handleSubmit}>
               <div className="rate-form-group">
                 <label htmlFor="company_Name" className="form-label">
@@ -186,6 +186,7 @@ const CustomerRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
+                <span className="required-asterisk">*</span>
                   Rate Per KM:
                 </label>
                 <input
@@ -202,6 +203,7 @@ const CustomerRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">
+                    <span className="required-asterisk">*</span>
                       Title:
                     </label>
                     <select
@@ -221,6 +223,7 @@ const CustomerRate = () => {
                 <div>
                 <div className="form-group">
                     <label htmlFor="rate" className="form-label">
+                    <span className="required-asterisk">*</span>
                       Rate:
                     </label>
                     <input

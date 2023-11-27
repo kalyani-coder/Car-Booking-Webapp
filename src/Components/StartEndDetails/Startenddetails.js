@@ -106,8 +106,9 @@ const StartEndDetails = () => {
         <div className="start-end-details-form">
           <div className="start-end-details-row">
             <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
+            <div className="start-end-details-form-group">
                 <label htmlFor="pickuplocation" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Pickup Location:
                 </label>
                 <input
@@ -123,6 +124,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="date" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Date:
                 </label>
                 <input
@@ -140,6 +142,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="time" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Time:
                 </label>
                 <input
@@ -155,6 +158,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="dropoffLocation" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Dropoff Location:
                 </label>
                 <input
@@ -172,6 +176,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="date1" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Date:
                 </label>
                 <input
@@ -187,6 +192,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="time1" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Time:
                 </label>
                 <input
@@ -231,7 +237,39 @@ const StartEndDetails = () => {
               </div>
             </div>
           </div>
+  
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="customerid" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
+                  Customer Name:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="customername" placeholder='Enter Customer Name'
+                  onChange={handleChange}
+                  value={formData.customername}
+                />
+              </div>
+            </div>
 
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="mobileno" className="start-end-details-label">
+                  Mobile No:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="mobileno" placeholder='Enter Customer Mobile Number'
+                  onChange={handleChange}
+                  value={formData.mobileno}
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="start-end-details-row">
             <div className="start-end-details-column">
@@ -273,42 +311,13 @@ const StartEndDetails = () => {
             </div>
           </div>
 
-          <div className="start-end-details-row">
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label htmlFor="customerid" className="start-end-details-label">
-                  Customer Name:
-                </label>
-                <input
-                  className="start-end-details-input"
-                  type="text"
-                  name="customername" placeholder='Enter Customer Name'
-                  onChange={handleChange}
-                  value={formData.customername}
-                />
-              </div>
-            </div>
-
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label htmlFor="mobileno" className="start-end-details-label">
-                  Mobile No:
-                </label>
-                <input
-                  className="start-end-details-input"
-                  type="text"
-                  name="mobileno" placeholder='Enter Customer Mobile Number'
-                  onChange={handleChange}
-                  value={formData.mobileno}
-                />
-              </div>
-            </div>
-          </div>
+          
 
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="drivername" className="start-end-details-label">
+                <span className="required-asterisk">*</span>
                   Driver Name:
                 </label>
                 <input

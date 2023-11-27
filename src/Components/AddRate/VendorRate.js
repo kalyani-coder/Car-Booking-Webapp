@@ -123,6 +123,7 @@ const VendorRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rateperkm" className="form-label">
+                <span className="required-asterisk">*</span>
                   Rate Per KM:
                 </label>
                 <input
@@ -140,6 +141,7 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">
+                    <span className="required-asterisk">*</span>
                       Title:
                     </label>
                     <select
@@ -158,6 +160,7 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="rate" className="form-label">
+                    <span className="required-asterisk">*</span>
                       Rate:
                     </label>
                     <input
