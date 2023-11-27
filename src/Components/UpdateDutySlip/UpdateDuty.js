@@ -252,7 +252,7 @@ const UpdateDuty = () => {
             </div>
             <div className='d-flex gap-5'>
               <div><label htmlFor="name" className="update-duty-form-label">
-                Name:
+                Customer Name:
               </label>
                 <input
                   className="update-duty-form-control"
@@ -523,6 +523,49 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.subtotalamount}
                 /></div>
+                <div>
+                <label htmlFor="subtotalamount" className="update-duty-form-label">
+                  SGST 2.5%:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="number"
+                  id="sgst"
+                  name="sgst"
+                  placeholder="SGST Amount"
+                  onChange={handleChange}
+                  value={formData.sgst}
+                /></div>
+                </div>
+
+                <div className='d-flex gap-5'>
+                <div>
+                <label htmlFor="subtotalamount" className="update-duty-form-label">
+                  CGST 2.5%:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="number"
+                  id="cgst"
+                  name="cgst"
+                  placeholder="CGST Amount"
+                  onChange={handleChange}
+                  value={formData.cgst}
+                /></div>
+
+                <div>
+                <label htmlFor="subtotalamount" className="update-duty-form-label">
+                  Total Amount:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="text"
+                  id="totalamount"
+                  name="totalamount"
+                  placeholder="Total Amount"
+                  onChange={handleChange}
+                  value={formData.totalamount}
+                /></div>
                 </div>
            
             <div className='d-flex gap-5'>
@@ -539,6 +582,22 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.advanceamount}
                 /></div>
+                <div>
+                <label htmlFor="advanceamount" className="update-duty-form-label">
+                  Remaining Amount:
+                </label>
+                <input
+                  className="update-duty-form-control"
+                  type="number"
+                  id="remainingamount"
+                  name="remainingamount"
+                  placeholder="Remaining Amount"
+                  onChange={handleChange}
+                  value={formData.remainingamount}
+                /></div>
+                </div>
+              
+              <div>
               <div> <label htmlFor="paymentmethod" className="update-duty-form-label">
                 Payment Method:
               </label>

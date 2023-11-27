@@ -102,6 +102,7 @@ const AddCustomer = () => {
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer</h2>
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
+              <span className="required-asterisk">*</span>
                 Customer Name:
               </label>
               <input
@@ -116,6 +117,7 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
               <label htmlFor="companyname" className="form-label">
+              {/* <span className="required-asterisk">*</span> */}
                 Company Name:
               </label>
               <input
@@ -130,6 +132,7 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
               <label htmlFor="gstno" className="form-label">
+              <span className="required-asterisk">*</span>
                 GST No:
               </label>
               <input
@@ -144,6 +147,7 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
   <label htmlFor="mobileno" className="form-label">
+  <span className="required-asterisk">*</span>
     Mobile No:
   </label>
   <input
@@ -160,6 +164,7 @@ const AddCustomer = () => {
 
             <div className="form-group">
               <label htmlFor="email" className="form-label">
+              <span className="required-asterisk">*</span>
                 Email Id:
               </label>
               <input
@@ -174,6 +179,7 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
               <label htmlFor="address" className="form-label">
+              <span className="required-asterisk">*</span>
                 Address:
               </label>
               <input

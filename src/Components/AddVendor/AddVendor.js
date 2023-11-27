@@ -93,6 +93,7 @@ const AddVendor = () => {
             <form>
               <div className="vendor-form-group">
                 <label htmlFor="vendorname" className="form-label">
+                <span className="required-asterisk">*</span>
                   Vendor Name:
                 </label>
                 <input
@@ -108,6 +109,7 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="companyname" className="form-label">
+                {/* <span className="required-asterisk">*</span> */}
                   Company Name:
                 </label>
                 <input
@@ -123,6 +125,7 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="gstno" className="form-label">
+                <span className="required-asterisk">*</span>
                   GST No:
                 </label>
                 <input
@@ -138,6 +141,7 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="mobileno" className="form-label">
+                <span className="required-asterisk">*</span>
                   Mobile No:
                 </label>
                 <input
@@ -153,6 +157,7 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
+                <span className="required-asterisk">*</span>
                   Email Id:
                 </label>
                 <input
@@ -168,6 +173,7 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="address" className="form-label">
+                <span className="required-asterisk">*</span>
                   Address:
                 </label>
                 <input

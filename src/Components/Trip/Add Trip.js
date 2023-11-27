@@ -162,13 +162,13 @@ const AddTrip = () => {
             <label htmlFor="mobileno" className="trip-form-label">
               Mobile No:
             </label>
-            <input className="form-control-add-trip-input" type="text" id="mobileno" name="mobileno" placeholder="Mobile No." onChange={handleChange} value={formData.mobileno} />
+            <input className="form-control-add-trip-input" type="number" id="mobileno" name="mobileno" placeholder="Mobile No." onChange={handleChange} value={formData.mobileno} />
           </div>
           <div className="trip-form-group">
             <label htmlFor="email" className="trip-form-label">
               Email Id:
             </label>
-            <input className="form-control-add-trip-input" type="text" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
+            <input className="form-control-add-trip-input" type="email" id="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
           </div>
           <div className="trip-form-group">
             <label htmlFor="address" className="trip-form-label">

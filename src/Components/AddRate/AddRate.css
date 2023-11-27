@@ -105,4 +105,11 @@
       padding: 8px 16px;
     }
   }
+
+
+  .required-asterisk {
+    color: red; /* or any other color */
+    margin-left: 4px; /* adjust the margin as needed */
+  }
+  
   
