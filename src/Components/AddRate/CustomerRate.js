@@ -3,6 +3,7 @@ import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const initialFormData = {
+  customer_type:"",
   company_Name: "",
   GST_No: "",
   customer_Name: "",
@@ -123,15 +124,15 @@ const CustomerRate = () => {
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Corporate Customer</h2>
             <form onSubmit={handleSubmit}>
             <div className="form-group">
-                <label htmlFor="rate_per_km" className="form-label">
+                <label htmlFor="customer_type" className="form-label">
                   Customer Type:
                 <span className="required-asterisk">*</span>
                 </label>
                 {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                 <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
                             <option value="">Customer</option>
-                            <option value="">Corporate Customer</option>
-                            <option value="Sedan Car">Indivisual Customer</option>
+                            <option value="Corporate Customer">Corporate Customer</option>
+                            <option value="Indivisual Customer">Indivisual Customer</option>
                            
                           </select>
               </div>

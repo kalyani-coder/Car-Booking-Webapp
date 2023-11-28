@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 
 const VendorRate = () => {
   const initialFormData = {
+    customer_type:"",
     company_Name: "",
     GST_No: "",
     vender_Name: "",
@@ -75,6 +76,19 @@ const VendorRate = () => {
               Vendor Rate
             </h2>
             <form onSubmit={handleSubmit}>
+            <div className="form-group">
+                <label htmlFor="customer_type" className="form-label">
+                  Customer Type:
+                <span className="required-asterisk">*</span>
+                </label>
+                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
+                <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
+                            <option value="">Customer</option>
+                            <option value="Corporate Customer">Corporate Customer</option>
+                            <option value="Indivisual Customer">Indivisual Customer</option>
+                           
+                          </select>
+              </div>
               <div className="rate-form-group">
                 <label htmlFor="companyname" className="form-label">
                   Company Name:
