@@ -540,11 +540,11 @@ const initialFormData = {
           <button  className="btn btn-danger" onClick={handleGenerate}>
             Generate
           </button>
-          {/* {totalAmount && (
+          {totalAmount && (
             <div>
               <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Total Amount: {totalAmount}</h2>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </>

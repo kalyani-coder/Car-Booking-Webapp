@@ -1,6 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar'; // Make sure the path is correct
-import './ViewCustomer.css'; // Make sure you have a CSS file for this component
+import Sidebar from '../Sidebar/Sidebar';
+import './ViewCustomer.css';
+import { FaEdit, FaTrash,FaTimes  } from 'react-icons/fa'; // Import icons
+
+const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
+  <table className="table">
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Company Name</th>
+        <th>GST No</th>
+        <th>Mobile</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {customers.map((customer) => (
+        <tr key={customer._id}>
+          <td>{customer.Cus_name}</td>
+          <td>{customer.company_name}</td>
+          <td>{customer.gst_no}</td>
+          <td>{customer.Cus_Mobile}</td>
+          <td>{customer.Cus_Email}</td>
+          <td>{customer.address}</td>
+          <td>
+            <button className='btn btn-info' onClick={() => handleEditCustomer(customer)}>
+              <FaEdit />
+            </button>
+            <button className='btn btn-danger' onClick={() => deleteCustomer(customer._id)}>
+              <FaTrash />
+            </button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
 
 const ViewCustomer = () => {
   const [customers, setCustomers] = useState([]);
@@ -9,6 +46,7 @@ const ViewCustomer = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState({});
+  const [viewType, setViewType] = useState('table'); // Set the default view type to 'table'
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -19,7 +57,7 @@ const ViewCustomer = () => {
         }
         const data = await response.json();
         setCustomers(data);
-        setFilteredCustomers(data); // Initialize filtered data with all customers
+        setFilteredCustomers(data);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Error fetching data: ' + error.message);
@@ -31,8 +69,11 @@ const ViewCustomer = () => {
 
   const filterCustomers = () => {
     const filteredData = customers.filter((customer) => {
-      const customerNameMatches = customer.Cus_name.toLowerCase().includes(searchQuery.toLowerCase());
-      const companyNameMatches = customer.company_name.toLowerCase().includes(searchQuery.toLowerCase());
+      const customerNameMatches =
+        customer && customer.Cus_name && customer.Cus_name.toLowerCase().includes(searchQuery.toLowerCase());
+      const companyNameMatches =
+        customer && customer.company_name && customer.company_name.toLowerCase().includes(searchQuery.toLowerCase());
+
       return customerNameMatches || companyNameMatches;
     });
 
@@ -94,6 +135,10 @@ const ViewCustomer = () => {
     }
   };
 
+  const handleViewTypeChange = (type) => {
+    setViewType(type);
+  };
+
   return (
     <>
       <Sidebar />
@@ -111,38 +156,23 @@ const ViewCustomer = () => {
             />
           </div>
 
-          <div className="grid-view">
-            {filteredCustomers.length === 0 ? (
-              <p>No results found.</p>
-            ) : (
-              <div className="grid grid-cols-3 gap-4">
-                {filteredCustomers.map((customer) => (
-                  <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
-                    <div className="custom-card-body p-4">
-                      <h5 className="font-semibold ">Customer Name: {customer.Cus_name}</h5>
-                      <p className="custom-card-subtitle mb-2">Company Name: {customer.company_name}</p>
-                      <p className="custom-card-subtitle mb-2">GST No: {customer.gst_no}</p>
-                      <p className="custom-card-subtitle mb-2">Mobile: {customer.Cus_Mobile}</p>
-                      <p className="custom-card-subtitle mb-2">Email: {customer.Cus_Email}</p>
-                      <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>
-                      <div className="flex justify-between">
-                        <button className='btn btn-info' onClick={() => handleEditCustomer(customer)}>Edit</button>
-                        {/* <button className='btn btn-danger'>Save</button> */}
-                        <button className='btn btn-danger' onClick={() => deleteCustomer(customer._id)}>Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Render only the TableView component */}
+          {viewType === 'table' && (
+            <TableView customers={filteredCustomers} handleEditCustomer={handleEditCustomer} deleteCustomer={deleteCustomer} />
+          )}
         </div>
       </div>
 
+      {/* Rest of the component remains unchanged */}
       {isEditing && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">Edit Customer</h2>
+          <div className="bg-white p-4 rounded shadow-lg w-96">
+          <div className="flex justify-between items-center mb-2">
+        <h2 className="text-2xl font-bold">Edit Customer</h2>
+        <button onClick={() => setIsEditing(false)} className="close-icon">
+          <FaTimes />
+        </button>
+      </div>
             <h5 className='fw-bold'>Customer Name</h5>
             <input
               type="text"
@@ -165,32 +195,26 @@ const ViewCustomer = () => {
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className='fw-bold'>Customer Mobile</h5>
-             <input
+            <input
               type="text"
               value={editedCustomer.Cus_Mobile}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Mobile: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className='fw-bold'>Customer Email</h5>
-             <input
+            <input
               type="text"
               value={editedCustomer.Cus_Email}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Email: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className='fw-bold'>Address</h5>
-             <input
+            <input
               type="text"
               value={editedCustomer.address}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, address: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {/* <textarea
-              value={editedCustomer.company_name}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, company_name: e.target.value })}
-              rows="4"
-              className="w-full p-2 mb-4 border border-gray-300 rounded"
-            /> */}
             <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
             <button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
           </div>

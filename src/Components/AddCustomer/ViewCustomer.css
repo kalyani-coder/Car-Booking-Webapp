@@ -33,3 +33,24 @@
     margin-left: 300px;
     width: 50%;
 } */
+/* Add the following styles to your ViewCustomer.css file */
+
+.table {
+  width: 100%;
+  margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.table td .btn {
+  margin-right: 8px; /* Adjust the margin as needed */
+}
+
+/* Add space between Edit and Delete buttons in the table view */
+.table td .btn:last-child {
+  margin-right: 0;
+}
