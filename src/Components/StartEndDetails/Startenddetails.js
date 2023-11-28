@@ -108,8 +108,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
             <div className="start-end-details-form-group">
                 <label htmlFor="pickuplocation" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Pickup Location:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -124,8 +124,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="date" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Date:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -142,8 +142,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="time" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Time:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -158,8 +158,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="dropoffLocation" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Dropoff Location:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -176,8 +176,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="date1" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Date:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -192,8 +192,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="time1" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Time:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -242,8 +242,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="customerid" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Customer Name:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
@@ -317,8 +317,8 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="drivername" className="start-end-details-label">
-                <span className="required-asterisk">*</span>
                   Driver Name:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"

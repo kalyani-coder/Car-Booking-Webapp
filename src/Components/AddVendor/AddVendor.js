@@ -93,8 +93,8 @@ const AddVendor = () => {
             <form>
               <div className="vendor-form-group">
                 <label htmlFor="vendorname" className="form-label">
-                <span className="required-asterisk">*</span>
                   Vendor Name:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -125,8 +125,8 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="gstno" className="form-label">
-                <span className="required-asterisk">*</span>
                   GST No:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -141,8 +141,8 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="mobileno" className="form-label">
-                <span className="required-asterisk">*</span>
                   Mobile No:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -157,8 +157,8 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
-                <span className="required-asterisk">*</span>
                   Email Id:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -173,8 +173,8 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="address" className="form-label">
-                <span className="required-asterisk">*</span>
                   Address:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
