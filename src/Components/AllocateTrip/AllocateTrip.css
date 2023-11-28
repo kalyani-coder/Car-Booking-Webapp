@@ -8,7 +8,7 @@
   padding: 20px;
   margin-left: 300px;
      background-color:rgb(200, 205, 122);
-  height: 120vh;
+  height: 140vh;
 }
 
 /* Styling for Trip Details Section */
@@ -87,8 +87,17 @@
   background-color: #004f83;
   color: white;
 }
+
 .custom-allocate-btn:hover {
   background-color: #0056b3;
+}
+.custom-generate-btn {
+  background-color: #0D6EFD;
+  color: white;
+}
+.required-asterisk {
+  color: red; /* or any other color */
+  margin-left: 4px; /* adjust the margin as needed */
 }
 
 

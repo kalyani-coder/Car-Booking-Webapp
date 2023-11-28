@@ -98,6 +98,7 @@ function AllocateTrip() {
                 <div className="d-flex gap-3">
                   <div>
                     <label htmlFor='pickupLocation' className="trip-details-label">Pickup Location:</label>
+                    <span className="required-asterisk">*</span>
                     <input
                       type="text"
                       className="trip-details-input"
@@ -108,6 +109,7 @@ function AllocateTrip() {
                   </div>
                   <div>
                     <label htmlFor="date" className="trip-details-label">Pickup Date:</label>
+                    <span className="required-asterisk">*</span>
                     <input
                       type="date"
                       className="trip-details-input"
@@ -117,6 +119,7 @@ function AllocateTrip() {
                   </div>
                   <div>
                     <label htmlFor='time' className="trip-details-label">Time:</label>
+                    <span className="required-asterisk">*</span>
                     <input
                       type="time"
                       className="trip-details-input"
@@ -128,6 +131,7 @@ function AllocateTrip() {
                 <div className="d-flex gap-3">
                   <div>
                     <label className="trip-details-label">Drop-off Location:</label>
+                    <span className="required-asterisk">*</span>
                     <input
                       type="text"
                       className="trip-details-input"
@@ -138,6 +142,7 @@ function AllocateTrip() {
                   </div>
                   <div>
                     <label htmlFor='dropoffDate' className="trip-details-label">Drop-off Date:</label>
+                    <span className="required-asterisk">*</span>
                     <input
                       type="date"
                       className="trip-details-input"
@@ -147,6 +152,7 @@ function AllocateTrip() {
                   </div>
                   <div>
                     <label htmlFor='time1' className="trip-details-label"> Time:</label>
+                    <span className="required-asterisk">*</span>
                     <input
                       type="time"
                       className="trip-details-input"
@@ -156,6 +162,7 @@ function AllocateTrip() {
                   </div>
                 </div>
                 <label htmlFor="vehicle" className="trip-details-label">Vehicle Preference:</label>
+                <span className="required-asterisk">*</span>
                 <select
                   className="trip-details-input"
                   name="vehicle"
@@ -183,6 +190,7 @@ function AllocateTrip() {
                 </select>
 
                 <label htmlFor='triptype' className="trip-details-label">Trip Type:</label>
+                <span className="required-asterisk">*</span>
                 <select
                   className="trip-details-input"
                   id="triptype"
@@ -195,6 +203,7 @@ function AllocateTrip() {
                 </select>
 
                 <label htmlFor='subtype' className="trip-details-label">Sub Type:</label>
+                <span className="required-asterisk">*</span>
                 <select
                   className="trip-details-input"
                   id="subtype"
@@ -216,6 +225,7 @@ function AllocateTrip() {
             <div className="driver-details-form">
               <div className="pt-4 mb-2 grid-gap-2">
                 <label htmlFor="drivername" className="driver-details-label">Driver Name:</label>
+                <span className="required-asterisk">*</span>
                 <input
                   type="text"
                   className="driver-details-input"
@@ -236,6 +246,7 @@ function AllocateTrip() {
                 />
 
                 <label htmlFor="mobileno" className="driver-details-label">Mobile No:</label>
+                <span className="required-asterisk">*</span>
                 <input
                   type="number"
                   className="driver-details-input"
@@ -254,6 +265,15 @@ function AllocateTrip() {
                   value={tripDetails.address}
                   onChange={(e) => handleFieldChange('address', e.target.value)}
                 />
+                 <label htmlFor="vehicle_number" className="driver-details-label">Vehicle Number:</label>
+                <input
+                  type="text"
+                  className="driver-details-input"
+                  name="vehicle_number"
+                  placeholder="Vehicle Number"
+                  value={tripDetails.vehicle_number}
+                  onChange={(e) => handleFieldChange('address', e.target.value)}
+                />
               </div>
             </div>
 
@@ -266,6 +286,9 @@ function AllocateTrip() {
           </button>
           <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
             Allocate
+          </button>
+          <button className="custom-btn custom-generate-btn" onClick={handleAllocateClick}>
+            Share
           </button>
         </div>
       </div>
