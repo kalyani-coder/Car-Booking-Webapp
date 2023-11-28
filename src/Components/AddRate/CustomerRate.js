@@ -10,6 +10,12 @@ const initialFormData = {
   rate_per_km: "",
   title: "",
   rate: "",
+  vehicle:"",
+  hour:"",
+  km:"",
+  extra_km:"",
+  extra_hour:""
+  
 };
 
 const CustomerRate = () => {
@@ -169,7 +175,8 @@ const CustomerRate = () => {
                     </option>
                   ))}
                 </select>
-              </div>              <div className="form-group">
+              </div>             
+               <div className="form-group">
                 <label htmlFor="mobile_Number" className="form-label">
                   Mobile No:
                 </label>
@@ -183,6 +190,32 @@ const CustomerRate = () => {
                   value={formData.mobile_Number}
                 />
                 {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+              </div>
+              <div className="form-group">
+                <label htmlFor="rate_per_km" className="form-label">
+                <span className="required-asterisk">*</span>
+                  Vehicle Type:
+                </label>
+                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
+                <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
+                            <option value="">Vehicle</option>
+                            <option value="Sedan Car">Sedan Car</option>
+                            <option value="Mini Car">Mini Car</option>
+                            <option value="SUV Car">SUV Car</option>
+                            <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                            <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                            <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                            <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                            <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                            <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                            <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                            <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+                            <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+                            <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+                            <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+                            <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+                            <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+                          </select>
               </div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
@@ -233,6 +266,78 @@ const CustomerRate = () => {
                       name="rate"
                       placeholder="rate"
                       value={formData.rate}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex gap-3">
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="km" className="form-label">
+                    <span className="required-asterisk">*</span>
+                      KM:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="km"
+                      id="km"
+                      name="km"
+                      placeholder="km"
+                      value={formData.KM}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                <div className="form-group">
+                    <label htmlFor="extra_km" className="form-label">
+                    <span className="required-asterisk">*</span>
+                      Extra KM:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="extra_km"
+                      id="extra_km"
+                      name="extra_km"
+                      placeholder="Extra km"
+                      value={formData.extra_km}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex gap-3">
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="hour" className="form-label">
+                    <span className="required-asterisk">*</span>
+                      Hour:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="hour"
+                      id="hour"
+                      name="hour"
+                      placeholder="hour"
+                      value={formData.Hour}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                <div className="form-group">
+                    <label htmlFor="extra_hour" className="form-label">
+                    <span className="required-asterisk">*</span>
+                      Extra Hour:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="extra_hour"
+                      id="extra_hour"
+                      name="extra_hour"
+                      placeholder="Extra Hour"
+                      value={formData.extra_hour}
                       onChange={handleChange}
                     />
                   </div>
