@@ -15,6 +15,7 @@ import { CgDetailsMore } from 'react-icons/cg';
 import { MdUpdate } from 'react-icons/md';
 import { AiFillBank } from 'react-icons/ai';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
+import logoImage from '../../assects/images/shivpushpa_logo.png'; // Replace with the actual path to your logo image
 
 
 const Sidebar = () => {
@@ -72,8 +73,10 @@ const Sidebar = () => {
     <>
 
       <div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '100vh' }}>
-        <div className='logo'>
-          <h3 className='car-heading'>Car Booking</h3>
+        <div className='logo'style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <img src={logoImage} alt="Car Booking Logo" className="logo-img" /
+        >
+          {/* <h3 className='car-heading'>Car Booking</h3> */}
         </div>
 
         <div className="logo_details">

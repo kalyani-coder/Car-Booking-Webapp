@@ -120,11 +120,25 @@ const CustomerRate = () => {
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Corporate Client</h2>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Corporate Customer</h2>
             <form onSubmit={handleSubmit}>
+            <div className="form-group">
+                <label htmlFor="rate_per_km" className="form-label">
+                  Customer Type:
+                <span className="required-asterisk">*</span>
+                </label>
+                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
+                <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
+                            <option value="">Customer</option>
+                            <option value="">Corporate Customer</option>
+                            <option value="Sedan Car">Indivisual Customer</option>
+                           
+                          </select>
+              </div>
               <div className="rate-form-group">
                 <label htmlFor="company_Name" className="form-label">
                   Company Name:
+                <span className="required-asterisk">*</span>
                 </label>
                 <div className="form-group">
                   <input
@@ -141,6 +155,7 @@ const CustomerRate = () => {
               <div className="form-group">
                 <label htmlFor="GST_No" className="form-label">
                   GST No:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -155,6 +170,7 @@ const CustomerRate = () => {
               <div className="form-group">
                 <label htmlFor="customer_Name" className="form-label">
                   Customer Name:
+                <span className="required-asterisk">*</span>
                 </label>
                 <select
                   className="form-control-rate-add-input"
@@ -178,7 +194,8 @@ const CustomerRate = () => {
               </div>             
                <div className="form-group">
                 <label htmlFor="mobile_Number" className="form-label">
-                  Mobile No:
+                  Mobile No: 
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-cust-add-input"
@@ -193,8 +210,8 @@ const CustomerRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
-                <span className="required-asterisk">*</span>
                   Vehicle Type:
+                <span className="required-asterisk">*</span>
                 </label>
                 {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                 <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
@@ -219,8 +236,8 @@ const CustomerRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
-                <span className="required-asterisk">*</span>
                   Rate Per KM:
+                <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -275,8 +292,8 @@ const CustomerRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
-                    <span className="required-asterisk">*</span>
                       KM:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
@@ -292,8 +309,8 @@ const CustomerRate = () => {
                 <div>
                 <div className="form-group">
                     <label htmlFor="extra_km" className="form-label">
-                    <span className="required-asterisk">*</span>
                       Extra KM:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
@@ -311,8 +328,8 @@ const CustomerRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="hour" className="form-label">
-                    <span className="required-asterisk">*</span>
                       Hour:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
@@ -328,8 +345,8 @@ const CustomerRate = () => {
                 <div>
                 <div className="form-group">
                     <label htmlFor="extra_hour" className="form-label">
-                    <span className="required-asterisk">*</span>
                       Extra Hour:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"

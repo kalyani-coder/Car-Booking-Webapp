@@ -78,6 +78,7 @@ const VendorRate = () => {
               <div className="rate-form-group">
                 <label htmlFor="companyname" className="form-label">
                   Company Name:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -93,6 +94,7 @@ const VendorRate = () => {
               <div className="form-group">
                 <label htmlFor="gstno" className="form-label">
                   GST No:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -108,6 +110,7 @@ const VendorRate = () => {
               <div className="form-group">
                 <label htmlFor="vendorname" className="form-label">
                   Vendor Name:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -122,6 +125,7 @@ const VendorRate = () => {
               <div className="form-group">
                 <label htmlFor="mobileno" className="form-label">
                   Mobile No:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -136,8 +140,8 @@ const VendorRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
-                <span className="required-asterisk">*</span>
                   Vehicle Type:
+                  <span className="required-asterisk">*</span>
                 </label>
                 {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                 <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
@@ -162,8 +166,8 @@ const VendorRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rateperkm" className="form-label">
-                  <span className="required-asterisk">*</span>
                   Rate Per KM:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
@@ -180,8 +184,8 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">
-                      <span className="required-asterisk">*</span>
                       Title:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <select
                       className="rate-form-control"
@@ -199,8 +203,8 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="rate" className="form-label">
-                      <span className="required-asterisk">*</span>
                       Rate:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
@@ -220,8 +224,8 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
-                      <span className="required-asterisk">*</span>
                       KM:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
@@ -238,14 +242,14 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="extra_km" className="form-label">
-                      <span className="required-asterisk">*</span>
                       Extra KM:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
                       type="number"
                       id="extra_km"
-                      name="extra_kmkm"
+                      name="extra_km"
                       placeholder="extrakm"
                       value={formData.extra_km}
                       onChange={handleChange}
@@ -258,27 +262,26 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="hour" className="form-label">
-                      <span className="required-asterisk">*</span>
                       Hour:
+                      <span className="required-asterisk">*</span>
                     </label>
-                    <select
+                    <input
                       className="rate-form-control"
-                      name="hour"
+                      type="number"
                       id="hour"
-                      value={formData.Hour}
+                      name="hour"
+                      placeholder="hour"
+                      value={formData.hour}
                       onChange={handleChange}
-                    >
-                      <option value="">Title</option>
-                      <option value="One Day / 80km">One Day /80km</option>
-                      <option value="One Day / 300km">One Day /300km</option>
-                    </select>
+                      required
+                    />
                   </div>
                 </div>
                 <div>
                   <div className="form-group">
                     <label htmlFor="extra_hour" className="form-label">
-                      <span className="required-asterisk">*</span>
                       Extra Hour:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
