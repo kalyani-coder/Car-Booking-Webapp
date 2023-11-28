@@ -264,8 +264,8 @@ const CustomerEnquiry = () => {
 
             <div className="form-group">
               <label htmlFor="triptype" className="form-label">
-              <span className="required-asterisk">*</span>
                 Trip Type:
+              <span className="required-asterisk">*</span>
               </label>
               <select
                 className="form-control-cust-inq-input"
@@ -281,8 +281,8 @@ const CustomerEnquiry = () => {
             </div>
             <div className="form-group">
               <label htmlFor="subtype" className="form-label">
-              <span className="required-asterisk">*</span>
                 Sub Type:
+              <span className="required-asterisk">*</span>
               </label>
               <select
                 className="form-control-cust-inq-input"
@@ -302,8 +302,8 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="pickup" className="form-label">
-                  <span className="required-asterisk">*</span>
                     Pickup Location:
+                  <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="text"
@@ -318,8 +318,8 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="date1" className="form-label">
-                  <span className="required-asterisk">*</span>
                     Date 1:
+                  <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="date"
@@ -337,8 +337,8 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="time1" className="form-label">
-                  <span className="required-asterisk">*</span>
                     Time 1:
+                  <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="time"
@@ -355,8 +355,8 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="dropoff" className="form-label">
-                  <span className="required-asterisk">*</span>
                     Dropoff Location:
+                  <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="text"
@@ -371,8 +371,8 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                 <label htmlFor="date2" className="form-label">
-                <span className="required-asterisk">*</span>
               Date 2:
+                <span className="required-asterisk">*</span>
             </label>
             <input
               type="date"
@@ -390,8 +390,8 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                 <label htmlFor="time2" className="form-label">
-                <span className="required-asterisk">*</span>
                     Time 2:
+                <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="time"
@@ -439,8 +439,8 @@ const CustomerEnquiry = () => {
             </div>
             <div className="form-group">
               <label htmlFor="vehicle" className="form-label">
-              <span className="required-asterisk">*</span>
                 Vehicle:
+              <span className="required-asterisk">*</span>
               </label>
               <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
                 <option value="">Vehicle</option>

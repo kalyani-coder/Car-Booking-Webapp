@@ -116,8 +116,8 @@ const AddDriver = () => {
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Driver</h2>
             <div className="driver-form-group">
               <label htmlFor="drivername" className="form-label">
-              <span className="required-asterisk">*</span>
                 Driver Name:
+              <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-dri-add-input"
@@ -148,8 +148,8 @@ const AddDriver = () => {
 
             <div className="form-group">
               <label htmlFor="address" className="form-label">
-              <span className="required-asterisk">*</span>
                 Address:
+              <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-dri-add-input"
@@ -164,8 +164,8 @@ const AddDriver = () => {
 
             <div className="form-group">
               <label htmlFor="mobileno" className="form-label">
-              <span className="required-asterisk">*</span>
                 Mobile No:
+              <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-dri-add-input"
@@ -181,8 +181,8 @@ const AddDriver = () => {
 
             <div className="form-group">
               <label htmlFor="mobileno1" className="form-label">
-              <span className="required-asterisk">*</span>
                 Alternate Mobile No:
+              <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-dri-add-input"

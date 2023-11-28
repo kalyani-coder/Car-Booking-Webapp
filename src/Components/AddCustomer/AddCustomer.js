@@ -102,8 +102,8 @@ const AddCustomer = () => {
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer</h2>
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
-              <span className="required-asterisk">*</span>
                 Customer Name:
+                <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-cust-add-input"
@@ -132,8 +132,8 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
               <label htmlFor="gstno" className="form-label">
-              <span className="required-asterisk">*</span>
                 GST No:
+                <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-cust-add-input"
@@ -147,8 +147,8 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
   <label htmlFor="mobileno" className="form-label">
-  <span className="required-asterisk">*</span>
     Mobile No:
+    <span className="required-asterisk">*</span>
   </label>
   <input
     className="form-control-cust-add-input"
@@ -164,8 +164,8 @@ const AddCustomer = () => {
 
             <div className="form-group">
               <label htmlFor="email" className="form-label">
-              <span className="required-asterisk">*</span>
                 Email Id:
+                <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-cust-add-input"
@@ -179,8 +179,8 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
               <label htmlFor="address" className="form-label">
-              <span className="required-asterisk">*</span>
                 Address:
+                <span className="required-asterisk">*</span>
               </label>
               <input
                 className="form-control-cust-add-input"
