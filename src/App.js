@@ -36,6 +36,7 @@ import ViewDriver from './Components/Driver/ViewDriver';
 import ViewCustomerPayment from './Components/AddPayment/ViewCustomerPayment';
 import ViewDriverDetails from './Components/StartEndDetails/ViewDriverDetails'
 import Customer from './Components/CustomerEnquiry/Customer';
+import IndivisualCustomerRate from './Components/AddRate/IndivisualCustomerRate';
 
 
 
@@ -63,6 +64,7 @@ function App() {
     <Route path='/viewcustomerpayment'  element={<ViewCustomerPayment/>}/>
     <Route path='/companyrate'  element={<CustomerRate/>}/>
     <Route path='/viewcompanyrate'  element={<ViewCustomerRate/>}/>
+    <Route path='/indivisualcustomerrate'  element={<IndivisualCustomerRate/>}/>
     <Route path='/vendorrate'  element={<VendorRate/>}/>
     <Route path='/viewvendorrate'  element={<ViewVendorRate/>}/>
     <Route path='/customerenquiry'  element={<CustomerEnquiry/>}/>

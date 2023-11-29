@@ -18,7 +18,7 @@ const initialFormData = {
   extra_hour: "",
 };
 
-const CustomerRate = () => {
+const IndivisualCustomerRate = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState("");
   const [customerList, setCustomerList] = useState([]);
@@ -132,7 +132,7 @@ const CustomerRate = () => {
                 marginBottom: "8px",
               }}
             >
-              Corporate Customer
+              Indivisual Customer
             </h2>
             <form onSubmit={handleSubmit}>
               {/* <div className="form-group">
@@ -415,4 +415,4 @@ const CustomerRate = () => {
   );
 };
 
-export default CustomerRate;
+export default IndivisualCustomerRate;

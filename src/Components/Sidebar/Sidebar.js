@@ -16,6 +16,7 @@ import { MdUpdate } from 'react-icons/md';
 import { AiFillBank } from 'react-icons/ai';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
 import logoImage from '../../assects/images/shivpushpa_logo.png'; // Replace with the actual path to your logo image
+import IndivisualCustomerRate from './../AddRate/IndivisualCustomerRate';
 
 
 const Sidebar = () => {
@@ -177,6 +178,11 @@ const Sidebar = () => {
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcompanyrate'}>
                   View Company Rate
+                </Link>
+              </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/indivisualcustomerrate '}>
+                  Indivisual Customer Rate 
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">
