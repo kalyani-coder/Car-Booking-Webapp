@@ -152,7 +152,7 @@ const ShareDetails = () => {
                   <option value="">Select Customer</option>
                   {customerList.map((customer) => (
                     <option key={customer._id} value={customer.cus_Name}>
-                      {customer.cus_Name}
+                      {customer.Cus_name}
                     </option>
                   ))}
                 </select>
