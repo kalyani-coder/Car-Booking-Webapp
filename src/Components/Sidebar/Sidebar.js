@@ -72,7 +72,7 @@ const Sidebar = () => {
   return (
     <>
 
-      <div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '100vh' }}>
+      <div className="sidebar" style={{ position: 'fixed', overflowY: 'auto', maxHeight: '50vh' }}>
         <div className='logo'style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <img src={logoImage} alt="Car Booking Logo" className="logo-img" /
         >

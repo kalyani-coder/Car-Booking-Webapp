@@ -335,7 +335,7 @@ const UpdateDuty = () => {
             <div className='d-flex gap-5'>
               
               <div>   <label htmlFor="title" className="update-duty-form-label">
-                Title:
+                Duty Type:
               </label>
                 <select
                   className="update-duty-form-control"
@@ -344,7 +344,7 @@ const UpdateDuty = () => {
                   onChange={handleChange}
                   value={formData.title}
                 >
-                  <option value="">Title</option>
+                  <option value="">Duty Type</option>
                   <option value="One Day / 80km">One Day /80km</option>
                   <option value="One Day / 300km">One Day /300km</option>
                   {/* Add other vehicle options */}

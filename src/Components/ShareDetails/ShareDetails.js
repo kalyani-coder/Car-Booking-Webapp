@@ -140,7 +140,7 @@ const ShareDetails = () => {
                 </label>
                 {/* Dropdown to select a customer */}
                 <select
-                  className="form-control-rate-add-input"
+                  className="share-details-input"
                   name="cus_Name"
                   id="cus_Name"
                   onChange={(e) => {
