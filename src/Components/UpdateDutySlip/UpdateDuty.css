@@ -28,6 +28,7 @@
 
 /* Style for form labels */
 .update-duty-form-label {
+  font-weight: bold;
   margin-bottom: 5px;
   display: block;
 }
