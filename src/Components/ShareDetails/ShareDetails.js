@@ -144,15 +144,15 @@ const ShareDetails = () => {
                   name="cus_Name"
                   id="cus_Name"
                   onChange={(e) => {
-                    const selectedCustomer = customerList.find((customer) => customer.cus_Name === e.target.value);
+                    const selectedCustomer = customerList.find((customer) => customer.Cus_name === e.target.value);
                     setSelectedCustomer(selectedCustomer);
                   }}
-                  value={selectedCustomer ? selectedCustomer.cus_Name : ''}
+                  value={selectedCustomer ? selectedCustomer.Cus_name : ''}
                 >
                   <option value="">Select Customer</option>
                   {customerList.map((customer) => (
-                    <option key={customer._id} value={customer.cus_Name}>
-                      {customer.cus_Name}
+                    <option key={customer._id} value={customer.Cus_name}>
+                      {customer.Cus_name}
                     </option>
                   ))}
                 </select>

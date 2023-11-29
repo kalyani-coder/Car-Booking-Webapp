@@ -197,16 +197,16 @@ const CustomerRate = () => {
                   id="customer_Name"
                   onChange={(e) => {
                     const selectedCustomer = customerList.find(
-                      (customer) => customer.customer_Name === e.target.value
+                      (customer) => customer.Cus_name === e.target.value
                     );
                     setSelectedCustomer(selectedCustomer);
                   }}
-                  value={selectedCustomer ? selectedCustomer.customer_Name : ""}
+                  value={selectedCustomer ? selectedCustomer.Cus_name : ""}
                 >
                   <option value="">Select Customer</option>
                   {customerList.map((customer) => (
-                    <option key={customer._id} value={customer.customer_Name}>
-                      {customer.customer_Name}
+                    <option key={customer._id} value={customer.Cus_name}>
+                      {customer.Cus_name}
                     </option>
                   ))}
                 </select>
