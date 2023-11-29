@@ -62,7 +62,7 @@
   }
   .rate-form-control {
     width: 360px;
-    height: 40px; /* Make all inputs and selects full width */
+    height: 43px; /* Make all inputs and selects full width */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;

@@ -154,7 +154,7 @@ const VendorRate = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="rate_per_km" className="form-label">
-                  Vehicle Type:
+                  Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
                 {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
@@ -198,7 +198,7 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">
-                      Title:
+                      Duty Type:
                       <span className="required-asterisk">*</span>
                     </label>
                     <select
@@ -208,9 +208,9 @@ const VendorRate = () => {
                       value={formData.title}
                       onChange={handleChange}
                     >
-                      <option value="">Title</option>
-                      <option value="One Day / 80km">One Day /80km</option>
-                      <option value="One Day / 300km">One Day /300km</option>
+                      <option value="">Duty Type</option>
+                      <option value="One Day / 80km">One Day /80km-Local Duty</option>
+                      <option value="One Day / 300km">One Day /300km-Outstation Duty</option>
                     </select>
                   </div>
                 </div>

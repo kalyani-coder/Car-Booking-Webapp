@@ -109,8 +109,8 @@ const AddVendor = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="companyname" className="form-label">
-                {/* <span className="required-asterisk">*</span> */}
                   Company Name:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"

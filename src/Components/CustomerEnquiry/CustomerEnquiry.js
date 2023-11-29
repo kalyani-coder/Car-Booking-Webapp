@@ -439,7 +439,7 @@ const CustomerEnquiry = () => {
             </div>
             <div className="form-group">
               <label htmlFor="vehicle" className="form-label">
-                Vehicle:
+                Type Of Vehicle:
               <span className="required-asterisk">*</span>
               </label>
               <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>

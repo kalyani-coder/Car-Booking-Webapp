@@ -161,7 +161,7 @@ function AllocateTrip() {
                     />
                   </div>
                 </div>
-                <label htmlFor="vehicle" className="trip-details-label">Vehicle Preference:</label>
+                <label htmlFor="vehicle" className="trip-details-label">Type Of Vehicle:</label>
                 <span className="required-asterisk">*</span>
                 <select
                   className="trip-details-input"

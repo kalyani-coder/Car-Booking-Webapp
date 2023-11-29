@@ -264,7 +264,7 @@ const UpdateDuty = () => {
                   value={formData.name}
                 /></div>
               <div>   <label htmlFor="vehicle" className="update-duty-form-label">
-                Vehicle:
+                Type Of Vehicle:
               </label>
                 <select
                   className="update-duty-form-control"
@@ -276,6 +276,21 @@ const UpdateDuty = () => {
                   <option value="">Vehicle</option>
                   <option value="Sedan Car">Sedan Car</option>
                   <option value="Mini Car">Mini Car</option>
+                  <option value="SUV Car">SUV Car</option>
+                  <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                   <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                   <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                   <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                   <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                   <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                   <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                   <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+                   <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+                   <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+                   <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+                   <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+                   <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+                  
                   {/* Add other vehicle options */}
                 </select></div>
             </div>
@@ -345,8 +360,8 @@ const UpdateDuty = () => {
                   value={formData.title}
                 >
                   <option value="">Duty Type</option>
-                  <option value="One Day / 80km">One Day /80km</option>
-                  <option value="One Day / 300km">One Day /300km</option>
+                  <option value="One Day / 80km">One Day /80km-Local Duty</option>
+                  <option value="One Day / 300km">One Day /300km-Outstation Duty</option>
                   {/* Add other vehicle options */}
                 </select></div>
               <div> <label htmlFor="amount1" className="update-duty-form-label">

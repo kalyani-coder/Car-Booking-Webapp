@@ -286,7 +286,7 @@ function AddPayment() {
                     <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Vehicle</label>
+                          <label >Type Of Vehicle</label>
                           {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                           <select className="form-control mb-2" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
                             <option value="">Vehicle</option>
@@ -409,7 +409,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                         <label>
-                            Title:
+                            Duty Type:
                           </label>
                           <select
                             className="form-control"
@@ -417,7 +417,7 @@ function AddPayment() {
                             id="title"
                             onChange={handleChange} value={formData.title}
                           >
-                            <option value="">Title</option>
+                            <option value="">Duty Type</option>
                             <option value="One Day / 80km">One Day /80km</option>
                             <option value="One Day / 300km">One Day /300km</option>
                           </select>

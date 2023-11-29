@@ -265,7 +265,7 @@ const AddTrip = () => {
           </div>
           <div className="trip-form-group">
             <label htmlFor="vehicle" className="trip-form-label">
-              Vehicle:
+              Type Of Vehicle:
             </label>
             <select className="form-control-add-trip-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
               <option value="">Vehicle</option>
