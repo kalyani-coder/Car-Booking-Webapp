@@ -172,12 +172,12 @@ const Sidebar = () => {
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
                 <Link to={'/companyrate'}>
-                  Company Rate
+                  Corporate Customer Rate
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcompanyrate'}>
-                  View Company Rate
+                  View Corporate Corporate Rate
                 </Link>
               </a></li><hr />
               <li><a class="dropdown-item" href="#">

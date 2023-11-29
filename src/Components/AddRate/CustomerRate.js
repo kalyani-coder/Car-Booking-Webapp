@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
+// Initial form data state
 const initialFormData = {
   customer_type: "",
   company_Name: "",
@@ -11,7 +12,7 @@ const initialFormData = {
   rate_per_km: "",
   title: "",
   rate: "",
-  vehicle: "",
+  vehicle_Type: "", // Updated the name to match the state variable
   hour: "",
   km: "",
   extra_km: "",
@@ -19,11 +20,13 @@ const initialFormData = {
 };
 
 const CustomerRate = () => {
+  // State variables
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
+  // Fetch customer data on component mount
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -46,6 +49,7 @@ const CustomerRate = () => {
     fetchCustomers();
   }, []);
 
+  // Update form data when a customer is selected
   useEffect(() => {
     if (selectedCustomer) {
       setFormData({
@@ -56,10 +60,12 @@ const CustomerRate = () => {
         rate_per_km: "",
         title: "",
         rate: "",
+        vehicle_Type: "", // Updated the name to match the state variable
       });
     }
   }, [selectedCustomer]);
 
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -77,9 +83,11 @@ const CustomerRate = () => {
     }
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validation checks
     if (!selectedCustomer) {
       window.alert("Please select a customer");
       return;
@@ -92,6 +100,7 @@ const CustomerRate = () => {
       }
     }
 
+    // Prepare data with customer details
     const formDataWithCustomer = {
       ...formData,
       company_Name: selectedCustomer.company_Name,
@@ -100,17 +109,27 @@ const CustomerRate = () => {
       mobile_Number: selectedCustomer.mobile_Number,
     };
 
-    const response = await fetch(
-      "https://carbooking-backend-fo78.onrender.com/api/customer-rate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formDataWithCustomer),
-      }
-    );
+    // Determine the API endpoint based on the selected customer type
+    let apiEndpoint = "";
+    if (formData.vehicle_Type === "Corporate Customer") {
+      apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/corporate-customer-rate";
+    } else if (formData.vehicle_Type === "Individual Customer") {
+      apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/individual-customer-rate";
+    } else {
+      window.alert("Invalid customer type");
+      return;
+    }
 
+    // Make the API request
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataWithCustomer),
+    });
+
+    // Handle the response
     if (response.ok) {
       console.log("Data posted successfully!");
       window.alert("Data post Successfully");
@@ -135,7 +154,7 @@ const CustomerRate = () => {
               Corporate Customer
             </h2>
             <form onSubmit={handleSubmit}>
-              {/* <div className="form-group">
+              <div className="form-group">
                 <label htmlFor="customer_type" className="form-label">
                   Customer Type:
                   <span className="required-asterisk">*</span>
@@ -153,7 +172,7 @@ const CustomerRate = () => {
                     Indivisual Customer
                   </option>
                 </select>
-              </div> */}
+              </div>
               <div className="rate-form-group">
                 <label htmlFor="company_Name" className="form-label">
                   Company Name:
