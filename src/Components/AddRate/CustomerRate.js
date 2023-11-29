@@ -49,10 +49,10 @@ const CustomerRate = () => {
   useEffect(() => {
     if (selectedCustomer) {
       setFormData({
-        company_Name: selectedCustomer.company_Name || "",
-        GST_No: selectedCustomer.GST_No || "",
-        customer_Name: selectedCustomer.customer_Name || "",
-        mobile_Number: selectedCustomer.mobile_Number || "",
+        company_Name: selectedCustomer.company_name || "",
+        GST_No: selectedCustomer.gst_no || "",
+        customer_Name: selectedCustomer.Cus_name || "",
+        mobile_Number: selectedCustomer.Cus_Mobile || "",
         rate_per_km: "",
         title: "",
         rate: "",
