@@ -5,6 +5,7 @@ import Sidebar from "../Sidebar/Sidebar";
 const AddCustomer = () => {
   
   const initialFormData = {
+    customer_type: "",
     customername: "",
     companyname: "",
     gstno: "",
