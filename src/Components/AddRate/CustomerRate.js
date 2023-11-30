@@ -86,6 +86,8 @@ const CustomerRate = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted!");
+    console.log("Form Data:", formData);
 
     // Validation checks
     if (!selectedCustomer) {
@@ -112,7 +114,7 @@ const CustomerRate = () => {
     // Determine the API endpoint based on the selected customer type
     let apiEndpoint = "";
     if (formData.vehicle_Type === "Corporate Customer") {
-      apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/corporate-customer-rate";
+      apiEndpoint = "http://localhost:700/api/corporate-customer";
     } else if (formData.vehicle_Type === "Individual Customer") {
       apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/individual-customer-rate";
     } else {
@@ -173,6 +175,31 @@ const CustomerRate = () => {
                   </option>
                 </select>
               </div>
+              <div className="form-group">
+                <label htmlFor="customer_Name" className="form-label">
+                  Customer Name:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <select
+                  className="form-control-rate-add-input"
+                  name="customer_Name"
+                  id="customer_Name"
+                  onChange={(e) => {
+                    const selectedCustomer = customerList.find(
+                      (customer) => customer.Cus_name === e.target.value
+                    );
+                    setSelectedCustomer(selectedCustomer);
+                  }}
+                  value={selectedCustomer ? selectedCustomer.Cus_name : ""}
+                >
+                  <option value="">Select Customer</option>
+                  {customerList.map((customer) => (
+                    <option key={customer._id} value={customer.Cus_name}>
+                      {customer.Cus_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="rate-form-group">
                 <label htmlFor="company_Name" className="form-label">
                   Company Name:
@@ -205,31 +232,7 @@ const CustomerRate = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="customer_Name" className="form-label">
-                  Customer Name:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <select
-                  className="form-control-rate-add-input"
-                  name="customer_Name"
-                  id="customer_Name"
-                  onChange={(e) => {
-                    const selectedCustomer = customerList.find(
-                      (customer) => customer.Cus_name === e.target.value
-                    );
-                    setSelectedCustomer(selectedCustomer);
-                  }}
-                  value={selectedCustomer ? selectedCustomer.Cus_name : ""}
-                >
-                  <option value="">Select Customer</option>
-                  {customerList.map((customer) => (
-                    <option key={customer._id} value={customer.Cus_name}>
-                      {customer.Cus_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+             
               <div className="form-group">
                 <label htmlFor="mobile_Number" className="form-label">
                   Mobile No:
