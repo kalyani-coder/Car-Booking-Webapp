@@ -78,11 +78,15 @@ const AddTrip = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    
   
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+
+    
   
     if (
       (name === 'date1' && formData.time1) ||
@@ -122,6 +126,9 @@ const AddTrip = () => {
       }));
     }
   };
+
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Check if all fields in initialFormData are filled

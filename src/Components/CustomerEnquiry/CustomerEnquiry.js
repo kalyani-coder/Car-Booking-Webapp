@@ -115,36 +115,38 @@ const CustomerEnquiry = () => {
   const handleDateChange = (event) => {
     handleChange(event);
 
-    const { date1, time1, date2, time2 } = formData;
+    
 
-    if (date1 && time1 && date2 && time2) {
-      const pickupDateTime = new Date(`${date1}T${time1}`);
-      const dropoffDateTime = new Date(`${date2}T${time2}`);
+    const { date1,date2, } = formData;
 
-      console.log("Selected Pickup Date and Time:", pickupDateTime);
-      console.log("Selected Dropoff Date and Time:", dropoffDateTime);
+    if (date1 &&  date2) {
+      const pickupDate = new Date(`${date1}`);
+      const dropoffDate = new Date(`${date2}`);
 
-      const timeDifference = dropoffDateTime - pickupDateTime;
+      console.log("Selected Pickup Date :", pickupDate);
+      console.log("Selected Dropoff Date:", dropoffDate);
+
+      const timeDifference = dropoffDate - pickupDate;
 
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      // const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
       setFormData((prevData) => ({
         ...prevData,
         totaldays: totalDays,
-        totalhours: totalHours,
+        // totalhours: totalHours,
       }));
     }
   };
 
   const updateTotal = () => {
-    const selectedDate1 = new Date(`${formData.date1}T${formData.time1}`);
-    const selectedDate2 = new Date(`${formData.date2}T${formData.time2}`);
+    const selectedDate1 = new Date(`${formData.date1}`);
+    const selectedDate2 = new Date(`${formData.date2}`);
 
     if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
       const timeDifference = selectedDate2 - selectedDate1;
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      // const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
       const formattedDate1 = selectedDate1.toLocaleDateString("en-US");
       const formattedDate2 = selectedDate2.toLocaleDateString("en-US");
@@ -152,7 +154,7 @@ const CustomerEnquiry = () => {
       setFormData((prevData) => ({
         ...prevData,
         totaldays: totalDays,
-        totalhours: totalHours,
+        // totalhours: totalHours,
         formattedDate1: formattedDate1,
         formattedDate2: formattedDate2,
       }));
@@ -160,7 +162,7 @@ const CustomerEnquiry = () => {
       setFormData((prevData) => ({
         ...prevData,
         totaldays: "",
-        totalhours: "",
+        // totalhours: "",
         formattedDate1: "",
         formattedDate2: "",
       }));
@@ -174,7 +176,7 @@ const CustomerEnquiry = () => {
       [name]: value,
     }));
 
-    if (name === "date1" || name === "date2" || name === "time1" || name === "time2") {
+    if (name === "date1" || name === "date2" ) {
       updateTotal();
     }
   };
