@@ -43,6 +43,7 @@ const AddCustomer = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (
+      formData.customer_type.trim() === "" ||
       formData.customername.trim() === "" ||
       formData.companyname.trim() === "" ||
       formData.gstno.trim() === "" ||

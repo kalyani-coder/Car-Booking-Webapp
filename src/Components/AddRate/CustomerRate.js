@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+
+// Importing styles and Sidebar component
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
-// Initial form data state
+// Initial form data
 const initialFormData = {
   customer_type: "",
   company_Name: "",
@@ -10,23 +12,26 @@ const initialFormData = {
   customer_Name: "",
   mobile_Number: "",
   rate_per_km: "",
-  title: "",
+  duty_type: "",
   rate: "",
-  vehicle_Type: "", // Updated the name to match the state variable
+  vehicle_Type: "",
   hour: "",
   km: "",
   extra_km: "",
   extra_hour: "",
 };
 
+// Functional component for CustomerRate
 const CustomerRate = () => {
   // State variables
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
-  // Fetch customer data on component mount
+  // Fetching customer data from the API on component mount
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -36,7 +41,6 @@ const CustomerRate = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Fetched Customers:", data);
           setCustomerList(data);
         } else {
           console.error("Failed to fetch customers");
@@ -49,7 +53,7 @@ const CustomerRate = () => {
     fetchCustomers();
   }, []);
 
-  // Update form data when a customer is selected
+  // Setting form data when a customer is selected
   useEffect(() => {
     if (selectedCustomer) {
       setFormData({
@@ -57,52 +61,67 @@ const CustomerRate = () => {
         GST_No: selectedCustomer.gst_no || "",
         customer_Name: selectedCustomer.Cus_name || "",
         mobile_Number: selectedCustomer.Cus_Mobile || "",
-        rate_per_km: "",
-        title: "",
-        rate: "",
-        vehicle_Type: "", // Updated the name to match the state variable
+        vehicle_Type: selectedCustomer.type_of_vehicle || "",
       });
     }
   }, [selectedCustomer]);
 
-  // Handle form input changes
+  // Handling form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    // Validating mobile number length
     if (name === "mobile_Number" && value.length > 10) {
       return;
     }
 
+    // Updating form data
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
+    // Clearing mobile number error when changed
     if (name === "mobile_Number" && mobilenoError) {
       setMobilenoError("");
     }
   };
 
-  // Handle form submission
+  // Validating the form
+  const validateForm = () => {
+    const errors = {};
+
+    // Checking for empty fields
+    for (const key in formData) {
+      if (!formData[key] || formData[key].trim() === "") {
+        errors[key] = "This field is required";
+      }
+    }
+
+    // Setting form errors
+    setFormErrors(errors);
+
+    // Returning true if no errors, false otherwise
+    return Object.keys(errors).length === 0;
+  };
+
+  // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted!");
-    console.log("Form Data:", formData);
 
-    // Validation checks
+    // Alert if no customer is selected
     if (!selectedCustomer) {
       window.alert("Please select a customer");
       return;
     }
 
-    for (const key in formData) {
-      if (formData[key] === "") {
-        window.alert("All fields are required");
-        return;
-      }
+    // Alert if form validation fails
+    if (!validateForm()) {
+      window.alert("Please fill in all required fields");
+      return;
     }
 
-    // Prepare data with customer details
+    // Adding customer data to form data
     const formDataWithCustomer = {
       ...formData,
       company_Name: selectedCustomer.company_Name,
@@ -111,18 +130,19 @@ const CustomerRate = () => {
       mobile_Number: selectedCustomer.mobile_Number,
     };
 
-    // Determine the API endpoint based on the selected customer type
+    // Setting API endpoint based on vehicle type
     let apiEndpoint = "";
     if (formData.vehicle_Type === "Corporate Customer") {
-      apiEndpoint = "http://localhost:700/api/corporate-customer";
+      apiEndpoint = "http://localhost:7000/api/corporate-customer";
     } else if (formData.vehicle_Type === "Individual Customer") {
-      apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/individual-customer-rate";
+      apiEndpoint =
+        "https://carbooking-backend-fo78.onrender.com/api/individual-customer-rate";
     } else {
       window.alert("Invalid customer type");
       return;
     }
 
-    // Make the API request
+    // Sending POST request to the API
     const response = await fetch(apiEndpoint, {
       method: "POST",
       headers: {
@@ -131,14 +151,17 @@ const CustomerRate = () => {
       body: JSON.stringify(formDataWithCustomer),
     });
 
-    // Handle the response
+    // Handling successful or failed API response
     if (response.ok) {
-      console.log("Data posted successfully!");
-      window.alert("Data post Successfully");
+      setSuccessMessage("Data added successfully!");
+      setFormData(initialFormData);
+      setSelectedCustomer(null);
     } else {
       console.error("Error posting data:", response.statusText);
     }
   };
+
+  // Rendering the component
 
   return (
     <>
@@ -155,18 +178,20 @@ const CustomerRate = () => {
             >
               Corporate Customer
             </h2>
-            <form onSubmit={handleSubmit}>
+              {/* Form */}
+              <form onSubmit={handleSubmit}>
+              {/* Customer Type dropdown */}
               <div className="form-group">
-                <label htmlFor="customer_type" className="form-label">
+                <label htmlFor="Cus_Type" className="form-label">
                   Customer Type:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
                   className="form-control-cust-add-input"
-                  name="vehicle_Type"
-                  id="vehicle_Type"
+                  name="Cus_Type"
+                  id="Cus_Type"
                   onChange={handleChange}
-                  value={formData.vehicle_Type}
+                  value={formData.Cus_Type}
                 >
                   <option value="">Customer</option>
                   <option value="Corporate Customer">Corporate Customer</option>
