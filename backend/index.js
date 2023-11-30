@@ -51,6 +51,7 @@ const VenderPayment = require('./src/routes/VenderPayment')
 const rateSchema = require('./src/routes/Rate')
 const venderRate = require('./src/routes/VenderRate')
 const corporateCustomer = require('./src/routes/CorporateCustomer')
+const indivisualCustomer = require('./src/routes/IndivisualCustomer')
 
 // const userLogin  = require('./src/routes/UserLogin')
 
@@ -73,6 +74,7 @@ apiRouter.use('/customer-rate' , rateSchema)
 apiRouter.use('/vender-rate' , venderRate)
 apiRouter.use('/add-drivers' , AddDriver)
 apiRouter.use('/corporate-customer' , corporateCustomer)
+apiRouter.use('/indivisual-customer' , indivisualCustomer)
 
 // apiRouter.use('/user-login' , userLogin)
 
