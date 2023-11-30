@@ -100,6 +100,25 @@ const AddCustomer = () => {
         <div className="customer-main-container">
           <div className="customer-form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer</h2>
+            <div className="form-group">
+                <label htmlFor="customer_type" className="form-label">
+                  Customer Type:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <select
+                  className="form-control-cust-add-input"
+                  name="vehicle_Type"
+                  id="vehicle_Type"
+                  onChange={handleChange}
+                  value={formData.vehicle_Type}
+                >
+                  <option value="">Customer</option>
+                  <option value="Corporate Customer">Corporate Customer</option>
+                  <option value="Indivisual Customer">
+                    Indivisual Customer
+                  </option>
+                </select>
+              </div>
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name:
