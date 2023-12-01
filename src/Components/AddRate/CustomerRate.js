@@ -368,7 +368,7 @@ const CustomerRate = () => {
             
 
               <div className="form-group">
-                <label htmlFor="rateperkm" className="form-label">
+                <label htmlFor="rate_per_Km" className="form-label">
                   Rate Per KM (Extra Km):
                   <span className="required-asterisk">*</span>
                 </label>
