@@ -8,60 +8,52 @@ function VendorPayment() {
     GST_No: "",
     vender_Name: "",
     mobile_Number: "",
+    vehicle: "",
+    vehicle_no: "",
+    total_km: "",
+    total_hour: "",
+    totalkm_amount: "0",
+    totalhour_amount: "",
+    total_amount: "",
+    extra_hour: "",
+    extra_km: "",
     payment: "",
     amount: "",
     tds: "0.00",
-    total_Amount: "",
-    paid_Amount: "",
+    paid_amount: "",
     remaining_Amount: "",
-    payment_Method: ""
+    payment_Method: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    
-
-    if (name === 'paid_Amount') {
-      // Parse advance amount and total amount as floats
-      const paidAmount = parseFloat(value) || 0;
-      const totalAmount = parseFloat(formData.total_Amount) || 0;
-
-      // Calculate remaining amount
-      const remainingAmount = totalAmount - paidAmount;
-
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-        remaining_Amount: remainingAmount.toFixed(2),
-      }));
-    } else if (name === "amount") {
-      const tdsData = calculateTDS(parseFloat(value) || 0);
-      const totalAmount = (parseFloat(value) || 0) + tdsData.TDS;
-
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-        tds: tdsData.TDS.toFixed(2),
-        total_Amount: totalAmount.toFixed(2),
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+  
+    setFormData((prevData) => {
+      let updatedData;
+  
+      if (name === 'totalkm_amount' || name === 'totalhour_amount') {
+        // Corrected variable names
+        const totalkmAmount = parseFloat(prevData.totalkm_amount) ;
+        const totalhourAmount = parseFloat(prevData.totalhour_amount)  ;
+        const totalAmount = totalkmAmount + totalhourAmount;
+  
+        updatedData = {
+          ...prevData,
+          [name]: value,
+          total_amount: totalAmount.toFixed(2),
+        };
+      } else {
+        // For other fields, update the state as usual
+        updatedData = {
+          ...prevData,
+          [name]: value,
+        };
+      }
+  
+      return updatedData;
+    });
   };
-
-  const calculateTDS = (amount) => {
-    const taxRate = 1; // 1 % tax rate
-    const tds = (amount * taxRate) / 100;
-
-    return {
-      TDS: tds,
-    };
-  };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -87,6 +79,7 @@ function VendorPayment() {
       console.error("Error posting data:", response.statusText);
     }
   };
+
 
   return (
     <>
@@ -161,7 +154,94 @@ function VendorPayment() {
                       </div>
                     </div>
 
+
                     <div className="row g-2">
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Type Of Vehicle</label>
+                          {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
+                          <select className="form-control mb-2" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
+                            <option value="">Vehicle</option>
+                            <option value="Sedan Car">Sedan Car</option>
+                            <option value="Mini Car">Mini Car</option>
+                            <option value="SUV Car">SUV Car</option>
+                            <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                            <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                            <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                            <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                            <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                            <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                            <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                            <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+                            <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+                            <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+                            <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+                            <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+                            <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+                          </select>
+                        </div>
+                      </div>
+
+
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Vehicle No</label>
+                          <input type="string" className="form-control" name='vehicle_no' placeholder="Vehicle Number" onChange={handleChange} value={formData.vehicle_no} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row g-2">
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Total Kms</label>
+                          <input type="text" className="form-control"  name="total_km" placeholder="Enter  Total Kms" onChange={handleChange} value={formData.total_km} />
+
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Total Hours</label>
+                          <input type="text" className="form-control" name="total_hour" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hour} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row g-2">
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Total Kms Amount</label>
+                          <input type="text" className="form-control"  name="totalkm_amount" placeholder="Enter  Total Kms Amount" onChange={handleChange} value={formData.totalkm_amount} />
+
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label >Total Hours Amount</label>
+                          <input type="text" className="form-control" name="totalhour_amount" placeholder="Enter Total Hours" onChange={handleChange} value={formData.totalhour_amount} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row g-2">
+                    <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="total_amount">Total Amount</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="total_amount"
+                            name="total_amount"
+                            placeholder="Total Amount"
+                            value={formData.total_amount}
+                            onChange={handleChange}
+                            readOnly
+                          />
+                        </div>
+                        </div>
+                        </div>
+
+                      <div className="row g-2">
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="payment">Payment</label>
@@ -210,16 +290,17 @@ function VendorPayment() {
                           />
                         </div>
                       </div>
+
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="total_Amount">Total Amount</label>
+                          <label htmlFor="total_Amount">Paid Amount</label>
                           <input
                             type="text"
                             className="form-control"
-                            id="total_Amount"
-                            name="total_Amount"
-                            placeholder="Enter Total Amount"
-                            value={formData.total_Amount}
+                            id="paid_amount"
+                            name="paid_amount"
+                            placeholder="Enter Paid Amount"
+                            value={formData.paid_amount}
                             onChange={handleChange}
                             
                           />
@@ -228,21 +309,7 @@ function VendorPayment() {
                     </div>
 
                     <div className="row g-2">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="paid_Amount">Paid Amount</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="paid_Amount"
-                            name="paid_Amount"
-                            placeholder="Enter Paid Amount"
-                            value={formData.paid_Amount}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md">
+                    <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="remaining_Amount">Remaining Amount</label>
                           <input
@@ -255,10 +322,10 @@ function VendorPayment() {
                             onChange={handleChange}
                           />
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
+                        </div>
+                    
+                        <div className="col-md">
+                      <div className="form-group">
                       <label htmlFor="payment_Method">Payment Method</label>
                       <select
                         className="form-control"
@@ -275,7 +342,10 @@ function VendorPayment() {
                             
                       </select>
                     </div>
+                    </div>
+                    </div>
 
+                    
                     <br />
                     <button className="customer-btn-submit" type="submit">
                       Save
