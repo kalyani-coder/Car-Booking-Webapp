@@ -321,21 +321,7 @@ const CustomerRate = () => {
                   </option>
                 </select>
               </div>
-              <div className="form-group">
-                <label htmlFor="rate_per_km" className="form-label">
-                  Rate Per KM:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="number"
-                  id="rate_per_km"
-                  name="rate_per_km"
-                  placeholder="Rate Per KM"
-                  value={formData.rate_per_km}
-                  onChange={handleChange}
-                />
-              </div>
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -368,16 +354,53 @@ const CustomerRate = () => {
                     </label>
                     <input
                       className="rate-form-control"
-                      type="number"
+                      type="text"
                       id="rate"
                       name="rate"
                       placeholder="rate"
                       value={formData.rate}
                       onChange={handleChange}
+                      required
                     />
-                  </div>
+                  </div>    
                 </div>
               </div>
+            
+
+              <div className="form-group">
+                <label htmlFor="rateperkm" className="form-label">
+                  Rate Per KM (Extra Km):
+                  <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="form-control-rate-add-input"
+                  type="text"
+                  id="rate_per_Km"
+                  name="rate_per_Km"
+                  placeholder="Rate Per KM"
+                  value={formData.rate_per_Km}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="rateperhour" className="form-label">
+                  Rate Per Hour (Extra Hour):
+                  <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="form-control-rate-add-input"
+                  type="text"
+                  id="rate_per_hour"
+                  name="rate_per_hour"
+                  placeholder="Rate Per Hour"
+                  value={formData.rate_per_hour}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">

@@ -78,11 +78,56 @@ const AddTrip = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    
+  
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+
+    
+  
+    if (
+      (name === 'date1' && formData.time1) ||
+      (name === 'date' && formData.time)
+    ) {
+      const startDate = new Date(formData.date + ' ' + formData.time);
+      const endDate = new Date(formData.date1 + ' ' + formData.time1);
+  
+      // Calculate total days
+      const timeDifference = endDate.getTime() - startDate.getTime();
+      const daysDifference = timeDifference / (1000 * 3600 * 24 );
+      const totalDays = Math.abs(Math.round(daysDifference)); // Use Math.abs to ensure positive value
+  
+      // Update form data with total days
+      setFormData((prevData) => ({
+        ...prevData,
+        totaldays: totalDays.toString(),
+      }));
+    }
+  
+    if (
+      (name === 'time1' && formData.date1) ||
+      (name === 'time' && formData.date)
+    ) {
+      const startTime = new Date(formData.date + ' ' + formData.time);
+      const endTime = new Date(formData.date1 + ' ' + formData.time1);
+  
+      // Calculate total hours
+      const timeDifference = endTime.getTime() - startTime.getTime();
+      const hoursDifference = timeDifference / (1000 * 3600);
+      const totalHours = Math.abs(Math.round(hoursDifference)); // Use Math.abs to ensure positive value
+  
+      // Update form data with total hours
+      setFormData((prevData) => ({
+        ...prevData,
+        hours: totalHours.toString(),
+      }));
+    }
   };
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -209,10 +254,10 @@ const AddTrip = () => {
           </div>
           <div>
           <div className="trip-form-group">
-            <label htmlFor="date1" className="trip-form-label">
+            <label htmlFor="date" className="trip-form-label">
               Date:
             </label>
-            <input type="date" className="form-control add-trip-input" name="date1" onChange={handleChange} value={formData.date1} />
+            <input type="date" className="form-control add-trip-input" name="date" onChange={handleChange} value={formData.date} />
           </div>
           </div>
           <div>
@@ -235,10 +280,10 @@ const AddTrip = () => {
           </div>
           <div>
           <div className="trip-form-group">
-            <label htmlFor="date" className="trip-form-label">
+            <label htmlFor="date1" className="trip-form-label">
               Date:
             </label>
-            <input type="date" className="form-control add-trip-input" name="date" onChange={handleChange} value={formData.date} />
+            <input type="date" className="form-control add-trip-input" name="date1" onChange={handleChange} value={formData.date1} />
           </div>
           </div>
           <div>
@@ -255,14 +300,16 @@ const AddTrip = () => {
             <label htmlFor="totaldays" className="trip-form-label">
               Total Days:
             </label>
-            <input type="number" className="form-control-add-trip-input" name="totaldays" placeholder="Total Days" onChange={handleChange} value={formData.totaldays} />
+            <input type="text" className="form-control-add-trip-input" name="totaldays" placeholder="Total Days" onChange={handleChange} value={formData.totaldays} readOnly />
           </div>
           <div className="trip-form-group">
             <label htmlFor="hours" className="trip-form-label">
               Total Hours:
             </label>
-            <input type="text" className="form-control-add-trip-input" name="hours" placeholder="Hours" onChange={handleChange} value={formData.hours} />
+            <input type="text" className="form-control-add-trip-input" name="hours" placeholder="Hours" onChange={handleChange} value={formData.hours} readOnly />
           </div>
+
+
           <div className="trip-form-group">
             <label htmlFor="vehicle" className="trip-form-label">
               Type Of Vehicle:

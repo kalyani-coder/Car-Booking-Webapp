@@ -128,9 +128,10 @@ function AllocateTrip() {
                     />
                   </div>
                 </div>
+                
                 <div className="d-flex gap-3">
                   <div>
-                    <label className="trip-details-label">Drop-off Location:</label>
+                    <label className="trip-details-label">Dropoff Location:</label>
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
@@ -140,7 +141,7 @@ function AllocateTrip() {
                       onChange={(e) => handleFieldChange('dropoffLocation', e.target.value)}
                     />
                   </div>
-                  <div>
+                  <div className="drop-off">
                     <label htmlFor='dropoffDate' className="trip-details-label">Drop-off Date:</label>
                     <span className="required-asterisk">*</span>
                     <input
