@@ -321,6 +321,24 @@ const CustomerRate = () => {
                   </option>
                 </select>
               </div>
+              <div className="form-group">
+                <label htmlFor="rate_per_km" className="form-label">
+                  Rate Per KM:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="form-control-cust-add-input"
+                  type="tel"
+                  id="rate_per_km"
+                  name="rate_per_km"
+                  placeholder="Rate per KM"
+                  onChange={handleChange}
+                  value={formData.rate_per_km}
+                />
+                {mobilenoError && (
+                  <p className="error-message">{mobilenoError}</p>
+                )}
+              </div>
 
               <div className="d-flex gap-3">
                 <div>
@@ -367,7 +385,7 @@ const CustomerRate = () => {
               </div>
             
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="rate_per_Km" className="form-label">
                   Rate Per KM (Extra Km):
                   <span className="required-asterisk">*</span>
@@ -382,9 +400,9 @@ const CustomerRate = () => {
                   onChange={handleChange}
                   required
                 />
-              </div>
+              </div> */}
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="rateperhour" className="form-label">
                   Rate Per Hour (Extra Hour):
                   <span className="required-asterisk">*</span>
@@ -399,7 +417,7 @@ const CustomerRate = () => {
                   onChange={handleChange}
                   required
                 />
-              </div>
+              </div> */}
 
               <div className="d-flex gap-3">
                 <div>
