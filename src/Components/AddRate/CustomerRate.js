@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
-
-// Importing styles and Sidebar component
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 // Initial form data
 const initialFormData = {
-  customer_type: "",
-  company_Name: "",
-  GST_No: "",
-  customer_Name: "",
-  mobile_Number: "",
+  Cus_Type: "",
+  Cus_name: "",
+  company_name: "",
+  gst_no: "",
+  Cus_Mobile: "",
+  type_of_vehicle: "",
   rate_per_km: "",
   duty_type: "",
   rate: "",
-  vehicle_Type: "",
-  hour: "",
   km: "",
   extra_km: "",
-  extra_hour: "",
+  hours: "",
+  extra_hours: "",
+  
 };
 
-// Functional component for CustomerRate
 const CustomerRate = () => {
   // State variables
   const [formData, setFormData] = useState(initialFormData);
@@ -57,11 +55,12 @@ const CustomerRate = () => {
   useEffect(() => {
     if (selectedCustomer) {
       setFormData({
-        company_Name: selectedCustomer.company_name || "",
-        GST_No: selectedCustomer.gst_no || "",
-        customer_Name: selectedCustomer.Cus_name || "",
-        mobile_Number: selectedCustomer.Cus_Mobile || "",
-        vehicle_Type: selectedCustomer.type_of_vehicle || "",
+        ...formData,
+        company_name: selectedCustomer.company_name || "",
+        gst_no: selectedCustomer.gst_no || "",
+        Cus_name: selectedCustomer.Cus_name || "",
+        Cus_Mobile: selectedCustomer.Cus_Mobile || "",
+        // type_of_vehicle: selectedCustomer.type_of_vehicle || "",
       });
     }
   }, [selectedCustomer]);
@@ -70,20 +69,23 @@ const CustomerRate = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validating mobile number length
     if (name === "mobile_Number" && value.length > 10) {
+      // Prevent further input if more than 10 digits
       return;
     }
 
-    // Updating form data
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
-    // Clearing mobile number error when changed
-    if (name === "mobile_Number" && mobilenoError) {
-      setMobilenoError("");
+    if (name === "mobile_Number") {
+      // Validate mobile number (10 digits)
+      if (!/^\d{10}$/.test(value)) {
+        setMobilenoError("Mobile number must be 10 digits");
+      } else {
+        setMobilenoError("");
+      }
     }
   };
 
@@ -108,6 +110,7 @@ const CustomerRate = () => {
   // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form Data Submitted:", formData);
 
     // Alert if no customer is selected
     if (!selectedCustomer) {
@@ -124,45 +127,46 @@ const CustomerRate = () => {
     // Adding customer data to form data
     const formDataWithCustomer = {
       ...formData,
-      company_Name: selectedCustomer.company_Name,
+      company_name: selectedCustomer.company_name,
       GST_No: selectedCustomer.GST_No,
       customer_Name: selectedCustomer.customer_Name,
       mobile_Number: selectedCustomer.mobile_Number,
     };
 
     // Setting API endpoint based on vehicle type
-    let apiEndpoint = "";
-    if (formData.vehicle_Type === "Corporate Customer") {
-      apiEndpoint = "http://localhost:7000/api/corporate-customer";
-    } else if (formData.vehicle_Type === "Individual Customer") {
-      apiEndpoint =
-        "https://carbooking-backend-fo78.onrender.com/api/individual-customer-rate";
-    } else {
-      window.alert("Invalid customer type");
-      return;
-    }
+  let apiEndpoint = "";
+  if (formData.Cus_Type === "Corporate Customer") {
+    apiEndpoint = "http://localhost:7000/api/corporate-customer";
+  } else if (formData.Cus_Type === "Individual Customer") {
+    apiEndpoint = "http://localhost:7000/api/indivisual-customer";
+  } else {
+    window.alert("Invalid customer type");
+    return;
+  }
 
     // Sending POST request to the API
-    const response = await fetch(apiEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formDataWithCustomer),
-    });
+  const response = await fetch(apiEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formDataWithCustomer),
+  });
 
     // Handling successful or failed API response
     if (response.ok) {
       setSuccessMessage("Data added successfully!");
       setFormData(initialFormData);
       setSelectedCustomer(null);
+      // Display alert after successful save
+      window.alert("Data added successfully!");
     } else {
       console.error("Error posting data:", response.statusText);
     }
   };
 
-  // Rendering the component
 
+  // Rendering the component
   return (
     <>
       <Sidebar />
@@ -178,8 +182,8 @@ const CustomerRate = () => {
             >
               Corporate Customer
             </h2>
-              {/* Form */}
-              <form onSubmit={handleSubmit}>
+            {/* Form */}
+            <form onSubmit={handleSubmit}>
               {/* Customer Type dropdown */}
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">
@@ -195,20 +199,18 @@ const CustomerRate = () => {
                 >
                   <option value="">Customer</option>
                   <option value="Corporate Customer">Corporate Customer</option>
-                  <option value="Indivisual Customer">
-                    Indivisual Customer
-                  </option>
+                  <option value="Individual Customer">Individual Customer</option>
                 </select>
               </div>
               <div className="form-group">
-                <label htmlFor="customer_Name" className="form-label">
+                <label htmlFor="Cus_name" className="form-label">
                   Customer Name:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
                   className="form-control-rate-add-input"
-                  name="customer_Name"
-                  id="customer_Name"
+                  name="Cus_name"
+                  id="Cus_name"
                   onChange={(e) => {
                     const selectedCustomer = customerList.find(
                       (customer) => customer.Cus_name === e.target.value
@@ -226,7 +228,7 @@ const CustomerRate = () => {
                 </select>
               </div>
               <div className="rate-form-group">
-                <label htmlFor="company_Name" className="form-label">
+                <label htmlFor="company_name" className="form-label">
                   Company Name:
                   <span className="required-asterisk">*</span>
                 </label>
@@ -234,60 +236,59 @@ const CustomerRate = () => {
                   <input
                     className="form-control-rate-add-input"
                     type="text"
-                    id="company_Name"
-                    name="company_Name"
+                    id="company_name"
+                    name="company_name"
                     placeholder="Company Name"
-                    value={formData.company_Name}
+                    value={formData.company_name}
                     onChange={handleChange}
                   />
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="GST_No" className="form-label">
+                <label htmlFor="gst_no" className="form-label">
                   GST No:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="GST_No"
-                  name="GST_No"
+                  id="gst_no"
+                  name="gst_no"
                   placeholder="GST No."
-                  value={formData.GST_No}
+                  value={formData.gst_no}
                   onChange={handleChange}
                 />
               </div>
-             
+
               <div className="form-group">
-                <label htmlFor="mobile_Number" className="form-label">
+                <label htmlFor="Cus_Mobile" className="form-label">
                   Mobile No:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-cust-add-input"
                   type="tel"
-                  id="mobile_Number"
-                  name="mobile_Number"
+                  id="Cus_Mobile"
+                  name="Cus_Mobile"
                   placeholder="Mobile No."
                   onChange={handleChange}
-                  value={formData.mobile_Number}
+                  value={formData.Cus_Mobile}
                 />
                 {mobilenoError && (
                   <p className="error-message">{mobilenoError}</p>
                 )}
               </div>
               <div className="form-group">
-                <label htmlFor="rate_per_km" className="form-label">
+                <label htmlFor="type_of_vehicle" className="form-label">
                   Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
-                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                 <select
                   className="form-control-cust-add-input"
-                  name="vehicle_Type"
-                  id="vehicle_Type"
+                  name="type_of_vehicle"
+                  id="type_of_vehicle"
                   onChange={handleChange}
-                  value={formData.vehicle_Type}
+                  value={formData.type_of_vehicle}
                 >
                   <option value="">Vehicle</option>
                   <option value="Sedan Car">Sedan Car</option>
@@ -338,15 +339,15 @@ const CustomerRate = () => {
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
-                    <label htmlFor="title" className="form-label">
+                    <label htmlFor="duty_type" className="form-label">
                       Duty Type:
                       <span className="required-asterisk">*</span>
                     </label>
                     <select
                       className="rate-form-control"
-                      name="title"
-                      id="title"
-                      value={formData.title}
+                      name="duty_type"
+                      id="duty_type"
+                      value={formData.duty_type}
                       onChange={handleChange}
                     >
                       <option value="">Duty Type</option>
@@ -356,7 +357,6 @@ const CustomerRate = () => {
                       <option value="One Day / 300km">
                         One Day /300km-Outstation Duty
                       </option>
-                      {/* Add other options as needed */}
                     </select>
                   </div>
                 </div>
@@ -391,7 +391,7 @@ const CustomerRate = () => {
                       id="km"
                       name="km"
                       placeholder="km"
-                      value={formData.KM}
+                      value={formData.km}
                       onChange={handleChange}
                     />
                   </div>
@@ -417,34 +417,34 @@ const CustomerRate = () => {
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
-                    <label htmlFor="hour" className="form-label">
+                    <label htmlFor="hours" className="form-label">
                       Hour:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
-                      type="hour"
-                      id="hour"
-                      name="hour"
-                      placeholder="hour"
-                      value={formData.Hour}
+                      type="hours"
+                      id="hours"
+                      name="hours"
+                      placeholder="hours"
+                      value={formData.hours}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="extra_hour" className="form-label">
+                    <label htmlFor="extra_hours" className="form-label">
                       Extra Hour:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
-                      type="extra_hour"
-                      id="extra_hour"
-                      name="extra_hour"
+                      type="extra_hours"
+                      id="extra_hours"
+                      name="extra_hours"
                       placeholder="Extra Hour"
-                      value={formData.extra_hour}
+                      value={formData.extra_hours}
                       onChange={handleChange}
                     />
                   </div>

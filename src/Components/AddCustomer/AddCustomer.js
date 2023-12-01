@@ -3,9 +3,8 @@ import "./AddCustomer.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddCustomer = () => {
-  
   const initialFormData = {
-    customer_type: "",
+    // customer_type: "",
     customername: "",
     companyname: "",
     gstno: "",
@@ -42,8 +41,15 @@ const AddCustomer = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if any required fields are empty or undefined
     if (
-      formData.customer_type.trim() === "" ||
+      !formData.customername ||
+      !formData.companyname ||
+      !formData.gstno ||
+      !formData.mobileno ||
+      !formData.email ||
+      !formData.address ||
       formData.customername.trim() === "" ||
       formData.companyname.trim() === "" ||
       formData.gstno.trim() === "" ||
@@ -71,7 +77,6 @@ const AddCustomer = () => {
       };
 
       const response = await fetch("https://carbooking-backend-fo78.onrender.com/api/add-customers", {
-                                     
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,15 +90,11 @@ const AddCustomer = () => {
       } else {
         alert("Failed to add data. Please try again.");
       }
-
-      // ... (API request and success handling)
     } catch (error) {
       console.error("API request error:", error);
       alert("Failed to add data. Please try again.");
     }
   };
-
-
 
   return (
     <>
@@ -102,25 +103,7 @@ const AddCustomer = () => {
         <div className="customer-main-container">
           <div className="customer-form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer</h2>
-            <div className="form-group">
-                <label htmlFor="customer_type" className="form-label">
-                  Customer Type:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <select
-                  className="form-control-cust-add-input"
-                  name="vehicle_Type"
-                  id="vehicle_Type"
-                  onChange={handleChange}
-                  value={formData.vehicle_Type}
-                >
-                  <option value="">Customer</option>
-                  <option value="Corporate Customer">Corporate Customer</option>
-                  <option value="Indivisual Customer">
-                    Indivisual Customer
-                  </option>
-                </select>
-              </div>
+            
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name:
@@ -138,7 +121,6 @@ const AddCustomer = () => {
             </div>
             <div className="form-group">
               <label htmlFor="companyname" className="form-label">
-              {/* <span className="required-asterisk">*</span> */}
                 Company Name:
               </label>
               <input
@@ -167,21 +149,21 @@ const AddCustomer = () => {
               />
             </div>
             <div className="form-group">
-  <label htmlFor="mobileno" className="form-label">
-    Mobile No:
-    <span className="required-asterisk">*</span>
-  </label>
-  <input
-    className="form-control-cust-add-input"
-    type="tel"
-    id="mobileno"
-    name="mobileno"
-    placeholder="Mobile No."
-    onChange={handleChange}
-    value={formData.mobileno}
-  />
-  {mobilenoError && <p className="error-message">{mobilenoError}</p>}
-</div>
+              <label htmlFor="mobileno" className="form-label">
+                Mobile No:
+                <span className="required-asterisk">*</span>
+              </label>
+              <input
+                className="form-control-cust-add-input"
+                type="tel"
+                id="mobileno"
+                name="mobileno"
+                placeholder="Mobile No."
+                onChange={handleChange}
+                value={formData.mobileno}
+              />
+              {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+            </div>
 
             <div className="form-group">
               <label htmlFor="email" className="form-label">
