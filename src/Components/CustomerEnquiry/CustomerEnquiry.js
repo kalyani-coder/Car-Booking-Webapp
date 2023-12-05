@@ -51,6 +51,7 @@ const CustomerEnquiry = () => {
     if (selectedCustomer) {
       setFormData((prevData) => ({
         ...prevData,
+        customername: selectedCustomer.Cus_name,
         mobileno: selectedCustomer.Cus_Mobile,
         email: selectedCustomer.Cus_Email,
         address: selectedCustomer.address,
@@ -123,18 +124,18 @@ const CustomerEnquiry = () => {
       const pickupDate = new Date(`${date1}`);
       const dropoffDate = new Date(`${date2}`);
 
-      console.log("Selected Pickup Date :", pickupDate);
-      console.log("Selected Dropoff Date:", dropoffDate);
+      // console.log("Selected Pickup Date :", pickupDate);
+      // console.log("Selected Dropoff Date:", dropoffDate);
 
       const timeDifference = dropoffDate - pickupDate;
 
-      const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      // const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const totalDays = Math.abs(Math.round(timeDifference / (1000 * 3600 * 24)));
+      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
       setFormData((prevData) => ({
         ...prevData,
         totaldays: totalDays,
-        // totalhours: totalHours,
+        totalhours: totalHours,
       }));
     }
   };
@@ -146,7 +147,7 @@ const CustomerEnquiry = () => {
     if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
       const timeDifference = selectedDate2 - selectedDate1;
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      // const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
       const formattedDate1 = selectedDate1.toLocaleDateString("en-US");
       const formattedDate2 = selectedDate2.toLocaleDateString("en-US");
@@ -154,7 +155,7 @@ const CustomerEnquiry = () => {
       setFormData((prevData) => ({
         ...prevData,
         totaldays: totalDays,
-        // totalhours: totalHours,
+        totalhours: totalHours,
         formattedDate1: formattedDate1,
         formattedDate2: formattedDate2,
       }));
@@ -162,7 +163,7 @@ const CustomerEnquiry = () => {
       setFormData((prevData) => ({
         ...prevData,
         totaldays: "",
-        // totalhours: "",
+         totalhours: "",
         formattedDate1: "",
         formattedDate2: "",
       }));
@@ -434,7 +435,7 @@ const CustomerEnquiry = () => {
                   type="text"
                   className="form-control-cust-inq-input"
                   name="totalhours"
-                  // placeholder="Total Hours"
+                  placeholder="Total Hours"
                   value={formData.totalhours}
                   readOnly
                 />

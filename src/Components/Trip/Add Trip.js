@@ -78,27 +78,19 @@ const AddTrip = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    
   
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-
-
-    
   
-    if (
-      (name === 'date1' && formData.time1) ||
-      (name === 'date' && formData.time)
-    ) {
+    if ((name === 'date1' && formData.time1) || (name === 'date' && formData.time)) {
       const startDate = new Date(formData.date + ' ' + formData.time);
       const endDate = new Date(formData.date1 + ' ' + formData.time1);
   
       // Calculate total days
       const timeDifference = endDate.getTime() - startDate.getTime();
-      const daysDifference = timeDifference / (1000 * 3600 * 24 );
-      const totalDays = Math.abs(Math.round(daysDifference)); // Use Math.abs to ensure positive value
+      const totalDays = Math.abs(Math.round(timeDifference / (1000 * 3600 * 24)));
   
       // Update form data with total days
       setFormData((prevData) => ({
@@ -107,17 +99,13 @@ const AddTrip = () => {
       }));
     }
   
-    if (
-      (name === 'time1' && formData.date1) ||
-      (name === 'time' && formData.date)
-    ) {
+    if ((name === 'time1' && formData.date1) || (name === 'time' && formData.date)) {
       const startTime = new Date(formData.date + ' ' + formData.time);
       const endTime = new Date(formData.date1 + ' ' + formData.time1);
   
       // Calculate total hours
       const timeDifference = endTime.getTime() - startTime.getTime();
-      const hoursDifference = timeDifference / (1000 * 3600);
-      const totalHours = Math.abs(Math.round(hoursDifference)); // Use Math.abs to ensure positive value
+      const totalHours = Math.abs(Math.round(timeDifference / (1000 * 3600)));
   
       // Update form data with total hours
       setFormData((prevData) => ({
@@ -126,6 +114,7 @@ const AddTrip = () => {
       }));
     }
   };
+  
 
   
 
