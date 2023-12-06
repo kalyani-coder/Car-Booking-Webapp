@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./ViewCustomerRate.css";
 import Sidebar from '../Sidebar/Sidebar';
+import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
+
 
 const ViewCustomerRate = () => {
   const [customerRates, setCustomerRates] = useState([]);
@@ -75,10 +77,23 @@ const ViewCustomerRate = () => {
     }
   };
 
-  // Function to delete a customer rate (example implementation)
-  const deleteCustomerRate = (customerRateId) => {
-    // Implement your delete logic here
-    console.log(`Delete customer rate with ID: ${customerRateId}`);
+  const deleteCustomerRate = async (customerRateId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this driver?");
+    try {
+      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/customer-rate/${customerRateId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setCustomerRates((prevCustomerRates) =>
+          prevCustomerRates.filter((customerRate) => customerRate._id !== customerRateId)
+        );
+      } else {
+        console.error('Error deleting customer rate:', response.status);
+      }
+    } catch (error) {
+      console.error('Error deleting customer rate:', error);
+    }
   };
 
   return (
@@ -98,76 +113,102 @@ const ViewCustomerRate = () => {
             />
           </div>
 
-          <div className="grid-view">
+          <div className="table-view">
             {filteredCustomerRates.length === 0 ? (
               <p>No results found.</p>
             ) : (
-              <div className="grid grid-cols-3 gap-4">
-                {filteredCustomerRates.map((customerRate) => (
-                  <div key={customerRate._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
-                    <div className="custom-card-body p-4">
-                      <h5 className="font-semibold">Company Name: {customerRate.company_Name}</h5>
-                      <p className="font-semibold">Customer Name: {customerRate.customer_Name}</p>
-                      <p className="custom-card-subtitle mb-2">GST_No: {customerRate.GST_No}</p>
-                      <p className="custom-card-subtitle mb-2">Mobile Number: {customerRate.mobile_Number}</p>
-                      <p className="custom-card-subtitle mb-2">Rate Per KM: {customerRate.rate_per_km}</p>
-                      <p className="custom-card-subtitle mb-2">Title: {customerRate.title}</p>
-                      <p className="custom-card-subtitle mb-2">Rate: {customerRate.rate}</p>
-                      {/* Add more fields as needed */}
-                      <div className="flex justify-between">
-                        <button className='btn btn-info' onClick={() => handleEditCustomerRate(customerRate)}>Edit</button>
-                        <button className='btn btn-danger' onClick={() => handleSave(customerRate._id)}>Save</button>
-                        <button className='btn btn-success' onClick={() => deleteCustomerRate(customerRate._id)}>Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Company Name</th>
+                    <th>Customer Name</th>
+                    <th>GST No</th>
+                    <th>Mobile Number</th>
+                    <th>Rate Per KM</th>
+                    <th>Title</th>
+                    <th>Rate</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCustomerRates.map((customerRate) => (
+                    <tr key={customerRate._id}>
+                      <td>{customerRate.company_Name}</td>
+                      <td>{customerRate.customer_Name}</td>
+                      <td>{customerRate.GST_No}</td>
+                      <td>{customerRate.mobile_Number}</td>
+                      <td>{customerRate.rate_per_km}</td>
+                      <td>{customerRate.title}</td>
+                      <td>{customerRate.rate}</td>
+                      <td>
+                        <button className='btn btn-info' onClick={() => handleEditCustomerRate(customerRate)}>
+                          <FaEdit />
+                        </button>
+                        <button className='btn btn-danger' onClick={() => deleteCustomerRate(customerRate._id)}>
+                          <FaTrash />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             )}
           </div>
         </div>
       </div>
 
       {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg">
-            <h2 className="text-2xl font-bold mb-2">Edit Customer Rate</h2>
+          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded shadow-lg w-96">
+          <div className="flex justify-between items-center mb-2">
+        <h2 className="text-2xl font-bold">Edit Corporate Customer Rate</h2>
+        <button onClick={() => setIsEditing(false)} className="close-icon">
+          <FaTimes />
+        </button>
+      </div>
+            <h5 className='fw-bold'>Company Name</h5>
             <input
               type="text"
               value={editedCustomerRate.company_Name}
               onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, company_Name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
+            <h5 className='fw-bold'>Customer Name</h5>
             <input
               type="text"
               value={editedCustomerRate.customer_Name}
               onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, customer_Name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
+            <h5 className='fw-bold'>GST No</h5>
             <input
               type="text"
               value={editedCustomerRate.GST_No}
               onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, GST_No: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
+            <h5 className='fw-bold'>Mobile Namer</h5>
             <input
               type="text"
               value={editedCustomerRate.mobile_Number}
               onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, mobile_Number: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
+            <h5 className='fw-bold'>Rate Per Km</h5>
             <input
               type="text"
               value={editedCustomerRate.rate_per_km}
               onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, rate_per_km: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
+            <h5 className='fw-bold'>Duty Type</h5>
             <input
               type="text"
               value={editedCustomerRate.title}
               onChange={(e) => setEditedCustomerRate({ ...editedCustomerRate, title: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
+            <h5 className='fw-bold'>Rate</h5>
             <input
               type="text"
               value={editedCustomerRate.rate}
