@@ -42,6 +42,13 @@ const UpdateDuty = () => {
     advanceamount: '',
     remainingamount:'',
     paymentmethod: '',
+    paymentmethod: '',
+    chequeNo: '',
+    ifscCode: '',
+    upiId: '',
+    cashReceiver: '',
+    transactionId: '',
+    TransactionNumber : '',
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -158,6 +165,138 @@ const UpdateDuty = () => {
     }
   };
 
+  const renderPaymentMethodFields = () => {
+    if (formData.paymentmethod === "Cheque") {
+      return (
+        <>
+          <div className="mb-3"style={{width : "50%"}}>
+            <label className="form-label">Cheque Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.chequeNo}
+              onChange={(e) => setFormData({ ...formData, chequeNo: e.target.value })}
+            />
+          </div>
+          <div className="mb-3"style={{width : "50%"}}>
+            <label className="form-label">IFSC Code:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.ifscCode}
+              onChange={(e) => setFormData({ ...formData, ifscCode: e.target.value })}
+            />
+          </div>
+
+          <div className="mb-3" style={{width : "50%"}}>
+            <label className="form-label">Transaction Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.TransactionNumber}
+              onChange={(e) => setFormData({ ...formData, TransactionNumber: e.target.value})}
+            />
+          </div>
+        </>
+      );
+    } else if (formData.paymentmethod === "UPI / Wallet Payment") {
+      return (
+        <>
+          <div className="mb-3" style={{width : "50%"}}>
+            <label className="form-label">UPI ID:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.upiId}
+              onChange={(e) => setFormData({ ...formData, upiId: e.target.value })}
+            />
+          </div>
+        </>
+      );
+    } else if (formData.paymentmethod === "Cash") {
+      return (
+        <>
+          <div className="mb-3">
+            <label className="form-label">Name to Whom Submitted Cash:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.cashReceiver}
+              onChange={(e) => setFormData({ ...formData, cashReceiver: e.target.value })}
+            />
+          </div>
+          {/* <div className="mb-3">
+            <label className="form-label">Upload Receipt:</label>
+            <input
+              type="file"
+              className="form-control"
+              onChange={handleFileChange} // Assuming you have a handleFileChange function
+            />
+          </div> */}
+        </>
+      );
+    } else if (formData.paymentmethod === "Bank Transfer(NEFT)") {
+      return (
+        <>
+          <div className="mb-3" style={{width : "50%"}}>
+            <label className="form-label">NEFT Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.neftnumber}
+              onChange={(e) => setFormData({ ...formData, neftnumber: e.target.value })}
+            />
+          </div>
+
+          <div className="mb-3" style={{width : "50%"}}>
+            <label className="form-label">IFSC Code :</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.ifsccode}
+              onChange={(e) => setFormData({ ...formData, ifsccode: e.target.value })}
+            />
+          </div>
+
+          <div className="mb-3" style={{width : "50%"}}>
+            <label className="form-label">Account Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.accountnumber}
+              onChange={(e) => setFormData({ ...formData, accountnumber: e.target.value })}
+            />
+          </div>
+
+          <div className="mb-3" style={{width : "50%"}}>
+            <label className="form-label">Branch Name:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.branchname}
+              onChange={(e) => setFormData({ ...formData, branchname: e.target.value })}
+            />
+          </div>
+        </>
+      );
+    } 
+    else {
+      return (
+        <>
+          <div className="mb-3">
+            <label className="form-label">Transaction ID:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.transactionId}
+              onChange={(e) => setFormData({ ...formData, transactionId: e.target.value })}
+            />
+          </div>
+        </>
+      );
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (Object.values(formData).some((value) => value === '')) {
@@ -168,7 +307,7 @@ const UpdateDuty = () => {
     const data = { ...formData };
 
     try {
-      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/update-duty', {
+      const response = await fetch('http://localhost:7000/api/update-duty', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -612,25 +751,27 @@ const UpdateDuty = () => {
                 /></div>
                 </div>
               
-              <div>
-              <div> <label htmlFor="paymentmethod" className="update-duty-form-label">
+                <div className="mb-3">
+              <label htmlFor="paymentmethod" className="update-duty-form-label">
                 Payment Method:
               </label>
-                <select
-                  className="update-duty-form-control"
-                  name="paymentmethod"
-                  id="paymentmethod"
-                  onChange={handleChange}
-                  value={formData.paymentmethod}
-                >
-                  <option value="">Payment Method</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Cheque ">Cheque </option>
-                            <option value="UPI / Wallet Payment">UPI /Wallet Payment</option>
-                            <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
-                            
-                </select></div>
+              <select
+                className="update-duty-form-control"
+                name="paymentmethod"
+                id="paymentmethod"
+                onChange={handleChange}
+                value={formData.paymentmethod}
+              >
+                <option value="">Payment Method</option>
+                <option value="Cash">Cash</option>
+                <option value="Cheque">Cheque</option>
+                <option value="UPI / Wallet Payment">UPI /Wallet Payment</option>
+                <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
+              </select>
             </div>
+
+            {/* Render payment method specific fields */}
+            {renderPaymentMethodFields()}
 
           </div>
         </div>
