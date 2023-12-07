@@ -133,12 +133,12 @@ const CustomerRate = () => {
       mobile_Number: selectedCustomer.mobile_Number,
     };
 
-    // Setting API endpoint based on vehicle type
+    // Setting API endpoint based on customer type
   let apiEndpoint = "";
   if (formData.Cus_Type === "Corporate Customer") {
-    apiEndpoint = "http://localhost:7000/api/corporate-customer";
+    apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/corporate-customer";
   } else if (formData.Cus_Type === "Individual Customer") {
-    apiEndpoint = "http://localhost:7000/api/indivisual-customer";
+    apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/indivisual-customer";
   } else {
     window.alert("Invalid customer type");
     return;

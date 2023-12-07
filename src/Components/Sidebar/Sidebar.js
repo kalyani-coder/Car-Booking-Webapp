@@ -177,7 +177,7 @@ const Sidebar = () => {
               </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcompanyrate'}>
-                  View Corporate Corporate Rate
+                  View Corporate Customer Rate
                 </Link>
               </a></li><hr />
               {/* <li><a class="dropdown-item" href="#">

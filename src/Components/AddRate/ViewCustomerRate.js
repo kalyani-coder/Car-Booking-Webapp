@@ -78,30 +78,29 @@ const ViewCustomerRate = () => {
   };
 
   const deleteCustomerRate = async (customerRateId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this driver?");
+    const confirmed = window.confirm("Are you sure you want to delete this corporate customer?");
     try {
       const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/customer-rate/${customerRateId}`, {
         method: 'DELETE',
       });
-
-      if (response.ok) {
-        setCustomerRates((prevCustomerRates) =>
-          prevCustomerRates.filter((customerRate) => customerRate._id !== customerRateId)
-        );
-      } else {
-        console.error('Error deleting customer rate:', response.status);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+  
+      setCustomerRates((prevCustomerRates) => prevCustomerRates.filter((customerRate) => customerRate._id !== customerRateId));
+      alert('Corporate customer deleted successfully');
     } catch (error) {
-      console.error('Error deleting customer rate:', error);
+      console.error('Error deleting corporate customer:', error);
+      setError('Error deleting corporate customer: ' + error.message);
     }
   };
-
+ 
   return (
     <>
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Company Rate</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Corporate Customer Rate</h2>
 
           <div className="search-bar">
             <input
@@ -126,7 +125,13 @@ const ViewCustomerRate = () => {
                     <th>Mobile Number</th>
                     <th>Rate Per KM</th>
                     <th>Title</th>
+                    <th>Type Of Vehicle</th>
+                    <th>Duty Type</th>
                     <th>Rate</th>
+                    <th>KM</th>
+                    <th>Extra KM</th>
+                    <th>Hour</th>
+                    <th>Extra Hour</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -138,8 +143,14 @@ const ViewCustomerRate = () => {
                       <td>{customerRate.GST_No}</td>
                       <td>{customerRate.mobile_Number}</td>
                       <td>{customerRate.rate_per_km}</td>
-                      <td>{customerRate.title}</td>
+                      <td>{customerRate.type_of_vehicle}</td>
+                      <td>{customerRate.rate_per_km}</td>
+                      <td>{customerRate.duty_type}</td>
                       <td>{customerRate.rate}</td>
+                      <td>{customerRate.km}</td>
+                      <td>{customerRate.extra_km}</td>
+                      <td>{customerRate.hours}</td>
+                      <td>{customerRate.extra_hours}</td>
                       <td>
                         <button className='btn btn-info' onClick={() => handleEditCustomerRate(customerRate)}>
                           <FaEdit />
