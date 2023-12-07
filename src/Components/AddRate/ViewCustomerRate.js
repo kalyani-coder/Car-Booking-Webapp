@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./ViewCustomerRate.css";
 import Sidebar from '../Sidebar/Sidebar';
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 
 const ViewCustomerRate = () => {
@@ -86,7 +87,7 @@ const ViewCustomerRate = () => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       setCustomerRates((prevCustomerRates) => prevCustomerRates.filter((customerRate) => customerRate._id !== customerRateId));
       alert('Corporate customer deleted successfully');
     } catch (error) {
@@ -94,13 +95,38 @@ const ViewCustomerRate = () => {
       setError('Error deleting corporate customer: ' + error.message);
     }
   };
- 
+
   return (
     <>
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
           <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Corporate Customer Rate</h2>
+
+
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Customers List
+            </a>
+
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <Link class="dropdown-item"
+                   to='/viewcorporatecustomer'>Corporate Customers
+                  
+                  </Link>
+                {/* <a class="dropdown-item" href="#">Corporate Customers</a> */}
+                </li>
+              <li>
+              <Link class="dropdown-item"
+                   to='/indivisualcustomers'>Indivisual Customers 
+                  
+                  </Link>
+                {/* <a class="dropdown-item" href="#">Another action</a> */}
+                </li>
+              {/* <li><a class="dropdown-item" href="#">Something else here</a></li> */}
+            </ul>
+          </div>
 
           <div className="search-bar">
             <input
@@ -169,14 +195,14 @@ const ViewCustomerRate = () => {
       </div>
 
       {isEditing && (
-          <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded shadow-lg w-96">
-          <div className="flex justify-between items-center mb-2">
-        <h2 className="text-2xl font-bold">Edit Corporate Customer Rate</h2>
-        <button onClick={() => setIsEditing(false)} className="close-icon">
-          <FaTimes />
-        </button>
-      </div>
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-2xl font-bold">Edit Corporate Customer Rate</h2>
+              <button onClick={() => setIsEditing(false)} className="close-icon">
+                <FaTimes />
+              </button>
+            </div>
             <h5 className='fw-bold'>Company Name</h5>
             <input
               type="text"
