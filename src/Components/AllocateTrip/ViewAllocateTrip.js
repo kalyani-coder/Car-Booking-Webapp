@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import './ViewAllocateTrip.css';
+
 
 const ViewAllocateTrip = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -85,36 +87,51 @@ const ViewAllocateTrip = () => {
           {error ? (
             <p>Error: {error}</p>
           ) : (
-            <div className="grid grid-cols-3 gap-4">
-              {filteredShareDetails.map((shareDetail) => (
-                <div key={shareDetail._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                  <div className="p-4">
-                    <h5 className="font-semibold ">Vehicle: {shareDetail.vehicle}</h5>
-                    <p className="mb-2">Trip Type: {shareDetail.triptype}</p>
-                    <p className="mb-2">Subtype: {shareDetail.subtype}</p>
-                    <p className="mb-2">Pickup: {shareDetail.pickuplocation}</p>
-                    <p className="mb-2">Date: {shareDetail.date}</p>
-                    <p className="mb-2">Time: {shareDetail.time}</p>
-                    <p className="mb-2">Dropoff: {shareDetail.dropofflocation}</p>
-                    <p className="mb-2">Date1: {shareDetail.date1}</p>
-                    <p className="mb-2">Time1: {shareDetail.time1}</p>
-                    <p className="mb-2">Driver Name: {shareDetail.drivername}</p>
-                    <p className="mb-2">Driver Email: {shareDetail.mail}</p>
-                    <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
-                    {/* <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p> */}
-                    {/* Add other fields as needed */}
-                    <div className="flex justify-between">
-
-
-                      <button className='btn btn-info'>Edit</button>
-                      <button className='btn btn-danger'>Save</button>
-                      <button className='btn btn-success' onClick={() => handleDelete(shareDetail._id)}>Delete</button>
-
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Trip Type</th>
+                  <th>Subtype</th>
+                  <th>Pickup</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Dropoff</th>
+                  <th>Date1</th>
+                  <th>Time1</th>
+                  <th>Driver Name</th>
+                  <th>Driver Email</th>
+                  <th>Mobile No</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredShareDetails.map((shareDetail) => (
+                  <tr key={shareDetail._id}>
+                    <td>{shareDetail.vehicle}</td>
+                    <td>{shareDetail.triptype}</td>
+                    <td>{shareDetail.subtype}</td>
+                    <td>{shareDetail.pickuplocation}</td>
+                    <td>{shareDetail.date}</td>
+                    <td>{shareDetail.time}</td>
+                    <td>{shareDetail.dropofflocation}</td>
+                    <td>{shareDetail.date1}</td>
+                    <td>{shareDetail.time1}</td>
+                    <td>{shareDetail.drivername}</td>
+                    <td>{shareDetail.mail}</td>
+                    <td>{shareDetail.mobileno}</td>
+                    <td>
+                    <button className='btn btn-info'>
+                      <FaEdit />
+                    </button>
+                    <button className='btn btn-danger' onClick={() => handleDelete(shareDetail._id)}>
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

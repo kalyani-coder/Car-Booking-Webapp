@@ -1,55 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+
 
 const ViewTrip = () => {
-  const [customers, setCustomers] = useState([]);
-  const [filteredCustomers, setFilteredCustomers] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [filteredTrips, setFilteredTrips] = useState([]);
   const [error, setError] = useState(null);
   const [searchCustomerName, setSearchCustomerName] = useState('');
 
   useEffect(() => {
-    const fetchCustomers = async () => {
+    const fetchTrips = async () => {
       try {
         const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-trip');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setCustomers(data);
-        setFilteredCustomers(data); // Initialize filtered data with all trips
+        setTrips(data);
+        setFilteredTrips(data); // Initialize filtered data with all trips
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Error fetching data: ' + error.message);
       }
     };
 
-    fetchCustomers();
+    fetchTrips();
   }, []);
 
   // Function to filter trips based on customer name
   const filterTrips = () => {
-    const filteredData = customers.filter((customer) => {
-      // Check if customer.customername is defined before filtering
-      if (customer.customername) {
-        return customer.customername.toLowerCase().includes(searchCustomerName.toLowerCase());
+    const filteredData = trips.filter((trip) => {
+      // Check if trip.customername is defined before filtering
+      if (trip.customername) {
+        return trip.customername.toLowerCase().includes(searchCustomerName.toLowerCase());
       } else {
-        return false; // Return false if customer.customername is undefined
+        return false; // Return false if trip.customername is undefined
       }
     });
 
-    setFilteredCustomers(filteredData);
+    setFilteredTrips(filteredData);
   };
 
   useEffect(() => {
     filterTrips();
   }, [searchCustomerName]);
 
+  // Handlers for edit and delete
+  const handleEditTrip = (tripId) => {
+    // Implement your logic for editing the trip with the given ID
+    console.log('Edit trip with ID:', tripId);
+  };
+
+  const handleDeleteTrip = (tripId) => {
+    // Implement your logic for deleting the trip with the given ID
+    console.log('Delete trip with ID:', tripId);
+  };
+
   return (
     <>
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>View Trips</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Trips</h2>
           <div className="p-4 space-y-4">
             <input
               type="text"
@@ -62,38 +75,59 @@ const ViewTrip = () => {
           {error ? (
             <p>Error: {error}</p>
           ) : (
-            <div className="grid grid-cols-2 gap-4">
-              {filteredCustomers.map((customer) => (
-                <div key={customer._id} className="custom-card bg-white shadow-md rounded-lg overflow-hidden">
-                  <div className="custom-card-body p-4">
-                    <h5 className="font-semibold">Customer Name: {customer.customername}</h5>
-                    <p className="custom-card-subtitle mb-2">Mobile No: {customer.mobileno}</p>
-                    <p className="custom-card-subtitle mb-2">Email: {customer.email}</p>
-                    <p className="custom-card-subtitle mb-2">Address: {customer.address}</p>
-                    <p className="custom-card-subtitle mb-2">Trip Type: {customer.triptype}</p>
-                    <p className="custom-card-subtitle mb-2">Sub Type: {customer.triptype}</p>
-                    <p className="custom-card-subtitle mb-2">Pickup Location: {customer.pickup}</p>
-                    <p className="custom-card-subtitle mb-2">Date: {customer.date}</p>
-                    <p className="custom-card-subtitle mb-2">Time: {customer.time}</p>
-                    <p className="custom-card-subtitle mb-2">Drop Off Location: {customer.dropoff}</p>
-                    <p className="custom-card-subtitle mb-2">Date: {customer.date1}</p>
-                    <p className="custom-card-subtitle mb-2">Time: {customer.time1}</p>
-                    <p className="custom-card-subtitle mb-2">Total Days: {customer.totaldays}</p>
-                    <p className="custom-card-subtitle mb-2">Hours: {customer.hours}</p>
-                    <p className="custom-card-subtitle mb-2">Vehicle: {customer.vehicle}</p>
-                    {/* Add other fields as needed */}
-                    <div className="flex justify-between">
-                        
-
-                        <button className='btn btn-info'>Edit</button>
-                        <button className='btn btn-danger'>Save</button>
-                        <button className='btn btn-success'>Delete</button>
-                     
-                      </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Mobile No</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Trip Type</th>
+                  <th>Sub Type</th>
+                  <th>Pickup</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Drop Off</th>
+                  <th>Date 1</th>
+                  <th>Time 1</th>
+                  <th>Total Days</th>
+                  <th>Hours</th>
+                  <th>Type of Vehicle</th>
+                  {/* Add other table headers as needed */}
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTrips.map((trip) => (
+                  <tr key={trip._id}>
+                    <td>{trip.customername}</td>
+                    <td>{trip.mobileno}</td>
+                    <td>{trip.email}</td>
+                    <td>{trip.address}</td>
+                    <td>{trip.triptype}</td>
+                    <td>{trip.subtype}</td>
+                    <td>{trip.pickup}</td>
+                    <td>{trip.date}</td>
+                    <td>{trip.time}</td>
+                    <td>{trip.dropoff}</td>
+                    <td>{trip.date1}</td>
+                    <td>{trip.time1}</td>
+                    <td>{trip.totaldays}</td>
+                    <td>{trip.hours}</td>
+                    <td>{trip.vehicle}</td>
+                    {/* Add other table cells as needed */}
+                    <td>
+                      <button className='btn btn-info' onClick={() => handleEditTrip(trip._id)}>
+                        <FaEdit />
+                      </button>
+                      <button className='btn btn-danger' onClick={() => handleDeleteTrip(trip._id)}>
+                        <FaTrash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>

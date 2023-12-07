@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { FaEdit, FaTrash, FaFilePdf } from 'react-icons/fa';
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -140,53 +141,65 @@ const ViewShareDetails = () => {
           {error ? (
             <p>Error: {error}</p>
           ) : (
-            <div className="grid grid-cols-3 gap-4">
-              {filteredShareDetails.map((shareDetail) => (
-                <div key={shareDetail._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                  <div className="p-4">
-                    <h5 className="font-semibold  ">Vehicle: {shareDetail.vehicle}</h5>
-                    <p className="mb-2">Trip Type: {shareDetail.triptype}</p>
-                    <p className="mb-2">Subtype: {shareDetail.subtype}</p>
-                    <p className="mb-2">Pickup: {shareDetail.pickup}</p>
-                    <p className="mb-2">Date: {shareDetail.date}</p>
-                    <p className="mb-2">Time: {shareDetail.time}</p>
-                    <p className="mb-2">Dropoff: {shareDetail.Dropoff}</p>
-                    <p className="mb-2">Date1: {shareDetail.date1}</p>
-                    <p className="mb-2">Time1: {shareDetail.time1}</p>
-                    <p className="mb-2">Driver Name: {shareDetail.drivername}</p>
-                    <p className="mb-2">Driver Email: {shareDetail.drivermail}</p>
-                    <p className="mb-2">Mobile No: {shareDetail.mobileno}</p>
-                    <p className="mb-2">Mobile No1: {shareDetail.mobileno1}</p>
-                    <div className="flex justify-between">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Vehicle</th>
+                  <th>Trip Type</th>
+                  <th>Subtype</th>
+                  <th>Pickup</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Dropoff</th>
+                  <th>Date1</th>
+                  <th>Time1</th>
+                  <th>Driver Name</th>
+                  <th>Driver Email</th>
+                  <th>Mobile No</th>
+                  <th>Mobile No1</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredShareDetails.map((shareDetail) => (
+                  <tr key={shareDetail._id}>
+                    <td>{shareDetail.vehicle}</td>
+                    <td>{shareDetail.triptype}</td>
+                    <td>{shareDetail.subtype}</td>
+                    <td>{shareDetail.pickuplocation}</td>
+                    <td>{shareDetail.date}</td>
+                    <td>{shareDetail.time}</td>
+                    <td>{shareDetail.dropofflocation}</td>
+                    <td>{shareDetail.date1}</td>
+                    <td>{shareDetail.time1}</td>
+                    <td>{shareDetail.drivername}</td>
+                    <td>{shareDetail.drivermail}</td>
+                    <td>{shareDetail.mobileno}</td>
+                    <td>{shareDetail.mobileno1}</td>
+                    <td>
                       <button
                         className='btn btn-primary btn-sm'
                         onClick={() => generateInvoice(shareDetail)}
                       >
-                        Generate
+                        <FaFilePdf />
                       </button>
                       <button
                         className='btn btn-info btn-sm'
                         onClick={() => handleEditShareDetail(shareDetail)}
                       >
-                        Edit
-                      </button>
-                      <button
-                        className='btn btn-success btn-sm'
-                        onClick={() => handleSaveShareDetail(shareDetail)}
-                      >
-                        Save
+                        <FaEdit />
                       </button>
                       <button
                         className='btn btn-danger btn-sm'
                         onClick={() => handleDeleteShareDetail(shareDetail)}
                       >
-                        Delete
+                        <FaTrash />
                       </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>
