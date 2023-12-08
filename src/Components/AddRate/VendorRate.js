@@ -4,16 +4,13 @@ import Sidebar from "../Sidebar/Sidebar";
 
 const VendorRate = () => {
   const initialFormData = {
-    customer_type:"",
     company_Name: "",
     GST_No: "",
     vender_Name: "",
     mobile_Number: "",
-    vehicle: "",
     title: "",
     rate: "",
     rate_per_Km: "",
-    rate_per_hour:"",
     hour: "",
     km: "",
     extra_km: "",
@@ -21,43 +18,71 @@ const VendorRate = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [mobilenoError, setMobilenoError] = useState(""); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+
+    if (name === "mobileno" && value.length > 10) {
+      // Prevent further input if more than 10 digits
+      return;
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
+
+    if (name === "mobileno") {
+      // Validate mobile number (10 digits)
+      if (!/^\d{10}$/.test(value)) {
+        setMobilenoError("Mobile number must be 10 digits");
+      } else {
+        setMobilenoError("");
+      }
+    }
   };
+
+    
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the form from submitting and causing a page reload
-
+    console.log("Form Data Submitted:", formData);
+    // Validate form fields
     for (const key in formData) {
       if (formData[key] === "") {
         window.alert("All fields are required");
         return;
       }
     }
+  
+    // Check if mobile number validation error exists
+    if (mobilenoError) {
+      window.alert(mobilenoError);
+      return;
+    }
 
-    const response = await fetch(
-      "https://carbooking-backend-fo78.onrender.com/api/vender-rate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+    try {
+      const response = await fetch(
+        "https://carbooking-backend-fo78.onrender.com/api/vender-rate",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(initialFormData),
+        });
+     
+  
+      if (response.ok) {
+        alert("Data added successfully!");
+        setFormData(initialFormData); // Reset the form fields to their initial values
+      } else {
+        alert("Failed to add data. Please try again.");
       }
-    );
-
-    if (response.ok) {
-      console.log("Data posted successfully!");
-      window.alert("Data posted Successfully");
-      setFormData(initialFormData); // Reset the form fields to their initial values
-    } else {
-      console.error("Error posting data:", response.statusText);
-      window.alert("Error posting data: " + response.statusText);
+    } catch (error) {
+      console.error("API request error:", error);
+      alert("Failed to add data. Please try again.");
     }
   };
 
@@ -77,19 +102,7 @@ const VendorRate = () => {
               Vendor Rate
             </h2>
             <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label htmlFor="customer_type" className="form-label">
-                  Customer Type:
-                <span className="required-asterisk">*</span>
-                </label>
-                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
-                <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
-                            <option value="">Customer</option>
-                            <option value="Corporate Customer">Corporate Customer</option>
-                            <option value="Indivisual Customer">Indivisual Customer</option>
-                           
-                          </select>
-              </div>
+            
               <div className="rate-form-group">
                 <label htmlFor="companyname" className="form-label">
                   Company Name:
@@ -154,7 +167,7 @@ const VendorRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="rate_per_km" className="form-label">
+                <label htmlFor="title" className="form-label">
                   Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
@@ -179,6 +192,23 @@ const VendorRate = () => {
                             <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
                           </select>
               </div>
+              <div className="form-group">
+                <label htmlFor="rateperkm" className="form-label">
+                  Rate Per KM (Extra Km):
+                  <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="form-control-rate-add-input"
+                  type="text"
+                  id="rate_per_Km"
+                  name="rate_per_Km"
+                  placeholder="Rate Per KM"
+                  value={formData.rate_per_Km}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
 
               <div className="d-flex gap-3">
                 <div>
@@ -219,44 +249,6 @@ const VendorRate = () => {
                   </div>    
                 </div>
               </div>
-            
-
-              <div className="form-group">
-                <label htmlFor="rateperkm" className="form-label">
-                  Rate Per KM (Extra Km):
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="text"
-                  id="rate_per_Km"
-                  name="rate_per_Km"
-                  placeholder="Rate Per KM"
-                  value={formData.rate_per_Km}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="rateperhour" className="form-label">
-                  Rate Per Hour (Extra Hour):
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="text"
-                  id="rate_per_hour"
-                  name="rate_per_hour"
-                  placeholder="Rate Per Hour"
-                  value={formData.rate_per_hour}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-
-              
             
               <div className="d-flex gap-3">
                 <div>
@@ -335,7 +327,7 @@ const VendorRate = () => {
                 </div>
               </div>
 
-              <button type="submit" className="rate-btn-submit">
+              <button type="submit" className="rate-btn-submit" onClick={handleSubmit}>
                 Save
               </button>
             </form>
