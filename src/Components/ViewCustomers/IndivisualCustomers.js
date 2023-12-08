@@ -95,10 +95,10 @@ const IndivisualCustomers = () => {
                 <th>Company Name</th>
                 <th>GST No</th>
                 <th>Mobile</th>
-                <th>Email</th>
-                <th>Address</th>
+                {/* <th>Email</th>
+                <th>Address</th> */}
                 <th>Type of Vehicle</th>
-                <th>View More</th>
+                {/* <th>View More</th> */}
                 <th>Actions</th>
               </tr>
             </thead>
@@ -109,17 +109,18 @@ const IndivisualCustomers = () => {
                   <td>{customer.company_name}</td>
                   <td>{customer.gst_no}</td>
                   <td>{customer.Cus_Mobile}</td>
-                  <td>{customer.Cus_Email}</td>
-                  <td>{customer.address}</td>
+                  {/* <td>{customer.Cus_Email}</td>
+                  <td>{customer.address}</td> */}
                   <td>{customer.type_of_vehicle}</td>
 
-                  <td>
+                  {/* <td>
                     <button className='btn btn-secondary'>View More</button>
-                  </td>
+                  </td> */}
                   <td>
                     {editedCustomer && editedCustomer._id === customer._id ? (
                       <div className="modal-bg">
                         <div className="modal-content">
+                          <h1 className='fw-bold text-center'>Indivisual Customers List</h1>
                           <h2>Edit Customer</h2>
                           <h5 className='fw-bold'>Customer Name</h5>
                           <input
@@ -149,20 +150,58 @@ const IndivisualCustomers = () => {
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Mobile: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>Customer Email</h5>
+                         
+                         
+                           <h5 className='fw-bold'>rate_per_km</h5>
                           <input
                             type="text"
-                            value={editedCustomer.Cus_Email}
-                            onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Email: e.target.value })}
+                            value={editedCustomer.rate_per_km}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, rate_per_km: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>Address</h5>
+                           <h5 className='fw-bold'>duty_type</h5>
                           <input
                             type="text"
-                            value={editedCustomer.address}
-                            onChange={(e) => setEditedCustomer({ ...editedCustomer, address: e.target.value })}
+                            value={editedCustomer.duty_type}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, duty_type: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
+                           <h5 className='fw-bold'>rate</h5>
+                          <input
+                            type="text"
+                            value={editedCustomer.rate}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, rate: e.target.value })}
+                            className="w-full p-2 mb-2 border border-gray-300 rounded"
+                          />
+                           <h5 className='fw-bold'>km</h5>
+                          <input
+                            type="text"
+                            value={editedCustomer.km}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, km: e.target.value })}
+                            className="w-full p-2 mb-2 border border-gray-300 rounded"
+                          />
+                           <h5 className='fw-bold'>extra_km</h5>
+                          <input
+                            type="text"
+                            value={editedCustomer.extra_km}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, extra_km: e.target.value })}
+                            className="w-full p-2 mb-2 border border-gray-300 rounded"
+                          />
+                           <h5 className='fw-bold'>hours</h5>
+                          <input
+                            type="text"
+                            value={editedCustomer.hours}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, hours: e.target.value })}
+                            className="w-full p-2 mb-2 border border-gray-300 rounded"
+                          />
+                           <h5 className='fw-bold'>extra_hours</h5>
+                          <input
+                            type="text"
+                            value={editedCustomer.extra_hours}
+                            onChange={(e) => setEditedCustomer({ ...editedCustomer, extra_hours: e.target.value })}
+                            className="w-full p-2 mb-2 border border-gray-300 rounded"
+                          />
+                         
                           <button onClick={handleSaveEdit} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
                           <button onClick={() => setEditedCustomer(null)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
                         </div>
@@ -189,3 +228,8 @@ const IndivisualCustomers = () => {
 }
 
 export default IndivisualCustomers;
+
+
+
+
+
