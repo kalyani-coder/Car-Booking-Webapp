@@ -101,7 +101,7 @@ const ViewCustomerRate = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Corporate Customer Rate</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Customer List</h2>
 
 
           <div class="dropdown">
@@ -115,7 +115,6 @@ const ViewCustomerRate = () => {
                    to='/viewcorporatecustomer'>Corporate Customers
                   
                   </Link>
-                {/* <a class="dropdown-item" href="#">Corporate Customers</a> */}
                 </li>
               <li>
               <Link class="dropdown-item"
@@ -128,19 +127,11 @@ const ViewCustomerRate = () => {
             </ul>
           </div>
 
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search by Customer Name "
-              className="w-full p-2 rounded border"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        
 
           <div className="table-view">
             {filteredCustomerRates.length === 0 ? (
-              <p>No results found.</p>
+              <p></p>
             ) : (
               <table className="table">
                 <thead>

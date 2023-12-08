@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
-
-
-const ViewCorporateCustomr = () => {
+const YourComponent = () => {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
@@ -14,58 +13,87 @@ const ViewCorporateCustomr = () => {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  const handleEditCustomer = (customer) => {
+    // Handle edit logic here
+    console.log('Edit customer:', customer);
+  };
+
+  const deleteCustomer = (customerId) => {
+    // Handle delete logic here
+    console.log('Delete customer with ID:', customerId);
+  };
+
   return (
-    <>
-      <Sidebar />
-      <div className="customer-Add-container">
+    <>  
+    <Sidebar />
+    <div className="customer-Add-container">
         <div className="customer-main-container">
           <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Corporate Customer</h2>
-
 
           <div class="dropdown">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               Customers List
             </a>
-
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
                   <Link class="dropdown-item"
                    to='/viewcompanyrate'>View Company Rate
                   
                   </Link>
-                {/* <a class="dropdown-item" href="#">Corporate Customers</a> */}
                 </li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li>
+              <Link class="dropdown-item"
+                   to='/indivisualcustomers'>Indivisual Customers 
+                  
+                  </Link>
+                </li>
             </ul>
           </div>
 
 
 
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Company</th>
-                <th>GST No</th>
-                {/* Add more table headers based on your API schema */}
-              </tr>
-            </thead>
-            <tbody>
-              {customers.map(customer => (
-                <tr key={customer._id}>
-                  <td>{customer.Cus_name}</td>
-                  <td>{customer.company_name}</td>
-                  <td>{customer.gst_no}</td>
-                  {/* Add more table cells based on your API schema */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
-  );
-}
 
-export default ViewCorporateCustomr;
+      <table className="table">
+      <thead>
+        <tr>
+          <th>Customer Type</th>
+          <th>Customer Name</th>
+          <th>Company Name</th>
+          <th>GST No</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {customers.map((customer) => (
+          <tr key={customer._id}>
+            <td>{customer.Cus_type}</td>
+            <td>{customer.Cus_name}</td>
+            <td>{customer.company_name}</td>
+            <td>{customer.gst_no}</td>
+            <td>{customer.Cus_Mobile}</td>
+            <td>{customer.Cus_Email}</td>
+            <td>{customer.address}</td>
+            <td>
+              <button className='btn btn-info' onClick={() => handleEditCustomer(customer)}>
+                <FaEdit />
+              </button>
+              <button className='btn btn-danger' onClick={() => deleteCustomer(customer._id)}>
+                <FaTrash />
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    </div>
+    </div>
+    </>
+
+  );
+};
+
+export default YourComponent;
