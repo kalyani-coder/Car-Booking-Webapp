@@ -133,10 +133,16 @@ const ViewVendor = () => {
         </div>
       </div>
 
-      <Modal show={isEditing} onHide={() => setIsEditing(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Vendor</Modal.Title>
-        </Modal.Header>
+      <Modal show={isEditing}>
+  <Modal.Header className="d-flex justify-content-between align-items-center mb-2">
+    <h2 className="text-2xl font-bold">Edit Vendor</h2>
+    <div
+      className="close-icon"
+      onClick={() => setIsEditing(false)}
+    >
+      <FaTimes />
+    </div>
+  </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formVendorName">
