@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import "./ViewCustomerRate.css";
 import Sidebar from '../Sidebar/Sidebar';
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
+import './ViewCustomerRate.css';
 
 const ViewVenderRate = () => {
   const [customerRates, setCustomerRates] = useState([]);
@@ -10,7 +10,6 @@ const ViewVenderRate = () => {
   const [editedItem, setEditedItem] = useState(null);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-
 
   useEffect(() => {
     const fetchCustomerRates = async () => {
@@ -21,7 +20,7 @@ const ViewVenderRate = () => {
         }
         const data = await response.json();
         setCustomerRates(data);
-        setFilteredCustomerRates(data); // Initialize filtered data with all customer rates
+        setFilteredCustomerRates(data);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Error fetching data: ' + error.message);
@@ -31,105 +30,181 @@ const ViewVenderRate = () => {
     fetchCustomerRates();
   }, []);
 
+  useEffect(() => {
+    // Check if there's an edited item in localStorage and set it to state
+    const storedEditedItem = JSON.parse(localStorage.getItem('editedItem'));
+    if (storedEditedItem) {
+      setEditedItem(storedEditedItem);
+      setIsEditing(true);
+    }
+  }, []);
 
   const filterCustomerRates = () => {
-  const filteredData = customerRates.filter((customerRate) => {
-    const vendorNameMatches =
-      customerRate.vender_Name &&
-      customerRate.vender_Name.toLowerCase().includes(searchQuery.toLowerCase());
-    // Check if customerRate.vender_Name is defined before using toLowerCase
+    const filteredData = customerRates.filter((customerRate) => {
+      const vendorNameMatches =
+        customerRate.vender_Name &&
+        customerRate.vender_Name.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Add more criteria as needed
-    return vendorNameMatches;
-  });
-
-  setFilteredCustomerRates(filteredData);
-};
-
-const handleEdit = (_id) => {
-  const itemToEdit = customerRates.find((customerRate) => customerRate._id === _id);
-  setEditedItem(itemToEdit);
-};
-
-const handleSave = async () => {
-  // Implement your save logic here
-  console.log('Saving edited item:', editedItem);
-
-  // Assuming you have an endpoint for updating a vendor rate
-  const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/vender-rate/${editedItem._id}`, {
-    method: 'PUT', // Use the appropriate HTTP method for updating
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(editedItem),
-  });
-
-  if (response.ok) {
-    // Update the state after successful save
-    setCustomerRates((prevRates) =>
-      prevRates.map((rate) => (rate._id === editedItem._id ? editedItem : rate))
-    );
-    setEditedItem(null); // Reset edited item state
-  } else {
-    console.error('Error saving data:', response.statusText);
-    setError('Error saving data');
-  }
-};
-
-const handleDelete = async (id) => {
-  const confirmed = window.confirm("Are you sure you want to delete this vendor?");
-  try {
-    // Assuming you have an endpoint for deleting a vendor rate
-    const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/vender-rate/${id}`, {
-      method: 'DELETE',
+      return vendorNameMatches;
     });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    setFilteredCustomerRates(filteredData);
+  };
+
+  const handleEdit = (_id) => {
+    const itemToEdit = customerRates.find((customerRate) => customerRate._id === _id);
+    setEditedItem(itemToEdit);
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/vender-rate/${editedItem._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedItem),
+      });
+
+      if (response.ok) {
+        setCustomerRates((prevRates) =>
+          prevRates.map((customerRate) => (customerRate._id === editedItem._id ? editedItem : customerRate))
+        );
+        setIsEditing(false);
+
+        // Remove the edited item from localStorage
+        localStorage.removeItem('editedItem');
+      } else {
+        console.error('Error updating vendor rate:', response.status);
+      }
+    } catch (error) {
+      console.error('Error updating vendor rate:', error);
+      setError('Error updating vendor rate: ' + error.message);
     }
+  };
 
-    // Remove the deleted item from the state
-    setCustomerRates((prevRates) => prevRates.filter((customerRate) => customerRate._id !== id));
-    alert('vendor deleted successfully');
-  } catch (error) {
-    console.error('Error deleting vendor:', error);
-    setError('Error deleting vendor: ' + error.message);
-  }
-};
+  const handleCancelEdit = () => {
+    setEditedItem(null);
+    setIsEditing(false);
 
+    // Remove the edited item from localStorage
+    localStorage.removeItem('editedItem');
+  };
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this vendor rate?');
+    try {
+      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/vender-rate/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      setCustomerRates((prevRates) => prevRates.filter((customerRate) => customerRate._id !== id));
+      alert('Vendor rate deleted successfully');
+    } catch (error) {
+      console.error('Error deleting vendor rate:', error);
+      setError('Error deleting vendor rate: ' + error.message);
+    }
+  };
 
   return (
     <>
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Vendor Rate</h2>
+          <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>View Vendor Rate</h2>
 
           <div className="search-bar">
             <input
               type="text"
-              placeholder="Search by Vender Name "
+              placeholder="Search by Vendor Name "
               className="w-full p-2 rounded border"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg w-96">
-          <div className="flex justify-between items-center mb-2">
-        <h2 className="text-2xl font-bold">Edit Vendor Rate</h2>
-        <button onClick={() => setIsEditing(false)} className="close-icon">
-          <FaTimes />
-        </button>
-      </div>
 
-           
-            <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
-            <button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
-          </div>
-        </div>
-      )}
+          {isEditing && (
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded shadow-lg w-96">
+                <div className="flex justify-between items-center mb-2">
+                  <h2 className="text-2xl font-bold">Edit Vendor Rate</h2>
+                  <button onClick={handleCancelEdit} className="close-icon">
+                    <FaTimes />
+                  </button>
+                </div>
+                <h5>Company Name</h5>
+                <input
+                  type="text"
+                  value={editedItem.company_Name}
+                  onChange={(e) => setEditedItem({ ...editedItem, company_Name: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+
+
+                <h5>Vender Name</h5>
+                <input
+                  type="text"
+                  value={editedItem.vender_Name}
+                  onChange={(e) => setEditedItem({ ...editedItem, vender_Name: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+                <h5>GST_No</h5>
+                <input
+                  type="text"
+                  value={editedItem.GST_No}
+                  onChange={(e) => setEditedItem({ ...editedItem, GST_No: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+
+                <h5>Mobile Number</h5>
+                <input
+                  type="text"
+                  value={editedItem.mobile_Number}
+                  onChange={(e) => setEditedItem({ ...editedItem, mobile_Number: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+
+                <h5>rate_per_Km</h5>
+                <input
+                  type="text"
+                  value={editedItem.rate_per_Km}
+                  onChange={(e) => setEditedItem({ ...editedItem, rate_per_Km: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+
+                <h5>title</h5>
+                <input
+                  type="text"
+                  value={editedItem.title}
+                  onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+
+                <h5>rate</h5>
+                <input
+                  type="text"
+                  value={editedItem.rate}
+                  onChange={(e) => setEditedItem({ ...editedItem, rate: e.target.value })}
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                />
+
+                <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
+                  Save
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
 
           <div className="table-view">
             {filteredCustomerRates.length === 0 ? (
@@ -139,7 +214,7 @@ const handleDelete = async (id) => {
                 <thead>
                   <tr>
                     <th>Company Name</th>
-                    <th>Vender Name</th>
+                    <th>Vendor Name</th>
                     <th>GST No</th>
                     <th>Mobile Number</th>
                     <th>Rate Per KM</th>
@@ -155,12 +230,22 @@ const handleDelete = async (id) => {
                       <td>{customerRate.vender_Name}</td>
                       <td>{customerRate.GST_No}</td>
                       <td>{customerRate.mobile_Number}</td>
-                      <td>{customerRate.rate_per_km}</td>
+                      <td>{customerRate.rate_per_Km}</td>
                       <td>{customerRate.title}</td>
                       <td>{customerRate.rate}</td>
                       <td>
-                        <button className="btn btn-info" onClick={() => handleEdit(customerRate._id)}><FaEdit /></button>
-                        <button className="btn btn-danger" onClick={() => handleDelete(customerRate._id)}><FaTrash /></button>
+                        <button
+                          className="btn btn-info"
+                          onClick={() => handleEdit(customerRate._id)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(customerRate._id)}
+                        >
+                          <FaTrash />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -175,4 +260,3 @@ const handleDelete = async (id) => {
 };
 
 export default ViewVenderRate;
-

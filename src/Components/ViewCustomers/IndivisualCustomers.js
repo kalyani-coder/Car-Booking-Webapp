@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
-import './IndivisualCustomer.css'
+import './IndivisualCustomer.css';
 
 const IndivisualCustomers = () => {
   const [customers, setCustomers] = useState([]);
