@@ -20,6 +20,9 @@ const StartEndDetails = () => {
     mobileno: '',
     drivername: '',
     mobileNumber: '',
+    toll: '',
+    allowance: '',
+    nightstay: '',
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -329,7 +332,6 @@ const StartEndDetails = () => {
                 />
               </div>
             </div>
-
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="mobileNumber" className="start-end-details-label">
@@ -345,7 +347,56 @@ const StartEndDetails = () => {
               </div>
             </div>
           </div>
-
+          <div className="start-end-details-row">
+          <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="allowance" className="start-end-details-label">
+                  Allowance:
+                {/* <span className="required-asterisk">*</span> */}
+                </label>
+                <input
+                  className="start-end-details-input add-input"
+                  type="text"
+                  name="Allowance" placeholder='Enter Driver Allowance'
+                  onChange={handleChange}
+                  value={formData.allowance}
+                />
+              </div>
+            </div>
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="allowance" className="start-end-details-label">
+                  Toll Charges:
+                {/* <span className="required-asterisk">*</span> */}
+                </label>
+                <input
+                  className="start-end-details-input add-input"
+                  type="number"
+                  name="toll" placeholder='Enter Driver Toll Charges'
+                  onChange={handleChange}
+                  value={formData.toll}
+                />
+              </div>
+            </div>
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="nightstay" className="start-end-details-label">
+                  Night Stay:
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="number"
+                  name="nightstay" placeholder='Enter Driver Nght Stay'
+                  onChange={handleChange}
+                  value={formData.nightstay}
+                />
+              </div>
+            </div>
+          </div>
+          
+         
+          
+    
           <div className="start-end-details-button-row">
             <button type="button" className="start-end-details-button">
               Print

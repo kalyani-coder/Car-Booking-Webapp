@@ -38,7 +38,8 @@
   .start-end-details-input {
     border: 1px solid #ccc;
     padding: 8px;
-    width: 100%;
+    flex: 1 1;
+    width: 92%;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
   }
   
@@ -55,6 +56,11 @@
     border: none;
     cursor: pointer;
   }
+ .add-input{
+  width: 350px;
+  padding: 8px;
+ }
+ 
   
   /* Responsive Styles */
   @media (max-width: 600px) {
