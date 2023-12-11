@@ -15,6 +15,9 @@ const getDetailsFromDriverSchema = new mongoose.Schema({
     tripsubtype: String,
     drivername: String,
     mobileNumber: Number,
+    toll : String,
+    allowance : Number,
+    nightstay : String,
 
 
 })
