@@ -356,8 +356,8 @@ const StartEndDetails = () => {
                 </label>
                 <input
                   className="start-end-details-input add-input"
-                  type="text"
-                  name="Allowance" placeholder='Enter Driver Allowance'
+                  type="number"
+                  name="allowance" placeholder='Enter Driver allowance'
                   onChange={handleChange}
                   value={formData.allowance}
                 />
@@ -365,7 +365,7 @@ const StartEndDetails = () => {
             </div>
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="allowance" className="start-end-details-label">
+                <label htmlFor="toll" className="start-end-details-label">
                   Toll Charges:
                 {/* <span className="required-asterisk">*</span> */}
                 </label>
