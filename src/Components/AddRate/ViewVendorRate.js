@@ -130,18 +130,19 @@ const ViewVenderRate = () => {
 
           {isEditing && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-4 rounded shadow-lg w-96">
+              <div className="bg-white p-4 rounded shadow-lg w-96 overflow-y-auto max-h-[80vh]">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-2xl font-bold">Edit Vendor Rate</h2>
                   <button onClick={handleCancelEdit} className="close-icon">
                     <FaTimes />
                   </button>
                 </div>
+                
                 <h5>Company Name</h5>
                 <input
                   type="text"
                   value={editedItem.company_Name}
-                  onChange={(e) => setEditedItem({ ...editedItem, company_Name: e.target.value })}
+                  onChange={(e) => setEditedItem({ ...editedItem, company_Name: e.target.company_Name })}
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
@@ -150,14 +151,14 @@ const ViewVenderRate = () => {
                 <input
                   type="text"
                   value={editedItem.vender_Name}
-                  onChange={(e) => setEditedItem({ ...editedItem, vender_Name: e.target.value })}
+                  onChange={(e) => setEditedItem({ ...editedItem, vender_Name: e.target.vender_Name })}
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
                 <h5>GST_No</h5>
                 <input
                   type="text"
                   value={editedItem.GST_No}
-                  onChange={(e) => setEditedItem({ ...editedItem, GST_No: e.target.value })}
+                  onChange={(e) => setEditedItem({ ...editedItem, GST_No: e.target.GST_No })}
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
@@ -165,7 +166,7 @@ const ViewVenderRate = () => {
                 <input
                   type="text"
                   value={editedItem.mobile_Number}
-                  onChange={(e) => setEditedItem({ ...editedItem, mobile_Number: e.target.value })}
+                  onChange={(e) => setEditedItem({ ...editedItem, mobile_Number: e.target.mobile_Number })}
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
@@ -173,25 +174,73 @@ const ViewVenderRate = () => {
                 <input
                   type="text"
                   value={editedItem.rate_per_Km}
-                  onChange={(e) => setEditedItem({ ...editedItem, rate_per_Km: e.target.value })}
+                  onChange={(e) => setEditedItem({ ...editedItem, rate_per_Km: e.target.rate_per_Km })}
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
-                <h5>title</h5>
+                
+              <h5>Duty Type</h5>
                 <input
                   type="text"
-                  value={editedItem.title}
-                  onChange={(e) => setEditedItem({ ...editedItem, title: e.target.value })}
-                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  id="title"
+                  value={editedItem?.title || ''}
+                  onChange={(e) => setEditedItem((prev) => ({ ...prev, title: e.target.title }))}
+                  className="form-control"
                 />
+             
 
                 <h5>rate</h5>
                 <input
                   type="text"
                   value={editedItem.rate}
-                  onChange={(e) => setEditedItem({ ...editedItem, rate: e.target.value })}
+                  onChange={(e) => setEditedItem({ ...editedItem, rate: e.target.rate })}
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
+                <h5>KM</h5>
+                    <input
+                      className="rate-form-control"
+                      type="number"
+                      id="km"
+                      name="km"
+                      placeholder="km"
+                      value={editedItem?.km || ''}
+                  onChange={(e) => setEditedItem((prev) => ({ ...prev, km: e.target.km }))}
+                      required
+                    />
+                    <h5>Extra KM</h5>
+                    <input
+                      className="rate-form-control"
+                      type="number"
+                      id="extra_km"
+                      name="extra_km"
+                      placeholder="extrakm"
+                      value={editedItem?.extra_km || ''}
+                      onChange={(e) => setEditedItem((prev) => ({ ...prev, extra_km: e.target.extra_km }))}
+                      required
+                    />
+                    <h5> Hour</h5>
+                    <input
+                      className="rate-form-control"
+                      type="number"
+                      id="hour"
+                      name="hour"
+                      placeholder="hour"
+                      value={editedItem?.hour || ''}
+                      onChange={(e) => setEditedItem((prev) => ({ ...prev, hour: e.target.hour }))}
+                      required
+                    />
+
+                     <h5>Extra Hour</h5>
+                    <input
+                      className="rate-form-control"
+                      type="number"
+                      id="extra_hour"
+                      name="extra_hour"
+                      placeholder="Extra Hour"
+                      value={editedItem?.extra_hour || ''}
+                      onChange={(e) => setEditedItem((prev) => ({ ...prev, extra_hour: e.target.extra_hour }))}
+                      required
+                    />
 
                 <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
                   Save
@@ -204,6 +253,7 @@ const ViewVenderRate = () => {
                 </button>
               </div>
             </div>
+            
           )}
 
           <div className="table-view">

@@ -85,14 +85,14 @@ const ViewTrip = () => {
                   <th>Trip Type</th>
                   <th>Sub Type</th>
                   <th>Pickup</th>
-                  <th>Date</th>
+                  {/* <th>Date</th>
                   <th>Time</th>
                   <th>Drop Off</th>
                   <th>Date 1</th>
                   <th>Time 1</th>
                   <th>Total Days</th>
                   <th>Hours</th>
-                  <th>Type of Vehicle</th>
+                  <th>Type of Vehicle</th> */}
                   {/* Add other table headers as needed */}
                   <th>Actions</th>
                 </tr>
@@ -107,14 +107,14 @@ const ViewTrip = () => {
                     <td>{trip.triptype}</td>
                     <td>{trip.subtype}</td>
                     <td>{trip.pickup}</td>
-                    <td>{trip.date}</td>
+                    {/* <td>{trip.date}</td>
                     <td>{trip.time}</td>
                     <td>{trip.dropoff}</td>
                     <td>{trip.date1}</td>
                     <td>{trip.time1}</td>
                     <td>{trip.totaldays}</td>
                     <td>{trip.hours}</td>
-                    <td>{trip.vehicle}</td>
+                    <td>{trip.vehicle}</td> */}
                     {/* Add other table cells as needed */}
                     <td>
                       <button className='btn btn-info' onClick={() => handleEditTrip(trip._id)}>
