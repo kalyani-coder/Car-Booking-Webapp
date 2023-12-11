@@ -77,7 +77,10 @@ const StartEndDetails = () => {
         customername: formData.customername,
         mobileno: formData.mobileno,
         drivername: formData.drivername,
-        mobileNumber: formData.mobileNumber
+        mobileNumber: formData.mobileNumber,
+        allowance: formData.allowance,
+        toll: formData.toll,
+        nightstay: formData.nightstay
       };
 
 
