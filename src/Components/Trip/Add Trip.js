@@ -3,6 +3,32 @@ import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddTrip = () => {
+
+
+  const initialPersonData = {
+    name: "",
+    mobile: "",
+    vehicleNo: "",
+  };
+
+
+  const addPerson = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      people: [...prevData.people, { ...initialPersonData }],
+    }));
+  };
+
+  const handlePersonChange = (index, event) => {
+    const { name, value } = event.target;
+  
+    setFormData((prevData) => ({
+      ...prevData,
+      people: (prevData.people || []).map((person, i) =>
+        i === index ? { ...person, [name]: value } : person
+      ),
+    }));
+  };
   const initialFormData = {
     customername: "",
     mobileno: "",
@@ -19,6 +45,10 @@ const AddTrip = () => {
     totaldays: "",
     hours: "",
     vehicle: "",
+    members: 1, 
+    people: [{ ...initialPersonData }],
+
+    
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -114,15 +144,21 @@ const AddTrip = () => {
       }));
     }
   };
+
+  
   
 
   
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Check if all fields in initialFormData are filled
-    if (Object.values(formData).some((value) => value === '')) {
-      alert('Please fill in all required fields.');
+    if (
+      Object.values(formData).some((value) => value === "") ||
+      parseInt(formData.members, 10) < 1
+    ) {
+      alert(
+        "Please fill in all required fields and ensure the number of members is greater than 0."
+      );
       return;
     }
 
@@ -234,12 +270,91 @@ const AddTrip = () => {
           </div>
           <div className="d-flex gap-3">
             <div>
-          <div className="trip-form-group">
+
+
+<div className="">
+            <div className="trip-form-group">
+          <label htmlFor="numberOfPeople" className="trip-form-label">
+            Number of People:
+          </label>
+          <select
+            className="form-control-add-trip-input"
+            name="members"
+            onChange={handleChange}
+            value={formData.members}
+          >
+            {[1, 2, 3, 4, 5, 6, 7].map((number) => (
+              <option key={number} value={number}>
+                {number}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Add person details for each person */}
+       <div className="d-flex">
+              {formData.people.map((person, index) => (
+                <div key={index} className="trip-person-row ">
+                  <div className="trip-form-group">
+                    <label htmlFor={`name${index}`} className="trip-form-label">
+                      Person {index + 1} Name:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control-add-trip-input"
+                      name={`name${index}`}
+                      placeholder="Name"
+                      onChange={(e) => handlePersonChange(index, e)}
+                      value={person.name}
+                    />
+                  </div>
+                  <div className="trip-form-group">
+                    <label htmlFor={`mobile${index}`} className="trip-form-label">
+                      Mobile No:
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control-add-trip-input"
+                      name={`mobile${index}`}
+                      placeholder="Mobile No."
+                      onChange={(e) => handlePersonChange(index, e)}
+                      value={person.mobile}
+                    />
+                  </div>
+                  <div className="trip-form-group">
+                    <label htmlFor={`vehicleNo${index}`} className="trip-form-label">
+                      Vehicle No:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control-add-trip-input"
+                      name={`vehicleNo${index}`}
+                      placeholder="Vehicle No."
+                      onChange={(e) => handlePersonChange(index, e)}
+                      value={person.vehicleNo}
+                    />
+                  </div>
+                </div>
+              ))}
+              </div>
+            </div>
+            </div>
+
+      {/* Add Person button */}
+
+      <div>
+      <button type="button" className="trip-btn-submit" onClick={addPerson}>
+        Add Person
+      </button>
+      </div>
+
+
+          {/* <div className="trip-form-group">
             <label htmlFor="pickup" className="trip-form-label">
               Pickup Location:
             </label>
             <input type="text" className="form-control add-trip-input" name="pickup" placeholder="Pickup Location" onChange={handleChange} value={formData.pickup} />
-          </div>
+          </div> */}
           </div>
           <div>
           <div className="trip-form-group">
@@ -328,7 +443,7 @@ const AddTrip = () => {
           </button>
         </div>
       </div>
-    </div>
+    
     </>
   );
 };

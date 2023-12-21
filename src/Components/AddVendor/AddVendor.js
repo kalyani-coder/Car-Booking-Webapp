@@ -12,6 +12,7 @@ const AddVendor = () => {
     mobileno: "",
     email: "",
     address: "",
+    drivername: "",
   };
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
@@ -187,6 +188,21 @@ const AddVendor = () => {
                   required
                 />
               </div>
+              <div className="driver-form-group">
+              <label htmlFor="drivername" className="form-label">
+                Driver Name:
+              <span className="required-asterisk">*</span>
+              </label>
+              <input
+                className="form-control-dri-add-input"
+                type="text"
+                id="drivername"
+                name="drivername"
+                placeholder="Driver Name"
+                onChange={handleChange}
+                value={formData.drivername}
+              />
+            </div>
 
               <button
                 type="submit"

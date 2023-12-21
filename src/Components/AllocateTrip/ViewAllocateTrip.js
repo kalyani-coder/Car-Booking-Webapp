@@ -94,14 +94,16 @@ const ViewAllocateTrip = () => {
                   <th>Trip Type</th>
                   <th>Subtype</th>
                   <th>Pickup</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  {/* <th>Date</th>
+                  <th>Time</th> */}
                   <th>Dropoff</th>
-                  <th>Date1</th>
-                  <th>Time1</th>
+                  {/* <th>Date1</th>
+                  <th>Time1</th> */}
                   <th>Driver Name</th>
                   <th>Driver Email</th>
-                  <th>Mobile No</th>
+                  {/* <th>Mobile No</th> */}
+                  <th>Paid</th>
+                  <th>Un paid</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -112,15 +114,18 @@ const ViewAllocateTrip = () => {
                     <td>{shareDetail.triptype}</td>
                     <td>{shareDetail.subtype}</td>
                     <td>{shareDetail.pickuplocation}</td>
-                    <td>{shareDetail.date}</td>
-                    <td>{shareDetail.time}</td>
+                    {/* <td>{shareDetail.date}</td>
+                    <td>{shareDetail.time}</td> */}
                     <td>{shareDetail.dropofflocation}</td>
-                    <td>{shareDetail.date1}</td>
-                    <td>{shareDetail.time1}</td>
+                    {/* <td>{shareDetail.date1}</td>
+                    <td>{shareDetail.time1}</td> */}
                     <td>{shareDetail.drivername}</td>
                     <td>{shareDetail.mail}</td>
-                    <td>{shareDetail.mobileno}</td>
+                    {/* <td>{shareDetail.mobileno}</td> */}
+                    <td>{shareDetail.paid}</td>
+                       <td>{shareDetail.paid}</td>
                     <td>
+                     
                     <button className='btn btn-info'>
                       <FaEdit />
                     </button>

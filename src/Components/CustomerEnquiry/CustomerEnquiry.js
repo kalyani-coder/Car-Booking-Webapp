@@ -22,7 +22,13 @@ const CustomerEnquiry = () => {
     vehicle: "",
 
   };
-
+  
+  const formatDate = (date) => {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
@@ -115,7 +121,7 @@ const CustomerEnquiry = () => {
 
   const handleDateChange = (event) => {
     handleChange(event);
-
+   
     
 
     const { date1,date2, } = formData;
@@ -139,19 +145,20 @@ const CustomerEnquiry = () => {
       }));
     }
   };
+ 
 
   const updateTotal = () => {
     const selectedDate1 = new Date(`${formData.date1}`);
     const selectedDate2 = new Date(`${formData.date2}`);
-
+  
     if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
       const timeDifference = selectedDate2 - selectedDate1;
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-      const formattedDate1 = selectedDate1.toLocaleDateString("en-US");
-      const formattedDate2 = selectedDate2.toLocaleDateString("en-US");
-
+  
+      const formattedDate1 = formatDate(selectedDate1);
+      const formattedDate2 = formatDate(selectedDate2);
+  
       setFormData((prevData) => ({
         ...prevData,
         totaldays: totalDays,
@@ -163,7 +170,7 @@ const CustomerEnquiry = () => {
       setFormData((prevData) => ({
         ...prevData,
         totaldays: "",
-         totalhours: "",
+        totalhours: "",
         formattedDate1: "",
         formattedDate2: "",
       }));
@@ -319,10 +326,10 @@ const CustomerEnquiry = () => {
                 </div>
               </div>
               <div>
-                <div className="form-group">
-                  <label htmlFor="date1" className="form-label">
+              <div className="form-group">
+                  <label htmlFor="date2" className="form-label">
                     Date 1:
-                  <span className="required-asterisk">*</span>
+                    <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="date"
@@ -332,8 +339,8 @@ const CustomerEnquiry = () => {
                     onBlur={handleBlur}
                     value={formData.date1}
                   />
-                  {formData.formattedDate1 && (
-                    <p>Formatted Date 1: {formData.formattedDate1}</p>
+                 {formData.date1 && (
+                  <p>Formatted Date 1: {formData.date1}</p>
                   )}
                 </div>
               </div>
@@ -372,22 +379,22 @@ const CustomerEnquiry = () => {
                 </div>
               </div>
               <div>
-                <div className="form-group">
-                <label htmlFor="date2" className="form-label">
-              Date 2:
-                <span className="required-asterisk">*</span>
-            </label>
-            <input
-              type="date"
-              className="form-control cust-inq-input"
-              name="date2"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={formData.date2}
-            />
-            {formData.formattedDate2 && (
-              <p>Formatted Date 2: {formData.formattedDate2}</p>
-            )}
+              <div className="form-group">
+                  <label htmlFor="date2" className="form-label">
+                    Date 2:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    className="form-control cust-inq-input"
+                    name="date2"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={formData.date2}
+                  />
+                  {formData.date2 && (
+                  <p>Formatted Date 2: {formData.date2}</p>
+                  )}
                 </div>
               </div>
               <div>

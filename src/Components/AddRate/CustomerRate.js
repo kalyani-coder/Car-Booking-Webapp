@@ -361,6 +361,12 @@ const CustomerRate = () => {
                       <option value="One Day / 300km">
                         One Day /300km-Outstation Duty
                       </option>
+                      <option value="440km- Local Airport Transfer">
+                        440km-Local Airport Transfer
+                        </option>
+                      <option value="Pune-Mumbai Pickup Drop">
+                        Pune-Mumbai Pickup Dropoff
+                        </option>
                     </select>
                   </div>
                 </div>
