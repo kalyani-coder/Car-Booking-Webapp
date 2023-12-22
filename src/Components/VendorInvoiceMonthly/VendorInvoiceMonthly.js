@@ -34,7 +34,7 @@ function VendorInvoiceMonthly() {
   });
 
   const invoiceItems = [
-    { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
+    { description: 'Item 1',saccode: '996601', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
     // Add more items as needed
   ];
 
@@ -51,6 +51,9 @@ function VendorInvoiceMonthly() {
   };
 
   const handleGenerate = () => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
+    if (downloadConfirmed) {
     const doc = new jsPDF();
 
     // Add content to the PDF
@@ -78,6 +81,7 @@ function VendorInvoiceMonthly() {
     const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
     const data = invoiceItems.map((item) => [
       item.description,
+      item.saccode,
       item.kms,
       item.amount,
       item.total,
@@ -114,6 +118,7 @@ function VendorInvoiceMonthly() {
     doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
     doc.save('invoice.pdf');
+  }
   };
 
   return (
@@ -128,6 +133,7 @@ function VendorInvoiceMonthly() {
             <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Company Name" id="companyName" name="companyName" onChange={handleChange} />
             {/* Add similar input elements for other fields */}
           </div>
+          
           <div className="pt-4 grid-gap-2 col-6">
             <label htmlFor="gstno" className="form-label">GST No:</label>
             <input className="form-control-vendor-invoice-monthly" type="text" placeholder="GST No." id="gstno" name="gstno" onChange={handleChange} />
@@ -156,22 +162,26 @@ function VendorInvoiceMonthly() {
             <thead>
               <tr>
                 <th>Description</th>
+                <th>Sac Code</th>
                 <th>Kms</th>
                 <th>Amount</th>
+                <th>Total</th>
                 <th>CGST</th>
                 <th>SGST</th>
-                <th>Total Amount</th>
+                
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.description}</td>
+                  <td>{item.saccode}</td>
                   <td>{item.kms}</td>
                   <td>{item.amount}</td>
+                  <td>{item.totalAmount}</td>
                   <td>{item.cgst}</td>
                   <td>{item.sgst}</td>
-                  <td>{item.totalAmount}</td>
+                 
                 </tr>
               ))}
             </tbody>

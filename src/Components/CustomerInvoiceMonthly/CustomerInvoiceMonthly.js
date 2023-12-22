@@ -11,6 +11,7 @@ function VendorInvoiceMonthly() {
     gstno: '',
     companyAddress: '332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
+    kind_attn: '',
     date: '',
     contactno: '',
     to: '',
@@ -33,7 +34,7 @@ function VendorInvoiceMonthly() {
   });
 
   const invoiceItems = [
-    { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
+    { description: 'Item 1', saccode: '996601', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
     // Add more items as needed
   ];
 
@@ -50,6 +51,9 @@ function VendorInvoiceMonthly() {
   };
 
   const handleGenerate = () => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+  
+    if (downloadConfirmed) {
     const doc = new jsPDF();
 
     // Add content to the PDF
@@ -74,9 +78,10 @@ function VendorInvoiceMonthly() {
     doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
 
     // Add table
-    const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
+    const columns = ['Description','Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
     const data = invoiceItems.map((item) => [
       item.description,
+      item.saccode,
       item.kms,
       item.amount,
       item.total,
@@ -113,6 +118,7 @@ function VendorInvoiceMonthly() {
     doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
     doc.save('invoice.pdf');
+  }
   };
 
 
@@ -203,6 +209,17 @@ function VendorInvoiceMonthly() {
               value={formData.mail}
               onChange={handleChange}
             />
+            <label htmlFor="Kind Attn" className="form-label">
+              Kind Attn:
+            </label>
+            <input
+              className="form-control-vendor-invoice"
+              type="text"
+              placeholder="Kind Attn"
+              name="kind attn"
+              value={formData.kind_attn}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Invoice To:</h2>
@@ -261,22 +278,26 @@ function VendorInvoiceMonthly() {
             <thead>
               <tr>
                 <th>Description</th>
+                <th>Sac Code</th>
                 <th>Kms</th>
                 <th>Amount</th>
+                <th>Total</th>
                 <th>CGST</th>
                 <th>SGST</th>
-                <th>Total Amount</th>
+                
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.description}</td>
+                  <td>{item.saccode}</td>
                   <td>{item.kms}</td>
                   <td>{item.amount}</td>
+                  <td>{item.totalAmount}</td>
                   <td>{item.cgst}%</td>
                   <td>{item.sgst}%</td>
-                  <td>{item.totalAmount}</td>
+                  
                 </tr>
               ))}
             </tbody>

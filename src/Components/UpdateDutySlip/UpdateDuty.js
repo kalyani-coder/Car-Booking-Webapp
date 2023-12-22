@@ -501,6 +501,8 @@ const UpdateDuty = () => {
                   <option value="">Duty Type</option>
                   <option value="One Day / 80km">One Day /80km-Local Duty</option>
                   <option value="One Day / 300km">One Day /300km-Outstation Duty</option>
+                  <option value="440km- Local Airport Transfer">440km-Local Airport Transfer</option>
+                      <option value="Pune-Mumbai Pickup Drop">Pune-Mumbai Pickup Dropoff </option>
                   {/* Add other vehicle options */}
                 </select></div>
               <div> <label htmlFor="amount1" className="update-duty-form-label">

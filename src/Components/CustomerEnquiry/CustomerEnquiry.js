@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerEnquiry.css";
 import Sidebar from "../Sidebar/Sidebar";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const CustomerEnquiry = () => {
   const initialFormData = {
@@ -22,14 +25,15 @@ const CustomerEnquiry = () => {
     vehicle: "",
 
   };
-  
+  //Function to format the date as dd/mm/yy
   const formatDate = (date) => {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
+    const year = date.getFullYear().toString().slice(-2); // Take only the last two digits of the year
     return `${day}/${month}/${year}`;
   };
   const [formData, setFormData] = useState(initialFormData);
+  // const [selectedDate, setSelectedDate] = useState(null);
   const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -156,15 +160,15 @@ const CustomerEnquiry = () => {
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   
-      const formattedDate1 = formatDate(selectedDate1);
-      const formattedDate2 = formatDate(selectedDate2);
+      // const formattedDate1 = formatDate(selectedDate1);
+      // const formattedDate2 = formatDate(selectedDate2);
   
       setFormData((prevData) => ({
         ...prevData,
         totaldays: totalDays,
         totalhours: totalHours,
-        formattedDate1: formattedDate1,
-        formattedDate2: formattedDate2,
+        // formattedDate1: formattedDate1,
+        // formattedDate2: formattedDate2,
       }));
     } else {
       setFormData((prevData) => ({
@@ -328,26 +332,27 @@ const CustomerEnquiry = () => {
               <div>
               <div className="form-group">
                   <label htmlFor="date2" className="form-label">
-                    Date 1:
+                    Date :
                     <span className="required-asterisk">*</span>
                   </label>
-                  <input
-                    type="date"
+                  <DatePicker
+                  placeholderText="dd/mm/yyyy"
                     className="form-control cust-inq-input"
-                    name="date1"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.date1}
+                    selected={formData.date1 ? new Date(formData.date1) : null}
+                    onChange={(date) => handleChange({ target: { name: "date1", value: date } })}
+                    dateFormat="dd/MM/yyyy" // Set the desired date format
+                    calendarIcon={<i className="fas fa-calendar-alt"></i>} // Use your preferred icon
                   />
-                 {formData.date1 && (
-                  <p>Formatted Date 1: {formData.date1}</p>
-                  )}
+                 {/* {formData.date1 && (
+                  <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
+                  )} */}
                 </div>
+                
               </div>
               <div>
                 <div className="form-group">
                   <label htmlFor="time1" className="form-label">
-                    Time 1:
+                    Time :
                   <span className="required-asterisk">*</span>
                   </label>
                   <input
@@ -381,26 +386,26 @@ const CustomerEnquiry = () => {
               <div>
               <div className="form-group">
                   <label htmlFor="date2" className="form-label">
-                    Date 2:
+                    Date :
                     <span className="required-asterisk">*</span>
                   </label>
-                  <input
-                    type="date"
+                  <DatePicker
+                  placeholderText="dd/mm/yyyy"
                     className="form-control cust-inq-input"
-                    name="date2"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={formData.date2}
+                    selected={formData.date2 ? new Date(formData.date2) : null}
+                    onChange={(date) => handleChange({ target: { name: "date2", value: date } })}
+                    dateFormat="dd/MM/yyyy" // Set the desired date format
+                    calendarIcon={<i className="fas fa-calendar-alt"></i>} // Use your preferred icon
                   />
-                  {formData.date2 && (
-                  <p>Formatted Date 2: {formData.date2}</p>
-                  )}
+                 {/* {formData.date1 && (
+                  <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
+                  )} */}
                 </div>
               </div>
               <div>
                 <div className="form-group">
                 <label htmlFor="time2" className="form-label">
-                    Time 2:
+                    Time :
                 <span className="required-asterisk">*</span>
                   </label>
                   <input
@@ -442,7 +447,7 @@ const CustomerEnquiry = () => {
                   type="text"
                   className="form-control-cust-inq-input"
                   name="totalhours"
-                  placeholder="Total Hours"
+                  // placeholder="Total Hours"
                   value={formData.totalhours}
                   readOnly
                 />

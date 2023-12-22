@@ -12,6 +12,7 @@ function VendorInvoice() {
     gstno: "",
     companyAddress: '332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
+    kind_attn:"",
     date: "",
     contactno: "",
     to: "",
@@ -51,6 +52,9 @@ function VendorInvoice() {
   // };
 
   const handleGenerate = () => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
+    if (downloadConfirmed) {
     const doc = new jsPDF();
 
     // Add content to the PDF
@@ -75,9 +79,10 @@ function VendorInvoice() {
     doc.text('Contact No: ' + formData.vendorContactNo, 10, 110);
 
     // Add table
-    const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
+    const columns = ['Description','Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
     const data = invoiceItems.map((item) => [
       item.description,
+      item.saccode,
       item.kms,
       item.amount,
       item.total,
@@ -114,6 +119,7 @@ function VendorInvoice() {
     doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
     doc.save('invoice.pdf');
+  }
   };
 
   return (
@@ -203,6 +209,17 @@ function VendorInvoice() {
               placeholder="Mail"
               name="mail"
               value={formData.mail}
+              onChange={handleChange}
+            />
+             <label htmlFor="Kind Attn" className="form-label">
+              Kind Attn:
+            </label>
+            <input
+              className="form-control-vendor-invoice"
+              type="text"
+              placeholder="Kind Attn"
+              name="kind attn"
+              value={formData.kind_attn}
               onChange={handleChange}
             />
           </div>

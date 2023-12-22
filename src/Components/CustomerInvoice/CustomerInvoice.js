@@ -7,10 +7,11 @@ import Sidebar from '../Sidebar/Sidebar';
 const initialFormData = {
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
+    kind_attn: '',
     gstno: '',
     companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
-    date: '',
+    date: '', // Add a default value for the date property
     contactno: '',
     to: '',
     customerName: '',
@@ -72,6 +73,7 @@ const initialFormData = {
   const [invoiceItems, setInvoiceItems] = useState([
     {
       description: '',
+      saccode: '',
       kms: '',
       amount: '',
       total: '',
@@ -160,6 +162,7 @@ const initialFormData = {
   const handleAddItem = () => {
     const newItem = {
       description: '',
+      saccode: '',
       kms: '',
       amount: '',
       total: '',
@@ -179,6 +182,9 @@ const initialFormData = {
   };
 
   const handleGenerate = () => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
+    if (downloadConfirmed) {
     const doc = new jsPDF();
 
     doc.setFontSize(12);
@@ -197,9 +203,10 @@ const initialFormData = {
     doc.text('Customer GST No: ' + formData.customerGSTNo, 10, 100);
     doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
 
-    const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
+    const columns = ['Description','Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
     const data = invoiceItems.map((item) => [
       item.description,
+      item.saccode,
       item.kms,
       item.amount,
       item.total,
@@ -235,7 +242,9 @@ const initialFormData = {
     doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
     doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
 
+
     doc.save('invoice.pdf');
+  }
   };
 
 
@@ -246,51 +255,30 @@ const initialFormData = {
         <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>Customer Invoice</h2>
         <div className="form-customer-invoice-monthly">
           <div className="pt-4 grid-gap-2 col-6">
-            {/* <label htmlFor="companyName" className="form-label">
-              Company Name:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="companyName"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-            /> */}
-            {/* <label htmlFor="companyAddress" className="form-label">
-              Company Address:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="companyAddress"
-              name="companyAddress"
-              value={formData.companyAddress}
-              onChange={handleChange}
-            /> */}
-            {/* <label htmlFor="date" className="form-label">
+            
+            <label htmlFor="date" className="form-label">
               Date
             </label>
             <input
-              className="form-control-customer-invoice-monthly"
+              className="form-control-vendor-invoice"
               type="date"
-              id="date"
               name="date"
               value={formData.date}
               onChange={handleChange}
-            /> */}
-            <br />
-            {/* <label htmlFor="contactno" className="form-label">
-              Contact No
+            />
+             <label htmlFor="Kind Attn" className="form-label">
+              Kind Attn:
             </label>
             <input
-              className="form-control-customer-invoice-monthly"
+              className="form-control-vendor-invoice"
               type="text"
-              id="contactno"
-              name="contactno"
-              value={formData.contactno}
+              placeholder="Kind Attn"
+              name="kind attn"
+              value={formData.kind_attn}
               onChange={handleChange}
-            /> */}
+            />
+            <br />
+           
           </div>
           <div className="pt-4 grid-gap-2 col-6">
             <label htmlFor="invoiceno" className="form-label">
