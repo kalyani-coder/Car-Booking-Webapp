@@ -369,13 +369,13 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="toll" className="start-end-details-label">
-                  Toll Charges:
+                  Toll Parking:
                 {/* <span className="required-asterisk">*</span> */}
                 </label>
                 <input
                   className="start-end-details-input add-input"
                   type="number"
-                  name="toll" placeholder='Enter Driver Toll Charges'
+                  name="toll" placeholder='Enter Driver Toll Parking'
                   onChange={handleChange}
                   value={formData.toll}
                 />

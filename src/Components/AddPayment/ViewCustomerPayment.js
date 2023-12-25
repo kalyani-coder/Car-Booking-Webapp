@@ -25,9 +25,12 @@ const ViewCustomerPayment = () => {
   }, []);
 
   const handleGenerateInvoice = (customerId) => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
     // Fetch customer data for the specified customer ID
     const customer = customers.find((customer) => customer._id === customerId);
 
+ if (downloadConfirmed) {
     if (customer) {
       const doc = new jsPDF();
 
@@ -79,6 +82,7 @@ const ViewCustomerPayment = () => {
 
       // Save the PDF or open in a new tab
       doc.save(`Invoice_${customer._id}.pdf`);
+    }
     } else {
       console.error('Customer not found.');
     }

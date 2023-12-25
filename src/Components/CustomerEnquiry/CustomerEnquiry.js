@@ -72,6 +72,8 @@ const CustomerEnquiry = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    
+
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",
       customer_name: formData.customername,
@@ -331,7 +333,7 @@ const CustomerEnquiry = () => {
               </div>
               <div>
               <div className="form-group">
-                  <label htmlFor="date2" className="form-label">
+                  <label htmlFor="date" className="form-label">
                     Date :
                     <span className="required-asterisk">*</span>
                   </label>

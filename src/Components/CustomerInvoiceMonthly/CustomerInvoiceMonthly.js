@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CustomerInvoiceMonthly.css';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Sidebar from '../Sidebar/Sidebar';
+import CustomerInvoice from './../CustomerInvoice/CustomerInvoice';
 
-function VendorInvoiceMonthly() {
+function CustomerInvoiceMonthly() {
   const [formData, setFormData] = useState({
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
@@ -32,6 +33,43 @@ function VendorInvoiceMonthly() {
     ifsccode: 'COSB0000015',
     micrcode: '411164014',
   });
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
+        if (response.ok) {
+          const data = await response.json();
+          setCustomerList(data);
+        } else {
+          console.error('Failed to fetch customers');
+        }
+      } catch (error) {
+        console.error('API request error:', error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+    // Generate the next invoice number when the component mounts
+    const invoiceNumber = getNextInvoiceNumber();
+
+    if (selectedCustomer) {
+      setFormData((prevData) => ({
+        ...prevData,
+        invoiceno: invoiceNumber,
+        customerName: selectedCustomer.Cus_name || '',
+        customerGSTNo: selectedCustomer.gst_no || '',
+        customerAddress: selectedCustomer.address || '',
+        customerContactNo: selectedCustomer.Cus_Mobile || '',
+      }));
+    }
+  }, [selectedCustomer]);
+
 
   const invoiceItems = [
     { description: 'Item 1', saccode: '996601', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
@@ -50,7 +88,26 @@ function VendorInvoiceMonthly() {
     window.print();
   };
 
+  const getNextInvoiceNumber = () => {
+    // Get the last invoice number from the form data
+    const lastInvoiceNumber = parseInt(formData.invoiceno) || 0;
+    // Calculate the next invoice number
+    const nextInvoiceNumber = lastInvoiceNumber + 1;
+    // Return the formatted next invoice number (padded with leading zeros)
+    return nextInvoiceNumber.toString().padStart(4, '0'); // Ensuring a 4-digit invoice number
+};
+
+
   const handleGenerate = () => {
+    // Generate the next invoice number
+    const invoiceNumber = getNextInvoiceNumber();
+    // Set the generated invoice number in the form data
+    setFormData((prevData) => ({
+      ...prevData,
+      invoiceno: invoiceNumber,
+    }));
+
+
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
   
     if (downloadConfirmed) {
@@ -70,7 +127,7 @@ function VendorInvoiceMonthly() {
     doc.text('PO No: ', 150, 30);
     doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
     doc.text('Date: ' + formData.date, 150, 50);
-    doc.text('Customer ID GST No: 27AABTS4503R1Z1', 150, 60);
+    doc.text('GST No: 27AABTS4503R1Z1', 150, 60);
 
     doc.text('Customer Name: ' + formData.customerName, 10, 80);
     doc.text('Customer Address: ' + formData.customerAddress, 10, 90);
@@ -228,14 +285,28 @@ function VendorInvoiceMonthly() {
             <label htmlFor="customerName" className="form-label">
               Customer Name:
             </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerName"
+            {/* Dropdown to select a customer */}
+            <select
+              className="form-control-cust-inq-input"
+              id="customername"
               name="customerName"
-              value={formData.customerName}
-              onChange={handleChange}
-            />
+              onChange={(e) => {
+                // Find the selected customer from the list
+                const selectedCustomer = customerList.find(
+                  (customer) => customer.Cus_name === e.target.value
+                );
+                // Set the selected customer to state
+                setSelectedCustomer(selectedCustomer);
+              }}
+              value={selectedCustomer ? selectedCustomer.Cus_name : ''}
+            >
+              <option value="">Select Customer</option>
+              {customerList.map((customer) => (
+                <option key={customer._id} value={customer.Cus_name}>
+                  {customer.Cus_name}
+                </option>
+              ))}
+            </select>
             <label htmlFor="customerGSTNo" className="form-label">
               GST No:
             </label>
@@ -387,4 +458,4 @@ function VendorInvoiceMonthly() {
   );
 }
 
-export default VendorInvoiceMonthly;
+export default CustomerInvoiceMonthly;

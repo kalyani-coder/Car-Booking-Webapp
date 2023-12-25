@@ -92,10 +92,13 @@ function VendorPayment() {
                 <div className="card-body mt-5">
                   <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor Payment</h2>
                   <form onSubmit={handleSubmit}>
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="company_Name">Company Name</label>
+                          <label htmlFor="company_Name" class="form-label">Company Name:
+                          <span className="required-asterisk">*</span>
+                          </label>
+                          
                           <input
                             type="text"
                             className="form-control"
@@ -109,7 +112,9 @@ function VendorPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="GST_No">GST No</label>
+                          <label htmlFor="GST_No" class="form-label">GST No:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -123,10 +128,12 @@ function VendorPayment() {
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="vender_Name">Vendor Name</label>
+                          <label htmlFor="vender_Name" class="form-label">Vendor Name:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -140,7 +147,9 @@ function VendorPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="mobile_Number">Mobile Number</label>
+                          <label htmlFor="mobile_Number" class="form-label">Mobile Number:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -155,10 +164,12 @@ function VendorPayment() {
                     </div>
 
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Type Of Vehicle</label>
+                          <label htmlFor="typeofvehicle"  class="form-label">Type Of Vehicle:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                           <select className="form-control mb-2" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
                             <option value="">Vehicle</option>
@@ -185,48 +196,60 @@ function VendorPayment() {
 
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Vehicle No</label>
+                          <label htmlFor="vehicleno"  class="form-label">Vehicle No:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="string" className="form-control" name='vehicle_no' placeholder="Vehicle Number" onChange={handleChange} value={formData.vehicle_no} />
                         </div>
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Kms</label>
+                          <label htmlFor="totalkms" class="form-label">Total Kms:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control"  name="total_km" placeholder="Enter  Total Kms" onChange={handleChange} value={formData.total_km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Hours</label>
+                          <label htmlFor="totalhours" class="form-label">Total Hours:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control" name="total_hour" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hour} />
                         </div>
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Kms Amount</label>
+                          <label htmlFor="totalkmsamount" class="form-label">Total Kms Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control"  name="totalkm_amount" placeholder="Enter  Total Kms Amount" onChange={handleChange} value={formData.totalkm_amount} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Hours Amount</label>
+                          <label htmlFor="totalhoursamount" class="form-label">Total Hours Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control" name="totalhour_amount" placeholder="Enter Total Hours" onChange={handleChange} value={formData.totalhour_amount} />
                         </div>
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                     <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="total_amount">Total Amount</label>
+                          <label htmlFor="total_amount" class="form-label">Total Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -241,10 +264,12 @@ function VendorPayment() {
                         </div>
                         </div>
 
-                      <div className="row g-2">
+                      <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="payment">Payment</label>
+                          <label htmlFor="payment" class="form-label">Payment:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <select
                             className="form-control"
                             id="payment"
@@ -260,7 +285,9 @@ function VendorPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="amount">Amount</label>
+                          <label htmlFor="amount" class="form-label">Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -274,10 +301,12 @@ function VendorPayment() {
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="tds">TDS 1%</label>
+                          <label htmlFor="tds" class="form-label">TDS 1%:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -293,7 +322,9 @@ function VendorPayment() {
 
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="total_Amount">Paid Amount</label>
+                          <label htmlFor="total_Amount" class="form-label">Paid Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -308,10 +339,12 @@ function VendorPayment() {
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                     <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="remaining_Amount">Remaining Amount</label>
+                          <label htmlFor="remaining_Amount" class="form-label">Remaining Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -326,7 +359,9 @@ function VendorPayment() {
                     
                         <div className="col-md">
                       <div className="form-group">
-                      <label htmlFor="payment_Method">Payment Method</label>
+                      <label htmlFor="payment_Method" class="form-label">Payment Method:
+                          <span className="required-asterisk">*</span>
+                          </label>
                       <select
                         className="form-control"
                         id="payment_Method"

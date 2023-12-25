@@ -4,6 +4,14 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Sidebar from '../Sidebar/Sidebar';
 
+const getCurrentDateFormatted = () => {
+  const currentDate = new Date();
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const year = currentDate.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
 const initialFormData = {
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
@@ -11,7 +19,7 @@ const initialFormData = {
     gstno: '',
     companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
-    date: '', // Add a default value for the date property
+    date: getCurrentDateFormatted(),
     contactno: '',
     to: '',
     customerName: '',
@@ -57,9 +65,13 @@ const initialFormData = {
     }, []);
   
     useEffect(() => {
+      // Generate the next invoice number when the component mounts
+     const invoiceNumber = getNextInvoiceNumber();
+
       if (selectedCustomer) {
         setFormData((prevData) => ({
           ...prevData,
+          invoiceno: invoiceNumber,
           customerName: selectedCustomer.Cus_name || '',
           customerGSTNo: selectedCustomer.gst_no || '',
           customerAddress: selectedCustomer.address || '',
@@ -181,7 +193,24 @@ const initialFormData = {
     recalculateOverallTotals(updatedItems);
   };
 
+  const getNextInvoiceNumber = () => {
+    // Get the last invoice number from the form data
+    const lastInvoiceNumber = parseInt(formData.invoiceno) || 0;
+    // Calculate the next invoice number
+    const nextInvoiceNumber = lastInvoiceNumber + 1;
+    // Return the formatted next invoice number (padded with leading zeros)
+    return nextInvoiceNumber.toString().padStart(4, '0'); // Ensuring a 4-digit invoice number
+};
+
   const handleGenerate = () => {
+    // Generate the next invoice number
+    const invoiceNumber = getNextInvoiceNumber();
+    // Set the generated invoice number in the form data
+    setFormData((prevData) => ({
+      ...prevData,
+      invoiceno: invoiceNumber,
+    }));
+  
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
 
     if (downloadConfirmed) {
@@ -260,12 +289,12 @@ const initialFormData = {
               Date
             </label>
             <input
-              className="form-control-vendor-invoice"
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-            />
+            className="form-control-vendor-invoice"
+            type="date"
+            name="date"
+            value={getCurrentDateFormatted()} // Set the formatted date for display
+            onChange={handleChange}
+          />
              <label htmlFor="Kind Attn" className="form-label">
               Kind Attn:
             </label>

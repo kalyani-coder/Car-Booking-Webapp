@@ -23,7 +23,7 @@
 
 .share-details-column {
   flex: 1;
-  max-width: calc(50% - 10px);
+  max-width: calc(40% - 10px);
 }
 
 .share-details-form-group {

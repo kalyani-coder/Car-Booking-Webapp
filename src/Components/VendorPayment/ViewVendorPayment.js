@@ -25,6 +25,9 @@ const ViewVendorPayment = () => {
   }, []);
 
   const handleGenerateInvoice = (vendor) => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
+    if (downloadConfirmed) {
     const doc = new jsPDF();
 
     // Set the document title
@@ -59,6 +62,7 @@ const ViewVendorPayment = () => {
 
     // Save the PDF or open in a new tab
     doc.save(`Invoice_${vendor._id}.pdf`);
+  }
   };
 
   const filteredVendors = vendors.filter((vendor) => {

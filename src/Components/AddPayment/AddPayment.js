@@ -195,10 +195,12 @@ function AddPayment() {
                   <form>
                     <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>Add Customer Payment</h2>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Company Name</label>
+                          <label for="companyname" class="form-label">Company Name:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -211,7 +213,9 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>GST No</label>
+                          <label for="gstno" class="form-label">GST No:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -224,10 +228,12 @@ function AddPayment() {
                       </div>
                     </div>
                   
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Reporting Address</label>
+                          <label for="reportingaddress" className="form-label">Reporting Address:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -240,7 +246,9 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Date</label>
+                          <label for="date" className="form-label">Date:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="Date"
                             className="form-control"
@@ -254,10 +262,12 @@ function AddPayment() {
                     </div>
 
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Customer Name</label>
+                          <label for="customername" className="form-label">Customer Name:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -270,7 +280,9 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Vehicle Number</label>
+                          <label for="vehiclenumber" className="form-label">Vehicle Number:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -283,10 +295,12 @@ function AddPayment() {
                       </div>
                     </div>
                    
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Type Of Vehicle</label>
+                          <label for="typeofvehicle" className="form-label">Type Of Vehicle:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                           <select className="form-control mb-2" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
                             <option value="">Vehicle</option>
@@ -313,17 +327,21 @@ function AddPayment() {
 
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Quantity</label>
+                          <label for="quantity" className="form-label">Quantity:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="number" className="form-control" name='quantity' placeholder="Add Quantity" onChange={handleChange} value={formData.quantity} />
 
                         </div>
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>From</label>
+                          <label for="from" className="form-label"l>From:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -336,7 +354,9 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>To</label>
+                          <label for="to" className="form-label">To:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="text"
                             className="form-control"
@@ -350,34 +370,42 @@ function AddPayment() {
                     </div>
 
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Starting Kms</label>
+                          <label for="startingkms" className="form-label">Starting Kms:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control"  name="starting_Km" placeholder="Enter  Starting Kms" onChange={handleChange} value={formData.starting_Km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Starting Time</label>
+                          <label for="startingtime" className="form-label">Starting Time:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="time" className="form-control"  name="starting_Time" placeholder="Enter Starting Time" onChange={handleChange} value={formData.starting_Time} />
 
                         </div>
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Closing Kms</label>
+                          <label for="closingkms" className="form-label">Closing Kms:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control" id="closing_km" name="closing_km" placeholder="Enter  Closing Kms" onChange={handleChange} value={formData.closing_km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Closing Time</label>
+                          <label for="closingtime" className="form-label">Closing Time:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="Time" className="form-control" id="closing_Time" name="closing_Time"  placeholder="Enter  Closing Time" onChange={handleChange} value={formData.closing_Time} />
 
                         </div>
@@ -385,17 +413,21 @@ function AddPayment() {
                     </div>
 
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Kms</label>
+                          <label for="totalkms" className="form-label">Total Kms:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control"  name="total_Km" placeholder="Enter  Total Kms" onChange={handleChange} value={formData.total_Km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Total Hours</label>
+                          <label for="totalhours" className="form-label">Total Hours:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="Text" className="form-control" name="total_hours" placeholder="Enter  Total Hours" onChange={handleChange} value={formData.total_hours}readOnly />
 
                         </div>
@@ -405,28 +437,42 @@ function AddPayment() {
 
 
                     
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                        <label>
+                        <label for="dutytype" className="form-label">
                             Duty Type:
+                          <span className="required-asterisk">*</span>
                           </label>
                           <select
-                            className="form-control"
-                            name="title"
-                            id="title"
-                            onChange={handleChange} value={formData.title}
-                          >
-                            <option value="">Duty Type</option>
-                            <option value="One Day / 80km">One Day /80km</option>
-                            <option value="One Day / 300km">One Day /300km</option>
-                          </select>
+                      className="form-control"
+                      name="duty_type"
+                      id="duty_type"
+                      value={formData.title}
+                      onChange={handleChange}
+                    >
+                      <option value="">Duty Type</option>
+                      <option value="One Day / 80km">
+                        One Day /80km-Local Duty
+                      </option>
+                      <option value="One Day / 300km">
+                        One Day /300km-Outstation Duty
+                      </option>
+                      <option value="440km- Local Airport Transfer">
+                        440km-Local Airport Transfer
+                        </option>
+                      <option value="Pune-Mumbai Pickup Drop">
+                        Pune-Mumbai Pickup Dropoff
+                        </option>
+                    </select>
                           </div>
                           </div>
 
                           <div className="col-md">
                          <div className="form-group">
-                          <label>Title Amount</label>
+                          <label for="titleamount" className="form-label">Title Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -440,17 +486,21 @@ function AddPayment() {
                       </div>
                       </div>
                  
-                         <div className="row g-2">
+                         <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                        <label >Extra Kms</label>
+                        <label for="extrakms" className="form-label">Extra Kms:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control" id="extra_Km" name="extra_Km" placeholder="Enter  Extra Kms" onChange={handleChange} value={formData.extra_Km} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Extra Kms Amount</label>
+                          <label for="extrakmsamount" className="form-label">Extra Kms Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -465,17 +515,21 @@ function AddPayment() {
                     </div>
 
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >Extra Hours</label>
+                          <label for="extrahours" className="form-label">Extra Hours:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="text" className="form-control" id="extra_Hours" name="extra_Hours" placeholder="Enter  Extra Hours" onChange={handleChange} value={formData.extra_Hours} />
 
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label > Extra Hours Amount</label>
+                          <label for="extrahoursamount" className="form-label"> Extra Hours Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="number" className="form-control" name='extrahours_Amount' placeholder="Enter Extra Hours Amount"
                            value={formData.extrahours_Amount}
                            onChange={handleChange}
@@ -489,7 +543,9 @@ function AddPayment() {
                     {/* Display the SubTotal */}
                     <div className="col-md">
                       <div className="form-group">
-                        <label>SubTotal</label>
+                        <label for="subtotal" className="form-label">SubTotal:
+                          <span className="required-asterisk">*</span>
+                          </label>
                         <input
                           type="number"
                           className="form-control"
@@ -501,10 +557,12 @@ function AddPayment() {
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label >SGST 2.5%</label>
+                          <label for="sgst2.5%" className="form-label">SGST 2.5%:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="number" className="form-control"  name='SGST'  placeholder="Enter  SGST Amount" value={formData.SGST}
         onChange={handleChange}
       /> 
@@ -513,7 +571,9 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label >CGST 2.5%</label> 
+                          <label for="cgst2.5%" className="form-label">CGST 2.5%:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input type="number" className="form-control" name='CGST' placeholder="Enter CGST  Amount" value={formData.CGST}
         onChange={handleChange} />
 
@@ -522,10 +582,12 @@ function AddPayment() {
                     </div>
 
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Total Amount</label>
+                          <label for="totalamount" className="form-label">Total Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -538,24 +600,27 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Advance Amount</label>
-                          <input
-  type="number"
-  className="form-control"
-  name="advance_Amount"
-  placeholder="Enter Advance Amount"
-  value={formData.advance_Amount}
-  onChange={handleChange}
-/>
+                          <label for="advanceamount" className="form-label">Advance Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
+                          <input type="number"
+                          className="form-control"
+                          name="advance_Amount"
+                          placeholder="Enter Advance Amount"
+                          value={formData.advance_Amount}
+                          onChange={handleChange}
+                         />
 
                         </div>
                       </div>
                     </div>
 
-                    <div className="row g-2">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Remaining Amount</label>
+                          <label for="remainingamount" className="form-label">Remaining Amount:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -568,7 +633,9 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label>Payment Method</label>
+                          <label for="paymentmethod" className="form-label">Payment Method:
+                          <span className="required-asterisk">*</span>
+                          </label>
                           <select
                             className="form-control"
                             name="payment_Method"
