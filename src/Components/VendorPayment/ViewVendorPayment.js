@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { FaFilePdf } from 'react-icons/fa';
 
 const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);
@@ -87,38 +88,51 @@ const ViewVendorPayment = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
-          <div className="grid grid-cols-3 gap-4">
-            {filteredVendors.map((vendor) => (
-              <div
-                key={vendor._id}
-                className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
-              >
-                <div className="custom-card-body p-4">
-                  <h5 className="custom-card- font-semibold">
-                    Vendor Name: {vendor.company_Name}
-                  </h5>
-                  <p className="custom-card-subtitle mb-2">
-                    Company Name: {vendor.vender_Name}
-                  </p>
-                  <p className="custom-card-subtitle mb-2">GST No: {vendor.GST_No}</p>
-                  <p className="custom-card-subtitle mb-2">Mobile Number: {vendor.mobile_Number}</p>
-                  <p className="custom-card-subtitle mb-2">Payment: {vendor.payment}</p>
-                  <p className="custom-card-subtitle mb-2">Amount: {vendor.amount}</p>
-                  <p className="custom-card-subtitle mb-2">tds: {vendor.tds}</p>
-                  <p className="custom-card-subtitle mb-2">Total Amount: {vendor.total_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Paid Amount: {vendor.paid_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Remaining Amount: {vendor.remaining_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Payment Method: {vendor.payment_Method}</p>
-                </div>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleGenerateInvoice(vendor)}
-                >
-                  Generate
-                </button>
-              </div>
-            ))}
-          </div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Vendor Name</th>
+                <th className="border px-4 py-2">Company Name</th>
+                <th className="border px-4 py-2">GST No</th>
+                <th className="border px-4 py-2">Mobile Number</th>
+                <th className="border px-4 py-2">Payment</th>
+                <th className="border px-4 py-2">Amount</th>
+                <th className="border px-4 py-2">tds</th>
+                <th className="border px-4 py-2">Total Amount</th>
+                <th className="border px-4 py-2">Paid Amount</th>
+                <th className="border px-4 py-2">Remaining Amount</th>
+                <th className="border px-4 py-2">Payment Method</th>
+                <th className="border px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredVendors.map((vendor) => (
+                <tr key={vendor._id}>
+                  <td className="border px-4 py-2">{vendor.company_Name}</td>
+                  <td className="border px-4 py-2">{vendor.vender_Name}</td>
+                  <td className="border px-4 py-2">{vendor.GST_No}</td>
+                  <td className="border px-4 py-2">{vendor.mobile_Number}</td>
+                  <td className="border px-4 py-2">{vendor.payment}</td>
+                  <td className="border px-4 py-2">{vendor.amount}</td>
+                  <td className="border px-4 py-2">{vendor.tds}</td>
+                  <td className="border px-4 py-2">{vendor.total_Amount}</td>
+                  <td className="border px-4 py-2">{vendor.paid_Amount}</td>
+                  <td className="border px-4 py-2">{vendor.remaining_Amount}</td>
+                  <td className="border px-4 py-2">{vendor.payment_Method}</td>
+                  <td className="border px-4 py-2">
+                    <button
+                      className="btn btn-info"
+                      onClick={() => handleGenerateInvoice(vendor)}
+                    >
+                      <FaFilePdf />
+                    </button>
+                    
+                  </td>
+                </tr>
+                
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>

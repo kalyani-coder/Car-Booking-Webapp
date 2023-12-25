@@ -84,7 +84,7 @@ function VendorPayment() {
   return (
     <>
       <Sidebar />
-      <div className="container-fluid ">
+      <div className="container-fluid">
         <div className="form-body" >
           <div className="card-1">
             <div className="row justify-content-center">
