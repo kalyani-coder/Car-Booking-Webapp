@@ -67,6 +67,9 @@ const ViewShareDetails = () => {
   }, [searchText]);
 
   const generateInvoice = (shareDetail) => {
+    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
+    if (downloadConfirmed) {
     const doc = new jsPDF();
 
     // Add your code to generate the invoice in a table format here
@@ -106,6 +109,7 @@ const ViewShareDetails = () => {
 
     // Save the PDF or open in a new tab
     doc.save(`Invoice_${shareDetail._id}.pdf`);
+  }
   };
 
   const handleEditShareDetail = (shareDetail) => {
