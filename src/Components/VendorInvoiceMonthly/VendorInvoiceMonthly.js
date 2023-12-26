@@ -56,9 +56,15 @@ function VendorInvoiceMonthly() {
     if (downloadConfirmed) {
     const doc = new jsPDF();
 
+    doc.setFontSize(18);
+    doc.text('Shivpushpa Travels', 10, 10, { className: 'uppercase-text' });
+
+
+     // Set the document title
+     doc.setFontSize(12);
+     doc.text('Vendor Monthly Invoice', 10, 10);
     // Add content to the PDF
-    doc.setFontSize(12);
-    
+    doc.setFontSize(10);
     doc.text(formData.companyName, 10, 10);
     doc.text(formData.companyAddress, 10, 20);
     doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
@@ -66,7 +72,9 @@ function VendorInvoiceMonthly() {
     // doc.text('Date: ' + formData.date, 10, 50);
     doc.text('Mail: ' + formData.mail, 10, 60);
 
-    // Add content to the right side
+    doc.setFontSize(18);
+    doc.text('invoice', 150, 20, { className: 'uppercase-text' });
+    doc.setFontSize(10);
     doc.text('PO No: ', 150, 30);
     doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
     doc.text('Date: ' + formData.date, 150, 50);
@@ -105,6 +113,7 @@ function VendorInvoiceMonthly() {
     });
 
     // Add Bank Details
+    doc.setFontSize(10);
     doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
     doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 30);
     doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 40);
@@ -113,7 +122,8 @@ function VendorInvoiceMonthly() {
     doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 70);
     doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 80);
 
-    // Add Shivpushpa Travels and Authorized Signatory
+    // "Right side bottom details" section
+    doc.setFontSize(12);
     doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 30);
     doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
