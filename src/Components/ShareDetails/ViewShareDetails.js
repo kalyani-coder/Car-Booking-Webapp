@@ -356,28 +356,43 @@ const ViewShareDetails = () => {
                 <FaTimes />
               </button>
             </div>
-            <h5 className="fw-bold">Customer Name</h5>
-              type="text"
-              value={editedShareDetail.cus_Name}
-              onChange={(e) =>
-                setEditedShareDetail({
-                  ...editedShareDetail,
-                  cus_Name: e.target.value,
-                })
-              }
-            <h5 className='fw-bold'>Mobile Number</h5>
-            <input
-              type="text"
-              value={editedShareDetail.field2}
-              onChange={(e) =>
-                setEditedShareDetail({
-                  ...editedShareDetail,
-                  mobileno: e.target.value,
-                })
-              }
-              className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
-
+            <div className="form-container">
+            <h5 className='fw-bold'>Customer Name:</h5>
+              <input
+                type="text"
+                value={editedShareDetail.cus_Name}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, cus_Name: e.target.value })}
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold'>Mobile No:</h5>
+              <input
+                type="text"
+                value={editedShareDetail.mobileno}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, mobileno: e.target.value })}
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold'>Address</h5>
+              <textarea
+                value={editedShareDetail.address}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, address: e.target.value })}
+                rows="4"
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold'>Mobile No</h5>
+              <input
+                type="text"
+                value={editedShareDetail.driver_Mo1}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, driver_Mo1: e.target.value })}
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold'>Alternate Mobile No</h5>
+              <input
+                type="text"
+                value={editedShareDetail.driver_Mo2}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, driver_Mo2: e.target.value })}
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
+              />
+            </div>
             {/* ... (add more fields as needed) */}
             <button
               onClick={handleSaveShareDetail}
