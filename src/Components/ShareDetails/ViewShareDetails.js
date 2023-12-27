@@ -365,19 +365,18 @@ const ViewShareDetails = () => {
                   cus_Name: e.target.value,
                 })
               }
-           <Form.Group controlId="formMobileNumber">
-          <Form.Label>Mobile Number</Form.Label>
-          <Form.Control
-            type="text"
-            value={editedShareDetail.mobileno}
-            onChange={(e) =>
-              setEditedShareDetail({
-                ...editedShareDetail,
-                mobileno: e.target.value,
-              })
-            }
-          />
-        </Form.Group>
+            <h5 className='fw-bold'>Mobile Number</h5>
+            <input
+              type="text"
+              value={editedShareDetail.field2}
+              onChange={(e) =>
+                setEditedShareDetail({
+                  ...editedShareDetail,
+                  mobileno: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
 
             {/* ... (add more fields as needed) */}
             <button
