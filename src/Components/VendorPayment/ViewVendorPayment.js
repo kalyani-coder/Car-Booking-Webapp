@@ -75,10 +75,16 @@ const ViewVendorPayment = () => {
   
         // Add the table to the PDF
         doc.autoTable({
-          head: [columns],
           body: rows,
           startY: 50,
           theme: 'grid',
+          styles: {
+            fontSize: 10, // Default font size for the entire table
+          },
+          columnStyles: {
+            0: { fontSize: 10, fontStyle: "bold" }, // Field names - larger and bold
+            1: { fontSize: 10 }, // Values - default font size
+          },
         });
   
         // Add space between the table and the "Bank Details" section
@@ -109,9 +115,7 @@ const ViewVendorPayment = () => {
   //   setSelectedVendor(vendor);
   // };
 
-  const handleCloseModal = () => {
-    setSelectedVendor(null);
-  };
+ 
 
   const filteredVendors = vendors.filter((vendor) => {
     const vendorName = vendor.vender_Name || '';
@@ -138,32 +142,29 @@ const ViewVendorPayment = () => {
           <table className="table">
             <thead>
               <tr>
-                <th className="border px-4 py-2">Vendor Name</th>
-                <th className="border px-4 py-2">Company Name</th>
-                <th className="border px-4 py-2">GST No</th>
-                <th className="border px-4 py-2">Mobile Number</th>
-                <th className="border px-4 py-2">Payment</th>
-                <th className="border px-4 py-2">Amount</th>
-                <th className="border px-4 py-2">Action</th>
+                <th>Vendor Name</th>
+                <th>Company Name</th>
+                <th>GST No</th>
+                <th>Mobile Number</th>
+                <th>Payment</th>
+                <th>Amount</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {filteredVendors.map((vendor) => (
                 <React.Fragment key={vendor._id}>
                   <tr>
-                    <td className="border px-4 py-2">{vendor.company_Name}</td>
-                    <td className="border px-4 py-2">{vendor.vender_Name}</td>
-                    <td className="border px-4 py-2">{vendor.GST_No}</td>
-                    <td className="border px-4 py-2">{vendor.mobile_Number}</td>
-                    <td className="border px-4 py-2">{vendor.payment}</td>
-                    <td className="border px-4 py-2">{vendor.amount}</td>
-                    <td className="border px-4 py-2">
+                    <td>{vendor.company_Name}</td>
+                    <td>{vendor.vender_Name}</td>
+                    <td>{vendor.GST_No}</td>
+                    <td>{vendor.mobile_Number}</td>
+                    <td>{vendor.payment}</td>
+                    <td>{vendor.amount}</td>
+                    <td>
                       <Link  className="btn btn-info ml-2" to={`/ViewVendorPayment/${vendor._id}`}>
                         View More
                       </Link>
-
-                      
-                    
                       <button
                         className="btn btn-info"
                         onClick={() => handleGenerateInvoice(vendor)}
@@ -172,34 +173,16 @@ const ViewVendorPayment = () => {
                       </button>
                     </td>
                   </tr>
+                 
                   {selectedVendor === vendor && (
                     <tr>
-                      <th className="border px-4 py-2">Tds</th>
-                      <th className="border px-4 py-2">Total Amount</th>
-                      <th className="border px-4 py-2">Paid Amount</th>
-                      <th className="border px-4 py-2">Remaining Amount</th>
-                      <th className="border px-4 py-2">Payment Method</th>
-                      <th className="border px-4 py-2">Generate Invoice</th>
-                      <th className="border px-4 py-2">Close</th>
-                    </tr>
-                  )}
-                  {selectedVendor === vendor && (
-                    <tr>
-                      <td className="border px-4 py-2">{vendor.tds}</td>
-                      <td className="border px-4 py-2">{vendor.total_Amount}</td>
-                      <td className="border px-4 py-2">{vendor.paid_Amount}</td>
-                      <td className="border px-4 py-2">{vendor.remaining_Amount}</td>
-                      <td className="border px-4 py-2">{vendor.payment_Method}</td>
-                      <td className="border px-4 py-2">
+
+                      <td >
                         <button className="btn btn-primary" onClick={() => handleGenerateInvoice(vendor)}>
                           <FaFilePdf />
                         </button>
                       </td>
-                      <td className="border px-4 py-2">
-                        <button className="btn btn-danger" onClick={handleCloseModal}>
-                          Close
-                        </button>
-                      </td>
+       
                     </tr>
                   )}
                 </React.Fragment>

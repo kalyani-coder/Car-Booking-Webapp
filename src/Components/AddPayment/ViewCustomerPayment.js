@@ -1,23 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import React, { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { FaFilePdf } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const ViewCustomerPayment = () => {
   const [customers, setcustomers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchcustomers = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/customer-payment');
+        const response = await fetch(
+          "https://carbooking-backend-fo78.onrender.com/api/customer-payment"
+        );
         if (!response.ok) {
-          throw Error('Network response was not ok');
+          throw Error("Network response was not ok");
         }
         const data = await response.json();
         setcustomers(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -25,72 +29,124 @@ const ViewCustomerPayment = () => {
   }, []);
 
   const handleGenerateInvoice = (customerId) => {
-    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+    const downloadConfirmed = window.confirm(
+      "Do you want to download the invoice?"
+    );
 
     // Fetch customer data for the specified customer ID
     const customer = customers.find((customer) => customer._id === customerId);
 
- if (downloadConfirmed) {
-    if (customer) {
-      const doc = new jsPDF();
+    if (downloadConfirmed) {
+      if (customer) {
+        const doc = new jsPDF({
+          unit: "mm",
+          format: "a4",
+          compress: true,
+          orientation: "portrait",
+          // Increase the height as needed
+          height: 800,
+        });
 
-      // Set the document title
-      doc.text('View Customer Payment Invoice', 10, 10);
+        // Left side details
+        doc.setFontSize(12);
+        doc.text("Customer Payment", 20, 20, { className: "uppercase-text" });
+        doc.text("Shivpushpa Travels", 20, 30);
+        doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 20, 40);
+        doc.text("Mail: travelshivpushpa@gmail.com", 20, 50);
 
-      // Define the columns and rows for the table
-      const columns = ['Field', 'Value'];
-      const rows = [
-        ['Company Name', customer.company_Name],
-        ['GST No', customer.GST_No],
-        ['Reporting Address', customer.reporting_Address],
-        ['Date', customer.Date],
-        ['Customer Name', customer.customer_Name],
-        ['Vehicle Number', customer.vehicle_Number],
-        ['Vehicle Type', customer.vehicle_Type],
-        ['Quantity', customer.quantity],
-        ['From', customer.from],
-        ['To', customer.to],
-        ['Closing KM', customer.closing_km],
-        ['Closing Time', customer.closing_Time],
-        ['Starting KM', customer.starting_Km],
-        ['Starting Time', customer.starting_Time],
-        ['Total KM', customer.total_Km],
-        ['Title', customer.title],
-        ['Title Amount', customer.title_Amount],
-        ['Extra KM', customer.extra_Km],
-        ['ExtraKM Amount', customer.extramkm_Amount],
-        ['Extra Hours', customer.extra_Hours],
-        ['ExtraHours Amount', customer.extrahours_Amount],
-        ['SGST', customer.SGST],
-        ['CGST', customer.CGST],
-        ['Total Amount', customer.total_Amount],
-        ['Advance Amount', customer.advance_Amount],
-        ['Remaining Amount', customer.remaining_Amount],
-        ['Payment Method', customer.payment_Method],
-      ];
+        // Right side details
+        doc.setFontSize(18);
+        doc.text("Invoice", 150, 20, { className: "uppercase-text" });
+        doc.setFontSize(12);
+        doc.text(`Invoice No: ${customer.invoice_No}`, 150, 30);
+        doc.text(`Date: ${customer.Date}`, 150, 40);
 
-      // Set the table position and dimensions
-      const tableY = 20;
+        // Define the columns and rows for the table
+        doc.setFontSize(12);
+        const columns = ["Field", "Value"];
+        const rows = [
+          ["Company Name", customer.company_Name],
+          ["GST No", customer.GST_No],
+          ["Reporting Address", customer.reporting_Address],
+          ["Date", customer.Date],
+          ["Customer Name", customer.customer_Name],
+          ["Vehicle Number", customer.vehicle_Number],
+          ["Vehicle Type", customer.vehicle_Type],
+          ["Quantity", customer.quantity],
+          ["From", customer.from],
+          ["To", customer.to],
+          ["Closing KM", customer.closing_km],
+          ["Closing Time", customer.closing_Time],
+          ["Starting KM", customer.starting_Km],
+          ["Starting Time", customer.starting_Time],
+          ["Total KM", customer.total_Km],
+          ["Title", customer.title],
+          ["Title Amount", customer.title_Amount],
+          ["Extra KM", customer.extra_Km],
+          ["ExtraKM Amount", customer.extramkm_Amount],
+          ["Extra Hours", customer.extra_Hours],
+          ["ExtraHours Amount", customer.extrahours_Amount],
+          ["SGST", customer.SGST],
+          ["CGST", customer.CGST],
+          ["Total Amount", customer.total_Amount],
+          ["Advance Amount", customer.advance_Amount],
+          ["Remaining Amount", customer.remaining_Amount],
+          ["Payment Method", customer.payment_Method],
+        ];
 
-      // Add the table to the PDF
-      doc.autoTable({
-        head: [columns],
-        body: rows,
-        startY: tableY,
-        theme: 'grid',
-      });
+        // Set the table position and dimensions
+        let tableY = 60;
 
-      // Save the PDF or open in a new tab
-      doc.save(`Invoice_${customer._id}.pdf`);
-    }
+        // Add the table to the PDF
+        doc.autoTable({
+          body: rows,
+          startY: tableY,
+          theme: "grid",
+          styles: {
+            fontSize: 10, // Default font size for the entire table
+          },
+          columnStyles: {
+            0: { fontSize: 10, fontStyle: "bold" }, // Field names - larger and bold
+            1: { fontSize: 10 }, // Values - default font size
+          },
+        });
+
+        // Add space between the table and the "Bank Details" section
+        doc.text("", 10, doc.autoTable.previous.finalY + 10);
+
+        // Bank Details section
+        // doc.setFontSize(10);
+        // doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
+        // doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
+        // doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
+        // doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
+        // doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
+        // doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
+
+        // "Right side bottom details" section
+        doc.setFontSize(12);
+        doc.text(
+          "For Shivpushpa Travels",
+          150,
+          doc.autoTable.previous.finalY + 10
+        );
+        doc.text(
+          "Authorised Signatory",
+          150,
+          doc.autoTable.previous.finalY + 20
+        );
+
+        // Save the PDF or open in a new tab
+        doc.save(`Invoice_${customer._id}.pdf`);
+      }
     } else {
-      console.error('Customer not found.');
+      console.error("Customer not found.");
     }
   };
 
-  const filteredcustomers = customers.filter((customer) => {
-    const customerName = customer.customer_Name || '';
-    const companyName = customer.company_Name || '';
+  const filteredCustomers = customers.filter((customer) => {
+    const customerName = customer.customer_Name || "";
+    const companyName = customer.company_Name || "";
     return (
       customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       companyName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -110,54 +166,44 @@ const ViewCustomerPayment = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
-          <div className="grid grid-cols-2 gap-4">
-            {filteredcustomers.map((customer) => (
-              <div
-                key={customer._id}
-                className="custom-card bg-white shadow-md rounded-lg overflow-hidden"
-              >
-                <div className="custom-card-body p-4">
-                  <h5 className="custom-card- font-semibold">
-                    Customer Name: {customer.customer_Name}
-                  </h5>
-                  <p className="custom-card-subtitle mb-2">
-                    Company Name: {customer.company_Name}
-                  </p>
-                  <p className="custom-card-subtitle mb-2">GST No: {customer.GST_No}</p>
-                  <p className="custom-card-subtitle mb-2">Reporting Address: {customer.reporting_Address}</p>
-                  <p className="custom-card-subtitle mb-2">Date: {customer.Date}</p>
-                  <p className="custom-card-subtitle mb-2">Vehicle Number: {customer.vehicle_Number}</p>
-                  <p className="custom-card-subtitle mb-2">Vehicle Type: {customer.vehicle_Type}</p>
-                  <p className="custom-card-subtitle mb-2">Quantity: {customer.quantity}</p>
-                  <p className="custom-card-subtitle mb-2">From: {customer.from}</p>
-                  <p className="custom-card-subtitle mb-2">To: {customer.to}</p>
-                  <p className="custom-card-subtitle mb-2">Closing KM: {customer.closing_km}</p>
-                  <p className="custom-card-subtitle mb-2">Closing Time: {customer.closing_Time}</p>
-                  <p className="custom-card-subtitle mb-2">Starting KM: {customer.starting_Km}</p>
-                  <p className="custom-card-subtitle mb-2">Starting Time: {customer.starting_Time}</p>
-                  <p className="custom-card-subtitle mb-2">Total KM: {customer.total_Km}</p>
-                  <p className="custom-card-subtitle mb-2">Title: {customer.title}</p>
-                  <p className="custom-card-subtitle mb-2">Title Amount: {customer.title_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Extra KM: {customer.extra_Km}</p>
-                  <p className="custom-card-subtitle mb-2">Extra KM Amount: {customer.extramkm_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Extra Hours: {customer.extra_Hours}</p>
-                  <p className="custom-card-subtitle mb-2">Extra Hours Amount: {customer.extrahours_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">SGST: {customer.SGST}</p>
-                  <p className="custom-card-subtitle mb-2">CGST: {customer.CGST}</p>
-                  <p className="custom-card-subtitle mb-2">Total Amount: {customer.total_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Advance Amount: {customer.advance_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Remaining Amount: {customer.remaining_Amount}</p>
-                  <p className="custom-card-subtitle mb-2">Payment Method: {customer.payment_Method}</p>
-                </div>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleGenerateInvoice(customer._id)}
-                >
-                  Generate
-                </button>
-              </div>
-            ))}
-          </div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Company Name</th>
+                <th>GST No</th>
+                <th>reporting_Address</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCustomers.map((customer) => (
+                <tr key={customer._id}>
+                  <td>{customer.customer_Name}</td>
+                  <td>{customer.company_Name}</td>
+                  <td>{customer.GST_No}</td>
+                  <td>{customer.reporting_Address}</td>
+                  <td>{customer.Date}</td>
+
+                  <td>
+                    <Link
+                      className="btn btn-info ml-2"
+                      to={`/ViewCustomerPayment/${customer._id}`}
+                    >
+                      View More
+                    </Link>
+                    <button
+                      className="btn btn-info"
+                      onClick={() => handleGenerateInvoice(customer._id)}
+                    >
+                      <FaFilePdf />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </>

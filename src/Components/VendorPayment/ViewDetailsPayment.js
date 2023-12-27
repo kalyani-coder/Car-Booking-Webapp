@@ -30,6 +30,8 @@ export default function ViewDetailsPayment() {
   const handleCancel = () => {
     // Add logic for cancel action here
     // For example, redirect to another page or go back in history
+     // Close the current window
+  window.close();
     console.log('Cancel button clicked');
     
   };
