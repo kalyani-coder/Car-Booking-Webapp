@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+// import "./ViewShareDetails.css"
 import Sidebar from "../Sidebar/Sidebar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { FaEdit, FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
+// import ViewShareDetails from './ViewShareDetails.css';
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -344,9 +346,9 @@ const ViewShareDetails = () => {
           )}
         </div>
       </div>
-      {isEditing && (
+      {isEditing && ( 
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg w-96">
+          <div className="bg-white p-4 rounded shadow-lg w-96" style={{ width: "40%", height: "80vh", overflowY: "scroll" }}>
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Share Details</h2>
               <button
@@ -357,40 +359,137 @@ const ViewShareDetails = () => {
               </button>
             </div>
             <div className="form-container">
-            <h5 className='fw-bold'>Customer Name:</h5>
+            <h5 className='fw-bold my-2'>Customer Name:</h5>
               <input
                 type="text"
                 value={editedShareDetail.cus_Name}
                 onChange={(e) => setEditedShareDetail({ ...editedShareDetail, cus_Name: e.target.value })}
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold'>Mobile No:</h5>
+              <h5 className='fw-bold my-2'>Vehicle:</h5>
+              <select
+                  className="share-details-input"
+                  name="vehicle"
+                  id="vehicle"
+                  onChange={(e) => setEditedShareDetail({ ...editedShareDetail, vehicle: e.target.value })}
+                  value={editedShareDetail.vehicle}
+                >
+                  <option value="">Vehicle</option>
+                  <option value="Sedan Car">Sedan Car</option>
+                  <option value="Mini Car">Mini Car</option>
+                  <option value="SUV Car">SUV Car</option>
+                  <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                  <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                  <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                  <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                  <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                  <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                  <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                  <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+                  <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+                  <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+                  <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+                  <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+                  <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                </select>
+                <h5 className='fw-bold my-2'>Trip Type:</h5>
+                <select
+                  className="share-details-input"
+                  name="triptype"
+                  id="triptype"
+                  onChange={(e) => setEditedShareDetail({ ...editedShareDetail, triptype: e.target.value })}
+                  value={editedShareDetail.triptype}
+                >
+                  <option value="">Trip Type</option>
+                  <option value="One Way Trip">One Way Trip</option>
+                  <option value="Return Trip">Return Trip</option>
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                </select>
+                <h5 className='fw-bold my-2'>Sub Type:</h5>
+                <select
+                  className="share-details-input"
+                  name="subtype"
+                  id="subtype"
+                  onChange={(e) => setEditedShareDetail({ ...editedShareDetail, subtype: e.target.value })}
+                  value={editedShareDetail.subtype}
+                >
+                  <option value="">Sub Type</option>
+                  <option value="Local Trip">Local Trip</option>
+                  <option value="Outstation Trip">Outstation Trip</option>
+                  <option value="Outstation Local Trip">Outstation Local Trip</option>
+                  <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
+                  className="w-full p-2 mb-2 border border-gray-300 rounded"
+                </select>
+              <h5 className='fw-bold my-2'>Mobile No:</h5>
               <input
-                type="text"
+                type="number"
                 value={editedShareDetail.mobileno}
                 onChange={(e) => setEditedShareDetail({ ...editedShareDetail, mobileno: e.target.value })}
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold'>Address</h5>
-              <textarea
-                value={editedShareDetail.address}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, address: e.target.value })}
-                rows="4"
+              <h5 className='fw-bold my-2'>Vehicle Number:</h5>
+              <input
+              type="text"
+                value={editedShareDetail.vehicleno}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, vehicleno: e.target.value })}
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold'>Mobile No</h5>
+              <h5 className='fw-bold my-2'>Pickup Location</h5>
               <input
                 type="text"
-                value={editedShareDetail.driver_Mo1}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, driver_Mo1: e.target.value })}
+                value={editedShareDetail.pickup}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, pickup: e.target.value })}
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold'>Alternate Mobile No</h5>
+              <h5 className='fw-bold my-2'>Date:</h5>
               <input
-                type="text"
-                value={editedShareDetail.driver_Mo2}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, driver_Mo2: e.target.value })}
+                type="date"
+                value={editedShareDetail.date}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, date: e.target.value })}
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
+              />
+               <h5 className='fw-bold my-2'>Time:</h5>
+              <input
+                type="time"
+                value={editedShareDetail.time}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, time: e.target.value })}
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold my-2'>Dropoff Location</h5>
+              <input
+                type="text"
+                value={editedShareDetail.Dropoff}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, Dropoff: e.target.value })}
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold my-2'>Date:</h5>
+              <input
+                type="date"
+                value={editedShareDetail.date1}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, date1: e.target.value })}
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
+              />
+               <h5 className='fw-bold my-2'>Time:</h5>
+              <input
+                type="time"
+                value={editedShareDetail.time1}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, time1: e.target.value })}
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
+              />
+              <h5 className='fw-bold my-2'>Driver Name:</h5>
+              <input
+                type="text"
+                value={editedShareDetail.drivername}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, drivername: e.target.value })}
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              />
+               <h5 className='fw-bold my-2'>Driver Mail:</h5>
+              <input
+                type="text"
+                value={editedShareDetail.drivermail}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, drivermail: e.target.value })}
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
             </div>
             {/* ... (add more fields as needed) */}

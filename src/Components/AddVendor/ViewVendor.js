@@ -145,7 +145,7 @@ const ViewVendor = () => {
   </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formVendorName">
+            <Form.Group controlId="formVendorName" className="my-2">
               <Form.Label>Vendor Name</Form.Label>
               <Form.Control
                 type="text"
@@ -154,7 +154,7 @@ const ViewVendor = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formCompanyName">
+            <Form.Group controlId="formCompanyName" className="my-2">
               <Form.Label>Company Name</Form.Label>
               <Form.Control
                 type="text"
@@ -163,7 +163,7 @@ const ViewVendor = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formGSTNo">
+            <Form.Group controlId="formGSTNo" className="my-2">
               <Form.Label>GST No</Form.Label>
               <Form.Control
                 type="text"
@@ -172,7 +172,7 @@ const ViewVendor = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formMobile">
+            <Form.Group controlId="formMobile" className="my-2">
               <Form.Label>Mobile</Form.Label>
               <Form.Control
                 type="text"
@@ -181,7 +181,7 @@ const ViewVendor = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formEmail">
+            <Form.Group controlId="formEmail" className="my-2">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
@@ -190,7 +190,7 @@ const ViewVendor = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formAddress">
+            <Form.Group controlId="formAddress" className="my-2">
               <Form.Label>Address</Form.Label>
               <Form.Control
                 type="text"

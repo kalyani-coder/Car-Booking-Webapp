@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 // import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { Table } from 'react-bootstrap';
+import { FaEdit, FaTrash, FaSave } from 'react-icons/fa';
+import { Modal, Button, Form } from 'react-bootstrap';
+
 
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
   const [filteredShareDetails, setFilteredShareDetails] = useState([]);
   const [error, setError] = useState(null);
   const [searchText, setSearchText] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [editedShareDetail, setEditedShareDetail] = useState(null);
 
   useEffect(() => {
     const fetchShareDetails = async () => {
@@ -44,41 +50,7 @@ const ViewStartEndDetails = () => {
     filterShareDetails();
   }, [searchText]);
 
-  // const generateInvoice = (shareDetail) => {
-  //   const doc = new jsPDF();
-
-  //   // Add your code to generate the invoice in a table format here
-  //   // For simplicity, we'll just add a sample table with the data
-  //   doc.text('Sample Invoice', 10, 10);
-
-  //   const columns = ['Field', 'Value'];
-  //   const rows = [
-  //     ['Vehicle', shareDetail.vehicle],
-  //     ['Trip Type', shareDetail.triptype],
-  //     ['Subtype', shareDetail.subtype],
-  //     ['Pickup', shareDetail.pickup],
-  //     ['Date', shareDetail.date],
-  //     ['Time', shareDetail.time],
-  //     ['Droff Location', shareDetail.totalDays],
-  //     ['Drop Off Date', shareDetail.date1],
-  //     ['Drop Off Time', shareDetail.time1],
-  //     ['Driver Name', shareDetail.drivername],
-  //     ['Driver Email', shareDetail.drivermail],
-  //     ['Mobile Number', shareDetail.mobileno],
-  //     ['Mobile Number', shareDetail.mobileno1],
-  //     // Add other fields as needed
-  //   ];
-
-  //   doc.autoTable({
-  //     head: [columns],
-  //     body: rows,
-  //     startY: 20,
-  //   });
-
-  //   // Save the PDF or open in a new tab
-  //   doc.save(`Invoice_${shareDetail._id}.pdf`);
-  // };
-
+  
   const handleEditShareDetail = (shareDetail) => {
     // Implement your edit functionality here
     console.log(`Editing share detail with ID: ${shareDetail._id}`);
@@ -89,9 +61,46 @@ const ViewStartEndDetails = () => {
     console.log(`Saving share detail with ID: ${shareDetail._id}`);
   };
 
-  const handleDeleteShareDetail = (shareDetail) => {
-    // Implement your delete functionality here
-    console.log(`Deleting share detail with ID: ${shareDetail._id}`);
+ const handleCloseEdit = () => {
+    setEditMode(false);
+    setEditedShareDetail(null);
+  };
+
+  const handleDeleteShareDetail = async (shareDetail) => {
+    const confirmed = window.confirm("Do you want to delete this share detail?");
+    if (confirmed) {
+      try {
+        const response = await fetch(
+          `https://carbooking-backend-fo78.onrender.com/api/getDetails-fromDriver/${shareDetail._id}`,
+          {
+            method: "DELETE",
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+  
+        const updatedShareDetails = shareDetails.filter(
+          (detail) => detail._id !== shareDetail._id
+        );
+  
+        setShareDetails(updatedShareDetails);
+        setFilteredShareDetails(updatedShareDetails);
+  
+        alert("Share detail deleted successfully");
+      } catch (error) {
+        console.error("Error deleting share detail:", error);
+        setError("Error deleting share detail: " + error.message);
+      }
+    }
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedShareDetail((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -112,55 +121,95 @@ const ViewStartEndDetails = () => {
           {error ? (
             <p>Error: {error}</p>
           ) : (
-            <div className="grid grid-cols-3 gap-4">
-              {filteredShareDetails.map((shareDetail) => (
-                <div key={shareDetail._id} className="bg-white shadow-md rounded-lg overflow-hidden">
-                  <div className="p-4">
-                  <h5 className="font-semibold">Driver Name : {shareDetail.drivername}</h5>
-                    <p className="mb-2">Pickup Location : {shareDetail.pickuplocation}</p>
-                    <p className="mb-2">Date : {shareDetail.date}</p>
-                    <p className="mb-2">Time : {shareDetail.time}</p>
-                    <p className="mb-2">Drop Location : {shareDetail.totalDaysLocation}</p>
-                    <p className="mb-2">Date1 : {shareDetail.date1}</p>
-                    <p className="mb-2">Time1 : {shareDetail.time1}</p>
-                    <p className="mb-2">Total Days : {shareDetail.totalDays}</p>
-                    <p className="mb-2">Total Hours : {shareDetail.totalHours}</p>
-                    <p className="mb-2">Trip Type : {shareDetail.triptype}</p>
-                    <p className="mb-2">Trip Sub Type : {shareDetail.tripsubtype}</p>
-                    
-                    <p className="mb-2">Mobile No : {shareDetail.mobileNumber}</p>
-                    {/* <p className="mb-2">Mobile No1: {shareDetail.mobilrno1}</p> */}
-                    <div className="flex justify-between">
-                      {/* <button
-                        className='btn btn-primary btn-sm'
-                        onClick={() => generateInvoice(shareDetail)}
-                      >
-                        Generate
-                      </button> */}
-                      <button
-                        className='btn btn-info btn-sm'
-                        onClick={() => handleEditShareDetail(shareDetail)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className='btn btn-success btn-sm'
-                        onClick={() => handleSaveShareDetail(shareDetail)}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className='btn btn-danger btn-sm'
-                        onClick={() => handleDeleteShareDetail(shareDetail)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Driver Name</th>
+                  <th>Pickup Location</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Drop Location</th>
+                  <th>Date1</th>
+                  <th>Time1</th>
+                  <th>Total Days</th>
+                  <th>Total Hours</th>
+                  <th>Trip Type</th>
+                  <th>Trip Sub Type</th>
+                  <th>Mobile No</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredShareDetails.map((shareDetail) => (
+                  <tr key={shareDetail._id}>
+                    <td>{shareDetail.drivername}</td>
+                    <td>{shareDetail.pickuplocation}</td>
+                    <td>{shareDetail.date}</td>
+                    <td>{shareDetail.time}</td>
+                    <td>{shareDetail.totalDaysLocation}</td>
+                    <td>{shareDetail.date1}</td>
+                    <td>{shareDetail.time1}</td>
+                    <td>{shareDetail.totalDays}</td>
+                    <td>{shareDetail.totalHours}</td>
+                    <td>{shareDetail.triptype}</td>
+                    <td>{shareDetail.tripsubtype}</td>
+                    <td>{shareDetail.mobileNumber}</td>
+                    <td>
+                      <div className="d-flex justify-content-between">
+                        <button
+                          className='btn btn-info btn-sm'
+                          onClick={() => handleEditShareDetail(shareDetail)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className='btn btn-success btn-sm'
+                          onClick={() => handleSaveShareDetail(shareDetail)}
+                        >
+                           <FaSave />
+                        </button>
+                        <button
+                          className='btn btn-danger btn-sm'
+                          onClick={() => handleDeleteShareDetail(shareDetail)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
           )}
+           {/* Display the Edit Modal when in edit mode */}
+           <Modal show={editMode} onHide={handleCloseEdit}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Share Detail</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form>
+                <Form.Group controlId="formPickupLocation">
+                  <Form.Label>Pickup Location</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter pickup location"
+                    name="pickuplocation"
+                    value={editedShareDetail?.pickuplocation || ''}
+                    onChange={handleInputChange}
+                  />
+                </Form.Group>
+                {/* Add more form fields based on your schema */}
+              </Form>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseEdit}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSaveShareDetail}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </>

@@ -175,42 +175,42 @@ const ViewCustomer = () => {
           <FaTimes />
         </button>
       </div>
-            <h5 className='fw-bold'>Customer Name</h5>
+            <h5 className='fw-bold my-2'>Customer Name</h5>
             <input
               type="text"
               value={editedCustomer.Cus_name}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold'>Company Name</h5>
+            <h5 className='fw-bold my-2'>Company Name</h5>
             <input
               type="text"
               value={editedCustomer.company_name}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, company_name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold'>GST No </h5>
+            <h5 className='fw-bold my-2'>GST No </h5>
             <input
               type="text"
               value={editedCustomer.gst_no}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold'>Customer Mobile</h5>
+            <h5 className='fw-bold my-2'>Customer Mobile</h5>
             <input
               type="text"
               value={editedCustomer.Cus_Mobile}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Mobile: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold'>Customer Email</h5>
+            <h5 className='fw-bold my-2'>Customer Email</h5>
             <input
               type="text"
               value={editedCustomer.Cus_Email}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Email: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold'>Address</h5>
+            <h5 className='fw-bold my-2'>Address</h5>
             <input
               type="text"
               value={editedCustomer.address}

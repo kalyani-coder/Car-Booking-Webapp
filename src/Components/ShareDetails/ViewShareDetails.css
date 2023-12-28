@@ -22,4 +22,8 @@
     font-size: 1rem;
     margin-bottom: 4px;
   }
-  
+  .model-edit{
+    width: 40%;
+    overflow-y: scroll;
+    height: 80vh;
+  }
