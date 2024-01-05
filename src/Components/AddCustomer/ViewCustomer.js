@@ -7,7 +7,6 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
     <thead>
       <tr>
-        <th>Customer Type</th>
         <th>Customer Name</th>
         <th>Company Name</th>
         <th>GST No</th>
@@ -20,7 +19,6 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
     <tbody>
       {customers.map((customer) => (
         <tr key={customer._id}>
-          <td>{customer.Cus_type}</td>
           <td>{customer.Cus_name}</td>
           <td>{customer.company_name}</td>
           <td>{customer.gst_no}</td>

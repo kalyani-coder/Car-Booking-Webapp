@@ -4,13 +4,13 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import Sidebar from '../Sidebar/Sidebar';
 
-const getCurrentDateFormatted = () => {
-  const currentDate = new Date();
-  const day = currentDate.getDate().toString().padStart(2, '0');
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-  const year = currentDate.getFullYear();
-  return `${day}/${month}/${year}`;
-};
+// const getCurrentDateFormatted = () => {
+//   const currentDate = new Date();
+//   const day = currentDate.getDate().toString().padStart(2, '0');
+//   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+//   const year = currentDate.getFullYear();
+//   return `${day}/${month}/${year}`;
+// };
 
 const initialFormData = {
     invoiceno: '',
@@ -19,7 +19,7 @@ const initialFormData = {
     gstno: '',
     companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
-    date: getCurrentDateFormatted(),
+    date: '',
     contactno: '',
     to: '',
     customerName: '',
@@ -49,7 +49,7 @@ const initialFormData = {
     useEffect(() => {
       const fetchCustomers = async () => {
         try {
-          const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
+          const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/customer-payment');
           if (response.ok) {
             const data = await response.json();
             setCustomerList(data);
@@ -65,17 +65,17 @@ const initialFormData = {
     }, []);
   
     useEffect(() => {
-      // Generate the next invoice number when the component mounts
-     const invoiceNumber = getNextInvoiceNumber();
+      
+    //  const invoiceNumber = getNextInvoiceNumber();
 
       if (selectedCustomer) {
         setFormData((prevData) => ({
           ...prevData,
-          invoiceno: invoiceNumber,
-          customerName: selectedCustomer.Cus_name || '',
-          customerGSTNo: selectedCustomer.gst_no || '',
-          customerAddress: selectedCustomer.address || '',
-          customerContactNo: selectedCustomer.Cus_Mobile || '',
+          // invoiceno: invoiceNumber,
+          customerName: selectedCustomer.customer_Name  || '',
+          GST_No: selectedCustomer.GST_No  || '',
+          Date:selectedCustomer.Date || '',
+          
         }));
       }
     }, [selectedCustomer]);
@@ -135,6 +135,11 @@ const initialFormData = {
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+
     const updatedItems = [...invoiceItems];
     updatedItems[index][name] = value;
 
@@ -193,22 +198,22 @@ const initialFormData = {
     recalculateOverallTotals(updatedItems);
   };
 
-  const getNextInvoiceNumber = () => {
-    // Get the last invoice number from the form data
-    const lastInvoiceNumber = parseInt(formData.invoiceno) || 0;
-    // Calculate the next invoice number
-    const nextInvoiceNumber = lastInvoiceNumber + 1;
-    // Return the formatted next invoice number (padded with leading zeros)
-    return nextInvoiceNumber.toString().padStart(4, '0'); // Ensuring a 4-digit invoice number
-};
+//   const getNextInvoiceNumber = () => {
+    
+//     const lastInvoiceNumber = parseInt(formData.invoiceno) || 0;
+    
+//     const nextInvoiceNumber = lastInvoiceNumber + 1;
+    
+//     return nextInvoiceNumber.toString().padStart(4, '0'); 
+// };
 
   const handleGenerate = () => {
     // Generate the next invoice number
-    const invoiceNumber = getNextInvoiceNumber();
+    // const invoiceNumber = getNextInvoiceNumber();
     // Set the generated invoice number in the form data
     setFormData((prevData) => ({
       ...prevData,
-      invoiceno: invoiceNumber,
+      // invoiceno: invoiceNumber,
     }));
   
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
@@ -285,25 +290,40 @@ const initialFormData = {
         <div className="form-customer-invoice-monthly">
           <div className="pt-4 grid-gap-2 col-6">
             
-            <label htmlFor="date" className="form-label">
+          <label htmlFor="customerName" className="form-label">
+              Customer Name:
+            </label>
+            {/* Dropdown to select a customer */}
+            <select
+              className="form-control-cust-inq-input"
+              id="customerName"
+              name="customerName"
+              onChange={(e) => {
+                // Find the selected customer from the list
+                const selectedCustomer = customerList.find(
+                  (customer) => customer.customer_Name === e.target.value
+                );
+                // Set the selected customer to state
+                setSelectedCustomer(selectedCustomer);
+              }}
+              value={selectedCustomer ? selectedCustomer.customer_Name : ''}
+            >
+              <option value="">Select Customer</option>
+              {customerList.map((customer) => (
+                <option key={customer._id} value={customer.customer_Name}>
+                  {customer.customer_Name}
+                </option>
+              ))}
+            </select>
+          <label htmlFor="date" className="form-label">
               Date
             </label>
             <input
-            className="form-control-vendor-invoice"
-            type="date"
-            name="date"
-            value={getCurrentDateFormatted()} // Set the formatted date for display
-            onChange={handleChange}
-          />
-             <label htmlFor="Kind Attn" className="form-label">
-              Kind Attn:
-            </label>
-            <input
-              className="form-control-vendor-invoice"
-              type="text"
-              placeholder="Kind Attn"
-              name="kind attn"
-              value={formData.kind_attn}
+              className="form-control-customer-invoice-monthly"
+              type="date"
+              id="date"
+              name="date"
+              value={formData.Date}
               onChange={handleChange}
             />
             <br />
@@ -331,7 +351,7 @@ const initialFormData = {
               id="gstno"
               name="gstno"
               placeholder="GST No"
-              value={formData.gstno}
+              value={formData.GST_No}
               onChange={handleChange}
             />
          

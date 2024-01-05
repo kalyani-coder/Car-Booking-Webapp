@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Sidebar from '../Sidebar/Sidebar';
-import { FaTimes } from 'react-icons/fa'; // Import icons
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Sidebar from "../Sidebar/Sidebar";
+import { FaTimes } from "react-icons/fa"; // Import icons
 
 export default function ViewDetailsCustomerPayment() {
   const custPayId = useParams();
   const [customerPayData, setCustomerPayData] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async () => {
     const id = custPayId._id;
 
     try {
-      const response = await axios.get(`https://carbooking-backend-fo78.onrender.com/api/customer-payment/${id}`);
+      const response = await axios.get(
+        `https://carbooking-backend-fo78.onrender.com/api/customer-payment/${id}`
+      );
       setCustomerPayData(response.data);
     } catch (error) {
       console.log(error);
@@ -27,11 +29,21 @@ export default function ViewDetailsCustomerPayment() {
   console.log(customerPayData);
 
   const handleCancel = () => {
-    // Add logic for cancel action here
-    // For example, redirect to another page or go back in history
-    // Close the current window
+    // Attempt to close the window
     window.close();
-    console.log('Cancel button clicked');
+  
+    // If window.close() didn't work, you can try using the following:
+    if (window.opener) {
+      // If the window has an opener (likely opened with window.open()), close the opener
+      window.opener = null;
+      window.open('', '_self', '');
+      window.close();
+    } else {
+      // If there is no opener (likely not opened with window.open()), navigate back in history
+      window.history.back();
+    }
+  
+    console.log("Cancel button clicked");
   };
 
   return (
@@ -39,7 +51,9 @@ export default function ViewDetailsCustomerPayment() {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h1 className="text-2xl font-semibold mb-4">Customer Payment Details</h1>
+          <h1 className="text-2xl font-semibold mb-4">
+            Customer Payment Details
+          </h1>
           <input
             type="search"
             placeholder="Search By Customer Name"
@@ -54,33 +68,96 @@ export default function ViewDetailsCustomerPayment() {
                 <button onClick={handleCancel} className="cancel-button">
                   <FaTimes />
                 </button>
-                <p>Company Name: {customerPayData.company_Name}</p>
-                <p>GST No: {customerPayData.GST_No}</p>
-                <p>Reporting Address: {customerPayData.reporting_Address}</p>
-                <p>Date: {customerPayData.Date}</p>
-                <p>Customer Name: {customerPayData.customer_Name}</p>
-                <p>Vehicle Number: {customerPayData.vehicle_Number}</p>
-                <p>Vehicle Type: {customerPayData.vehicle_Type}</p>
-                <p>Quantity: {customerPayData.quantity}</p>
-                <p>From: {customerPayData.from}</p>
-                <p>To: {customerPayData.to}</p>
-                <p>Closing KM: {customerPayData.closing_km}</p>
-                <p>Closing Time: {customerPayData.closing_Time}</p>
-                <p>Starting KM: {customerPayData.starting_Km}</p>
-                <p>Starting Time: {customerPayData.starting_Time}</p>
-                <p>Total KM: {customerPayData.total_Km}</p>
-                <p>Title: {customerPayData.title}</p>
-                <p>Title Amount: {customerPayData.title_Amount}</p>
-                <p>Extra KM: {customerPayData.extra_Km}</p>
-                <p>ExtraKM Amount: {customerPayData.extramkm_Amount}</p>
-                <p>Extra Hours: {customerPayData.extra_Hours}</p>
-                <p>ExtraHours Amount: {customerPayData.extrahours_Amount}</p>
-                <p>SGST: {customerPayData.SGST}</p>
-                <p>CGST: {customerPayData.CGST}</p>
-                <p>Total Amount: {customerPayData.total_Amount}</p>
-                <p>Advance Amount: {customerPayData.advance_Amount}</p>
-                <p>Remaining Amount: {customerPayData.remaining_Amount}</p>
-                <p>Payment Method: {customerPayData.payment_Method}</p>
+                <p className="mb-2">
+                  <strong>Company Name:</strong>  {customerPayData.company_Name}
+                </p>
+                <p className="mb-2"p>
+                  <strong>GST No:</strong>  {customerPayData.GST_No}
+                </p>
+                <p className="mb-2">
+                  <strong>Reporting Address:</strong>{" "}
+                   {customerPayData.reporting_Address}
+                </p>
+                <p className="mb-2">
+                  <strong>Date:</strong>  {customerPayData.Date}
+                </p>
+                <p className="mb-2">
+                  <strong>Customer Name:</strong>{" "}
+                   {customerPayData.customer_Name}
+                </p>
+                <p className="mb-2">
+                  <strong>Vehicle Number:</strong>{" "}
+                   {customerPayData.vehicle_Number}
+                </p>
+                <p className="mb-2">
+                  <strong>Vehicle Type:</strong>  {customerPayData.vehicle_Type}
+                </p>
+                <p className="mb-2">
+                  <strong>Quantity:</strong>  {customerPayData.quantity}
+                </p>
+                <p className="mb-2">
+                  <strong>From:</strong> {customerPayData.from}
+                </p>
+                <p className="mb-2">
+                  <strong>To:</strong>  {customerPayData.to}
+                </p>
+                <p className="mb-2">
+                  <strong>Closing KM:</strong>  {customerPayData.closing_km}
+                </p>
+                <p className="mb-2">
+                  <strong>Closing Time:</strong> { customerPayData.closing_Time}
+                </p>
+                <p className="mb-2">
+                  <strong>Starting KM:</strong>  {customerPayData.starting_Km}
+                </p>
+                <p className="mb-2">
+                  <strong>Starting Time:</strong>{" "}
+                   {customerPayData.starting_Time}
+                </p>
+                <p className="mb-2">
+                  <strong>Total KM:</strong>  {customerPayData.total_Km}
+                </p>
+                <p className="mb-2">
+                  <strong>Title:</strong>  {customerPayData.title}
+                </p>
+                <p className="mb-2">
+                  <strong>Title Amount:</strong>  {customerPayData.title_Amount}
+                </p>
+                <p className="mb-2">
+                  <strong>Extra KM:</strong>  {customerPayData.extra_Km}
+                </p>
+                <p className="mb-2">
+                  <strong>ExtraKM Amount:</strong>{" "}
+                   {customerPayData.extramkm_Amount}
+                </p>
+                <p className="mb-2">
+                  <strong>Extra Hours:</strong>  {customerPayData.extra_Hours}
+                </p>
+                <p className="mb-2">
+                  <strong>ExtraHours Amount:</strong>{" "}
+                   {customerPayData.extrahours_Amount}
+                </p>
+                <p className="mb-2">
+                  <strong>SGST:</strong> {customerPayData.SGST}
+                </p>
+                <p className="mb-2">
+                  <strong>CGST:</strong>   {customerPayData.CGST}
+                </p>
+                <p className="mb-2">
+                  <strong>Total Amount:</strong>  {customerPayData.total_Amount}
+                </p>
+                <p className="mb-2">
+                  <strong>Advance Amount:</strong>{" "}
+                  {customerPayData.advance_Amount}
+                </p>
+                <p className="mb-2">
+                  <strong>Remaining Amount:</strong>{" "}
+                  {customerPayData.remaining_Amount}
+                </p>
+                <p className="mb-2">
+                  <strong>Payment Method:</strong>{" "}
+                   {customerPayData.payment_Method}
+                </p>
               </div>
             </div>
           )}

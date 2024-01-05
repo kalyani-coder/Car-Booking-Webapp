@@ -39,7 +39,7 @@ function CustomerInvoiceMonthly() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
+        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/customer-payment');
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
@@ -62,10 +62,9 @@ function CustomerInvoiceMonthly() {
       setFormData((prevData) => ({
         ...prevData,
         invoiceno: invoiceNumber,
-        customerName: selectedCustomer.Cus_name || '',
-        customerGSTNo: selectedCustomer.gst_no || '',
-        customerAddress: selectedCustomer.address || '',
-        customerContactNo: selectedCustomer.Cus_Mobile || '',
+        customer_Name: selectedCustomer.customer_Name || '',
+        GST_No: selectedCustomer.GST_No || '',
+        Date:selectedCustomer.Date || '',
       }));
     }
   }, [selectedCustomer]);
@@ -293,53 +292,42 @@ function CustomerInvoiceMonthly() {
               onChange={(e) => {
                 // Find the selected customer from the list
                 const selectedCustomer = customerList.find(
-                  (customer) => customer.Cus_name === e.target.value
+                  (customer) => customer.customer_Name === e.target.value
                 );
                 // Set the selected customer to state
                 setSelectedCustomer(selectedCustomer);
               }}
-              value={selectedCustomer ? selectedCustomer.Cus_name : ''}
+              value={selectedCustomer ? selectedCustomer.customer_Name : ''}
             >
               <option value="">Select Customer</option>
               {customerList.map((customer) => (
-                <option key={customer._id} value={customer.Cus_name}>
-                  {customer.Cus_name}
+                <option key={customer._id} value={customer.customer_Name}>
+                  {customer.customer_Name}
                 </option>
               ))}
             </select>
-            <label htmlFor="customerGSTNo" className="form-label">
+            <label htmlFor="GST_No" className="form-label">
               GST No:
             </label>
             <input
               className="form-control-customer-invoice-monthly"
               type="text"
               id="customerGSTNo"
-              name="customerGSTNo"
-              value={formData.customerGSTNo}
+              name="GST_No"
+              value={formData.GST_No}
               onChange={handleChange}
             />
           </div>
           <div className="mb-2 grid-gap-2 col-6">
-            <label htmlFor="customerAddress" className="form-label">
-              Customer Address:
+            <label htmlFor="Date" className="form-label">
+              Date:
             </label>
             <input
               className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerAddress"
-              name="customerAddress"
-              value={formData.customerAddress}
-              onChange={handleChange}
-            />
-            <label htmlFor="customerContactNo" className="form-label">
-              Contact No
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerContactNo"
-              name="customerContactNo"
-              value={formData.customerContactNo}
+              type="date"
+              id="Date"
+              name="Date"
+              value={formData.Date}
               onChange={handleChange}
             />
           </div>

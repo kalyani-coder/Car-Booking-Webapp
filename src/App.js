@@ -41,6 +41,8 @@ import IndivisualCustomers from './Components/ViewCustomers/IndivisualCustomers'
 import ViewDetailsPayment from './Components/VendorPayment/ViewDetailsPayment';
 import ViewDetailsCustomerPayment from './Components/AddPayment/ViewDetailsCustomerPayment'; 
 // import IndivisualCustomerRate from './Components/AddRate/IndivisualCustomerRate';
+import CustomerSingleInvoice from './Components/CustomerInvoice/CustomerSingleInvoice';
+
 
 
 
@@ -76,6 +78,7 @@ function App() {
     <Route path='/vendorpayment' element={<VendorPayment/>} />
     <Route path='/Viewvendorpayment' element={<ViewVendorPayment/>} />
     <Route path='/customerinvoice' element={<CustomerInvoice/>} />
+    <Route path='/singlecustomerinvoice' element={<CustomerSingleInvoice/>} />
     <Route path='/vendorinvoice' element={<VendorInvoice/>} />
     <Route path='/customerinvoicemonthly' element={<CustomerInvoiceMonthly/>} />
     <Route path='/vendorinvoicemonthly' element={<VendorInvoiceMonthly/>} />

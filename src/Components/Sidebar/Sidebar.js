@@ -377,6 +377,11 @@ const Sidebar = () => {
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
+                <Link to={'/singlecustomerinvoice'}>
+                  Single Customer Invoice
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
                 <Link to={'/vendorinvoice'}>
                   Vendor Invoice
                 </Link>
