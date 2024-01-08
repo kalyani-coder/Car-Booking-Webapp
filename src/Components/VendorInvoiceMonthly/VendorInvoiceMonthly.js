@@ -137,21 +137,6 @@ function VendorInvoiceMonthly() {
 
       <div className="container-vendor-invoice-monthly">
         <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Monthly Vendor Invoice</h2>
-        <div className="form-vendor-invoice-monthly">
-          <div className="pt-4 grid-gap-2 col-6">
-            <label htmlFor="companyName" className="form-label">Company Name:</label>
-            <input className="form-control-vendor-invoice-monthly" type="text" placeholder="Company Name" id="companyName" name="companyName" onChange={handleChange} />
-            {/* Add similar input elements for other fields */}
-          </div>
-          
-          <div className="pt-4 grid-gap-2 col-6">
-            <label htmlFor="gstno" className="form-label">GST No:</label>
-            <input className="form-control-vendor-invoice-monthly" type="text" placeholder="GST No." id="gstno" name="gstno" onChange={handleChange} />
-            {/* Add similar input elements for other fields */}
-          </div>
-          {/* Add more input elements */}
-        </div>
-
         <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "5px" }}>Invoice To :</h2>
         <div className="form-vendor-invoice-monthly">
           <div className="grid-gap-2 col-6">
@@ -197,84 +182,8 @@ function VendorInvoiceMonthly() {
             </tbody>
           </table>
 
-          <div>
-            <label>Bank Details:</label>
-          </div>
 
-          <div className="form-vendor-invoice">
-            <div className="grid-gap-2 col-6">
-              <label htmlFor="bankname" className="form-label">
-                Bank Name:
-              </label>
-              <input
-                className="form-control-vendor-invoice"
-                type="text"
-                placeholder="Bank Name"
-                name="bankname"
-                value={formData.bankname}
-                onChange={handleChange}
-              />
-              <label htmlFor="accountNumber" className="form-label">
-                Account Number:
-              </label>
-              <input
-                className="form-control-vendor-invoice"
-                type="text"
-                placeholder="Account Number"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleChange}
-              />
-              <label htmlFor="ifsccode" className="form-label">
-                IFSC Code:
-              </label>
-              <input
-                className="form-control-vendor-invoice"
-                type="text"
-                placeholder="IFSC Code"
-                name="ifsccode"
-                value={formData.ifsccode}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-gap-2 col-6">
-              <label htmlFor="branch" className="form-label">
-                Branch Name:
-              </label>
-              <input
-                className="form-control-vendor-invoice"
-                type="text"
-                placeholder="Branch Name"
-                name="branchname"
-                value={formData.branchname}
-                onChange={handleChange}
-              />
-              <label htmlFor="accountHolderName" className="form-label">
-                Account Holder Name:
-              </label>
-              <input
-                className="form-control-vendor-invoice"
-                type="text"
-                placeholder="Account Holder Name"
-                name="accountHolderName"
-                value={formData.accountHolderName}
-                onChange={handleChange}
-              />
-              <label htmlFor="micrcode" className="form-label">
-                MICR Code:
-              </label>
-              <input
-                className="form-control-vendor-invoice"
-                type="text"
-                placeholder="MICR Code"
-                name="micrcode"
-                value={formData.micrcode}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <button className="btn btn-danger" onClick={handleGenerate}>
+          <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
         </div>

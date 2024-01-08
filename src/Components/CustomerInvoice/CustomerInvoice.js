@@ -13,13 +13,12 @@ import Sidebar from '../Sidebar/Sidebar';
 // };
 
 const initialFormData = {
-    invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
     kind_attn: '',
-    gstno: '',
+    GST_No: '',
     companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
-    date: '',
+    Date: '',
     contactno: '',
     to: '',
     customerName: '',
@@ -198,22 +197,14 @@ const initialFormData = {
     recalculateOverallTotals(updatedItems);
   };
 
-//   const getNextInvoiceNumber = () => {
-    
-//     const lastInvoiceNumber = parseInt(formData.invoiceno) || 0;
-    
-//     const nextInvoiceNumber = lastInvoiceNumber + 1;
-    
-//     return nextInvoiceNumber.toString().padStart(4, '0'); 
+
 // };
 
   const handleGenerate = () => {
-    // Generate the next invoice number
-    // const invoiceNumber = getNextInvoiceNumber();
-    // Set the generated invoice number in the form data
+    
     setFormData((prevData) => ({
       ...prevData,
-      // invoiceno: invoiceNumber,
+     
     }));
   
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
@@ -286,7 +277,8 @@ const initialFormData = {
     <>
       <Sidebar />
       <div className="container-customer-invoice-monthly">
-        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>Customer Invoice</h2>
+        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>Single Customer Invoice</h2>
+        <h3 style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '5px' }}>Invoice To:</h3>
         <div className="form-customer-invoice-monthly">
           <div className="pt-4 grid-gap-2 col-6">
             
@@ -330,18 +322,19 @@ const initialFormData = {
            
           </div>
           <div className="pt-4 grid-gap-2 col-6">
-            <label htmlFor="invoiceno" className="form-label">
-              Invoice No:
-            </label>
-            <input
+            <label htmlFor="kind_attn" className="form-label">
+              Kind Attn:
+              <input
               className="form-control-customer-invoice-monthly"
               type="text"
-              id="invoiceno"
-              name="invoiceno"
-              placeholder="Invoice No"
-              value={formData.invoiceno}
+              id="kind_attn"
+              name="kind_attn"
+              placeholder="Kind Attn"
+              value={formData.kind_attn}
               onChange={handleChange}
             />
+            </label>
+            
             <label htmlFor="gstno" className="form-label">
               GST No
             </label>
@@ -357,76 +350,7 @@ const initialFormData = {
          
           </div>
         </div>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Invoice To:</h2>
-        <div className="form-customer-invoice-monthly">
-          <div className="grid-gap-2 col-6">
-            <label htmlFor="customerName" className="form-label">
-              Customer Name:
-            </label>
-             {/* Dropdown to select a customer */}
-             <select
-              className="form-control-cust-inq-input"
-              id="customername"
-              name="customerName"
-              onChange={(e) => {
-                // Find the selected customer from the list
-                const selectedCustomer = customerList.find(
-                  (customer) => customer.Cus_name === e.target.value
-                );
-                // Set the selected customer to state
-                setSelectedCustomer(selectedCustomer);
-              }}
-              value={selectedCustomer ? selectedCustomer.Cus_name : ''}
-            >
-              <option value="">Select Customer</option>
-              {customerList.map((customer) => (
-                <option key={customer._id} value={customer.Cus_name}>
-                  {customer.Cus_name}
-                </option>
-              ))}
-            </select>
-
-
-            <label htmlFor="customerGSTNo" className="form-label">
-              GST No:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerGSTNo"
-              name="customerGSTNo"
-              placeholder="Customer GST No"
-              value={formData.customerGSTNo}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-2 grid-gap-2 col-6">
-            <label htmlFor="customerAddress" className="form-label">
-              Customer Address:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerAddress"
-              name="customerAddress"
-              placeholder="Customer Address"
-              value={formData.customerAddress}
-              onChange={handleChange}
-            />
-            <label htmlFor="customerContactNo" className="form-label">
-              Contact No
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="customerContactNo"
-              name="customerContactNo"
-              placeholder="Contact No"
-              value={formData.customerContactNo}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+        
         <div>
         <table className="invoice-table">
             <thead>
@@ -494,87 +418,12 @@ const initialFormData = {
             </tr>
             </tbody>
           </table>
-          <button className="btn btn-primary" onClick={handleAddItem}>
+          <button className="btn btn-primary mt-2 mr-2" onClick={handleAddItem}>
             Add Item
           </button>
-          <div>
-            <br />
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Bank Details:</h2>
-          </div>
-          <div className="form-customer-invoice-monthly">
-            <div className="grid-gap-2 col-6">
-              <label htmlFor="bankname" className="form-label">
-                Bank Name:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="bankname"
-                name="bankname"
-                value={formData.bankname}
-                onChange={handleChange}
-              />
-              <label htmlFor="branchname" className="form-label">
-                Branch Name:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="branchname"
-                name="branchname"
-                value={formData.branchname}
-                onChange={handleChange}
-              />
-              <label htmlFor="accountNumber" className="form-label">
-                Account Number:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="accountNumber"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-gap-2 col-6">
-              <label htmlFor="accountHoldername" className="form-label">
-                Account Holder Name:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="accountHoldername"
-                name="accountHoldername"
-                placeholder="Account Holder"
-                value={formData.accountHoldername}
-                onChange={handleChange}
-              />
-              <label htmlFor="ifsccode" className="form-label">
-                IFSC Code:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="ifsccode"
-                name="ifsccode"
-                value={formData.ifsccode}
-                onChange={handleChange}
-              />
-              <label htmlFor="micrcode" className="form-label">
-                MICR Code:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="micrcode"
-                name="micrcode"
-                value={formData.micrcode}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <button  className="btn btn-danger" onClick={handleGenerate}>
+        
+         
+          <button  className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
           {totalAmount && (

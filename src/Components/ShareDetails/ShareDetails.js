@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './SharedDetails.css'; // Your custom CSS file
 import Sidebar from '../Sidebar/Sidebar';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 // Functional component for ShareDetails
 const ShareDetails = () => {
@@ -59,6 +61,18 @@ const ShareDetails = () => {
       });
     }
   }, [selectedCustomer]);
+
+
+  // Function to format the date to DD/MM/YYYY
+const formatDate = (inputDate) => {
+  if (!inputDate) return '';
+  const dateObj = new Date(inputDate);
+  const day = dateObj.getDate();
+  const month = dateObj.getMonth() + 1;
+  const year = dateObj.getFullYear();
+  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+};
+
 
   // Handle form field changes
   const handleChange = (event) => {
@@ -311,13 +325,15 @@ const ShareDetails = () => {
                 <label htmlFor="date" className="share-details-label">
                   Pickup Date:
                 </label>
-                <input
-                  type="date"
-                  className="share-details-input"
-                  name="date"
-                  onChange={handleChange}
-                  value={formData.date}
-                />
+                <DatePicker
+              className="share-details-input"
+              name="date"
+              selected={formData.date ? new Date(formData.date) : null}
+              onChange={(date) => {
+                setFormData((prevData) => ({ ...prevData, date }));
+              }}
+              dateFormat="dd/MM/yyyy" // Set the desired date format  
+            />
               </div>
             </div>
 
@@ -326,13 +342,15 @@ const ShareDetails = () => {
                 <label htmlFor="date1" className="share-details-label">
                   Dropoff Date:
                 </label>
-                <input
-                  type="date"
-                  className="share-details-input"
-                  name="date1"
-                  onChange={handleChange}
-                  value={formData.date1}
-                />
+                <DatePicker
+              className="share-details-input"
+              name="date1"
+              selected={formData.date1 ? new Date(formData.date1) : null}
+              onChange={(date) => {
+                setFormData((prevData) => ({ ...prevData, date1: date }));
+              }}
+              dateFormat="dd/MM/yyyy" // Set the desired date format
+            />
               </div>
             </div>
           </div>

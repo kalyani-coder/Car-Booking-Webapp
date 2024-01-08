@@ -1,29 +1,128 @@
-/* ViewVendor.css */
+/* SharedDetails.css */
 
-.custom-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-  
-  .custom-card-body {
-    padding: 0;
-  }
-  
-  .custom-card-title {
-    font-size: 1.25rem;
-    margin-bottom: 8px;
-  }
-  
-  .custom-card-subtitle {
-    font-size: 1rem;
-    margin-bottom: 4px;
-  }
-  .model-edit{
-    width: 40%;
-    overflow-y: scroll;
-    height: 80vh;
-  }
+/* Container styles */
+.share-details-container {
+  display: flex;
+  padding: 20px;
+}
+
+/* Form styles */
+.share-details-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Row and column styles */
+.share-details-row {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.share-details-column {
+  flex: 1;
+  margin-right: 15px;
+}
+
+/* Form group styles */
+.share-details-form-group {
+  margin-bottom: 15px;
+}
+
+/* Label styles */
+.share-details-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Input styles */
+.share-details-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Button styles */
+.share-details-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.share-details-button:hover {
+  background-color: #45a049;
+}
+
+/* Error message styles */
+.text-red-500 {
+  color: #e53e3e;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+/* Date picker styles */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}
+
+/* Optional: Customize date picker appearance */
+.react-datepicker {
+  font-size: 14px;
+}
+
+.react-datepicker__header {
+  background-color: #4caf50;
+  color: white;
+}
+
+.react-datepicker__day-names {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.react-datepicker__day {
+  margin: 5px;
+  cursor: pointer;
+}
+
+.react-datepicker__day:hover {
+  background-color: #4caf50;
+  color: white;
+}
+
+.react-datepicker__current-month {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.react-datepicker__time-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.react-datepicker__time {
+  list-style: none;
+  padding: 5px;
+}
+
+.react-datepicker__time-list-item {
+  cursor: pointer;
+}
+
+.react-datepicker__time-list-item:hover {
+  background-color: #4caf50;
+  color: white;
+}

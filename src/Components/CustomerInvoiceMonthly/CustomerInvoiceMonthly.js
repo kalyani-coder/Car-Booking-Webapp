@@ -9,11 +9,11 @@ function CustomerInvoiceMonthly() {
   const [formData, setFormData] = useState({
     invoiceno: '',
     companyName: 'Shivpushpa Travels Invoice',
-    gstno: '',
+    GST_No: '',
     companyAddress: '332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111',
     mail: 'travelshivpushpa@gmail.com',
     kind_attn: '',
-    date: '',
+    Date: '',
     contactno: '',
     to: '',
     customerName: '',
@@ -23,8 +23,8 @@ function CustomerInvoiceMonthly() {
     discount: '',
     kms: '',
     amount: '',
-    cgst: '',
-    sgst: '',
+    CGST: '',
+    SGST: '',
     totalAmount: '',
     bankname: 'The Cosmos Co-operative Bank Ltd',
     branchname: 'Kasba Raviwar Branch, Pune 411 002',
@@ -55,13 +55,10 @@ function CustomerInvoiceMonthly() {
   }, []);
 
   useEffect(() => {
-    // Generate the next invoice number when the component mounts
-    const invoiceNumber = getNextInvoiceNumber();
-
     if (selectedCustomer) {
       setFormData((prevData) => ({
         ...prevData,
-        invoiceno: invoiceNumber,
+       
         customer_Name: selectedCustomer.customer_Name || '',
         GST_No: selectedCustomer.GST_No || '',
         Date:selectedCustomer.Date || '',
@@ -87,23 +84,16 @@ function CustomerInvoiceMonthly() {
     window.print();
   };
 
-  const getNextInvoiceNumber = () => {
-    // Get the last invoice number from the form data
-    const lastInvoiceNumber = parseInt(formData.invoiceno) || 0;
-    // Calculate the next invoice number
-    const nextInvoiceNumber = lastInvoiceNumber + 1;
-    // Return the formatted next invoice number (padded with leading zeros)
-    return nextInvoiceNumber.toString().padStart(4, '0'); // Ensuring a 4-digit invoice number
-};
+  
 
 
   const handleGenerate = () => {
-    // Generate the next invoice number
-    const invoiceNumber = getNextInvoiceNumber();
-    // Set the generated invoice number in the form data
+    
+    
+   
     setFormData((prevData) => ({
       ...prevData,
-      invoiceno: invoiceNumber,
+     
     }));
 
 
@@ -125,13 +115,12 @@ function CustomerInvoiceMonthly() {
     // Add content to the right side
     doc.text('PO No: ', 150, 30);
     doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
-    doc.text('Date: ' + formData.date, 150, 50);
+    doc.text('Date: ' + formData.Date, 150, 50);
     doc.text('GST No: 27AABTS4503R1Z1', 150, 60);
 
     doc.text('Customer Name: ' + formData.customerName, 10, 80);
-    doc.text('Customer Address: ' + formData.customerAddress, 10, 90);
-    doc.text('Customer GST No: ' + formData.customerGSTNo, 10, 100);
-    doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
+    doc.text('Customer GST No: ' + formData.GST_No, 10, 90);
+   
 
     // Add table
     const columns = ['Description','Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
@@ -183,101 +172,6 @@ function CustomerInvoiceMonthly() {
       <Sidebar />
       <div className="container-customer-invoice-monthly">
         <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>Monthly Customer Invoice</h2>
-        <div className="form-customer-invoice-monthly">
-          <div className="pt-4 grid-gap-2 col-6">
-            <label htmlFor="companyName" className="form-label">
-              Company Name:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="companyName"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-            />
-            <label htmlFor="companyAddress" className="form-label">
-              Company Address:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="companyAddress"
-              name="companyAddress"
-              value={formData.companyAddress}
-              onChange={handleChange}
-            />
-            <label htmlFor="date" className="form-label">
-              Date
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="date"
-              id="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-            />
-            <br />
-            <label htmlFor="contactno" className="form-label">
-              Contact No
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="contactno"
-              name="contactno"
-              value={formData.contactno}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="pt-4 grid-gap-2 col-6">
-            <label htmlFor="invoiceno" className="form-label">
-              Invoice No:
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="invoiceno"
-              name="invoiceno"
-              value={formData.invoiceno}
-              onChange={handleChange}
-            />
-            <label htmlFor="gstno" className="form-label">
-              GST No
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="gstno"
-              name="gstno"
-              value={formData.gstno}
-              onChange={handleChange}
-            />
-            <label htmlFor="mail" className="form-label">
-              Mail
-            </label>
-            <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="mail"
-              name="mail"
-              value={formData.mail}
-              onChange={handleChange}
-            />
-            <label htmlFor="Kind Attn" className="form-label">
-              Kind Attn:
-            </label>
-            <input
-              className="form-control-vendor-invoice"
-              type="text"
-              placeholder="Kind Attn"
-              name="kind attn"
-              value={formData.kind_attn}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Invoice To:</h2>
         <div className="form-customer-invoice-monthly">
           <div className="grid-gap-2 col-6">
@@ -320,6 +214,18 @@ function CustomerInvoiceMonthly() {
           </div>
           <div className="mb-2 grid-gap-2 col-6">
             <label htmlFor="Date" className="form-label">
+              Kind Attn:
+            </label>
+            <input
+              className="form-control-customer-invoice-monthly"
+              type="text"
+              id="kind_attn"
+              name="kind_attn"
+              placeholder="Kind Attn"
+              value={formData.kind_attn}
+              onChange={handleChange}
+            />
+             <label htmlFor="Date" className="form-label">
               Date:
             </label>
             <input
@@ -343,101 +249,26 @@ function CustomerInvoiceMonthly() {
                 <th>Total</th>
                 <th>CGST</th>
                 <th>SGST</th>
-                
               </tr>
             </thead>
             <tbody>
               {invoiceItems.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.description}</td>
-                  <td>{item.saccode}</td>
-                  <td>{item.kms}</td>
-                  <td>{item.amount}</td>
-                  <td>{item.totalAmount}</td>
-                  <td>{item.cgst}%</td>
-                  <td>{item.sgst}%</td>
-                  
-                </tr>
+                <tr key={item._id}>
+                <td>{`${item.vehicle_Type} from ${item.from} to ${item.to}`}</td>
+                <td>{item.vehicle_Type}</td>
+                <td>{item.from}</td>
+                <td>{item.to}</td>
+                <td>{item.total_Km}</td>
+                <td>{item.total_Amount}</td>
+                <td>{item.CGST}</td>
+                <td>{item.SGST}</td>
+              </tr>
               ))}
             </tbody>
           </table>
-          <div>
-            <br />
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '5px' }}>Bank Details:</h2>
-          </div>
-          <div className="form-customer-invoice-monthly">
-            <div className="grid-gap-2 col-6">
-              <label htmlFor="bankname" className="form-label">
-                Bank Name:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="bankname"
-                name="bankname"
-                value={formData.bankname}
-                onChange={handleChange}
-              />
-              <label htmlFor="branchname" className="form-label">
-                Branch Name:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="branchname"
-                name="branchname"
-                value={formData.branchname}
-                onChange={handleChange}
-              />
-              <label htmlFor="accountNumber" className="form-label">
-                Account Number:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="accountNumber"
-                name="accountNumber"
-                value={formData.accountNumber}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="grid-gap-2 col-6">
-              <label htmlFor="accountHoldername" className="form-label">
-                Account Holder Name:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="accountHoldername"
-                name="accountHoldername"
-                value={formData.accountHoldername}
-                onChange={handleChange}
-              />
-              <label htmlFor="ifsccode" className="form-label">
-                IFSC Code:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="ifsccode"
-                name="ifsccode"
-                value={formData.ifsccode}
-                onChange={handleChange}
-              />
-              <label htmlFor="micrcode" className="form-label">
-                MICR Code:
-              </label>
-              <input
-                className="form-control-customer-invoice-monthly"
-                type="text"
-                id="micrcode"
-                name="micrcode"
-                value={formData.micrcode}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <button  className="btn btn-danger" onClick={handleGenerate}>
+         
+         
+          <button  className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
         </div>

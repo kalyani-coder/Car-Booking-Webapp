@@ -6,7 +6,8 @@
 .container-vendor-invoice{
     margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
-     background-color:rgb(200, 205, 122);
+  background-color:rgb(200, 205, 122);
+  height:100vh;
 }
 button-vendor{
    color:red;
