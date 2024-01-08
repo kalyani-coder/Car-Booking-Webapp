@@ -63,17 +63,6 @@ const ShareDetails = () => {
   }, [selectedCustomer]);
 
 
-  // Function to format the date to DD/MM/YYYY
-const formatDate = (inputDate) => {
-  if (!inputDate) return '';
-  const dateObj = new Date(inputDate);
-  const day = dateObj.getDate();
-  const month = dateObj.getMonth() + 1;
-  const year = dateObj.getFullYear();
-  return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
-};
-
-
   // Handle form field changes
   const handleChange = (event) => {
     const { name, value } = event.target;
