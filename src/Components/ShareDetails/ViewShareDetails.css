@@ -67,6 +67,30 @@
   font-size: 14px;
 }
 
+/* Calendar icon styles */
+.date-picker-container {
+  position: relative;
+}
+.share-details-input {
+  padding-right: 30px; /* Adjust the padding to accommodate the icon */
+}
+
+.calendar-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #555;
+  cursor: pointer;
+}
+
+.left-icon {
+  left: 10px;
+}
+
+.right-icon {
+  right: 10px;
+}
 
 
 
