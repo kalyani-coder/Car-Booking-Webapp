@@ -3,7 +3,7 @@ import './SharedDetails.css'; // Your custom CSS file
 import Sidebar from '../Sidebar/Sidebar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { FaRegCalendarAlt } from 'react-icons/fa';
+
 
 
 // Functional component for ShareDetails
@@ -320,7 +320,7 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="date1"
                   selected={formData.date1}
-                  onChange={(date) => setFormData((prevData) => ({ ...prevData, date1: date }))}
+                  onChange={(date) => setFormData((prevData) => ({ ...prevData, date: date }))}
                   dateFormat="dd/MM/yyyy"
                   placeholderText="dd/mm/yyyy"
                   
@@ -334,19 +334,15 @@ const ShareDetails = () => {
                 <label htmlFor="date1" className="share-details-label">
                   Dropoff Date:
                 </label>
-                <FaRegCalendarAlt className="calendar-icon left-icon" />
-              <DatePicker
-                className="share-details-input"
-                name="date1"
-                selected={formData.date1 ? new Date(formData.date1) : null}
-                onChange={(date) => {
-                  setFormData((prevData) => ({ ...prevData, date1: date }));
-                }}
-                dateFormat="dd/MM/yyyy" // Set the desired date format
-                showPopperArrow={false} // Hide the arrow
-                placeholderText="dd/mm/yyyy" // Placeholder text
-              />
-              <FaRegCalendarAlt className="calendar-icon right-icon" />
+                <DatePicker
+                  className="share-details-input"
+                  name="date1"
+                  selected={formData.date1}
+                  onChange={(date) => setFormData((prevData) => ({ ...prevData, date1: date}))}
+                  dateFormat="dd/MM/yyyy"
+                  showPopperArrow={false}
+                  placeholderText="dd/mm/yyyy"
+                />
               </div>
             </div>
           </div>

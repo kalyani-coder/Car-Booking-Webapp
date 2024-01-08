@@ -43,6 +43,7 @@ const initialFormData = {
     const [formData, setFormData] = useState(initialFormData);
     const [error, setError] = useState('');
     const [customerList, setCustomerList] = useState([]);
+    console.log(customerList)
     const [selectedCustomer, setSelectedCustomer] = useState(null);
   
     useEffect(() => {
