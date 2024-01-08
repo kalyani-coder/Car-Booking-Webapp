@@ -315,6 +315,7 @@ const ShareDetails = () => {
                   Pickup Date:
                 </label>
                 <DatePicker
+                placeholderText="dd/mm/yyyy"
               className="share-details-input"
               name="date"
               selected={formData.date ? new Date(formData.date) : null}
@@ -339,6 +340,8 @@ const ShareDetails = () => {
                 setFormData((prevData) => ({ ...prevData, date1: date }));
               }}
               dateFormat="dd/MM/yyyy" // Set the desired date format
+              showPopperArrow={false} // Hide the arrow
+              placeholderText="dd/mm/yyyy" // Placeholder text
             />
               </div>
             </div>
