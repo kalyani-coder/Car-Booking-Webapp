@@ -353,7 +353,7 @@ const ViewShareDetails = () => {
               <h2 className="text-2xl font-bold">Edit Share Details</h2>
               <button
                 onClick={() => setIsEditing(false)}
-                className="close-icon"
+                className="close-icon" 
               >
                 <FaTimes />
               </button>

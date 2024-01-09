@@ -3,7 +3,7 @@ import "./CustomerEnquiry.css";
 import Sidebar from "../Sidebar/Sidebar";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import moment from 'moment';
 
 const CustomerEnquiry = () => {
   const initialFormData = {
@@ -27,11 +27,13 @@ const CustomerEnquiry = () => {
   };
   //Function to format the date as dd/mm/yy
   const formatDate = (date) => {
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(-2); // Take only the last two digits of the year
-    return `${day}/${month}/${year}`;
+    return date ? moment(date).format("DD/MM/YYYY") : "";
   };
+
+  const formatDateForPost = (date) => {
+    return date ? moment(date, "DD/MM/YYYY").format("DD/MM/YYYY") : null;
+  };
+
   const [formData, setFormData] = useState(initialFormData);
   // const [selectedDate, setSelectedDate] = useState(null);
   const [error, setError] = useState("");
@@ -82,10 +84,10 @@ const CustomerEnquiry = () => {
       tripe_type: formData.triptype,
       sub_type: formData.subtype,
       pic_up: formData.pickup,
-      date1: formData.date1,
+      date1: formatDateForPost(formData.date1),
+      date2: formatDateForPost(formData.date2),
       time1: formData.time1,
       drop_of: formData.dropoff,
-      date2: formData.date2,
       time2: formData.time2,
       days: formData.totaldays,
       hours: formData.totalhours,
@@ -124,9 +126,12 @@ const CustomerEnquiry = () => {
       alert("Failed to save data. Please try again.");
     }
   };
+  
 
-  const handleDateChange = (event) => {
-    handleChange(event);
+  const handleDateChange = (date, name) => {
+
+    const formattedDate = formatDate(date);
+    // handleChange(event);
    
     
 
@@ -146,6 +151,7 @@ const CustomerEnquiry = () => {
 
       setFormData((prevData) => ({
         ...prevData,
+        [name]: formattedDate,
         totaldays: totalDays,
         totalhours: totalHours,
       }));
@@ -190,7 +196,7 @@ const CustomerEnquiry = () => {
       [name]: value,
     }));
 
-    if (name === "date1" || name === "date2" ) {
+    if (name === "date1" || name === "date2") {
       updateTotal();
     }
   };
@@ -338,12 +344,12 @@ const CustomerEnquiry = () => {
                     <span className="required-asterisk">*</span>
                   </label>
                   <DatePicker
-                  placeholderText="dd/mm/yyyy"
+                    placeholderText="dd/mm/yyyy"
                     className="form-control cust-inq-input"
-                    selected={formData.date1 ? new Date(formData.date1) : null}
-                    onChange={(date) => handleChange({ target: { name: "date1", value: date } })}
-                    dateFormat="dd/MM/yyyy" // Set the desired date format
-                    calendarIcon={<i className="fas fa-calendar-alt"></i>} // Use your preferred icon
+                    selected={formData.date1 ? moment(formData.date1, "DD/MM/YYYY").toDate() : null}
+                    onChange={(date) => handleDateChange(date, "date1")}
+                    dateFormat="dd/MM/yyyy"
+                    calendarIcon={<i className="fas fa-calendar-alt"></i>}
                   />
                  {/* {formData.date1 && (
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
@@ -392,12 +398,12 @@ const CustomerEnquiry = () => {
                     <span className="required-asterisk">*</span>
                   </label>
                   <DatePicker
-                  placeholderText="dd/mm/yyyy"
+                    placeholderText="dd/mm/yyyy"
                     className="form-control cust-inq-input"
-                    selected={formData.date2 ? new Date(formData.date2) : null}
-                    onChange={(date) => handleChange({ target: { name: "date2", value: date } })}
-                    dateFormat="dd/MM/yyyy" // Set the desired date format
-                    calendarIcon={<i className="fas fa-calendar-alt"></i>} // Use your preferred icon
+                    selected={formData.date2 ? moment(formData.date2, "DD/MM/YYYY").toDate() : null}
+                    onChange={(date) => handleDateChange(date, "date2")}
+                    dateFormat="dd/MM/yyyy"
+                    calendarIcon={<i className="fas fa-calendar-alt"></i>}
                   />
                  {/* {formData.date1 && (
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>

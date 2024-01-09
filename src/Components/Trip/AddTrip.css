@@ -62,6 +62,15 @@
   .add-trip-input{
     width: 234px;
   }
+  .form-control-add-trip-input1{
+    width: 230px;
+    height: 42px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+
   .form-control-date,
   .form-control-time,
   .form-control-number {
