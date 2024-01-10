@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import './ViewDriver.css'; // Make sure you have a CSS file for this component
-import { FaEdit, FaTrash,FaTimes  } from 'react-icons/fa'; // Import icons
+import { FaEdit, FaTrash, FaTimes  } from 'react-icons/fa'; // Import icons
 
 const TableView = ({ drivers, handleEditDriver, handleDeleteDriver }) => (
   <table className="table">
@@ -88,11 +88,14 @@ const ViewDriver = () => {
           prevDrivers.map((driver) => (driver._id === editedDriver._id ? editedDriver : driver))
         );
         setIsEditing(false);
+        alert('Driver information updated successfully');
       } else {
         console.error('Error updating driver:', response.status);
+        alert('Error updating driver. Please try again.');
       }
     } catch (error) {
       console.error('Error updating driver:', error);
+      alert('Error updating driver. Please try again.');
     }
   };
 

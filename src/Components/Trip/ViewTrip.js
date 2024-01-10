@@ -9,6 +9,61 @@ const ViewTrip = () => {
   const [searchCustomerName, setSearchCustomerName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedTrip, setEditedTrip] = useState({}); // Initialize with an empty object
+  const [successMessage, setSuccessMessage] = useState("");
+const [errorMessage, setErrorMessage] = useState("");
+
+  const [formData, setFormData] = useState({
+    members: 1,
+    people: [{ name: "", mobile: "", vehicleNo: "" }],
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handlePersonChange = (index, e) => {
+    const updatedPeople = [...formData.people];
+    updatedPeople[index] = {
+      ...updatedPeople[index],
+      [e.target.name]: e.target.value,
+    };
+    setFormData({
+      ...formData,
+      people: updatedPeople,
+    });
+  };
+
+  const addPerson = () => {
+    if (formData.people.length < 7) {
+      setFormData({
+        ...formData,
+        people: [...formData.people, { name: "", mobile: "", vehicleNo: "" }],
+      });
+    } else {
+      alert("You can add up to 7 people.");
+    }
+  };
+
+  const handleCancel = () => {
+    // Attempt to close the window
+    window.close();
+
+    // If window.close() didn't work, you can try using the following:
+    if (window.opener) {
+      // If the window has an opener (likely opened with window.open()), close the opener
+      window.opener = null;
+      window.open("", "_self", "");
+      window.close();
+    } else {
+      // If there is no opener (likely not opened with window.open()), navigate back in history
+      window.history.back();
+    }
+
+    console.log("Cancel button clicked");
+  };
 
   useEffect(() => {
     const fetchTrips = async () => {
@@ -95,22 +150,26 @@ const ViewTrip = () => {
           body: JSON.stringify(editedTrip),
         }
       );
-
+  
       if (response.ok) {
         setTrips((prevTrips) =>
-          prevTrips.map((trip) =>
-            trip._id === editedTrip._id ? editedTrip : trip
-          )
+          prevTrips.map((trip) => (trip._id === editedTrip._id ? editedTrip : trip))
         );
         setIsEditing(false);
+        setSuccessMessage("Data updated successfully.");
+        setErrorMessage(""); // Clear any previous error message
       } else {
         console.error("Error updating trip:", response.status);
+        setSuccessMessage(""); // Clear any previous success message
+        setErrorMessage("Error updating trip. Please try again.");
       }
     } catch (error) {
       console.error("Error updating trip:", error);
+      setSuccessMessage(""); // Clear any previous success message
+      setErrorMessage("Error updating trip. Please try again.");
     }
   };
-
+  
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
@@ -175,291 +234,445 @@ const ViewTrip = () => {
                               overflowY: "scroll",
                             }}
                           >
-                            <div className="flex justify-between items-center mb-2">
-                              <h2 className="text-2xl font-bold">Edit Trip</h2>
-                              <button
-                                onClick={() => setIsEditing(false)}
-                                className="close-icon"
+                            <div className="form-container">
+                              <div className="flex justify-between items-center mb-2">
+                                <h2 className="text-2xl font-bold">
+                                  Edit Trip
+                                </h2>
+                                <button
+                                  onClick={handleCancel}
+                                  className="cancel-button"
+                                >
+                                  <FaTimes />
+                                </button>
+                              </div>
+
+                              <h5 className="fw-bold my-2">Customer Name:</h5>
+                              <input
+                                type="text"
+                                value={editedTrip.customername}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    customername: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Mobile No:</h5>
+                              <input
+                                type="text"
+                                value={editedTrip.mobileno}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    mobileno: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Email:</h5>
+                              <input
+                                type="text"
+                                value={editedTrip.email}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    email: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Address:</h5>
+                              <input
+                                type="text"
+                                value={editedTrip.address}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    address: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Trip Type:</h5>
+                              <select
+                                className="share-details-input"
+                                name="triptype"
+                                id="triptype"
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    triptype: e.target.value,
+                                  })
+                                }
+                                value={editedTrip.triptype}
                               >
-                                <FaTimes />
+                                <option value="">Trip Type</option>
+                                <option value="One Way Trip">
+                                  One Way Trip
+                                </option>
+                                <option value="Return Trip">Return Trip</option>
+                                className="w-full p-2 mb-2 border
+                                border-gray-300 rounded"
+                              </select>
+                              <h5 className="fw-bold my-2">Sub Type:</h5>
+                              <select
+                                className="share-details-input"
+                                name="subtype"
+                                id="subtype"
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    subtype: e.target.value,
+                                  })
+                                }
+                                value={editedTrip.subtype}
+                              >
+                                <option value="">Sub Type</option>
+                                <option value="Local Trip">Local Trip</option>
+                                <option value="Outstation Trip">
+                                  Outstation Trip
+                                </option>
+                                <option value="Outstation Local Trip">
+                                  Outstation Local Trip
+                                </option>
+                                <option value="Outstation Outstation Trip">
+                                  Outstation Outstation Trip
+                                </option>
+                                className="w-full p-2 mb-2 border
+                                border-gray-300 rounded"
+                              </select>
+                              <div className="trip-form-group">
+                                <label
+                                  htmlFor="numberOfPeople"
+                                  className="trip-form-label"
+                                >
+                                  Number of People:
+                                </label>
+                                <select
+                                  className="form-control-add-trip-input1"
+                                  name="numberof_people"
+                                  value={editedTrip.numberof_people}
+                                  onChange={(e) =>
+                                    setEditedTrip({
+                                      ...editedTrip,
+                                      numberof_people: e.target.value,
+                                    })
+                                  }
+                                >
+                                  {[1, 2, 3, 4, 5, 6, 7].map((number) => (
+                                    <option key={number} value={number}>
+                                      {number}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                              {/* Add Person button */}
+                              <div>
+                                <button
+                                  type="button"
+                                  className="trip-btn-submit"
+                                  onClick={addPerson}
+                                >
+                                  Add Person
+                                </button>
+                              </div>
+                              {/* Editable fields for each person */}
+                              <div className="d-flex flex-wrap gap-3">
+                                {Array.from(
+                                  {
+                                    length: Math.ceil(
+                                      editedTrip.numberof_people / 2
+                                    ),
+                                  },
+                                  (_, rowIndex) => (
+                                    <div
+                                      key={rowIndex}
+                                      className="d-flex gap-3"
+                                    >
+                                      {Array.from(
+                                        { length: 2 },
+                                        (_, colIndex) => {
+                                          const personIndex =
+                                            rowIndex * 2 + colIndex;
+                                          return personIndex <
+                                            editedTrip.numberof_people ? (
+                                            <div
+                                              key={personIndex}
+                                              className="trip-person-row"
+                                            >
+                                              <label
+                                                htmlFor={`name${
+                                                  personIndex + 1
+                                                }`}
+                                                className="trip-form-label"
+                                              >
+                                                Name {personIndex + 1}:
+                                              </label>
+                                              <input
+                                                type="text"
+                                                id={`name${personIndex + 1}`}
+                                                name={`name${personIndex + 1}`}
+                                                value={
+                                                  editedTrip[
+                                                    `name${personIndex + 1}`
+                                                  ] || ""
+                                                }
+                                                onChange={(e) =>
+                                                  setEditedTrip({
+                                                    ...editedTrip,
+                                                    [`name${personIndex + 1}`]:
+                                                      e.target.value,
+                                                  })
+                                                }
+                                                className="form-control-add-trip-input1"
+                                              />
+
+                                              <label
+                                                htmlFor={`mobile${
+                                                  personIndex + 1
+                                                }`}
+                                                className="trip-form-label"
+                                              >
+                                                Mobile No {personIndex + 1}:
+                                              </label>
+                                              <input
+                                                type="text"
+                                                id={`mobile${personIndex + 1}`}
+                                                name={`mobile${
+                                                  personIndex + 1
+                                                }`}
+                                                value={
+                                                  editedTrip[
+                                                    `mobile${personIndex + 1}`
+                                                  ] || ""
+                                                }
+                                                onChange={(e) =>
+                                                  setEditedTrip({
+                                                    ...editedTrip,
+                                                    [`mobile${
+                                                      personIndex + 1
+                                                    }`]: e.target.value,
+                                                  })
+                                                }
+                                                className="form-control-add-trip-input1"
+                                              />
+
+                                              <label
+                                                htmlFor={`vehicle${
+                                                  personIndex + 1
+                                                }`}
+                                                className="trip-form-label"
+                                              >
+                                                Vehicle No {personIndex + 1}:
+                                              </label>
+                                              <input
+                                                type="text"
+                                                id={`vehicle${personIndex + 1}`}
+                                                name={`vehicle${
+                                                  personIndex + 1
+                                                }`}
+                                                value={
+                                                  editedTrip[
+                                                    `vehicle${personIndex + 1}`
+                                                  ] || ""
+                                                }
+                                                onChange={(e) =>
+                                                  setEditedTrip({
+                                                    ...editedTrip,
+                                                    [`vehicle${
+                                                      personIndex + 1
+                                                    }`]: e.target.value,
+                                                  })
+                                                }
+                                                className="form-control-add-trip-input1"
+                                              />
+                                            </div>
+                                          ) : null;
+                                        }
+                                      )}
+                                    </div>
+                                  )
+                                )}
+                              </div>
+
+                              <h5 className="fw-bold my-2">Date:</h5>
+                              <input
+                                type="date"
+                                value={editedTrip.date}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    date: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Time:</h5>
+                              <input
+                                type="time"
+                                value={editedTrip.time}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    address: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">
+                                Drop Off Location:
+                              </h5>
+                              <input
+                                type="text"
+                                value={editedTrip.dropoff}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    email: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Date:</h5>
+                              <input
+                                type="date"
+                                value={editedTrip.date1}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    address: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Time:</h5>
+                              <input
+                                type="time"
+                                value={editedTrip.time1}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    address: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Total Days:</h5>
+                              <input
+                                type="date"
+                                value={editedTrip.totaldays}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    address: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Total Hour:</h5>
+                              <input
+                                type="time"
+                                value={editedTrip.hours}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    address: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
+                              <h5 className="fw-bold my-2">Type of Vehicle:</h5>
+                              <select
+                                className="form-control-add-trip-input"
+                                name="vehicle"
+                                id="vehicle"
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    vehicle: e.target.value,
+                                  })
+                                }
+                                value={editedTrip.vehicle}
+                              >
+                                <option value="">Vehicle</option>
+                                <option value="Sedan Car">Sedan Car</option>
+                                <option value="Mini Car">Mini Car</option>
+                                <option value="SUV Car">SUV Car</option>
+                                <option value="AC Bus 13-Seater">
+                                  AC Bus 13-Seater
+                                </option>
+                                <option value="AC Bus 17-Seater">
+                                  AC Bus 17-Seater
+                                </option>
+                                <option value="AC Bus 20-Seater">
+                                  AC Bus 20-Seater
+                                </option>
+                                <option value="AC Bus 32-Seater">
+                                  AC Bus 32-Seater
+                                </option>
+                                <option value="AC Bus 35-Seater">
+                                  AC Bus 35-Seater
+                                </option>
+                                <option value="AC Bus 40-Seater">
+                                  AC Bus 40-Seater
+                                </option>
+                                <option value="AC Bus 45-Seater">
+                                  AC Bus 45-Seater
+                                </option>
+                                <option value="Non-AC Bus 17-Seater">
+                                  Non-AC Bus 17-Seater
+                                </option>
+                                <option value="Non-AC Bus 20-Seater">
+                                  Non-AC Bus 20-Seater
+                                </option>
+                                <option value="Non-AC Bus 32-Seater">
+                                  Non-AC Bus 32-Seater
+                                </option>
+                                <option value="Non-AC Bus 40-Seater">
+                                  Non-AC Bus 40-Seater
+                                </option>
+                                <option value="Non-AC Bus 45-Seater">
+                                  Non-AC Bus 45-Seater
+                                </option>
+                                <option value="Non-AC Bus 49-Seater">
+                                  Non-AC Bus 49-Seater
+                                </option>
+                              </select>
+                            </div>
+                            <div className="mt-4">
+                              <button
+                                onClick={handleSaveEdit}
+                                className="px-4 py-2 bg-blue-500 text-white rounded"
+                              >
+                                Save
+                              </button>
+                              <button
+                                onClick={handleCancelEdit}
+                                className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+                              >
+                                Cancel
                               </button>
                             </div>
-
-                            <h5 className="fw-bold my-2">Customer Name:</h5>
-                            <input
-                              type="text"
-                              value={editedTrip.customername}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  customername: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Mobile No:</h5>
-                            <input
-                              type="text"
-                              value={editedTrip.mobileno}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  mobileno: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Email:</h5>
-                            <input
-                              type="text"
-                              value={editedTrip.email}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  email: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Address:</h5>
-                            <input
-                              type="text"
-                              value={editedTrip.address}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  address: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Trip Type:</h5>
-                            <select
-                              className="share-details-input"
-                              name="triptype"
-                              id="triptype"
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  triptype: e.target.value,
-                                })
-                              }
-                              value={editedTrip.triptype}
-                            >
-                              <option value="">Trip Type</option>
-                              <option value="One Way Trip">One Way Trip</option>
-                              <option value="Return Trip">Return Trip</option>
-                              className="w-full p-2 mb-2 border border-gray-300
-                              rounded"
-                            </select>
-                            <h5 className="fw-bold my-2">Sub Type:</h5>
-                            <select
-                              className="share-details-input"
-                              name="subtype"
-                              id="subtype"
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  subtype: e.target.value,
-                                })
-                              }
-                              value={editedTrip.subtype}
-                            >
-                              <option value="">Sub Type</option>
-                              <option value="Local Trip">Local Trip</option>
-                              <option value="Outstation Trip">
-                                Outstation Trip
-                              </option>
-                              <option value="Outstation Local Trip">
-                                Outstation Local Trip
-                              </option>
-                              <option value="Outstation Outstation Trip">
-                                Outstation Outstation Trip
-                              </option>
-                              className="w-full p-2 mb-2 border border-gray-300
-                              rounded"
-                            </select>
-                            <h5 className="fw-bold my-2">pickup:</h5>
-                            <input
-                              type="text"
-                              value={editedTrip.pickup}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  pickup: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Date:</h5>
-                            <input
-                              type="date"
-                              value={editedTrip.date}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  date: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Time:</h5>
-                            <input
-                              type="time"
-                              value={editedTrip.time}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  address: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Drop Off Location:</h5>
-                            <input
-                              type="text"
-                              value={editedTrip.dropoff}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  email: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Date:</h5>
-                            <input
-                              type="date"
-                              value={editedTrip.date1}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  address: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Time:</h5>
-                            <input
-                              type="time"
-                              value={editedTrip.time1}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  address: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Total Days:</h5>
-                            <input
-                              type="date"
-                              value={editedTrip.totaldays}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  address: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Total Hour:</h5>
-                            <input
-                              type="time"
-                              value={editedTrip.hours}
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  address: e.target.value,
-                                })
-                              }
-                              className="w-full p-2 mb-2 border border-gray-300 rounded"
-                            />
-                            <h5 className="fw-bold my-2">Type of Vehicle:</h5>
-                            <select
-                              className="form-control-add-trip-input"
-                              name="vehicle"
-                              id="vehicle"
-                              onChange={(e) =>
-                                setEditedTrip({
-                                  ...editedTrip,
-                                  vehicle: e.target.value,
-                                })
-                              }
-                              value={editedTrip.vehicle}
-                            >
-                              <option value="">Vehicle</option>
-                              <option value="Sedan Car">Sedan Car</option>
-                              <option value="Mini Car">Mini Car</option>
-                              <option value="SUV Car">SUV Car</option>
-                              <option value="AC Bus 13-Seater">
-                                AC Bus 13-Seater
-                              </option>
-                              <option value="AC Bus 17-Seater">
-                                AC Bus 17-Seater
-                              </option>
-                              <option value="AC Bus 20-Seater">
-                                AC Bus 20-Seater
-                              </option>
-                              <option value="AC Bus 32-Seater">
-                                AC Bus 32-Seater
-                              </option>
-                              <option value="AC Bus 35-Seater">
-                                AC Bus 35-Seater
-                              </option>
-                              <option value="AC Bus 40-Seater">
-                                AC Bus 40-Seater
-                              </option>
-                              <option value="AC Bus 45-Seater">
-                                AC Bus 45-Seater
-                              </option>
-                              <option value="Non-AC Bus 17-Seater">
-                                Non-AC Bus 17-Seater
-                              </option>
-                              <option value="Non-AC Bus 20-Seater">
-                                Non-AC Bus 20-Seater
-                              </option>
-                              <option value="Non-AC Bus 32-Seater">
-                                Non-AC Bus 32-Seater
-                              </option>
-                              <option value="Non-AC Bus 40-Seater">
-                                Non-AC Bus 40-Seater
-                              </option>
-                              <option value="Non-AC Bus 45-Seater">
-                                Non-AC Bus 45-Seater
-                              </option>
-                              <option value="Non-AC Bus 49-Seater">
-                                Non-AC Bus 49-Seater
-                              </option>
-                            </select>
-                            <button
-                              onClick={handleSaveEdit}
-                              className="px-4 py-2 bg-blue-500 text-white rounded"
-                            >
-                              Save
-                            </button>
-                            <button
-                              onClick={handleCancelEdit}
-                              className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
-                            >
-                              Cancel
-                            </button>
                           </div>
                         </div>
                       ) : (
                         <>
-                          <button
-                            className="btn btn-info"
-                            onClick={() => handleEditTrip(trip._id)}
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleDeleteTrip(trip._id)}
-                          >
-                            <FaTrash />
-                          </button>
+                          <div className="d-flex align-items-center gap-2">
+                            <button
+                              className="btn btn-info"
+                              onClick={() => handleEditTrip(trip._id)}
+                            >
+                              <FaEdit />
+                            </button>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleDeleteTrip(trip._id)}
+                            >
+                              <FaTrash />
+                            </button>
+                          </div>
                         </>
                       )}
                     </td>

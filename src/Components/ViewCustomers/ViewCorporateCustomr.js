@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaEdit, FaTrash} from 'react-icons/fa';
+import { FaEdit, FaTrash, FaTimes} from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import './IndivisualCustomer.css';
@@ -18,18 +18,45 @@ const CorporateCustomers = () => {
   }, []);
 
   const handleDelete = (customerId) => {
-    // Send a DELETE request to delete the customer
-    fetch(`http://localhost:7000/api/corporate-customer/${customerId}`, {
-      method: 'DELETE',
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Customer deleted successfully:', data);
-        // Remove the deleted customer from the state
-        setCustomers(prevCustomers => prevCustomers.filter(customer => customer._id !== customerId));
-      })
-      .catch(error => console.error('Error deleting customer:', error));
+    const confirmed = window.confirm('Are you sure you want to delete this corporate customer?');
+  
+    if (confirmed) {
+      try {
+        // Send a DELETE request to delete the customer
+        fetch(`http://localhost:7000/api/corporate-customer/${customerId}`, {
+          method: 'DELETE',
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log('Customer deleted successfully:', data);
+            // Remove the deleted customer from the state
+            setCustomers((prevCustomers) =>
+              prevCustomers.filter((customer) => customer._id !== customerId)
+            );
+            alert('Customer deleted successfully');
+          })
+          .catch((error) => {
+            console.error('Error deleting customer:', error);
+            alert(`Error deleting customer: ${error.message}`);
+          });
+      } catch (error) {
+        // Handle network errors or other exceptions
+        console.error('Error deleting customer:', error);
+        alert('Error deleting customer. Please try again.');
+      }
+    }
   };
+  
+
+  const handleCancel = () => {
+    setEditedCustomer(false);
+  };
+
 
   
 
@@ -47,23 +74,25 @@ const CorporateCustomers = () => {
         },
         body: JSON.stringify(editedCustomer),
       });
-
+  
       if (response.ok) {
         // Update the local state with the edited customer
-        setCustomers(prevCustomers =>
-          prevCustomers.map(customer =>
-            customer._id === editedCustomer._id ? editedCustomer : customer
-          )
+        setCustomers((prevCustomers) =>
+          prevCustomers.map((customer) => (customer._id === editedCustomer._id ? editedCustomer : customer))
         );
         // Clear the editedCustomer state
         setEditedCustomer(null);
+        alert('Corporate Customer updated successfully');
       } else {
         console.error('Error updating customer:', response.status);
+        alert('Error updating customer. Please try again.');
       }
     } catch (error) {
       console.error('Error updating customer:', error);
+      alert('Error updating customer. Please try again.');
     }
   };
+  
 
   return (
     <>
@@ -122,81 +151,94 @@ const CorporateCustomers = () => {
                   </td> */}
                   <td>
                     {editedCustomer && editedCustomer._id === customer._id ? (
-                      <div className="modal-bg">
-                        <div className="modal-content">
-                        <h1 className='fw-bold text-center'>Corporate Customers List</h1>
-                          <h2>Edit Customer</h2>
-                          <h5 className='fw-bold'>Customer Name</h5>
+                      <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                        <div className="bg-white p-4 rounded shadow-lg w-96" style={{
+                              width: "40%",
+                              height: "80vh",
+                              overflowY: "scroll",
+                            }}>
+                        {/* <h1 className='fw-bold text-center'>Corporate Customers List</h1> */}
+                        <div className="form-container">
+                        <div className="flex justify-between items-center mb-2">
+                          <h2 className="text-2xl font-bold">Edit Corporate Customer</h2>
+                          <button
+                                  onClick={handleCancel}
+                                  className="cancel-button"
+                                >
+                                  <FaTimes />
+                                </button>
+                          </div>
+                          <h5 className='fw-bold my-2'>Customer Name</h5>
                           <input
                             type="text"
                             value={editedCustomer.Cus_name}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_name: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>Company Name</h5>
+                          <h5 className='fw-bold my-2'>Company Name</h5>
                           <input
                             type="text"
                             value={editedCustomer.company_name}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, company_name: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>GST No </h5>
+                          <h5 className='fw-bold my-2'>GST No </h5>
                           <input
                             type="text"
                             value={editedCustomer.gst_no}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>Customer Mobile</h5>
+                          <h5 className='fw-bold my-2'>Customer Mobile</h5>
                           <input
                             type="text"
                             value={editedCustomer.Cus_Mobile}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Mobile: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>Type of Vehicle</h5>
+                          <h5 className='fw-bold my-2'>Type of Vehicle</h5>
                           <input
                             type="text"
                             value={editedCustomer.type_of_vehicle}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, type_of_vehicle: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                          <h5 className='fw-bold'>rate_per_km</h5>
+                          <h5 className='fw-bold my-2'>rate_per_km</h5>
                           <input
                             type="text"
                             value={editedCustomer.rate_per_km}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, rate_per_km: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                           <h5 className='fw-bold'>duty_type</h5>
+                           <h5 className='fw-bold my-2'>duty_type</h5>
                           <input
                             type="text"
                             value={editedCustomer.duty_type}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, duty_type: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                           <h5 className='fw-bold'>rate</h5>
+                           <h5 className='fw-bold my-2'>Rate:</h5>
                           <input
                             type="text"
                             value={editedCustomer.rate}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, rate: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                           <h5 className='fw-bold'>km</h5>
+                           <h5 className='fw-bold my-2'>KM:</h5>
                           <input
                             type="text"
                             value={editedCustomer.km}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, km: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                           <h5 className='fw-bold'>extra_km</h5>
+                           <h5 className='fw-bold my-2'>Extra KM:</h5>
                           <input
                             type="text"
                             value={editedCustomer.extra_km}
                             onChange={(e) => setEditedCustomer({ ...editedCustomer, extra_km: e.target.value })}
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
-                           <h5 className='fw-bold'>hours</h5>
+                           <h5 className='fw-bold my-2'>Hours:</h5>
                           <input
                             type="text"
                             value={editedCustomer.hours}
@@ -204,7 +246,7 @@ const CorporateCustomers = () => {
                             className="w-full p-2 mb-2 border border-gray-300 rounded"
                           />
 
-                           <h5 className='fw-bold'>extra_hours</h5>
+                           <h5 className='fw-bold my-2'>Extra Hours</h5>
                           <input
                             type="text"
                             value={editedCustomer.extra_hours}
@@ -214,6 +256,7 @@ const CorporateCustomers = () => {
                           <button onClick={handleSaveEdit} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
                           <button onClick={() => setEditedCustomer(null)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
                         </div>
+                      </div>
                       </div>
                     ) : (
                       <>
