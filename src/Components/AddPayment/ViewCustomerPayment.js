@@ -13,7 +13,7 @@ const ViewCustomerPayment = () => {
     const fetchcustomers = async () => {
       try {
         const response = await fetch(
-          "https://carbooking-backend-fo78.onrender.com/api/customer-payment"
+          "http://localhost:7000/api/customer-payment"
         );
         if (!response.ok) {
           throw Error("Network response was not ok");

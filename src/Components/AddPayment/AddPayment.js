@@ -157,7 +157,7 @@ function AddPayment() {
 
     try {
       const response = await fetch(
-        "https://carbooking-backend-fo78.onrender.com/api/customer-payment",
+        "http://localhost:7000/api/customer-payment",
         {
           method: "POST",
           headers: {

@@ -34,7 +34,7 @@ const CustomerRate = () => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "https://carbooking-backend-fo78.onrender.com/api/add-customers"
+          "http://localhost:7000/api/add-customers"
         );
 
         if (response.ok) {
@@ -136,9 +136,9 @@ const CustomerRate = () => {
     // Setting API endpoint based on customer type
   let apiEndpoint = "";
   if (formData.Cus_Type === "Corporate Customer") {
-    apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/corporate-customer";
+    apiEndpoint = "http://localhost:7000/api/corporate-customer";
   } else if (formData.Cus_Type === "Individual Customer") {
-    apiEndpoint = "https://carbooking-backend-fo78.onrender.com/api/indivisual-customer";
+    apiEndpoint = "http://localhost:7000/api/indivisual-customer";
   } else {
     window.alert("Invalid customer type");
     return;

@@ -18,7 +18,7 @@ const ViewShareDetails = () => {
     const fetchShareDetails = async () => {
       try {
         const response = await fetch(
-          "https://carbooking-backend-fo78.onrender.com/api/share-details"
+          "http://localhost:7000/api/share-details"
         );
         if (!response.ok) {
           throw Error("Network response was not ok");
@@ -39,7 +39,7 @@ const ViewShareDetails = () => {
     try {
       // Make an API call to fetch additional information based on the share trip details ID
       const additionalInfoResponse = await fetch(
-        `https://carbooking-backend-fo78.onrender.com/api/additional-info/${shareDetail.sharetripdetailsId}`
+        `http://localhost:7000/api/additional-info/${shareDetail.sharetripdetailsId}`
       );
       if (!additionalInfoResponse.ok) {
         throw Error("Error fetching additional info");
@@ -200,7 +200,7 @@ const ViewShareDetails = () => {
   const handleSaveShareDetail = async () => {
     try {
       const response = await fetch(
-        `https://carbooking-backend-fo78.onrender.com/api/share-details/${editedShareDetail._id}`,
+        `http://localhost:7000/api/share-details/${editedShareDetail._id}`,
         {
           method: "PATCH",
           headers: {
@@ -237,7 +237,7 @@ const ViewShareDetails = () => {
     if (confirmed) {
       try {
         const response = await fetch(
-          `https://carbooking-backend-fo78.onrender.com/api/share-details/${shareDetail._id}`,
+          `http://localhost:7000/api/share-details/${shareDetail._id}`,
           {
             method: "DELETE",
           }

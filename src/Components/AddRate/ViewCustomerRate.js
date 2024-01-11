@@ -16,7 +16,7 @@ const ViewCustomerRate = () => {
   useEffect(() => {
     const fetchCustomerRates = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/customer-rate');
+        const response = await fetch('http://localhost:7000/api/customer-rate');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -55,7 +55,7 @@ const ViewCustomerRate = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/customer-rate/${editedCustomerRate._id}`, {
+      const response = await fetch(`http://localhost:7000/api/customer-rate/${editedCustomerRate._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const ViewCustomerRate = () => {
   const deleteCustomerRate = async (customerRateId) => {
     const confirmed = window.confirm("Are you sure you want to delete this corporate customer?");
     try {
-      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/customer-rate/${customerRateId}`, {
+      const response = await fetch(`http://localhost:7000/api/customer-rate/${customerRateId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

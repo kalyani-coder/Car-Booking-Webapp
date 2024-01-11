@@ -14,7 +14,7 @@ const ViewVenderRate = () => {
   useEffect(() => {
     const fetchCustomerRates = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/vender-rate');
+        const response = await fetch('http://localhost:7000/api/vender-rate');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -59,7 +59,7 @@ const ViewVenderRate = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/vender-rate/${editedItem._id}`, {
+      const response = await fetch(`http://localhost:7000/api/vender-rate/${editedItem._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const ViewVenderRate = () => {
   const handleDelete = async (id) => {
     const confirmed = window.confirm('Are you sure you want to delete this vendor rate?');
     try {
-      const response = await fetch(`https://carbooking-backend-fo78.onrender.com/api/vender-rate/${id}`, {
+      const response = await fetch(`http://localhost:7000/api/vender-rate/${id}`, {
         method: 'DELETE',
       });
 

@@ -36,7 +36,7 @@ const ShareDetails = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/add-customers');
+        const response = await fetch('http://localhost:7000/api/add-customers');
 
         if (response.ok) {
           const data = await response.json();
@@ -108,7 +108,7 @@ const ShareDetails = () => {
     setMobilenoError('');
 
     try {
-      const response = await fetch('https://carbooking-backend-fo78.onrender.com/api/share-details', {
+      const response = await fetch('http://localhost:7000/api/share-details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

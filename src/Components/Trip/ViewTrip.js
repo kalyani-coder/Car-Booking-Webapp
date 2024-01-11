@@ -69,7 +69,7 @@ const [errorMessage, setErrorMessage] = useState("");
     const fetchTrips = async () => {
       try {
         const response = await fetch(
-          "https://carbooking-backend-fo78.onrender.com/api/add-trip"
+          "http://localhost:7000/api/add-trip"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -117,7 +117,7 @@ const [errorMessage, setErrorMessage] = useState("");
     if (confirmed) {
       try {
         const response = await fetch(
-          `https://carbooking-backend-fo78.onrender.com/api/add-trip/${tripId}`,
+          `http://localhost:7000/api/add-trip/${tripId}`,
           {
             method: "DELETE",
           }
@@ -141,7 +141,7 @@ const [errorMessage, setErrorMessage] = useState("");
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `https://carbooking-backend-fo78.onrender.com/api/add-trip/${editedTrip._id}`,
+        `http://localhost:7000/api/add-trip/${editedTrip._id}`,
         {
           method: "PATCH",
           headers: {

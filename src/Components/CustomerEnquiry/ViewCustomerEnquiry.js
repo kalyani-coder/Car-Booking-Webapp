@@ -62,7 +62,7 @@ const ViewCustomerEnquiry = () => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "https://carbooking-backend-fo78.onrender.com/api/customer-enquiry"
+          "http://localhost:7000/api/customer-enquiry"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -165,7 +165,7 @@ const ViewCustomerEnquiry = () => {
     if (confirmed) {
       try {
         const response = await fetch(
-          `https://carbooking-backend-fo78.onrender.com/api/customer-enquiry/${customerId}`,
+          `http://localhost:7000/api/customer-enquiry/${customerId}`,
           {
             method: "DELETE",
           }

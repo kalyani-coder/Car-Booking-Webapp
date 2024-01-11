@@ -71,7 +71,7 @@ const AddTrip = () => {
       try {
         // Make a GET request to the API endpoint for customers
         const response = await fetch(
-          "https://carbooking-backend-fo78.onrender.com/api/add-customers"
+          "http://localhost:7000/api/add-customers"
         );
 
         if (response.ok) {
@@ -181,7 +181,7 @@ const AddTrip = () => {
     try {
       // Send the data to the API
       const response = await fetch(
-        "https://carbooking-backend-fo78.onrender.com/api/add-trip",
+        "http://localhost:7000/api/add-trip",
         {
           method: "POST",
           headers: {
