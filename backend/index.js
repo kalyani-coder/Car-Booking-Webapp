@@ -27,8 +27,10 @@ app.use(cors({origin : 'http://localhost:3000' , credentials : true}))
 // database connectivity on mongoDB Atlas
 
 mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority' , {
-    useNewUrlParser : true,
-    useUnifiedTopology : true
+  
+    useUnifiedTopology : true,
+    bufferCommands: false, // Disable buffering
+  
 }, console.log("Connected to Database"))
 
 // apiRouter handle all api's in one route 
