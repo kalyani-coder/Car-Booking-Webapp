@@ -34,17 +34,16 @@ router.get('/:id' , async(req, res) => {
 })
 
 // POST METHOD 
-router.post('/' , async(req, res) => {
-
-    try{
-        const AddVenders = new NewAddCustomer(req.body)
-        await AddVenders.save()
-        res.status(201).json({message : "Data post Successfully"})
-
-    }catch(e){
-        res.status(404).json({message : "Can not post venders"})
+router.post('/', async (req, res) => {
+    try {
+      const AddVenders = new NewAddCustomer(req.body);
+      await AddVenders.save();
+      res.status(201).json({ message: "Data posted successfully" });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ message: "Internal Server Error" });
     }
-})
+  });
 
 // PATCH METHOD 
 router.patch('/:id' , async(req, res) => {

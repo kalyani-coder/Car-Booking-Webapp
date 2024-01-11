@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const AddTripSchema = new mongoose.Schema({
 
+    customerId : String,
     customername : String, 
     mobileno: Number , 
     email : String ,

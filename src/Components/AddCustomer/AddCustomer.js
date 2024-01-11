@@ -76,7 +76,7 @@ const AddCustomer = () => {
         address: formData.address,
       };
 
-      const response = await fetch("https://carbooking-backend-fo78.onrender.com/api/add-customers", {
+      const response = await fetch("http://localhost:7000/api/add-customers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
