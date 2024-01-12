@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const AddPaymentSchema = new mongoose.Schema({
-  customerId: string,
+  
   company_Name: String,
   GST_No: String,
   reporting_Address: String,
@@ -31,6 +31,8 @@ const AddPaymentSchema = new mongoose.Schema({
   advance_Amount: Number,
   remaining_Amount: Number,
   payment_Method: String,
+  customerId : String,
+  
 });
 
 const NewAddPaymentDetails = new mongoose.model(

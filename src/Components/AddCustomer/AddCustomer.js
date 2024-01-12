@@ -68,11 +68,11 @@ const AddCustomer = () => {
 
     try {
       const requestBody = {
-        Cus_name: formData.customername,
+        cus_name: formData.customername,
         company_name: formData.companyname,
         gst_no: formData.gstno,
-        Cus_Mobile: formData.mobileno,
-        Cus_Email: formData.email,
+        cus_mobile: formData.mobileno,
+        cus_email: formData.email,
         address: formData.address,
       };
 

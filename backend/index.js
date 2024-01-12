@@ -12,6 +12,7 @@ const port = process.env.PORT || 7000
 // middleware 
 app.use(bodyParser.json({limit : "10mb"}))
 app.use(cors({origin : 'http://localhost:3000' , credentials : true}))
+// app.use(cors)
 
 // session tracking with login 
 // app.use(session({

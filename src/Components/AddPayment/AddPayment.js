@@ -1,8 +1,35 @@
-import React, { useState } from "react";
+import React, { useState,useEffect  } from "react";
 import "./AddPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 function AddPayment() {
+  const [customerList, setCustomerList] = useState([]);
+
+
+  useEffect(() => {
+    const fetchCustomerNames = async () => {
+      try {
+        const response = await fetch("http://localhost:7000/api/add-trip");
+
+        if (response.ok) {
+          const data = await response.json();
+          // Ensure data is an array before setting it in the state
+          if (Array.isArray(data)) {
+            setCustomerList(data);
+          } else {
+            console.error("Invalid data format: expected an array");
+          }
+        } else {
+          console.error("Failed to fetch customer names");
+        }
+      } catch (error) {
+        console.error("API request error:", error);
+      }
+    };
+
+    // Call the fetchCustomerNames function when the component mounts
+    fetchCustomerNames();
+  }, []);
   const initialFormData = {
     company_Name: "",
     GST_No: "",
@@ -276,20 +303,23 @@ function AddPayment() {
 
                     <div className="row grid-gap-5">
                       <div className="col-md">
-                        <div className="form-group">
-                          <label for="customername" className="form-label">
+                      <label for="vehiclenumber" className="form-label">
                             Customer Name:
                             <span className="required-asterisk">*</span>
                           </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="customer_Name"
-                            placeholder="Enter Customer Name"
-                            value={formData.customer_Name}
-                            onChange={handleChange}
-                          />
-                        </div>
+                      <select
+            className="form-control"
+            name="customername"
+            value={formData.customername}
+            onChange={handleChange}
+          >
+            <option value="">Select Customer</option>
+            {customerList.map((customer) => (
+              <option key={customer._id} value={customer.customername}>
+                {customer.customername}
+              </option>
+            ))}
+          </select>
                       </div>
                       <div className="col-md">
                         <div className="form-group">

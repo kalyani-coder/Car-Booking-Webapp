@@ -19,11 +19,11 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
     <tbody>
       {customers.map((customer) => (
         <tr key={customer._id}>
-          <td>{customer.Cus_name}</td>
+          <td>{customer.cus_name}</td>
           <td>{customer.company_name}</td>
           <td>{customer.gst_no}</td>
-          <td>{customer.Cus_Mobile}</td>
-          <td>{customer.Cus_Email}</td>
+          <td>{customer.cus_mobile}</td>
+          <td>{customer.cus_email}</td>
           <td>{customer.address}</td>
           <td>
             <button className='btn btn-info' onClick={() => handleEditCustomer(customer)}>

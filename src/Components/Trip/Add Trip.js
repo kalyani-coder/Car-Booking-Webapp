@@ -3,6 +3,12 @@ import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddTrip = () => {
+  
+  
+
+
+
+
   const initialPersonData = {
     name: "",
     mobile: "",
@@ -41,6 +47,7 @@ const AddTrip = () => {
   };
 
   const initialFormData = {
+    customerId : ""  ,
     customername: "",
     mobileno: "",
     email: "",
@@ -59,47 +66,49 @@ const AddTrip = () => {
     members: 1,
     people: [{ ...initialPersonData }],
   };
-
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+console.log(selectedCustomer)
+
+
 
   // Fetch customer data from the API using useEffect hook
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        // Make a GET request to the API endpoint for customers
-        const response = await fetch(
-          "http://localhost:7000/api/add-customers"
-        );
-
+        const response = await fetch("http://localhost:7000/api/add-customers");
+  
         if (response.ok) {
-          // If the response is successful, parse the JSON data and set the customer list
           const data = await response.json();
-          setCustomerList(data);
+          console.log("Fetched customer data:", data);
+  
+          if (Array.isArray(data)) {
+            setCustomerList(data);
+          } else {
+            console.error("Invalid data format: expected an array");
+          }
         } else {
-          // If there is an error in the response, log an error message
           console.error("Failed to fetch customers");
         }
       } catch (error) {
-        // If there is an error in making the request, log an error message
         console.error("API request error:", error);
       }
     };
-
-    // Call the fetchCustomers function when the component mounts
+  
     fetchCustomers();
-  }, []); // The empty dependency array ensures that this effect runs only once on mount
+  }, []);
+   // The empty dependency array ensures that this effect runs only once on mount
 
   // Use useEffect to update form data when a customer is selected
   useEffect(() => {
     if (selectedCustomer) {
       // Assuming selectedCustomer contains additional details like Cus_GSTIN, address, Cus_Mobile
       setFormData({
-        customername: selectedCustomer.Cus_name || "",
-        mobileno: selectedCustomer.Cus_Mobile || "",
-        email: selectedCustomer.Cus_Email || "",
+        customername: selectedCustomer.cus_name || "",
+        mobileno: selectedCustomer.cus_mobile || "",
+        email: selectedCustomer.cus_email || "",
         address: selectedCustomer.address || "",
         triptype: "",
         subtype: "",
@@ -164,33 +173,72 @@ const AddTrip = () => {
     }
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   // if (
+  //   //   Object.values(formData).some((value) => value === "") ||
+  //   //   parseInt(formData.members, 10) < 1
+  //   // ) {
+  //   //   alert(
+  //   //     "Please fill in all required fields and ensure the number of members is greater than 0."
+  //   //   );
+  //   //   return;
+  //   // }
+
+  //   const data = { ...formData };
+
+  //   try {
+  //     // Send the data to the API
+  //     const response = await fetch("http://localhost:7000/api/add-trip", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+
+
+      
+
+  //     if (response.ok) {
+  //       alert("Data added successfully!");
+  //       setFormData(initialFormData); // Reset the form
+  //     } else {
+  //       alert("Failed to add data. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("API request error:", error);
+  //     alert("Failed to add data. Please try again.");
+  //   }
+  // };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (
-      Object.values(formData).some((value) => value === "") ||
-      parseInt(formData.members, 10) < 1
-    ) {
-      alert(
-        "Please fill in all required fields and ensure the number of members is greater than 0."
-      );
+  
+    // Check if a customer is selected
+    if (!selectedCustomer) {
+      alert("Please select a customer before adding a trip.");
       return;
     }
-
-    const data = { ...formData };
-
+  
+    // Update data with the selected customer's ID
+    const dataWithCustomerId = {
+      ...formData,
+      customerId: selectedCustomer._id, // Assuming the customer ID is available in the selectedCustomer object
+    };
+  
     try {
       // Send the data to the API
-      const response = await fetch(
-        "http://localhost:7000/api/add-trip",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
+      const response = await fetch("http://localhost:7000/api/add-trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataWithCustomerId),
+      });
+  
       if (response.ok) {
         alert("Data added successfully!");
         setFormData(initialFormData); // Reset the form
@@ -202,7 +250,7 @@ const AddTrip = () => {
       alert("Failed to add data. Please try again.");
     }
   };
-
+  
   return (
     <>
       <Sidebar />
@@ -219,41 +267,35 @@ const AddTrip = () => {
           </h2>
           <div className="trip-form-container">
             {error && <p className="trip-text-red-500">{error}</p>}
-            <div className="trip-form-group">
-              {/* <label htmlFor="customerid" className="form-label">
-              Customer Id:
-            </label>
-            <input className="form-control-cust-inq-input" type="text" id="customerid" name="customerid" placeholder="Customer id" onChange={handleChange} value={formData.customerid} /> */}
-            </div>
+            <div className="trip-form-group"></div>
             <div className="trip-form-group">
               <label htmlFor="customername" className="trip-form-label">
                 Customer Name:
               </label>
               <select
-                className="form-control-add-trip-input"
-                id="customername"
-                name="customername"
-                onChange={(e) => {
-                  // Find the selected customer from the list
-                  const selectedCustomer = customerList.find(
-                    (customer) => customer.Cus_name === e.target.value
-                  );
-                  // Set the selected customer to state
-                  setSelectedCustomer(selectedCustomer);
-                }}
-                value={selectedCustomer ? selectedCustomer.Cus_name : ""}
-              >
-                <option value="">Select Customer</option>
-                {customerList.map((customer) => (
-                  <option
-                    key={customer._id}
-                    value={customer.Cus_name}
-                    onClick={() => setSelectedCustomer(customer)}
-                  >
-                    {customer.Cus_name}
-                  </option>
-                ))}
-              </select>
+  className="form-control-add-trip-input"
+  id="customername"
+  name="customername"
+  onChange={(e) => {
+    // Find the selected customer from the list
+    const selectedCustomer = customerList.find(
+      (customer) => customer.cus_name === e.target.value
+    );
+    // Set the selected customer to state
+    setSelectedCustomer(selectedCustomer);
+  }}
+  value={selectedCustomer ? selectedCustomer.cus_name : ""}
+>
+  <option value="">Select Customer</option>
+  {customerList &&
+    customerList.map((customer) => (
+      <option key={customer._id} value={customer.cus_name}>
+        {customer.cus_name}
+      </option>
+    ))}
+</select>
+
+
             </div>
             <div className="trip-form-group">
               <label htmlFor="mobileno" className="trip-form-label">
@@ -335,7 +377,7 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <div className="d-flex gap-3">
+            {/* <div className="d-flex gap-3">
               <div>
                 <div className="trip-form-group">
                   <label htmlFor="numberOfPeople" className="trip-form-label">
@@ -354,13 +396,16 @@ const AddTrip = () => {
                     ))}
                   </select>
                 </div>
-                 {/* Add Person button */}
+                
                 <div>
-        <button type="button" className="trip-btn-submit" onClick={addPerson}>
-          Add Person
-        </button>
-      </div>
-                {/* Add person details for each person */}
+                  <button
+                    type="button"
+                    className="trip-btn-submit"
+                    onClick={addPerson}
+                  >
+                    Add Person
+                  </button>
+                </div>
                 <div className="d-flex flex-wrap gap-3">
                   {formData.people.map((person, index) => (
                     <div key={index} className="trip-person-row">
@@ -416,9 +461,7 @@ const AddTrip = () => {
                   ))}
                 </div>
               </div>
-
-
-            </div>
+            </div> */}
             <div>
               <div className="trip-form-group">
                 <label htmlFor="date" className="trip-form-label">

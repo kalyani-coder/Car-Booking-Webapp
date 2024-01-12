@@ -292,7 +292,7 @@ function CustomerInvoiceMonthly() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/customer-payment');
+        const response = await fetch('http://localhost:7000/api/customer');
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
