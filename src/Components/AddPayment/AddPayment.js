@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
 
@@ -15,6 +15,12 @@ function AddPayment() {
           const data = await response.json();
           // Ensure data is an array before setting it in the state
           if (Array.isArray(data)) {
+            // Log customer IDs
+            data.forEach(customer => {
+
+            });
+
+            // Set the customer list in the state
             setCustomerList(data);
           } else {
             console.error("Invalid data format: expected an array");
@@ -27,9 +33,13 @@ function AddPayment() {
       }
     };
 
-    // Call the fetchCustomerNames function when the component mounts
-    fetchCustomerNames();
-  }, []);
+    fetchCustomerNames(); // Call the fetch function when the component mounts
+
+  }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
+
+
+
+
   const initialFormData = {
     company_Name: "",
     GST_No: "",
@@ -66,6 +76,7 @@ function AddPayment() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log("Selected Customer ID:", value); // Corrected to log the selected value
 
     if (name === "advance_Amount") {
       // Parse advance amount as a float
@@ -129,6 +140,7 @@ function AddPayment() {
     }
   };
 
+
   const calculateSubTotal = () => {
     const { title_Amount, extramkm_Amount, extrahours_Amount } = formData;
 
@@ -170,10 +182,18 @@ function AddPayment() {
     event.preventDefault();
     console.log("Form Data:", formData);
 
+    // Ensure that customerId is present in formData
+    if (!formData.customername) {
+      setError("Please select a customer.");
+      return;
+    }
+
+    // Validate other fields
     for (const key in formData) {
       if (
-        formData[key] === "" ||
-        (typeof formData[key] === "number" && isNaN(formData[key]))
+        key !== "customername" &&
+        (formData[key] === "" ||
+          (typeof formData[key] === "number" && isNaN(formData[key])))
       ) {
         setError("All fields are required and must be valid numbers.");
         return;
@@ -183,26 +203,22 @@ function AddPayment() {
     setError("");
 
     try {
-      const response = await fetch(
-        "http://localhost:7000/api/customer-payment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      // Add customerId to formData
+      const dataToSend = { ...formData, customerId: formData.customername };
+
+      const response = await fetch("http://localhost:7000/api/customer-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      });
 
       if (response.ok) {
         window.alert("Data Added");
         setFormData(initialFormData);
       } else {
-        console.error(
-          "Failed to save data:",
-          response.status,
-          response.statusText
-        );
+        console.error("Failed to save data:", response.status, response.statusText);
         alert("Failed to save data. Please try again.");
       }
     } catch (error) {
@@ -210,6 +226,7 @@ function AddPayment() {
       alert("Failed to save data. Please try again.");
     }
   };
+
 
   return (
     <>
@@ -303,23 +320,23 @@ function AddPayment() {
 
                     <div className="row grid-gap-5">
                       <div className="col-md">
-                      <label for="vehiclenumber" className="form-label">
-                            Customer Name:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                      <select
-            className="form-control"
-            name="customername"
-            value={formData.customername}
-            onChange={handleChange}
-          >
-            <option value="">Select Customer</option>
-            {customerList.map((customer) => (
-              <option key={customer._id} value={customer.customername}>
-                {customer.customername}
-              </option>
-            ))}
-          </select>
+                        <label for="vehiclenumber" className="form-label">
+                          Customer Name:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <select
+                          className="form-control"
+                          name="customer_Name"
+                          value={formData.customer_Name}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select Customer</option>
+                          {customerList.map((customer) => (
+                            <option key={customer._id} value={customer.customerId}>
+                              {customer.customername}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
@@ -570,7 +587,7 @@ function AddPayment() {
                           </label>
                           <select
                             className="form-control"
-                            name="duty_type"
+                            name="title"
                             id="duty_type"
                             value={formData.title}
                             onChange={handleChange}

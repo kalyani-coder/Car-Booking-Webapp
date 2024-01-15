@@ -13,74 +13,74 @@ import Sidebar from '../Sidebar/Sidebar';
 // };
 
 const initialFormData = {
-    companyName: 'Shivpushpa Travels Invoice',
-    kind_attn: '',
-    GST_No: '',
-    companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
-    mail: 'travelshivpushpa@gmail.com',
-    Date: '',
-    contactno: '',
-    to: '',
-    customerName: '',
-    customerAddress: '',
-    customerGSTNo: '',
-    customerContactNo: '',
-    discount: '',
-    kms: '',
-    amount: '',
-    cgst: '',
-    sgst: '',
-    totalAmount: '',
-    bankname: 'The Cosmos Co-operative Bank Ltd',
-    branchname: 'Kasba Raviwar Branch, Pune 411 002',
-    accountNumber: '015204301220061',
-    accountHoldername: '',
-    ifsccode: 'COSB0000015',
-    micrcode: '411164014',
-  };
+  companyName: 'Shivpushpa Travels Invoice',
+  kind_attn: '',
+  GST_No: '',
+  companyAddress: '332, Kasba Peth Phadke Haud Chowk, Pune 411 0111',
+  mail: 'travelshivpushpa@gmail.com',
+  Date: '',
+  contactno: '',
+  to: '',
+  customerName: '',
+  customerAddress: '',
+  customerGSTNo: '',
+  customerContactNo: '',
+  discount: '',
+  kms: '',
+  amount: '',
+  cgst: '',
+  sgst: '',
+  totalAmount: '',
+  bankname: 'The Cosmos Co-operative Bank Ltd',
+  branchname: 'Kasba Raviwar Branch, Pune 411 002',
+  accountNumber: '015204301220061',
+  accountHoldername: '',
+  ifsccode: 'COSB0000015',
+  micrcode: '411164014',
+};
 
-  function CustomerInvoice() {
-    const [formData, setFormData] = useState(initialFormData);
-    const [error, setError] = useState('');
-    const [customerList, setCustomerList] = useState([]);
-    console.log(customerList)
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
-  
-    useEffect(() => {
-      const fetchCustomers = async () => {
-        try {
-          const response = await fetch('http://localhost:7000/api/customer-payment');
-          if (response.ok) {
-            const data = await response.json();
-            setCustomerList(data);
-          } else {
-            console.error('Failed to fetch customers');
-          }
-        } catch (error) {
-          console.error('API request error:', error);
+function CustomerInvoice() {
+  const [formData, setFormData] = useState(initialFormData);
+  const [error, setError] = useState('');
+  const [customerList, setCustomerList] = useState([]);
+  console.log(customerList)
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('http://localhost:7000/api/customer-payment');
+        if (response.ok) {
+          const data = await response.json();
+          setCustomerList(data);
+        } else {
+          console.error('Failed to fetch customers');
         }
-      };
-  
-      fetchCustomers();
-    }, []);
-  
-    useEffect(() => {
-      
+      } catch (error) {
+        console.error('API request error:', error);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+
     //  const invoiceNumber = getNextInvoiceNumber();
 
-      if (selectedCustomer) {
-        setFormData((prevData) => ({
-          ...prevData,
-          // invoiceno: invoiceNumber,
-          customerName: selectedCustomer.customer_Name  || '',
-          GST_No: selectedCustomer.GST_No  || '',
-          Date:selectedCustomer.Date || '',
-          
-        }));
-      }
-    }, [selectedCustomer]);
-  
-  
+    if (selectedCustomer) {
+      setFormData((prevData) => ({
+        ...prevData,
+        // invoiceno: invoiceNumber,
+        customerName: selectedCustomer.customer_Name || '',
+        GST_No: selectedCustomer.GST_No || '',
+        Date: selectedCustomer.Date || '',
+
+      }));
+    }
+  }, [selectedCustomer]);
+
+
 
   const [invoiceItems, setInvoiceItems] = useState([
     {
@@ -113,8 +113,8 @@ const initialFormData = {
     });
     setTotalAmount(total.toFixed(2));
   };
-  
-  
+
+
 
   useEffect(() => {
     calculateTotalAmount();
@@ -148,7 +148,7 @@ const initialFormData = {
       const standardRate = 20;
       const extraRate1 = 18; // Rate for kilometers beyond 80 up to 300
       const extraRate2 = 15; // Rate for kilometers beyond 300
-  
+
       let baseKms, extraRate;
       if (kms <= 80) {
         baseKms = kms;
@@ -160,17 +160,17 @@ const initialFormData = {
         baseKms = 300;
         extraRate = extraRate2;
       }
-  
+
       const extraKms = kms - baseKms;
-  
+
       updatedItems[index]['amount'] = standardRate * baseKms + extraRate * extraKms;
       updatedItems[index]['total'] = updatedItems[index]['amount'].toFixed(2);
-  
+
       const total = parseFloat(updatedItems[index]['total']) || 0;
       updatedItems[index]['cgst'] = ((total * 2.5) / 100).toFixed(2);
       updatedItems[index]['sgst'] = ((total * 2.5) / 100).toFixed(2);
     }
-  
+
 
     setInvoiceItems(updatedItems);
     recalculateOverallTotals(updatedItems);
@@ -199,78 +199,78 @@ const initialFormData = {
   };
 
 
-// };
+  // };
 
   const handleGenerate = () => {
-    
+
     setFormData((prevData) => ({
       ...prevData,
-     
+
     }));
-  
+
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
 
     if (downloadConfirmed) {
-    const doc = new jsPDF();
+      const doc = new jsPDF();
 
-    doc.setFontSize(12);
-    doc.text(formData.companyName, 10, 10);
-    doc.text(formData.companyAddress, 10, 20);
-    doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
+      doc.setFontSize(12);
+      doc.text(formData.companyName, 10, 10);
+      doc.text(formData.companyAddress, 10, 20);
+      doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
 
-    doc.text('PO No: ', 150, 30);
-    doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
-    doc.text('GST No: ' + formData.gstno, 10, 40);
-    doc.text('Date: ' + formData.date, 150, 50);
-    doc.text('Customer ID:', 150, 60);
+      doc.text('PO No: ', 150, 30);
+      doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
+      doc.text('GST No: ' + formData.gstno, 10, 40);
+      doc.text('Date: ' + formData.date, 150, 50);
+      doc.text('Customer ID:', 150, 60);
 
-    doc.text('Customer Name: ' + formData.customerName, 10, 80);
-    doc.text('Customer Address: ' + formData.customerAddress, 10, 90);
-    doc.text('Customer GST No: ' + formData.customerGSTNo, 10, 100);
-    doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
+      doc.text('Customer Name: ' + formData.customerName, 10, 80);
+      doc.text('Customer Address: ' + formData.customerAddress, 10, 90);
+      doc.text('Customer GST No: ' + formData.customerGSTNo, 10, 100);
+      doc.text('Contact No: ' + formData.customerContactNo, 10, 110);
 
-    const columns = ['Description','Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
-    const data = invoiceItems.map((item) => [
-      item.description,
-      item.saccode,
-      item.kms,
-      item.amount,
-      item.total,
-      item.cgst,
-      item.sgst,
-    ]);
+      const columns = ['Description', 'Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
+      const data = invoiceItems.map((item) => [
+        item.description,
+        item.saccode,
+        item.kms,
+        item.amount,
+        item.total,
+        item.cgst,
+        item.sgst,
+      ]);
 
-    doc.autoTable({
-      startY: 120,
-      head: [columns],
-      body: data,
-      headStyles: {
-        textColor: 255,
-      },
-      bodyStyles: {
-        textColor: 0,
-        valign: 'middle',
-      },
-    });
+      doc.autoTable({
+        startY: 120,
+        head: [columns],
+        body: data,
+        headStyles: {
+          textColor: 255,
+        },
+        bodyStyles: {
+          textColor: 0,
+          valign: 'middle',
+        },
+      });
 
-    doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
-    doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 30);
-    doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 40);
-    doc.text('Account Holder Name: ' + formData.accountHoldername, 10, doc.autoTable.previous.finalY + 50);
-    doc.text('Account Number: ' + formData.accountNumber, 10, doc.autoTable.previous.finalY + 60);
-    doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 70);
-    doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 80);
+      doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
+      doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 30);
+      doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 40);
+      doc.text('Account Holder Name: ' + formData.accountHoldername, 10, doc.autoTable.previous.finalY + 50);
+      doc.text('Account Number: ' + formData.accountNumber, 10, doc.autoTable.previous.finalY + 60);
+      doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 70);
+      doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 80);
 
-    doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 30);
-    doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
+      doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 30);
+      doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
-    doc.text('Total CGST: ' + overallTotals.totalCGST, 10, doc.autoTable.previous.finalY + 80);
-    doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
-    doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
+      doc.text('Total CGST: ' + overallTotals.totalCGST, 10, doc.autoTable.previous.finalY + 80);
+      doc.text('Total SGST: ' + overallTotals.totalSGST, 10, doc.autoTable.previous.finalY + 90);
+      doc.text('Grand Total: ' + overallTotals.totalAmount, 10, doc.autoTable.previous.finalY + 100);
 
 
-    doc.save('invoice.pdf');
-  }
+      doc.save('invoice.pdf');
+    }
   };
 
 
@@ -282,8 +282,8 @@ const initialFormData = {
         <h3 style={{ fontSize: '1rem', fontWeight: 'bold', marginBottom: '5px' }}>Invoice To:</h3>
         <div className="form-customer-invoice-monthly">
           <div className="pt-4 grid-gap-2 col-6">
-            
-          <label htmlFor="customerName" className="form-label">
+
+            <label htmlFor="customerName" className="form-label">
               Customer Name:
             </label>
             {/* Dropdown to select a customer */}
@@ -308,7 +308,7 @@ const initialFormData = {
                 </option>
               ))}
             </select>
-          <label htmlFor="date" className="form-label">
+            <label htmlFor="date" className="form-label">
               Date
             </label>
             <input
@@ -320,22 +320,22 @@ const initialFormData = {
               onChange={handleChange}
             />
             <br />
-           
+
           </div>
           <div className="pt-4 grid-gap-2 col-6">
             <label htmlFor="kind_attn" className="form-label">
               Kind Attn:
               <input
-              className="form-control-customer-invoice-monthly"
-              type="text"
-              id="kind_attn"
-              name="kind_attn"
-              placeholder="Kind Attn"
-              value={formData.kind_attn}
-              onChange={handleChange}
-            />
+                className="form-control-customer-invoice-monthly"
+                type="text"
+                id="kind_attn"
+                name="kind_attn"
+                placeholder="Kind Attn"
+                value={formData.kind_attn}
+                onChange={handleChange}
+              />
             </label>
-            
+
             <label htmlFor="gstno" className="form-label">
               GST No
             </label>
@@ -348,12 +348,12 @@ const initialFormData = {
               value={formData.GST_No}
               onChange={handleChange}
             />
-         
+
           </div>
         </div>
-        
+
         <div>
-        <table className="invoice-table">
+          <table className="invoice-table">
             <thead>
               <tr>
                 <th>Description</th>
@@ -396,35 +396,35 @@ const initialFormData = {
                   <td>{item.sgst}</td>
                 </tr>
               ))}
-                    <tr>
-              <td colSpan="2">Total CGST</td>
-              <td></td>
-              <td></td>
-              <td>{overallTotals.totalCGST}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colSpan="2">Total SGST</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>{overallTotals.totalSGST}</td>
-            </tr>
-            <tr>
-              <td colSpan="2">Grand Total</td>
-              <td></td>
-              <td>{overallTotals.totalAmount}</td>
-              <td></td>
-              <td></td>
-            </tr>
+              <tr>
+                <td colSpan="2">Total CGST</td>
+                <td></td>
+                <td></td>
+                <td>{overallTotals.totalCGST}</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colSpan="2">Total SGST</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{overallTotals.totalSGST}</td>
+              </tr>
+              <tr>
+                <td colSpan="2">Grand Total</td>
+                <td></td>
+                <td>{overallTotals.totalAmount}</td>
+                <td></td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
           <button className="btn btn-primary mt-2 mr-2" onClick={handleAddItem}>
             Add Item
           </button>
-        
-         
-          <button  className="btn btn-danger mt-2" onClick={handleGenerate}>
+
+
+          <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
           {totalAmount && (
