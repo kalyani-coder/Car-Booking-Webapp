@@ -294,8 +294,6 @@ console.log(selectedCustomer)
       </option>
     ))}
 </select>
-
-
             </div>
             <div className="trip-form-group">
               <label htmlFor="mobileno" className="trip-form-label">

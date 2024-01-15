@@ -10,6 +10,8 @@ const ViewVendor = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedVendor, setEditedVendor] = useState({});
   const [viewType, setViewType] = useState('table');
+  const [successMessage, setSuccessMessage] = useState('');  // Ensure this line is present
+  const [errorMessage, setErrorMessage] = useState(''); 
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -67,7 +69,7 @@ const ViewVendor = () => {
         },
         body: JSON.stringify(editedVendor),
       });
-
+  
       if (response.ok) {
         setVendors((prevVendors) =>
           prevVendors.map((vendor) =>
@@ -75,13 +77,20 @@ const ViewVendor = () => {
           )
         );
         setIsEditing(false);
+        setSuccessMessage('Vendor data updated successfully');
+        setErrorMessage('');
       } else {
         console.error('Error updating vendor:', response.status);
+        setSuccessMessage('');
+        setErrorMessage('Error updating vendor. Please try again.');
       }
     } catch (error) {
       console.error('Error updating vendor:', error);
+      setSuccessMessage('');
+      setErrorMessage('Error updating vendor. Please try again.');
     }
   };
+  
 
   return (
     <>

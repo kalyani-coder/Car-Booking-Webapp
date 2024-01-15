@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import './AllocateTrip.css'; // Import the custom CSS
 import Sidebar from '../Sidebar/Sidebar';
 
 function AllocateTrip() {
   const initialTripDetails = {
+    customerId: '',
     pickupLocation: '',
     date: '',
     time: '',
@@ -17,10 +18,44 @@ function AllocateTrip() {
     mail: '',
     mobileno: '',
     address: '',
+    vehicleno: ''
   };
 
   const [tripDetails, setTripDetails] = useState(initialTripDetails);
   const [error, setError] = useState('');
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customers, setCustomers] = useState([]);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch('http://localhost:7000/api/add-trip');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        const updatedCustomers = data.map((customer) => ({
+          ...customer,
+          triptype: "Round Trip",
+          subtype: "Business",
+          pickup: "Airport",
+          date: "2024-01-15",
+          time: "10:00 AM",
+          dropoff: "Hotel",
+          date1: "2024-01-18",
+          time1: "02:00 PM",
+          vehicle: "Sedan Car", // Add the default vehicle type or get it from the API if available
+        }));
+  
+        setCustomers(updatedCustomers);
+      } catch (error) {
+        console.error('Error fetching customers:', error);
+        setError('Error fetching customers: ' + error.message);
+      }
+    };
+    fetchCustomers();
+  }, []);
 
   const handleFieldChange = (fieldName, value) => {
     setTripDetails((prevTripDetails) => ({
@@ -32,7 +67,7 @@ function AllocateTrip() {
   const handleAllocateClick = async () => {
     // Ensure all fields are filled
     for (const fieldName in tripDetails) {
-      if (tripDetails[fieldName] === '') {
+      if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
         setError('All fields are required.');
         return;
       }
@@ -56,6 +91,7 @@ function AllocateTrip() {
       mail: tripDetails.mail,
       mobileno: tripDetails.mobileno,
       address: tripDetails.address,
+      vehicleno: tripDetails.vehicleno
     };
     console.log("sdfgbn", { apiData })
     try {
@@ -80,6 +116,23 @@ function AllocateTrip() {
       alert('Failed to save data. Please try again.');
     }
   };
+  const handleShareClick = async () => {
+    try {
+      // Make the API request to share the post data
+      const response = await fetch(`http://localhost:7000/api/trip-details/${tripDetails._id}`);
+      if (response.ok) {
+        const sharedData = await response.json();
+        // Display the shared data in the console or alert, you can modify this part based on your requirement
+        console.log('Shared Data:', sharedData);
+        alert('Trip details shared successfully!');
+      } else {
+        alert('Failed to share trip details. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to share trip details. Please try again.');
+    }
+  };
 
   return (
     <>
@@ -87,14 +140,40 @@ function AllocateTrip() {
 
       <div className="trip-details-container">
         <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Allocate Trip Details</h2>
+        
+             
         <div className='d-flex gap-3'>
-
-
           <div className="trip-details-section">
             {error && <p className="text-red-500">{error}</p>}
             <h2 className="trip-details-heading">Trip Details</h2>
             <div className="trip-details-form">
+            
               <div className="pt-4 mb-2 grid-gap-2">
+              <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
+                <span className="required-asterisk">*</span>
+                <select
+                className="trip-details-input"
+                id="customerId"
+                name="customerId"
+                onChange={(e) => {
+                  const selectedCustomer = customers.find(
+                    (customer) => customer.customername === e.target.value
+                  );
+                  setTripDetails((prevTripDetails) => ({
+                    ...prevTripDetails,
+                    customerId: selectedCustomer ? selectedCustomer._id : '',
+                  }));
+                }}
+                value={tripDetails.customerId}
+              >
+                <option value="">Select Customer</option>
+                {customers.map((customer) => (
+                  <option key={customer._id} value={customer.customername}>
+                    {customer.customername}
+                  </option>
+                ))}
+              </select>
+
                 <div className="d-flex gap-3">
                   <div>
                     <label htmlFor='pickupLocation' className="trip-details-label">Pickup Location:</label>
@@ -272,8 +351,8 @@ function AllocateTrip() {
                   className="driver-details-input"
                   name="vehicle_number"
                   placeholder="Vehicle Number"
-                  value={tripDetails.vehicle_number}
-                  onChange={(e) => handleFieldChange('address', e.target.value)}
+                  value={tripDetails.vehicleno}
+                  onChange={(e) => handleFieldChange('vehicleno', e.target.value)}
                 />
               </div>
             </div>
@@ -282,13 +361,10 @@ function AllocateTrip() {
         </div>
 
         <div className="custom-button-container text-center mt-3">
-          <button className="custom-btn custom-print-btn" onClick={() => window.print()}>
-            Print
-          </button>
           <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
             Allocate
           </button>
-          <button className="custom-btn custom-generate-btn" onClick={handleAllocateClick}>
+          <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
           </button>
         </div>

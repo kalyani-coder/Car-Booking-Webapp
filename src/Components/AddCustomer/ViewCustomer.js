@@ -47,6 +47,9 @@ const ViewCustomer = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState({});
   const [viewType, setViewType] = useState('table'); // Set the default view type to 'table'
+  const [successMessage, setSuccessMessage] = useState('');  // Ensure this line is present
+  const [errorMessage, setErrorMessage] = useState(''); 
+
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -119,21 +122,28 @@ const ViewCustomer = () => {
         },
         body: JSON.stringify(editedCustomer),
       });
-
+  
       if (response.ok) {
-        setCustomers(prevCustomers =>
-          prevCustomers.map(customer =>
+        setCustomers((prevCustomers) =>
+          prevCustomers.map((customer) =>
             customer._id === editedCustomer._id ? editedCustomer : customer
           )
         );
         setIsEditing(false);
+        setSuccessMessage('Customer data updated successfully');
+        setErrorMessage('');
       } else {
         console.error('Error updating customer:', response.status);
+        setSuccessMessage('');
+        setErrorMessage('Error updating customer. Please try again.');
       }
     } catch (error) {
       console.error('Error updating customer:', error);
+      setSuccessMessage('');
+      setErrorMessage('Error updating customer. Please try again.');
     }
   };
+  
 
   const handleViewTypeChange = (type) => {
     setViewType(type);
@@ -176,8 +186,8 @@ const ViewCustomer = () => {
             <h5 className='fw-bold my-2'>Customer Name</h5>
             <input
               type="text"
-              value={editedCustomer.Cus_name}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_name: e.target.value })}
+              value={editedCustomer.cus_name}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className='fw-bold my-2'>Company Name</h5>
@@ -197,15 +207,15 @@ const ViewCustomer = () => {
             <h5 className='fw-bold my-2'>Customer Mobile</h5>
             <input
               type="text"
-              value={editedCustomer.Cus_Mobile}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Mobile: e.target.value })}
+              value={editedCustomer.cus_mobile}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_mobile: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className='fw-bold my-2'>Customer Email</h5>
             <input
               type="text"
-              value={editedCustomer.Cus_Email}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, Cus_Email: e.target.value })}
+              value={editedCustomer.cus_email}
+              onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_email: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className='fw-bold my-2'>Address</h5>
