@@ -35,20 +35,7 @@ function AllocateTrip() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        const updatedCustomers = data.map((customer) => ({
-          ...customer,
-          triptype: "Round Trip",
-          subtype: "Business",
-          pickup: "Airport",
-          date: "2024-01-15",
-          time: "10:00 AM",
-          dropoff: "Hotel",
-          date1: "2024-01-18",
-          time1: "02:00 PM",
-          vehicle: "Sedan Car", // Add the default vehicle type or get it from the API if available
-        }));
-  
-        setCustomers(updatedCustomers);
+        setCustomers(data); // Assuming that the data received is an array of customers
       } catch (error) {
         console.error('Error fetching customers:', error);
         setError('Error fetching customers: ' + error.message);
@@ -56,6 +43,29 @@ function AllocateTrip() {
     };
     fetchCustomers();
   }, []);
+
+  useEffect(() => {
+    // Update form data when a customer is selected
+    if (selectedCustomer) {
+      setTripDetails({
+        customerId: selectedCustomer._id,
+        pickupLocation: '',
+        date: '2024-01-01', // Default date value, modify as needed
+        time: '00:00', // Default time value, modify as needed
+        dropoffLocation: '',
+        date1: '2024-01-13', // Default date value, modify as needed
+        time1: '00:00', // Default time value, modify as needed
+        vehicle: '',
+        triptype: 'One Way Trip', // Default trip type, modify as needed
+        subtype: 'Outstation Outstation Trip', // Default subtype, modify as needed
+        drivername: '',
+        mail: '',
+        mobileno: '',
+        address: '',
+        vehicleno: '',
+      });
+    }
+  }, [selectedCustomer]);
 
   const handleFieldChange = (fieldName, value) => {
     setTripDetails((prevTripDetails) => ({
@@ -176,14 +186,14 @@ function AllocateTrip() {
 
                 <div className="d-flex gap-3">
                   <div>
-                    <label htmlFor='pickupLocation' className="trip-details-label">Pickup Location:</label>
+                    <label htmlFor='pickup' className="trip-details-label">Pickup Location:</label>
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
                       className="trip-details-input"
                       placeholder="Pickup Location"
-                      value={tripDetails.pickupLocation}
-                      onChange={(e) => handleFieldChange('pickupLocation', e.target.value)}
+                      value={tripDetails.pickup}
+                      onChange={(e) => handleFieldChange('pickup', e.target.value)}
                     />
                   </div>
                   <div>
