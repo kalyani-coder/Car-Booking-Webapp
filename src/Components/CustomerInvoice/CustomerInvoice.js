@@ -35,6 +35,7 @@ function CustomerInvoice() {
     micrcode: '411164014',
   });
 
+  const [invoiceNumber, setInvoiceNumber] = useState(101); // Initialize with the starting invoice number
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
@@ -52,7 +53,7 @@ function CustomerInvoice() {
         console.error("API request error:", error);
       }
     };
-
+    setInvoiceNumber(101);
     fetchCustomers();
   }, []);
   
@@ -64,10 +65,7 @@ function CustomerInvoice() {
     setSelectedCustomer(selectedCustomer);
   };
 
-  // const handlePrint = () => {
-  //   setShowInvoiceData(true);
-  //   window.print();
-  // };
+  
 
   const handleGenerate = () => {
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
@@ -91,6 +89,14 @@ function CustomerInvoice() {
         // Invoice Details Section
         doc.setFontSize(10);
         doc.text('PO No: ', 140, 30);
+        const updatedInvoiceNumber = invoiceNumber + 1;
+      setInvoiceNumber(updatedInvoiceNumber); // Increment the invoice number
+
+      setFormData({
+        ...formData,
+        invoiceno: `INV-${updatedInvoiceNumber}`, // Update the invoice number in the form data
+      });
+
         doc.text('Invoice No: ', 140, 40);
         doc.text('Date: ', 140, 50);
         doc.text('Customer ID: ', 140, 60);
@@ -158,6 +164,7 @@ function CustomerInvoice() {
         doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 60);
 
         doc.save('invoice.pdf');
+        doc.save(`invoice_${updatedInvoiceNumber}.pdf`);
     }
 };
 
@@ -181,7 +188,7 @@ function CustomerInvoice() {
         >
           Invoice To :
         </h2>
-
+       
         <div className="form-vendor-invoice">
           <div className="grid-gap-2 col-6">
             <label htmlFor="vendorName" className="form-label">

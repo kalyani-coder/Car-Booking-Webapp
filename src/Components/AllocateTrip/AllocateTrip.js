@@ -1,10 +1,11 @@
-import React, { useState, useEffect  } from 'react';
-import './AllocateTrip.css'; // Import the custom CSS
+import React, { useState, useEffect } from 'react';
+import './AllocateTrip.css';
 import Sidebar from '../Sidebar/Sidebar';
 
 function AllocateTrip() {
   const initialTripDetails = {
     customerId: '',
+    customername: '',
     pickupLocation: '',
     date: '',
     time: '',
@@ -18,7 +19,7 @@ function AllocateTrip() {
     mail: '',
     mobileno: '',
     address: '',
-    vehicleno: ''
+    vehicleno: '',
   };
 
   const [tripDetails, setTripDetails] = useState(initialTripDetails);
@@ -35,7 +36,7 @@ function AllocateTrip() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setCustomers(data); // Assuming that the data received is an array of customers
+        setCustomers(data);
       } catch (error) {
         console.error('Error fetching customers:', error);
         setError('Error fetching customers: ' + error.message);
@@ -44,105 +45,105 @@ function AllocateTrip() {
     fetchCustomers();
   }, []);
 
-  useEffect(() => {
-    // Update form data when a customer is selected
-    if (selectedCustomer) {
-      setTripDetails({
-        customerId: selectedCustomer._id,
-        pickupLocation: '',
-        date: '2024-01-01', // Default date value, modify as needed
-        time: '00:00', // Default time value, modify as needed
-        dropoffLocation: '',
-        date1: '2024-01-13', // Default date value, modify as needed
-        time1: '00:00', // Default time value, modify as needed
-        vehicle: '',
-        triptype: 'One Way Trip', // Default trip type, modify as needed
-        subtype: 'Outstation Outstation Trip', // Default subtype, modify as needed
-        drivername: '',
-        mail: '',
-        mobileno: '',
-        address: '',
-        vehicleno: '',
-      });
+  const fetchTripDetails = async (customerId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/trip-details/${customerId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch trip details');
+      }
+      const tripData = await response.json();
+      setTripDetails(tripData);
+    } catch (error) {
+      console.error('Error fetching trip details:', error);
+      setError('Error fetching trip details: ' + error.message);
     }
-  }, [selectedCustomer]);
+  };
+
 
   const handleFieldChange = (fieldName, value) => {
     setTripDetails((prevTripDetails) => ({
       ...prevTripDetails,
       [fieldName]: value,
     }));
-  };
 
-  const handleAllocateClick = async () => {
-    // Ensure all fields are filled
-    for (const fieldName in tripDetails) {
-      if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
-        setError('All fields are required.');
-        return;
-      }
-    }
-
-    // Reset error if all fields are filled
-    setError('');
-
-    // Prepare the data to send to the API
-    const apiData = {
-      pickuplocation: tripDetails.pickupLocation,
-      date: tripDetails.date,
-      time: tripDetails.time,
-      dropofflocation: tripDetails.dropoffLocation,
-      date1: tripDetails.date1,
-      time1: tripDetails.time1,
-      vehicle: tripDetails.vehicle,
-      triptype: tripDetails.triptype,
-      subtype: tripDetails.subtype,
-      drivername: tripDetails.drivername,
-      mail: tripDetails.mail,
-      mobileno: tripDetails.mobileno,
-      address: tripDetails.address,
-      vehicleno: tripDetails.vehicleno
-    };
-    console.log("sdfgbn", { apiData })
-    try {
-      // Make the API request
-      const response = await fetch('http://localhost:7000/api/trip-details', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(apiData),
-      });
-
-      if (response.ok) {
-        // Reset the form on success
-        setTripDetails(initialTripDetails);
-        alert('Data saved successfully!');
-      } else {
-        alert('Failed to save data. Please try again.');
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-      alert('Failed to save data. Please try again.');
+    // If the selected field is 'customerId', fetch corresponding trip details
+    if (fieldName === 'customerId') {
+      const selectedCustomer = customers.find((customer) => customer.customername === value);
+      setSelectedCustomer(selectedCustomer);
+      fetchTripDetails(selectedCustomer._id);
     }
   };
-  const handleShareClick = async () => {
-    try {
-      // Make the API request to share the post data
-      const response = await fetch(`http://localhost:7000/api/trip-details/${tripDetails._id}`);
-      if (response.ok) {
-        const sharedData = await response.json();
-        // Display the shared data in the console or alert, you can modify this part based on your requirement
-        console.log('Shared Data:', sharedData);
-        alert('Trip details shared successfully!');
-      } else {
-        alert('Failed to share trip details. Please try again.');
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-      alert('Failed to share trip details. Please try again.');
-    }
-  };
+
+  // const handleAllocateClick = async () => {
+  //   // Ensure all fields are filled
+  //   for (const fieldName in tripDetails) {
+  //     if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
+  //       setError('All fields are required.');
+  //       return;
+  //     }
+  //   }
+
+  //   // Reset error if all fields are filled
+  //   setError('');
+
+  //   // Prepare the data to send to the API
+  //   const apiData = {
+  //     pickuplocation: tripDetails.pickupLocation,
+  //     date: tripDetails.date,
+  //     time: tripDetails.time,
+  //     dropofflocation: tripDetails.dropoffLocation,
+  //     date1: tripDetails.date1,
+  //     time1: tripDetails.time1,
+  //     vehicle: tripDetails.vehicle,
+  //     triptype: tripDetails.triptype,
+  //     subtype: tripDetails.subtype,
+  //     drivername: tripDetails.drivername,
+  //     mail: tripDetails.mail,
+  //     mobileno: tripDetails.mobileno,
+  //     address: tripDetails.address,
+  //     vehicleno: tripDetails.vehicleno
+  //   };
+
+  //   try {
+  //     // Make the API request
+  //     const response = await fetch('http://localhost:7000/api/trip-details', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(apiData),
+  //     });
+
+  //     if (response.ok) {
+  //       // Reset the form on success
+  //       setTripDetails(initialTripDetails);
+  //       alert('Data saved successfully!');
+  //     } else {
+  //       alert('Failed to save data. Please try again.');
+  //     }
+  //   } catch (error) {
+  //     console.error('API request error:', error);
+  //     alert('Failed to save data. Please try again.');
+  //   }
+  // };
+
+  // const handleShareClick = async () => {
+  //   try {
+  //     // Make the API request to share the post data
+  //     const response = await fetch(`http://localhost:7000/api/trip-details/${tripDetails._id}`);
+  //     if (response.ok) {
+  //       const sharedData = await response.json();
+  //       // Display the shared data in the console or alert, you can modify this part based on your requirement
+  //       console.log('Shared Data:', sharedData);
+  //       alert('Trip details shared successfully!');
+  //     } else {
+  //       alert('Failed to share trip details. Please try again.');
+  //     }
+  //   } catch (error) {
+  //     console.error('API request error:', error);
+  //     alert('Failed to share trip details. Please try again.');
+  //   }
+  // };
 
   return (
     <>
@@ -162,27 +163,24 @@ function AllocateTrip() {
               <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
                 <span className="required-asterisk">*</span>
                 <select
-                className="trip-details-input"
-                id="customerId"
-                name="customerId"
-                onChange={(e) => {
-                  const selectedCustomer = customers.find(
-                    (customer) => customer.customername === e.target.value
-                  );
-                  setTripDetails((prevTripDetails) => ({
-                    ...prevTripDetails,
-                    customerId: selectedCustomer ? selectedCustomer._id : '',
-                  }));
-                }}
-                value={tripDetails.customerId}
-              >
-                <option value="">Select Customer</option>
-                {customers.map((customer) => (
-                  <option key={customer._id} value={customer.customername}>
-                    {customer.customername}
-                  </option>
-                ))}
-              </select>
+                  className="trip-details-input"
+                  id="customerId"
+                  name="customerId"
+                  onChange={(e) => {
+                    const selectedCustomer = customers.find(
+                      (customer) => customer.customername === e.target.value
+                    );
+                    setSelectedCustomer(selectedCustomer);
+                  }}
+                  value={selectedCustomer ? selectedCustomer.customername : ''}
+                >
+                  <option value="">Select Customer</option>
+                  {customers.map((customer) => (
+                    <option key={customer._id} value={customer.customername}>
+                      {customer.customername}
+                    </option>
+                  ))}
+                </select>
 
                 <div className="d-flex gap-3">
                   <div>
@@ -226,8 +224,8 @@ function AllocateTrip() {
                       type="text"
                       className="trip-details-input"
                       placeholder="Drop-off Location"
-                      value={tripDetails.dropoffLocation}
-                      onChange={(e) => handleFieldChange('dropoffLocation', e.target.value)}
+                      value={tripDetails.dropoff}
+                      onChange={(e) => handleFieldChange('dropoff', e.target.value)}
                     />
                   </div>
                   <div className="drop-off">
@@ -371,12 +369,12 @@ function AllocateTrip() {
         </div>
 
         <div className="custom-button-container text-center mt-3">
-          <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
+          {/* <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
             Allocate
           </button>
           <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
-          </button>
+          </button> */}
         </div>
       </div>
 

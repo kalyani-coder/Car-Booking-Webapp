@@ -435,7 +435,7 @@ const [errorMessage, setErrorMessage] = useState("");
                                                 }`}
                                                 className="trip-form-label"
                                               >
-                                                Mobile No {personIndex + 1}:
+                                                Mobile No :
                                               </label>
                                               <input
                                                 type="text"
@@ -465,7 +465,7 @@ const [errorMessage, setErrorMessage] = useState("");
                                                 }`}
                                                 className="trip-form-label"
                                               >
-                                                Vehicle No {personIndex + 1}:
+                                                Vehicle No :
                                               </label>
                                               <input
                                                 type="text"

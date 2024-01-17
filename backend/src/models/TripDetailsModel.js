@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const TripDetailsSchema = new mongoose.Schema({
 
        
+    customerId : String,
+    customername : String, 
     pickuplocation:  String,
     date:  String,
     time:  String,

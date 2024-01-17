@@ -5,10 +5,6 @@ import Sidebar from "../Sidebar/Sidebar";
 const AddTrip = () => {
   
   
-
-
-
-
   const initialPersonData = {
     name: "",
     mobile: "",
@@ -17,12 +13,14 @@ const AddTrip = () => {
 
   const handlePersonChange = (index, e) => {
     const { name, value } = e.target;
+  
     setFormData((prevData) => {
       const updatedPeople = [...prevData.people];
       updatedPeople[index] = {
         ...updatedPeople[index],
         [name]: value,
       };
+  
       return {
         ...prevData,
         people: updatedPeople,
@@ -31,8 +29,9 @@ const AddTrip = () => {
   };
 
   const addPerson = () => {
-    if (formData.people.length < 7) {
+    if (formData.members < 7) {
       setFormData((prevData) => ({
+        ...prevData,
         members: prevData.members + 1,
         people: [
           ...prevData.people,
@@ -43,8 +42,12 @@ const AddTrip = () => {
           },
         ],
       }));
+    } else {
+      setError("Maximum number of people reached (7).");
     }
   };
+
+  
 
   const initialFormData = {
     customerId : ""  ,
@@ -110,6 +113,8 @@ console.log(selectedCustomer)
         mobileno: selectedCustomer.cus_mobile || "",
         email: selectedCustomer.cus_email || "",
         address: selectedCustomer.address || "",
+        members: formData.members,
+        people: formData.people,
         triptype: "",
         subtype: "",
         pickup: "",
@@ -122,12 +127,19 @@ console.log(selectedCustomer)
         hours: "",
         vehicle: "",
         // Add other fields based on your customer details
+
+        
       });
     }
-  }, [selectedCustomer]); // Run this effect whenever selectedCustomer changes
+  }, [selectedCustomer, formData.members, formData.people]); // Run this effect whenever selectedCustomer changes
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "members" && (value < 1 || value > 7)) {
+      setError("Number of people must be between 1 and 7.");
+      return;
+    }
 
     setFormData((prevData) => ({
       ...prevData,
@@ -267,33 +279,34 @@ console.log(selectedCustomer)
           </h2>
           <div className="trip-form-container">
             {error && <p className="trip-text-red-500">{error}</p>}
-            <div className="trip-form-group"></div>
+           
             <div className="trip-form-group">
               <label htmlFor="customername" className="trip-form-label">
                 Customer Name:
               </label>
               <select
-  className="form-control-add-trip-input"
-  id="customername"
-  name="customername"
-  onChange={(e) => {
-    // Find the selected customer from the list
-    const selectedCustomer = customerList.find(
-      (customer) => customer.cus_name === e.target.value
-    );
-    // Set the selected customer to state
-    setSelectedCustomer(selectedCustomer);
-  }}
-  value={selectedCustomer ? selectedCustomer.cus_name : ""}
->
-  <option value="">Select Customer</option>
-  {customerList &&
-    customerList.map((customer) => (
-      <option key={customer._id} value={customer.cus_name}>
-        {customer.cus_name}
-      </option>
-    ))}
-</select>
+                className="form-control-add-trip-input"
+                id="customername"
+                name="customername"
+                onChange={(e) => {
+                  const selectedCustomer = customerList.find(
+                    (customer) => customer.cus_name === e.target.value
+                  );
+                  setSelectedCustomer(selectedCustomer);
+                }}
+                value={selectedCustomer ? selectedCustomer.cus_name : ""}
+              >
+                <option value="">Select Customer</option>
+                {customerList?.length > 0 ? (
+  customerList.map((customer) => (
+    <option key={customer._id} value={customer.cus_name}>
+      {customer.cus_name}
+    </option>
+  ))
+) : (
+  <option value="">No Customers Available</option>
+)}
+              </select>
             </div>
             <div className="trip-form-group">
               <label htmlFor="mobileno" className="trip-form-label">
@@ -375,24 +388,24 @@ console.log(selectedCustomer)
                 </option>
               </select>
             </div>
-            {/* <div className="d-flex gap-3">
+            <div className="d-flex gap-3">
               <div>
                 <div className="trip-form-group">
                   <label htmlFor="numberOfPeople" className="trip-form-label">
                     Number of People:
                   </label>
                   <select
-                    className="form-control-add-trip-input1"
-                    name="members"
-                    onChange={handleChange}
-                    value={formData.members}
-                  >
-                    {[1, 2, 3, 4, 5, 6, 7].map((number) => (
-                      <option key={number} value={number}>
-                        {number}
-                      </option>
-                    ))}
-                  </select>
+            className="form-control-add-trip-input1"
+            name="members"
+            onChange={handleChange}
+            value={formData.members}
+          >
+            {[1, 2, 3, 4, 5, 6, 7].map((number) => (
+              <option key={number} value={number}>
+                {number}
+              </option>
+            ))}
+          </select>
                 </div>
                 
                 <div>
@@ -405,61 +418,63 @@ console.log(selectedCustomer)
                   </button>
                 </div>
                 <div className="d-flex flex-wrap gap-3">
-                  {formData.people.map((person, index) => (
+                  
+                {formData.people?.length > 0 &&
+                    formData.people.map((person, index) => (
                     <div key={index} className="trip-person-row">
                       <div className="trip-form-group">
-                        <label
-                          htmlFor={`name${index}`}
-                          className="trip-form-label"
-                        >
-                          Person {index + 1} Name:
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control-add-trip-input1"
-                          name={`name${index}`}
-                          placeholder="Name"
-                          onChange={(e) => handlePersonChange(index, e)}
-                          value={person.name}
-                        />
-                      </div>
+                          <label
+                            htmlFor={`name${index}`}
+                            className="trip-form-label"
+                          >
+                            Person {index + 1} Name:
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control-add-trip-input1"
+                            name={`name${index}`}
+                            placeholder="Name"
+                            onChange={(e) => handlePersonChange(index, e)}
+                            value={person.name}
+                          />
+                        </div>
                       <div className="trip-form-group">
-                        <label
-                          htmlFor={`mobile${index}`}
-                          className="trip-form-label"
-                        >
-                          Mobile No:
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control-add-trip-input1"
-                          name={`mobile${index}`}
-                          placeholder="Mobile No."
-                          onChange={(e) => handlePersonChange(index, e)}
-                          value={person.mobile}
-                        />
-                      </div>
+                          <label
+                            htmlFor={`mobile${index}`}
+                            className="trip-form-label"
+                          >
+                            Mobile No:
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control-add-trip-input1"
+                            name={`mobile${index}`}
+                            placeholder="Mobile No."
+                            onChange={(e) => handlePersonChange(index, e)}
+                            value={person.mobile}
+                          />
+                        </div>
                       <div className="trip-form-group">
-                        <label
-                          htmlFor={`vehicleNo${index}`}
-                          className="trip-form-label"
-                        >
-                          Vehicle No:
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control-add-trip-input1"
-                          name={`vehicleNo${index}`}
-                          placeholder="Vehicle No."
-                          onChange={(e) => handlePersonChange(index, e)}
-                          value={person.vehicleNo}
-                        />
-                      </div>
+                          <label
+                            htmlFor={`vehicleNo${index}`}
+                            className="trip-form-label"
+                          >
+                            Vehicle No:
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control-add-trip-input1"
+                            name={`vehicleNo${index}`}
+                            placeholder="Vehicle No."
+                            onChange={(e) => handlePersonChange(index, e)}
+                            value={person.vehicleNo}
+                          />
+                        </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div> */}
+            </div>
             <div>
               <div className="trip-form-group">
                 <label htmlFor="date" className="trip-form-label">

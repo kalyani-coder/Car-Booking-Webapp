@@ -49,6 +49,7 @@ function CustomerInvoiceMonthly() {
     const fetchCustomers = async () => {
       try {
         const response = await fetch("http://localhost:7000/api/customer-payment");
+        
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
