@@ -33,18 +33,35 @@ router.get('/:id', async (req, res) => {
 
 })
 
-// POST METHOD 
-router.post('/', async (req, res) => {
-
+// GET route to retrieve payments by month
+router.get('/by-date/:date', async (req, res) => {
     try {
-        const NewAddPayment = new NewAddPaymentSchema(req.body)
-        const newNewAddPayment = await NewAddPayment.save()
-        res.status(201).json({ message: "Data post Successfully" })
-
+      const requestedDate = req.params.date;
+  
+      // Check if the requestedDate is a valid date (you may want to add more validation here)
+      if (!isValidDate(requestedDate)) {
+        return res.status(400).json({ message: 'Invalid date parameter' });
+      }
+  
+      // Query the database for payments on the requested date
+      const payments = await NewAddPaymentSchema.find({ Date: requestedDate });
+  
+      res.json(payments);
     } catch (e) {
-        res.status(404).json({ message: "Can not post customer enquiry" })
+      console.error(e);
+      res.status(500).json({ message: 'Internal server error' });
     }
-})
+  });
+  
+  // Utility function to check if a string is a valid date
+  function isValidDate(dateString) {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateString.match(regex) !== null;
+  }
+  
+ 
+  
+  
 
 // PATCH METHOD 
 router.patch('/:id', async (req, res) => {
