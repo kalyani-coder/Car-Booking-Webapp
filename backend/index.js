@@ -29,8 +29,8 @@ app.use(cors({origin : 'http://localhost:3000' , credentials : true}))
 
 mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority' , {
   
-    useUnifiedTopology : true,
-    bufferCommands: false, // Disable buffering
+    // useUnifiedTopology : true,
+    // bufferCommands: false, // Disable buffering
   
 }, console.log("Connected to Database"))
 

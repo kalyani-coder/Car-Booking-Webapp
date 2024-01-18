@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
-import './ViewAllocateTrip.css';
-
+import React, { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
+import "./ViewAllocateTrip.css";
 
 const ViewAllocateTrip = () => {
   const [shareDetails, setShareDetails] = useState([]);
   const [filteredShareDetails, setFilteredShareDetails] = useState([]);
   const [error, setError] = useState(null);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [editingId, setEditingId] = useState(null);
+  const [customers, setCustomers] = useState([]);
   const [editedTrip, setEditedTrip] = useState({
     _id: "",
     pickuplocation: "",
@@ -27,25 +27,82 @@ const ViewAllocateTrip = () => {
     address: "",
     vehicleno: "",
   });
+  const [vehicleDetails, setVehicleDetails] = useState([]);
+
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch("http://localhost:7000/api/add-trip");
+        if (!response.ok) {
+          throw Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setCustomers(data.customers);
+        setError(null);
+      } catch (error) {
+        setError("Error fetching customer names: " + error.message);
+      }
+    };
+
+    fetchCustomers();
+  }, []);
 
   useEffect(() => {
     const fetchShareDetails = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/trip-details');
+        const response = await fetch("http://localhost:7000/api/trip-details");
         if (!response.ok) {
-          throw Error('Network response was not ok');
+          throw Error("Network response was not ok");
         }
         const data = await response.json();
         setShareDetails(data);
         setFilteredShareDetails(data);
-        setError(null); // Reset the error state
+        setError(null);
       } catch (error) {
-        setError('Error fetching share details: ' + error.message);
+        setError("Error fetching share details: " + error.message);
       }
     };
 
     fetchShareDetails();
   }, []);
+
+  useEffect(() => {
+    const tripDetailsToFetch = {
+      triptype: "One Way Trip",
+      subtype: "Outstation Trip",
+      pickup: "", // Provide the actual pickup value
+      date: "2024-01-24",
+      time: "16:19",
+      dropoff: "pune",
+      date1: "2024-01-09",
+      time1: "19:16",
+    };
+
+    fetchVehicleDetails(tripDetailsToFetch);
+  }, []); // You may adjust the dependency array based on your needs
+
+  const fetchVehicleDetails = async (tripDetails) => {
+    try {
+      const response = await fetch("http://localhost:7000/api/vehicle-details", {
+        method: "POST", // Assuming the API requires a POST request
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tripDetails),
+      });
+
+      if (!response.ok) {
+        throw Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      setVehicleDetails(data.vehicleDetails);
+      setError(null);
+    } catch (error) {
+      setError("Error fetching vehicle details: " + error.message);
+    }
+  };
 
   const filterShareDetails = () => {
     const filteredData = shareDetails.filter((shareDetail) => {
@@ -65,14 +122,14 @@ const ViewAllocateTrip = () => {
 
   const handleEdit = (_id) => {
     setEditingId(_id);
-    // Fetch the data for the specific trip using the provided API
+
     fetch(`http://localhost:7000/api/trip-details/${_id}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setEditedTrip(data);
       })
-      .catch(error => {
-        setError('Error fetching trip details for editing: ' + error.message);
+      .catch((error) => {
+        setError("Error fetching trip details for editing: " + error.message);
       });
   };
 
@@ -81,64 +138,62 @@ const ViewAllocateTrip = () => {
   };
 
   const handleSaveEdit = () => {
-    const successMessage = 'Trip details successfully updated!';
-    const errorMessage = 'Error updating trip details. Please try again.';
+    const successMessage = "Trip details successfully updated!";
+    const errorMessage = "Error updating trip details. Please try again.";
 
-    // Placeholder for API endpoint to update trip details
     const updateTripEndpoint = `http://localhost:7000/api/trip-details/${editingId}`;
 
-    // Assuming editedTrip contains the updated data
     fetch(updateTripEndpoint, {
-      method: 'PUT', // or 'PATCH' depending on your API
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(editedTrip),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
-      .then(data => {
-        // Trip details successfully updated
-        setShareDetails(prevDetails => {
-          // Replace the old data with the updated data
-          return prevDetails.map(detail =>
+      .then((data) => {
+        setShareDetails((prevDetails) => {
+          return prevDetails.map((detail) =>
             detail._id === editingId ? data : detail
           );
         });
         setEditingId(null);
         alert(successMessage);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(`Error updating trip details: ${error.message}`);
         alert(errorMessage);
       });
   };
 
-
-  // Delete Allocate trips 
   const handleDelete = (_id) => {
-    const confirmed = window.confirm("Are you sure you want to delete this trip?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this trip?"
+    );
     if (confirmed) {
       try {
         fetch(`http://localhost:7000/api/trip-details/${_id}`, {
-          method: 'DELETE',
+          method: "DELETE",
         })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          setShareDetails((prevDetails) => prevDetails.filter(detail => detail._id !== _id));
-          alert('Trip successfully deleted');
-        })
-        .catch(error => {
-          setError('Error deleting allocate trip: ' + error.message);
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            setShareDetails((prevDetails) =>
+              prevDetails.filter((detail) => detail._id !== _id)
+            );
+            alert("Trip successfully deleted");
+          })
+          .catch((error) => {
+            setError("Error deleting allocate trip: " + error.message);
+          });
       } catch (error) {
-        setError('Error deleting allocate trip: ' + error.message);
+        setError("Error deleting allocate trip: " + error.message);
       }
     }
   };
@@ -148,7 +203,15 @@ const ViewAllocateTrip = () => {
       <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Allocate Trips</h2>
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginBottom: "8px",
+            }}
+          >
+            View Allocate Trips
+          </h2>
           <div className="p-4 space-y-4">
             <input
               type="text"
@@ -195,7 +258,7 @@ const ViewAllocateTrip = () => {
                     <td>{shareDetail.mail}</td>
                     <td>{shareDetail.mobileno}</td>
                     <td>
-                    {editingId === shareDetail._id ?   (
+                      {editingId === shareDetail._id ? (
                         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
                           <div
                             className="bg-white p-4 rounded shadow-lg w-96"
@@ -208,7 +271,7 @@ const ViewAllocateTrip = () => {
                             <div className="form-container">
                               <div className="flex justify-between items-center mb-2">
                                 <h2 className="text-2xl font-bold">
-                                  Edit Allocate  Trip
+                                  Edit Allocate Trip
                                 </h2>
                                 <button
                                   onClick={handleCancelEdit}
@@ -217,7 +280,31 @@ const ViewAllocateTrip = () => {
                                   <FaTimes />
                                 </button>
                               </div>
-
+                              <h5 className="fw-bold my-2">Customer Name:</h5>
+                              <select
+                                className="trip-details-input"
+                                id="customerId"
+                                name="customerId"
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    customername: e.target.value,
+                                  })
+                                }
+                                value={editedTrip.customername}
+                              >
+                                <option value="">Select Customer</option>
+                                {customers &&
+                                  customers.map &&
+                                  customers.map((customer) => (
+                                    <option
+                                      key={customer._id}
+                                      value={customer.customername}
+                                    >
+                                      {customer.customername}
+                                    </option>
+                                  ))}
+                              </select>
                               <h5 className="fw-bold my-2">Pickup Location:</h5>
                               <input
                                 type="text"
@@ -254,7 +341,9 @@ const ViewAllocateTrip = () => {
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
-                              <h5 className="fw-bold my-2">Dropoff Location:</h5>
+                              <h5 className="fw-bold my-2">
+                                Dropoff Location:
+                              </h5>
                               <input
                                 type="text"
                                 value={editedTrip.dropofflocation}
@@ -290,64 +379,27 @@ const ViewAllocateTrip = () => {
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
-                               <h5 className="fw-bold my-2">Type of Vehicle:</h5>
+                              <h5 className="fw-bold my-2">Type of Vehicle:</h5>
                               <select
-                                className="form-control-add-trip-input"
-                                name="vehicle"
-                                id="vehicle"
-                                onChange={(e) =>
-                                  setEditedTrip({
-                                    ...editedTrip,
-                                    vehicle: e.target.value,
-                                  })
-                                }
-                                value={editedTrip.vehicle}
-                              >
-                                <option value="">Vehicle</option>
-                                <option value="Sedan Car">Sedan Car</option>
-                                <option value="Mini Car">Mini Car</option>
-                                <option value="SUV Car">SUV Car</option>
-                                <option value="AC Bus 13-Seater">
-                                  AC Bus 13-Seater
-                                </option>
-                                <option value="AC Bus 17-Seater">
-                                  AC Bus 17-Seater
-                                </option>
-                                <option value="AC Bus 20-Seater">
-                                  AC Bus 20-Seater
-                                </option>
-                                <option value="AC Bus 32-Seater">
-                                  AC Bus 32-Seater
-                                </option>
-                                <option value="AC Bus 35-Seater">
-                                  AC Bus 35-Seater
-                                </option>
-                                <option value="AC Bus 40-Seater">
-                                  AC Bus 40-Seater
-                                </option>
-                                <option value="AC Bus 45-Seater">
-                                  AC Bus 45-Seater
-                                </option>
-                                <option value="Non-AC Bus 17-Seater">
-                                  Non-AC Bus 17-Seater
-                                </option>
-                                <option value="Non-AC Bus 20-Seater">
-                                  Non-AC Bus 20-Seater
-                                </option>
-                                <option value="Non-AC Bus 32-Seater">
-                                  Non-AC Bus 32-Seater
-                                </option>
-                                <option value="Non-AC Bus 40-Seater">
-                                  Non-AC Bus 40-Seater
-                                </option>
-                                <option value="Non-AC Bus 45-Seater">
-                                  Non-AC Bus 45-Seater
-                                </option>
-                                <option value="Non-AC Bus 49-Seater">
-                                  Non-AC Bus 49-Seater
-                                </option>
-                              </select>
-                               <h5 className="fw-bold my-2">Trip Type:</h5>
+        className="form-control-add-trip-input"
+        name="vehicle"
+        id="vehicle"
+        onChange={(e) =>
+          setEditedTrip({
+            ...editedTrip,
+            vehicle: e.target.value,
+          })
+        }
+        value={editedTrip.vehicle}
+      >
+        <option value="">Vehicle</option>
+        {vehicleDetails.map((vehicle) => (
+          <option key={vehicle._id} value={vehicle.vehicleType}>
+            {vehicle.vehicleType}
+          </option>
+        ))}
+      </select>
+                              <h5 className="fw-bold my-2">Trip Type:</h5>
                               <select
                                 className="share-details-input"
                                 name="triptype"
@@ -407,8 +459,7 @@ const ViewAllocateTrip = () => {
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
-                             
-                              
+
                               <h5 className="fw-bold my-2">Mail:</h5>
                               <input
                                 type="text"
@@ -433,9 +484,7 @@ const ViewAllocateTrip = () => {
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
-                              <h5 className="fw-bold my-2">
-                                Driver Address:
-                              </h5>
+                              <h5 className="fw-bold my-2">Driver Address:</h5>
                               <input
                                 type="text"
                                 value={editedTrip.address}
@@ -478,7 +527,7 @@ const ViewAllocateTrip = () => {
                         </div>
                       ) : (
                         <>
-                          <div className="d-flex align-items-center gap-2">
+                           <div className="d-flex align-items-center gap-2">
                             <button
                               className="btn btn-info"
                               onClick={() => handleEdit(shareDetail._id)}

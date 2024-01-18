@@ -63,10 +63,10 @@ const CustomerEnquiry = () => {
     if (selectedCustomer) {
       setFormData((prevData) => ({
         ...prevData,
-        customername: selectedCustomer.Cus_name,
-        mobileno: selectedCustomer.Cus_Mobile,
-        email: selectedCustomer.Cus_Email,
-        address: selectedCustomer.address,
+        customername: selectedCustomer.cus_name || "",
+        mobileno: selectedCustomer.cus_mobile || "",
+        email: selectedCustomer.cus_email || "",
+        address: selectedCustomer.address || "",
       }));
     }
   }, [selectedCustomer]);
@@ -223,22 +223,27 @@ const CustomerEnquiry = () => {
                 Customer Name:
               </label>
               <select
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input"
                 id="customername"
                 name="customername"
                 onChange={(e) => {
-                  const selectedCustomer = customerList.find((customer) => customer.Cus_name === e.target.value);
+                  const selectedCustomer = customerList.find(
+                    (customer) => customer.cus_name === e.target.value
+                  );
                   setSelectedCustomer(selectedCustomer);
-                  handleChange(e);
                 }}
-                value={formData.customername}
+                value={selectedCustomer ? selectedCustomer.cus_name : ""}
               >
                 <option value="">Select Customer</option>
-                {customerList.map((customer) => (
-                  <option key={customer._id} value={customer.Cus_name}>
-                    {customer.Cus_name}
-                  </option>
-                ))}
+                {customerList?.length > 0 ? (
+  customerList.map((customer) => (
+    <option key={customer._id} value={customer.cus_name}>
+      {customer.cus_name}
+    </option>
+  ))
+) : (
+  <option value="">No Customers Available</option>
+)}
               </select>
             </div>
             <div className="form-group">

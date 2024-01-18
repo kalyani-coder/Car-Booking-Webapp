@@ -57,6 +57,7 @@ const ViewCustomerEnquiry = () => {
   const [searchCustomerName, setSearchCustomerName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState(null);
+  
 
   useEffect(() => {
     const fetchCustomers = async () => {

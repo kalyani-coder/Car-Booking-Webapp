@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import "./VendorInvoice.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -6,11 +6,13 @@ import Sidebar from "../Sidebar/Sidebar";
 
 function VendorInvoice() {
   const [formData, setFormData] = useState({
+    vendorId: "",
     tripid: "",
     invoiceno: "",
     companyName: 'Shivpushpa Travels Invoice',
     gstno: "",
     companyAddress: '332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111',
+    contactno: "9325501950 / 9325501978",
     mail: 'travelshivpushpa@gmail.com',
     kind_attn:"",
     date: "",
@@ -34,22 +36,36 @@ function VendorInvoice() {
     micrcode: '411164014',
   });
 
-  const invoiceItems = [
-    { description: 'Item 1', kms: 100, amount: 50, total: 82.5, cgst: 2.5, sgst: 2.5 },
-    // Add more items as needed
-  ];
+  const [vendors, setVendors] = useState([]); // State to store fetched vendors
+
+  useEffect(() => {
+    // Fetch vendors from the API when the component mounts
+    fetch("http://localhost:7000/api/add-venders")
+      .then((response) => response.json())
+      .then((data) => setVendors(data))
+      .catch((error) => console.error("Error fetching vendors:", error));
+  }, []);
+
+ 
 
   // const [showInvoiceData, setShowInvoiceData] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const selectedVendor = vendors.find((vendor) => vendor._id === value);
+
+    setFormData({
+      ...formData,
+      [name]: value,
+      vendorName: selectedVendor?.vender_Name || "",
+      vendorGSTNo: selectedVendor?.GST_No || "",
+      vendorContactNo: selectedVendor?.vender_Mobile || "",
+      venderEmail: selectedVendor?.Vender_Email || "",    // New fields
+      address: selectedVendor?.address || "",             // New fields
+    });
   };
 
-  // const handlePrint = () => {
-  //   setShowInvoiceData(true);
-  //   window.print();
-  // };
+  
 
   const handleGenerate = () => {
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
@@ -78,32 +94,8 @@ function VendorInvoice() {
     doc.text('Vendor GST No: ' + formData.vendorGSTNo, 10, 100);
     doc.text('Contact No: ' + formData.vendorContactNo, 10, 110);
 
-    // Add table
-    const columns = ['Description','Sac Code', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];
-    const data = invoiceItems.map((item) => [
-      item.description,
-      item.saccode,
-      item.kms,
-      item.amount,
-      item.total,
-      item.cgst + '%',
-      item.sgst + '%',
-    ]);
-
-    doc.autoTable({
-      startY: 120,
-      head: [columns],
-      body: data,
-      headStyles: {
-        fillColor: [51, 51, 255],
-        textColor: 255,
-      },
-      bodyStyles: {
-        textColor: 0,
-        fillColor: [50, 50, 251],
-        valign: 'middle',
-      },
-    });
+    
+    
 
     // Add Bank Details
     doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 20);
@@ -128,7 +120,7 @@ function VendorInvoice() {
 
       <div className="container-vendor-invoice">
         <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
-          Vendor Invoice
+           Vendor Invoice
         </h2>
        
 
@@ -144,17 +136,24 @@ function VendorInvoice() {
 
         <div className="form-vendor-invoice">
           <div className="grid-gap-2 col-6">
-            <label htmlFor="vendorName" className="form-label">
+            <label htmlFor="vendorId" className="form-label">
               Vendor Name:
             </label>
-            <input
-              className="form-control-vendor-invoice"
-              type="text"
-              placeholder="Vendor Name"
-              name="vendorName"
-              value={formData.vendorName}
+            <select
+              className="form-control-cust-inq-input"
+              name="vendorId"
+              value={formData.vendorId}
               onChange={handleChange}
-            />
+            >
+              <option value="" disabled>
+                Select Vendor
+              </option>
+              {vendors.map((vendor) => (
+                <option key={vendor._id} value={vendor._id}>
+                  {vendor.vender_Name}
+                </option>
+              ))}
+            </select>
             <label htmlFor="vendorGSTNo" className="form-label">
               GST No:
             </label>
@@ -168,15 +167,15 @@ function VendorInvoice() {
             />
           </div>
           <div className="mb-2 grid-gap-2 col-6">
-            <label htmlFor="vendorAddress" className="form-label">
+            <label htmlFor="address" className="form-label">
               Vendor Address:
             </label>
             <input
               className="form-control-vendor-invoice"
               type="text"
               placeholder="Vendor Address"
-              name="vendorAddress"
-              value={formData.vendorAddress}
+              name="address"
+              value={formData.address}
               onChange={handleChange}
             />
             <label htmlFor="vendorContactNo" className="form-label">
@@ -193,32 +192,7 @@ function VendorInvoice() {
           </div>
         </div>
         <div>
-          <table className="invoice-table">
-            <thead>
-              <tr>
-                <th>Description</th>
-                <th>SAC Code</th>
-                <th>Kms</th>
-                <th>Amount</th>
-                <th>Total</th>
-                <th>CGST 2.5%</th>
-                <th>SGST 2.5%</th>
-              </tr>
-            </thead>
-            <tbody>
-              {invoiceItems.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.description}</td>
-                  <td>{item.saccode}</td>
-                  <td>{item.kms}</td>
-                  <td>{item.amount}</td>
-                  <td>{item.total}</td>
-                  <td>{item.cgst + "%"}</td>
-                  <td>{item.sgst + "%"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          
           
           <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate

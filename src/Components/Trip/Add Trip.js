@@ -3,8 +3,6 @@ import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddTrip = () => {
-  
-  
   const initialPersonData = {
     name: "",
     mobile: "",
@@ -13,14 +11,14 @@ const AddTrip = () => {
 
   const handlePersonChange = (index, e) => {
     const { name, value } = e.target;
-  
+
     setFormData((prevData) => {
       const updatedPeople = [...prevData.people];
       updatedPeople[index] = {
         ...updatedPeople[index],
         [name]: value,
       };
-  
+
       return {
         ...prevData,
         people: updatedPeople,
@@ -47,10 +45,8 @@ const AddTrip = () => {
     }
   };
 
-  
-
   const initialFormData = {
-    customerId : ""  ,
+    customerId: "",
     customername: "",
     mobileno: "",
     email: "",
@@ -73,20 +69,18 @@ const AddTrip = () => {
   const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-console.log(selectedCustomer)
-
-
+  console.log(selectedCustomer);
 
   // Fetch customer data from the API using useEffect hook
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch("http://localhost:7000/api/add-customers");
-  
+
         if (response.ok) {
           const data = await response.json();
           console.log("Fetched customer data:", data);
-  
+
           if (Array.isArray(data)) {
             setCustomerList(data);
           } else {
@@ -99,10 +93,10 @@ console.log(selectedCustomer)
         console.error("API request error:", error);
       }
     };
-  
+
     fetchCustomers();
   }, []);
-   // The empty dependency array ensures that this effect runs only once on mount
+  // The empty dependency array ensures that this effect runs only once on mount
 
   // Use useEffect to update form data when a customer is selected
   useEffect(() => {
@@ -127,8 +121,6 @@ console.log(selectedCustomer)
         hours: "",
         vehicle: "",
         // Add other fields based on your customer details
-
-        
       });
     }
   }, [selectedCustomer, formData.members, formData.people]); // Run this effect whenever selectedCustomer changes
@@ -209,10 +201,6 @@ console.log(selectedCustomer)
   //       body: JSON.stringify(data),
   //     });
 
-
-
-      
-
   //     if (response.ok) {
   //       alert("Data added successfully!");
   //       setFormData(initialFormData); // Reset the form
@@ -225,22 +213,21 @@ console.log(selectedCustomer)
   //   }
   // };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     // Check if a customer is selected
     if (!selectedCustomer) {
       alert("Please select a customer before adding a trip.");
       return;
     }
-  
+
     // Update data with the selected customer's ID
     const dataWithCustomerId = {
       ...formData,
       customerId: selectedCustomer._id, // Assuming the customer ID is available in the selectedCustomer object
     };
-  
+
     try {
       // Send the data to the API
       const response = await fetch("http://localhost:7000/api/add-trip", {
@@ -250,7 +237,7 @@ console.log(selectedCustomer)
         },
         body: JSON.stringify(dataWithCustomerId),
       });
-  
+
       if (response.ok) {
         alert("Data added successfully!");
         setFormData(initialFormData); // Reset the form
@@ -262,7 +249,7 @@ console.log(selectedCustomer)
       alert("Failed to add data. Please try again.");
     }
   };
-  
+
   return (
     <>
       <Sidebar />
@@ -279,7 +266,7 @@ console.log(selectedCustomer)
           </h2>
           <div className="trip-form-container">
             {error && <p className="trip-text-red-500">{error}</p>}
-           
+
             <div className="trip-form-group">
               <label htmlFor="customername" className="trip-form-label">
                 Customer Name:
@@ -298,14 +285,14 @@ console.log(selectedCustomer)
               >
                 <option value="">Select Customer</option>
                 {customerList?.length > 0 ? (
-  customerList.map((customer) => (
-    <option key={customer._id} value={customer.cus_name}>
-      {customer.cus_name}
-    </option>
-  ))
-) : (
-  <option value="">No Customers Available</option>
-)}
+                  customerList.map((customer) => (
+                    <option key={customer._id} value={customer.cus_name}>
+                      {customer.cus_name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No Customers Available</option>
+                )}
               </select>
             </div>
             <div className="trip-form-group">
@@ -395,19 +382,19 @@ console.log(selectedCustomer)
                     Number of People:
                   </label>
                   <select
-            className="form-control-add-trip-input1"
-            name="members"
-            onChange={handleChange}
-            value={formData.members}
-          >
-            {[1, 2, 3, 4, 5, 6, 7].map((number) => (
-              <option key={number} value={number}>
-                {number}
-              </option>
-            ))}
-          </select>
+                    className="form-control-add-trip-input1"
+                    name="members"
+                    onChange={handleChange}
+                    value={formData.members}
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7].map((number) => (
+                      <option key={number} value={number}>
+                        {number}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                
+
                 <div>
                   <button
                     type="button"
@@ -418,11 +405,10 @@ console.log(selectedCustomer)
                   </button>
                 </div>
                 <div className="d-flex flex-wrap gap-3">
-                  
-                {formData.people?.length > 0 &&
+                  {formData.people?.length > 0 &&
                     formData.people.map((person, index) => (
-                    <div key={index} className="trip-person-row">
-                      <div className="trip-form-group">
+                      <div key={index} className="trip-person-row">
+                        <div className="trip-form-group">
                           <label
                             htmlFor={`name${index}`}
                             className="trip-form-label"
@@ -438,7 +424,7 @@ console.log(selectedCustomer)
                             value={person.name}
                           />
                         </div>
-                      <div className="trip-form-group">
+                        <div className="trip-form-group">
                           <label
                             htmlFor={`mobile${index}`}
                             className="trip-form-label"
@@ -454,7 +440,7 @@ console.log(selectedCustomer)
                             value={person.mobile}
                           />
                         </div>
-                      <div className="trip-form-group">
+                        <div className="trip-form-group">
                           <label
                             htmlFor={`vehicleNo${index}`}
                             className="trip-form-label"
@@ -470,8 +456,8 @@ console.log(selectedCustomer)
                             value={person.vehicleNo}
                           />
                         </div>
-                    </div>
-                  ))}
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>

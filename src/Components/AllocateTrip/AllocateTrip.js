@@ -45,6 +45,22 @@ function AllocateTrip() {
     fetchCustomers();
   }, []);
 
+  useEffect(() => {
+     if (selectedCustomer){
+      setTripDetails({
+        pickup: selectedCustomer.pickup || "",
+        date: selectedCustomer.date || "",
+        time: selectedCustomer.time || "",
+        dropoff: selectedCustomer.dropoff || "",
+        date1: selectedCustomer.date1 || "",
+        time1: selectedCustomer.time1 || "",
+        triptype: selectedCustomer.triptype || "",
+        subtype: selectedCustomer.subtype || "",
+        vehicle: selectedCustomer.vehicle || "",
+      })
+     }
+  },[ selectedCustomer]);
+
   const fetchTripDetails = async (customerId) => {
     try {
       const response = await fetch(`http://localhost:7000/api/trip-details/${customerId}`);
@@ -74,76 +90,77 @@ function AllocateTrip() {
     }
   };
 
-  // const handleAllocateClick = async () => {
-  //   // Ensure all fields are filled
-  //   for (const fieldName in tripDetails) {
-  //     if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
-  //       setError('All fields are required.');
-  //       return;
-  //     }
-  //   }
+  const handleAllocateClick = async () => {
+    // Ensure all fields are filled
+    for (const fieldName in tripDetails) {
+      if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
+        setError('All fields are required.');
+        return;
+      }
+    }
 
-  //   // Reset error if all fields are filled
-  //   setError('');
+    // Reset error if all fields are filled
+    setError('');
 
-  //   // Prepare the data to send to the API
-  //   const apiData = {
-  //     pickuplocation: tripDetails.pickupLocation,
-  //     date: tripDetails.date,
-  //     time: tripDetails.time,
-  //     dropofflocation: tripDetails.dropoffLocation,
-  //     date1: tripDetails.date1,
-  //     time1: tripDetails.time1,
-  //     vehicle: tripDetails.vehicle,
-  //     triptype: tripDetails.triptype,
-  //     subtype: tripDetails.subtype,
-  //     drivername: tripDetails.drivername,
-  //     mail: tripDetails.mail,
-  //     mobileno: tripDetails.mobileno,
-  //     address: tripDetails.address,
-  //     vehicleno: tripDetails.vehicleno
-  //   };
+    // Prepare the data to send to the API
+    const apiData = {
+      customername: tripDetails.customername,
+      pickuplocation: tripDetails.pickupLocation,
+      date: tripDetails.date,
+      time: tripDetails.time,
+      dropofflocation: tripDetails.dropoffLocation,
+      date1: tripDetails.date1,
+      time1: tripDetails.time1,
+      vehicle: tripDetails.vehicle,
+      triptype: tripDetails.triptype,
+      subtype: tripDetails.subtype,
+      drivername: tripDetails.drivername,
+      mail: tripDetails.mail,
+      mobileno: tripDetails.mobileno,
+      address: tripDetails.address,
+      vehicleno: tripDetails.vehicleno
+    };
 
-  //   try {
-  //     // Make the API request
-  //     const response = await fetch('http://localhost:7000/api/trip-details', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(apiData),
-  //     });
+    try {
+      // Make the API request
+      const response = await fetch('http://localhost:7000/api/trip-details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiData),
+      });
 
-  //     if (response.ok) {
-  //       // Reset the form on success
-  //       setTripDetails(initialTripDetails);
-  //       alert('Data saved successfully!');
-  //     } else {
-  //       alert('Failed to save data. Please try again.');
-  //     }
-  //   } catch (error) {
-  //     console.error('API request error:', error);
-  //     alert('Failed to save data. Please try again.');
-  //   }
-  // };
+      if (response.ok) {
+        // Reset the form on success
+        setTripDetails(initialTripDetails);
+        alert('Data saved successfully!');
+      } else {
+        alert('Failed to save data. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to save data. Please try again.');
+    }
+  };
 
-  // const handleShareClick = async () => {
-  //   try {
-  //     // Make the API request to share the post data
-  //     const response = await fetch(`http://localhost:7000/api/trip-details/${tripDetails._id}`);
-  //     if (response.ok) {
-  //       const sharedData = await response.json();
-  //       // Display the shared data in the console or alert, you can modify this part based on your requirement
-  //       console.log('Shared Data:', sharedData);
-  //       alert('Trip details shared successfully!');
-  //     } else {
-  //       alert('Failed to share trip details. Please try again.');
-  //     }
-  //   } catch (error) {
-  //     console.error('API request error:', error);
-  //     alert('Failed to share trip details. Please try again.');
-  //   }
-  // };
+  const handleShareClick = async () => {
+    try {
+      // Make the API request to share the post data
+      const response = await fetch(`http://localhost:7000/api/trip-details/${tripDetails._id}`);
+      if (response.ok) {
+        const sharedData = await response.json();
+        // Display the shared data in the console or alert, you can modify this part based on your requirement
+        console.log('Shared Data:', sharedData);
+        alert('Trip details shared successfully!');
+      } else {
+        alert('Failed to share trip details. Please try again.');
+      }
+    } catch (error) {
+      console.error('API request error:', error);
+      alert('Failed to share trip details. Please try again.');
+    }
+  };
 
   return (
     <>
@@ -369,12 +386,12 @@ function AllocateTrip() {
         </div>
 
         <div className="custom-button-container text-center mt-3">
-          {/* <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
+          <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
             Allocate
           </button>
           <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
-          </button> */}
+          </button>
         </div>
       </div>
 
