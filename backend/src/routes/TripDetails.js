@@ -34,17 +34,17 @@ router.get('/:id' , async(req, res) => {
 })
 
 // POST METHOD 
-router.post('/' , async(req, res) => {
 
-    try{
-        const tripDetails = new newTripDetailsSchema(req.body)
-        const newtripDetails = await tripDetails.save()
-        res.status(201).json({message : "Data post Successfully"})
-
-    }catch(e){
-        res.status(404).json({message : "Can not post customer enquiry"})
+router.post("/", async (req, res) => {
+    try {
+        const tripDetails = new newTripDetailsSchema(req.body); // Use 'new' to create a new instance
+        await tripDetails.save(); // Save the instance
+        res.status(201).json({ message: "Data posted successfully" });
+    } catch (e) {
+        res.status(404).json({ message: "Cannot post trip details", error: e.message });
     }
-})
+});
+
 
 // PATCH METHOD 
 router.patch('/:id' , async(req, res) => {
@@ -55,10 +55,10 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedtripDetails = await newTripDetailsSchema.findByIdAndUpdate(tripDetailsId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "Customer Enquiry Successfully updated "})
+        res.status(201).json({message : "post trip details successfully "})
 
     }catch(e){
-        res.status(404).json({message : "Can not patch Customer enquiry"})
+        res.status(404).json({message : "Can not patch trip details"})
     }
 })
 
