@@ -1,68 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import './SharedDetails.css'; // Your custom CSS file
-import Sidebar from '../Sidebar/Sidebar';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-
+import React, { useState, useEffect } from "react";
+import "./SharedDetails.css"; // Your custom CSS file
+import Sidebar from "../Sidebar/Sidebar";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 // Functional component for ShareDetails
 const ShareDetails = () => {
   // Initial form data state
   const initialFormData = {
-    cus_Name: '',
-    cus_Mobile: '',
-    vehicle: '',
-    vehiclenumber: '',
-    triptype: '',
-    subtype: '',
-    pickup: '',
-    date: '',
-    time: '',
-    dropoff: '',
-    date1: '',
-    time1: '',
-    drivername: '',
-    mobileno: '',
+    customername: "",
+    cus_Id: "",
+    cus_Mobile: "",
+    vehicle: "",
+    vehicleno: "",
+    triptype: "",
+    subtype: "",
+    pickuplocation: "",
+    date: "",
+    time: "",
+    dropofflocation: "",
+    date1: "",
+    time1: "",
+    drivername: "",
+    mobileno: "",
   };
 
   // State variables
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState('');
+  const [mobilenoError, setMobilenoError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customers, setCustomers] = useState([]);
+  const [tripDetails, setTripDetails] = useState(null);
 
-  // Fetch customers on component mount
+   // Define setError function
+   const setError = (error) => {
+    // Handle error logic here
+    console.error('Error:', error);
+  };
+
+  
+  const fetchTripDetails = async (customerId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/trip-details/${customerId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch trip details');
+      }
+      const tripData = await response.json();
+      setTripDetails(tripData);
+    } catch (error) {
+      console.error('Error fetching trip details:', error);
+      setError('Error fetching trip details: ' + error.message);
+    }
+  };
+
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/add-customers');
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Fetched Customers:', data); // Log the fetched data
-          setCustomerList(data);
-        } else {
-          console.error('Failed to fetch customers');
+        const response = await fetch('http://localhost:7000/api/add-trip');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        const data = await response.json();
+        setCustomers(data);
       } catch (error) {
-        console.error('API request error:', error);
+        console.error('Error fetching customers:', error);
+        setError('Error fetching customers: ' + error.message);
       }
     };
-
     fetchCustomers();
   }, []);
 
-  // Update form data when a customer is selected
   useEffect(() => {
     if (selectedCustomer) {
-      setFormData({
-        cus_Name: selectedCustomer.cus_Name || '',
-        cus_Mobile: selectedCustomer.cus_Mobile || '',
-        // ... (other fields)
-      });
+      fetchTripDetails(selectedCustomer.customerId);
     }
   }, [selectedCustomer]);
+  
 
 
   // Handle form field changes
@@ -73,6 +87,8 @@ const ShareDetails = () => {
       [name]: value,
     }));
   };
+
+  
 
   // Handle form submission
   const handleShare = async () => {
@@ -98,46 +114,53 @@ const ShareDetails = () => {
 
     // Check if all fields are filled
     for (const key in apiData) {
-      if (apiData[key] === '') {
-        setMobilenoError('All fields are required.');
+      if (apiData[key] === "") {
+        setMobilenoError("All fields are required.");
         return;
       }
     }
 
     // Reset error if all fields are filled
-    setMobilenoError('');
+    setMobilenoError("");
 
     try {
-      const response = await fetch('http://localhost:7000/api/share-details', {
-        method: 'POST',
+      const response = await fetch("http://localhost:7000/api/share-details", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(apiData),
       });
 
       if (response.ok) {
-        alert('Data saved successfully!');
+        alert("Data saved successfully!");
         setFormData(initialFormData); // Reset the form
       } else {
-        alert('Failed to save data. Please try again.');
+        alert("Failed to save data. Please try again.");
       }
     } catch (error) {
-      console.error('API request error:', error);
-      alert('Failed to save data. Please try again.');
+      console.error("API request error:", error);
+      alert("Failed to save data. Please try again.");
     }
   };
 
   return (
     <>
       <Sidebar />
-      <div className='share-details-container'>
-      {mobilenoError && <p className="text-red-500">{mobilenoError}</p>}
+      <div className="share-details-container">
+        {mobilenoError && <p className="text-red-500">{mobilenoError}</p>}
         <div className="share-details-form">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Share Details</h2>
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginBottom: "8px",
+            }}
+          >
+            Share Details
+          </h2>
 
-
-        <div className="share-details-row">
+          <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="cus_Name" className="share-details-label">
@@ -145,19 +168,21 @@ const ShareDetails = () => {
                 </label>
                 {/* Dropdown to select a customer */}
                 <select
-                  className="share-details-input"
-                  name="cus_Name"
-                  id="cus_Name"
+                  className="trip-details-input"
+                  id="customerId"
+                  name="customerId"
                   onChange={(e) => {
-                    const selectedCustomer = customerList.find((customer) => customer.Cus_name === e.target.value);
+                    const selectedCustomer = customers.find(
+                      (customer) => customer.customername === e.target.value
+                    );
                     setSelectedCustomer(selectedCustomer);
                   }}
-                  value={selectedCustomer ? selectedCustomer.Cus_name : ''}
+                  value={selectedCustomer ? selectedCustomer.customername : ''}
                 >
                   <option value="">Select Customer</option>
-                  {customerList.map((customer) => (
-                    <option key={customer._id} value={customer.Cus_name}>
-                      {customer.Cus_name}
+                  {customers.map((customer) => (
+                    <option key={customer.cus_Id} value={customer.customername}>
+                      {customer.customername}
                     </option>
                   ))}
                 </select>
@@ -181,17 +206,15 @@ const ShareDetails = () => {
             </div>
           </div>
 
-
           <div className="share-details-row">
-          <div className="share-details-column">
-          <div className="share-details-form-group">
-
+            <div className="share-details-column">
+              <div className="share-details-form-group">
                 <label htmlFor="vehicle" className="share-details-label">
                   Vehicle:
                 </label>
                 <select
                   className="share-details-input"
-                  name="vehicle"
+                  name="vevehiclehicle"
                   id="vehicle"
                   onChange={handleChange}
                   value={formData.vehicle}
@@ -207,28 +230,40 @@ const ShareDetails = () => {
                   <option value="AC Bus 35-seater">AC Bus 35-seater</option>
                   <option value="AC Bus 40-seater">AC Bus 40-seater</option>
                   <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-                  <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-                  <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-                  <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-                  <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-                  <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-                  <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+                  <option value="Non-AC Bus 17-Seater">
+                    Non-AC Bus 17 Seater
+                  </option>
+                  <option value="Non-AC Bus 20-Seater">
+                    Non-AC Bus 20 Seater
+                  </option>
+                  <option value="Non-AC Bus 32-Seater">
+                    Non-AC Bus 32 Seater
+                  </option>
+                  <option value="Non-AC Bus 40-Seater">
+                    Non-AC Bus 40 Seater
+                  </option>
+                  <option value="Non-AC Bus 45-Seater">
+                    Non-AC Bus 45 Seater
+                  </option>
+                  <option value="Non-AC Bus 49-Seater">
+                    Non-AC Bus 49 Seater
+                  </option>
                 </select>
               </div>
             </div>
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="vehiclenumber" className="share-details-label">
+                <label htmlFor="vehicleno" className="share-details-label">
                   Vehicle Number:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="vehiclenumber"
+                  name="vehicleno"
                   placeholder="Vehicle Number"
                   onChange={handleChange}
-                  value={formData.vehiclenumber}
+                  value={formData.vehicleno}
                 />
               </div>
             </div>
@@ -269,8 +304,12 @@ const ShareDetails = () => {
                   <option value="">Sub Type</option>
                   <option value="Local Trip">Local Trip</option>
                   <option value="Outstation Trip">Outstation Trip</option>
-                  <option value="Outstation Local Trip">Outstation Local Trip</option>
-                  <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
+                  <option value="Outstation Local Trip">
+                    Outstation Local Trip
+                  </option>
+                  <option value="Outstation Outstation Trip">
+                    Outstation Outstation Trip
+                  </option>
                 </select>
               </div>
             </div>
@@ -279,32 +318,32 @@ const ShareDetails = () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="pickup" className="share-details-label">
+                <label htmlFor="pickuplocation" className="share-details-label">
                   Pickup Location:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="pickup"
+                  name="pickuplocation"
                   placeholder="Pickup Location"
                   onChange={handleChange}
-                  value={formData.pickup}
+                  value={formData.pickuplocation}
                 />
               </div>
             </div>
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="dropoff" className="share-details-label">
+                <label htmlFor="dropofflocation" className="share-details-label">
                   Dropoff Location:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="dropoff"
+                  name="dropofflocation"
                   placeholder="Enter Dropoff Location"
                   onChange={handleChange}
-                  value={formData.dropoff}
+                  value={formData.dropofflocation}
                 />
               </div>
             </div>
@@ -320,12 +359,12 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="date1"
                   selected={formData.date1}
-                  onChange={(date) => setFormData((prevData) => ({ ...prevData, date: date }))}
+                  onChange={(date) =>
+                    setFormData((prevData) => ({ ...prevData, date: date }))
+                  }
                   dateFormat="dd/MM/yyyy"
                   placeholderText="dd/mm/yyyy"
-                  
                 />
-                
               </div>
             </div>
 
@@ -338,7 +377,9 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="date1"
                   selected={formData.date1}
-                  onChange={(date) => setFormData((prevData) => ({ ...prevData, date1: date}))}
+                  onChange={(date) =>
+                    setFormData((prevData) => ({ ...prevData, date1: date }))
+                  }
                   dateFormat="dd/MM/yyyy"
                   showPopperArrow={false}
                   placeholderText="dd/mm/yyyy"
@@ -413,8 +454,11 @@ const ShareDetails = () => {
             </div>
           </div>
 
-
-          <button type="button" className="share-details-button" onClick={handleShare}>
+          <button
+            type="button"
+            className="share-details-button"
+            onClick={handleShare}
+          >
             Save
           </button>
         </div>

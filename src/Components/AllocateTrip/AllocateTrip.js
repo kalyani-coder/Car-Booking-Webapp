@@ -48,10 +48,10 @@ function AllocateTrip() {
   useEffect(() => {
      if (selectedCustomer){
       setTripDetails({
-        pickup: selectedCustomer.pickup || "",
+        pickuplocation: selectedCustomer.pickuplocation || "",
         date: selectedCustomer.date || "",
         time: selectedCustomer.time || "",
-        dropoff: selectedCustomer.dropoff || "",
+        dropofflocation: selectedCustomer.dropofflocation || "",
         date1: selectedCustomer.date1 || "",
         time1: selectedCustomer.time1 || "",
         triptype: selectedCustomer.triptype || "",
@@ -201,14 +201,14 @@ function AllocateTrip() {
 
                 <div className="d-flex gap-3">
                   <div>
-                    <label htmlFor='pickup' className="trip-details-label">Pickup Location:</label>
+                    <label htmlFor='pickuplocation' className="trip-details-label">Pickup Location:</label>
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
                       className="trip-details-input"
                       placeholder="Pickup Location"
-                      value={tripDetails.pickup}
-                      onChange={(e) => handleFieldChange('pickup', e.target.value)}
+                      value={tripDetails.pickuplocation}
+                      onChange={(e) => handleFieldChange('pickuplocation', e.target.value)}
                     />
                   </div>
                   <div>
@@ -241,8 +241,8 @@ function AllocateTrip() {
                       type="text"
                       className="trip-details-input"
                       placeholder="Drop-off Location"
-                      value={tripDetails.dropoff}
-                      onChange={(e) => handleFieldChange('dropoff', e.target.value)}
+                      value={tripDetails.dropofflocation}
+                      onChange={(e) => handleFieldChange('dropofflocation', e.target.value)}
                     />
                   </div>
                   <div className="drop-off">

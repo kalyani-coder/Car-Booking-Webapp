@@ -26,6 +26,8 @@ const StartEndDetails = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customers, setCustomers] = useState([]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -114,14 +116,61 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
             <div className="start-end-details-form-group">
                 <label htmlFor="pickuplocation" className="start-end-details-label">
+                  Customer Name:
+                <span className="required-asterisk">*</span>
+                </label>
+                {/* Dropdown to select a customer */}
+                <select
+                  className="trip-details-input"
+                  id="customerId"
+                  name="customerId"
+                  onChange={(e) => {
+                    const selectedCustomer = customers.find(
+                      (customer) => customer.customername === e.target.value
+                    );
+                    setSelectedCustomer(selectedCustomer);
+                  }}
+                  value={selectedCustomer ? selectedCustomer.customername : ''}
+                >
+                  <option value="">Select Customer</option>
+                  {customers.map((customer) => (
+                    <option key={customer.cus_Id} value={customer.customername}>
+                      {customer.customername}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="date" className="start-end-details-label">
                   Pickup Location:
                 <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
-                  type="text"
-                  name="pickuplocation" placeholder="Enter Pickup Location"
-                  value={formData.pickuplocation}
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="date" className="start-end-details-label">
+                  Pickup Date:
+                <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="date"
+                  name="date"
+                  value={formData.date}
                   onChange={handleChange}
                 />
               </div>
@@ -129,8 +178,42 @@ const StartEndDetails = () => {
 
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="date" className="start-end-details-label">
-                  Date:
+                <label htmlFor="dropoffLocation" className="start-end-details-label">
+                Pickup Time:
+                <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="time"
+                  name="time" 
+                  value={formData.time}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="date1" className="start-end-details-label">
+                Dropoff Location:
+                <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  className="start-end-details-input"
+                  type="date"
+                  name="date1"
+                  value={formData.date1}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="time1" className="start-end-details-label">
+                Dropoff Date:
                 <span className="required-asterisk">*</span>
                 </label>
                 <input
@@ -148,8 +231,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="time" className="start-end-details-label">
-                  Time:
-                <span className="required-asterisk">*</span>
+                Dropoff Time:
                 </label>
                 <input
                   className="start-end-details-input"
@@ -163,75 +245,8 @@ const StartEndDetails = () => {
 
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="dropoffLocation" className="start-end-details-label">
-                  Dropoff Location:
-                <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="start-end-details-input"
-                  type="text"
-                  name="dropoffLocation" placeholder='Enter Drop-off Location'
-                  value={formData.dropoffLocation}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="start-end-details-row">
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label htmlFor="date1" className="start-end-details-label">
-                  Date:
-                <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="start-end-details-input"
-                  type="date"
-                  name="date1"
-                  value={formData.date1}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label htmlFor="time1" className="start-end-details-label">
-                  Time:
-                <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="start-end-details-input"
-                  type="time"
-                  name="time1"
-                  value={formData.time1}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="start-end-details-row">
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label htmlFor="totalDays" className="start-end-details-label">
-                  Total Days:
-                </label>
-                <input
-                  className="start-end-details-input"
-                  type="number"
-                  name="totalDays" placeholder='Enter Total Days'
-                  value={formData.totalDays}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
                 <label htmlFor="totalHours" className="start-end-details-label">
-                  Total Hours:
+                  Total Days:
                 </label>
                 <input
                   className="start-end-details-input"
@@ -248,7 +263,7 @@ const StartEndDetails = () => {
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="customerid" className="start-end-details-label">
-                  Customer Name:
+                  Total Hours:
                 <span className="required-asterisk">*</span>
                 </label>
                 <input

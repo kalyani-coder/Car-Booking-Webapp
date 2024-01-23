@@ -83,7 +83,7 @@ const ViewAllocateTrip = () => {
 
   const fetchVehicleDetails = async (tripDetails) => {
     try {
-      const response = await fetch("http://localhost:7000/api/vehicle-details", {
+      const response = await fetch("http://localhost:7000/api/trip-details", {
         method: "POST", // Assuming the API requires a POST request
         headers: {
           "Content-Type": "application/json",
