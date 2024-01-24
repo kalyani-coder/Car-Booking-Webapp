@@ -1,15 +1,8 @@
-// UpdateDuty.js
-
-// Import React and useState hook from React
 import React, { useState } from 'react';
-
-// Import custom CSS for styling
 import './UpdateDuty.css';
-
-// Import Sidebar component
 import Sidebar from '../Sidebar/Sidebar';
 
-// Functional component definition
+
 const UpdateDuty = () => {
   // Initial form data state
   const initialFormData = {

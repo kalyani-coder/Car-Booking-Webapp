@@ -144,15 +144,16 @@ const StartEndDetails = () => {
 
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="date" className="start-end-details-label">
+                <label htmlFor="pickuplocation" className="start-end-details-label">
                   Pickup Location:
                 <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
-                  type="date"
-                  name="date"
-                  value={formData.date}
+                  type="text"
+                  name="pickuplocation"
+                  value={formData.pickuplocation}
+                  placeholder="Enter Pickup Location"
                   onChange={handleChange}
                 />
               </div>
@@ -251,7 +252,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="number"
-                  name="totalHours" placeholder='Enter Total Hours'
+                  name="totalHours" placeholder='Enter Total Days'
                   value={formData.totalHours}
                   onChange={handleChange}
                 />
@@ -269,7 +270,7 @@ const StartEndDetails = () => {
                 <input
                   className="start-end-details-input"
                   type="text"
-                  name="customername" placeholder='Enter Customer Name'
+                  name="customername" placeholder='Enter Total Hours'
                   onChange={handleChange}
                   value={formData.customername}
                 />

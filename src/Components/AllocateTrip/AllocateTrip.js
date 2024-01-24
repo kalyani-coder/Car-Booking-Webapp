@@ -6,10 +6,10 @@ function AllocateTrip() {
   const initialTripDetails = {
     customerId: '',
     customername: '',
-    pickupLocation: '',
+    pickuplocation: '',
     date: '',
     time: '',
-    dropoffLocation: '',
+    dropofflocation: '',
     date1: '',
     time1: '',
     vehicle: '',
@@ -105,10 +105,10 @@ function AllocateTrip() {
     // Prepare the data to send to the API
     const apiData = {
       customername: tripDetails.customername,
-      pickuplocation: tripDetails.pickupLocation,
+      pickuplocation: tripDetails.pickuplocation,
       date: tripDetails.date,
       time: tripDetails.time,
-      dropofflocation: tripDetails.dropoffLocation,
+      dropofflocation: tripDetails.dropofflocation,
       date1: tripDetails.date1,
       time1: tripDetails.time1,
       vehicle: tripDetails.vehicle,

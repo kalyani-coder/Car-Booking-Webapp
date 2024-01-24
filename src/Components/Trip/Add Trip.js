@@ -4,9 +4,27 @@ import Sidebar from "../Sidebar/Sidebar";
 
 const AddTrip = () => {
   const initialPersonData = {
-    name: "",
-    mobile: "",
-    vehicleNo: "",
+    name_1: "",
+    mobile_1: "",
+    vehicleNo_1: "",
+    name_2: "",
+    mobile_2: "",
+    vehicleNo_2: "",
+    name_3: "",
+    mobile_3: "",
+    vehicleNo_3: "",
+    name_4: "",
+    mobile_4: "",
+    vehicleNo_4: "",
+    name_5: "",
+    mobile_5: "",
+    vehicleNo_5: "",
+    name_6: "",
+    mobile_6: "",
+    vehicleNo_6: "",
+    name_7: "",
+    mobile_7: "",
+    vehicleNo_7: "",
   };
 
   const handlePersonChange = (index, e) => {
@@ -34,9 +52,9 @@ const AddTrip = () => {
         people: [
           ...prevData.people,
           {
-            name: "",
-            mobile: "",
-            vehicleNo: "",
+            name_1: "",
+            mobile_1: "",
+            vehicleNo_1: "",
           },
         ],
       }));

@@ -280,7 +280,7 @@ const ViewAllocateTrip = () => {
                                   <FaTimes />
                                 </button>
                               </div>
-                              <h5 className="fw-bold my-2">Customer Name:</h5>
+                              {/* <h5 className="fw-bold my-2">Customer Name:</h5>
                               <select
                                 className="trip-details-input"
                                 id="customerId"
@@ -304,7 +304,7 @@ const ViewAllocateTrip = () => {
                                       {customer.customername}
                                     </option>
                                   ))}
-                              </select>
+                              </select> */}
                               <h5 className="fw-bold my-2">Pickup Location:</h5>
                               <input
                                 type="text"

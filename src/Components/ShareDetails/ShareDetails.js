@@ -4,7 +4,6 @@ import Sidebar from "../Sidebar/Sidebar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-// Functional component for ShareDetails
 const ShareDetails = () => {
   // Initial form data state
   const initialFormData = {
@@ -33,39 +32,58 @@ const ShareDetails = () => {
   const [customers, setCustomers] = useState([]);
   const [tripDetails, setTripDetails] = useState(null);
 
-   // Define setError function
-   const setError = (error) => {
+  // Define setError function
+  const setError = (error) => {
     // Handle error logic here
-    console.error('Error:', error);
+    console.error("Error:", error);
   };
 
-  
   const fetchTripDetails = async (customerId) => {
     try {
-      const response = await fetch(`http://localhost:7000/api/trip-details/${customerId}`);
+      const response = await fetch(
+        `http://localhost:7000/api/trip-details/${customerId}`
+      );
       if (!response.ok) {
-        throw new Error('Failed to fetch trip details');
+        throw new Error("Failed to fetch trip details");
       }
       const tripData = await response.json();
-      setTripDetails(tripData);
+      console.log("Fetched trip details:", tripData);
+
+      setFormData({
+        customername: tripData.customername,
+        cus_Id: tripData.customerId,
+        cus_Mobile: tripData.mobileno.toString(),
+        vehicle: tripData.vehicle,
+        vehicleno: tripData.vehicleno,
+        triptype: tripData.triptype,
+        subtype: tripData.subtype,
+        pickuplocation: tripData.pickuplocation,
+        date: tripData.date,
+        time: tripData.time,
+        dropofflocation: tripData.dropofflocation,
+        date1: tripData.date1,
+        time1: tripData.time1,
+        drivername: tripData.drivername,
+        mobileno: tripData.mobileno.toString(),
+      });
     } catch (error) {
-      console.error('Error fetching trip details:', error);
-      setError('Error fetching trip details: ' + error.message);
+      console.error("Error fetching trip details:", error);
+      setError("Error fetching trip details: " + error.message);
     }
   };
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:7000/api/add-trip');
+        const response = await fetch("http://localhost:7000/api/add-trip");
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setCustomers(data);
       } catch (error) {
-        console.error('Error fetching customers:', error);
-        setError('Error fetching customers: ' + error.message);
+        console.error("Error fetching customers:", error);
+        setError("Error fetching customers: " + error.message);
       }
     };
     fetchCustomers();
@@ -73,13 +91,10 @@ const ShareDetails = () => {
 
   useEffect(() => {
     if (selectedCustomer) {
-      fetchTripDetails(selectedCustomer.customerId);
+      fetchTripDetails(selectedCustomer._id);
     }
   }, [selectedCustomer]);
-  
 
-
-  // Handle form field changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -88,16 +103,14 @@ const ShareDetails = () => {
     }));
   };
 
-  
-
   // Handle form submission
   const handleShare = async () => {
     // Map form field names to API field names
     const apiData = {
-      cus_Name: formData.cus_Name,
+      customername: formData.customername,
       cus_Mobile: formData.cus_Mobile,
       vehicle: formData.vehicle,
-      vehiclenumber: formData.vehiclenumber,
+      vehicleno: formData.vehicleno,
       triptype: formData.triptype,
       subtype: formData.subtype,
       pickup: formData.pickup,
@@ -163,10 +176,8 @@ const ShareDetails = () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="cus_Name" className="share-details-label">
-                  Customer Name:
-                </label>
-                {/* Dropdown to select a customer */}
+              <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
+                <span className="required-asterisk">*</span>
                 <select
                   className="trip-details-input"
                   id="customerId"
@@ -181,7 +192,7 @@ const ShareDetails = () => {
                 >
                   <option value="">Select Customer</option>
                   {customers.map((customer) => (
-                    <option key={customer.cus_Id} value={customer.customername}>
+                    <option key={customer._id} value={customer.customername}>
                       {customer.customername}
                     </option>
                   ))}
@@ -214,7 +225,7 @@ const ShareDetails = () => {
                 </label>
                 <select
                   className="share-details-input"
-                  name="vevehiclehicle"
+                  name="vehicle"
                   id="vehicle"
                   onChange={handleChange}
                   value={formData.vehicle}
@@ -314,7 +325,6 @@ const ShareDetails = () => {
               </div>
             </div>
           </div>
-
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
@@ -334,7 +344,10 @@ const ShareDetails = () => {
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="dropofflocation" className="share-details-label">
+                <label
+                  htmlFor="dropofflocation"
+                  className="share-details-label"
+                >
                   Dropoff Location:
                 </label>
                 <input

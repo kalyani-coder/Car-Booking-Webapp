@@ -3,6 +3,8 @@
 const mongoose = require("mongoose")
 
 const getDetailsFromDriverSchema = new mongoose.Schema({
+    customerId : String,
+    customername : String, 
     pickuplocation: String,
     date: Date,
     time: String,
