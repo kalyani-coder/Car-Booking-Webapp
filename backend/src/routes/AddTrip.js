@@ -1,6 +1,9 @@
-const express = require('express')
-const AddTrip = require('../models/AddTrip')
-const router = express.Router()
+const express = require('express');
+const bodyParser = require('body-parser');
+const AddTrip = require('../models/AddTrip');
+const router = express.Router();
+
+router.use(bodyParser.json());
 
 
 
@@ -19,15 +22,39 @@ router.get('/', async (req, res) => {
 
 
 })
+
+
+
 router.post('/', async (req, res) => {
     try {
-        const newTrip = new AddTrip(req.body);
-        await newTrip.save();
-        res.status(201).json(newTrip);
+       console.log(req.body)
+        // Create a new instance of AddTrip
+        const addTripData = new AddTrip(req.body);
+
+      
+
+        // Save the data to the database
+        await addTripData.save();
+
+        // Return the created data in the response
+        res.status(201).json(addTripData);
     } catch (error) {
-        res.status(500).json(error);
+        // Check if the error is a Mongoose validation error
+        if (error.name === 'ValidationError') {
+            const validationErrors = {};
+            for (const key in error.errors) {
+                validationErrors[key] = error.errors[key].message;
+            }
+            res.status(400).json({ validationErrors });
+        } else {
+            // Handle other types of errors
+            console.error(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
     }
 });
+
+
 router.delete('/:id', async (req, res) => {
     try {
         const deletedTrip = await AddTrip.findByIdAndDelete(req.params.id);

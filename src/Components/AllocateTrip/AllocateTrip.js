@@ -7,6 +7,7 @@ function AllocateTrip() {
     customerId: '',
     customername: '',
     pickuplocation: '',
+    mobileno: "",
     date: '',
     time: '',
     dropofflocation: '',
@@ -19,6 +20,7 @@ function AllocateTrip() {
     mail: '',
     mobileno: '',
     address: '',
+    driverMobile:'',
     vehicleno: '',
   };
 
@@ -52,6 +54,7 @@ function AllocateTrip() {
         date: selectedCustomer.date || "",
         time: selectedCustomer.time || "",
         dropofflocation: selectedCustomer.dropofflocation || "",
+        mobileno: selectedCustomer.mobileno || "",
         date1: selectedCustomer.date1 || "",
         time1: selectedCustomer.time1 || "",
         triptype: selectedCustomer.triptype || "",
@@ -108,6 +111,7 @@ function AllocateTrip() {
       pickuplocation: tripDetails.pickuplocation,
       date: tripDetails.date,
       time: tripDetails.time,
+      mobileno : tripDetails.mobileno,
       dropofflocation: tripDetails.dropofflocation,
       date1: tripDetails.date1,
       time1: tripDetails.time1,
@@ -143,25 +147,49 @@ function AllocateTrip() {
       alert('Failed to save data. Please try again.');
     }
   };
+  const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
 
   const handleShareClick = async () => {
     try {
-      // Make the API request to share the post data
-      const response = await fetch(`http://localhost:7000/api/trip-details/${tripDetails._id}`);
-      if (response.ok) {
-        const sharedData = await response.json();
-        // Display the shared data in the console or alert, you can modify this part based on your requirement
-        console.log('Shared Data:', sharedData);
-        alert('Trip details shared successfully!');
-      } else {
-        alert('Failed to share trip details. Please try again.');
-      }
+      // Fetch trip details first
+      await fetchTripDetails(selectedCustomer._id);
+  
+      // Log the data from text input fields
+      console.log('Pickup Location:', tripDetails.pickuplocation);
+      console.log('Pickup Date:', tripDetails.date);
+      console.log('Time:', tripDetails.time);
+      console.log('Drop-off Location:', tripDetails.dropofflocation);
+      console.log("customer Mobile number: ", tripDetails.mobileno);
+      console.log('Drop-off Date:', tripDetails.date1);
+      console.log('Drop-off Time:', tripDetails.time1);
+      console.log('Type Of Vehicle:', tripDetails.vehicle);
+      console.log('Trip Type:', tripDetails.triptype);
+      console.log('Sub Type:', tripDetails.subtype);
+      console.log('Driver Name:', tripDetails.drivername);
+      console.log('Mail:', tripDetails.mail);
+      console.log('Mobile No:', tripDetails.driverMobile);
+      console.log('Driver Address:', tripDetails.address);
+      console.log('Vehicle Number:', tripDetails.vehicleno);
+  
+      const Url = "http://api.paysmm.co.in/wapp/api/send";
+      const mobileNumber = tripDetails.mobileno;
+      const textMessage = `hello ${tripDetails.customername} your booking is done your booking id is 
+           ${tripDetails._id} your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickuplocation} and your drop location is ${tripDetails.dropofflocation} 
+           your driver details are driver name: ${tripDetails.drivername} and his mobile number: ${tripDetails.driverMobile}`;
+  
+      const url = `${Url}?apikey=${apiKey}&mobile=${mobileNumber}&msg=${textMessage}`;
+  
+      // Open the URL in a new browser window
+      window.open(url, "_blank");
+  
+      // Log the request details if needed
+      console.log("Opening link:", url);
     } catch (error) {
-      console.error('API request error:', error);
+      console.error('Error fetching trip details:', error);
       alert('Failed to share trip details. Please try again.');
     }
   };
-
+  
   return (
     <>
       <Sidebar />
@@ -329,6 +357,16 @@ function AllocateTrip() {
             <h2 className="driver-details-heading">Driver Details</h2>
             <div className="driver-details-form">
               <div className="pt-4 mb-2 grid-gap-2">
+              <label htmlFor="mobileno" className="driver-details-label">Customer Mobile No:</label>
+                <span className="required-asterisk">*</span>
+                <input
+                  type="number"
+                  className="driver-details-input"
+                  name="mobileno"
+                  placeholder="Customer Mobile No"
+                  value={tripDetails.mobileno}
+                  onChange={(e) => handleFieldChange('mobileno', e.target.value)}
+                />
                 <label htmlFor="drivername" className="driver-details-label">Driver Name:</label>
                 <span className="required-asterisk">*</span>
                 <input
@@ -357,8 +395,8 @@ function AllocateTrip() {
                   className="driver-details-input"
                   name="mobileno"
                   placeholder="Mobile No."
-                  value={tripDetails.mobileno}
-                  onChange={(e) => handleFieldChange('mobileno', e.target.value)}
+                  value={tripDetails.driverMobile}
+                  onChange={(e) => handleFieldChange('driverMobile', e.target.value)}
                 />
 
                 <label htmlFor="address" className="driver-details-label">Driver Address:</label>

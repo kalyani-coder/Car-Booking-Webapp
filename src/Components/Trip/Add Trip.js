@@ -479,6 +479,22 @@ const AddTrip = () => {
                 </div>
               </div>
             </div>
+            <div className="d-flex gap-3">
+            <div>
+              <div className="trip-form-group">
+                <label htmlFor="pickup" className="trip-form-label">
+                  Pickup Location:
+                </label>
+                <input
+                  type="text"
+                  className="form-control add-trip-input"
+                  name="pickup"
+                  placeholder="Enter Pickup Location"
+                  onChange={handleChange}
+                  value={formData.pickup}
+                />
+              </div>
+            </div>
             <div>
               <div className="trip-form-group">
                 <label htmlFor="date" className="trip-form-label">
@@ -507,6 +523,7 @@ const AddTrip = () => {
                 />
               </div>
             </div>
+          </div>
           </div>
           <div className="d-flex gap-3">
             <div>

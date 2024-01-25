@@ -496,7 +496,20 @@ const [errorMessage, setErrorMessage] = useState("");
                                   )
                                 )}
                               </div>
-
+                              <h5 className="fw-bold my-2">
+                                Pickup Location:
+                              </h5>
+                              <input
+                                type="text"
+                                value={editedTrip.pickup}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    pickup: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
                               <h5 className="fw-bold my-2">Date:</h5>
                               <input
                                 type="date"
@@ -516,7 +529,7 @@ const [errorMessage, setErrorMessage] = useState("");
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    address: e.target.value,
+                                    time: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
@@ -530,7 +543,7 @@ const [errorMessage, setErrorMessage] = useState("");
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    email: e.target.value,
+                                    dropoff: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
@@ -542,7 +555,7 @@ const [errorMessage, setErrorMessage] = useState("");
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    address: e.target.value,
+                                    date1: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
@@ -554,31 +567,31 @@ const [errorMessage, setErrorMessage] = useState("");
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    address: e.target.value,
+                                    time1: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
                               <h5 className="fw-bold my-2">Total Days:</h5>
                               <input
-                                type="date"
+                                type="text"
                                 value={editedTrip.totaldays}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    address: e.target.value,
+                                    totaldays: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
                               <h5 className="fw-bold my-2">Total Hour:</h5>
                               <input
-                                type="time"
+                                type="text"
                                 value={editedTrip.hours}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    address: e.target.value,
+                                    hours: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"

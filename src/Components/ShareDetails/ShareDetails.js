@@ -38,6 +38,7 @@ const ShareDetails = () => {
     console.error("Error:", error);
   };
 
+  
   const fetchTripDetails = async (customerId) => {
     try {
       const response = await fetch(

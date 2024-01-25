@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 
-// Initial form data
 const initialFormData = {
   Cus_Type: "",
   Cus_name: "",
@@ -17,31 +16,37 @@ const initialFormData = {
   extra_km: "",
   hours: "",
   extra_hours: "",
-  
 };
 
 const CustomerRate = () => {
-  // State variables
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const [customerListByType, setCustomerListByType] = useState([]);
 
-  // Fetching customer data from the API on component mount
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:7000/api/add-customers"
-        );
+        // Fetch data from the appropriate endpoint based on customer type
+        const endpoint =
+          formData.Cus_Type === "Corporate Customer"
+            ? "http://localhost:7000/api/corporate-customer"
+            : formData.Cus_Type === "Indivisual Customer"
+            ? "http://localhost:7000/api/indivisual-customer"
+            : "";
 
-        if (response.ok) {
-          const data = await response.json();
-          setCustomerList(data);
-        } else {
-          console.error("Failed to fetch customers");
+        if (endpoint) {
+          const response = await fetch(endpoint);
+
+          if (response.ok) {
+            const data = await response.json();
+            setCustomerList(data);
+          } else {
+            console.error("Failed to fetch customers");
+          }
         }
       } catch (error) {
         console.error("API request error:", error);
@@ -49,28 +54,29 @@ const CustomerRate = () => {
     };
 
     fetchCustomers();
-  }, []);
+  }, [formData.Cus_Type]);
 
-  // Setting form data when a customer is selected
   useEffect(() => {
-    if (selectedCustomer) {
-      setFormData({
-        ...formData,
-        company_name: selectedCustomer.company_name || "",
-        gst_no: selectedCustomer.gst_no || "",
-        Cus_name: selectedCustomer.Cus_name || "",
-        Cus_Mobile: selectedCustomer.Cus_Mobile || "",
-        // type_of_vehicle: selectedCustomer.type_of_vehicle || "",
-      });
+    // Set the customer list based on the selected customer type
+    if (formData.Cus_Type === "Corporate Customer") {
+      setCustomerListByType(
+        customerList.filter(
+          (customer) => customer.Cus_Type === "Corporate Customer"
+        )
+      );
+    } else if (formData.Cus_Type === "Indivisual Customer") {
+      setCustomerListByType(
+        customerList.filter(
+          (customer) => customer.Cus_Type === "Indivisual Customer"
+        )
+      );
     }
-  }, [selectedCustomer]);
+  }, [formData.Cus_Type, customerList]);
 
-  // Handling form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "mobile_Number" && value.length > 10) {
-      // Prevent further input if more than 10 digits
+    if (name === "Cus_Mobile" && value.length > 10) {
       return;
     }
 
@@ -79,8 +85,7 @@ const CustomerRate = () => {
       [name]: value,
     }));
 
-    if (name === "mobile_Number") {
-      // Validate mobile number (10 digits)
+    if (name === "Cus_Mobile") {
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
       } else {
@@ -89,76 +94,70 @@ const CustomerRate = () => {
     }
   };
 
-  // Validating the form
   const validateForm = () => {
     const errors = {};
 
-    // Checking for empty fields
     for (const key in formData) {
       if (!formData[key] || formData[key].trim() === "") {
         errors[key] = "This field is required";
       }
     }
 
-    // Setting form errors
     setFormErrors(errors);
 
-    // Returning true if no errors, false otherwise
     return Object.keys(errors).length === 0;
   };
 
-  // Handling form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
 
-    // Alert if no customer is selected
     if (!selectedCustomer) {
       window.alert("Please select a customer");
       return;
     }
 
-    // Alert if form validation fails
     if (!validateForm()) {
       window.alert("Please fill in all required fields");
       return;
     }
 
-    // Adding customer data to form data
     const formDataWithCustomer = {
       ...formData,
       company_name: selectedCustomer.company_name,
-      GST_No: selectedCustomer.GST_No,
-      customer_Name: selectedCustomer.customer_Name,
-      mobile_Number: selectedCustomer.mobile_Number,
+      gst_no: selectedCustomer.gst_no,
+      Cus_Mobile: selectedCustomer.Cus_Mobile,
+      type_of_vehicle: selectedCustomer.type_of_vehicle,
+      rate_per_km: selectedCustomer.rate_per_km,
+      duty_type: selectedCustomer.duty_type,
+      rate: selectedCustomer.rate,
+      km: selectedCustomer.km,
+      extra_km: selectedCustomer.extra_km,
+      hours: selectedCustomer.hours,
+      extra_hours: selectedCustomer.extra_hours,
     };
 
-    // Setting API endpoint based on customer type
-  let apiEndpoint = "";
-  if (formData.Cus_Type === "Corporate Customer") {
-    apiEndpoint = "http://localhost:7000/api/corporate-customer";
-  } else if (formData.Cus_Type === "Individual Customer") {
-    apiEndpoint = "http://localhost:7000/api/indivisual-customer";
-  } else {
-    window.alert("Invalid customer type");
-    return;
-  }
+    let apiEndpoint = "";
+    if (formData.Cus_Type === "Corporate Customer") {
+      apiEndpoint = "http://localhost:7000/api/corporate-customer";
+    } else if (formData.Cus_Type === "Indivisual Customer") {
+      apiEndpoint = "http://localhost:7000/api/indivisual-customer";
+    } else {
+      window.alert("Invalid customer type");
+      return;
+    }
 
-    // Sending POST request to the API
-  const response = await fetch(apiEndpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formDataWithCustomer),
-  });
+    const response = await fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataWithCustomer),
+    });
 
-    // Handling successful or failed API response
     if (response.ok) {
       setSuccessMessage("Data added successfully!");
       setFormData(initialFormData);
       setSelectedCustomer(null);
-      // Display alert after successful save
       window.alert("Data added successfully!");
     } else {
       console.error("Error posting data:", response.statusText);
@@ -166,7 +165,6 @@ const CustomerRate = () => {
   };
 
 
-  // Rendering the component
   return (
     <>
       <Sidebar />
@@ -212,16 +210,16 @@ const CustomerRate = () => {
                   name="Cus_name"
                   id="Cus_name"
                   onChange={(e) => {
-                    const selectedCustomer = customerList.find(
-                      (customer) => customer.Cus_name === e.target.value
+                    const selectedCustomerId = e.target.value;
+                    setSelectedCustomer(
+                      customerList.find((customer) => customer._id === selectedCustomerId)
                     );
-                    setSelectedCustomer(selectedCustomer);
                   }}
-                  value={selectedCustomer ? selectedCustomer.Cus_name : ""}
+                  value={selectedCustomer ? selectedCustomer._id : ""}
                 >
                   <option value="">Select Customer</option>
-                  {customerList.map((customer) => (
-                    <option key={customer._id} value={customer.Cus_name}>
+                  {customerListByType.map((customer) => (
+                    <option key={customer._id} value={customer._id}>
                       {customer.Cus_name}
                     </option>
                   ))}

@@ -85,6 +85,7 @@ const AddCustomer = () => {
       });
 
       if (response.ok) {
+        console.log("Response:", response);
         alert("Data added successfully!");
         setFormData(initialFormData); // Clear the form fields
       } else {

@@ -7,6 +7,7 @@ const TripDetailsSchema = new mongoose.Schema({
        
     customerId : String,
     customername : String, 
+    customermobile: Number,
     pickuplocation:  String,
     date:  String,
     time:  String,

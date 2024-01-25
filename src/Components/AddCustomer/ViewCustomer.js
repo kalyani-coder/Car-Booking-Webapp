@@ -60,6 +60,7 @@ const ViewCustomer = () => {
         }
         const data = await response.json();
         setCustomers(data);
+        console.log(data)
         setFilteredCustomers(data);
       } catch (error) {
         console.error('Error fetching data:', error);
