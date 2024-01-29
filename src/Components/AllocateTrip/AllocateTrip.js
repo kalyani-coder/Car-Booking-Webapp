@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AllocateTrip.css';
 import Sidebar from '../Sidebar/Sidebar';
-
+import axios from 'axios';
 function AllocateTrip() {
   const initialTripDetails = {
     customerId: '',
@@ -23,7 +23,19 @@ function AllocateTrip() {
     vehicleno: '',
   };
 
-  const [tripDetails, setTripDetails] = useState(initialTripDetails);
+  const [tripDetails, setTripDetails] = useState({
+    mobileno: '',
+    drivername: '',
+    mail: '',
+    drivermobileno: '',
+    address: '',
+    vehicleno: '',
+  });
+
+
+
+
+  // const [tripDetails, setTripDetails] = useState(initialTripDetails);
   const [error, setError] = useState('');
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -96,71 +108,75 @@ function AllocateTrip() {
     }
   };
 
-  const handleAllocateClick = async () => {
-    // Check if already submitting, prevent multiple submissions
-    if (isSubmitting) return;
+  // const handleAllocateClick = async () => {
+  //   // Check if already submitting, prevent multiple submissions
+  //   if (isSubmitting) return;
 
-    setIsSubmitting(true); // Set submitting status to true
+  //   setIsSubmitting(true); // Set submitting status to true
 
-    // Ensure all fields are filled
-    for (const fieldName in tripDetails) {
-      if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
-        setError('All fields are required.');
-        setIsSubmitting(false); // Reset submitting status
-        return;
-      }
-    }
+  //   // Ensure all fields are filled
+  //   for (const fieldName in tripDetails) {
+  //     if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
+  //       setError('All fields are required.');
+  //       setIsSubmitting(false); // Reset submitting status
+  //       return;
+  //     }
+  //   }
 
-    // Reset error if all fields are filled
-    setError('');
+  //   // Reset error if all fields are filled
+  //   setError('');
 
-    // Prepare the data to send to the API
-    const apiData = {
-      customerId: tripDetails.customerId,
-      customername: tripDetails.customername,
-      customermobile: tripDetails.mobileno,
-      pickuplocation: tripDetails.pickup,
-      date: tripDetails.date,
-      time: tripDetails.time,
-      dropofflocation: tripDetails.dropoff,
-      date1: tripDetails.date1,
-      time1: tripDetails.time1,
-      vehicle: tripDetails.vehicle,
-      triptype: tripDetails.triptype,
-      subtype: tripDetails.subtype,
-      drivername: tripDetails.drivername,
-      mail: tripDetails.mail,
-      drivermobileno: tripDetails.drivermobileno,
-      address: tripDetails.address,
-      vehicleno: tripDetails.vehicleno
-    };
+  //   // Prepare the data to send to the API
+  //   const apiData = {
+  //     customerId: tripDetails.customerId,
+  //     customername: tripDetails.customername,
+  //     customermobile: tripDetails.mobileno,
+  //     pickuplocation: tripDetails.pickup,
+  //     date: tripDetails.date,
+  //     time: tripDetails.time,
+  //     dropofflocation: tripDetails.dropoff,
+  //     date1: tripDetails.date1,
+  //     time1: tripDetails.time1,
+  //     vehicle: tripDetails.vehicle,
+  //     triptype: tripDetails.triptype,
+  //     subtype: tripDetails.subtype,
+  //     drivername: tripDetails.drivername,
+  //     mail: tripDetails.mail,
+  //     drivermobileno: tripDetails.drivermobileno,
+  //     address: tripDetails.address,
+  //     vehicleno: tripDetails.vehicleno
+  //   };
 
-    try {
-      // Make the API request
-      const response = await fetch('http://localhost:7000/api/trip-details', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(apiData),
-      });
+  //   try {
+  //     // Make the API request
+  //     const response = await fetch('http://localhost:7000/api/trip-details', {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(apiData),
+  //     });
   
-      if (response.ok) {
-        // Reset the form on success
-        setTripDetails(initialTripDetails);
-        setIsSubmitting(false); // Reset submitting status
-        alert('Data saved successfully!');
-      } else {
-        setIsSubmitting(false); // Reset submitting status
-        alert('Failed to save data. Please try again.');
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-      setIsSubmitting(false); // Reset submitting status
-      alert('Failed to save data. Please try again.');
-    }
-  };
+  //     if (response.ok) {
+  //       // Reset the form on success
+  //       setTripDetails(initialTripDetails);
+  //       setIsSubmitting(false); // Reset submitting status
+  //       alert('Data saved successfully!');
+  //     } else {
+  //       setIsSubmitting(false); // Reset submitting status
+  //       alert('Failed to save data. Please try again.');
+  //     }
+  //   } catch (error) {
+  //     console.error('API request error:', error);
+  //     setIsSubmitting(false); // Reset submitting status
+  //     alert('Failed to save data. Please try again.');
+  //   }
+  // };
   // const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
+
+
+
+ 
 
   const handleShareClick = async () => {
     try {
@@ -204,6 +220,30 @@ function AllocateTrip() {
       alert('Failed to share trip details. Please try again.');
     }
   };
+
+  const handleAllocateTrip = () => {
+    // Construct payload object
+    const payload = {
+      customerId: selectedCustomer?._id,
+      customername: selectedCustomer?.customername,
+      customermobile: selectedCustomer?.mobile, // Assuming customer mobile is available
+      // Add other fields from tripDetails
+      ...tripDetails,
+    };
+
+    // Make POST request to API endpoint
+    axios.post('http://localhost:7000/api/trip-details', payload)
+      .then(response => {
+        // Handle success
+        console.log('Trip allocated successfully:', response.data);
+        // Optionally, you can reset form fields or show a success message
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error allocating trip:', error);
+        // Optionally, show an error message to the user
+      });
+  };
   
   return (
     <>
@@ -223,24 +263,24 @@ function AllocateTrip() {
               <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
                 <span className="required-asterisk">*</span>
                 <select
-                  className="trip-details-input"
-                  id="customerId"
-                  name="customerId"
-                  onChange={(e) => {
-                    const selectedCustomer = customers.find(
-                      (customer) => customer.customername === e.target.value
-                    );
-                    setSelectedCustomer(selectedCustomer);
-                  }}
-                  value={selectedCustomer ? selectedCustomer.customername : ''}
-                >
-                  <option value="">Select Customer</option>
-                  {customers.map((customer) => (
-                    <option key={customer._id} value={customer.customername}>
-                      {customer.customername}
-                    </option>
-                  ))}
-                </select>
+        className="trip-details-input"
+        id="customerId"
+        name="customerId"
+        onChange={(e) => {
+          const selectedCustomer = customers.find(
+            (customer) => customer.customername === e.target.value
+          );
+          setSelectedCustomer(selectedCustomer);
+        }}
+        value={selectedCustomer ? selectedCustomer.customername : ''}
+      >
+        <option value="">Select Customer</option>
+        {customers.map((customer) => (
+          <option key={customer._id} value={customer.customername}>
+            {customer.customername}
+          </option>
+        ))}
+      </select>
 
                 <div className="d-flex gap-3">
                   <div>
@@ -368,6 +408,27 @@ function AllocateTrip() {
             </div>
           </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <div className="driver-details-section">
             <h2 className="driver-details-heading">Driver Details</h2>
             <div className="driver-details-form">
@@ -436,12 +497,20 @@ function AllocateTrip() {
             </div>
 
           </div>
+
+
+
+
+
+
+
+
         </div>
 
         <div className="custom-button-container text-center mt-3">
-          <button className="custom-btn custom-allocate-btn" onClick={handleAllocateClick}>
-            Allocate
-          </button>
+        <button className="custom-btn custom-allocate-btn" onClick={handleAllocateTrip}>
+        Allocate
+      </button>
           <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
           </button>
