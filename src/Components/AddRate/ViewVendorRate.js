@@ -51,10 +51,8 @@ const ViewVenderRate = () => {
     setFilteredCustomerRates(filteredData);
   };
 
-  const handleEdit = (_id) => {
-    const itemToEdit = customerRates.find((customerRate) => customerRate._id === _id);
-    setEditedItem(itemToEdit);
-    setIsEditing(true);
+  const handleEdit = (editedItem) => {
+    setEditedItem(editedItem);
   };
 
   const handleSave = async () => {
@@ -66,23 +64,27 @@ const ViewVenderRate = () => {
         },
         body: JSON.stringify(editedItem),
       });
-
+  
       if (response.ok) {
         setCustomerRates((prevRates) =>
           prevRates.map((customerRate) => (customerRate._id === editedItem._id ? editedItem : customerRate))
         );
         setIsEditing(false);
-
+  
         // Remove the edited item from localStorage
         localStorage.removeItem('editedItem');
+        alert('Vendor rate updated successfully');
       } else {
         console.error('Error updating vendor rate:', response.status);
+        alert('Error updating vendor rate. Please try again.');
       }
     } catch (error) {
       console.error('Error updating vendor rate:', error);
       setError('Error updating vendor rate: ' + error.message);
+      alert('Error updating vendor rate. Please try again.');
     }
   };
+  
 
   const handleCancelEdit = () => {
     setEditedItem(null);

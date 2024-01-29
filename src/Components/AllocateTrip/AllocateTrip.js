@@ -18,9 +18,8 @@ function AllocateTrip() {
     subtype: '',
     drivername: '',
     mail: '',
-    mobileno: '',
     address: '',
-    driverMobile:'',
+    drivermobileno:'',
     vehicleno: '',
   };
 
@@ -29,6 +28,7 @@ function AllocateTrip() {
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customers, setCustomers] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state to track submission status
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -50,10 +50,13 @@ function AllocateTrip() {
   useEffect(() => {
      if (selectedCustomer){
       setTripDetails({
-        pickuplocation: selectedCustomer.pickuplocation || "",
+        ...initialTripDetails,
+        customerId: selectedCustomer._id, // Preserve customerId
+        customername: selectedCustomer.customername,
+        pickup: selectedCustomer.pickup || "",
         date: selectedCustomer.date || "",
         time: selectedCustomer.time || "",
-        dropofflocation: selectedCustomer.dropofflocation || "",
+        dropoff: selectedCustomer.dropoff || "",
         mobileno: selectedCustomer.mobileno || "",
         date1: selectedCustomer.date1 || "",
         time1: selectedCustomer.time1 || "",
@@ -94,10 +97,16 @@ function AllocateTrip() {
   };
 
   const handleAllocateClick = async () => {
+    // Check if already submitting, prevent multiple submissions
+    if (isSubmitting) return;
+
+    setIsSubmitting(true); // Set submitting status to true
+
     // Ensure all fields are filled
     for (const fieldName in tripDetails) {
       if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
         setError('All fields are required.');
+        setIsSubmitting(false); // Reset submitting status
         return;
       }
     }
@@ -107,12 +116,13 @@ function AllocateTrip() {
 
     // Prepare the data to send to the API
     const apiData = {
+      customerId: tripDetails.customerId,
       customername: tripDetails.customername,
-      pickuplocation: tripDetails.pickuplocation,
+      customermobile: tripDetails.mobileno,
+      pickuplocation: tripDetails.pickup,
       date: tripDetails.date,
       time: tripDetails.time,
-      mobileno : tripDetails.mobileno,
-      dropofflocation: tripDetails.dropofflocation,
+      dropofflocation: tripDetails.dropoff,
       date1: tripDetails.date1,
       time1: tripDetails.time1,
       vehicle: tripDetails.vehicle,
@@ -120,7 +130,7 @@ function AllocateTrip() {
       subtype: tripDetails.subtype,
       drivername: tripDetails.drivername,
       mail: tripDetails.mail,
-      mobileno: tripDetails.mobileno,
+      drivermobileno: tripDetails.drivermobileno,
       address: tripDetails.address,
       vehicleno: tripDetails.vehicleno
     };
@@ -128,26 +138,29 @@ function AllocateTrip() {
     try {
       // Make the API request
       const response = await fetch('http://localhost:7000/api/trip-details', {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(apiData),
       });
-
+  
       if (response.ok) {
         // Reset the form on success
         setTripDetails(initialTripDetails);
+        setIsSubmitting(false); // Reset submitting status
         alert('Data saved successfully!');
       } else {
+        setIsSubmitting(false); // Reset submitting status
         alert('Failed to save data. Please try again.');
       }
     } catch (error) {
       console.error('API request error:', error);
+      setIsSubmitting(false); // Reset submitting status
       alert('Failed to save data. Please try again.');
     }
   };
-  const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
+  // const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
 
   const handleShareClick = async () => {
     try {
@@ -155,10 +168,10 @@ function AllocateTrip() {
       await fetchTripDetails(selectedCustomer._id);
   
       // Log the data from text input fields
-      console.log('Pickup Location:', tripDetails.pickuplocation);
+      console.log('Pickup Location:', tripDetails.pickup);
       console.log('Pickup Date:', tripDetails.date);
       console.log('Time:', tripDetails.time);
-      console.log('Drop-off Location:', tripDetails.dropofflocation);
+      console.log('Drop-off Location:', tripDetails.dropoff);
       console.log("customer Mobile number: ", tripDetails.mobileno);
       console.log('Drop-off Date:', tripDetails.date1);
       console.log('Drop-off Time:', tripDetails.time1);
@@ -170,20 +183,22 @@ function AllocateTrip() {
       console.log('Mobile No:', tripDetails.driverMobile);
       console.log('Driver Address:', tripDetails.address);
       console.log('Vehicle Number:', tripDetails.vehicleno);
-  
-      const Url = "http://api.paysmm.co.in/wapp/api/send";
-      const mobileNumber = tripDetails.mobileno;
       const textMessage = `hello ${tripDetails.customername} your booking is done your booking id is 
            ${tripDetails._id} your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickuplocation} and your drop location is ${tripDetails.dropofflocation} 
            your driver details are driver name: ${tripDetails.drivername} and his mobile number: ${tripDetails.driverMobile}`;
   
-      const url = `${Url}?apikey=${apiKey}&mobile=${mobileNumber}&msg=${textMessage}`;
+           console.log(textMessage)
   
-      // Open the URL in a new browser window
-      window.open(url, "_blank");
+      // const Url = "http://api.paysmm.co.in/wapp/api/send";
+      // const mobileNumber = tripDetails.mobileno;
+      
+      // const url = `${Url}?apikey=${apiKey}&mobile=${mobileNumber}&msg=${textMessage}`;
   
-      // Log the request details if needed
-      console.log("Opening link:", url);
+      // // Open the URL in a new browser window
+      // window.open(url, "_blank");
+  
+      // // Log the request details if needed
+      // console.log("Opening link:", url);
     } catch (error) {
       console.error('Error fetching trip details:', error);
       alert('Failed to share trip details. Please try again.');
@@ -229,14 +244,14 @@ function AllocateTrip() {
 
                 <div className="d-flex gap-3">
                   <div>
-                    <label htmlFor='pickuplocation' className="trip-details-label">Pickup Location:</label>
+                    <label htmlFor='pickup' className="trip-details-label">Pickup Location:</label>
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
                       className="trip-details-input"
                       placeholder="Pickup Location"
-                      value={tripDetails.pickuplocation}
-                      onChange={(e) => handleFieldChange('pickuplocation', e.target.value)}
+                      value={tripDetails.pickup}
+                      onChange={(e) => handleFieldChange('pickup', e.target.value)}
                     />
                   </div>
                   <div>
@@ -269,8 +284,8 @@ function AllocateTrip() {
                       type="text"
                       className="trip-details-input"
                       placeholder="Drop-off Location"
-                      value={tripDetails.dropofflocation}
-                      onChange={(e) => handleFieldChange('dropofflocation', e.target.value)}
+                      value={tripDetails.dropoff}
+                      onChange={(e) => handleFieldChange('dropoff', e.target.value)}
                     />
                   </div>
                   <div className="drop-off">
@@ -388,15 +403,15 @@ function AllocateTrip() {
                   onChange={(e) => handleFieldChange('mail', e.target.value)}
                 />
 
-                <label htmlFor="mobileno" className="driver-details-label">Mobile No:</label>
+                <label htmlFor="drivermobileno" className="driver-details-label">Mobile No:</label>
                 <span className="required-asterisk">*</span>
                 <input
                   type="number"
                   className="driver-details-input"
-                  name="mobileno"
-                  placeholder="Mobile No."
-                  value={tripDetails.driverMobile}
-                  onChange={(e) => handleFieldChange('driverMobile', e.target.value)}
+                  name="drivermobileno"
+                  placeholder="Driver Mobile No."
+                  value={tripDetails.drivermobileno}
+                  onChange={(e) => handleFieldChange('drivermobileno', e.target.value)}
                 />
 
                 <label htmlFor="address" className="driver-details-label">Driver Address:</label>
@@ -408,11 +423,11 @@ function AllocateTrip() {
                   value={tripDetails.address}
                   onChange={(e) => handleFieldChange('address', e.target.value)}
                 />
-                 <label htmlFor="vehicle_number" className="driver-details-label">Vehicle Number:</label>
+                 <label htmlFor="vehicleno" className="driver-details-label">Vehicle Number:</label>
                 <input
                   type="text"
                   className="driver-details-input"
-                  name="vehicle_number"
+                  name="vehicleno"
                   placeholder="Vehicle Number"
                   value={tripDetails.vehicleno}
                   onChange={(e) => handleFieldChange('vehicleno', e.target.value)}

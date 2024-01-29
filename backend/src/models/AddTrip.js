@@ -14,7 +14,7 @@ const AddTripSchema = new mongoose.Schema({
     address: String,
     triptype: String,
     subtype: String,
-    people: [PersonSchema], // Use an array to store person details
+    pickup: String,
     date: String,
     time: String,
     dropoff: String,

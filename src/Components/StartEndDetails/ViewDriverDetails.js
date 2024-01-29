@@ -129,8 +129,8 @@ const ViewStartEndDetails = () => {
                   <th>Date</th>
                   <th>Time</th>
                   <th>Drop Location</th>
-                  <th>Date1</th>
-                  <th>Time1</th>
+                  <th>Date</th>
+                  <th>Time</th>
                   <th>Total Days</th>
                   <th>Total Hours</th>
                   <th>Trip Type</th>

@@ -3,66 +3,6 @@ import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const AddTrip = () => {
-  const initialPersonData = {
-    name_1: "",
-    mobile_1: "",
-    vehicleNo_1: "",
-    name_2: "",
-    mobile_2: "",
-    vehicleNo_2: "",
-    name_3: "",
-    mobile_3: "",
-    vehicleNo_3: "",
-    name_4: "",
-    mobile_4: "",
-    vehicleNo_4: "",
-    name_5: "",
-    mobile_5: "",
-    vehicleNo_5: "",
-    name_6: "",
-    mobile_6: "",
-    vehicleNo_6: "",
-    name_7: "",
-    mobile_7: "",
-    vehicleNo_7: "",
-  };
-
-  const handlePersonChange = (index, e) => {
-    const { name, value } = e.target;
-
-    setFormData((prevData) => {
-      const updatedPeople = [...prevData.people];
-      updatedPeople[index] = {
-        ...updatedPeople[index],
-        [name]: value,
-      };
-
-      return {
-        ...prevData,
-        people: updatedPeople,
-      };
-    });
-  };
-
-  const addPerson = () => {
-    if (formData.members < 7) {
-      setFormData((prevData) => ({
-        ...prevData,
-        members: prevData.members + 1,
-        people: [
-          ...prevData.people,
-          {
-            name_1: "",
-            mobile_1: "",
-            vehicleNo_1: "",
-          },
-        ],
-      }));
-    } else {
-      setError("Maximum number of people reached (7).");
-    }
-  };
-
   const initialFormData = {
     customerId: "",
     customername: "",
@@ -80,8 +20,6 @@ const AddTrip = () => {
     totaldays: "",
     hours: "",
     vehicle: "",
-    members: 1,
-    people: [{ ...initialPersonData }],
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
@@ -125,8 +63,6 @@ const AddTrip = () => {
         mobileno: selectedCustomer.cus_mobile || "",
         email: selectedCustomer.cus_email || "",
         address: selectedCustomer.address || "",
-        members: formData.members,
-        people: formData.people,
         triptype: "",
         subtype: "",
         pickup: "",
@@ -138,98 +74,17 @@ const AddTrip = () => {
         totaldays: "",
         hours: "",
         vehicle: "",
-        // Add other fields based on your customer details
       });
     }
-  }, [selectedCustomer, formData.members, formData.people]); // Run this effect whenever selectedCustomer changes
+  }, [selectedCustomer]); 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "members" && (value < 1 || value > 7)) {
-      setError("Number of people must be between 1 and 7.");
-      return;
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
       [name]: value,
-    }));
-
-    if (
-      (name === "date1" && formData.time1) ||
-      (name === "date" && formData.time)
-    ) {
-      const startDate = new Date(formData.date + " " + formData.time);
-      const endDate = new Date(formData.date1 + " " + formData.time1);
-
-      // Calculate total days
-      const timeDifference = endDate.getTime() - startDate.getTime();
-      const totalDays = Math.abs(
-        Math.round(timeDifference / (1000 * 3600 * 24))
-      );
-
-      // Update form data with total days
-      setFormData((prevData) => ({
-        ...prevData,
-        totaldays: totalDays.toString(),
-      }));
-    }
-
-    if (
-      (name === "time1" && formData.date1) ||
-      (name === "time" && formData.date)
-    ) {
-      const startTime = new Date(formData.date + " " + formData.time);
-      const endTime = new Date(formData.date1 + " " + formData.time1);
-
-      // Calculate total hours
-      const timeDifference = endTime.getTime() - startTime.getTime();
-      const totalHours = Math.abs(Math.round(timeDifference / (1000 * 3600)));
-
-      // Update form data with total hours
-      setFormData((prevData) => ({
-        ...prevData,
-        hours: totalHours.toString(),
-      }));
-    }
+    });
   };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   // if (
-  //   //   Object.values(formData).some((value) => value === "") ||
-  //   //   parseInt(formData.members, 10) < 1
-  //   // ) {
-  //   //   alert(
-  //   //     "Please fill in all required fields and ensure the number of members is greater than 0."
-  //   //   );
-  //   //   return;
-  //   // }
-
-  //   const data = { ...formData };
-
-  //   try {
-  //     // Send the data to the API
-  //     const response = await fetch("http://localhost:7000/api/add-trip", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (response.ok) {
-  //       alert("Data added successfully!");
-  //       setFormData(initialFormData); // Reset the form
-  //     } else {
-  //       alert("Failed to add data. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     console.error("API request error:", error);
-  //     alert("Failed to add data. Please try again.");
-  //   }
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -267,6 +122,7 @@ const AddTrip = () => {
       alert("Failed to add data. Please try again.");
     }
   };
+  
 
   return (
     <>
@@ -393,7 +249,7 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <div className="d-flex gap-3">
+            {/* <div className="d-flex gap-3">
               <div>
                 <div className="trip-form-group">
                   <label htmlFor="numberOfPeople" className="trip-form-label">
@@ -478,7 +334,7 @@ const AddTrip = () => {
                     ))}
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="d-flex gap-3">
             <div>
               <div className="trip-form-group">

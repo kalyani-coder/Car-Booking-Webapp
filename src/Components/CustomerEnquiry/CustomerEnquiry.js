@@ -73,9 +73,8 @@ const CustomerEnquiry = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    
-
+  
+    // Gather form data
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",
       customer_name: formData.customername,
@@ -94,17 +93,19 @@ const CustomerEnquiry = () => {
       vehicle: formData.vehicle,
       address: formData.address,
     };
-
+  
+    // Validate form data
     for (const key in apiData) {
       if (apiData[key] === "") {
         setError("All fields are required.");
         return;
       }
     }
-
-    setError("");
-
+  
+    setError(""); // Clear any previous error
+  
     try {
+      // Send data to backend API
       const response = await fetch("http://localhost:7000/api/customer-enquiry", {
         method: "POST",
         headers: {
@@ -112,12 +113,13 @@ const CustomerEnquiry = () => {
         },
         body: JSON.stringify(apiData),
       });
-
+  
+      // Check response status
       if (response.ok) {
         const responseData = await response.json();
         setApiResponse(responseData);
         alert("Data saved successfully!");
-        setFormData(initialFormData);
+        setFormData(initialFormData); // Clear form after successful submission
       } else {
         alert("Failed to save data. Please try again.");
       }
@@ -126,6 +128,7 @@ const CustomerEnquiry = () => {
       alert("Failed to save data. Please try again.");
     }
   };
+  
   
 
   const handleDateChange = (date, name) => {
@@ -344,19 +347,18 @@ const CustomerEnquiry = () => {
               </div>
               <div>
               <div className="form-group">
-                  <label htmlFor="date" className="form-label">
+                  <label htmlFor="date1" className="form-label">
                     Date :
                     <span className="required-asterisk">*</span>
                   </label>
                   
-                  <DatePicker
-                    placeholderText="dd/mm/yyyy"
-                    className="form-control cust-inq-input"
-                    selected={formData.date2 ? moment(formData.date2, "DD/MM/YYYY").toDate() : null}
-                    onChange={(date) => handleDateChange(date, "date2")}
-                    dateFormat="dd/MM/yyyy"
-                    calendarIcon={<i className="fas fa-calendar-alt"></i>}
-                  />
+                  <input
+                  type="date"
+                  className="form-control add-trip-input"
+                  name="date1"
+                  onChange={handleChange}
+                  value={formData.date1}
+                />
 
                  {/* {formData.date1 && (
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
@@ -404,14 +406,14 @@ const CustomerEnquiry = () => {
                     Date :
                     <span className="required-asterisk">*</span>
                   </label>
-                  <DatePicker
-                    placeholderText="dd/mm/yyyy"
-                    className="form-control cust-inq-input"
-                    selected={formData.date2 ? moment(formData.date2, "DD/MM/YYYY").toDate() : null}
-                    onChange={(date) => handleDateChange(date, "date2")}
-                    dateFormat="dd/MM/yyyy"
-                    calendarIcon={<i className="fas fa-calendar-alt"></i>}
-                  />
+                  <input
+                  type="date"
+                  className="form-control add-trip-input"
+                  name="date2"
+                  onChange={handleChange}
+                  value={formData.date2}
+                />
+
                  {/* {formData.date1 && (
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
                   )} */}
