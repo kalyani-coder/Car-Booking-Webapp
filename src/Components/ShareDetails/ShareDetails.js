@@ -204,13 +204,13 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="cus_Mobile" className="share-details-label">
-                  Mobile No:
+                  Customer Mobile No:
                 </label>
                 <input
                   type="number"
                   className="share-details-input"
                   name="cus_Mobile"
-                  placeholder="Enter Mobile Number"
+                  placeholder="Customer Mobile Number"
                   onChange={handleChange}
                   value={formData.cus_Mobile}
                 />
@@ -454,13 +454,13 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label htmlFor="mobileno" className="share-details-label">
-                  Mobile No:
+                  Driver Mobile No:
                 </label>
                 <input
                   type="number"
                   className="share-details-input"
                   name="mobileno"
-                  placeholder="Mobile Number"
+                  placeholder="Driver Mobile Number"
                   onChange={handleChange}
                   value={formData.mobileno}
                 />

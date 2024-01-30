@@ -87,6 +87,7 @@ const AddCustomer = () => {
       if (response.ok) {
         console.log("Response:", response);
         alert("Data added successfully!");
+        console.log('Trip allocated successfully:', response.data);
         setFormData(initialFormData); // Clear the form fields
       } else {
         alert("Failed to add data. Please try again.");

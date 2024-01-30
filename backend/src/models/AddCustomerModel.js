@@ -20,7 +20,7 @@ const mongoose = require('mongoose');
 const newAddCustomerSchema = new mongoose.Schema({
   cus_name: String,
   company_name: String,
-  gst_no: Number,
+  gst_no: String,
   cus_mobile: Number,
   cus_email: String,
   address: String,

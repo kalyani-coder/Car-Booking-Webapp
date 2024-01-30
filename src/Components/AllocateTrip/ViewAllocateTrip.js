@@ -227,6 +227,7 @@ const ViewAllocateTrip = () => {
             <table className="table">
               <thead>
                 <tr>
+                  <th>Customer Name</th>
                   <th>Vehicle</th>
                   <th>Trip Type</th>
                   <th>Subtype</th>
@@ -245,6 +246,7 @@ const ViewAllocateTrip = () => {
               <tbody>
                 {filteredShareDetails.map((shareDetail) => (
                   <tr key={shareDetail._id}>
+                    <td>{shareDetail.customername}</td>
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.triptype}</td>
                     <td>{shareDetail.subtype}</td>
@@ -256,7 +258,7 @@ const ViewAllocateTrip = () => {
                     <td>{shareDetail.time1}</td> */}
                     <td>{shareDetail.drivername}</td>
                     <td>{shareDetail.mail}</td>
-                    <td>{shareDetail.mobileno}</td>
+                    <td>{shareDetail.customermobile}</td>
                     <td>
                       {editingId === shareDetail._id ? (
                         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
