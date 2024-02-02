@@ -107,70 +107,7 @@ function AllocateTrip() {
     }
   };
 
-  // const handleAllocateClick = async () => {
-  //   // Check if already submitting, prevent multiple submissions
-  //   if (isSubmitting) return;
-
-  //   setIsSubmitting(true); // Set submitting status to true
-
-  //   // Ensure all fields are filled
-  //   for (const fieldName in tripDetails) {
-  //     if (fieldName !== 'customerId' && tripDetails[fieldName] === '') {
-  //       setError('All fields are required.');
-  //       setIsSubmitting(false); // Reset submitting status
-  //       return;
-  //     }
-  //   }
-
-  //   // Reset error if all fields are filled
-  //   setError('');
-
-  //   // Prepare the data to send to the API
-  //   const apiData = {
-  //     customerId: tripDetails.customerId,
-  //     customername: tripDetails.customername,
-  //     customermobile: tripDetails.mobileno,
-  //     pickuplocation: tripDetails.pickup,
-  //     date: tripDetails.date,
-  //     time: tripDetails.time,
-  //     dropofflocation: tripDetails.dropoff,
-  //     date1: tripDetails.date1,
-  //     time1: tripDetails.time1,
-  //     vehicle: tripDetails.vehicle,
-  //     triptype: tripDetails.triptype,
-  //     subtype: tripDetails.subtype,
-  //     drivername: tripDetails.drivername,
-  //     mail: tripDetails.mail,
-  //     drivermobileno: tripDetails.drivermobileno,
-  //     address: tripDetails.address,
-  //     vehicleno: tripDetails.vehicleno
-  //   };
-
-  //   try {
-  //     // Make the API request
-  //     const response = await fetch('http://localhost:7000/api/trip-details', {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(apiData),
-  //     });
   
-  //     if (response.ok) {
-  //       // Reset the form on success
-  //       setTripDetails(initialTripDetails);
-  //       setIsSubmitting(false); // Reset submitting status
-  //       alert('Data saved successfully!');
-  //     } else {
-  //       setIsSubmitting(false); // Reset submitting status
-  //       alert('Failed to save data. Please try again.');
-  //     }
-  //   } catch (error) {
-  //     console.error('API request error:', error);
-  //     setIsSubmitting(false); // Reset submitting status
-  //     alert('Failed to save data. Please try again.');
-  //   }
-  // };
   const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
 
 

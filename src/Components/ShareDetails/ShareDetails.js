@@ -8,83 +8,42 @@ const ShareDetails = () => {
   // Initial form data state
   const initialFormData = {
     customername: "",
-    cus_Id: "",
-    cus_Mobile: "",
+    customerId: "",
+    mobileno: "",
     vehicle: "",
     vehicleno: "",
     triptype: "",
     subtype: "",
-    pickuplocation: "",
+    pickup: "",
     date: "",
     time: "",
-    dropofflocation: "",
+    dropoff: "",
     date1: "",
     time1: "",
     drivername: "",
-    mobileno: "",
+    drivermobileno: "",
   };
 
   // State variables
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState("");
-  const [customerList, setCustomerList] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState("");
   const [customers, setCustomers] = useState([]);
-  const [tripDetails, setTripDetails] = useState(null);
-
-  // Define setError function
-  const setError = (error) => {
-    // Handle error logic here
-    console.error("Error:", error);
-  };
-
-  
-  const fetchTripDetails = async (customerId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:7000/api/trip-details/${customerId}`
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch trip details");
-      }
-      const tripData = await response.json();
-      console.log("Fetched trip details:", tripData);
-
-      setFormData({
-        customername: tripData.customername,
-        cus_Id: tripData.customerId,
-        cus_Mobile: tripData.mobileno.toString(),
-        vehicle: tripData.vehicle,
-        vehicleno: tripData.vehicleno,
-        triptype: tripData.triptype,
-        subtype: tripData.subtype,
-        pickuplocation: tripData.pickuplocation,
-        date: tripData.date,
-        time: tripData.time,
-        dropofflocation: tripData.dropofflocation,
-        date1: tripData.date1,
-        time1: tripData.time1,
-        drivername: tripData.drivername,
-        mobileno: tripData.mobileno.toString(),
-      });
-    } catch (error) {
-      console.error("Error fetching trip details:", error);
-      setError("Error fetching trip details: " + error.message);
-    }
-  };
+  const [tripDetails, setTripDetails] = useState(initialFormData); // Add tripDetails state
+  const [error, setError] = useState(""); // Add error state
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("http://localhost:7000/api/add-trip");
+        const response = await fetch('http://localhost:7000/api/add-trip');
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await response.json();
         setCustomers(data);
       } catch (error) {
-        console.error("Error fetching customers:", error);
-        setError("Error fetching customers: " + error.message);
+        console.error('Error fetching customers:', error);
+        setError('Error fetching customers: ' + error.message);
       }
     };
     fetchCustomers();
@@ -96,6 +55,22 @@ const ShareDetails = () => {
     }
   }, [selectedCustomer]);
 
+  const fetchTripDetails = async (customerId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/trip-details/${customerId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch trip details');
+      }
+      const tripData = await response.json();
+      setTripDetails(tripData);
+      console.log("tripdetails");
+    } catch (error) {
+      console.error('Error fetching trip details:', error);
+      setError('Error fetching trip details: ' + error.message);
+    }
+  };
+
+  // Handle form field changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -105,36 +80,16 @@ const ShareDetails = () => {
   };
 
   // Handle form submission
-  const handleShare = async () => {
-    // Map form field names to API field names
-    const apiData = {
-      customername: formData.customername,
-      cus_Mobile: formData.cus_Mobile,
-      vehicle: formData.vehicle,
-      vehicleno: formData.vehicleno,
-      triptype: formData.triptype,
-      subtype: formData.subtype,
-      pickup: formData.pickup,
-      date: formData.date,
-      time: formData.time,
-      Dropoff: formData.dropoff,
-      date1: formData.date1,
-      time1: formData.time1,
-      drivername: formData.drivername,
-      drivermail: formData.drivermail,
-      mobileno: formData.mobileno,
-      driveraddress: formData.driveraddress,
-    };
-
-    // Check if all fields are filled
-    for (const key in apiData) {
-      if (apiData[key] === "") {
+  const handleSave = async () => {
+    // Validate form fields
+    for (const key in formData) {
+      if (formData[key] === "") {
         setMobilenoError("All fields are required.");
         return;
       }
     }
 
-    // Reset error if all fields are filled
+    // Reset error
     setMobilenoError("");
 
     try {
@@ -143,7 +98,7 @@ const ShareDetails = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(apiData),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -203,16 +158,16 @@ const ShareDetails = () => {
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="cus_Mobile" className="share-details-label">
+                <label htmlFor="mobileno" className="share-details-label">
                   Customer Mobile No:
                 </label>
                 <input
                   type="number"
                   className="share-details-input"
-                  name="cus_Mobile"
+                  name="mobileno"
                   placeholder="Customer Mobile Number"
                   onChange={handleChange}
-                  value={formData.cus_Mobile}
+                  value={formData.mobileno}
                 />
               </div>
             </div>
@@ -329,16 +284,16 @@ const ShareDetails = () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="pickuplocation" className="share-details-label">
+                <label htmlFor="pickup" className="share-details-label">
                   Pickup Location:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="pickuplocation"
+                  name="pickup"
                   placeholder="Pickup Location"
                   onChange={handleChange}
-                  value={formData.pickuplocation}
+                  value={formData.pickup}
                 />
               </div>
             </div>
@@ -346,7 +301,7 @@ const ShareDetails = () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label
-                  htmlFor="dropofflocation"
+                  htmlFor="dropoff"
                   className="share-details-label"
                 >
                   Dropoff Location:
@@ -354,10 +309,10 @@ const ShareDetails = () => {
                 <input
                   type="text"
                   className="share-details-input"
-                  name="dropofflocation"
+                  name="dropoff"
                   placeholder="Enter Dropoff Location"
                   onChange={handleChange}
-                  value={formData.dropofflocation}
+                  value={formData.dropoff}
                 />
               </div>
             </div>
@@ -372,7 +327,7 @@ const ShareDetails = () => {
                 <DatePicker
                   className="share-details-input"
                   name="date1"
-                  selected={formData.date1}
+                  selected={formData.date}
                   onChange={(date) =>
                     setFormData((prevData) => ({ ...prevData, date: date }))
                   }
@@ -459,10 +414,10 @@ const ShareDetails = () => {
                 <input
                   type="number"
                   className="share-details-input"
-                  name="mobileno"
-                  placeholder="Driver Mobile Number"
+                  name="cus_Mobile"
+                  placeholder="Customer Mobile Number"
                   onChange={handleChange}
-                  value={formData.mobileno}
+                  value={formData.driver}
                 />
               </div>
             </div>
@@ -471,7 +426,7 @@ const ShareDetails = () => {
           <button
             type="button"
             className="share-details-button"
-            onClick={handleShare}
+            onClick={handleSave}
           >
             Save
           </button>
