@@ -1,4 +1,3 @@
-// StartEndDetails.js
 
 import React, { useState } from "react";
 import "./StartEndDeteails.css";
@@ -60,12 +59,6 @@ const StartEndDetails = () => {
     }
     try {
       const requestBody = {
-        // driver_Name: formData.drivername,
-        // driver_Email: formData.email,
-        // address: formData.address,
-        // driver_Mo1: formData.mobileno,
-        // driver_Mo2: formData.mobileno,
-
         pickuplocation: formData.pickuplocation,
         date: formData.date,
         time: formData.time,
@@ -129,7 +122,7 @@ const StartEndDetails = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 {/* Dropdown to select a customer */}
-                <select
+                {/* <select
                   className="trip-details-input"
                   id="customerId"
                   name="customerId"
@@ -147,7 +140,15 @@ const StartEndDetails = () => {
                       {customer.customername}
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <input
+                  className="start-end-details-input"
+                  type="text"
+                  name="customername"
+                  placeholder="Enter Customer Mobile Number"
+                  onChange={handleChange}
+                  value={formData.customername}
+                />
               </div>
             </div>
 
@@ -159,7 +160,7 @@ const StartEndDetails = () => {
                 </label>
                 <input
                   className="start-end-details-input"
-                  type="text"
+                  type="number"
                   name="mobileno"
                   placeholder="Enter Customer Mobile Number"
                   onChange={handleChange}
@@ -262,17 +263,17 @@ const StartEndDetails = () => {
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
-                    <label htmlFor="pickup" className="form-label">
+                    <label htmlFor="dropoff" className="form-label">
                     Dropoff Location:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       type="text"
                       className="form-control cust-inq-input"
-                      name="pickup"
-                      placeholder="Pickup Location"
+                      name="dropoff"
+                      placeholder="Dropoff Location"
                       onChange={handleChange}
-                      value={formData.pickup}
+                      value={formData.dropoff}
                     />
                   </div>
                 </div>
@@ -285,9 +286,9 @@ const StartEndDetails = () => {
                     <input
                       type="date"
                       className="form-control add-trip-input"
-                      name="date"
+                      name="date1"
                       onChange={handleChange}
-                      value={formData.date}
+                      value={formData.date1}
                     />
                   </div>
                 </div>
@@ -299,9 +300,9 @@ const StartEndDetails = () => {
                     <input
                       type="time"
                       className="form-control cust-inq-input"
-                      name="time"
+                      name="time1"
                       onChange={handleChange}
-                      value={formData.time}
+                      value={formData.time1}
                     />
                   </div>
                 </div>

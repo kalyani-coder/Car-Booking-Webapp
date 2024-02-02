@@ -7,8 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 const ShareDetails = () => {
   // Initial form data state
   const initialFormData = {
-    customername: "",
-    customerId: "",
+    customerId : "",
+    customername : "", 
     mobileno: "",
     vehicle: "",
     vehicleno: "",
@@ -51,7 +51,7 @@ const ShareDetails = () => {
 
   useEffect(() => {
     if (selectedCustomer) {
-      fetchTripDetails(selectedCustomer._id);
+      fetchTripDetails(selectedCustomer._id); // Pass customerId to fetchTripDetails
     }
   }, [selectedCustomer]);
 
@@ -63,12 +63,13 @@ const ShareDetails = () => {
       }
       const tripData = await response.json();
       setTripDetails(tripData);
-      console.log("tripdetails");
+      console.log("tripdetails", tripData); // Log tripData to see fetched details
     } catch (error) {
       console.error('Error fetching trip details:', error);
       setError('Error fetching trip details: ' + error.message);
     }
   };
+  
 
   // Handle form field changes
   const handleChange = (event) => {
@@ -78,40 +79,42 @@ const ShareDetails = () => {
       [name]: value,
     }));
   };
+   
 
-  // Handle form submission
-  const handleSave = async () => {
-    // Validate form fields
-    for (const key in formData) {
-      if (formData[key] === "") {
-        setMobilenoError("All fields are required.");
-        return;
-      }
+ // Handle form submission
+const handleSave = async () => {
+  // Validate form fields
+  for (const key in formData) {
+    if (formData[key] === "") {
+      setMobilenoError("All fields are required.");
+      return;
     }
+  }
 
-    // Reset error
-    setMobilenoError("");
+  // Reset error
+  setMobilenoError("");
 
-    try {
-      const response = await fetch("http://localhost:7000/api/share-details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+  try {
+    const response = await fetch("http://localhost:7000/api/share-details", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-      if (response.ok) {
-        alert("Data saved successfully!");
-        setFormData(initialFormData); // Reset the form
-      } else {
-        alert("Failed to save data. Please try again.");
-      }
-    } catch (error) {
-      console.error("API request error:", error);
+    if (response.ok) {
+      alert("Data saved successfully!");
+      setFormData(initialFormData); // Reset the form
+    } else {
       alert("Failed to save data. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("API request error:", error);
+    alert("Failed to save data. Please try again.");
+  }
+};
+
 
   return (
     <>

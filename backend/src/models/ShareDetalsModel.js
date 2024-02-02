@@ -3,7 +3,8 @@
 const mongoose = require('mongoose');
 
 const ShareDetailsSchema = new mongoose.Schema({
-
+        customerId : String,
+        customername : String, 
         cus_Name: String,
         cus_Mobile: Number,
         vehicle: String,
