@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AddCustomer.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert"
 
 const AddCustomer = () => {
   const initialFormData = {
@@ -15,6 +16,9 @@ const AddCustomer = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
+
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,6 +40,20 @@ const AddCustomer = () => {
       } else {
         setMobilenoError("");
       }
+    }
+  };
+
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
     }
   };
 
@@ -86,15 +104,15 @@ const AddCustomer = () => {
 
       if (response.ok) {
         console.log("Response:", response);
-        alert("Data added successfully!");
+        showAlert("Data added successfully!" , "success");
         console.log('Trip allocated successfully:', response.data);
         setFormData(initialFormData); // Clear the form fields
       } else {
-        alert("Failed to add data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to add data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -105,6 +123,9 @@ const AddCustomer = () => {
         <div className="customer-main-container">
           <div className="customer-form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer</h2>
+
+            {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
             
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">

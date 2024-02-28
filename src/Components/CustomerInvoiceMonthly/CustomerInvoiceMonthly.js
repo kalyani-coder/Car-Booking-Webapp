@@ -226,6 +226,7 @@ doc.text("MICR Code: " + (formData.micrcode || ''), 10, doc.autoTable.previous.f
         <div className="form-vendor-invoice">
          
           <div className="grid-gap-2 col-6">
+          <div className="form-group">
         {/* Date picker to select a date */}
         <label htmlFor="Date" className="form-label">
           Select Date:
@@ -234,8 +235,9 @@ doc.text("MICR Code: " + (formData.micrcode || ''), 10, doc.autoTable.previous.f
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
           dateFormat="dd-MM-yyyy"
-          className="form-control-customer-invoice-monthly"
+          className="form-control"
         />
+        </div>
       </div>
         </div>
         <div>

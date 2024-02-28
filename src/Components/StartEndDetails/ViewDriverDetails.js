@@ -143,17 +143,17 @@ const ViewStartEndDetails = () => {
                 {filteredShareDetails.map((shareDetail) => (
                   <tr key={shareDetail._id}>
                     <td>{shareDetail.drivername}</td>
-                    <td>{shareDetail.pickuplocation}</td>
+                    <td>{shareDetail.pickup}</td>
                     <td>{shareDetail.date}</td>
                     <td>{shareDetail.time}</td>
-                    <td>{shareDetail.totalDaysLocation}</td>
+                    <td>{shareDetail.Dropoff}</td>
                     <td>{shareDetail.date1}</td>
                     <td>{shareDetail.time1}</td>
                     <td>{shareDetail.totalDays}</td>
                     <td>{shareDetail.totalHours}</td>
                     <td>{shareDetail.triptype}</td>
-                    <td>{shareDetail.tripsubtype}</td>
-                    <td>{shareDetail.mobileNumber}</td>
+                    <td>{shareDetail.subtype}</td>
+                    <td>{shareDetail.mobileno}</td>
                     <td>
                       <div className="d-flex justify-content-between">
                         <button

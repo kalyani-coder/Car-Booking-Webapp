@@ -35,6 +35,8 @@ const rateSchema = require('./src/routes/Rate');
 const venderRate = require('./src/routes/VenderRate');
 const corporateCustomer = require('./src/routes/CorporateCustomer');
 const indivisualCustomer = require('./src/routes/IndivisualCustomer');
+const newMasterRateSchema = require('./src/routes/MasterforCorporate');
+const gettrip = require("./src/routes/EditTripDetails")
 
 // Define API paths
 apiRouter.use('/customer-enquiry', CustomerEnquiry);
@@ -53,6 +55,8 @@ apiRouter.use('/vender-rate', venderRate);
 apiRouter.use('/add-drivers', AddDriver);
 apiRouter.use('/corporate-customer', corporateCustomer);
 apiRouter.use('/indivisual-customer', indivisualCustomer);
+apiRouter.use('/masterrate', newMasterRateSchema);
+apiRouter.use("/get-trip",gettrip)
 
 // Handle all API routes
 app.use('/api', apiRouter);

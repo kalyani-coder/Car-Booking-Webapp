@@ -13,7 +13,36 @@ router.get('/' , async(req , res) => {
         res.status(404).json({message : "Can not get customer"})
     }
 })
+  //GET METHOD to retrive trips between two seleted dates
 
+  
+  function isValidDate(dateString) {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateString.match(regex) !== null;
+  }
+
+  router.get("/:date/:date1", async (req, res) => {
+    try {
+      const startDate = req.params.date;
+      const endDate = req.params.date1;
+  
+      if (!isValidDate(startDate) || !isValidDate(endDate)) {
+        return res.status(400).json({ message: "Invalid date parameters" });
+      }
+      // const dataInRange = await NewAddPaymentSchema.find({
+        const dataInRange = await newTripDetailsSchema.find({
+  
+        Date: { $gte: startDate, $lte: endDate },
+      });
+  
+      const totalTrips = dataInRange.length;
+  
+      res.json({ totalTrips, dataInRange });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
 // GET BY ID 
 router.get('/:id' , async(req, res) => {
 

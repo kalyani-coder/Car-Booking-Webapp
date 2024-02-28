@@ -12,30 +12,30 @@ const CustomerEnquiry = () => {
     mobileno: "",
     email: "",
     address: "",
-    triptype: "",
-    subtype: "",
-    pickup: "",
+    tripe_type: "",
+    sub_type: "",
+    pic_up: "",
     date1: "",
     time1: "",
-    dropoff: "",
+    drop_off: "",
     date2: "",
     time2: "",
-    totaldays: "",
-    totalhours: "",
+    totalDays: "",
+    totalHours: "",
     vehicle: "",
-
   };
-  //Function to format the date as dd/mm/yy
+
+  // Function to format the date as dd/mm/yy
   const formatDate = (date) => {
     return date ? moment(date).format("DD/MM/YYYY") : "";
   };
 
+  // Function to format the date for POST request
   const formatDateForPost = (date) => {
     return date ? moment(date, "DD/MM/YYYY").format("DD/MM/YYYY") : null;
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  // const [selectedDate, setSelectedDate] = useState(null);
   const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -71,41 +71,54 @@ const CustomerEnquiry = () => {
     }
   }, [selectedCustomer]);
 
+  const updateTotal = () => {
+    const selectedDate1 = new Date(formData.date1);
+    const selectedDate2 = new Date(formData.date2);
+
+    if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
+      const timeDifference = selectedDate2 - selectedDate1;
+      const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+      setFormData((prevData) => ({
+        ...prevData,
+        totalDays: totalDays.toString(),
+        totalHours: totalHours.toString(),
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        totalDays: "",
+        totalHours: "",
+      }));
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    // Gather form data
+
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",
       customer_name: formData.customername,
       mobileno: formData.mobileno,
       email: formData.email,
-      tripe_type: formData.triptype,
-      sub_type: formData.subtype,
-      pic_up: formData.pickup,
+      tripe_type: formData.tripe_type,
+      sub_type: formData.sub_type,
+      pic_up: formData.pic_up,
       date1: formatDateForPost(formData.date1),
       date2: formatDateForPost(formData.date2),
       time1: formData.time1,
-      drop_of: formData.dropoff,
+      drop_off: formData.drop_off,
       time2: formData.time2,
-      days: formData.totaldays,
-      hours: formData.totalhours,
       vehicle: formData.vehicle,
+      totalDays: formData.totalDays,
+      totalHours: formData.totalHours,
       address: formData.address,
     };
-  
-    // Validate form data
-    for (const key in apiData) {
-      if (apiData[key] === "") {
-        setError("All fields are required.");
-        return;
-      }
-    }
-  
+
     setError(""); // Clear any previous error
-  
+
     try {
-      // Send data to backend API
       const response = await fetch("http://localhost:7000/api/customer-enquiry", {
         method: "POST",
         headers: {
@@ -113,39 +126,30 @@ const CustomerEnquiry = () => {
         },
         body: JSON.stringify(apiData),
       });
-  
-      // Check response status
+
       if (response.ok) {
         const responseData = await response.json();
         setApiResponse(responseData);
         alert("Data saved successfully!");
+        console.log("Data");
         setFormData(initialFormData); // Clear form after successful submission
       } else {
         alert("Failed to save data. Please try again.");
+        console.log("error message", response)
       }
     } catch (error) {
       console.error("API request error:", error);
       alert("Failed to save data. Please try again.");
     }
   };
-  
-  
 
   const handleDateChange = (date, name) => {
-
     const formattedDate = formatDate(date);
-    // handleChange(event);
-   
-    
+    const { date1, date2 } = formData;
 
-    const { date1,date2, } = formData;
-
-    if (date1 &&  date2) {
-      const pickupDate = new Date(`${date1}`);
-      const dropoffDate = new Date(`${date2}`);
-
-      // console.log("Selected Pickup Date :", pickupDate);
-      // console.log("Selected Dropoff Date:", dropoffDate);
+    if (date1 && date2) {
+      const pickupDate = new Date(date1);
+      const dropoffDate = new Date(date2);
 
       const timeDifference = dropoffDate - pickupDate;
 
@@ -154,40 +158,8 @@ const CustomerEnquiry = () => {
 
       setFormData((prevData) => ({
         ...prevData,
-        [name]: formattedDate,
-        totaldays: totalDays,
-        totalhours: totalHours,
-      }));
-    }
-  };
- 
-
-  const updateTotal = () => {
-    const selectedDate1 = new Date(`${formData.date1}`);
-    const selectedDate2 = new Date(`${formData.date2}`);
-  
-    if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
-      const timeDifference = selectedDate2 - selectedDate1;
-      const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  
-      // const formattedDate1 = formatDate(selectedDate1);
-      // const formattedDate2 = formatDate(selectedDate2);
-  
-      setFormData((prevData) => ({
-        ...prevData,
-        totaldays: totalDays,
-        totalhours: totalHours,
-        // formattedDate1: formattedDate1,
-        // formattedDate2: formattedDate2,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        totaldays: "",
-        totalhours: "",
-        formattedDate1: "",
-        formattedDate2: "",
+        totalDays: totalDays.toString(),
+        totalHours: totalHours.toString(),
       }));
     }
   };
@@ -239,14 +211,14 @@ const CustomerEnquiry = () => {
               >
                 <option value="">Select Customer</option>
                 {customerList?.length > 0 ? (
-  customerList.map((customer) => (
-    <option key={customer._id} value={customer.cus_name}>
-      {customer.cus_name}
-    </option>
-  ))
-) : (
-  <option value="">No Customers Available</option>
-)}
+                  customerList.map((customer) => (
+                    <option key={customer._id} value={customer.cus_name}>
+                      {customer.cus_name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No Customers Available</option>
+                )}
               </select>
             </div>
             <div className="form-group">
@@ -295,14 +267,14 @@ const CustomerEnquiry = () => {
             <div className="form-group">
               <label htmlFor="triptype" className="form-label">
                 Trip Type:
-              <span className="required-asterisk">*</span>
+                <span className="required-asterisk">*</span>
               </label>
               <select
                 className="form-control-cust-inq-input"
-                id="triptype"
-                name="triptype"
+                id="tripe_type"
+                name="tripe_type"
                 onChange={handleChange}
-                value={formData.triptype}
+                value={formData.tripe_type}
               >
                 <option value="">Trip Type</option>
                 <option value="One Way Trip">One Way Trip</option>
@@ -310,16 +282,16 @@ const CustomerEnquiry = () => {
               </select>
             </div>
             <div className="form-group">
-              <label htmlFor="subtype" className="form-label">
+              <label htmlFor="sub_type" className="form-label">
                 Sub Type:
-              <span className="required-asterisk">*</span>
+                <span className="required-asterisk">*</span>
               </label>
               <select
                 className="form-control-cust-inq-input"
-                id="subtype"
-                name="subtype"
+                id="sub_type"
+                name="sub_type"
                 onChange={handleChange}
-                value={formData.subtype}
+                value={formData.sub_type}
               >
                 <option value="">Sub Type</option>
                 <option value="Local Trip">Local Trip</option>
@@ -331,46 +303,46 @@ const CustomerEnquiry = () => {
             <div className="d-flex gap-3">
               <div>
                 <div className="form-group">
-                  <label htmlFor="pickup" className="form-label">
+                  <label htmlFor="pic_up" className="form-label">
                     Pickup Location:
-                  <span className="required-asterisk">*</span>
+                    <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="text"
                     className="form-control cust-inq-input"
-                    name="pickup"
+                    name="pic_up"
                     placeholder="Pickup Location"
                     onChange={handleChange}
-                    value={formData.pickup}
+                    value={formData.pic_up}
                   />
                 </div>
               </div>
               <div>
-              <div className="form-group">
+                <div className="form-group">
                   <label htmlFor="date1" className="form-label">
                     Date :
                     <span className="required-asterisk">*</span>
                   </label>
-                  
-                  <input
-                  type="date"
-                  className="form-control add-trip-input"
-                  name="date1"
-                  onChange={handleChange}
-                  value={formData.date1}
-                />
 
-                 {/* {formData.date1 && (
+                  <input
+                    type="date"
+                    className="form-control add-trip-input"
+                    name="date1"
+                    onChange={handleChange}
+                    value={formData.date1}
+                  />
+
+                  {/* {formData.date1 && (
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
                   )} */}
                 </div>
-                
+
               </div>
               <div>
                 <div className="form-group">
                   <label htmlFor="time1" className="form-label">
                     Time :
-                  <span className="required-asterisk">*</span>
+                    <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="time"
@@ -388,42 +360,42 @@ const CustomerEnquiry = () => {
                 <div className="form-group">
                   <label htmlFor="dropoff" className="form-label">
                     Dropoff Location:
-                  <span className="required-asterisk">*</span>
+                    <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="text"
                     className="form-control cust-inq-input"
-                    name="dropoff"
+                    name="drop_off"
                     placeholder="Enter Dropoff Location"
                     onChange={handleChange}
-                    value={formData.dropoff}
+                    value={formData.drop_off}
                   />
                 </div>
               </div>
               <div>
-              <div className="form-group">
+                <div className="form-group">
                   <label htmlFor="date2" className="form-label">
                     Date :
                     <span className="required-asterisk">*</span>
                   </label>
                   <input
-                  type="date"
-                  className="form-control add-trip-input"
-                  name="date2"
-                  onChange={handleChange}
-                  value={formData.date2}
-                />
+                    type="date"
+                    className="form-control add-trip-input"
+                    name="date2"
+                    onChange={handleChange}
+                    value={formData.date2}
+                  />
 
-                 {/* {formData.date1 && (
+                  {/* {formData.date1 && (
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
                   )} */}
                 </div>
               </div>
               <div>
                 <div className="form-group">
-                <label htmlFor="time2" className="form-label">
+                  <label htmlFor="time2" className="form-label">
                     Time :
-                <span className="required-asterisk">*</span>
+                    <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="time"
@@ -438,41 +410,39 @@ const CustomerEnquiry = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="totaldays" className="form-label">
-              {/* <span className="required-asterisk">*</span> */}
+              <label htmlFor="totalDays" className="form-label">
+                {/* <span className="required-asterisk">*</span> */}
                 Total Days:
                 <span className="days" >Days</span>
               </label>
               <input
                 type="number"
                 className="form-control-cust-inq-input"
-                name="totaldays"
+                name="totalDays"
                 // placeholder="Total Days"
                 onChange={handleChange}
-                value={formData.totaldays}
-                readOnly
-            
+                value={formData.totalDays}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="hours" className="form-label">
-              {/* <span className="required-asterisk">*</span> */}
+              <label htmlFor="totalHours" className="form-label">
+                {/* <span className="required-asterisk">*</span> */}
                 Total Hours:
                 <span className="days" >Hours</span>
               </label>
               <input
-                  type="text"
-                  className="form-control-cust-inq-input"
-                  name="totalhours"
-                  // placeholder="Total Hours"
-                  value={formData.totalhours}
-                  readOnly
-                />
+                type="number"
+                className="form-control-cust-inq-input"
+                name="totalHours"
+                // placeholder="Total Days"
+                onChange={handleChange}
+                value={formData.totalHours}
+              />
             </div>
             <div className="form-group">
               <label htmlFor="vehicle" className="form-label">
                 Type Of Vehicle:
-              <span className="required-asterisk">*</span>
+                <span className="required-asterisk">*</span>
               </label>
               <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
                 <option value="">Vehicle</option>

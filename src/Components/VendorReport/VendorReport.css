@@ -1,0 +1,61 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr auto; /* Divide into two columns, first column takes remaining space, second column auto size */
+  align-items: center; /* Vertically center items */
+  gap: 20px; /* Gap between grid items */
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 6em;
+  grid-column: 1 / span 1; /* Span one column */
+}
+
+.export-button {
+  grid-column: 2 / span 1; /* Span one column */
+}
+
+.filter-input {
+  display: flex;
+  position: relative;
+  gap: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-input input[type="text"] {
+  padding-right: 30px;
+  width: 296px;
+  height: 40px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.filter-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.filter-dropdown select {
+  width: 200px; /* Adjust the width as needed */
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-dropdown::after {
+  content: '\f078'; /* FontAwesome chevron icon */
+  font-family: FontAwesome;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}

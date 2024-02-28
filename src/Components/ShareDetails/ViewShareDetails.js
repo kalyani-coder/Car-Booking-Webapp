@@ -35,31 +35,6 @@ const ViewShareDetails = () => {
     fetchShareDetails();
   }, []);
 
-  const fetchAdditionalInfo = async (shareDetail) => {
-    try {
-      // Make an API call to fetch additional information based on the share trip details ID
-      const additionalInfoResponse = await fetch(
-        `http://localhost:7000/api/additional-info/${shareDetail.sharetripdetailsId}`
-      );
-      if (!additionalInfoResponse.ok) {
-        throw Error("Error fetching additional info");
-      }
-      const additionalInfoData = await additionalInfoResponse.json();
-
-      // Update the share detail with additional info
-      const updatedShareDetails = shareDetails.map((detail) =>
-        detail._id === shareDetail._id
-          ? { ...detail, ...additionalInfoData }
-          : detail
-      );
-
-      setShareDetails(updatedShareDetails);
-      setFilteredShareDetails(updatedShareDetails);
-    } catch (error) {
-      console.error("Error fetching additional info: " + error.message);
-    }
-  };
-
   const filterShareDetails = () => {
     const filteredData = shareDetails.filter((shareDetail) => {
       const searchTextLower = searchText.toLowerCase();
@@ -76,15 +51,21 @@ const ViewShareDetails = () => {
     filterShareDetails();
   }, [searchText]);
 
+  // Define a global variable to track the invoice number
+let invoiceCounter = 100;
   const generateInvoice = (shareDetail) => {
+    console.log(shareDetail);
     const downloadConfirmed = window.confirm(
       "Do you want to download the invoice?"
     );
 
     if (downloadConfirmed) {
+            // Increment the invoice counter and pad it to ensure it's always three digits
+            invoiceCounter++;
+            const invoiceNo = invoiceCounter.toString().padStart(3, '0');
+      
       const doc = new jsPDF();
 
-      // Add your code to generate the invoice in a table format here
       // For simplicity, we'll just add a sample table with the data
       doc.text("Share Details Invoice", 10, 10);
       // Left side details
@@ -100,7 +81,7 @@ const ViewShareDetails = () => {
       doc.setFontSize(18);
       doc.text("Invoice", 150, 20, { className: "uppercase-text" });
       doc.setFontSize(12);
-      doc.text(`Invoice No: ${shareDetail.invoice_No}`, 150, 30);
+      doc.text(`Invoice No: ${invoiceNo}`, 150, 30); 
       doc.text(`Date: ${shareDetail.date}`, 150, 40);
 
       // Add a line to separate left and right side details
@@ -112,26 +93,22 @@ const ViewShareDetails = () => {
       // Table
       const columns = ["Field", "Value"];
       const rows = [
-        ["Company Name", shareDetail.companyName],
-        ["Company Address", shareDetail.companyAddress],
-        ["Invoice No", shareDetail.invoiceNo],
-        ["Contact No", shareDetail.contactNo],
-        ["Email", shareDetail.email],
-        ["PO No", shareDetail.poNo],
+        
         ["Customer ID", shareDetail.customerId],
+        ["Customer Name", shareDetail.customername],
+        ["Customer Mobile", shareDetail.customermobile], // <-- Add comma here
         ["Vehicle", shareDetail.vehicle],
         ["Trip Type", shareDetail.triptype],
         ["Subtype", shareDetail.subtype],
         ["Pickup", shareDetail.pickup],
         ["Date", shareDetail.date],
         ["Time", shareDetail.time],
-        ["Droff Location", shareDetail.Dropoff],
+        ["Dropoff Location", shareDetail.Dropoff],
         ["Drop Off Date", shareDetail.date1],
         ["Drop Off Time", shareDetail.time1],
         ["Driver Name", shareDetail.drivername],
         ["Driver Email", shareDetail.drivermail],
         ["Mobile No", shareDetail.mobileno],
-        ["Mobile No1", shareDetail.mobileno1],
         // ... (other table data)
       ];
 
@@ -291,10 +268,10 @@ const ViewShareDetails = () => {
                   <th>Trip Type</th>
                   <th>Subtype</th>
                   <th>Pickup</th>
-                  <th>Date</th>
+                  <th>Pickup Date</th>
                   <th>Time</th>
                   <th>Dropoff</th>
-                  <th>Date1</th>
+                  <th>Dropoff Date</th>
                   {/* <th>Time1</th>
                   <th>Driver Name</th>
                   <th>Driver Email</th>
@@ -309,10 +286,10 @@ const ViewShareDetails = () => {
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.triptype}</td>
                     <td>{shareDetail.subtype}</td>
-                    <td>{shareDetail.pickuplocation}</td>
+                    <td>{shareDetail.pickup}</td>
                     <td>{shareDetail.date}</td>
                     <td>{shareDetail.time}</td>
-                    <td>{shareDetail.dropofflocation}</td>
+                    <td>{shareDetail.Dropoff}</td>
                     <td>{shareDetail.date1}</td>
                     {/* <td>{shareDetail.time1}</td>
                     <td>{shareDetail.drivername}</td>

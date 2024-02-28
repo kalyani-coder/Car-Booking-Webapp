@@ -11,6 +11,7 @@ const ViewTrip = () => {
   const [editedTrip, setEditedTrip] = useState({}); // Initialize with an empty object
   const [successMessage, setSuccessMessage] = useState("");
 const [errorMessage, setErrorMessage] = useState("");
+const [selectedTrip, setSelectedTrip] = useState(null); 
 
   const [formData, setFormData] = useState({
     members: 1,
@@ -48,7 +49,6 @@ const [errorMessage, setErrorMessage] = useState("");
   };
 
   const handleCancel = () => {
-    // Attempt to close the window
     window.close();
 
     // If window.close() didn't work, you can try using the following:
@@ -174,6 +174,32 @@ const [errorMessage, setErrorMessage] = useState("");
     setIsEditing(false);
   };
 
+
+  const fetchTripDetails = async (tripId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/add-trip/${tripId}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setSelectedTrip(data);
+    } catch (error) {
+      console.error("Error fetching trip details:", error);
+      setErrorMessage("Error fetching trip details: " + error.message);
+    }
+  };
+
+  const handleViewMore = (tripId) => {
+    fetchTripDetails(tripId);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedTrip(null);
+  };
+
+
+  
+
   return (
     <>
       <Sidebar />
@@ -188,6 +214,48 @@ const [errorMessage, setErrorMessage] = useState("");
           >
             View Trips
           </h2>
+          {/* Other JSX code */}
+          {selectedTrip && (
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded shadow-lg w-96" style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold">Trip Details</h2>
+                  <button className="text-black-500" onClick={handleCloseModal}>
+                    <FaTimes />
+                  </button>
+                </div>
+                <div className="mt-4">
+                <p><strong>Customer Name:</strong> {selectedTrip.customername}</p>
+      <p className="mb-2"><strong>Mobile No:</strong> {selectedTrip.mobileno}</p>
+      <p className="mb-2"><strong>Email:</strong> {selectedTrip.email}</p>
+      <p className="mb-2"><strong>Address:</strong> {selectedTrip.address}</p>
+      <p className="mb-2"><strong>Trip Type:</strong> {selectedTrip.triptype}</p>
+      <p className="mb-2"><strong>Sub Type:</strong> {selectedTrip.subtype}</p>
+      <p className="mb-2"><strong>Pickup:</strong> {selectedTrip.pickup}</p>
+      <p className="mb-2"><strong>Date:</strong> {selectedTrip.date}</p>
+      <p className="mb-2"><strong>Time:</strong> {selectedTrip.time}</p>
+      <p className="mb-2"><strong>Drop Off Location:</strong> {selectedTrip.dropoff}</p>
+      <p className="mb-2"><strong>Date:</strong> {selectedTrip.date1}</p>
+      <p className="mb-2"><strong>Time:</strong> {selectedTrip.time1}</p>
+      <p className="mb-2"><strong>Total Days:</strong> {selectedTrip.totaldays}</p>
+      <p className="mb-2"><strong>Total Hour:</strong> {selectedTrip.hours}</p>
+      <p className="mb-2"><strong>Type of Vehicle:</strong> {selectedTrip.vehicle}</p>
+      <p className="mb-2"><strong>Person 1:</strong> {selectedTrip.Person_1}</p>
+      <p className="mb-2"><strong>Mobile Number 1:</strong> {selectedTrip.Mobile_Number_1}</p>
+      <p className="mb-2"><strong>Person 2:</strong> {selectedTrip.Person_2}</p>
+      <p className="mb-2"><strong>Mobile Number 2:</strong> {selectedTrip.Mobile_Number_2}</p>
+      <p className="mb-2"><strong>Person 3:</strong> {selectedTrip.Person_3}</p>
+      <p className="mb-2"><strong>Mobile Number 3:</strong> {selectedTrip.Mobile_Number_3}</p>
+      <p className="mb-2"><strong>Person 4:</strong> {selectedTrip.Person_4}</p>
+      <p className="mb-2"><strong>Mobile Number 4:</strong> {selectedTrip.Mobile_Number_4}</p>
+      <p className="mb-2"><strong>Person 5:</strong> {selectedTrip.Person_5}</p>
+      <p className="mb-2"><strong>Mobile Number 5:</strong> {selectedTrip.Mobile_Number_5}</p>
+      <p className="mb-2"><strong>Person 6:</strong> {selectedTrip.Person_6}</p>
+      <p className="mb-2"><strong>Mobile Number 6:</strong> {selectedTrip.Mobile_Number_6}</p>
+    </div>
+              </div>
+            </div>
+          )}
           <div className="p-4 space-y-4">
             <input
               type="text"
@@ -673,6 +741,9 @@ const [errorMessage, setErrorMessage] = useState("");
                       ) : (
                         <>
                           <div className="d-flex align-items-center gap-2">
+                          <button className="btn btn-primary" onClick={() => handleViewMore(trip._id)}>
+                        View More
+                      </button>
                             <button
                               className="btn btn-info"
                               onClick={() => handleEditTrip(trip._id)}

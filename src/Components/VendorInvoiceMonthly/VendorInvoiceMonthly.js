@@ -15,10 +15,10 @@ function VendorInvoiceMonthly() {
     date: '',
     contactno: '',
     to: '',
-    customerName: '',
-    customerAddress: '',
-    customerGSTNo: '',
-    customerContactNo: '',
+    vendorName: '',
+    vendorAddress: '',
+    vendorGSTNo: '',
+    vendorContactNo: '',
     discount: '',
     kms: '',
     amount: '',
@@ -83,7 +83,7 @@ function VendorInvoiceMonthly() {
     doc.text('Vendor Name: ' + formData.vendorName, 10, 80);
     doc.text('Vendor Address: ' + formData.vendorAddress, 10, 90);
     doc.text('Vendor GST No: ' + formData.vendorGSTNo, 10, 100);
-    doc.text('Contact No: ' + formData.vendorContactNo, 10, 110);
+    doc.text('Vendor Contact No: ' + formData.vendorContactNo, 10, 110);
 
     // Add table
     const columns = ['Description', 'Kms', 'Amount', 'Total', 'CGST 2.5%', 'SGST 2.5%'];

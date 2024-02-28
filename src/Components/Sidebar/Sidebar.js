@@ -15,7 +15,8 @@ import { CgDetailsMore } from 'react-icons/cg';
 import { MdUpdate } from 'react-icons/md';
 import { AiFillBank } from 'react-icons/ai';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
-import logoImage from '../../assects/images/shivpushpa_logo.png'; // Replace with the actual path to your logo image
+import { AiOutlineFilePdf } from 'react-icons/ai'; 
+import logoImage from '../../assects/images/shivpushpa_logo.png'; 
 // import IndivisualCustomerRate from './../AddRate/IndivisualCustomerRate';
 
 
@@ -117,6 +118,22 @@ const Sidebar = () => {
             </ul>
           </div> <br />
           {/* Customer */}
+          {/* Corporate Customer */}
+          <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+              <AiOutlineUserAdd className='user-icon' /> Master
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/master'}>
+                  Master 
+                </Link>
+              </a></li><hr />
+              
+            </ul>
+          </div> <br />
+          {/* Corporate Customer */}
 
 
           {/* Vendor */}
@@ -313,7 +330,7 @@ const Sidebar = () => {
           <div class="btn-group">
             <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-              <MdUpdate className='user-icon' /> Update Duty Slip
+              <MdUpdate className='user-icon' /> Update Trip Duty Slip
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
@@ -393,8 +410,36 @@ const Sidebar = () => {
               </a></li>
             </ul>
           </div><br />
-          <br />
+              {/* Download Report  */}
+              <div class="btn-group">
+            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
+              <AiOutlineFilePdf className='user-icon' />Generate Report
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/customerreport'}>
+                Customer Report
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/monthlycustomerreport'}>
+                Monthly Customer Report
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/vendorreport'}>
+                Vendor Report
+                </Link>
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/tripdetailsreport'}>
+                Trip Details Report
+                </Link>
+              </a></li>
+            </ul>
+          </div><br />
+       {/* Download Report  */}
           {/* for addign profile and logout button  */}
           <button
             className='btn btn-primary bg-danger'

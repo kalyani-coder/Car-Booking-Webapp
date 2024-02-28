@@ -91,6 +91,7 @@
     background-color: #0056b3;
   }
   
+  
   /* Responsive styles for smaller screens */
   @media (max-width: 768px) {
     .main-container {

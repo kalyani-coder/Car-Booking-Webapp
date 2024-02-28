@@ -16,12 +16,11 @@ const CustomerSchema = new mongoose.Schema({
     drop_of : String,
     date2 : Date,
     time : String,
-    days : String,
-    hours : String,
     vehicle : String,
     address : String,
     time2 : String,
-    totaldays : String,
+    totalDays: String,
+    totalHours: String
     
     
 })

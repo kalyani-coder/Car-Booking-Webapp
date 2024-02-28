@@ -3,6 +3,7 @@ import './UpdateDuty.css';
 import Sidebar from '../Sidebar/Sidebar';
 
 
+
 const UpdateDuty = () => {
   // Initial form data state
   const initialFormData = {
@@ -27,6 +28,7 @@ const UpdateDuty = () => {
     extrahour: '',
     extrahoursamount:'',
     extrakm: '',
+    amount1: '',
     extrakmamount: '',
     subtotalamount: '',
     sgst:'',
@@ -106,12 +108,22 @@ const UpdateDuty = () => {
     
 
     if (name === 'title') {
-      // Calculate rate per km based on the selected title
-      const ratePerKm = value === 'One Day / 80km' ? 80 : 300;
-      setFormData((prevData) => ({
-        ...prevData,
-        rateperkm: ratePerKm,
-      }));
+     // Calculate rate per km based on the selected title
+  let ratePerKm;
+  switch (value) {
+    case 'One Day / 80km':
+      ratePerKm = 80;
+      break;
+    case 'One Day / 300km':
+      ratePerKm = 300;
+      break;
+    case '440km- Local Airport Transfer':
+      ratePerKm = 440; // Example rate, replace with your desired value
+      break;
+    // Add more cases for other options if needed
+    default:
+      ratePerKm = 0;
+  }
 
       // Calculate the total amount
       const totalkm = parseFloat(formData.totalkm) || 0;
@@ -246,7 +258,7 @@ const UpdateDuty = () => {
             <input
               type="text"
               className="form-control"
-              value={formData.ifsccode}
+              value={formData.ifscCode}
               onChange={(e) => setFormData({ ...formData, ifsccode: e.target.value })}
             />
           </div>
@@ -292,10 +304,10 @@ const UpdateDuty = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (Object.values(formData).some((value) => value === '')) {
-      alert('Please fill in all required fields.');
-      return;
-    }
+    // if (Object.values(formData).some((value) => value === '')) {
+    //   alert('Please fill in all required fields.');
+    //   return;
+    // }
 
     const data = { ...formData };
 
@@ -773,12 +785,12 @@ const UpdateDuty = () => {
 
         {/* Buttons for form actions */}
         <div className="button-container">
-          <button type="button" className="btn btn-save" onClick={handleSubmit}>
+        <button type="button" className="customer-btn-submit" onClick={handleSubmit}>
             Save
           </button>
-          <button type="button" className="btn btn-print">
+          {/* <button type="button" className="customer-btn-submit" onClick={generateTripDutySlip}>
             Print
-          </button>
+          </button> */}
         </div>
       </div>
     </>

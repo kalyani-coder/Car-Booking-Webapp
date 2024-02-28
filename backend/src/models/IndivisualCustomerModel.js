@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const indivisualCustomerSchema = new mongoose.Schema({
+    customerId: String,
     Cus_Type : String,
    Cus_name : String,
    company_name : String,

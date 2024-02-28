@@ -1,0 +1,128 @@
+import React, { useState } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+
+const initialFormData = { 
+  add_vehicle: "",
+  add_duty_type: "",
+  add_rate: "",
+};
+
+const MasterCorporateCustomer = () => {
+  const [formData, setFormData] = useState(initialFormData);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [formErrors, setFormErrors] = useState({});
+
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      "http://localhost:7000/api/masterrate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    if (response.ok) {
+      setSuccessMessage("Data added successfully!");
+      setFormData(initialFormData);
+      window.alert("Data added successfully!");
+    } else {
+      console.error("Error posting data:", response.statusText);
+    }
+  };
+
+  return (
+    <>
+      <Sidebar />
+      <div className="rate-Add-container">
+        <div className="rate-main-container">
+          <div className="rate-form-container">
+            <h2
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "8px",
+              }}
+            >
+              Master
+            </h2>
+            {/* Form */}
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="add_vehicle" className="form-label">
+                  Add Vehicle:
+                </label>
+                <input
+                  className="form-control-cust-add-input"
+                  type="text"
+                  id="add_vehicle"
+                  name="add_vehicle"
+                  placeholder="Add Vehicle"
+                  onChange={(e) =>
+                    setFormData({ ...formData, add_vehicle: e.target.value })
+                  }
+                  value={formData.add_vehicle}
+                />
+              </div>
+              <div className="d-flex gap-3">
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="add_duty_type" className="form-label">
+                      Add Duty Type:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="text"
+                      id="add_duty_type"
+                      name="add_duty_type"
+                      placeholder="Add Duty Type"
+                      value={formData.add_duty_type}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          add_duty_type: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="add_rate" className="form-label">
+                      Add Rate:
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="number"
+                      id="add_rate"
+                      name="add_rate"
+                      placeholder="Add Rate"
+                      value={formData.add_rate}
+                      onChange={(e) =>
+                        setFormData({ ...formData, add_rate: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+
+              
+              
+              <button type="submit" className="rate-btn-submit">
+                Save
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default MasterCorporateCustomer;

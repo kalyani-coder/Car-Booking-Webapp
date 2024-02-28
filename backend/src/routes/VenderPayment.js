@@ -33,6 +33,22 @@ router.get('/:id' , async(req, res) => {
     
 })
 
+// GET BY VENDOR ID
+
+router.get("/:id", async (req, res) => {
+    const vendorName = req.params.vendorName;
+  
+    try {
+      const venderDetails = await NewVenderpayment.find({
+        vender_Name: vendorName,
+      });
+  
+      res.status(200).json(venderDetails);
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error", error });
+    }
+  });
+
 // POST METHOD 
 router.post('/' , async(req, res) => {
 
@@ -52,6 +68,9 @@ router.patch('/:id' , async(req, res) => {
     const VenderpaymentId = req.params.id
     
     try{
+        const currentDate = new Data();
+        req.body.current_Date= currentDate;
+        
         const UpdatedVenderpayment = await NewVenderpayment.findByIdAndUpdate(VenderpaymentId , req.body ,{
             new : true
         })
@@ -73,6 +92,22 @@ router.delete('/:id' , async(req, res) => {
     }catch(e){
         res.status(404).json({message : "Can not found" , e})
     }
-})
+});
+
+// GET BY VENDOR ID
+
+router.get("/:id", async (req, res) => {
+    const vendorName = req.params.vendorName;
+  
+    try {
+      const venderDetails = await NewVenderpayment.find({
+        vender_Name: vendorName,
+      });
+  
+      res.status(200).json(venderDetails);
+    } catch (error) {
+      res.status(500).json({ message: "Internal Server Error", error });
+    }
+  });
 
 module.exports = router;

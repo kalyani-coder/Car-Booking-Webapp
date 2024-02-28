@@ -1,83 +1,93 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StartEndDeteails.css";
 import Sidebar from "../Sidebar/Sidebar";
 
 const StartEndDetails = () => {
-  const initialFormData = {
-    pickuplocation: "",
-    date: "",
-    time: "",
-    dropoffLocation: "",
-    date1: "",
-    time1: "",
-    totalDays: "",
-    totalHours: "",
-    triptype: "",
-    tripsubtype: "",
-    customername: "",
-    mobileno: "",
-    drivername: "",
-    mobileNumber: "",
+  const [formData, setFormData] = useState({
     toll: "",
     allowance: "",
     nightstay: "",
-  };
-
-  const [formData, setFormData] = useState(initialFormData);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  });
+ 
+  const [totalDays, setTotalDays] = useState(0);
+  const [totalHours, setTotalHours] = useState(0);
   const [customers, setCustomers] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [selectedCustomerDetails, setSelectedCustomerDetails] = useState({
+    customername: "",
+    cus_Mobile: "",
+    pickuplocation: "",
+    date: "",
+    time: "",
+    dropofflocation: "",
+    date1: "",
+    time1: "",
+    vehicle: "",
+    triptype: "",
+    subtype: "",
+    drivername: "",
+    mail: "",
+    drivermobileno: "",
+    address: "",
+    vehicleno: "",
+  });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  useEffect(() => {
+    // Fetch data from the API endpoint
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:7000/api/share-details");
+        const data = await response.json();
+        // Log the fetched data to check if customer names are present
+        console.log("Fetched Data:", data);
+        // Update the customers state with the fetched data
+        setCustomers(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleCustomerChange = (customerName) => {
+    // Find the selected customer details based on the customer name
+    const customerDetails = customers.find(
+      (trip) => trip.customername === customerName
+    );
+
+    // Log selected customer details to the console
+    console.log("Selected Customer Name:", customerName);
+    console.log("Selected Customer Details:", customerDetails);
+
+    // Set the selected customer details in the state
+    setSelectedCustomerDetails(customerDetails || {});
+    setSelectedCustomer(customerName);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (
-      formData.pickuplocation.trim() === "" ||
-      formData.date.trim() === "" ||
-      formData.time.trim() === "" ||
-      formData.dropoffLocation.trim() === "" ||
-      formData.date1.trim() === "" ||
-      formData.time1.trim() === "" ||
-      formData.totalDays.trim() === "" ||
-      formData.totalHours.trim() === "" ||
-      formData.triptype.trim() === "" ||
-      formData.tripsubtype.trim() === "" ||
-      formData.customername.trim() === "" ||
-      formData.mobileno.trim() === "" ||
-      formData.drivername.trim() === "" ||
-      formData.mobileNumber.trim() === ""
-    ) {
-      alert("All fields are required.");
-      return;
-    }
-    try {
-      const requestBody = {
-        pickuplocation: formData.pickuplocation,
-        date: formData.date,
-        time: formData.time,
-        dropoffLocation: formData.dropoffLocation,
-        date1: formData.date1,
-        time1: formData.time1,
-        totalDays: formData.totalDays,
-        totalHours: formData.totalHours,
-        triptype: formData.triptype,
-        tripsubtype: formData.tripsubtype,
-        customername: formData.customername,
-        mobileno: formData.mobileno,
-        drivername: formData.drivername,
-        mobileNumber: formData.mobileNumber,
-        allowance: formData.allowance,
-        toll: formData.toll,
-        nightstay: formData.nightstay,
-      };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
 
+    // Calculate total days and total hours if relevant fields change
+    if (name === "date" || name === "time" || name === "date1" || name === "time1") {
+      const pickupDateTime = new Date(selectedCustomerDetails.date + " " + selectedCustomerDetails.time);
+      const dropoffDateTime = new Date(selectedCustomerDetails.date1 + " " + selectedCustomerDetails.time1);
+      
+      const diffTime = Math.abs(dropoffDateTime - pickupDateTime);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+      const diffHours = Math.ceil(diffTime / (1000 * 60 * 60)); 
+      
+      setTotalDays(diffDays);
+      setTotalHours(diffHours);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      // Make a POST request to the share-details API with the selected customer details
       const response = await fetch(
         "http://localhost:7000/api/getDetails-fromDriver",
         {
@@ -85,19 +95,38 @@ const StartEndDetails = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(requestBody),
+          body: JSON.stringify({
+            // Adjust the property names based on your API schema
+            customerId: selectedCustomerDetails.customerId,
+            customername: selectedCustomerDetails.customername,
+            customermobile: selectedCustomerDetails.customermobile,
+            vehicle: selectedCustomerDetails.vehicle,
+            triptype: selectedCustomerDetails.triptype,
+            subtype: selectedCustomerDetails.subtype,
+            pickup: selectedCustomerDetails.pickup,
+            date: selectedCustomerDetails.date,
+            time: selectedCustomerDetails.time,
+            Dropoff: selectedCustomerDetails.Dropoff,
+            date1: selectedCustomerDetails.date1,
+            time1: selectedCustomerDetails.time1,
+            drivername: selectedCustomerDetails.drivername,
+            mobileno: selectedCustomerDetails.mobileno,
+            vehicleno: selectedCustomerDetails.vehicleno,
+            toll: formData.toll,
+          allowance: formData.allowance,
+          nightstay: formData.nightstay,
+          }),
         }
       );
 
       if (response.ok) {
-        alert("Data added successfully!");
-        setFormData(initialFormData); // Clear the form fields
+        console.log("Details saved successfully!");
+        alert("Details saved successfully!");
       } else {
-        alert("Failed to add data. Please try again.");
+        console.error("Failed to save details:", response.statusText);
       }
     } catch (error) {
-      console.error("API request error:", error);
-      alert("Failed to add data. Please try again.");
+      console.error("Error saving details:", error);
     }
   };
 
@@ -113,58 +142,45 @@ const StartEndDetails = () => {
         <div className="start-end-details-form">
           <div className="start-end-details-row">
             <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label
-                  htmlFor="pickuplocation"
-                  className="start-end-details-label"
-                >
+              <div className="share-details-form-group">
+                <label htmlFor="vehicle" className="share-details-label">
                   Customer Name:
-                  <span className="required-asterisk">*</span>
                 </label>
-                {/* Dropdown to select a customer */}
-                {/* <select
-                  className="trip-details-input"
-                  id="customerId"
-                  name="customerId"
-                  onChange={(e) => {
-                    const selectedCustomer = customers.find(
-                      (customer) => customer.customername === e.target.value
-                    );
-                    setSelectedCustomer(selectedCustomer);
-                  }}
-                  value={selectedCustomer ? selectedCustomer.customername : ""}
+                <select
+                  className="share-details-input"
+                  value={selectedCustomer}
+                  onChange={(e) => handleCustomerChange(e.target.value)}
                 >
-                  <option value="">Select Customer</option>
-                  {customers.map((customer) => (
-                    <option key={customer.cus_Id} value={customer.customername}>
+                  {/* Default option */}
+                  <option value="" disabled>
+                    Select a customer
+                  </option>
+                  {/* Map over the customers array to populate the dropdown */}
+                  {customers.map((customer, index) => (
+                    <option key={index} value={customer.customername}>
                       {customer.customername}
                     </option>
                   ))}
-                </select> */}
-                <input
-                  className="start-end-details-input"
-                  type="text"
-                  name="customername"
-                  placeholder="Enter Customer Mobile Number"
-                  onChange={handleChange}
-                  value={formData.customername}
-                />
+                </select>
               </div>
             </div>
 
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="mobileno" className="start-end-details-label">
-                  Mobile No:
+                <label
+                  htmlFor="customermobile"
+                  className="start-end-details-label"
+                >
+                  Customer Mobile No:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="start-end-details-input"
                   type="number"
-                  name="mobileno"
-                  placeholder="Enter Customer Mobile Number"
-                  onChange={handleChange}
-                  value={formData.mobileno}
+                  name="customermobile"
+                  placeholder="Enter Customer Mobile No."
+                  value={selectedCustomerDetails.customermobile}
+                  readOnly
                 />
               </div>
             </div>
@@ -180,11 +196,11 @@ const StartEndDetails = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-control cust-inq-input"
+                      className="form-control startenddetails-input"
                       name="pickup"
                       placeholder="Pickup Location"
-                      onChange={handleChange}
-                      value={formData.pickup}
+                      value={selectedCustomerDetails.pickup}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -196,10 +212,10 @@ const StartEndDetails = () => {
 
                     <input
                       type="date"
-                      className="form-control add-trip-input"
+                      className="form-control startenddetails-input"
                       name="date"
-                      onChange={handleChange}
-                      value={formData.date}
+                      value={selectedCustomerDetails.date}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -210,10 +226,10 @@ const StartEndDetails = () => {
                     </label>
                     <input
                       type="time"
-                      className="form-control cust-inq-input"
+                      className="form-control startenddetails-input"
                       name="time"
-                      onChange={handleChange}
-                      value={formData.time}
+                      value={selectedCustomerDetails.time}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -227,13 +243,13 @@ const StartEndDetails = () => {
                       Total Days:
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="rate-form-control-Startenddetails"
                       type="number"
                       id="totalDays"
                       name="totalDays"
                       placeholder="Total Days"
-                      value={formData.totalDays}
-                      onChange={handleChange}
+                      // value={selectedCustomerDetails.date} readOnly
+
                       required
                     />
                   </div>
@@ -244,13 +260,13 @@ const StartEndDetails = () => {
                       Total Hours:
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="rate-form-control-Startenddetails"
                       type="number"
                       id="totalHours"
                       name="totalHours"
                       placeholder="Total Hours"
-                      value={formData.totalHours}
-                      onChange={handleChange}
+                      // value={selectedCustomerDetails.date} readOnly
+
                       required
                     />
                   </div>
@@ -264,31 +280,31 @@ const StartEndDetails = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="dropoff" className="form-label">
-                    Dropoff Location:
+                      Dropoff Location:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       type="text"
-                      className="form-control cust-inq-input"
+                      className="form-control startenddetails-input"
                       name="dropoff"
                       placeholder="Dropoff Location"
-                      onChange={handleChange}
-                      value={formData.dropoff}
+                      value={selectedCustomerDetails.Dropoff}
+                      readOnly
                     />
                   </div>
                 </div>
                 <div>
                   <div className="form-group">
                     <label htmlFor="date1" className="form-label">
-                    Dropoff Date :<span className="required-asterisk">*</span>
+                      Dropoff Date :<span className="required-asterisk">*</span>
                     </label>
 
                     <input
                       type="date"
-                      className="form-control add-trip-input"
+                      className="form-control startenddetails-input"
                       name="date1"
-                      onChange={handleChange}
-                      value={formData.date1}
+                      value={selectedCustomerDetails.date1}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -299,41 +315,28 @@ const StartEndDetails = () => {
                     </label>
                     <input
                       type="time"
-                      className="form-control cust-inq-input"
+                      className="form-control startenddetails-input"
                       name="time1"
-                      onChange={handleChange}
-                      value={formData.time1}
+                      value={selectedCustomerDetails.time1}
+                      readOnly
                     />
                   </div>
                 </div>
               </div>
             </div>
             <div className="start-end-details-column">
-            <div className="form-group">
+              <div className="form-group">
                 <label htmlFor="title" className="form-label">
                   Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
-                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
-                <select className="start-end-details-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
-                            <option value="">Vehicle</option>
-                            <option value="Sedan Car">Sedan Car</option>
-                            <option value="Mini Car">Mini Car</option>
-                            <option value="SUV Car">SUV Car</option>
-                            <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-                            <option value="AC Bus 17-seater">AC Bus 17-seater</option>
-                            <option value="AC Bus 20-seater">AC Bus 20-seater</option>
-                            <option value="AC Bus 32-seater">AC Bus 32-seater</option>
-                            <option value="AC Bus 35-seater">AC Bus 35-seater</option>
-                            <option value="AC Bus 40-seater">AC Bus 40-seater</option>
-                            <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-                            <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-                            <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-                            <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-                            <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-                            <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-                            <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
-                          </select>
+                <input
+                  type="text"
+                  className="start-end-details-input"
+                  placeholder="Vehicle"
+                  value={selectedCustomerDetails.vehicle}
+                  readOnly
+                />
               </div>
             </div>
           </div>
@@ -345,16 +348,13 @@ const StartEndDetails = () => {
                   Trip Type:
                   <span className="required-asterisk">*</span>
                 </label>
-                <select
+                <input
+                  type="text"
                   className="start-end-details-input"
-                  name="triptype"
-                  onChange={handleChange}
-                  value={formData.triptype}
-                >
-                  <option value="">Trip Type</option>
-                  <option value="One Way Trip">One Way Trip</option>
-                  <option value="Return Trip">Return Trip</option>
-                </select>
+                  placeholder="Vehicle"
+                  value={selectedCustomerDetails.triptype}
+                  readOnly
+                />
               </div>
             </div>
 
@@ -367,22 +367,13 @@ const StartEndDetails = () => {
                   Sub Type:
                   <span className="required-asterisk">*</span>
                 </label>
-                <select
+                <input
+                  type="text"
                   className="start-end-details-input"
-                  name="tripsubtype"
-                  onChange={handleChange}
-                  value={formData.tripsubtype}
-                >
-                  <option value="">Sub Type</option>
-                  <option value="Local Trip">Local Trip</option>
-                  <option value="Outstation Trip">Outstation Trip</option>
-                  <option value="Outstation Local Trip">
-                    Outstation Local Trip
-                  </option>
-                  <option value="Outstation Outstation Trip">
-                    Outstation Outstation Trip
-                  </option>
-                </select>
+                  placeholder="Vehicle"
+                  value={selectedCustomerDetails.subtype}
+                  readOnly
+                />
               </div>
             </div>
           </div>
@@ -398,8 +389,8 @@ const StartEndDetails = () => {
                   type="text"
                   name="drivername"
                   placeholder="Enter Driver Name"
-                  onChange={handleChange}
-                  value={formData.drivername}
+                  value={selectedCustomerDetails.drivername}
+                  readOnly
                 />
               </div>
             </div>
@@ -409,15 +400,15 @@ const StartEndDetails = () => {
                   htmlFor="mobileNumber"
                   className="start-end-details-label"
                 >
-                  Mobile No:
+                  Driver Mobile No:
                 </label>
                 <input
                   className="start-end-details-input"
                   type="text"
                   name="mobileNumber"
-                  placeholder="Enter Driver Mobile Number"
-                  onChange={handleChange}
-                  value={formData.mobileNumber}
+                  placeholder="Enter Driver Mobile No."
+                  value={selectedCustomerDetails.mobileno}
+                  readOnly
                 />
               </div>
             </div>
@@ -434,29 +425,26 @@ const StartEndDetails = () => {
                   className="start-end-details-input"
                   type="text"
                   name="allowance"
-                  placeholder="Enter Driver Allowance"
-                  onChange={handleChange}
+                  placeholder="Enter Allowance"
                   value={formData.allowance}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="start-end-details-column">
-            <div className="d-flex gap-2">
+              <div className="d-flex gap-2">
                 <div>
                   <div className="form-group">
                     <label htmlFor="toll" className="form-label">
-                    Toll Parking:
-                      {/* <span className="required-asterisk">*</span> */}
+                      Toll Parking:
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="rate-form-control-Startenddetails"
                       type="number"
-                      id="toll"
                       name="toll"
-                      placeholder="Toll Parking"
+                      placeholder="Enter Toll Parking"
                       value={formData.toll}
                       onChange={handleChange}
-                      required
                     />
                   </div>
                 </div>
@@ -464,33 +452,32 @@ const StartEndDetails = () => {
                   <div className="form-group">
                     <label htmlFor="nightstay" className="form-label">
                       Night Stay:
-                      {/* <span className="required-asterisk">*</span> */}
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="rate-form-control-Startenddetails"
                       type="number"
-                      id="nightstay"
                       name="nightstay"
-                      placeholder="nightstay"
-                      value={formData.nightstay}
+                      placeholder="Enter Night Stay"
+                      value={FormData.nightstay}
                       onChange={handleChange}
-                      required
                     />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
 
           <div className="start-end-details-button-row">
-            <button type="button" className="start-end-details-button">
+          <button
+              type="button"
+              className="customer-btn-submit mx-2"
+            >
               Print
             </button>
             <button
               type="button"
-              className="start-end-details-button mx-2"
-              onClick={handleSubmit}
+              className="customer-btn-submit mx-2"
+              onClick={handleSave}
             >
               Add
             </button>

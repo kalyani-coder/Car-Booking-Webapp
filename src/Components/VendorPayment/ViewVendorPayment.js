@@ -148,6 +148,7 @@ const ViewVendorPayment = () => {
                 <th>Mobile Number</th>
                 <th>Payment</th>
                 <th>Amount</th>
+                <th>Tds 1 %</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -161,6 +162,7 @@ const ViewVendorPayment = () => {
                     <td>{vendor.mobile_Number}</td>
                     <td>{vendor.payment}</td>
                     <td>{vendor.amount}</td>
+                    <td>{vendor.tds}</td>
                     <td>
                       <Link  className="btn btn-info ml-2" to={`/ViewVendorPayment/${vendor._id}`}>
                         View More

@@ -56,9 +56,20 @@
     border: none;
     cursor: pointer;
   }
- .add-input{
-  width: 350px;
-  padding: 8px;
+ 
+ .startenddetails-input{
+  width: 283px;
+  height: 43px;
+ }
+ .rate-form-control-Startenddetails{
+  width: 438px;
+    height: 43px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 10px;
  }
  
   

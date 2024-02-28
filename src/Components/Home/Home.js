@@ -19,7 +19,7 @@ const Home = () => {
       <>
         <Sidebar />
         <h1 className='text-center fs-2 fw-bold text-primary dashboard'>Welcome to Admin Dashboard</h1>
-        <div style={{ width: '80%', margin: 'auto' }}>
+        <div style={{ width: '80%', margin: 'auto', marginLeft: '300px' }}>
           <BarChart width={500} height={300} data={data}>
             <CartesianGrid strokeDasharray='3 3' />
             <XAxis dataKey='name' />

@@ -204,7 +204,7 @@ function AddPayment() {
 
     try {
       // Add customerId to formData
-      const dataToSend = { ...formData, customerId: formData.customername };
+      const dataToSend = { ...formData, customerId: formData.customer_Name };
 
       const response = await fetch("http://localhost:7000/api/customer-payment", {
         method: "POST",
@@ -257,7 +257,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="company_Name"
                             placeholder="Enter Company name"
                             value={formData.company_Name}
@@ -273,7 +273,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="GST_No"
                             placeholder="Enter GST No"
                             value={formData.GST_No}
@@ -292,7 +292,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="reporting_Address"
                             placeholder="Enter Reporting Address"
                             value={formData.reporting_Address}
@@ -308,7 +308,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="Date"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="Date"
                             placeholder="Date"
                             value={formData.Date}
@@ -325,7 +325,7 @@ function AddPayment() {
                           <span className="required-asterisk">*</span>
                         </label>
                         <select
-                          className="form-control"
+                          className="update-duty-form-control"
                           name="customer_Name"
                           value={formData.customer_Name}
                           onChange={handleChange}
@@ -346,7 +346,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="vehicle_Number"
                             placeholder="Enter Vehicle Number"
                             value={formData.vehicle_Number}
@@ -365,7 +365,7 @@ function AddPayment() {
                           </label>
                           {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                           <select
-                            className="form-control mb-2"
+                            className="update-duty-form-control mb-2"
                             name="vehicle_Type"
                             id="vehicle_Type"
                             onChange={handleChange}
@@ -426,7 +426,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="quantity"
                             placeholder="Add Quantity"
                             onChange={handleChange}
@@ -445,7 +445,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="from"
                             placeholder="From"
                             value={formData.from}
@@ -461,7 +461,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="to"
                             placeholder="To"
                             value={formData.to}
@@ -480,7 +480,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="starting_Km"
                             placeholder="Enter  Starting Kms"
                             onChange={handleChange}
@@ -496,7 +496,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="time"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="starting_Time"
                             placeholder="Enter Starting Time"
                             onChange={handleChange}
@@ -515,7 +515,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             id="closing_km"
                             name="closing_km"
                             placeholder="Enter  Closing Kms"
@@ -532,7 +532,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="Time"
-                            className="form-control"
+                            className="update-duty-form-control"
                             id="closing_Time"
                             name="closing_Time"
                             placeholder="Enter  Closing Time"
@@ -552,7 +552,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="total_Km"
                             placeholder="Enter  Total Kms"
                             onChange={handleChange}
@@ -568,7 +568,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="Text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="total_hours"
                             placeholder="Enter  Total Hours"
                             onChange={handleChange}
@@ -586,7 +586,7 @@ function AddPayment() {
                             <span className="required-asterisk">*</span>
                           </label>
                           <select
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="title"
                             id="duty_type"
                             value={formData.title}
@@ -617,7 +617,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="title_Amount"
                             placeholder="Enter Title Amount"
                             value={formData.title_Amount}
@@ -637,7 +637,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             id="extra_Km"
                             name="extra_Km"
                             placeholder="Enter  Extra Kms"
@@ -654,7 +654,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="extramkm_Amount"
                             placeholder="Enter Extra Kms Amount"
                             value={formData.extramkm_Amount}
@@ -674,7 +674,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="update-duty-form-control"
                             id="extra_Hours"
                             name="extra_Hours"
                             placeholder="Enter  Extra Hours"
@@ -692,7 +692,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="extrahours_Amount"
                             placeholder="Enter Extra Hours Amount"
                             value={formData.extrahours_Amount}
@@ -712,7 +712,7 @@ function AddPayment() {
                         </label>
                         <input
                           type="number"
-                          className="form-control"
+                          className="update-duty-form-control"
                           name="subtotal_Amount"
                           placeholder="SubTotal Amount"
                           value={formData.subtotal_Amount}
@@ -730,7 +730,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="SGST"
                             placeholder="Enter  SGST Amount"
                             value={formData.SGST}
@@ -746,7 +746,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="CGST"
                             placeholder="Enter CGST  Amount"
                             value={formData.CGST}
@@ -765,7 +765,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="total_Amount"
                             placeholder="Total Amount"
                             value={formData.total_Amount}
@@ -782,7 +782,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="advance_Amount"
                             placeholder="Enter Advance Amount"
                             value={formData.advance_Amount}
@@ -801,7 +801,7 @@ function AddPayment() {
                           </label>
                           <input
                             type="number"
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="remaining_Amount"
                             placeholder="Enter Remaining Amount"
                             value={formData.remaining_Amount}
@@ -817,7 +817,7 @@ function AddPayment() {
                             <span className="required-asterisk">*</span>
                           </label>
                           <select
-                            className="form-control"
+                            className="update-duty-form-control"
                             name="payment_Method"
                             value={formData.payment_Method}
                             onChange={handleChange}

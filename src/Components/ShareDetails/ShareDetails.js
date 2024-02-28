@@ -1,126 +1,104 @@
-import React, { useState, useEffect } from "react";
-import "./SharedDetails.css"; // Your custom CSS file
-import Sidebar from "../Sidebar/Sidebar";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../Sidebar/Sidebar';
+import './SharedDetails.css';
 
 const ShareDetails = () => {
-  // Initial form data state
-  const initialFormData = {
-    customerId : "",
-    customername : "", 
-    mobileno: "",
-    vehicle: "",
-    vehicleno: "",
-    triptype: "",
-    subtype: "",
-    pickup: "",
-    date: "",
-    time: "",
-    dropoff: "",
-    date1: "",
-    time1: "",
-    drivername: "",
-    drivermobileno: "",
-  };
-
-  // State variables
-  const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState("");
-  const [selectedCustomer, setSelectedCustomer] = useState("");
   const [customers, setCustomers] = useState([]);
-  const [tripDetails, setTripDetails] = useState(initialFormData); // Add tripDetails state
-  const [error, setError] = useState(""); // Add error state
+  const [selectedCustomer, setSelectedCustomer] = useState('');
+  const [selectedCustomerDetails, setSelectedCustomerDetails] = useState({
+    customermobile: '',
+    pickuplocation: '',
+    date: '',
+    time: '',
+    dropofflocation: '',
+    date1: '',
+    time1: '',
+    vehicle: '',
+    triptype: '',
+    subtype: '',
+    drivername: '',
+    mail: '',
+    drivermobileno: '',
+    address: '',
+    vehicleno: '',
+  });
 
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const response = await fetch('http://localhost:7000/api/add-trip');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setCustomers(data);
-      } catch (error) {
-        console.error('Error fetching customers:', error);
-        setError('Error fetching customers: ' + error.message);
-      }
-    };
-    fetchCustomers();
-  }, []);
-
-  useEffect(() => {
-    if (selectedCustomer) {
-      fetchTripDetails(selectedCustomer._id); // Pass customerId to fetchTripDetails
-    }
-  }, [selectedCustomer]);
-
-  const fetchTripDetails = async (customerId) => {
-    try {
-      const response = await fetch(`http://localhost:7000/api/trip-details/${customerId}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch trip details');
-      }
-      const tripData = await response.json();
-      setTripDetails(tripData);
-      console.log("tripdetails", tripData); // Log tripData to see fetched details
-    } catch (error) {
-      console.error('Error fetching trip details:', error);
-      setError('Error fetching trip details: ' + error.message);
-    }
-  };
   
 
-  // Handle form field changes
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  useEffect(() => {
+    // Fetch data from the API endpoint
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:7000/api/trip-details');
+        const data = await response.json();
+        // Update the customers state with the fetched data
+        setCustomers(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array to run the effect only once on component mount
+
+  const handleCustomerChange = (customerName) => {
+    // Find the selected customer details based on the customer name
+    const customerDetails = customers.find((trip) => trip.customername === customerName);
+
+    // Log selected customer details to the console
+    console.log('Selected Customer Details:', customerDetails);
+
+    // Set the selected customer details in the state
+    setSelectedCustomerDetails(customerDetails || {});
+    setSelectedCustomer(customerName);
   };
-   
 
- // Handle form submission
-const handleSave = async () => {
-  // Validate form fields
-  for (const key in formData) {
-    if (formData[key] === "") {
-      setMobilenoError("All fields are required.");
-      return;
+  const handleSave = async () => {
+    try {
+      // Make a POST request to the share-details API with the selected customer details
+      const response = await fetch('http://localhost:7000/api/share-details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          // Adjust the property names based on your API schema
+          customerId: selectedCustomerDetails.customerId,
+          customername: selectedCustomerDetails.customername,
+          // cus_Name: selectedCustomerDetails.cus_Name,
+          customermobile: selectedCustomerDetails.customermobile,
+          vehicle: selectedCustomerDetails.vehicle,
+          triptype: selectedCustomerDetails.triptype,
+          subtype: selectedCustomerDetails.subtype,
+          pickup: selectedCustomerDetails.pickuplocation,
+          date: selectedCustomerDetails.date,
+          time: selectedCustomerDetails.time,
+          Dropoff: selectedCustomerDetails.dropofflocation,
+          date1: selectedCustomerDetails.date1,
+          time1: selectedCustomerDetails.time1,
+          drivername: selectedCustomerDetails.drivername,
+          mobileno: selectedCustomerDetails.drivermobileno,
+          vehicleno: selectedCustomerDetails.vehicleno,
+        }),
+      });
+
+      if (response.ok) {
+        console.log('Details saved successfully!');
+       alert('Share Details saved successfully!');
+      } else {
+        console.error('Failed to save details:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error saving details:', error);
     }
-  }
-
-  // Reset error
-  setMobilenoError("");
-
-  try {
-    const response = await fetch("http://localhost:7000/api/share-details", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      alert("Data saved successfully!");
-      setFormData(initialFormData); // Reset the form
-    } else {
-      alert("Failed to save data. Please try again.");
-    }
-  } catch (error) {
-    console.error("API request error:", error);
-    alert("Failed to save data. Please try again.");
-  }
-};
-
+  };
 
   return (
     <>
       <Sidebar />
       <div className="share-details-container">
-        {mobilenoError && <p className="text-red-500">{mobilenoError}</p>}
+        {/* {mobilenoError && <p className="text-red-500">{mobilenoError}</p>} */}
         <div className="share-details-form">
           <h2
             style={{
@@ -135,42 +113,33 @@ const handleSave = async () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-              <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
-                <span className="required-asterisk">*</span>
-                <select
-                  className="trip-details-input"
-                  id="customerId"
-                  name="customerId"
-                  onChange={(e) => {
-                    const selectedCustomer = customers.find(
-                      (customer) => customer.customername === e.target.value
-                    );
-                    setSelectedCustomer(selectedCustomer);
-                  }}
-                  value={selectedCustomer ? selectedCustomer.customername : ''}
-                >
-                  <option value="">Select Customer</option>
-                  {customers.map((customer) => (
-                    <option key={customer._id} value={customer.customername}>
-                      {customer.customername}
-                    </option>
-                  ))}
-                </select>
+              <label htmlFor="vehicle" className="share-details-label">
+                  Customer Name:
+                </label>
+                <select  className="share-details-input" value={selectedCustomer} onChange={(e) => handleCustomerChange(e.target.value)}>
+          {/* Default option */}
+          <option value="" disabled>Select a customer</option>
+          {/* Map over the customers array to populate the dropdown */}
+          {customers.map((customer, index) => (
+            <option key={index}   value={customer.customername}>
+              {customer.customername}
+            </option>
+          ))}
+        </select>
               </div>
             </div>
 
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="mobileno" className="share-details-label">
+                <label htmlFor="customermobile" className="share-details-label">
                   Customer Mobile No:
                 </label>
                 <input
                   type="number"
                   className="share-details-input"
-                  name="mobileno"
+                  name="customermobile"
                   placeholder="Customer Mobile Number"
-                  onChange={handleChange}
-                  value={formData.mobileno}
+                  value={selectedCustomerDetails.customermobile} readOnly
                 />
               </div>
             </div>
@@ -184,10 +153,7 @@ const handleSave = async () => {
                 </label>
                 <select
                   className="share-details-input"
-                  name="vehicle"
-                  id="vehicle"
-                  onChange={handleChange}
-                  value={formData.vehicle}
+                  value={selectedCustomerDetails.vehicle} readOnly
                 >
                   <option value="">Vehicle</option>
                   <option value="Sedan Car">Sedan Car</option>
@@ -232,8 +198,7 @@ const handleSave = async () => {
                   className="share-details-input"
                   name="vehicleno"
                   placeholder="Vehicle Number"
-                  onChange={handleChange}
-                  value={formData.vehicleno}
+                  value={selectedCustomerDetails.vehicleno} readOnly
                 />
               </div>
             </div>
@@ -249,8 +214,7 @@ const handleSave = async () => {
                   className="share-details-input"
                   name="triptype"
                   id="triptype"
-                  onChange={handleChange}
-                  value={formData.triptype}
+                  value={selectedCustomerDetails.triptype} readOnly
                 >
                   <option value="">Trip Type</option>
                   <option value="One Way Trip">One Way Trip</option>
@@ -268,8 +232,7 @@ const handleSave = async () => {
                   className="share-details-input"
                   name="subtype"
                   id="subtype"
-                  onChange={handleChange}
-                  value={formData.subtype}
+                  value={selectedCustomerDetails.subtype} readOnly
                 >
                   <option value="">Sub Type</option>
                   <option value="Local Trip">Local Trip</option>
@@ -287,16 +250,15 @@ const handleSave = async () => {
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="pickup" className="share-details-label">
+                <label htmlFor="pickuplocation" className="share-details-label">
                   Pickup Location:
                 </label>
                 <input
                   type="text"
                   className="share-details-input"
-                  name="pickup"
+                  name="pickuplocation"
                   placeholder="Pickup Location"
-                  onChange={handleChange}
-                  value={formData.pickup}
+                  value={selectedCustomerDetails.pickuplocation} readOnly
                 />
               </div>
             </div>
@@ -304,7 +266,7 @@ const handleSave = async () => {
             <div className="share-details-column">
               <div className="share-details-form-group">
                 <label
-                  htmlFor="dropoff"
+                  htmlFor="dropofflocation"
                   className="share-details-label"
                 >
                   Dropoff Location:
@@ -312,10 +274,8 @@ const handleSave = async () => {
                 <input
                   type="text"
                   className="share-details-input"
-                  name="dropoff"
                   placeholder="Enter Dropoff Location"
-                  onChange={handleChange}
-                  value={formData.dropoff}
+                  value={selectedCustomerDetails.dropofflocation} readOnly
                 />
               </div>
             </div>
@@ -327,16 +287,7 @@ const handleSave = async () => {
                 <label htmlFor="date" className="share-details-label">
                   Pickup Date:
                 </label>
-                <DatePicker
-                  className="share-details-input"
-                  name="date1"
-                  selected={formData.date}
-                  onChange={(date) =>
-                    setFormData((prevData) => ({ ...prevData, date: date }))
-                  }
-                  dateFormat="dd/MM/yyyy"
-                  placeholderText="dd/mm/yyyy"
-                />
+                <input type="date"  className="share-details-input" value={selectedCustomerDetails.date} readOnly />
               </div>
             </div>
 
@@ -345,17 +296,7 @@ const handleSave = async () => {
                 <label htmlFor="date1" className="share-details-label">
                   Dropoff Date:
                 </label>
-                <DatePicker
-                  className="share-details-input"
-                  name="date1"
-                  selected={formData.date1}
-                  onChange={(date) =>
-                    setFormData((prevData) => ({ ...prevData, date1: date }))
-                  }
-                  dateFormat="dd/MM/yyyy"
-                  showPopperArrow={false}
-                  placeholderText="dd/mm/yyyy"
-                />
+                <input type="date"  className="share-details-input" value={selectedCustomerDetails.date1} readOnly />
               </div>
             </div>
           </div>
@@ -370,8 +311,7 @@ const handleSave = async () => {
                   type="time"
                   className="share-details-input"
                   name="time"
-                  onChange={handleChange}
-                  value={formData.time}
+                  value={selectedCustomerDetails.time}
                 />
               </div>
             </div>
@@ -385,8 +325,7 @@ const handleSave = async () => {
                   type="time"
                   className="share-details-input"
                   name="time1"
-                  onChange={handleChange}
-                  value={formData.time1}
+                  value={selectedCustomerDetails.time1} readOnly
                 />
               </div>
             </div>
@@ -403,8 +342,7 @@ const handleSave = async () => {
                   className="share-details-input"
                   name="drivername"
                   placeholder="Driver Name"
-                  onChange={handleChange}
-                  value={formData.drivername}
+                  value={selectedCustomerDetails.drivername} readOnly
                 />
               </div>
             </div>
@@ -417,10 +355,8 @@ const handleSave = async () => {
                 <input
                   type="number"
                   className="share-details-input"
-                  name="cus_Mobile"
-                  placeholder="Customer Mobile Number"
-                  onChange={handleChange}
-                  value={formData.driver}
+                  placeholder="Driver Mobile Number"
+                  value={selectedCustomerDetails.drivermobileno}
                 />
               </div>
             </div>
@@ -428,7 +364,7 @@ const handleSave = async () => {
 
           <button
             type="button"
-            className="share-details-button"
+            className="customer-btn-submit"
             onClick={handleSave}
           >
             Save

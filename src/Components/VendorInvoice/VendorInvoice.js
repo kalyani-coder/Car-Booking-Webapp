@@ -89,7 +89,7 @@ function VendorInvoice() {
     doc.text('Date: ' + formData.date, 150, 50);
     doc.text('Customer ID GST No: 27AABTS4503R1Z1', 150, 60);
 
-    doc.text('Vendor Name: ' + formData.vendorName, 10, 80);
+    doc.text('Vendor Name: ' + formData.vender_Name, 10, 80);
     doc.text('Vendor Address: ' + formData.vendorAddress, 10, 90);
     doc.text('Vendor GST No: ' + formData.vendorGSTNo, 10, 100);
     doc.text('Contact No: ' + formData.vendorContactNo, 10, 110);
@@ -194,7 +194,7 @@ function VendorInvoice() {
         <div>
           
           
-          <button className="btn btn-danger mt-2" onClick={handleGenerate}>
+        <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
         </div>

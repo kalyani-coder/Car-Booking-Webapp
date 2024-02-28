@@ -8,6 +8,7 @@ const VendorRate = () => {
     GST_No: "",
     vender_Name: "",
     mobile_Number: "",
+    vehicle: "",
     title: "",
     rate: "",
     rate_per_Km: "",
@@ -23,7 +24,7 @@ const VendorRate = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "mobileno" && value.length > 10) {
+    if (name === "mobile_Number" && value.length > 10) {
       // Prevent further input if more than 10 digits
       return;
     }
@@ -33,7 +34,7 @@ const VendorRate = () => {
       [name]: value,
     }));
 
-    if (name === "mobileno") {
+    if (name === "mobile_Number") {
       // Validate mobile number (10 digits)
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
@@ -43,11 +44,9 @@ const VendorRate = () => {
     }
   };
 
-    
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the form from submitting and causing a page reload
-    console.log("Form Data Submitted:", formData);
+
     // Validate form fields
     for (const key in formData) {
       if (formData[key] === "") {
@@ -70,10 +69,9 @@ const VendorRate = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(initialFormData),
+          body: JSON.stringify(formData), // Sending the updated formData instead of initialFormData
         });
-     
-  
+
       if (response.ok) {
         alert("Data added successfully!");
         setFormData(initialFormData); // Reset the form fields to their initial values
@@ -104,7 +102,7 @@ const VendorRate = () => {
             <form onSubmit={handleSubmit}>
             
               <div className="rate-form-group">
-                <label htmlFor="companyname" className="form-label">
+                <label htmlFor="company_Name" className="form-label">
                   Company Name:
                   <span className="required-asterisk">*</span>
                 </label>
@@ -120,7 +118,7 @@ const VendorRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="gstno" className="form-label">
+                <label htmlFor="GST_No" className="form-label">
                   GST No:
                   <span className="required-asterisk">*</span>
                 </label>
@@ -136,7 +134,7 @@ const VendorRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="vendorname" className="form-label">
+                <label htmlFor="vender_Name" className="form-label">
                   Vendor Name:
                   <span className="required-asterisk">*</span>
                 </label>
@@ -151,7 +149,7 @@ const VendorRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="mobileno" className="form-label">
+                <label htmlFor="mobile_Number" className="form-label">
                   Mobile No:
                   <span className="required-asterisk">*</span>
                 </label>
@@ -166,34 +164,38 @@ const VendorRate = () => {
                   required
                 />
               </div>
+              <div className="trip-form-group">
+            <label htmlFor="vehicle" className="trip-form-label">
+              Type Of Vehicle:
+            </label>
+            <select
+              className="form-control-add-trip-input"
+              name="vehicle"
+              id="vehicle"
+              onChange={handleChange}
+              value={formData.vehicle}
+            >
+              <option value="">Vehicle</option>
+              <option value="Sedan Car">Sedan Car</option>
+              <option value="Mini Car">Mini Car</option>
+              <option value="SUV Car">SUV Car</option>
+              <option value="AC Bus 13-Seater">AC Bus 13-Seater</option>
+              <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
+              <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
+              <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
+              <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
+              <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
+              <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
+              <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
+              <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
+              <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
+              <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
+              <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
+              <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
+            </select>
+          </div>
               <div className="form-group">
-                <label htmlFor="title" className="form-label">
-                  Type Of Vehicle:
-                  <span className="required-asterisk">*</span>
-                </label>
-                {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
-                <select className="form-control-cust-add-input" name="vehicle_Type" id="vehicle_Type" onChange={handleChange} value={formData.vehicle_Type}>
-                            <option value="">Vehicle</option>
-                            <option value="Sedan Car">Sedan Car</option>
-                            <option value="Mini Car">Mini Car</option>
-                            <option value="SUV Car">SUV Car</option>
-                            <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-                            <option value="AC Bus 17-seater">AC Bus 17-seater</option>
-                            <option value="AC Bus 20-seater">AC Bus 20-seater</option>
-                            <option value="AC Bus 32-seater">AC Bus 32-seater</option>
-                            <option value="AC Bus 35-seater">AC Bus 35-seater</option>
-                            <option value="AC Bus 40-seater">AC Bus 40-seater</option>
-                            <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-                            <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-                            <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-                            <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-                            <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-                            <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-                            <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
-                          </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="rateperkm" className="form-label">
+                <label htmlFor="rate_per_Km" className="form-label">
                   Rate Per KM (Extra Km):
                   <span className="required-asterisk">*</span>
                 </label>
@@ -240,7 +242,7 @@ const VendorRate = () => {
                     </label>
                     <input
                       className="rate-form-control"
-                      type="text"
+                      type="number"
                       id="rate"
                       name="rate"
                       placeholder="rate"

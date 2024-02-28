@@ -6,7 +6,7 @@ const ShareDetailsSchema = new mongoose.Schema({
         customerId : String,
         customername : String, 
         cus_Name: String,
-        cus_Mobile: Number,
+        customermobile: Number,
         vehicle: String,
         triptype: String,
         subtype: String,

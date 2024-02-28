@@ -68,7 +68,7 @@ router.delete('/:id' , async(req, res) => {
     const GetDetailsFromDriverId = req.params.id 
 
     try{
-        const deletedCustomeEnquiry = await NewGetDetailsFromDriver.findByIdAndRemove(GetDetailsFromDriverId)
+        const deletedCustomeEnquiry = await NewGetDetailsFromDriver.findByIdAndDelete(GetDetailsFromDriverId)
         res.status(201).json({message : " Start End details Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})

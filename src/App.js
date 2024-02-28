@@ -40,7 +40,13 @@ import ViewCorporateCustomr from './Components/ViewCustomers/ViewCorporateCustom
 import IndivisualCustomers from './Components/ViewCustomers/IndivisualCustomers';
 import ViewDetailsPayment from './Components/VendorPayment/ViewDetailsPayment';
 import ViewDetailsCustomerPayment from './Components/AddPayment/ViewDetailsCustomerPayment'; 
+import CustomerReport from './Components/GenerateReport/CustomerReport';
+import TripDetailsReport from './Components/GenerateReport/TripDetailsReport';
+import MonthlyCustomerReport from './Components/GenerateReport/MonthlyCustomerReport';
+import VendorReport from './Components/VendorReport/VendorReport';
 // import IndivisualCustomerRate from './Components/AddRate/IndivisualCustomerRate';
+import MasterCorporateCustomer from './Components/Master/MasterCorporateCustomer';
+
 
 
 
@@ -82,6 +88,7 @@ function App() {
     <Route path='/customerinvoicemonthly' element={<CustomerInvoiceMonthly/>} />
     <Route path='/vendorinvoicemonthly' element={<VendorInvoiceMonthly/>} />
     <Route path='/addcustomer' element={<AddCustomer/>} />
+    <Route path='/master' element={<MasterCorporateCustomer/>} />
     <Route path='/addvendor' element={<AddVendor/>} />
     <Route path='/viewcustomer' element={<ViewCustomer/>} />
     <Route path='/viewvendor' element={<ViewVendor/>} />
@@ -96,7 +103,10 @@ function App() {
     <Route path='/indivisualcustomers' element={<IndivisualCustomers/>} />
     <Route path='/viewvendorpayment/:_id' element={<ViewDetailsPayment/>}/>
     <Route path='/viewcustomerpayment/:_id' element={<ViewDetailsCustomerPayment/>}/>
-
+    <Route path='/customerreport' element={<CustomerReport/>}/>
+    <Route path='/monthlycustomerreport' element={<MonthlyCustomerReport/>}/>
+    <Route path='/tripdetailsreport' element={<TripDetailsReport/>}/>
+    <Route path='/vendorreport' element={<VendorReport/>}/>
     
 
 
