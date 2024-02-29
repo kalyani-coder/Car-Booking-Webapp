@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { FaEdit, FaSave, FaTrash } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Customer from './../CustomerEnquiry/Customer';
 
 const ViewUpdateDuty = () => {
   const [customers, setCustomers] = useState([]);
@@ -51,7 +52,9 @@ const generateTripDutySlip = async (customerId) => {
   if (downloadConfirmed) {
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text("Trip Duty Slip", 150, 20, { className: "uppercase-text" });
+// Center the "Trip Duty Slip" heading on the page
+const tripDutySlipX = (doc.internal.pageSize.getWidth() / 2) - (doc.getStringUnitWidth("Trip Duty Slip") * 18 / 2);
+doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
     // Increment the invoice counter and pad it to ensure it's always three digits
   invoiceCounter++;
   const invoiceNo = invoiceCounter.toString().padStart(3, '0');
@@ -85,8 +88,7 @@ const generateTripDutySlip = async (customerId) => {
     // Add table
     const columns = ["Field", "Value"];
     const rows = [
-      ["Company Name", formData.companyname],
-      ["GST No", formData.gstno],
+      
       ["Reporting Address", formData.reportingaddress],
       ["Customer Name", formData.name],
       ["Type Of Vehicle", formData.vehicle],
@@ -112,9 +114,9 @@ const generateTripDutySlip = async (customerId) => {
       ["Total Amount", formData.totalamount],
       ["Advanced Amount", formData.advanceamount],
       ["Remaining Amount", formData.remainingamount],
-      ["Payment Method", formData.paymentmethod],
     ];
 
+    const startYPosition = 20; 
     // Position the table below the left and right side details
     doc.autoTable({
       body: rows,
@@ -231,7 +233,7 @@ const generateTripDutySlip = async (customerId) => {
                 <th>GST No</th>
                 <th>Reporting Address</th>
                 <th>Date</th>
-                <th>Name</th>
+                <th>Customer Name</th>
                 <th>Vehicle</th>
                 <th>Actions</th>
               </tr>

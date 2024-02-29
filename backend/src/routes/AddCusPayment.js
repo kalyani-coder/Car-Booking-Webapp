@@ -129,6 +129,19 @@ router.get('/customer/:customerId', async (req, res) => {
         res.status(500).json(error);
     }
 });
+// API endpoint to fetch advance amount and remaining amount by ID
+router.get("/amounts/:id", async (req, res) => {
+  try {
+    const paymentDetails = await NewAddPaymentSchema.findById(req.params.id);
+    if (!paymentDetails) {
+      return res.status(404).json({ message: "Payment details not found" });
+    }
+    const { advance_Amount, remaining_Amount } = paymentDetails;
+    res.json({ advance_Amount, remaining_Amount });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 module.exports = router;

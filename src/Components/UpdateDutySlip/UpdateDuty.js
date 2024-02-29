@@ -403,7 +403,7 @@ const UpdateDuty = () => {
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Name"
+                  placeholder="Customer Name"
                   onChange={handleChange}
                   value={formData.name}
                 /></div>

@@ -205,9 +205,10 @@ function VendorReport() {
               <th>GST No</th>
               <th>Mobile Number</th>
               <th>Company Name</th>
+              <th>Vehicle Type</th>
               <th>Amount</th>
               <th>TDS</th>
-              <th>Total Amount</th>
+              <th>Payables  Amount</th>
               {/* <th>Paid Amount</th>
               <th>Remaining Amount</th> */}
               <th>Payment</th>
@@ -222,6 +223,7 @@ function VendorReport() {
                 <td>{vendor.GST_No}</td>
                 <td>{vendor.mobile_Number}</td>
                 <td>{vendor.company_Name}</td>
+                <td>{vendor.vehicle_type}</td>
                 <td>{vendor.total_Amount}</td>
                 <td>{vendor.tds}</td>
                 <td>{vendor.amount}</td>
