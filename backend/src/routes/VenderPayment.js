@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/' , async(req , res) => {
     try{
-        Venderpayment = await NewVenderpayment.find()
+        const Venderpayment = await NewVenderpayment.find()
         res.status(201).json(Venderpayment)
 
     }catch(e){
@@ -68,7 +68,7 @@ router.patch('/:id' , async(req, res) => {
     const VenderpaymentId = req.params.id
     
     try{
-        const currentDate = new Data();
+        const currentDate = new Date();
         req.body.current_Date= currentDate;
         
         const UpdatedVenderpayment = await NewVenderpayment.findByIdAndUpdate(VenderpaymentId , req.body ,{

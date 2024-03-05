@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/' , async(req , res) => {
     try{
-        shareDetailsget = await newShareDetailsSchema.find()
+       const shareDetailsget = await newShareDetailsSchema.find()
         res.status(201).json(shareDetailsget)
 
     }catch(e){

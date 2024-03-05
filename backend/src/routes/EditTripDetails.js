@@ -5,7 +5,7 @@ const router = express.Router();
 // GET METHOD
 router.get("/", async (req, res) => {
   try {
-    tripDetails = await getTripdetailSchema.find();
+   const tripDetails = await getTripdetailSchema.find();
     res.status(201).json(tripDetails);
   } catch (e) {
     res.status(404).json({ message: "Can not get customer" });

@@ -65,7 +65,7 @@ router.patch("/:id" , async(req, res) => {
 // DELETE MOTHOD 
 router.delete('/:id' , async(req, res) => {
 
-    userId = req.params.id
+  const userId = req.params.id
 
     try{
         const deletedUser = await newUserSchema.findByIdAndDelete(userId)

@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/', async (req, res) => {
     try {
-        NewAddPayment = await NewAddPaymentSchema.find()
+       const NewAddPayment = await NewAddPaymentSchema.find()
         res.status(201).json(NewAddPayment)
 
     } catch (e) {
@@ -69,8 +69,8 @@ router.get("/by-date/:date/:date1", async (req, res) => {
     if (!isValidDate(startDate) || !isValidDate(endDate)) {
       return res.status(400).json({ message: "Invalid date parameters" });
     }
-    // const dataInRange = await NewAddPaymentSchema.find({
-      const dataInRange = await newTripDetailsSchema.find({
+    const dataInRange = await NewAddPaymentSchema.find({
+      // const dataInRange = await newTripDetailsSchema.find({
 
       Date: { $gte: startDate, $lte: endDate },
     });
@@ -141,6 +141,31 @@ router.get("/amounts/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+
+// POST route to handle filtering data based on date range
+router.post('/monthly-data', async (req, res) => {
+    try {
+        const { startDate, endDate } = req.body;
+
+        // Convert start and end dates to Date objects
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        // Fetch data from MongoDB based on date range
+        const filteredData = await NewAddPaymentSchema.find({
+            Date: {
+                $gte: start,
+                $lte: end
+            }
+        });
+
+        res.json(filteredData);
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 });
 
 

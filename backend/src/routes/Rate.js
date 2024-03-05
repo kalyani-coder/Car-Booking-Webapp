@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/' , async(req , res) => {
     try{
-        rateSchema = await newRateSchema.find()
+        const rateSchema = await newRateSchema.find()
         res.status(201).json(rateSchema)
 
     }catch(e){

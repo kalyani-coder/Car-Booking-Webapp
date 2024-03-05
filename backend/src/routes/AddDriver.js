@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/' , async(req , res) => {
     try{
-        AddVenders = await newDriverSchema.find()
+        const AddVenders = await newDriverSchema.find()
         res.status(201).json(AddVenders)
 
     }catch(e){

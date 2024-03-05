@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/' , async(req , res) => {
     try{
-        GetDetailsFromDriver = await NewGetDetailsFromDriver.find()
+       const GetDetailsFromDriver = await NewGetDetailsFromDriver.find()
         res.status(201).json(GetDetailsFromDriver)
 
     }catch(e){
