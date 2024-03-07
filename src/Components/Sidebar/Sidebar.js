@@ -357,10 +357,11 @@ const Sidebar = () => {
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">
-                <Link to={'/addpayment'}>
+                <Link to={'/addcustomerpayment'}>
                   Customer Payment
                 </Link>
               </a></li>
+             
               <li><a class="dropdown-item" href="#">
                 <Link to={'/viewcustomerpayment'}>
                   View Customer Payment

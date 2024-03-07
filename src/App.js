@@ -72,7 +72,7 @@ function App() {
     <Route path='/viewallocatetrip' element={<ViewAllocateTrip/>} />
     <Route path='/updateduty'  element={<UpdateDuty/>}/>
     <Route path='/viewupdateduty'  element={<ViewUpdateDuty/>}/>
-    <Route path='/addpayment'  element={<AddPayment/>}/>
+    <Route path='/addcustomerpayment'  element={<AddPayment/>}/>
     <Route path='/viewcustomerpayment'  element={<ViewCustomerPayment/>}/>
     <Route path='/companyrate'  element={<CustomerRate/>}/>
     <Route path='/viewcompanyrate'  element={<ViewCustomerRate/>}/>

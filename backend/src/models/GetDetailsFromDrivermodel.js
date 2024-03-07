@@ -38,6 +38,8 @@ const getDetailsFromDriverSchema = new mongoose.Schema({
     Dropoff: String,
     date1: String,
     time1: String,
+    totalDays: String,
+    totalHours: String,
     drivername: String,
     mobileno: String,
     vehicleno: String,

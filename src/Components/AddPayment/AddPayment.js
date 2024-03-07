@@ -5,42 +5,8 @@ import Sidebar from "../Sidebar/Sidebar";
 function AddPayment() {
   const [customerList, setCustomerList] = useState([]);
 
-
-  useEffect(() => {
-    const fetchCustomerNames = async () => {
-      try {
-        const response = await fetch("http://localhost:7000/api/add-trip");
-
-        if (response.ok) {
-          const data = await response.json();
-          // Ensure data is an array before setting it in the state
-          if (Array.isArray(data)) {
-            // Log customer IDs
-            data.forEach(customer => {
-
-            });
-
-            // Set the customer list in the state
-            setCustomerList(data);
-          } else {
-            console.error("Invalid data format: expected an array");
-          }
-        } else {
-          console.error("Failed to fetch customer names");
-        }
-      } catch (error) {
-        console.error("API request error:", error);
-      }
-    };
-
-    fetchCustomerNames(); // Call the fetch function when the component mounts
-
-  }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
-
-
-
-
   const initialFormData = {
+    customerId: "",
     company_Name: "",
     GST_No: "",
     reporting_Address: "",
@@ -55,29 +21,111 @@ function AddPayment() {
     closing_Time: "",
     starting_Km: "",
     starting_Time: "",
-    total_Km: "",
+    totalkm: "",
     total_hours: "",
     title: "",
     title_Amount: 0,
     extra_Km: "",
-    extramkm_Amount: 0,
+    extramkm_Amount: "" ,
     extra_Hours: "",
-    extrahours_Amount: 0,
-    subtotal_Amount: 0,
-    SGST: 0,
-    CGST: 0,
-    total_Amount: 0,
-    advance_Amount: 0,
-    remaining_Amount: 0,
+    extrahours_Amount: "",
+    subtotal_Amount: "",
+    toll:'',
+    SGST: "",
+    CGST: "",
+    total_Amount: "",
+    advance_Amount: "",
+    remaining_Amount: "",
     payment_Method: "",
   };
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
 
+  const fetchTripDetails = async (customerId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/add-trip/${customerId}`);
+
+      if (response.ok) {
+        const tripDetails = await response.json();
+        console.log("Fetched trip details:", tripDetails);
+        return tripDetails;
+      } else {
+        console.error("Failed to fetch trip details");
+        return null;
+      }
+    } catch (error) {
+      console.error("API request error:", error);
+      return null;
+    }
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     console.log("Selected Customer ID:", value); // Corrected to log the selected value
 
+    //calculate the total km ,Extra km
+    if (name === "closingkm" || name === "startingkm") {
+      const closingKm = parseFloat(
+        name === "closingkm" ? value : formData.closing_km
+      );
+      const startingKm = parseFloat(
+        name === "startingkm" ? value : formData.starting_Km
+      );
+  
+      if (!isNaN(closingKm) && !isNaN(startingKm)) {
+        const totalKm = closingKm - startingKm;
+        const extraKm = totalKm - 8; // Calculate extra_Km
+        setFormData((prevData) => ({
+          ...prevData,
+          totalkm: totalKm.toString(),
+          extra_Km: extraKm.toString(), // Update extra_Km field
+        }));
+      }
+    }
+
+    //calculate the time(Total hour)
+    if (name === "startingtime" || name === "closingtime") {
+      const startingTimeStr = formData.starting_Time;
+      const closingTimeStr = formData.closing_Time;
+
+      const timeFormatRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+      if (
+        !timeFormatRegex.test(startingTimeStr) ||
+        !timeFormatRegex.test(closingTimeStr)
+      ) {
+        console.log("Invalid time format");
+        return;
+      }
+
+      const [startingHour, startingMinute] = startingTimeStr
+        .split(":")
+        .map(Number);
+      const [closingHour, closingMinute] = closingTimeStr
+        .split(":")
+        .map(Number);
+
+      // Calculate the time difference in minutes
+      let timeDiffMinutes =
+        (closingHour - startingHour) * 60 + (closingMinute - startingMinute);
+
+      // Handle negative time difference (e.g., closing time is before starting time)
+      if (timeDiffMinutes < 0) {
+        console.log("Invalid time range");
+        return;
+      }
+
+      // Convert minutes to hours and format with two decimal places
+      const timeDiffHours = timeDiffMinutes / 60;
+      const formattedTimeDiff = timeDiffHours.toFixed(2);
+
+      setFormData((prevData) => ({
+        ...prevData,
+        totalhour: formattedTimeDiff,
+      }));
+    }
+
+   
     if (name === "advance_Amount") {
       // Parse advance amount as a float
       const advanceAmount = parseFloat(value);
@@ -109,37 +157,72 @@ function AddPayment() {
       // Calculate the total kilometers
       if (!isNaN(closingKm) && !isNaN(startingKm)) {
         const totalKm = closingKm - startingKm;
+        const extraKm = totalKm > 80 ? totalKm - 80 : 0; // Calculate extra_Km based on flat rate
+
+        const ratePerKm = 13; // Example rate per km
+    const extramkm_Amount = extraKm * ratePerKm; // Calculate extramkm_Amount
+
         setFormData((prevData) => ({
           ...prevData,
           total_Km: totalKm.toString(), // Update the total_Km field
+          extra_Km: extraKm.toString(), // Update extra_Km field
+          extramkm_Amount: extramkm_Amount.toFixed(2), // Update extramkm_Amount field
+
+
+          
         }));
       }
-    } else if (name === "closing_Time" || name === "starting_Time") {
+    } 
+    if (name === "ratePerHour") {
+      // Update the rate per hour
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: parseFloat(value), // Convert input value to a number
+      }));
+    } 
+    else if (name === "closing_Time" || name === "starting_Time") {
       // Calculate the total hours
       const closingTime = formData.closing_Time;
       const startingTime = formData.starting_Time;
-
+    
       if (closingTime && startingTime) {
         const closingDateTime = new Date(`2000-01-01T${closingTime}`);
         const startingDateTime = new Date(`2000-01-01T${startingTime}`);
         const timeDiff = closingDateTime - startingDateTime;
-
+    
         if (timeDiff > 0) {
           const totalHours = (timeDiff / 3600000).toFixed(2); // 3600000 milliseconds in an hour
+          let extraHours = (totalHours - 8).toFixed(2); // Calculate extra hours
+          // extraHours = Math.max(extraHours, 0); // Ensure extraHours is not negative
+
+          // Retrieve ratePerHour from form data
+        const ratePerHour = parseFloat(formData.ratePerHour);
+        if (!isNaN(ratePerHour)) {
+          const extraHoursAmount = extraHours * ratePerHour; // Calculate extra hours amount
+
           setFormData((prevData) => ({
             ...prevData,
             total_hours: totalHours,
+            extra_Hours: extraHours,
+            extraHoursAmount: extraHoursAmount.toFixed(2), // Update extra hours amount field
           }));
         } else {
-          setFormData((prevData) => ({
-            ...prevData,
-            total_hours: "Invalid Time",
-          }));
+          console.log("Invalid rate per hour");
         }
+      } else {
+        setFormData((prevData) => ({
+          ...prevData,
+          total_hours: "Invalid Time",
+        }));
       }
     }
-  };
-
+  } else {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+};
 
   const calculateSubTotal = () => {
     const { title_Amount, extramkm_Amount, extrahours_Amount } = formData;
@@ -177,13 +260,13 @@ function AddPayment() {
       remaining_Amount: remainingAmount,
     }));
   };
-
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data:", formData);
 
     // Ensure that customerId is present in formData
-    if (!formData.customername) {
+    if (!formData.customer_Name) {
       setError("Please select a customer.");
       return;
     }
@@ -206,19 +289,26 @@ function AddPayment() {
       // Add customerId to formData
       const dataToSend = { ...formData, customerId: formData.customer_Name };
 
-      const response = await fetch("http://localhost:7000/api/customer-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToSend),
-      });
+      const response = await fetch(
+        "http://localhost:7000/api/customer-payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSend),
+        }
+      );
 
       if (response.ok) {
         window.alert("Data Added");
         setFormData(initialFormData);
       } else {
-        console.error("Failed to save data:", response.status, response.statusText);
+        console.error(
+          "Failed to save data:",
+          response.status,
+          response.statusText
+        );
         alert("Failed to save data. Please try again.");
       }
     } catch (error) {
@@ -226,7 +316,6 @@ function AddPayment() {
       alert("Failed to save data. Please try again.");
     }
   };
-
 
   return (
     <>
@@ -303,7 +392,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="date" className="form-label">
-                            Date:
+                            Payment Date:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -319,25 +408,35 @@ function AddPayment() {
                     </div>
 
                     <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <label for="vehiclenumber" className="form-label">
-                          Customer Name:
-                          <span className="required-asterisk">*</span>
-                        </label>
-                        <select
-                          className="update-duty-form-control"
-                          name="customer_Name"
-                          value={formData.customer_Name}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Customer</option>
-                          {customerList.map((customer) => (
-                            <option key={customer._id} value={customer.customerId}>
-                              {customer.customername}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                    <div className="col-md">
+  <label htmlFor="customername" className="form-label">
+    Customer Name:
+  </label>
+  <select
+    className="form-control-add-trip-input"
+    id="customername"
+    name="customername"
+    onChange={(e) => {
+      const selectedCustomer = customerList.find(
+        (customer) => customer.customername === e.target.value
+      );
+      setSelectedCustomer(selectedCustomer);
+    }}
+    value={selectedCustomer ? selectedCustomer.customername : ""}
+  >
+    <option value="">Select Customer</option>
+    {customerList && customerList.length > 0 ? (
+      customerList.map((customer) => (
+        <option key={customer._id} value={customer.customername}>
+          {customer.customername}
+        </option>
+      ))
+    ) : (
+      <option value="">No Customers Available</option>
+    )}
+  </select>
+</div>
+
                       <div className="col-md">
                         <div className="form-group">
                           <label for="vehiclenumber" className="form-label">
@@ -440,7 +539,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="from" className="form-label" l>
-                            From:
+                            Pickup Location:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -456,7 +555,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="to" className="form-label">
-                            To:
+                            Dropoff Location:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -490,15 +589,15 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="startingtime" className="form-label">
+                          <label htmlFor="starting_Time" className="form-label">
                             Starting Time:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-                            type="time"
                             className="update-duty-form-control"
+                            type="time"
+                            id="starting_Time"
                             name="starting_Time"
-                            placeholder="Enter Starting Time"
                             onChange={handleChange}
                             value={formData.starting_Time}
                           />
@@ -526,7 +625,7 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="closingtime" className="form-label">
+                          <label for="closing_Time" className="form-label">
                             Closing Time:
                             <span className="required-asterisk">*</span>
                           </label>
@@ -547,14 +646,14 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="totalkms" className="form-label">
-                            Total Kms:
+                            Total Km:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="text"
                             className="update-duty-form-control"
                             name="total_Km"
-                            placeholder="Enter  Total Kms"
+                            placeholder="Enter  Total Km"
                             onChange={handleChange}
                             value={formData.total_Km}
                           />
@@ -562,15 +661,15 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="totalhours" className="form-label">
-                            Total Hours:
+                          <label for="total_hours" className="form-label">
+                            Total Hour:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-                            type="Text"
+                            type="number"
                             className="update-duty-form-control"
                             name="total_hours"
-                            placeholder="Enter  Total Hours"
+                            placeholder="Enter  Total Hour"
                             onChange={handleChange}
                             value={formData.total_hours}
                             readOnly
@@ -631,36 +730,35 @@ function AddPayment() {
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="extrakms" className="form-label">
-                            Extra Kms:
+                          <label for="extra_Km" className="form-label">
+                            Extra Km:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-                            type="text"
-                            className="update-duty-form-control"
-                            id="extra_Km"
-                            name="extra_Km"
-                            placeholder="Enter  Extra Kms"
-                            onChange={handleChange}
-                            value={formData.extra_Km}
-                          />
+  type="number"
+  className="update-duty-form-control"
+  id="extra_Km"
+  name="extra_Km" /* Update name attribute to match state key */
+  placeholder="Enter Extra Kms"
+  onChange={handleChange}
+  value={formData.extra_Km}
+/>
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label for="extrakmsamount" className="form-label">
-                            Extra Kms Amount:
+                            (Rate Per KM)Extra Km Amount:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-                            type="number"
-                            className="update-duty-form-control"
-                            name="extramkm_Amount"
-                            placeholder="Enter Extra Kms Amount"
-                            value={formData.extramkm_Amount}
-                            onChange={handleChange}
-                            onBlur={handleSubtotalChange}
-                          />
+  type="number"
+  className="update-duty-form-control"
+  name="ratePerKm"
+  placeholder="Enter Rate Per Km"
+  value={formData.ratePerKm}
+  onChange={handleChange}
+/>
                         </div>
                       </div>
                     </div>
@@ -669,11 +767,11 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="extrahours" className="form-label">
-                            Extra Hours:
+                            Extra Hour:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-                            type="text"
+                            type="number"
                             className="update-duty-form-control"
                             id="extra_Hours"
                             name="extra_Hours"
@@ -685,17 +783,17 @@ function AddPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="extrahoursamount" className="form-label">
+                          <label for="ratePerHour" className="form-label">
                             {" "}
-                            Extra Hours Amount:
+                            (Rate Per Hour)Extra Hour Amount:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="number"
                             className="update-duty-form-control"
-                            name="extrahours_Amount"
+                            name="ratePerHour"
                             placeholder="Enter Extra Hours Amount"
-                            value={formData.extrahours_Amount}
+                            value={formData.ratePerHour}
                             onChange={handleChange}
                             onBlur={handleSubtotalChange}
                           />
@@ -703,8 +801,100 @@ function AddPayment() {
                       </div>
                     </div>
 
-                    {/* Display the SubTotal */}
-                    <div className="col-md">
+                    <div className="row grid-gap-5">
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label for="extramkm_Amount" className="form-label">
+                            Extra KMs Amount:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extramkm_Amount"
+                            placeholder="Enter  EXtra Km Amount"
+                            value={formData.extramkm_Amount}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label for="extrahours_Amount.5%" className="form-label">
+                            Extra Hours Amount:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extrahours_Amount"
+                            placeholder="Enter CGST  Amount"
+                            value={formData.extrahours_Amount}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row grid-gap-5">
+  {/* First field - Toll Parking */}
+  <div className="col-md">
+    <div className="form-group">
+      <label htmlFor="toll" className="form-label">
+        Toll Parking:
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="update-duty-form-control"
+        name="toll"
+        placeholder="Enter Toll Parking"
+        value={formData.toll}
+        onChange={handleChange}
+      />
+    </div>
+  </div>
+  
+  {/* Second field - CGST */}
+  <div className="col-md mr-3">
+    <div className="form-group">
+      <label htmlFor="cgst2.5%" className="form-label">
+        CGST 2.5%:
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="add-payment-form-control"
+        name="CGST"
+        placeholder="Enter CGST Amount"
+        value={formData.CGST}
+        onChange={handleChange}
+      />
+    </div>
+  </div>
+  
+  {/* Third field - SGST */}
+  <div className="col-md">
+    <div className="form-group">
+      <label htmlFor="sgst2.5%" className="form-label">
+        SGST 2.5%:
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="add-payment-form-control"
+        name="SGST"
+        placeholder="Enter SGST Amount"
+        value={formData.SGST}
+        onChange={handleChange}
+      />
+    </div>
+  </div>
+</div>
+
+
+<div className="row grid-gap5">
+    {/* Display the SubTotal */}
+    <div className="col-md">
                       <div className="form-group">
                         <label for="subtotal" className="form-label">
                           SubTotal:
@@ -720,45 +910,8 @@ function AddPayment() {
                         />
                       </div>
                     </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label for="sgst2.5%" className="form-label">
-                            SGST 2.5%:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            name="SGST"
-                            placeholder="Enter  SGST Amount"
-                            value={formData.SGST}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label for="cgst2.5%" className="form-label">
-                            CGST 2.5%:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            name="CGST"
-                            placeholder="Enter CGST  Amount"
-                            value={formData.CGST}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
+                    <div className="col-md">
+                    <div className="form-group">
                           <label for="totalamount" className="form-label">
                             Total Amount:
                             <span className="required-asterisk">*</span>
@@ -773,9 +926,11 @@ function AddPayment() {
                             readOnly
                           />
                         </div>
-                      </div>
+                    </div>
+</div>
+                    <div className="row grid-gap-5">
                       <div className="col-md">
-                        <div className="form-group">
+                      <div className="form-group">
                           <label for="advanceamount" className="form-label">
                             Advance Amount:
                             <span className="required-asterisk">*</span>
@@ -790,11 +945,8 @@ function AddPayment() {
                           />
                         </div>
                       </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
                       <div className="col-md">
-                        <div className="form-group">
+                      <div className="form-group">
                           <label for="remainingamount" className="form-label">
                             Remaining Amount:
                             <span className="required-asterisk">*</span>
@@ -810,8 +962,11 @@ function AddPayment() {
                           />
                         </div>
                       </div>
+                    </div>
+
+                    <div className="row grid-gap-5">
                       <div className="col-md">
-                        <div className="form-group">
+                      <div className="form-group">
                           <label for="paymentmethod" className="form-label">
                             Payment Method:
                             <span className="required-asterisk">*</span>
@@ -836,6 +991,9 @@ function AddPayment() {
                             {/* <option value="Phone Pay">Phone Pay</option> */}
                           </select>
                         </div>
+                      </div>
+                      <div className="col-md">
+                        
                       </div>
                     </div>
 

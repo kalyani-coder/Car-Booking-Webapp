@@ -118,6 +118,9 @@ export default function ViewDetailsCustomerPayment() {
                   <strong>Total KM:</strong>  {customerPayData.total_Km}
                 </p>
                 <p className="mb-2">
+                  <strong>Total Hour:</strong>  {customerPayData.total_hours}
+                </p>
+                <p className="mb-2">
                   <strong>Title:</strong>  {customerPayData.title}
                 </p>
                 <p className="mb-2">

@@ -14,7 +14,7 @@ const VendorRate = () => {
     rate_per_Km: "",
     hour: "",
     km: "",
-    extra_km: "",
+    // extra_km: "",
     extra_hour: "",
   };
 
@@ -194,7 +194,7 @@ const VendorRate = () => {
               <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
             </select>
           </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="rate_per_Km" className="form-label">
                   Rate Per KM (Extra Km):
                   <span className="required-asterisk">*</span>
@@ -209,7 +209,7 @@ const VendorRate = () => {
                   onChange={handleChange}
                   required
                 />
-              </div>
+              </div> */}
 
 
               <div className="d-flex gap-3">
@@ -258,7 +258,7 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
-                      KM:
+                    KM:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
@@ -275,17 +275,17 @@ const VendorRate = () => {
                 </div>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="extra_km" className="form-label">
-                      Extra KM:
+                    <label htmlFor="rate_per_Km" className="form-label">
+                      Rate Per KM(Extra KM):
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
                       type="number"
-                      id="extra_km"
-                      name="extra_km"
-                      placeholder="extrakm"
-                      value={formData.extra_km}
+                      id="rate_per_Km"
+                      name="rate_per_Km"
+                      placeholder="Extra KM"
+                      value={formData.rate_per_Km}
                       onChange={handleChange}
                       required
                     />
@@ -314,7 +314,7 @@ const VendorRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="extra_hour" className="form-label">
-                      Extra Hour:
+                      Rate Per Hour(Extra Hour):
                       <span className="required-asterisk">*</span>
                     </label>
                     <input

@@ -13,7 +13,7 @@ const initialFormData = {
   duty_type: "",
   rate: "",
   km: "",
-  extra_km: "",
+  // extra_km: "",
   hours: "",
   extra_hours: "",
 };
@@ -319,21 +319,7 @@ const CustomerRate = () => {
                   <p className="error-message">{mobilenoError}</p>
                 )}
               </div>
-              <div className="form-group">
-                <label htmlFor="rate_per_km" className="form-label">
-                  Rate Per KM:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="form-control-cust-add-input"
-                  type="tel"
-                  id="rate_per_km"
-                  name="rate_per_km"
-                  placeholder="Rate per KM"
-                  onChange={handleChange}
-                  value={formData.rate_per_km}
-                />
-              </div>
+             
               <div className="form-group">
                 <label htmlFor="type_of_vehicle" className="form-label">
                   Add Type Of Vehicle:
@@ -455,17 +441,17 @@ const CustomerRate = () => {
                 </div>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="extra_km" className="form-label">
-                      Extra KM:
+                    <label htmlFor="rate_per_Km" className="form-label">
+                      (Rate Per Km) Extra KM:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
-                      type="extra_km"
-                      id="extra_km"
-                      name="extra_km"
-                      placeholder="Extra km"
-                      value={formData.extra_km}
+                      type="rate_per_Km"
+                      id="rate_per_Km"
+                      name="rate_per_Km"
+                      placeholder="Extra KM"
+                      value={formData.rate_per_km}
                       onChange={handleChange}
                     />
                   </div>
@@ -492,7 +478,7 @@ const CustomerRate = () => {
                 <div>
                   <div className="form-group">
                     <label htmlFor="extra_hours" className="form-label">
-                      Extra Hour:
+                      (Rate Per Hour) Extra Hour:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input

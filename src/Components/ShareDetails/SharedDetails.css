@@ -3,27 +3,30 @@
 .share-details-container {
   /* width: 100%; */
   /* max-width: 800px; */
+  display:flex;
+  flex-wrap: wrap;
   margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
-     background-color:rgb(200, 205, 122);
+  background-color:rgb(200, 205, 122);
+  height: 100vh;
 }
 
 .share-details-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding-left: 20px;
+  /* gap: 8px;
+  padding-left: 20px; */
 }
 
 .share-details-row {
   display: flex;
-  gap: 20px;
-  flex-basis: 100%;
+  gap: 30px;
+  /* flex-basis: 100%; */
 }
 
 .share-details-column {
   flex: 1;
-  max-width: calc(40% - 10px);
+ width: 100%;
 }
 
 .share-details-form-group {
@@ -38,7 +41,7 @@
 }
 
 .share-details-input {
-  width: 700px; /* Make all inputs and selects full width */
+  width: 575px; /* Make all inputs and selects full width */
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid #ccc;

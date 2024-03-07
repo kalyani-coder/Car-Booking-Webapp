@@ -3,6 +3,8 @@
 .start-end-details-container {
     /* width: 100%; */
     /* max-width: 800px; */
+    display: flex;
+    flex-wrap: wrap;
     margin-left: 300px; /* Leave 300px from the left side */
     padding: 20px;
        background-color:rgb(200, 205, 122);
@@ -22,7 +24,7 @@
   
   .start-end-details-column {
     flex: 1;
-    min-width: 250px; /* Minimum width for each column */
+    width: 100%; /* Minimum width for each column */
   }
   
   /* .start-end-details-form-group {
@@ -39,7 +41,7 @@
     border: 1px solid #ccc;
     padding: 8px;
     flex: 1 1;
-    width: 92%;
+    width: 575px;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
   }
   
@@ -58,11 +60,11 @@
   }
  
  .startenddetails-input{
-  width: 283px;
+  /* width: 200px; */
   height: 43px;
  }
  .rate-form-control-Startenddetails{
-  width: 438px;
+  width: 275px;
     height: 43px;
     padding: 10px;
     border: 1px solid #ccc;

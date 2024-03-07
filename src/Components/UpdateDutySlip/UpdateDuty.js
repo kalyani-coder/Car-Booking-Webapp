@@ -71,7 +71,7 @@ const UpdateDuty = () => {
       }
     }
 
-    //calculate the time
+    //calculate the time(Total hour)
 
     if (name === 'startingtime' || name === 'closingtime') {
       const startingTimeStr = formData.startingtime;
@@ -310,7 +310,6 @@ const UpdateDuty = () => {
     // }
 
     const data = { ...formData };
-
     try {
       const response = await fetch('http://localhost:7000/api/update-duty', {
         method: 'POST',

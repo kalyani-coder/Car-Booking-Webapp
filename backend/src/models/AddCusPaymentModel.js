@@ -25,6 +25,7 @@ const AddPaymentSchema = new mongoose.Schema({
   extra_Hours: String,
   extrahours_Amount: String,
   subtotal_Amount: Number,
+  toll:Number,
   SGST: Number,
   CGST: Number,
   total_Amount: Number,

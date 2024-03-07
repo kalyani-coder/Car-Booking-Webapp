@@ -184,6 +184,7 @@ const StartEndDetails = () => {
                 />
               </div>
             </div>
+           
           </div>
           <div className="start-end-details-row">
             <div className="start-end-details-column">
@@ -236,41 +237,21 @@ const StartEndDetails = () => {
               </div>
             </div>
             <div className="start-end-details-column">
-              <div className="d-flex gap-2">
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="totalDays" className="form-label">
-                      Total Days:
-                    </label>
-                    <input
-                      className="rate-form-control-Startenddetails"
-                      type="number"
-                      id="totalDays"
-                      name="totalDays"
-                      placeholder="Total Days"
-                      // value={selectedCustomerDetails.date} readOnly
-
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="totalHours" className="form-label">
-                      Total Hours:
-                    </label>
-                    <input
-                      className="rate-form-control-Startenddetails"
-                      type="number"
-                      id="totalHours"
-                      name="totalHours"
-                      placeholder="Total Hours"
-                      // value={selectedCustomerDetails.date} readOnly
-
-                      required
-                    />
-                  </div>
-                </div>
+              <div className="start-end-details-form-group">
+                <label
+                  htmlFor="tripsubtype"
+                  className="start-end-details-label"
+                >
+                  Sub Type:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="start-end-details-input"
+                  placeholder="Subtype"
+                  value={selectedCustomerDetails.subtype}
+                  readOnly
+                />
               </div>
             </div>
           </div>
@@ -325,58 +306,81 @@ const StartEndDetails = () => {
               </div>
             </div>
             <div className="start-end-details-column">
-              <div className="form-group">
-                <label htmlFor="title" className="form-label">
+              <div className="d-flex gap-2">
+                
+                  <div className="form-group">
+                    <label htmlFor="toll" className="form-label">
+                      Total Days:
+                    </label>
+                    <input
+                      className="rate-form-control-Startenddetails"
+                      type="number"
+                      name="totalDays"
+                      placeholder="Enter Total Days"
+                      value={formData.totalDays}
+                      onChange={handleChange}
+                    />
+                  </div>
+                
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="totalDays" className="form-label">
+                    Total  Hours:
+                    </label>
+                    <input
+                      className="rate-form-control-Startenddetails"
+                      type="number"
+                      name="totalDays"
+                      placeholder="Enter Total Hours "
+                      value={FormData.totalDays}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          <div className="start-end-details-row">
+            <div className="start-end-details-column">
+              <div className="start-end-details-form-group">
+                <label htmlFor="vehicle" className="start-end-details-label">
                   Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  type="text"
                   className="start-end-details-input"
-                  placeholder="Vehicle"
+                  type="text"
+                  name="vehicle"
+                  placeholder="Enter Vehicle"
                   value={selectedCustomerDetails.vehicle}
                   readOnly
                 />
               </div>
             </div>
-          </div>
-
-          <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
-                <label htmlFor="triptype" className="start-end-details-label">
-                  Trip Type:
-                  <span className="required-asterisk">*</span>
+                <label
+                  htmlFor="triptype"
+                  className="start-end-details-label"
+                >
+                 Trip Type:
                 </label>
                 <input
+  x                className="start-end-details-input"
                   type="text"
-                  className="start-end-details-input"
-                  placeholder="Vehicle"
+                  name="triptype"
+                  placeholder="Enter Trip Type"
                   value={selectedCustomerDetails.triptype}
                   readOnly
                 />
               </div>
             </div>
-
-            <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label
-                  htmlFor="tripsubtype"
-                  className="start-end-details-label"
-                >
-                  Sub Type:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  type="text"
-                  className="start-end-details-input"
-                  placeholder="Vehicle"
-                  value={selectedCustomerDetails.subtype}
-                  readOnly
-                />
-              </div>
-            </div>
           </div>
+          
+
+          
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
@@ -403,7 +407,7 @@ const StartEndDetails = () => {
                   Driver Mobile No:
                 </label>
                 <input
-                  className="start-end-details-input"
+  x                className="start-end-details-input"
                   type="text"
                   name="mobileNumber"
                   placeholder="Enter Driver Mobile No."

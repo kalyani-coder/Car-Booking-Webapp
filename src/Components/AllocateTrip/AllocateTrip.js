@@ -202,7 +202,7 @@ function AllocateTrip() {
               <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
                 <span className="required-asterisk">*</span>
                 <select
-        className="trip-details-input"
+        className="driver-details-input"
         id="customerId"
         name="customerId"
         onChange={(e) => {
@@ -227,7 +227,7 @@ function AllocateTrip() {
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
-                      className="trip-details-input"
+                      className="driver-details-input"
                       placeholder="Pickup Location"
                       value={tripDetails.pickup}
                       onChange={(e) => handleFieldChange('pickup', e.target.value)}
@@ -238,7 +238,7 @@ function AllocateTrip() {
                     <span className="required-asterisk">*</span>
                     <input
                       type="date"
-                      className="trip-details-input"
+                      className="driver-details-input"
                       value={tripDetails.date}
                       onChange={(e) => handleFieldChange('date', e.target.value)}
                     />
@@ -248,7 +248,7 @@ function AllocateTrip() {
                     <span className="required-asterisk">*</span>
                     <input
                       type="time"
-                      className="trip-details-input"
+                      className="driver-details-input"
                       value={tripDetails.time}
                       onChange={(e) => handleFieldChange('time', e.target.value)}
                     />
@@ -261,7 +261,7 @@ function AllocateTrip() {
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
-                      className="trip-details-input"
+                      className="driver-details-input"
                       placeholder="Drop-off Location"
                       value={tripDetails.dropoff}
                       onChange={(e) => handleFieldChange('dropoff', e.target.value)}
@@ -272,7 +272,7 @@ function AllocateTrip() {
                     <span className="required-asterisk">*</span>
                     <input
                       type="date"
-                      className="trip-details-input"
+                      className="driver-details-input"
                       value={tripDetails.date1}
                       onChange={(e) => handleFieldChange('date1', e.target.value)}
                     />
@@ -282,7 +282,7 @@ function AllocateTrip() {
                     <span className="required-asterisk">*</span>
                     <input
                       type="time"
-                      className="trip-details-input"
+                      className="driver-details-input"
                       value={tripDetails.time1}
                       onChange={(e) => handleFieldChange('time1', e.target.value)}
                     />
@@ -291,7 +291,7 @@ function AllocateTrip() {
                 <label htmlFor="vehicle" className="trip-details-label">Type Of Vehicle:</label>
                 <span className="required-asterisk">*</span>
                 <select
-                  className="trip-details-input"
+                  className="driver-details-input"
                   name="vehicle"
                   id="vehicle"
                   value={tripDetails.vehicle}
@@ -319,7 +319,7 @@ function AllocateTrip() {
                 <label htmlFor='triptype' className="trip-details-label">Trip Type:</label>
                 <span className="required-asterisk">*</span>
                 <select
-                  className="trip-details-input"
+                  className="driver-details-input"
                   id="triptype"
                   value={tripDetails.triptype}
                   onChange={(e) => handleFieldChange('triptype', e.target.value)}
@@ -332,7 +332,7 @@ function AllocateTrip() {
                 <label htmlFor='subtype' className="trip-details-label">Sub Type:</label>
                 <span className="required-asterisk">*</span>
                 <select
-                  className="trip-details-input"
+                  className="driver-details-input"
                   id="subtype"
                   value={tripDetails.subtype}
                   onChange={(e) => handleFieldChange('subtype', e.target.value)}
@@ -415,13 +415,6 @@ function AllocateTrip() {
             </div>
 
           </div>
-
-
-
-
-
-
-
 
         </div>
 

@@ -218,7 +218,7 @@ doc.text("MICR Code: " + (formData.micrcode || ''), 10, doc.autoTable.previous.f
     <>
       <Sidebar />
 
-      <div className="container-vendor-invoice">
+      <div className="container-customer-invoice">
         <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
           Monthly Customer Invoice By Date
         </h2>

@@ -13,7 +13,7 @@ const venderRateSchema = new mongoose.Schema({
     rate : String,
     hour: String,
     km: String,
-    extra_km: String,
+    // extra_km: String,
     extra_hour: String,
 })
 

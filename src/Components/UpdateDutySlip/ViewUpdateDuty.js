@@ -108,7 +108,7 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
       ["Extra Hours Amount", formData.extrahoursamount],
       ["Extra KMS", formData.extrakm],
       ["Extra KMS Amount", formData.extrakmamount],
-      ["SubTotal Amount", formData.subtotalamount],
+      // ["SubTotal Amount", formData.subtotalamount],
       ["SGST 2.5%", formData.sgst],
       ["CGST 2.5%", formData.cgst],
       ["Total Amount", formData.totalamount],
@@ -152,22 +152,21 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
   };
 
   const handleDelete = async (customer) => {
-    // Display an alert with customer data before deletion
     const confirmDelete = window.confirm("Do you want to delete the customer?");
-
+  
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `http://localhost:7000/api/update-duty/${customer._id}`,
+          `http://localhost:7000/api/customers/${customer._id}`,
           {
             method: "DELETE",
           }
         );
-
+  
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-
+  
         setFilteredCustomers((prevCustomers) =>
           prevCustomers.filter((c) => c._id !== customer._id)
         );
@@ -178,6 +177,8 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
       }
     }
   };
+  
+  
 
   // Function to toggle showing details for a specific customer
   const toggleShowDetails = (customerId) => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 import axios from "axios";
+import { json } from "react-router-dom";
 
 const AddTrip = () => {
   const initialFormData = {
@@ -41,6 +42,7 @@ const AddTrip = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [mobilenoError, setMobilenoError] = useState("");
   const [isAddPeopleOpen, setIsAddPeopleOpen] = useState(false);
+  const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
 
   const toggleAddPeople = () => {
     setIsAddPeopleOpen((prevState) => !prevState); // Toggle the state
@@ -94,6 +96,65 @@ const AddTrip = () => {
     }
   }, [selectedCustomer]);
 
+  const fetchTripDetails = async (customerId) => {
+    try {
+      const response = await fetch(`http://localhost:7000/api/add-trip/${customerId}`);
+
+      if (response.ok) {
+        const tripDetails = await response.json();
+        console.log("Fetched trip details:", tripDetails);
+        return tripDetails;
+      } else {
+        console.error("Failed to fetch trip details");
+        return null;
+      }
+    } catch (error) {
+      console.error("API request error:", error);
+      return null;
+    }
+  };
+
+  const handleShareClick = async () => {
+    try {
+      if (!selectedCustomer || !selectedCustomer._id) {
+        alert("Please select a customer.");
+        return;
+      }
+
+      const tripDetails = await fetchTripDetails(selectedCustomer._id);
+
+      if (!tripDetails) {
+        alert("Failed to fetch trip details.");
+        return;
+      }
+
+      const textMessage = `Hello ${tripDetails.customername}, your booking is done. Your booking ID is ${tripDetails._id}. Your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickup} and your drop location is ${tripDetails.dropoff}. Your driver details are Driver Name: ${tripDetails.drivername} and his mobile number: ${tripDetails.drivermobileno}`;
+
+      console.log("WhatsApp message:", textMessage);
+
+      const mobileNumbers = [
+        tripDetails.mobileno,
+        tripDetails.Mobile_Number_1,
+        tripDetails.Mobile_Number_2,
+        tripDetails.Mobile_Number_3,
+        tripDetails.Mobile_Number_4,
+        tripDetails.Mobile_Number_5,
+        tripDetails.Mobile_Number_6,
+      ];
+
+      for (const number of mobileNumbers) {
+        if (number) {
+          const url = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${number}&msg=${textMessage}`;
+          window.open(url, "_blank");
+          console.log("Opening link:", url);
+        }
+      }
+    } catch (error) {
+      console.error('Error sharing trip details:', error);
+      alert('Failed to share trip details. Please try again.');
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -113,20 +174,17 @@ const AddTrip = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if a customer is selected
     if (!selectedCustomer || !selectedCustomer._id) {
       alert("Please select a customer before adding a trip.");
       return;
     }
 
-    // Update data with the selected customer's ID
     const dataWithCustomerId = {
       ...formData,
-      customerId: selectedCustomer._id, // Assuming the customer ID is available in the selectedCustomer object
+      customerId: selectedCustomer._id,
     };
 
     try {
-      // Send the data to the API
       const response = await fetch("http://localhost:7000/api/add-trip", {
         method: "POST",
         headers: {
@@ -137,7 +195,7 @@ const AddTrip = () => {
 
       if (response.ok) {
         alert("Data added successfully!");
-        setFormData(initialFormData); // Reset the form
+        setFormData(initialFormData);
       } else {
         alert("Failed to add data. Please try again.");
       }
@@ -312,7 +370,7 @@ const AddTrip = () => {
 
             <div onClick={toggleAddPeople}>
               <button className="btn btn-primary mb-3">
-                {isAddPeopleOpen ? "Close People" : "Add People"}
+                {isAddPeopleOpen ? "Close People" : "No. Of People 6"}
               </button>
               {isAddPeopleOpen && (
                 <div>
@@ -523,6 +581,13 @@ const AddTrip = () => {
               onClick={handleSubmit}
             >
               Add
+            </button>
+            <button
+              type="button"
+              className="trip-btn-submit ml-3"
+              onClick={handleShareClick}
+            >
+              Share With Customer
             </button>
           </div>
         </div>

@@ -14,7 +14,7 @@ const CorporateCustomerSchema = new mongoose.Schema({
    duty_type : String,
    rate : String,
    km : String,
-   extra_km :String,
+//    extra_km :String,
    hours : String,
    extra_hours : String
 

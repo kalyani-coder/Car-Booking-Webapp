@@ -224,7 +224,7 @@ function CustomerInvoice() {
     <>
       <Sidebar />
 
-      <div className="container-vendor-invoice">
+      <div className="container-customer-invoice">
         <h2
           style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
         >

@@ -404,7 +404,7 @@ function VendorPayment() {
                           <div>
                             <div className="form-group">
                               <label htmlFor="extra_km" className="form-label">
-                                Extra KM:
+                                (Rate Per Km)Extra KM:
                                 <span className="required-asterisk">*</span>
                               </label>
                               <input
@@ -466,7 +466,7 @@ function VendorPayment() {
                                 htmlFor="extra_hour"
                                 className="form-label"
                               >
-                                Extra Hour:
+                                (Rate Per Hour)Extra Hour:
                                 <span className="required-asterisk">*</span>
                               </label>
                               <input

@@ -61,6 +61,12 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+  .add-payment-form-control{
+    width: 250px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
   
   /* Button styling */
   .add-payment-btn {
