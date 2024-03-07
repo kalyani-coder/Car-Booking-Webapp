@@ -120,31 +120,30 @@ const AddTrip = () => {
         alert("Please select a customer.");
         return;
       }
-
+  
       const tripDetails = await fetchTripDetails(selectedCustomer._id);
-
+  
       if (!tripDetails) {
         alert("Failed to fetch trip details.");
         return;
       }
-
+  
       const textMessage = `Hello ${tripDetails.customername}, your booking is done. Your booking ID is ${tripDetails._id}. Your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickup} and your drop location is ${tripDetails.dropoff}. Your driver details are Driver Name: ${tripDetails.drivername} and his mobile number: ${tripDetails.drivermobileno}`;
-
+  
       console.log("WhatsApp message:", textMessage);
-
-      const mobileNumbers = [
-        tripDetails.mobileno,
-        tripDetails.Mobile_Number_1,
-        tripDetails.Mobile_Number_2,
-        tripDetails.Mobile_Number_3,
-        tripDetails.Mobile_Number_4,
-        tripDetails.Mobile_Number_5,
-        tripDetails.Mobile_Number_6,
+  
+      // Create an array of objects containing person names and their mobile numbers
+      const persons = [
+        { name: tripDetails.Person_1, mobile: tripDetails.Mobile_Number_1 },
+        { name: tripDetails.Person_2, mobile: tripDetails.Mobile_Number_2 },
+        { name: tripDetails.Person_3, mobile: tripDetails.Mobile_Number_3 },
+        // Add more persons if needed
       ];
-
-      for (const number of mobileNumbers) {
-        if (number) {
-          const url = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${number}&msg=${textMessage}`;
+  
+      // Iterate over each person and send the WhatsApp message
+      for (const person of persons) {
+        if (person.mobile) {
+          const url = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${person.mobile}&msg=${textMessage}`;
           window.open(url, "_blank");
           console.log("Opening link:", url);
         }
@@ -154,6 +153,7 @@ const AddTrip = () => {
       alert('Failed to share trip details. Please try again.');
     }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

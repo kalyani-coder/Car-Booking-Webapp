@@ -231,7 +231,7 @@ function MonthlyCustomerReport() {
                    <td>{customer.Date}</td>
                     <td>{customer.GST_No}</td>
                     <td>{customer.Company_Name}</td>
-                    <td>{customer.Customer_Name}</td>
+                    <td>{customer.customer_Name}</td>
                     <td>{customer.Vehicle_Type}</td>
                     <td>{customer.Quantity}</td>
                   </>
