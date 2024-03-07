@@ -9,14 +9,8 @@ const port = process.env.PORT || 7000;
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
-// Database connectivity to MongoDB Atlas
-mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority', {
-    // useUnifiedTopology : true,
-    // bufferCommands: false, // Disable buffering
-}, console.log("Connected to Database"));
-
-// API Router handles all APIs in one route
-apiRouter = express.Router();
+// Define API Router
+const apiRouter = express.Router();
 
 // Handle routes here
 const CustomerEnquiry = require('./src/routes/CustomerEnquiry');
@@ -58,7 +52,13 @@ apiRouter.use('/indivisual-customer', indivisualCustomer);
 apiRouter.use('/masterrate', newMasterRateSchema);
 apiRouter.use("/get-trip",gettrip)
 
-// Handle all API routes
+// Database connectivity to MongoDB Atlas
+mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority', {
+    // useUnifiedTopology : true,
+    // bufferCommands: false, // Disable buffering
+}, console.log("Connected to Database"));
+
+// Attach API router to the app
 app.use('/api', apiRouter);
 
 // Server is running on port 7000

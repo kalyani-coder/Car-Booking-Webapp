@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/' , async(req , res) => {
     try{
-        tripDetails = await newMasterRateSchema.find()
+        const tripDetails = await newMasterRateSchema.find()
         res.status(201).json(tripDetails)
 
     }catch(e){

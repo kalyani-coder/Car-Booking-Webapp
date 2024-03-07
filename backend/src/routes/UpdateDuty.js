@@ -6,7 +6,7 @@ const router = express.Router()
 // GET METHOD 
 router.get('/' , async(req , res) => {
     try{
-        UpdateDuty = await newUpdateDutySchema.find()
+        const UpdateDuty = await newUpdateDutySchema.find()
         res.status(201).json(UpdateDuty)
 
     }catch(e){
