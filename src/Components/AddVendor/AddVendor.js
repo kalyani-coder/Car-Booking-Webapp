@@ -1,8 +1,8 @@
 
-
 import React, { useState } from "react";
 import "./AddVendor.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert"
 
 const AddVendor = () => {
   const initialFormData = {
@@ -16,6 +16,9 @@ const AddVendor = () => {
   };
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,6 +40,20 @@ const AddVendor = () => {
       } else {
         setMobilenoError("");
       }
+    }
+  };
+
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
     }
   };
 
@@ -73,14 +90,14 @@ const AddVendor = () => {
       });
 
       if (response.ok) {
-        alert("Data added successfully!");
+        showAlert("Vendor added successfully!" , "success");
         setFormData(initialFormData); // Clear the form fields
       } else {
-        alert("Failed to add data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to add data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -90,6 +107,10 @@ const AddVendor = () => {
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
         <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor</h2>
+        
+        {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
           <div className="vendor-form-container">
             <form>
               <div className="vendor-form-group">
@@ -188,7 +209,7 @@ const AddVendor = () => {
                   required
                 />
               </div>
-              <div className="driver-form-group">
+              {/* <div className="driver-form-group">
               <label htmlFor="drivername" className="form-label">
                 Driver Name:
               <span className="required-asterisk">*</span>
@@ -202,7 +223,7 @@ const AddVendor = () => {
                 onChange={handleChange}
                 value={formData.drivername}
               />
-            </div>
+            </div> */}
 
               <button
                 type="submit"

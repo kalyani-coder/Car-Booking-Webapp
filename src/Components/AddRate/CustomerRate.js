@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert";
 
 const initialFormData = {
   Cus_Type: "",
@@ -29,6 +30,8 @@ const CustomerRate = () => {
   const [vehicleList, setVehicleList] = useState([]);
   const [dutyTypeList, setDutyTypeList] = useState([]);
   const [rateList, setRateList] = useState([]);
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -138,7 +141,19 @@ const CustomerRate = () => {
 
   //   return Object.keys(errors).length === 0 && !mobilenoError;
   // };
-
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -195,15 +210,15 @@ const CustomerRate = () => {
 
       if (response.ok) {
         console.log("Customer data added successfully");
-        setSuccessMessage(`${customerType} customer data added successfully!`);
+        showAlert(`${customerType} customer data added successfully!`, "success");
         setFormData(initialFormData);
         setSelectedCustomer(null);
         window.alert("Data added successfully!");
       } else {
-        console.error("Error posting data:", response.statusText);
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
-      console.error("Error:", error);
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -222,6 +237,10 @@ const CustomerRate = () => {
             >
               Corporate Customer
             </h2>
+            
+            {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">

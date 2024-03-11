@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./VendorPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert";
 
 function VendorPayment() {
   const [formData, setFormData] = useState({
@@ -30,6 +31,8 @@ function VendorPayment() {
   });
   const [vendors, setVendors] = useState([]);
   const [selectedVendorId, setSelectedVendorId] = useState("");
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   useEffect(() => {
     fetchVendors();
@@ -81,6 +84,20 @@ function VendorPayment() {
     }
   };
 
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -120,14 +137,14 @@ function VendorPayment() {
   
       if (response.ok) {
         console.log("Data posted successfully!");
-        window.alert("Data posted successfully!");
+        showAlert("Data added successfully!" , "success");
       } else {
         console.error("Error posting data:", response.statusText);
-        window.alert("Error posting data:", response.statusText);
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("Error posting data:", error.message);
-      window.alert("Error posting data:", error.message);
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
   
@@ -149,6 +166,10 @@ function VendorPayment() {
                   >
                     Add Vendor Payment
                   </h2>
+                  
+            {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
                   <form onSubmit={handleSubmit}>
                     <div className="row grid-gap-5">
                       <div className="col-md">

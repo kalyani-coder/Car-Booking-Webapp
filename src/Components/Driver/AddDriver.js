@@ -14,7 +14,8 @@ const AddDriver = () => {
 
   const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
   const [mobileno1Error, setMobileno1Error] = useState(""); // State for alternate mobile number validation error
-
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -61,6 +62,20 @@ const AddDriver = () => {
     }
   };
 
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (
@@ -96,14 +111,14 @@ const AddDriver = () => {
       });
 
       if (response.ok) {
-        alert("Data added successfully!");
+        showAlert("Driver added successfully!" , "success");
         setFormData(initialFormData); // Clear the form fields
       } else {
-        alert("Failed to add data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to add data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 

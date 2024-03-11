@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AddCustomer.css";
 import Sidebar from "../Sidebar/Sidebar";
-import Alert from "../AddCustomer/Alert"
+import Alert from "../AddCustomer/Alert";
 
 const AddCustomer = () => {
   const initialFormData = {
@@ -16,7 +16,6 @@ const AddCustomer = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
-
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./AddPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert";
 
 function AddPayment() {
   const [customerList, setCustomerList] = useState([]);
@@ -41,6 +42,9 @@ function AddPayment() {
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
+
 
   const fetchTripDetails = async (customerId) => {
     try {
@@ -260,6 +264,21 @@ function AddPayment() {
       remaining_Amount: remainingAmount,
     }));
   };
+  
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
  
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -301,7 +320,7 @@ function AddPayment() {
       );
 
       if (response.ok) {
-        window.alert("Data Added");
+        showAlert("Customer Payment added successfully!" , "success");
         setFormData(initialFormData);
       } else {
         console.error(
@@ -309,11 +328,11 @@ function AddPayment() {
           response.status,
           response.statusText
         );
-        alert("Failed to save data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to save data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -337,6 +356,9 @@ function AddPayment() {
                       Add Customer Payment
                     </h2>
 
+                    {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">

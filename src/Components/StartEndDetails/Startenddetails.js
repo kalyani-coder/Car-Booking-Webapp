@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./StartEndDeteails.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert";
 
 const StartEndDetails = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const StartEndDetails = () => {
   const [totalHours, setTotalHours] = useState(0);
   const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
   const [selectedCustomerDetails, setSelectedCustomerDetails] = useState({
     customername: "",
     cus_Mobile: "",
@@ -84,6 +87,21 @@ const StartEndDetails = () => {
       setTotalHours(diffHours);
     }
   };
+  
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
 
   const handleSave = async () => {
     try {
@@ -121,12 +139,12 @@ const StartEndDetails = () => {
 
       if (response.ok) {
         console.log("Details saved successfully!");
-        alert("Details saved successfully!");
+        showAlert("Data added successfully!" , "success");
       } else {
-        console.error("Failed to save details:", response.statusText);
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
-      console.error("Error saving details:", error);
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -139,6 +157,10 @@ const StartEndDetails = () => {
         >
           Get Start And End Details
         </h2>
+        
+        {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
         <div className="start-end-details-form">
           <div className="start-end-details-row">
             <div className="start-end-details-column">

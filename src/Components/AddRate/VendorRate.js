@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert";
 
 const VendorRate = () => {
   const initialFormData = {
@@ -20,6 +21,8 @@ const VendorRate = () => {
 
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState(""); 
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +46,21 @@ const VendorRate = () => {
       }
     }
   };
+
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the form from submitting and causing a page reload
@@ -73,14 +91,14 @@ const VendorRate = () => {
         });
 
       if (response.ok) {
-        alert("Data added successfully!");
+        showAlert("Vender added successfully!" , "success");
         setFormData(initialFormData); // Reset the form fields to their initial values
       } else {
-        alert("Failed to add data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to add data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -99,6 +117,10 @@ const VendorRate = () => {
             >
               Vendor Rate
             </h2>
+            
+            {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
             <form onSubmit={handleSubmit}>
             
               <div className="rate-form-group">

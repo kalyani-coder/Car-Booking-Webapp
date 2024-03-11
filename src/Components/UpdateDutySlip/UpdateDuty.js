@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './UpdateDuty.css';
 import Sidebar from '../Sidebar/Sidebar';
+import Alert from "../AddCustomer/Alert";
 
 
 
@@ -47,6 +48,9 @@ const UpdateDuty = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -302,6 +306,20 @@ const UpdateDuty = () => {
     }
   }
 
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // if (Object.values(formData).some((value) => value === '')) {
@@ -320,14 +338,14 @@ const UpdateDuty = () => {
       });
 
       if (response.ok) {
-        alert('Data added successfully!');
+        showAlert("Data added successfully!" , "success");
         setFormData(initialFormData);
       } else {
-        alert('Failed to add data. Please try again.');
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error('API request error:', error);
-      alert('Failed to add data. Please try again.');
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -341,6 +359,10 @@ const UpdateDuty = () => {
         <div className="update-duty-form">
           <div className="form-group">
           <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Duty Slip</h2>
+          
+          {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
             <div className='d-flex gap-5'>
               <div>  <label htmlFor="companyname" className="update-duty-form-label">
                 Company Name:

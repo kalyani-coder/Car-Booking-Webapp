@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './AllocateTrip.css';
 import Sidebar from '../Sidebar/Sidebar';
 import axios from 'axios';
+import Alert from "../AddCustomer/Alert";
+
+
 function AllocateTrip() {
   const initialTripDetails = {
     customerId: '',
@@ -40,6 +43,9 @@ function AllocateTrip() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customers, setCustomers] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false); // New state to track submission status
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
+
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -157,6 +163,20 @@ function AllocateTrip() {
     }
   };
 
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
   const handleAllocateTrip = () => {
     // Construct payload object
     const payload = {
@@ -173,13 +193,13 @@ function AllocateTrip() {
     axios.post('http://localhost:7000/api/trip-details', payload)
       .then(response => {
         // Handle success
-        alert("Data Added successfully!");
+        showAlert("Allocate Trip added successfully!" , "success");
         console.log('Trip allocated successfully:', response.data);
         // Optionally, you can reset form fields or show a success message
       })
       .catch(error => {
         // Handle error
-        console.error('Error allocating trip:', error);
+        showAlert("Failed to add data. Please try again.", "danger");
         // Optionally, show an error message to the user
       });
   };
@@ -191,7 +211,9 @@ function AllocateTrip() {
       <div className="trip-details-container">
         <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Allocate Trip Details</h2>
         
-             
+        {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+              
         <div className='d-flex gap-3'>
           <div className="trip-details-section">
             {error && <p className="text-red-500">{error}</p>}

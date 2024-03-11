@@ -3,6 +3,7 @@ import "./AddTrip.css";
 import Sidebar from "../Sidebar/Sidebar";
 import axios from "axios";
 import { json } from "react-router-dom";
+import Alert from "../AddCustomer/Alert";
 
 const AddTrip = () => {
   const initialFormData = {
@@ -43,6 +44,8 @@ const AddTrip = () => {
   const [mobilenoError, setMobilenoError] = useState("");
   const [numberOfPeople, setNumberOfPeople] = useState(0);
   const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
  
 
@@ -173,11 +176,27 @@ const AddTrip = () => {
     }
     return rows;
   };
+
+  
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
   
     if (!selectedCustomer || !selectedCustomer._id) {
-      alert("Please select a customer before adding a trip.");
+      showAlert("Please select a customer before adding a trip.", "danger");
       return;
     }
   
@@ -196,7 +215,7 @@ const AddTrip = () => {
       });
   
       if (response.ok) {
-        alert("Data added successfully!");
+        showAlert("Data added successfully!" , "success");
         setFormData(initialFormData);
   
         // Share trip details with the customer via WhatsApp API
@@ -222,17 +241,14 @@ const AddTrip = () => {
           }
         }
       } else {
-        alert("Failed to add data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to add data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
   
-  
-  
-
   return (
     <>
       <Sidebar />
@@ -247,6 +263,10 @@ const AddTrip = () => {
           >
             Add Trip
           </h2>
+          
+          {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
           <div className="trip-form-container">
             {error && <p className="trip-text-red-500">{error}</p>}
             <div className="trip-form-group">

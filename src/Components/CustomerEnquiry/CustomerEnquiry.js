@@ -4,6 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import Alert from "../AddCustomer/Alert";
 
 const CustomerEnquiry = () => {
   const initialFormData = {
@@ -40,6 +41,8 @@ const CustomerEnquiry = () => {
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [apiResponse, setApiResponse] = useState(null);
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -94,6 +97,21 @@ const CustomerEnquiry = () => {
     }
   };
 
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -130,16 +148,16 @@ const CustomerEnquiry = () => {
       if (response.ok) {
         const responseData = await response.json();
         setApiResponse(responseData);
-        alert("Data saved successfully!");
+        showAlert("Customer Enquiry Added successfully!" , "success");
         console.log("Data");
         setFormData(initialFormData); // Clear form after successful submission
       } else {
-        alert("Failed to save data. Please try again.");
+        showAlert("Failed to add data. Please try again.", "danger");
         console.log("error message", response)
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to save data. Please try again.");
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -187,12 +205,10 @@ const CustomerEnquiry = () => {
         <div className="main-container">
           <div className="form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer Enquiry</h2>
-            {error && <div className="error-message">{error}</div>}
-            {apiResponse && (
-              <div className={`api-response-message ${apiResponse.success ? "success" : "error"}`}>
-                {apiResponse.message}
-              </div>
-            )}
+           
+            {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
             <div className="form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name:

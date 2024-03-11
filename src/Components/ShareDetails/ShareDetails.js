@@ -2,10 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import './SharedDetails.css';
+import Alert from "../AddCustomer/Alert";
 
 const ShareDetails = () => {
   const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState('');
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
   const [selectedCustomerDetails, setSelectedCustomerDetails] = useState({
     customermobile: '',
     pickuplocation: '',
@@ -54,6 +57,20 @@ const ShareDetails = () => {
     setSelectedCustomer(customerName);
   };
 
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
+
   const handleSave = async () => {
     try {
       // Make a POST request to the share-details API with the selected customer details
@@ -85,12 +102,12 @@ const ShareDetails = () => {
 
       if (response.ok) {
         console.log('Details saved successfully!');
-       alert('Share Details saved successfully!');
+        showAlert("Share Details Saved successfully!" , "success");
       } else {
-        console.error('Failed to save details:', response.statusText);
+        showAlert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
-      console.error('Error saving details:', error);
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
 
@@ -110,6 +127,9 @@ const ShareDetails = () => {
             Share Details
           </h2>
 
+          {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
+            
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
