@@ -245,7 +245,7 @@ const CustomerRate = () => {
 
               <div className="form-group">
                 <label htmlFor="Cus_name" className="form-label">
-                  Customer Name:
+                  Customer Name/ Company Name:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
@@ -271,7 +271,7 @@ const CustomerRate = () => {
                 </select>
               </div>
 
-              <div className="rate-form-group">
+              {/* <div className="rate-form-group">
                 <label htmlFor="company_name" className="form-label">
                   Company Name:
                   <span className="required-asterisk">*</span>
@@ -285,7 +285,7 @@ const CustomerRate = () => {
                   value={formData.company_name}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               <div className="form-group">
                 <label htmlFor="gst_no" className="form-label">
                   GST No:

@@ -41,12 +41,10 @@ const AddTrip = () => {
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [mobilenoError, setMobilenoError] = useState("");
-  const [isAddPeopleOpen, setIsAddPeopleOpen] = useState(false);
+  const [numberOfPeople, setNumberOfPeople] = useState(0);
   const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
 
-  const toggleAddPeople = () => {
-    setIsAddPeopleOpen((prevState) => !prevState); // Toggle the state
-  };
+ 
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -114,76 +112,80 @@ const AddTrip = () => {
     }
   };
 
-  const handleShareClick = async () => {
-    try {
-      if (!selectedCustomer || !selectedCustomer._id) {
-        alert("Please select a customer.");
-        return;
-      }
   
-      const tripDetails = await fetchTripDetails(selectedCustomer._id);
   
-      if (!tripDetails) {
-        alert("Failed to fetch trip details.");
-        return;
-      }
-  
-      const textMessage = `Hello ${tripDetails.customername}, your booking is done. Your booking ID is ${tripDetails._id}. Your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickup} and your drop location is ${tripDetails.dropoff}. Your driver details are Driver Name: ${tripDetails.drivername} and his mobile number: ${tripDetails.drivermobileno}`;
-  
-      console.log("WhatsApp message:", textMessage);
-  
-      // Create an array of objects containing person names and their mobile numbers
-      const persons = [
-        { name: tripDetails.Person_1, mobile: tripDetails.Mobile_Number_1 },
-        { name: tripDetails.Person_2, mobile: tripDetails.Mobile_Number_2 },
-        { name: tripDetails.Person_3, mobile: tripDetails.Mobile_Number_3 },
-        // Add more persons if needed
-      ];
-  
-      // Iterate over each person and send the WhatsApp message
-      for (const person of persons) {
-        if (person.mobile) {
-          const url = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${person.mobile}&msg=${textMessage}`;
-          window.open(url, "_blank");
-          console.log("Opening link:", url);
-        }
-      }
-    } catch (error) {
-      console.error('Error sharing trip details:', error);
-      alert('Failed to share trip details. Please try again.');
-    }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
-  
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    if (name === "mobileno") {
-      if (!/^\d{10}$/.test(value)) {
-        setMobilenoError("Mobile number must be 10 digits");
-      } else {
-        setMobilenoError("");
-      }
+  const handleAddPerson = () => {
+    if (numberOfPeople < 6) {
+      setNumberOfPeople(numberOfPeople + 1);
     }
   };
 
+  const renderInputs = (start, end) => {
+    const inputs = [];
+    for (let i = start; i <= end; i++) {
+      inputs.push(
+        <div key={i}>
+          <div className="trip-form-group">
+            <label htmlFor={`Person_${i}`} className="trip-form-label">
+              Person {i}:
+            </label>
+            <input
+              type="text"
+              className="form-control add-trip-input"
+              name={`Person_${i}`}
+              placeholder={`Enter Person ${i}`}
+              onChange={handleChange}
+              value={formData[`Person_${i}`] || ''}
+            />
+          </div>
+          <div className="trip-form-group">
+            <label htmlFor={`Mobile_Number_${i}`} className="trip-form-label">
+              Mobile No. {i}:
+            </label>
+            <input
+              type="number"
+              className="form-control add-trip-input"
+              name={`Mobile_Number_${i}`}
+              placeholder={`Enter Mobile No. ${i}`}
+              onChange={handleChange}
+              value={formData[`Mobile_Number_${i}`] || ''}
+            />
+          </div>
+        </div>
+      );
+    }
+    return inputs;
+  };
+  const renderRows = () => {
+    const rows = [];
+    for (let i = 1; i <= numberOfPeople; i += 3) {
+      rows.push(
+        <div className="d-flex gap-3" key={i}>
+          {renderInputs(i, Math.min(i + 2, numberOfPeople))}
+        </div>
+      );
+    }
+    return rows;
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!selectedCustomer || !selectedCustomer._id) {
       alert("Please select a customer before adding a trip.");
       return;
     }
-
+  
     const dataWithCustomerId = {
       ...formData,
       customerId: selectedCustomer._id,
     };
-
+  
     try {
       const response = await fetch("http://localhost:7000/api/add-trip", {
         method: "POST",
@@ -192,10 +194,33 @@ const AddTrip = () => {
         },
         body: JSON.stringify(dataWithCustomerId),
       });
-
+  
       if (response.ok) {
         alert("Data added successfully!");
         setFormData(initialFormData);
+  
+        // Share trip details with the customer via WhatsApp API
+        const customerTextMessage = `Hello ${selectedCustomer.cus_name}, your booking is done. Your booking ID is ${formData.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
+  
+        const urlCustomer = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${selectedCustomer.mobileno}&msg=${customerTextMessage}`;
+        window.open(urlCustomer, "_blank");
+        console.log("Sending WhatsApp message to customer:", selectedCustomer.customername, "Mobile:", selectedCustomer.mobileno);
+        console.log("Opening link:", urlCustomer);
+  
+        // Share trip details with each person via WhatsApp API
+        for (let i = 1; i <= 6; i++) {
+          const personName = formData[`Person_${i}`];
+          const mobileNumber = formData[`Mobile_Number_${i}`];
+  
+          if (personName && mobileNumber) {
+            const personTextMessage = `Hello ${personName}, your booking is done. Your booking ID is ${response.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
+  
+            const urlPerson = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${mobileNumber}&msg=${personTextMessage}`;
+            window.open(urlPerson, "_blank");
+            console.log("Sending WhatsApp message to person:", personName, "Mobile:", mobileNumber);
+            console.log("Opening link:", urlPerson);
+          }
+        }
       } else {
         alert("Failed to add data. Please try again.");
       }
@@ -204,6 +229,9 @@ const AddTrip = () => {
       alert("Failed to add data. Please try again.");
     }
   };
+  
+  
+  
 
   return (
     <>
@@ -329,92 +357,14 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <div className="d-flex gap-3">
-              {[1, 2, 3].map((index) => (
-                <div key={index}>
-                  <div className="trip-form-group">
-                    <label htmlFor={`Person_${index}`} className="trip-form-label">
-                      Person {index}:
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control add-trip-input"
-                      name={`Person_${index}`}
-                      placeholder={`Enter Person ${index}`}
-                      onChange={handleChange}
-                      value={formData[`Person_${index}`]}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="d-flex gap-3">
-              {[1, 2, 3].map((index) => (
-                <div key={index}>
-                  <div className="trip-form-group">
-                    <label htmlFor={`Mobile_Number_${index}`} className="trip-form-label">
-                      Mobile No. {index}:
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control add-trip-input"
-                      name={`Mobile_Number_${index}`}
-                      placeholder={`Enter Mobile No. ${index}`}
-                      onChange={handleChange}
-                      value={formData[`Mobile_Number_${index}`]}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div>
+            <div>
+      {renderRows()}
+      {numberOfPeople < 6 && <button className="trip-btn-submit" onClick={handleAddPerson}>Add Person 6</button>}
+    </div>
+    </div>
 
-            <div onClick={toggleAddPeople}>
-              <button className="btn btn-primary mb-3">
-                {isAddPeopleOpen ? "Close People" : "No. Of People 6"}
-              </button>
-              {isAddPeopleOpen && (
-                <div>
-                  <div className="d-flex gap-3">
-                    {[4, 5, 6].map((index) => (
-                      <div key={index}>
-                        <div className="trip-form-group">
-                          <label htmlFor={`Person_${index}`} className="trip-form-label">
-                            Person {index}:
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control add-trip-input"
-                            name={`Person_${index}`}
-                            placeholder={`Enter Person ${index}`}
-                            onChange={handleChange}
-                            value={formData[`Person_${index}`]}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="d-flex gap-3">
-                    {[4, 5, 6].map((index) => (
-                      <div key={index}>
-                        <div className="trip-form-group">
-                          <label htmlFor={`Mobile_Number_${index}`} className="trip-form-label">
-                            Mobile No. {index}:
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control add-trip-input"
-                            name={`Mobile_Number_${index}`}
-                            placeholder={`Enter Mobile No. ${index}`}
-                            onChange={handleChange}
-                            value={formData[`Mobile_Number_${index}`]}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+
 
             <div className="d-flex gap-3">
               <div>
@@ -582,13 +532,13 @@ const AddTrip = () => {
             >
               Add
             </button>
-            <button
+            {/* <button
               type="button"
               className="trip-btn-submit ml-3"
               onClick={handleShareClick}
             >
               Share With Customer
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

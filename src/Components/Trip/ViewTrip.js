@@ -15,7 +15,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
 
   const [formData, setFormData] = useState({
     members: 1,
-    people: [{ name: "", mobile: "", vehicleNo: "" }],
+    people: [{ name: "", mobile: "" }],
   });
 
   const handleChange = (e) => {
@@ -38,13 +38,13 @@ const [selectedTrip, setSelectedTrip] = useState(null);
   };
 
   const addPerson = () => {
-    if (formData.people.length < 7) {
+    if (formData.people.length < 6) {
       setFormData({
         ...formData,
-        people: [...formData.people, { name: "", mobile: "", vehicleNo: "" }],
+        people: [...formData.people, { name: "", mobile: "" }],
       });
     } else {
-      alert("You can add up to 7 people.");
+      alert("You can add up to 6 people.");
     }
   };
 
@@ -429,23 +429,14 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                                     })
                                   }
                                 >
-                                  {[1, 2, 3, 4, 5, 6, 7].map((number) => (
+                                  {[1, 2, 3, 4, 5, 6].map((number) => (
                                     <option key={number} value={number}>
                                       {number}
                                     </option>
                                   ))}
                                 </select>
                               </div>
-                              {/* Add Person button */}
-                              <div>
-                                <button
-                                  type="button"
-                                  className="trip-btn-submit"
-                                  onClick={addPerson}
-                                >
-                                  Add Person
-                                </button>
-                              </div>
+                             
                               {/* Editable fields for each person */}
                               <div className="d-flex flex-wrap gap-3">
                                 {Array.from(
@@ -527,35 +518,6 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                                                 className="form-control-add-trip-input1"
                                               />
 
-                                              <label
-                                                htmlFor={`vehicle${
-                                                  personIndex + 1
-                                                }`}
-                                                className="trip-form-label"
-                                              >
-                                                Vehicle No :
-                                              </label>
-                                              <input
-                                                type="text"
-                                                id={`vehicle${personIndex + 1}`}
-                                                name={`vehicle${
-                                                  personIndex + 1
-                                                }`}
-                                                value={
-                                                  editedTrip[
-                                                    `vehicle${personIndex + 1}`
-                                                  ] || ""
-                                                }
-                                                onChange={(e) =>
-                                                  setEditedTrip({
-                                                    ...editedTrip,
-                                                    [`vehicle${
-                                                      personIndex + 1
-                                                    }`]: e.target.value,
-                                                  })
-                                                }
-                                                className="form-control-add-trip-input1"
-                                              />
                                             </div>
                                           ) : null;
                                         }

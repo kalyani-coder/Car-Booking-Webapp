@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import Alert from "../AddCustomer/Alert";
 
 const initialFormData = { 
   add_vehicle: "",
@@ -11,31 +12,49 @@ const MasterCorporateCustomer = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [successMessage, setSuccessMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const [successAlert, setSuccessAlert] = useState(null);
+  const [errorAlert, setErrorAlert] = useState(null);
+
 
   
-
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      },);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await fetch(
-      "http://localhost:7000/api/masterrate",
-      {
+  
+    try {
+      const response = await fetch("http://localhost:7000/api/masterrate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        showAlert("Data added successfully!", "success");
+        setFormData(initialFormData);
+      } else {
+        showAlert("Failed to add data. Please try again.", "danger");
+        console.error("Error posting data:", response.statusText);
       }
-    );
-
-    if (response.ok) {
-      setSuccessMessage("Data added successfully!");
-      setFormData(initialFormData);
-      window.alert("Data added successfully!");
-    } else {
-      console.error("Error posting data:", response.statusText);
+    } catch (error) {
+      console.error("API request error:", error);
+      showAlert("Failed to add data. Please try again.", "danger");
     }
   };
+  
 
   return (
     <>
@@ -52,6 +71,9 @@ const MasterCorporateCustomer = () => {
             >
               Master
             </h2>
+
+            {successAlert && <Alert alert={successAlert} />}
+      {errorAlert && <Alert alert={errorAlert} />}
             {/* Form */}
             <form onSubmit={handleSubmit}>
               <div className="form-group">

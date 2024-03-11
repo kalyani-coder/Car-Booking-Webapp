@@ -117,7 +117,7 @@ function AllocateTrip() {
   const handleShareClick = async () => {
     try {
       // Fetch trip details first
-      await fetchTripDetails(selectedCustomer._id);
+      await fetchTripDetails(selectedCustomer.customerId);
   
       // Log the data from text input fields
       console.log('Pickup Location:', tripDetails.pickup);

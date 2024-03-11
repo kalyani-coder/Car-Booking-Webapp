@@ -5,7 +5,6 @@ import * as XLSX from "xlsx";
 
 function VendorReport() {
   const [vendors, setVendors] = useState([]);
-  const [filterByAmount, setFilterByAmount] = useState("");
   const [filterByVendorName, setFilterByVendorName] = useState("");
   const [filterByPayment, setFilterByPayment] = useState("all");
   const [selectedVehicle, setSelectedVehicle] = useState("");
@@ -29,9 +28,6 @@ function VendorReport() {
       .catch((error) => console.error("Error fetching vendors:", error));
   };
 
-  const handleFilterByAmount = (event) => {
-    setFilterByAmount(event.target.value);
-  };
 
   const handleFilterByVendorName = (event) => {
     setFilterByVendorName(event.target.value);
@@ -75,7 +71,6 @@ function VendorReport() {
       ? vendor.payment === "Full Payment"
       : true;
     return (
-      amount.includes(filterByAmount) &&
       vendorName.includes(filterByVendorName.toLowerCase()) &&
       paymentStatus
     );
@@ -136,15 +131,7 @@ function VendorReport() {
 
         <div className="grid-container">
           <div className="filters">
-            <div className="filter-input">
-              <input
-                type="text"
-                placeholder="Filter by Total Amount"
-                value={filterByAmount}
-                onChange={handleFilterByAmount}
-              />
-              <i className="fas fa-filter"></i>
-            </div>
+           
             <div className="filter-input">
               <input
                 type="text"
@@ -203,6 +190,7 @@ function VendorReport() {
               <th>Sr. No.</th>
               <th>Vendor Name</th>
               <th>GST No</th>
+              <th>Invoice Number</th>
               <th>Mobile Number</th>
               <th>Company Name</th>
               <th>Vehicle Type</th>
@@ -212,7 +200,7 @@ function VendorReport() {
               {/* <th>Paid Amount</th>
               <th>Remaining Amount</th> */}
               <th>Payment</th>
-              <th>Payment Method</th>
+              {/* <th>Payment Method</th> */}
             </tr>
           </thead>
           <tbody>
@@ -221,6 +209,7 @@ function VendorReport() {
                 <td>{index + 1}</td>
                 <td>{vendor.vender_Name}</td>
                 <td>{vendor.GST_No}</td>
+                <td></td>
                 <td>{vendor.mobile_Number}</td>
                 <td>{vendor.company_Name}</td>
                 <td>{vendor.vehicle_type}</td>
@@ -230,7 +219,7 @@ function VendorReport() {
                 {/* <td>{vendor.paid_Amount}</td>
                 <td>{vendor.remaining_Amount}</td> */}
                 <td>{vendor.payment}</td>
-                <td>{vendor.payment_Method}</td>
+                {/* <td>{vendor.payment_Method}</td> */}
               </tr>
             ))}
           </tbody>

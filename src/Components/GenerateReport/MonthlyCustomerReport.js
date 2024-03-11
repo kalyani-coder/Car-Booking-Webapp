@@ -147,6 +147,7 @@ function MonthlyCustomerReport() {
                 <th>Sr.No.</th>
                 <th>Date</th>
                 <th>GST No.</th>
+                <th>Invoice No.</th>
                 <th>Customer Name</th>
                 <th>Vehicle Type</th>
                 <th>CGST</th>
@@ -160,6 +161,7 @@ function MonthlyCustomerReport() {
                 <th>Sr.No.</th>
                 <th>Date</th>
                 <th>GST No.</th>
+                <th>Invoice No.</th>
                 <th>Customer Name</th>
                 <th>Receivables Amount</th>
               </tr>
@@ -169,6 +171,7 @@ function MonthlyCustomerReport() {
                 <th>Sr.No.</th>
                 <th>Date</th>
                 <th>GST No.</th>
+                <th>Invoice No.</th>
                 <th>Customer Name</th>
                 <th>CGST</th>
                 <th>SGST</th>
@@ -181,6 +184,7 @@ function MonthlyCustomerReport() {
                 <th>Sr.No.</th>
                 <th>Date</th>
                 <th>GST No.</th>
+                <th>Invoice No.</th>
                 <th>Company Name</th>
                 <th>Customer Name</th>
                 <th>Vehicle Type</th>
@@ -196,6 +200,7 @@ function MonthlyCustomerReport() {
                   <>
                   <td>{customer.Date}</td>
                   <td>{customer.GST_No}</td>
+                  <td></td>
                     <td>{customer.Customer_Name}</td>
                     <td>{customer.vehicle_Type}</td>
                     <td>{customer.CGST}</td>
@@ -211,6 +216,7 @@ function MonthlyCustomerReport() {
                   <>
                   <td>{customer.Date}</td>
                   <td>{customer.GST_No}</td>
+                  <td></td>
                     <td>{customer.Customer_Name}</td>
                     <td>{customer.Total_Amount}</td>
                   </>
@@ -219,6 +225,7 @@ function MonthlyCustomerReport() {
                   <>
                   <td>{customer.Date}</td>
                   <td>{customer.GST_No}</td>
+                  <td></td>
                     <td>{customer.Customer_Name}</td>
                     <td>{customer.CGST}</td>
                     <td>{customer.SGST}</td>
@@ -230,6 +237,7 @@ function MonthlyCustomerReport() {
                   <>
                    <td>{customer.Date}</td>
                     <td>{customer.GST_No}</td>
+                    <td></td>
                     <td>{customer.Company_Name}</td>
                     <td>{customer.customer_Name}</td>
                     <td>{customer.Vehicle_Type}</td>
