@@ -7,11 +7,11 @@ import './Home.css'
 const Home = () => {
   // Sample data for customers and vendors
   const data = [
-    { name: 'Customers', bookings: 50 },
+    { name: 'Customers', bookings: 0 },
     { name: 'Vendors', bookings: 30 },
     { name: 'Bookings', bookings: 13 },
     { name: 'Trips', bookings: 22 },
-    { name: 'Profit', bookings: 27 },
+   
   ];
 
   return (
