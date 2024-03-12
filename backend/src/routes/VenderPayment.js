@@ -1,6 +1,7 @@
 
 const express = require('express')
 const NewVenderpayment = require('../models/VenderPaymentModel')
+const NewAddVenders = require("../models/AddVendersModel")
 const router = express.Router()
 
 // GET METHOD 
@@ -109,5 +110,25 @@ router.get("/:id", async (req, res) => {
       res.status(500).json({ message: "Internal Server Error", error });
     }
   });
+
+  router.get("/vender/:vender_id", async (req, res) => {
+    try {
+      const venderpayment = await NewAddVenders.find({
+       vender_id: req.params.vender_id,
+      });
+
+      if (venderpayment.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "Trips not found for the given customer ID" });
+      }
+
+      res.status(200).json( venderpayment);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+
+  
 
 module.exports = router;

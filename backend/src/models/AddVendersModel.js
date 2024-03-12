@@ -8,7 +8,8 @@ const AddVendersSchema = new mongoose.Schema({
     GST_No :String,
     vender_Mobile : Number,
     Vender_Email : String,
-    address : String,
+    address : String, 
+    vender_id : String,
 
 })
 
