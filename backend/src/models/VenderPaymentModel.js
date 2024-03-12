@@ -44,6 +44,7 @@ const VenderPaymentSchema = new mongoose.Schema({
     type: Date,
     default: () => new Date().toISOString().split("T")[0], // Set default value to current date without time
   },
+  vender_id : String,
     
     
     // reporting_Address : String,
