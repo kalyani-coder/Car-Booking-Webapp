@@ -9,7 +9,7 @@ const AddVendersSchema = new mongoose.Schema({
     vender_Mobile : Number,
     Vender_Email : String,
     address : String, 
-    vender_id : String,
+    
 
 })
 

@@ -26,10 +26,14 @@ function AddPayment() {
     total_hours: "",
     title: "",
     title_Amount: 0,
-    extra_Km: "",
-    extramkm_Amount: "" ,
-    extra_Hours: "",
-    extrahours_Amount: "",
+    ratePerKm: 0,
+    extra_Km: 0,
+    extramkm_Amount: 0,
+    extrakm_CGST: "",
+    extrakm_SGST: "",
+    ratePerHour: 0, // Initial value for rate per hour
+    extra_Hours: 0,
+    extrahours_Amount: 0,
     subtotal_Amount: "",
     toll:'',
     SGST: "",
@@ -39,6 +43,7 @@ function AddPayment() {
     remaining_Amount: "",
     payment_Method: "",
   };
+  
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -65,7 +70,32 @@ function AddPayment() {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
+    setFormData({ ...formData, [name]: parseFloat(value) });
     console.log("Selected Customer ID:", value); // Corrected to log the selected value
+
+     // Convert value to float
+  const parsedValue = parseFloat(value);
+
+  // Update form data with parsed value
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: parsedValue,
+  }));
+
+   // Calculate CGST and SGST
+   if (name === "extramkm_Amount") {
+    const cgst = (parsedValue * 2.5) / 100; // Calculate CGST
+    const sgst = (parsedValue * 2.5) / 100; // Calculate SGST
+
+    // Update form data with calculated values
+    setFormData((prevData) => ({
+      ...prevData,
+      extrakm_CGST: cgst.toFixed(2), // Round to 2 decimal places
+      extrakm_SGST: sgst.toFixed(2), // Round to 2 decimal places
+    }));
+  }
+
+  
 
     //calculate the total km ,Extra km
     if (name === "closingkm" || name === "startingkm") {
@@ -163,8 +193,9 @@ function AddPayment() {
         const totalKm = closingKm - startingKm;
         const extraKm = totalKm > 80 ? totalKm - 80 : 0; // Calculate extra_Km based on flat rate
 
-        const ratePerKm = 13; // Example rate per km
-    const extramkm_Amount = extraKm * ratePerKm; // Calculate extramkm_Amount
+        // const ratePerKm = 13; // Example rate per km
+    // Calculate extramkm_Amount
+  const extramkm_Amount = formData.extra_Km * formData.ratePerKm;
 
         setFormData((prevData) => ({
           ...prevData,
@@ -227,6 +258,22 @@ function AddPayment() {
     }));
   }
 };
+
+// Calculate extramkm_Amount whenever extraKm or ratePerKm changes
+React.useEffect(() => {
+  setFormData((prevData) => ({
+    ...prevData,
+    extramkm_Amount: prevData.extra_Km * prevData.ratePerKm,
+  }));
+}, [formData.extra_Km, formData.ratePerKm]);
+
+ // Calculate extrahours_Amount whenever extraHours or ratePerHour changes
+ React.useEffect(() => {
+  setFormData((prevData) => ({
+    ...prevData,
+    extrahours_Amount: prevData.extra_Hours * prevData.ratePerHour,
+  }));
+}, [formData.extra_Hours, formData.ratePerHour]);
 
   const calculateSubTotal = () => {
     const { title_Amount, extramkm_Amount, extrahours_Amount } = formData;
@@ -757,30 +804,33 @@ function AddPayment() {
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-  type="number"
-  className="update-duty-form-control"
-  id="extra_Km"
-  name="extra_Km" /* Update name attribute to match state key */
-  placeholder="Enter Extra Kms"
-  onChange={handleChange}
-  value={formData.extra_Km}
-/>
+        type="number"
+        className="update-duty-form-control"
+        name="extra_Km"
+        placeholder="Enter Extra KMs"
+        value={formData.extra_Km}
+        onChange={handleChange}
+      />
                         </div>
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="extrakmsamount" className="form-label">
+                          <label for="ratePerKm" className="form-label">
                             (Rate Per KM)Extra Km Amount:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-  type="number"
-  className="update-duty-form-control"
-  name="ratePerKm"
-  placeholder="Enter Rate Per Km"
-  value={formData.ratePerKm}
-  onChange={handleChange}
-/>
+        type="number"
+        className="update-duty-form-control"
+        name="ratePerKm"
+        placeholder="Enter Rate Per Km"
+        value={formData.ratePerKm}
+        onChange={handleChange}
+      />
+       <div>
+        {/* Display the calculated amount */}
+        {/* The amount for extra kilometers is: ${formData.extra_Km * formData.ratePerKm} */}
+      </div>
                         </div>
                       </div>
                     </div>
@@ -814,49 +864,106 @@ function AddPayment() {
                             type="number"
                             className="update-duty-form-control"
                             name="ratePerHour"
-                            placeholder="Enter Extra Hours Amount"
+                            placeholder="Enter Rate Per Hours Amount"
                             value={formData.ratePerHour}
                             onChange={handleChange}
-                            onBlur={handleSubtotalChange}
                           />
                         </div>
                       </div>
                     </div>
 
                     <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label for="extramkm_Amount" className="form-label">
-                            Extra KMs Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            name="extramkm_Amount"
-                            placeholder="Enter  EXtra Km Amount"
-                            value={formData.extramkm_Amount}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label for="extrahours_Amount.5%" className="form-label">
-                            Extra Hours Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            name="extrahours_Amount"
-                            placeholder="Enter CGST  Amount"
-                            value={formData.extrahours_Amount}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
+  {/* Column 1 */}
+  <div className="col-md">
+    <div className="form-group">
+      <label htmlFor="extrakm_Amount" className="form-label">
+        Extra KMs Amount:
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="update-duty-form-control"
+        name="extramkm_Amount"
+        placeholder="Enter Extra KMs Amount"
+        value={formData.extramkm_Amount}
+        onChange={handleChange}
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="extrakm_CGST" className="form-label">
+        Extra Km CGST (2.5%):
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+    type="number"
+    className="update-duty-form-control"
+    name="extrakm_CGST"
+    placeholder="Enter Extra Km CGST"
+    onChange={handleChange} // Remove the value attribute
+  />
+    </div>
+    <div className="form-group">
+      <label htmlFor="extrakm_SGST" className="form-label">
+        Extra Km SGST (2.5%):
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+    type="number"
+    className="update-duty-form-control"
+    name="extrakm_SGST"
+    placeholder="Enter Extra Km SGST"
+    onChange={handleChange} // Remove the value attribute
+  />
+    </div>
+  </div>
+
+  {/* Column 2 */}
+  <div className="col-md">
+    <div className="form-group">
+      <label htmlFor="extrahours_Amount" className="form-label">
+        Extra Hours Amount:
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="update-duty-form-control"
+        name="extrahours_Amount"
+        placeholder="Enter Extra Hours Amount"
+        value={formData.extrahours_Amount}
+        onChange={handleChange}
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="extrahours_CGST" className="form-label">
+        Extra Hour CGST (2.5%):
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="update-duty-form-control"
+        name="extrahours_CGST"
+        placeholder="Enter Extra Hour CGST"
+        value={formData.extrahours_CGST}
+        onChange={handleChange}
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="extrahours_SGST" className="form-label">
+        Extra Hour SGST (2.5%):
+        <span className="required-asterisk">*</span>
+      </label>
+      <input
+        type="number"
+        className="update-duty-form-control"
+        name="extrahours_SGST"
+        placeholder="Enter Extra Hour SGST"
+        value={formData.extrahours_SGST}
+        onChange={handleChange}
+      />
+    </div>
+  </div>
+</div>
+
                     <div className="row grid-gap-5">
   {/* First field - Toll Parking */}
   <div className="col-md">
@@ -1018,6 +1125,11 @@ function AddPayment() {
                         
                       </div>
                     </div>
+                    <div className="row grid-gap-5">
+ 
+
+ 
+</div>
 
                     <br />
                     <button id="btn1" className="btn btn-danger">

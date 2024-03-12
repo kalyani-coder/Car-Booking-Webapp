@@ -113,7 +113,7 @@ router.get("/:id", async (req, res) => {
 
   router.get("/vender/:vender_id", async (req, res) => {
     try {
-      const venderpayment = await NewAddVenders.find({
+      const venderpayment = await NewVenderpayment.find({
        vender_id: req.params.vender_id,
       });
 
