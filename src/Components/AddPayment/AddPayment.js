@@ -148,19 +148,33 @@ function AddPayment() {
   };
   
   const handleSubtotalChange = () => {
+    // Manually add title_Amount
+    const titleAmount = parseFloat(formData.title_Amount);
+  
+    // Calculate CGST and SGST based on title_Amount
+    const CGST = (titleAmount * 2.5) / 100;
+    const SGST = (titleAmount * 2.5) / 100;
+  
+    // Calculate subtotal
     const subtotal = calculateSubTotal();
-    const { SGST, CGST } = calculateSGST_CGST(subtotal);
-    const totalAmount = subtotal + SGST + CGST;
+  
+    // Calculate total amount
+    const totalAmount = subtotal + parseFloat(formData.extrakm_CGST) + parseFloat(formData.extrakm_SGST) + parseFloat(formData.extrahours_CGST) + parseFloat(formData.extrahours_SGST) + CGST + SGST;
+  
+    // Calculate remaining amount
     const remainingAmount = totalAmount - parseFloat(formData.advance_Amount);
+  
+    // Update form data
     setFormData((prevData) => ({
       ...prevData,
       subtotal_Amount: subtotal,
-      SGST: SGST,
-      CGST: CGST,
-      total_Amount: totalAmount,
-      remaining_Amount: remainingAmount,
+      SGST: SGST.toFixed(2),
+      CGST: CGST.toFixed(2),
+      total_Amount: totalAmount.toFixed(2),
+      remaining_Amount: remainingAmount.toFixed(2),
     }));
   };
+  
   
   // Effect for automatic calculation of extramkm_Amount whenever extra_Km or ratePerKm changes
   React.useEffect(() => {
@@ -214,8 +228,8 @@ React.useEffect(() => {
 
   setFormData((prevData) => ({
     ...prevData,
-    extrahours_CGST: cgst.toFixed(2),
-    extrahours_SGST: sgst.toFixed(2),
+    extrahours_CGST: cgst.toFixed(),
+    extrahours_SGST: sgst.toFixed(),
   }));
 }, [formData.extrahours_Amount]);
 
