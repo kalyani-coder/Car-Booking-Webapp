@@ -33,9 +33,9 @@ const Home = () => {
       </h1>
       <div className="flex ml-15 justify-center mt-10">
         <div className="flex justify-start w-full max-w-3xl">
-          <div className="w-1/2 mr-4">
+          {/* <div className="w-1/2 mr-4">
             <PieChart data={newdata} />
-          </div>
+          </div> */}
           <div className="w-1/2">
             <BarChart width={500} height={300} data={data}>
               <CartesianGrid strokeDasharray="3 3" />
