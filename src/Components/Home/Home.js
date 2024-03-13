@@ -21,7 +21,7 @@ const Home = () => {
   ];
 
   const newdata = {
-    labels: ["enwuiry", "bookings", "completed trips", "pending trips"],
+    labels: ["enquiry", "bookings", "completed trips", "pending trips"],
     values: [65, 55, 40, 15],
   };
 
