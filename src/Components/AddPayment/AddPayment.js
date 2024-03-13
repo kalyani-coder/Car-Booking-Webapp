@@ -1092,9 +1092,9 @@ function AddPayment() {
                     <div className="row grid-gap-5"></div>
 
                     <br />
-                    <button id="btn1" className="btn btn-danger">
+                    {/* <button id="btn1" className="btn btn-danger">
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       id="btn2"
                       className="add-payment-submit"
