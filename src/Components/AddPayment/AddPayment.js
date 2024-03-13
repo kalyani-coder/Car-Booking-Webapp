@@ -33,6 +33,8 @@ function AddPayment() {
     extrakm_SGST: "",
     ratePerHour: 0, // Initial value for rate per hour
     extra_Hours: 0,
+    extrahours_CGST:"",
+    extrahours_SGST: "",
     extrahours_Amount: 0,
     subtotal_Amount: "",
     toll:'',
@@ -67,179 +69,49 @@ function AddPayment() {
       console.error("API request error:", error);
       return null;
     }
+  }; 
+ 
+  // calculations start
+  const calculateTotalKmAndExtraKm = () => {
+    const closingKm = parseFloat(formData.closing_km);
+    const startingKm = parseFloat(formData.starting_Km);
+  
+    if (!isNaN(closingKm) && !isNaN(startingKm)) {
+      const totalKm = closingKm - startingKm;
+      const extraKm = totalKm > 80 ? totalKm - 80 : 0;
+      const extramkm_Amount = extraKm * formData.ratePerKm;
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        total_Km: totalKm.toString(),
+        extra_Km: extraKm.toString(),
+        extramkm_Amount: extramkm_Amount.toFixed(2),
+      }));
+    }
   };
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: parseFloat(value) });
-    console.log("Selected Customer ID:", value); // Corrected to log the selected value
-
-     // Convert value to float
-  const parsedValue = parseFloat(value);
-
-  // Update form data with parsed value
-  setFormData((prevData) => ({
-    ...prevData,
-    [name]: parsedValue,
-  }));
-
-   // Calculate CGST and SGST
-   if (name === "extramkm_Amount") {
-    const cgst = (parsedValue * 2.5) / 100; // Calculate CGST
-    const sgst = (parsedValue * 2.5) / 100; // Calculate SGST
-
-    // Update form data with calculated values
-    setFormData((prevData) => ({
-      ...prevData,
-      extrakm_CGST: cgst.toFixed(2), // Round to 2 decimal places
-      extrakm_SGST: sgst.toFixed(2), // Round to 2 decimal places
-    }));
-  }
-
   
-
-    //calculate the total km ,Extra km
-    if (name === "closingkm" || name === "startingkm") {
-      const closingKm = parseFloat(
-        name === "closingkm" ? value : formData.closing_km
-      );
-      const startingKm = parseFloat(
-        name === "startingkm" ? value : formData.starting_Km
-      );
+  const calculateTotalHoursAndExtraHours = () => {
+    const closingTime = formData.closing_Time;
+    const startingTime = formData.starting_Time;
   
-      if (!isNaN(closingKm) && !isNaN(startingKm)) {
-        const totalKm = closingKm - startingKm;
-        const extraKm = totalKm - 8; // Calculate extra_Km
-        setFormData((prevData) => ({
-          ...prevData,
-          totalkm: totalKm.toString(),
-          extra_Km: extraKm.toString(), // Update extra_Km field
-        }));
-      }
-    }
-
-    //calculate the time(Total hour)
-    if (name === "startingtime" || name === "closingtime") {
-      const startingTimeStr = formData.starting_Time;
-      const closingTimeStr = formData.closing_Time;
-
-      const timeFormatRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-
-      if (
-        !timeFormatRegex.test(startingTimeStr) ||
-        !timeFormatRegex.test(closingTimeStr)
-      ) {
-        console.log("Invalid time format");
-        return;
-      }
-
-      const [startingHour, startingMinute] = startingTimeStr
-        .split(":")
-        .map(Number);
-      const [closingHour, closingMinute] = closingTimeStr
-        .split(":")
-        .map(Number);
-
-      // Calculate the time difference in minutes
-      let timeDiffMinutes =
-        (closingHour - startingHour) * 60 + (closingMinute - startingMinute);
-
-      // Handle negative time difference (e.g., closing time is before starting time)
-      if (timeDiffMinutes < 0) {
-        console.log("Invalid time range");
-        return;
-      }
-
-      // Convert minutes to hours and format with two decimal places
-      const timeDiffHours = timeDiffMinutes / 60;
-      const formattedTimeDiff = timeDiffHours.toFixed(2);
-
-      setFormData((prevData) => ({
-        ...prevData,
-        totalhour: formattedTimeDiff,
-      }));
-    }
-
-   
-    if (name === "advance_Amount") {
-      // Parse advance amount as a float
-      const advanceAmount = parseFloat(value);
-
-      // Calculate remaining amount
-      const remainingAmount = formData.total_Amount - advanceAmount;
-
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-        remaining_Amount: remainingAmount,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-
-    if (name === "closing_km" || name === "starting_Km") {
-      // Parse values as floats
-      const closingKm = parseFloat(
-        name === "closing_km" ? value : formData.closing_km
-      );
-      const startingKm = parseFloat(
-        name === "starting_Km" ? value : formData.starting_Km
-      );
-
-      // Calculate the total kilometers
-      if (!isNaN(closingKm) && !isNaN(startingKm)) {
-        const totalKm = closingKm - startingKm;
-        const extraKm = totalKm > 80 ? totalKm - 80 : 0; // Calculate extra_Km based on flat rate
-
-        // const ratePerKm = 13; // Example rate per km
-    // Calculate extramkm_Amount
-  const extramkm_Amount = formData.extra_Km * formData.ratePerKm;
-
-        setFormData((prevData) => ({
-          ...prevData,
-          total_Km: totalKm.toString(), // Update the total_Km field
-          extra_Km: extraKm.toString(), // Update extra_Km field
-          extramkm_Amount: extramkm_Amount.toFixed(2), // Update extramkm_Amount field
-
-
-          
-        }));
-      }
-    } 
-    if (name === "ratePerHour") {
-      // Update the rate per hour
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: parseFloat(value), // Convert input value to a number
-      }));
-    } 
-    else if (name === "closing_Time" || name === "starting_Time") {
-      // Calculate the total hours
-      const closingTime = formData.closing_Time;
-      const startingTime = formData.starting_Time;
-    
-      if (closingTime && startingTime) {
-        const closingDateTime = new Date(`2000-01-01T${closingTime}`);
-        const startingDateTime = new Date(`2000-01-01T${startingTime}`);
-        const timeDiff = closingDateTime - startingDateTime;
-    
-        if (timeDiff > 0) {
-          const totalHours = (timeDiff / 3600000).toFixed(2); // 3600000 milliseconds in an hour
-          let extraHours = (totalHours - 8).toFixed(2); // Calculate extra hours
-          // extraHours = Math.max(extraHours, 0); // Ensure extraHours is not negative
-
-          // Retrieve ratePerHour from form data
+    if (closingTime && startingTime) {
+      const closingDateTime = new Date(`2000-01-01T${closingTime}`);
+      const startingDateTime = new Date(`2000-01-01T${startingTime}`);
+      const timeDiff = closingDateTime - startingDateTime;
+  
+      if (timeDiff > 0) {
+        const totalHours = (timeDiff / 3600000).toFixed(2);
+        let extraHours = (totalHours - 8).toFixed(2);
+  
         const ratePerHour = parseFloat(formData.ratePerHour);
         if (!isNaN(ratePerHour)) {
-          const extraHoursAmount = extraHours * ratePerHour; // Calculate extra hours amount
-
+          const extraHoursAmount = extraHours * ratePerHour;
+  
           setFormData((prevData) => ({
             ...prevData,
             total_hours: totalHours,
             extra_Hours: extraHours,
-            extraHoursAmount: extraHoursAmount.toFixed(2), // Update extra hours amount field
+            extraHoursAmount: extraHoursAmount.toFixed(2),
           }));
         } else {
           console.log("Invalid rate per hour");
@@ -251,52 +123,30 @@ function AddPayment() {
         }));
       }
     }
-  } else {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
-};
-
-// Calculate extramkm_Amount whenever extraKm or ratePerKm changes
-React.useEffect(() => {
-  setFormData((prevData) => ({
-    ...prevData,
-    extramkm_Amount: prevData.extra_Km * prevData.ratePerKm,
-  }));
-}, [formData.extra_Km, formData.ratePerKm]);
-
- // Calculate extrahours_Amount whenever extraHours or ratePerHour changes
- React.useEffect(() => {
-  setFormData((prevData) => ({
-    ...prevData,
-    extrahours_Amount: prevData.extra_Hours * prevData.ratePerHour,
-  }));
-}, [formData.extra_Hours, formData.ratePerHour]);
-
+  };
+  
   const calculateSubTotal = () => {
     const { title_Amount, extramkm_Amount, extrahours_Amount } = formData;
-
+  
     const subtotal =
       parseFloat(title_Amount) +
       parseFloat(extramkm_Amount) +
       parseFloat(extrahours_Amount);
-
+  
     return subtotal;
   };
-
+  
   const calculateSGST_CGST = (subtotal) => {
     const taxRate = 2.5; // 2.5% tax rate
     const sgst = (subtotal * taxRate) / 100;
     const cgst = (subtotal * taxRate) / 100;
-
+  
     return {
       SGST: sgst,
       CGST: cgst,
     };
   };
-
+  
   const handleSubtotalChange = () => {
     const subtotal = calculateSubTotal();
     const { SGST, CGST } = calculateSGST_CGST(subtotal);
@@ -312,6 +162,65 @@ React.useEffect(() => {
     }));
   };
   
+  // Effect for automatic calculation of extramkm_Amount whenever extra_Km or ratePerKm changes
+  React.useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      extramkm_Amount: prevData.extra_Km * prevData.ratePerKm,
+    }));
+  }, [formData.extra_Km, formData.ratePerKm]);
+  
+  // Effect for automatic calculation of extrahours_Amount whenever extra_Hours or ratePerHour changes
+  React.useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      extrahours_Amount: prevData.extra_Hours * prevData.ratePerHour,
+    }));
+  }, [formData.extra_Hours, formData.ratePerHour]);
+  
+  // Effect for automatic calculation of totalKm and extraKm whenever closing_km or starting_Km changes
+  React.useEffect(() => {
+    calculateTotalKmAndExtraKm();
+  }, [formData.closing_km, formData.starting_Km]);
+  
+  // Effect for automatic calculation of totalHours and extraHours whenever closing_Time or starting_Time changes
+  React.useEffect(() => {
+    calculateTotalHoursAndExtraHours();
+  }, [formData.closing_Time, formData.starting_Time]);
+  
+  // Effect for automatic calculation of subtotal, SGST, CGST, totalAmount, and remainingAmount whenever relevant values change
+  React.useEffect(() => {
+    handleSubtotalChange();
+  }, [formData.title_Amount, formData.extramkm_Amount, formData.extrahours_Amount, formData.advance_Amount]);
+
+  // Effect for automatic calculation of extrakm_CGST and extrakm_SGST whenever extramkm_Amount changes
+React.useEffect(() => {
+  const extramkm_Amount = parseFloat(formData.extramkm_Amount);
+  const cgst = Math.round(extramkm_Amount * 2.5) / 100; // Calculate CGST
+  const sgst = Math.round(extramkm_Amount * 2.5) / 100; // Calculate SGST
+
+  setFormData((prevData) => ({
+    ...prevData,
+    extrakm_CGST: cgst.toFixed(),
+    extrakm_SGST: sgst.toFixed(),
+  }));
+}, [formData.extramkm_Amount]);
+
+// Effect for automatic calculation of extrahours_CGST and extrahours_SGST whenever extrahours_Amount changes
+React.useEffect(() => {
+  const extrahours_Amount = parseFloat(formData.extrahours_Amount);
+  const cgst = Math.round(extrahours_Amount * 2.5) / 100; // Calculate CGST
+  const sgst = Math.round(extrahours_Amount * 2.5) / 100; // Calculate SGST
+
+  setFormData((prevData) => ({
+    ...prevData,
+    extrahours_CGST: cgst.toFixed(2),
+    extrahours_SGST: sgst.toFixed(2),
+  }));
+}, [formData.extrahours_Amount]);
+
+  
+  // Function to show alert messages
   const showAlert = (message, type) => {
     if (type === "success") {
       setSuccessAlert({ msg: message, type: type });
@@ -325,7 +234,17 @@ React.useEffect(() => {
       },);
     }
   };
-
+  
+  // handleChange function to handle changes in form inputs
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  
+// 
  
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -886,8 +805,10 @@ React.useEffect(() => {
         name="extramkm_Amount"
         placeholder="Enter Extra KMs Amount"
         value={formData.extramkm_Amount}
-        onChange={handleChange}
+        onChange={handleChange} 
+        // onBlur={handleAutoCalculate} // Trigger auto-calculation when focus leaves the input field
       />
+      
     </div>
     <div className="form-group">
       <label htmlFor="extrakm_CGST" className="form-label">
@@ -899,8 +820,10 @@ React.useEffect(() => {
     className="update-duty-form-control"
     name="extrakm_CGST"
     placeholder="Enter Extra Km CGST"
-    onChange={handleChange} // Remove the value attribute
+    value={formData.extrakm_CGST}  // Display the calculated CGST
+    onChange={handleChange} // Trigger handleChange on input change
   />
+  
     </div>
     <div className="form-group">
       <label htmlFor="extrakm_SGST" className="form-label">
@@ -912,8 +835,10 @@ React.useEffect(() => {
     className="update-duty-form-control"
     name="extrakm_SGST"
     placeholder="Enter Extra Km SGST"
-    onChange={handleChange} // Remove the value attribute
+    value={formData.extrakm_SGST}  // Display the calculated SGST
+    onChange={handleChange} // Trigger handleChange on input change
   />
+  
     </div>
   </div>
 
