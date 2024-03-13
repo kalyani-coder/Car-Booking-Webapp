@@ -33,11 +33,11 @@ function AddPayment() {
     extrakm_SGST: "",
     ratePerHour: 0, // Initial value for rate per hour
     extra_Hours: 0,
-    extrahours_CGST:"",
+    extrahours_CGST: "",
     extrahours_SGST: "",
     extrahours_Amount: 0,
     subtotal_Amount: "",
-    toll:'',
+    toll: "",
     SGST: "",
     CGST: "",
     total_Amount: "",
@@ -45,17 +45,18 @@ function AddPayment() {
     remaining_Amount: "",
     payment_Method: "",
   };
-  
+
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
 
-
   const fetchTripDetails = async (customerId) => {
     try {
-      const response = await fetch(`http://localhost:7000/api/add-trip/${customerId}`);
+      const response = await fetch(
+        `http://localhost:7000/api/add-trip/${customerId}`
+      );
 
       if (response.ok) {
         const tripDetails = await response.json();
@@ -69,18 +70,18 @@ function AddPayment() {
       console.error("API request error:", error);
       return null;
     }
-  }; 
- 
+  };
+
   // calculations start
   const calculateTotalKmAndExtraKm = () => {
     const closingKm = parseFloat(formData.closing_km);
     const startingKm = parseFloat(formData.starting_Km);
-  
+
     if (!isNaN(closingKm) && !isNaN(startingKm)) {
       const totalKm = closingKm - startingKm;
       const extraKm = totalKm > 80 ? totalKm - 80 : 0;
       const extramkm_Amount = extraKm * formData.ratePerKm;
-  
+
       setFormData((prevData) => ({
         ...prevData,
         total_Km: totalKm.toString(),
@@ -89,24 +90,24 @@ function AddPayment() {
       }));
     }
   };
-  
+
   const calculateTotalHoursAndExtraHours = () => {
     const closingTime = formData.closing_Time;
     const startingTime = formData.starting_Time;
-  
+
     if (closingTime && startingTime) {
       const closingDateTime = new Date(`2000-01-01T${closingTime}`);
       const startingDateTime = new Date(`2000-01-01T${startingTime}`);
       const timeDiff = closingDateTime - startingDateTime;
-  
+
       if (timeDiff > 0) {
         const totalHours = (timeDiff / 3600000).toFixed(2);
         let extraHours = (totalHours - 8).toFixed(2);
-  
+
         const ratePerHour = parseFloat(formData.ratePerHour);
         if (!isNaN(ratePerHour)) {
           const extraHoursAmount = extraHours * ratePerHour;
-  
+
           setFormData((prevData) => ({
             ...prevData,
             total_hours: totalHours,
@@ -124,46 +125,53 @@ function AddPayment() {
       }
     }
   };
-  
+
   const calculateSubTotal = () => {
     const { title_Amount, extramkm_Amount, extrahours_Amount } = formData;
-  
+
     const subtotal =
       parseFloat(title_Amount) +
       parseFloat(extramkm_Amount) +
       parseFloat(extrahours_Amount);
-  
+
     return subtotal;
   };
-  
+
   const calculateSGST_CGST = (subtotal) => {
     const taxRate = 2.5; // 2.5% tax rate
     const sgst = (subtotal * taxRate) / 100;
     const cgst = (subtotal * taxRate) / 100;
-  
+
     return {
       SGST: sgst,
       CGST: cgst,
     };
   };
-  
+
   const handleSubtotalChange = () => {
     // Manually add title_Amount
     const titleAmount = parseFloat(formData.title_Amount);
-  
+
     // Calculate CGST and SGST based on title_Amount
     const CGST = (titleAmount * 2.5) / 100;
     const SGST = (titleAmount * 2.5) / 100;
-  
+
     // Calculate subtotal
     const subtotal = calculateSubTotal();
-  
+
     // Calculate total amount
-    const totalAmount = subtotal + parseFloat(formData.extrakm_CGST) + parseFloat(formData.extrakm_SGST) + parseFloat(formData.extrahours_CGST) + parseFloat(formData.extrahours_SGST) + CGST + SGST;
-  
+    const totalAmount =
+      subtotal +
+      parseFloat(formData.extrakm_CGST) +
+      parseFloat(formData.extrakm_SGST) +
+      parseFloat(formData.extrahours_CGST) +
+      parseFloat(formData.extrahours_SGST) +
+      CGST +
+      SGST;
+
     // Calculate remaining amount
     const remainingAmount = totalAmount - parseFloat(formData.advance_Amount);
-  
+
     // Update form data
     setFormData((prevData) => ({
       ...prevData,
@@ -174,8 +182,7 @@ function AddPayment() {
       remaining_Amount: remainingAmount.toFixed(2),
     }));
   };
-  
-  
+
   // Effect for automatic calculation of extramkm_Amount whenever extra_Km or ratePerKm changes
   React.useEffect(() => {
     setFormData((prevData) => ({
@@ -183,7 +190,7 @@ function AddPayment() {
       extramkm_Amount: prevData.extra_Km * prevData.ratePerKm,
     }));
   }, [formData.extra_Km, formData.ratePerKm]);
-  
+
   // Effect for automatic calculation of extrahours_Amount whenever extra_Hours or ratePerHour changes
   React.useEffect(() => {
     setFormData((prevData) => ({
@@ -191,49 +198,53 @@ function AddPayment() {
       extrahours_Amount: prevData.extra_Hours * prevData.ratePerHour,
     }));
   }, [formData.extra_Hours, formData.ratePerHour]);
-  
+
   // Effect for automatic calculation of totalKm and extraKm whenever closing_km or starting_Km changes
   React.useEffect(() => {
     calculateTotalKmAndExtraKm();
   }, [formData.closing_km, formData.starting_Km]);
-  
+
   // Effect for automatic calculation of totalHours and extraHours whenever closing_Time or starting_Time changes
   React.useEffect(() => {
     calculateTotalHoursAndExtraHours();
   }, [formData.closing_Time, formData.starting_Time]);
-  
+
   // Effect for automatic calculation of subtotal, SGST, CGST, totalAmount, and remainingAmount whenever relevant values change
   React.useEffect(() => {
     handleSubtotalChange();
-  }, [formData.title_Amount, formData.extramkm_Amount, formData.extrahours_Amount, formData.advance_Amount]);
+  }, [
+    formData.title_Amount,
+    formData.extramkm_Amount,
+    formData.extrahours_Amount,
+    formData.advance_Amount,
+  ]);
 
   // Effect for automatic calculation of extrakm_CGST and extrakm_SGST whenever extramkm_Amount changes
-React.useEffect(() => {
-  const extramkm_Amount = parseFloat(formData.extramkm_Amount);
-  const cgst = Math.round(extramkm_Amount * 2.5) / 100; // Calculate CGST
-  const sgst = Math.round(extramkm_Amount * 2.5) / 100; // Calculate SGST
+  React.useEffect(() => {
+    const extramkm_Amount = parseFloat(formData.extramkm_Amount);
+    const cgst = Math.round(extramkm_Amount * 2.5) / 100; // Calculate CGST
+    const sgst = Math.round(extramkm_Amount * 2.5) / 100; // Calculate SGST
 
-  setFormData((prevData) => ({
-    ...prevData,
-    extrakm_CGST: cgst.toFixed(),
-    extrakm_SGST: sgst.toFixed(),
-  }));
-}, [formData.extramkm_Amount]);
+    setFormData((prevData) => ({
+      ...prevData,
+      extrakm_CGST: cgst.toFixed(),
+      extrakm_SGST: sgst.toFixed(),
+    }));
+  }, [formData.extramkm_Amount]);
 
-// Effect for automatic calculation of extrahours_CGST and extrahours_SGST whenever extrahours_Amount changes
-React.useEffect(() => {
-  const extrahours_Amount = parseFloat(formData.extrahours_Amount);
-  const cgst = Math.round(extrahours_Amount * 2.5) / 100; // Calculate CGST
-  const sgst = Math.round(extrahours_Amount * 2.5) / 100; // Calculate SGST
+  // Effect for automatic calculation of extrahours_CGST and extrahours_SGST whenever extrahours_Amount changes
+  React.useEffect(() => {
+    const extrahours_Amount = parseFloat(formData.extrahours_Amount);
+    const cgst = Math.round(extrahours_Amount * 2.5) / 100; // Calculate CGST
+    const sgst = Math.round(extrahours_Amount * 2.5) / 100; // Calculate SGST
 
-  setFormData((prevData) => ({
-    ...prevData,
-    extrahours_CGST: cgst.toFixed(),
-    extrahours_SGST: sgst.toFixed(),
-  }));
-}, [formData.extrahours_Amount]);
+    setFormData((prevData) => ({
+      ...prevData,
+      extrahours_CGST: cgst.toFixed(),
+      extrahours_SGST: sgst.toFixed(),
+    }));
+  }, [formData.extrahours_Amount]);
 
-  
   // Function to show alert messages
   const showAlert = (message, type) => {
     if (type === "success") {
@@ -245,10 +256,10 @@ React.useEffect(() => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      });
     }
   };
-  
+
   // handleChange function to handle changes in form inputs
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -257,9 +268,9 @@ React.useEffect(() => {
       [name]: value,
     }));
   };
-  
-// 
- 
+
+  //
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data:", formData);
@@ -300,7 +311,7 @@ React.useEffect(() => {
       );
 
       if (response.ok) {
-        showAlert("Customer Payment added successfully!" , "success");
+        showAlert("Customer Payment added successfully!", "success");
         setFormData(initialFormData);
       } else {
         console.error(
@@ -337,10 +348,10 @@ React.useEffect(() => {
                     </h2>
 
                     {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+                    {errorAlert && <Alert alert={errorAlert} />}
+
                     <div className="row grid-gap-5">
-                      <div className="col-md">
+                      {/* <div className="col-md">
                         <div className="form-group">
                           <label for="companyname" class="form-label">
                             Company Name:
@@ -355,7 +366,7 @@ React.useEffect(() => {
                             onChange={handleChange}
                           />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-md">
                         <div className="form-group">
                           <label for="gstno" class="form-label">
@@ -410,34 +421,42 @@ React.useEffect(() => {
                     </div>
 
                     <div className="row grid-gap-5">
-                    <div className="col-md">
-  <label htmlFor="customername" className="form-label">
-    Customer Name:
-  </label>
-  <select
-    className="form-control-add-trip-input"
-    id="customername"
-    name="customername"
-    onChange={(e) => {
-      const selectedCustomer = customerList.find(
-        (customer) => customer.customername === e.target.value
-      );
-      setSelectedCustomer(selectedCustomer);
-    }}
-    value={selectedCustomer ? selectedCustomer.customername : ""}
-  >
-    <option value="">Select Customer</option>
-    {customerList && customerList.length > 0 ? (
-      customerList.map((customer) => (
-        <option key={customer._id} value={customer.customername}>
-          {customer.customername}
-        </option>
-      ))
-    ) : (
-      <option value="">No Customers Available</option>
-    )}
-  </select>
-</div>
+                      <div className="col-md">
+                        <label htmlFor="customername" className="form-label">
+                          Customer Name / Company Name:
+                        </label>
+                        <select
+                          className="form-control-add-trip-input"
+                          id="customername"
+                          name="customername"
+                          onChange={(e) => {
+                            const selectedCustomer = customerList.find(
+                              (customer) =>
+                                customer.customername === e.target.value
+                            );
+                            setSelectedCustomer(selectedCustomer);
+                          }}
+                          value={
+                            selectedCustomer
+                              ? selectedCustomer.customername
+                              : ""
+                          }
+                        >
+                          <option value="">Select Customer</option>
+                          {customerList && customerList.length > 0 ? (
+                            customerList.map((customer) => (
+                              <option
+                                key={customer._id}
+                                value={customer.customername}
+                              >
+                                {customer.customername}
+                              </option>
+                            ))
+                          ) : (
+                            <option value="">No Customers Available</option>
+                          )}
+                        </select>
+                      </div>
 
                       <div className="col-md">
                         <div className="form-group">
@@ -737,13 +756,13 @@ React.useEffect(() => {
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-        type="number"
-        className="update-duty-form-control"
-        name="extra_Km"
-        placeholder="Enter Extra KMs"
-        value={formData.extra_Km}
-        onChange={handleChange}
-      />
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extra_Km"
+                            placeholder="Enter Extra KMs"
+                            value={formData.extra_Km}
+                            onChange={handleChange}
+                          />
                         </div>
                       </div>
                       <div className="col-md">
@@ -753,17 +772,17 @@ React.useEffect(() => {
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
-        type="number"
-        className="update-duty-form-control"
-        name="ratePerKm"
-        placeholder="Enter Rate Per Km"
-        value={formData.ratePerKm}
-        onChange={handleChange}
-      />
-       <div>
-        {/* Display the calculated amount */}
-        {/* The amount for extra kilometers is: ${formData.extra_Km * formData.ratePerKm} */}
-      </div>
+                            type="number"
+                            className="update-duty-form-control"
+                            name="ratePerKm"
+                            placeholder="Enter Rate Per Km"
+                            value={formData.ratePerKm}
+                            onChange={handleChange}
+                          />
+                          <div>
+                            {/* Display the calculated amount */}
+                            {/* The amount for extra kilometers is: ${formData.extra_Km * formData.ratePerKm} */}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -806,180 +825,188 @@ React.useEffect(() => {
                     </div>
 
                     <div className="row grid-gap-5">
-  {/* Column 1 */}
-  <div className="col-md">
-    <div className="form-group">
-      <label htmlFor="extrakm_Amount" className="form-label">
-        Extra KMs Amount:
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="update-duty-form-control"
-        name="extramkm_Amount"
-        placeholder="Enter Extra KMs Amount"
-        value={formData.extramkm_Amount}
-        onChange={handleChange} 
-        // onBlur={handleAutoCalculate} // Trigger auto-calculation when focus leaves the input field
-      />
-      
-    </div>
-    <div className="form-group">
-      <label htmlFor="extrakm_CGST" className="form-label">
-        Extra Km CGST (2.5%):
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-    type="number"
-    className="update-duty-form-control"
-    name="extrakm_CGST"
-    placeholder="Enter Extra Km CGST"
-    value={formData.extrakm_CGST}  // Display the calculated CGST
-    onChange={handleChange} // Trigger handleChange on input change
-  />
-  
-    </div>
-    <div className="form-group">
-      <label htmlFor="extrakm_SGST" className="form-label">
-        Extra Km SGST (2.5%):
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-    type="number"
-    className="update-duty-form-control"
-    name="extrakm_SGST"
-    placeholder="Enter Extra Km SGST"
-    value={formData.extrakm_SGST}  // Display the calculated SGST
-    onChange={handleChange} // Trigger handleChange on input change
-  />
-  
-    </div>
-  </div>
+                      {/* Column 1 */}
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label
+                            htmlFor="extrakm_Amount"
+                            className="form-label"
+                          >
+                            Extra KMs Amount:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extramkm_Amount"
+                            placeholder="Enter Extra KMs Amount"
+                            value={formData.extramkm_Amount}
+                            onChange={handleChange}
+                            // onBlur={handleAutoCalculate} // Trigger auto-calculation when focus leaves the input field
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="extrakm_CGST" className="form-label">
+                            Extra Km CGST (2.5%):
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extrakm_CGST"
+                            placeholder="Enter Extra Km CGST"
+                            value={formData.extrakm_CGST} // Display the calculated CGST
+                            onChange={handleChange} // Trigger handleChange on input change
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="extrakm_SGST" className="form-label">
+                            Extra Km SGST (2.5%):
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extrakm_SGST"
+                            placeholder="Enter Extra Km SGST"
+                            value={formData.extrakm_SGST} // Display the calculated SGST
+                            onChange={handleChange} // Trigger handleChange on input change
+                          />
+                        </div>
+                      </div>
 
-  {/* Column 2 */}
-  <div className="col-md">
-    <div className="form-group">
-      <label htmlFor="extrahours_Amount" className="form-label">
-        Extra Hours Amount:
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="update-duty-form-control"
-        name="extrahours_Amount"
-        placeholder="Enter Extra Hours Amount"
-        value={formData.extrahours_Amount}
-        onChange={handleChange}
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="extrahours_CGST" className="form-label">
-        Extra Hour CGST (2.5%):
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="update-duty-form-control"
-        name="extrahours_CGST"
-        placeholder="Enter Extra Hour CGST"
-        value={formData.extrahours_CGST}
-        onChange={handleChange}
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="extrahours_SGST" className="form-label">
-        Extra Hour SGST (2.5%):
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="update-duty-form-control"
-        name="extrahours_SGST"
-        placeholder="Enter Extra Hour SGST"
-        value={formData.extrahours_SGST}
-        onChange={handleChange}
-      />
-    </div>
-  </div>
-</div>
-
-                    <div className="row grid-gap-5">
-  {/* First field - Toll Parking */}
-  <div className="col-md">
-    <div className="form-group">
-      <label htmlFor="toll" className="form-label">
-        Toll Parking:
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="update-duty-form-control"
-        name="toll"
-        placeholder="Enter Toll Parking"
-        value={formData.toll}
-        onChange={handleChange}
-      />
-    </div>
-  </div>
-  
-  {/* Second field - CGST */}
-  <div className="col-md mr-3">
-    <div className="form-group">
-      <label htmlFor="cgst2.5%" className="form-label">
-        CGST 2.5%:
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="add-payment-form-control"
-        name="CGST"
-        placeholder="Enter CGST Amount"
-        value={formData.CGST}
-        onChange={handleChange}
-      />
-    </div>
-  </div>
-  
-  {/* Third field - SGST */}
-  <div className="col-md">
-    <div className="form-group">
-      <label htmlFor="sgst2.5%" className="form-label">
-        SGST 2.5%:
-        <span className="required-asterisk">*</span>
-      </label>
-      <input
-        type="number"
-        className="add-payment-form-control"
-        name="SGST"
-        placeholder="Enter SGST Amount"
-        value={formData.SGST}
-        onChange={handleChange}
-      />
-    </div>
-  </div>
-</div>
-
-
-<div className="row grid-gap5">
-    {/* Display the SubTotal */}
-    <div className="col-md">
-                      <div className="form-group">
-                        <label for="subtotal" className="form-label">
-                          SubTotal:
-                          <span className="required-asterisk">*</span>
-                        </label>
-                        <input
-                          type="number"
-                          className="update-duty-form-control"
-                          name="subtotal_Amount"
-                          placeholder="SubTotal Amount"
-                          value={formData.subtotal_Amount}
-                          readOnly
-                        />
+                      {/* Column 2 */}
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label
+                            htmlFor="extrahours_Amount"
+                            className="form-label"
+                          >
+                            Extra Hours Amount:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extrahours_Amount"
+                            placeholder="Enter Extra Hours Amount"
+                            value={formData.extrahours_Amount}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label
+                            htmlFor="extrahours_CGST"
+                            className="form-label"
+                          >
+                            Extra Hour CGST (2.5%):
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extrahours_CGST"
+                            placeholder="Enter Extra Hour CGST"
+                            value={formData.extrahours_CGST}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label
+                            htmlFor="extrahours_SGST"
+                            className="form-label"
+                          >
+                            Extra Hour SGST (2.5%):
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="extrahours_SGST"
+                            placeholder="Enter Extra Hour SGST"
+                            value={formData.extrahours_SGST}
+                            onChange={handleChange}
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div className="col-md">
-                    <div className="form-group">
+
+                    <div className="row grid-gap-5">
+                      {/* First field - Toll Parking */}
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="toll" className="form-label">
+                            Toll Parking:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="toll"
+                            placeholder="Enter Toll Parking"
+                            value={formData.toll}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Second field - CGST */}
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="cgst2.5%" className="form-label">
+                            CGST 2.5%:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="add-payment-form-control"
+                            name="CGST"
+                            placeholder="Enter CGST Amount"
+                            value={formData.CGST}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Third field - SGST */}
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="sgst2.5%" className="form-label">
+                            SGST 2.5%:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="add-payment-form-control"
+                            name="SGST"
+                            placeholder="Enter SGST Amount"
+                            value={formData.SGST}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="row grid-gap5">
+                      {/* Display the SubTotal */}
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label for="subtotal" className="form-label">
+                            SubTotal:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="subtotal_Amount"
+                            placeholder="SubTotal Amount"
+                            value={formData.subtotal_Amount}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
                           <label for="totalamount" className="form-label">
                             Total Amount:
                             <span className="required-asterisk">*</span>
@@ -994,11 +1021,11 @@ React.useEffect(() => {
                             readOnly
                           />
                         </div>
+                      </div>
                     </div>
-</div>
                     <div className="row grid-gap-5">
                       <div className="col-md">
-                      <div className="form-group">
+                        <div className="form-group">
                           <label for="advanceamount" className="form-label">
                             Advance Amount:
                             <span className="required-asterisk">*</span>
@@ -1014,7 +1041,7 @@ React.useEffect(() => {
                         </div>
                       </div>
                       <div className="col-md">
-                      <div className="form-group">
+                        <div className="form-group">
                           <label for="remainingamount" className="form-label">
                             Remaining Amount:
                             <span className="required-asterisk">*</span>
@@ -1034,7 +1061,7 @@ React.useEffect(() => {
 
                     <div className="row grid-gap-5">
                       <div className="col-md">
-                      <div className="form-group">
+                        <div className="form-group">
                           <label for="paymentmethod" className="form-label">
                             Payment Method:
                             <span className="required-asterisk">*</span>
@@ -1060,15 +1087,9 @@ React.useEffect(() => {
                           </select>
                         </div>
                       </div>
-                      <div className="col-md">
-                        
-                      </div>
+                      <div className="col-md"></div>
                     </div>
-                    <div className="row grid-gap-5">
- 
-
- 
-</div>
+                    <div className="row grid-gap-5"></div>
 
                     <br />
                     <button id="btn1" className="btn btn-danger">
