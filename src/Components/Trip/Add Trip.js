@@ -120,8 +120,21 @@ const AddTrip = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    let newData = { ...formData, [name]: value };
+  
+    // Calculate total days and hours if both dates and times are provided
+  if ((name === "date" || name === "date1" || name === "time" || name === "time1") && formData.date && formData.date1 && formData.time && formData.time1) {
+    const startDate = new Date(`${formData.date}T${formData.time}`);
+    const endDate = new Date(`${formData.date1}T${formData.time1}`);
+    const timeDifference = endDate.getTime() - startDate.getTime();
+    const totalDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    const hours = Math.floor(timeDifference / (1000 * 3600));
+    newData = { ...newData, totaldays: totalDays.toString(), hours: hours.toString() };
+  }
+
+  setFormData(newData);
+};
+  
 
   const handleAddPerson = () => {
     if (numberOfPeople < 6) {
@@ -479,12 +492,13 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="totaldays" className="trip-form-label">
                 Total Days:
+                <span className="days" >Days</span>
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control-add-trip-input"
                 name="totaldays"
-                placeholder="Total Days"
+                // placeholder="Total Days"
                 onChange={handleChange}
                 value={formData.totaldays}
               />
@@ -492,12 +506,13 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="hours" className="trip-form-label">
                 Total Hours:
+                <span className="days" >Hours</span>
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control-add-trip-input"
                 name="hours"
-                placeholder="Hours"
+                // placeholder="Hours"
                 onChange={handleChange}
                 value={formData.hours}
               />

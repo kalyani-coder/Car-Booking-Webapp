@@ -128,7 +128,7 @@ const AddCustomer = () => {
             
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
-                Customer Name:
+                Customer Name / Company Name:
                 <span className="required-asterisk">*</span>
               </label>
               <input
@@ -141,7 +141,7 @@ const AddCustomer = () => {
                 value={formData.customername}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="companyname" className="form-label">
                 Company Name:
               </label>
@@ -154,7 +154,7 @@ const AddCustomer = () => {
                 onChange={handleChange}
                 value={formData.companyname}
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <label htmlFor="gstno" className="form-label">
                 GST No:

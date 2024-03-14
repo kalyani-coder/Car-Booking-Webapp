@@ -81,7 +81,7 @@ const CustomerEnquiry = () => {
     if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
       const timeDifference = selectedDate2 - selectedDate1;
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const totalHours = Math.floor(timeDifference / (1000 * 60 * 60)); // Calculate total hours
 
       setFormData((prevData) => ({
         ...prevData,
@@ -211,7 +211,7 @@ const CustomerEnquiry = () => {
             
             <div className="form-group">
               <label htmlFor="customername" className="form-label">
-                Customer Name:
+                Customer Name / Company Name:
               </label>
               <select
                 className="form-control-add-trip-input"
