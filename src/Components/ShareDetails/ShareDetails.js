@@ -365,6 +365,14 @@ const ShareDetails = () => {
                   value={selectedCustomerDetails.drivername} readOnly
                 />
               </div>
+              
+          <button
+            type="button"
+            className="customer-btn-submit"
+            onClick={handleSave}
+          >
+            Save
+          </button>
             </div>
 
             <div className="share-details-column">
@@ -382,13 +390,6 @@ const ShareDetails = () => {
             </div>
           </div>
 
-          <button
-            type="button"
-            className="customer-btn-submit"
-            onClick={handleSave}
-          >
-            Save
-          </button>
         </div>
       </div>
     </>

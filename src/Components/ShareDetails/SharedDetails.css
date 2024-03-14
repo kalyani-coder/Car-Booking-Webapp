@@ -49,12 +49,14 @@
   outline: none;
 }
 
-.share-details-button {
-  background-color: #dc3545;
+.share-btn-submit {
+  background-color: #004f83;
   color: #fff;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  margin-bottom: 45px;
 }
 
 /* Responsive Styles */
