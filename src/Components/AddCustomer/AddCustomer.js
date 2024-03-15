@@ -62,13 +62,13 @@ const AddCustomer = () => {
     // Check if any required fields are empty or undefined
     if (
       !formData.customername ||
-      !formData.companyname ||
+      // !formData.companyname ||
       !formData.gstno ||
       !formData.mobileno ||
       !formData.email ||
       !formData.address ||
       formData.customername.trim() === "" ||
-      formData.companyname.trim() === "" ||
+      // formData.companyname.trim() === "" ||
       formData.gstno.trim() === "" ||
       formData.mobileno.trim() === "" ||
       formData.email.trim() === "" ||

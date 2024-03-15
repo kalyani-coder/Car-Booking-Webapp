@@ -95,9 +95,10 @@ let invoiceCounter = 100;
 
     const rows = [
       { label: "Customer Name", value: customer.customer_Name, yPos: 75 },
-      { label: "GST No", value: customer.GST_No, yPos: 80 },
-      { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 85 },
-      { label: "Vehicle Number", value: customer.vehicle_Number, yPos: 90 }
+      { label: "Mobile No", value: customer.mobile_no, yPos: 80 },
+      { label: "GST No", value: customer.GST_No, yPos: 85 },
+      { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 90 },
+      { label: "Vehicle Number", value: customer.vehicle_Number, yPos: 95 }
     ];
     
     // Add the rows to the PDF
@@ -108,7 +109,7 @@ let invoiceCounter = 100;
 
     const customerDetails = [
       ['Description', 'SAC COde', 'KMS','AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
-      [`${customer.vehicle_Type} - ${customer.from} - ${customer.to}`, '', '', '', '', '', ''], // Populate other fields accordingly
+      [`${customer.vehicle_Type} - ${customer.from} - ${customer.to} on ${customer.Date}`, '', '', '', '', '', ''], // Populate other fields accordingly
       ['Total KM', '', customer.total_Km, '', '', '', ''],
       ['Total Hr', '', customer.total_hours, '', '', '', ''], 
       ['Extra KM', '', customer.extra_Km, '', '', '', ''],

@@ -7,6 +7,7 @@ const AddPaymentSchema = new mongoose.Schema({
   reporting_Address: String,
   Date: String,
   customer_Name: String,
+  mobile_no: Number,
   vehicle_Number: String,
   vehicle_Type: String,
   quantity: Number,
