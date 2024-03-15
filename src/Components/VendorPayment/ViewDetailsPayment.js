@@ -14,7 +14,7 @@ export default function ViewDetailsPayment() {
 
     try {
       const response = await axios.get(
-        `http://localhost:7000/api/vender-payment/${id}`
+        `https://carbookingbackend.onrender.com/api/vender-payment/${id}`
       );
       setVendorPayData(response.data);
     } catch (error) {

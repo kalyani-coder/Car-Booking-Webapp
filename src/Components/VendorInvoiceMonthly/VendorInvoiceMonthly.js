@@ -43,7 +43,7 @@ function VendorInvoiceMonthly() {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch("http://localhost:7000/api/vender-payment");
+        const response = await fetch("https://carbookingbackend.onrender.com/api/vender-payment");
         if (response.ok) {
           const data = await response.json();
           setVendors(data);
@@ -79,7 +79,7 @@ function VendorInvoiceMonthly() {
 
   const fetchVendorTripDetails = async (vendorName) => {
     try {
-      const response = await fetch(`http://localhost:7000/api/vender-payment?vendorName=${vendorName}`);
+      const response = await fetch(`https://carbookingbackend.onrender.com/api/vender-payment?vendorName=${vendorName}`);
       if (response.ok) {
         const data = await response.json();
         setFormData(prevState => ({

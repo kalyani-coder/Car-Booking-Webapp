@@ -102,7 +102,7 @@ const AddDriver = () => {
         driver_Mo2: formData.mobileno1,
       };
 
-      const response = await fetch("http://localhost:7000/api/add-drivers", {
+      const response = await fetch("https://carbookingbackend.onrender.com/api/add-drivers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

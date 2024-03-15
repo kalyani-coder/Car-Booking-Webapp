@@ -18,7 +18,7 @@ const ViewShareDetails = () => {
     const fetchShareDetails = async () => {
       try {
         const response = await fetch(
-          "http://localhost:7000/api/share-details"
+          "https://carbookingbackend.onrender.com/api/share-details"
         );
         if (!response.ok) {
           throw Error("Network response was not ok");
@@ -177,7 +177,7 @@ let invoiceCounter = 100;
   const handleSaveShareDetail = async () => {
     try {
       const response = await fetch(
-        `http://localhost:7000/api/share-details/${editedShareDetail._id}`,
+        `https://carbookingbackend.onrender.com/api/share-details/${editedShareDetail._id}`,
         {
           method: "PATCH",
           headers: {
@@ -214,7 +214,7 @@ let invoiceCounter = 100;
     if (confirmed) {
       try {
         const response = await fetch(
-          `http://localhost:7000/api/share-details/${shareDetail._id}`,
+          `https://carbookingbackend.onrender.com/api/share-details/${shareDetail._id}`,
           {
             method: "DELETE",
           }

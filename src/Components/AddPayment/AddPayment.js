@@ -56,7 +56,7 @@ function AddPayment() {
   const fetchTripDetails = async (customerId) => {
     try {
       const response = await fetch(
-        `http://localhost:7000/api/add-trip/${customerId}`
+        `https://carbookingbackend.onrender.com/api/add-trip/${customerId}`
       );
 
       if (response.ok) {
@@ -275,45 +275,24 @@ function AddPayment() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data:", formData);
-
-    // Ensure that customerId is present in formData
-    if (!formData.customer_Name) {
-      setError("Please select a customer.");
-      return;
-    }
-
-    // Validate other fields
-    for (const key in formData) {
-      if (
-        key !== "customername" &&
-        (formData[key] === "" ||
-          (typeof formData[key] === "number" && isNaN(formData[key])))
-      ) {
-        setError("All fields are required and must be valid numbers.");
-        return;
-      }
-    }
-
-    setError("");
-
+  
+    setError(""); // Clear any previous error messages
+  
     try {
-      // Add customerId to formData
-      const dataToSend = { ...formData, customerId: formData.customer_Name };
-
       const response = await fetch(
-        "http://localhost:7000/api/customer-payment",
+        "https://carbookingbackend.onrender.com/api/customer-payment",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(dataToSend),
+          body: JSON.stringify(formData), // Send the form data directly
         }
       );
-
+  
       if (response.ok) {
         showAlert("Customer Payment added successfully!", "success");
-        setFormData(initialFormData);
+        setFormData(initialFormData); // Optionally reset the form after successful submission
       } else {
         console.error(
           "Failed to save data:",
@@ -327,6 +306,7 @@ function AddPayment() {
       showAlert("Failed to add data. Please try again.", "danger");
     }
   };
+  
 
   return (
     <>

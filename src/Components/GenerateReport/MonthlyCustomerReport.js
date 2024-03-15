@@ -16,7 +16,7 @@ function MonthlyCustomerReport() {
   }, [customers, reportType]);
 
   const fetchCustomers = () => {
-    fetch(`http://localhost:7000/api/customer-payment`)
+    fetch(`https://carbookingbackend.onrender.com/api/customer-payment`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

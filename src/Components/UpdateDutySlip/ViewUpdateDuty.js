@@ -16,7 +16,7 @@ const ViewUpdateDuty = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("http://localhost:7000/api/update-duty");
+        const response = await fetch("https://carbookingbackend.onrender.com/api/update-duty");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -38,7 +38,7 @@ let invoiceCounter = 100;
 const generateTripDutySlip = async (customerId) => {
   try {
     // Fetch customer details from the API based on the customerId
-    const response = await fetch(`http://localhost:7000/api/update-duty/${customerId}`);
+    const response = await fetch(`https://carbookingbackend.onrender.com/api/update-duty/${customerId}`);
     if (!response.ok) {
       throw new Error("Failed to fetch customer details");
     }
@@ -157,7 +157,7 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `http://localhost:7000/api/customers/${customer._id}`,
+          `https://carbookingbackend.onrender.com/api/customers/${customer._id}`,
           {
             method: "DELETE",
           }

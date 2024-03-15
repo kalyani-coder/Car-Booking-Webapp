@@ -20,7 +20,7 @@ const Signup = () => {
         // e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:7000/api/users', {
+            const response = await fetch('https://carbookingbackend.onrender.com/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

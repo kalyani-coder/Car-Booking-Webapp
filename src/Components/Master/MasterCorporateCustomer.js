@@ -34,7 +34,7 @@ const MasterCorporateCustomer = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:7000/api/masterrate", {
+      const response = await fetch("https://carbookingbackend.onrender.com/api/masterrate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

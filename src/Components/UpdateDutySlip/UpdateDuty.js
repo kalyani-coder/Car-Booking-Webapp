@@ -329,7 +329,7 @@ const UpdateDuty = () => {
 
     const data = { ...formData };
     try {
-      const response = await fetch('http://localhost:7000/api/update-duty', {
+      const response = await fetch('https://carbookingbackend.onrender.com/api/update-duty', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

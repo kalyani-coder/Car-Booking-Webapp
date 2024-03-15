@@ -62,15 +62,27 @@ router.patch('/:id' , async(req, res) => {
 })
 
 // DELETE METHOD
-router.delete('/:id' , async(req, res) => {
+// router.delete('/:id' , async(req, res) => {
 
-    const AddVendersId = req.params.id 
+//     const AddVendersId = req.params.id 
 
+//     try{
+//         const deletedCustomeEnquiry = await NewAddCustomer.findByIdAndRemove(AddVendersId)
+//         res.status(201).json({message : "venders Successfully Deleted "})
+//     }catch(e){
+//         res.status(404).json({message : "Can not found" , e})
+//     }
+// })
+
+router.delete("/:id" , async (req,res) => {
+    const cusId = req.params.id
     try{
-        const deletedCustomeEnquiry = await NewAddCustomer.findByIdAndRemove(AddVendersId)
-        res.status(201).json({message : "venders Successfully Deleted "})
+
+        const deletedCUstomer = await NewAddCustomer.findByIdAndDelete(cusId)
+        res.status(201).json({message : "Customer deleted  successfully!"})
+
     }catch(e){
-        res.status(404).json({message : "Can not found" , e})
+        res.status(404).json({message : `Server Error${e}`})
     }
 })
 

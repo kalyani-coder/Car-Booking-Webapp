@@ -69,7 +69,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
     const fetchTrips = async () => {
       try {
         const response = await fetch(
-          "http://localhost:7000/api/add-trip"
+          "https://carbookingbackend.onrender.com/api/add-trip"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -117,7 +117,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
     if (confirmed) {
       try {
         const response = await fetch(
-          `http://localhost:7000/api/add-trip/${tripId}`,
+          `https://carbookingbackend.onrender.com/api/add-trip/${tripId}`,
           {
             method: "DELETE",
           }
@@ -141,7 +141,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:7000/api/add-trip/${editedTrip._id}`,
+        `https://carbookingbackend.onrender.com/api/add-trip/${editedTrip._id}`,
         {
           method: "PATCH",
           headers: {
@@ -177,7 +177,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
 
   const fetchTripDetails = async (tripId) => {
     try {
-      const response = await fetch(`http://localhost:7000/api/add-trip/${tripId}`);
+      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-trip/${tripId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

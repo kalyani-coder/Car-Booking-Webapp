@@ -17,7 +17,7 @@ const Login = () => {
         e.preventDefault();
     
         try {
-          const response = await fetch('http://localhost:7000/api/users');
+          const response = await fetch('https://carbookingbackend.onrender.com/api/users');
           const data = await response.json();
     
           const user = data.find(user => user.email === email && user.password === password);
