@@ -13,6 +13,7 @@ function AddPayment() {
     reporting_Address: "",
     Date: "",
     customer_Name: "",
+    mobile_no: "",
     vehicle_Number: "",
     vehicle_Type: "",
     quantity: "",
@@ -351,22 +352,22 @@ function AddPayment() {
                     {errorAlert && <Alert alert={errorAlert} />}
 
                     <div className="row grid-gap-5">
-                      {/* <div className="col-md">
+                      <div className="col-md">
                         <div className="form-group">
                           <label for="companyname" class="form-label">
-                            Company Name:
+                            Customer Name:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="text"
                             className="update-duty-form-control"
-                            name="company_Name"
-                            placeholder="Enter Company name"
-                            value={formData.company_Name}
+                            name="customer_Name"
+                            placeholder="Enter Customer name"
+                            value={formData.customer_Name}
                             onChange={handleChange}
                           />
                         </div>
-                      </div> */}
+                      </div>
                       <div className="col-md">
                         <div className="form-group">
                           <label for="gstno" class="form-label">
@@ -422,10 +423,10 @@ function AddPayment() {
 
                     <div className="row grid-gap-5">
                       <div className="col-md">
-                        <label htmlFor="customername" className="form-label">
+                        {/* <label htmlFor="customername" className="form-label">
                           Customer Name / Company Name:
-                        </label>
-                        <select
+                        </label> */}
+                        {/* <select
                           className="form-control-add-trip-input"
                           id="customername"
                           name="customername"
@@ -455,7 +456,19 @@ function AddPayment() {
                           ) : (
                             <option value="">No Customers Available</option>
                           )}
-                        </select>
+                        </select> */}
+                        <label for="mobile_no" className="form-label">
+                            Customer Mobile Number:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            name="mobile_no"
+                            placeholder="Enter Customer Number"
+                            value={formData.mobile_no}
+                            onChange={handleChange}
+                          />
                       </div>
 
                       <div className="col-md">

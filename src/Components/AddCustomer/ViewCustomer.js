@@ -8,7 +8,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
     <thead>
       <tr>
         <th>Customer Name</th>
-        <th>Company Name</th>
+        {/* <th>Company Name</th> */}
         <th>GST No</th>
         <th>Mobile</th>
         <th>Email</th>
@@ -20,7 +20,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
       {customers.map((customer) => (
         <tr key={customer._id}>
           <td>{customer.cus_name}</td>
-          <td>{customer.company_name}</td>
+          {/* <td>{customer.company_name}</td> */}
           <td>{customer.gst_no}</td>
           <td>{customer.cus_mobile}</td>
           <td>{customer.cus_email}</td>
@@ -191,13 +191,13 @@ const ViewCustomer = () => {
               onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold my-2'>Company Name</h5>
-            <input
+            {/* <h5 className='fw-bold my-2'>Company Name</h5> */}
+            {/* <input
               type="text"
               value={editedCustomer.company_name}
               onChange={(e) => setEditedCustomer({ ...editedCustomer, company_name: e.target.value })}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
-            />
+            /> */}
             <h5 className='fw-bold my-2'>GST No </h5>
             <input
               type="text"
