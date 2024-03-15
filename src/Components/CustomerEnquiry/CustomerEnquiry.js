@@ -114,7 +114,7 @@ const CustomerEnquiry = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",
       customer_name: formData.customername,
@@ -133,9 +133,9 @@ const CustomerEnquiry = () => {
       totalHours: formData.totalHours,
       address: formData.address,
     };
-
+  
     setError(""); // Clear any previous error
-
+  
     try {
       const response = await fetch("https://carbookingbackend.onrender.com/api/customer-enquiry", {
         method: "POST",
@@ -144,7 +144,7 @@ const CustomerEnquiry = () => {
         },
         body: JSON.stringify(apiData),
       });
-
+  
       if (response.ok) {
         const responseData = await response.json();
         setApiResponse(responseData);
@@ -152,35 +152,17 @@ const CustomerEnquiry = () => {
         console.log("Data");
         setFormData(initialFormData); // Clear form after successful submission
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
-        console.log("error message", response)
+        const errorMessage = await response.text();
+        showAlert(`Failed to add data. ${errorMessage}`, "error");
+        console.log("error message", errorMessage);
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      showAlert("Failed to add data. Please try again.", "error");
     }
   };
-
-  const handleDateChange = (date, name) => {
-    const formattedDate = formatDate(date);
-    const { date1, date2 } = formData;
-
-    if (date1 && date2) {
-      const pickupDate = new Date(date1);
-      const dropoffDate = new Date(date2);
-
-      const timeDifference = dropoffDate - pickupDate;
-
-      const totalDays = Math.abs(Math.round(timeDifference / (1000 * 3600 * 24)));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-      setFormData((prevData) => ({
-        ...prevData,
-        totalDays: totalDays.toString(),
-        totalHours: totalHours.toString(),
-      }));
-    }
-  };
+  
+ 
 
   const handleChange = (event) => {
     const { name, value } = event.target;

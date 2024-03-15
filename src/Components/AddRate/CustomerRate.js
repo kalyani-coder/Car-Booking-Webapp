@@ -213,7 +213,7 @@ const CustomerRate = () => {
         showAlert(`${customerType} customer data added successfully!`, "success");
         setFormData(initialFormData);
         setSelectedCustomer(null);
-        window.alert("Data added successfully!");
+        // window.alert("Data added successfully!");
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
       }
@@ -466,7 +466,7 @@ const CustomerRate = () => {
                     </label>
                     <input
                       className="rate-form-control"
-                      type="rate_per_Km"
+                      type="number"
                       id="rate_per_Km"
                       name="rate_per_Km"
                       placeholder="Extra KM"
@@ -485,7 +485,7 @@ const CustomerRate = () => {
                     </label>
                     <input
                       className="rate-form-control"
-                      type="hours"
+                      type="number"
                       id="hours"
                       name="hours"
                       placeholder="hours"
@@ -502,7 +502,7 @@ const CustomerRate = () => {
                     </label>
                     <input
                       className="rate-form-control"
-                      type="extra_hours"
+                      type="number"
                       id="extra_hours"
                       name="extra_hours"
                       placeholder="Extra hours"

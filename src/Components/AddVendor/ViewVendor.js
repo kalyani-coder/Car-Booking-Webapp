@@ -4,6 +4,7 @@ import './ViewVender.css'; // Make sure you have a CSS file for this component
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
 
+
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -78,16 +79,17 @@ const ViewVendor = () => {
         );
         setIsEditing(false);
         setSuccessMessage('Vendor data updated successfully');
+        // showAlert("Vendor updated successfully!" , "success");
         setErrorMessage('');
       } else {
         console.error('Error updating vendor:', response.status);
         setSuccessMessage('');
-        setErrorMessage('Error updating vendor. Please try again.');
+        
       }
     } catch (error) {
       console.error('Error updating vendor:', error);
       setSuccessMessage('');
-      setErrorMessage('Error updating vendor. Please try again.');
+      
     }
   };
   
