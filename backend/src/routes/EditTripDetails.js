@@ -5,7 +5,7 @@ const router = express.Router();
 // GET METHOD
 router.get("/", async (req, res) => {
   try {
-   const tripDetails = await getTripdetailSchema.find();
+    const tripDetails = await getTripdetailSchema.find();
     res.status(201).json(tripDetails);
   } catch (e) {
     res.status(404).json({ message: "Can not get customer" });
@@ -94,15 +94,13 @@ router.get("/date/:startDate/:endDate", async (req, res) => {
   }
 });
 
-
 // GET METHOD to retrieve trips for the entire year dynamically
 router.get("/annual/report", async (req, res) => {
   try {
     const currentYear = new Date().getFullYear();
 
     const startDate = `${currentYear}-01-01`;
-    const endDate =`${currentYear}12-31`;
-
+    const endDate = `${currentYear}12-31`;
 
     const dataInRange = await getTripdetailSchema.find({
       $and: [{ date: { $gte: startDate } }, { date1: { $lte: endDate } }],
@@ -116,6 +114,5 @@ router.get("/annual/report", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 module.exports = router;
