@@ -107,11 +107,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-  router.get("/vender/:vender_id", async (req, res) => {
-    try {
-      const venderpayment = await NewVenderpayment.find({
-        vender_id: req.params.vender_id,
-      });
+router.get("/vender/:vender_id", async (req, res) => {
+  try {
+    const venderpayment = await NewVenderpayment.find({
+      vender_id: req.params.vender_id,
+    });
 
     if (venderpayment.length === 0) {
       return res
