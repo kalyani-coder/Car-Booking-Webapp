@@ -27,9 +27,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
-
-
 // GET route to retrieve payments by month
 router.get("/by-date/:date", async (req, res) => {
   try {
@@ -180,6 +177,5 @@ router.post("/", async (req, res) => {
     res.status(404).json({ message: "Can not post Data" });
   }
 });
-
 
 module.exports = router;
