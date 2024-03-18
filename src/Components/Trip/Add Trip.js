@@ -150,6 +150,7 @@ const AddTrip = () => {
           <div className="trip-form-group">
             <label htmlFor={`Person_${i}`} className="trip-form-label">
               Person {i}:
+              
             </label>
             <input
               type="text"
