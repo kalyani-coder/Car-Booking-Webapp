@@ -107,16 +107,34 @@ let invoiceCounter = 100;
     });
     doc.line(10, 105, 200, 105);
 
+    const numberToWords = require('number-to-words');
+
+// Convert total amount to words
+const totalAmountInWords = numberToWords.toWords(customer.total_Amount);
+
+// Function to capitalize the first letter of each word
+function capitalizeFirstLetter(str) {
+  return str.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+}
+
+// Capitalize the totalAmountInWords
+const capitalizedTotalAmountInWords = capitalizeFirstLetter(totalAmountInWords);
+
     const customerDetails = [
-      ['Description', 'SAC COde', 'KMS','AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
+      ['Description', 'SAC Code', 'kms','AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
       [`${customer.vehicle_Type} - ${customer.from} - ${customer.to} on ${customer.Date}`, '', '', '', '', '', ''], // Populate other fields accordingly
       ['Total KM', '', customer.total_Km, '', '', '', ''],
       ['Total Hr', '', customer.total_hours, '', '', '', ''], 
-      ['Extra KM', '', customer.extra_Km, '', '', '', ''],
-      ['Extra Hr', '', customer.extra_Hours, '', '', '', ''],
+      [`${customer.vehicle_Type} for @8hr 80km`, '', '80', '', '', customer.CGST, customer.SGST], // Line for "@8hr 80km"
+      ['Extra KM', '', customer.extra_Km, '', '', customer.extrakm_CGST, customer.extrakm_SGST],
+      ['Extra Hr', '', customer.extra_Hours, '', '', customer.extrahours_CGST, customer.extrahours_SGST],
       ['Toll Parking', '', customer.toll, '', '', '', ''],
-      [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', "Rs. " + customer.total_Amount.toLocaleString()]
-  ];
+      [{ content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.subtotal_Amount.toLocaleString()}`, '', '', ''],
+      [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.total_Amount.toLocaleString()}`, '', '']
+    ];
+    
+// Add a new row below the "Total Amount" row
+customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, styles: { textColor: [0, 0, 0] } }, '', '', '', '', '', '', ]);
 
   const marginLeft = 10;
   const marginTop = 130;
@@ -127,47 +145,29 @@ let invoiceCounter = 100;
     theme: 'grid',
     margin: { left: marginLeft }
 });
-        // Set the table position and dimensions
-        let tableY = 60;
+         
+      // Bank Details section on the left side
+      doc.setFontSize(10);
+      doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
+      doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
+      doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
+      doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
+      doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
+      doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
 
-        // Add the table to the PDF
-        doc.autoTable({
-          // body: rows,
-          startY: tableY,
-          theme: "grid",
-          styles: {
-            fontSize: 10, // Default font size for the entire table
-          },
-          columnStyles: {
-            0: { fontSize: 10, fontStyle: "bold" }, // Field names - larger and bold
-            1: { fontSize: 10 }, // Values - default font size
-          },
-        });
+      // Additional details on the right side
+      doc.text(
+        "For Shivpushpa Travels",
+        150,
+        doc.autoTable.previous.finalY + 20
+      );
+      doc.text(
+        "Authorised Signatory",
+        150,
+        doc.autoTable.previous.finalY + 30
+      );
 
-        // Add space between the table and the "Bank Details" section
-        doc.text("", 10, doc.autoTable.previous.finalY + 10);
-
-        // Bank Details section
-        // doc.setFontSize(10);
-        // doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
-        // doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
-        // doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
-        // doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
-        // doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
-        // doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
-
-        // "Right side bottom details" section
-        doc.setFontSize(12);
-        // doc.text(
-        //   "For Shivpushpa Travels",
-        //   150,
-        //   doc.autoTable.previous.finalY + 10
-        // );
-        // doc.text(
-        //   "Authorised Signatory",
-        //   150,
-        //   doc.autoTable.previous.finalY + 20
-        // );
+       
 
         // Save the PDF or open in a new tab
         doc.save(`Invoice_${customer._id}.pdf`);
@@ -203,7 +203,7 @@ let invoiceCounter = 100;
             <thead>
               <tr>
                 <th>Customer Name</th>
-                <th>Company Name</th>
+                {/* <th>Company Name</th> */}
                 <th>GST No</th>
                 <th>reporting_Address</th>
                 <th>Date</th>
@@ -214,7 +214,7 @@ let invoiceCounter = 100;
               {filteredCustomers.map((customer) => (
                 <tr key={customer._id}>
                   <td>{customer.customer_Name}</td>
-                  <td>{customer.company_Name}</td>
+                  {/* <td>{customer.company_Name}</td> */}
                   <td>{customer.GST_No}</td>
                   <td>{customer.reporting_Address}</td>
                   <td>{customer.Date}</td>
