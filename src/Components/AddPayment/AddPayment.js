@@ -397,7 +397,6 @@ function AddPayment() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data:", formData);
-  
     setError(""); // Clear any previous error messages
   
     try {
@@ -416,10 +415,12 @@ function AddPayment() {
         showAlert("Customer Payment added successfully!", "success");
         setFormData(initialFormData); // Optionally reset the form after successful submission
       } else {
+        const responseData = await response.json(); // Parse response body as JSON
         console.error(
           "Failed to save data:",
           response.status,
-          response.statusText
+          response.statusText,
+          responseData // Log additional error details from the server
         );
         showAlert("Failed to add data. Please try again.", "danger");
       }

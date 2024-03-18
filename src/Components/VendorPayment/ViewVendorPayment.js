@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { FaFilePdf } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import headerlogo from "../../assects/images/shivpushpa_logo.png"
 
 const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);
@@ -28,88 +29,116 @@ const ViewVendorPayment = () => {
     fetchVendors();
   }, []);
 
-  const handleGenerateInvoice = (vendor) => {
-    const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+  // Define a global variable to track the invoice number
+let invoiceCounter = 100;
 
-    if (downloadConfirmed) {
-      const doc = new jsPDF();
-      // Set the document title
-      doc.setFontSize(18);
-      doc.text('Vendor Payment', 10, 10);
-      doc.setFontSize(12);
-      doc.text('Shivpushpa Travels', 10, 20, { className: 'uppercase-text' });
-      
+const handleGenerateInvoice = (vendor) => {
+  const downloadConfirmed = window.confirm('Do you want to download the invoice?');
+
+  if (downloadConfirmed) {
+    const doc = new jsPDF({
+      unit: "mm",
+      format: "a4",
+      compress: true,
+      orientation: "portrait",
+      // Increase the height as needed
+      height: 800,
+    });
+
+    doc.setFillColor(60, 181, 205);
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
+
+    // image 
+    const img = new Image();
+    img.src = headerlogo;
+    doc.addImage(img, 'JPEG', 5, 10, 45, 32);
+
+    doc.setFillColor(211, 211, 211);
+
+    doc.setFontSize(11);
+    doc.text('Shivpushpa Travels', 65, 15);
+    doc.text('332, Kasba Peth Phadke Haud Chowk', 65, 20);
+    doc.text('Pune 411 0111', 65, 25);
+    doc.text('9325501950 / 9325501978', 65, 30);
+    doc.text('travelshivpushpa@gmail.com', 65, 35);
+
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    invoiceCounter++;
+    const invoiceNo = invoiceCounter.toString().padStart(3, '0');
+
+    doc.setFontSize(11);
+    doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
+    doc.text(`Invoice Date : ${formattedDate}`, 150, 20);
+
+    doc.setDrawColor(0, 0, 255);
+    doc.line(10, 60, 200, 60);
+
+    doc.text('INVOICE TO:', 10, 68);
 
 
-        // Left side details
-        doc.setFontSize(10);
-        // doc.text('Address:', 20, 20); // Label for the address
-        doc.text('332, Kasba Peth Phadke Haud Chowk, Pune 411 0111', 20, 30);
-        doc.text('Mail: travelshivpushpa@gmail.com', 20, 40);
-  
-        // Right side details
-        doc.setFontSize(18);
-    doc.text('invoice', 150, 10, { className: 'uppercase-text' });
-        doc.setFontSize(10);
-        doc.text(`Invoice No: ${vendor.invoice_No}`, 120, 20);
-        doc.text(`Date: ${vendor.date }`, 120, 30);
-  
-        // Set the font size for the table
-      doc.setFontSize(12);
+    const rows = [
+      { label: "Vender Name", value: vendor.vender_Name, yPos: 75 },
+      { label: "Mobile No", value: vendor.mobile_Number, yPos: 80 },
+      { label: "GST No", value: vendor.GST_No, yPos: 85 },
+      { label: "Vehicle Type", value: vendor.vehicle_type, yPos: 90 },
+      { label: "Vehicle Number", value: vendor.vehicle_Number, yPos: 95 }
+    ];
+    
+   
+// Add the rows to the PDF
+rows.forEach(row => {
+  doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
+});
+doc.line(10, 105, 200, 105);
+    // Add the table to the PDF
+    doc.autoTable({
+      // body: rows,
+      startY: 50,
+      theme: 'grid',
+      styles: {
+        fontSize: 10, // Default font size for the entire table
+      },
+      columnStyles: {
+        0: { fontSize: 10, fontStyle: "bold" }, // Field names - larger and bold
+        1: { fontSize: 10 }, // Values - default font size
+      },
+    });
 
-      // Define the columns and rows for the table
-      const columns = ['Field', 'Value'];
-      const rows = [
-        ['Vendor Name', vendor.company_Name],
-        ['Company Name', vendor.vender_Name],
-        ['GST No', vendor.GST_No],
-        ['Mobile Number', vendor.mobile_Number],
-        ['Payment', vendor.payment],
-        ['Amount', vendor.amount],
-        ['tds', vendor.tds],
-        ['Total Amount', vendor.total_Amount],
-        ['Paid Amount', vendor.paid_Amount],
-        ['Remaining Amount', vendor.remaining_Amount],
-        ['Payment Method', vendor.payment_Method],
-      ];
-  
-        // Add the table to the PDF
-        doc.autoTable({
-          body: rows,
-          startY: 50,
-          theme: 'grid',
-          styles: {
-            fontSize: 10, // Default font size for the entire table
-          },
-          columnStyles: {
-            0: { fontSize: 10, fontStyle: "bold" }, // Field names - larger and bold
-            1: { fontSize: 10 }, // Values - default font size
-          },
-        });
-  
-        // Add space between the table and the "Bank Details" section
-        doc.text('', 20, doc.autoTable.previous.finalY + 10);
-  
-        // Bank Details section
-        doc.setFontSize(10);
-        doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
-        doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
-        doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
-        doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
-        doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
-        doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
-  
-       // "Right side bottom details" section
-      doc.setFontSize(12);
-      doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 20);
-      doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 40);
-  
-       
-        
-      // Save the PDF or open in a new tab
-      doc.save(`Invoice_${vendor._id}.pdf`);
-    }
-  };
+    const vendorDetails =[
+      ['Description', 'kms','AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
+      [`${vendor.vehicle_Type} - ${vendor.from} - ${vendor.to} on ${vendor.Date}`, '', '', '', '', '', ''], // Populate other fields accordingly
+      ['Total KM', '', vendor.total_Km, '', '', '', ''],
+      ['Total Hr', '', vendor.total_hours, '', '', '', ''], 
+      [`${vendor.vehicle_Type} for @8hr 80km`, '', '80', '', '', vendor.CGST, vendor.SGST], // Line for "@8hr 80km"
+      ['Extra KM', '', vendor.extra_Km, '', '', vendor.extrakm_CGST, vendor.extrakm_SGST],
+      ['Extra Hr', '', vendor.extra_Hours, '', '', vendor.extrahours_CGST, vendor.extrahours_SGST],
+      ['Toll Parking', '', vendor.toll, '', '', '', ''],
+      // [{ content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${vendor.subtotal_Amount.toLocaleString()}`, '', '', ''],
+      // [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${vendor.total_amount.toLocaleString()}`, '', '']
+    ]
+
+    // Add space between the table and the "Bank Details" section
+    doc.text('', 20, doc.autoTable.previous.finalY + 10);
+
+    // Bank Details section
+    // doc.setFontSize(10);
+    // doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
+    // doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
+    // doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
+    // doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
+    // doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
+    // doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
+
+    // "Right side bottom details" section
+    // doc.setFontSize(12);
+    // doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 20);
+    // doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 40);
+
+    // Save the PDF or open in a new tab
+    doc.save(`Invoice_${vendor._id}.pdf`);
+  }
+};
 
   // const handleViewMore = (vendor) => {
   //   setSelectedVendor(vendor);
