@@ -8,7 +8,7 @@ import ViewAllocateTrip from "./Components/AllocateTrip/ViewAllocateTrip";
 import UpdateDuty from "./Components/UpdateDutySlip/UpdateDuty";
 import AddPayment from "./Components/AddPayment/AddPayment";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Login from './Components/Login/LogIn';
+import Login from './Components/Login/LogIn';
 import Home from "./Components/Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import VendorPayment from "./Components/VendorPayment/VendorPayment";
@@ -56,9 +56,9 @@ function App() {
   <Startenddetails /> */}
       <Router>
         <Routes>
-          {/* <Route path='/' element={<Login/>}/> */}
+          <Route path='/' element={<Login/>}/>
           {/* <Route path='/signup' element={< Signup/>} /> */}
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/sharedetails" element={<ShareDetails />} />
           <Route path="/viewsharedetails" element={<ViewShareDetails />} />
           <Route path="/startenddetails" element={<Startenddetails />} />
