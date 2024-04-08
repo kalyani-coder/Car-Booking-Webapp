@@ -3,11 +3,16 @@ const mongoose = require('mongoose');
 const app = express();
 const cors = require('cors');
 
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 10000;
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+// locally api running
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
+// on server api running 
+app.use(cors({ origin: 'https://software.travelshivpushpa.com', credentials: true }));
+
 
 // Define API Router
 const apiRouter = express.Router();
@@ -52,16 +57,12 @@ apiRouter.use('/indivisual-customer', indivisualCustomer);
 apiRouter.use('/masterrate', newMasterRateSchema);
 apiRouter.use("/get-trip",gettrip)
 
-// Database connectivity to MongoDB Atlas
 mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority', {
-    // useUnifiedTopology : true,
-    // bufferCommands: false, // Disable buffering
 }, console.log("Connected to Database"));
 
-// Attach API router to the app
 app.use('/api', apiRouter);
 
-// Server is running on port 7000
+// Server is running on port 10000
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port http://localhost:${port}`);
 });
