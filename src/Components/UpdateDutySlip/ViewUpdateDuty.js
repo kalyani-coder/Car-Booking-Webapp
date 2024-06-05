@@ -163,8 +163,8 @@ const ViewUpdateDuty = () => {
             "Extra Kms. @", formData.extrakm,,
           ],
           ["Total Kms:", formData.totalkm, "Total Hours:", formData.totalhour, "Extra Hours:", formData.extrahour,],
-          [ "", "","","", "Total Amount", formData.totalamount],
-          ["", "",  "","","Less Advance", formData.advanceamount],
+          [ "", "","","", "Total Amount", `${formData.totalamount} Rs.`],
+          ["", "",  "","","Less Advance", `Rs. ${formData.advanceamount} Rs.`],
           ["Customer's Signature:", "", "","", "Net Bill" ]
         ];
   

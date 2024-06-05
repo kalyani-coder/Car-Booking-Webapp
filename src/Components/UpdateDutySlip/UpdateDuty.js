@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import './UpdateDuty.css';
 import Sidebar from '../Sidebar/Sidebar';
 import Alert from "../AddCustomer/Alert";
@@ -45,12 +45,40 @@ const UpdateDuty = () => {
     cashReceiver: '',
     transactionId: '',
     TransactionNumber : '',
+    tripDutyNumber: '',
   };
-
+  
   const [formData, setFormData] = useState(initialFormData);
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
+  const [customerList, setCustomerList] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
 
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        console.log("Fetching customers...");
+        const response = await fetch("http://localhost:10000/api/add-customers");
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Fetched customer data:", data);
+          const formattedData = data.map(customer => ({
+            _id: customer._id,
+            cus_name: customer.cus_name
+          }));
+          setCustomerList(formattedData);
+        } else {
+          console.error("Failed to fetch customers. Response status:", response.status);
+        }
+      } catch (error) {
+        console.error("API request error:", error);
+      }
+    };
+  
+    fetchCustomers();
+  }, []);
+  
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -173,6 +201,27 @@ const UpdateDuty = () => {
       }));
     }
   };
+  useEffect(() => {
+    fetchTripDutyNumber(); // Fetch trip duty number when the component mounts
+  }, []);
+
+  const fetchTripDutyNumber = async () => {
+    try {
+      const response = await fetch('http://localhost:10000/api/trip-duty-number');
+      if (response.ok) {
+        const data = await response.json();
+        setFormData((prevData) => ({
+          ...prevData,
+          tripDutyNumber: data.tripDutyNumber // Update trip duty number in the form data
+        }));
+      } else {
+        console.error('Failed to fetch trip duty number');
+      }
+    } catch (error) {
+      console.error('Error fetching trip duty number:', error);
+    }
+  };
+
 
   const renderPaymentMethodFields = () => {
     if (formData.paymentmethod === "Cheque") {
@@ -419,15 +468,30 @@ const UpdateDuty = () => {
               <div><label htmlFor="name" className="update-duty-form-label">
                 Customer Name:
               </label>
-                <input
-                  className="update-duty-form-control"
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Customer Name"
-                  onChange={handleChange}
-                  value={formData.name}
-                /></div>
+              <select
+                className="form-control-add-trip-input"
+                id="customername"
+                name="customername"
+                onChange={(e) => {
+                  const selectedCustomer = customerList.find(
+                    (customer) => customer.cus_name === e.target.value
+                  );
+                  setSelectedCustomer(selectedCustomer);
+                }}
+                value={selectedCustomer ? selectedCustomer.cus_name : ""}
+              >
+                <option value="">Select Customer</option>
+                {customerList?.length > 0 ? (
+                  customerList.map((customer) => (
+                    <option key={customer._id} value={customer.cus_name}>
+                      {customer.cus_name}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No Customers Available</option>
+                )}
+              </select>
+                </div>
               <div>   <label htmlFor="vehicle" className="update-duty-form-label">
                 Type Of Vehicle:
               </label>
