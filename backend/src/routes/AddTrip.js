@@ -2,10 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const AddTrip = require('../models/AddTrip');
 const router = express.Router();
-
 router.use(bodyParser.json());
-
-
 
 router.get('/', async (req, res) => {
     try {
@@ -13,23 +10,56 @@ router.get('/', async (req, res) => {
         res.status(200).json(addtrip)
         
     } catch (error) {
-        res.status(500).json(error)
-    
-        
+        res.status(500).json(error)   
     }
-
-
-
-
 })
+
+
+
+// router.post('/', async (req, res) => {
+//     try {
+//        console.log(req.body)
+//         // Create a new instance of AddTrip
+//         const addTripData = new AddTrip(req.body);
+//         // Save the data to the database
+//         await addTripData.save();
+
+//         // Return the created data in the response
+//         res.status(201).json(addTripData);
+//     } catch (error) {
+//         // Check if the error is a Mongoose validation error
+//         if (error.name === 'ValidationError') {
+//             const validationErrors = {};
+//             for (const key in error.errors) {
+//                 validationErrors[key] = error.errors[key].message;
+//             }
+//             res.status(400).json({ validationErrors });
+//         } else {
+//             // Handle other types of errors
+//             console.error(error);
+//             res.status(500).json({ error: 'Internal server error' });
+//         }
+//     }
+// });
+
 
 router.post('/', async (req, res) => {
     try {
-       console.log(req.body)
-        // Create a new instance of AddTrip
-        const addTripData = new AddTrip(req.body);
+        console.log(req.body);
 
-      
+        // Find the highest trip_duty_number in the database
+        const latestTrip = await AddTrip.findOne().sort({ trip_duty_number: -1 }).exec();
+        let newTripDutyNumber = 1; // Default value if no trips exist yet
+
+        if (latestTrip && latestTrip.trip_duty_number) {
+            newTripDutyNumber = latestTrip.trip_duty_number + 1;
+        }
+
+        // Create a new instance of AddTrip with the incremented trip_duty_number
+        const addTripData = new AddTrip({
+            ...req.body,
+            trip_duty_number: newTripDutyNumber
+        });
 
         // Save the data to the database
         await addTripData.save();
@@ -91,11 +121,5 @@ router.get('/customer/:customerId', async (req, res) => {
         res.status(500).json(error);
     }
 });
-
-
-
-
-
-
 
 module.exports = router;

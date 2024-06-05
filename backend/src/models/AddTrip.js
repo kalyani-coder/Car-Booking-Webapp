@@ -35,6 +35,7 @@ const AddTripSchema = new mongoose.Schema({
     Mobile_Number_5: Number,
     Person_6: String,
     Mobile_Number_6: Number,
+    trip_duty_number : Number,
 });
 
 const AddTrip = mongoose.model('AddTrip', AddTripSchema);
