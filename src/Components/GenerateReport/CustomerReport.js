@@ -49,7 +49,7 @@ function CustomerReport() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/customer-payment");
+        const response = await fetch("http://localhost:10000/api/customer-payment");
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
@@ -70,7 +70,7 @@ function CustomerReport() {
     const fetchInvoices = async () => {
       try {
         const formattedDate = selectedDate.toISOString().split("T")[0];
-        const response = await fetch(`https://carbookingbackend.onrender.com/api/customer-payment/by-date/${formattedDate}`);
+        const response = await fetch(`http://localhost:10000/api/customer-payment/by-date/${formattedDate}`);
         
         if (response.ok) {
           const data = await response.json();

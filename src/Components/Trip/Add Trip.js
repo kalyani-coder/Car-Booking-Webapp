@@ -52,7 +52,7 @@ const AddTrip = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/add-customers");
+        const response = await fetch("http://localhost:10000/api/add-customers");
 
         if (response.ok) {
           const data = await response.json();
@@ -99,7 +99,7 @@ const AddTrip = () => {
 
   const fetchTripDetails = async (customerId) => {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-trip/${customerId}`);
+      const response = await fetch(`http://localhost:10000/api/add-trip/${customerId}`);
 
       if (response.ok) {
         const tripDetails = await response.json();
@@ -220,7 +220,7 @@ const AddTrip = () => {
     };
   
     try {
-      const response = await fetch("https://carbookingbackend.onrender.com/api/add-trip", {
+      const response = await fetch("http://localhost:10000/api/add-trip", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

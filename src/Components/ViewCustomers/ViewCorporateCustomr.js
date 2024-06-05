@@ -11,7 +11,7 @@ const CorporateCustomers = () => {
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    fetch('https://carbookingbackend.onrender.com/api/corporate-customer')
+    fetch('http://localhost:10000/api/corporate-customer')
       .then(response => response.json())
       .then(data => setCustomers(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -23,7 +23,7 @@ const CorporateCustomers = () => {
     if (confirmed) {
       try {
         // Send a DELETE request to delete the customer
-        fetch(`https://carbookingbackend.onrender.com/api/corporate-customer/${customerId}`, {
+        fetch(`http://localhost:10000/api/corporate-customer/${customerId}`, {
           method: 'DELETE',
         })
           .then((response) => {
@@ -67,7 +67,7 @@ const CorporateCustomers = () => {
 
   const handleSaveEdit = async () => {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/corporate-customer/${editedCustomer._id}`, {
+      const response = await fetch(`http://localhost:10000/api/corporate-customer/${editedCustomer._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { FaEdit, FaSave, FaTrash } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Customer from './../CustomerEnquiry/Customer';
+import Customer from "./../CustomerEnquiry/Customer";
 
 const ViewUpdateDuty = () => {
   const [customers, setCustomers] = useState([]);
@@ -16,7 +16,7 @@ const ViewUpdateDuty = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/update-duty");
+        const response = await fetch("http://localhost:10000/api/update-duty");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -32,114 +32,193 @@ const ViewUpdateDuty = () => {
     fetchCustomers();
   }, []);
 
+  let invoiceCounter = 100;
 
-   // Define a global variable to track the invoice number
-let invoiceCounter = 100;
-const generateTripDutySlip = async (customerId) => {
-  try {
-    // Fetch customer details from the API based on the customerId
-    const response = await fetch(`https://carbookingbackend.onrender.com/api/update-duty/${customerId}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch customer details");
+  const generateTripDutySlip = async (customerId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:10000/api/update-duty/${customerId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch customer details");
+      }
+      const formData = await response.json();
+  
+      console.log(formData);
+  
+      const downloadConfirmed = window.confirm(
+        "Do you want to download the trip duty slip?"
+      );
+      if (downloadConfirmed) {
+        const doc = new jsPDF();
+  
+        // Set heading properties
+        const heading = "Shivpushpa Travels".toUpperCase();
+        doc.setFont("helvetica", "bold"); // Set font to Helvetica Bold
+        doc.setFontSize(22); // Set font size to 22
+  
+        // Center the heading on the page and set it to red
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const headingX =
+          pageWidth / 2 -
+          (doc.getStringUnitWidth(heading) * doc.internal.getFontSize()) / 6;
+        doc.setTextColor(255, 0, 0); // Set text color to red
+        doc.text(heading, headingX, 20);
+  
+        // Reset text properties for the address lines
+        doc.setTextColor(0, 0, 0); // Reset text color to black
+        doc.setFontSize(12); // Reset font size to 12
+        doc.setFont("helvetica", "normal"); // Reset font to normal
+  
+        const addressLines = [
+          "Address: 332, Kasba Peth Near Hero Honda Showroom, Pune 411 0111",
+          "Cell: 9325501950 / 9325501978",
+        ];
+  
+        addressLines.forEach((line, index) => {
+          const textWidth =
+            doc.getStringUnitWidth(line) * doc.internal.getFontSize();
+          const textX = pageWidth / 2 - textWidth / 6;
+          doc.text(line, textX, 30 + index * 10);
+        });
+  
+        // Increment the invoice counter and pad it to ensure it's always three digits
+        invoiceCounter++;
+        const invoiceNo = invoiceCounter.toString().padStart(3, "0");
+  
+        // Left side table details
+        const leftDetails = [
+          ["Company Name:", "Shivpushpa Travels"],
+          ["Reporting Address:", formData.reportingaddress],
+        ];
+  
+        // Right side table details
+        const rightDetails = [
+          ["Duty Slip No:", invoiceNo],
+          ["Date:", formData.date],
+        ];
+  
+        // Render left side table
+        doc.autoTable({
+          startY: 60,
+          margin: { left: 14 }, // Positioning the left table
+          body: leftDetails,
+          theme: "grid",
+          styles: { fontSize: 10 },
+          columnStyles: {
+            0: { fontStyle: "bold", halign: "left", cellWidth: 40 },       
+                 1: { halign: "left" }, // Style for the second column
+          },
+        });
+  
+        // Render right side table
+        doc.autoTable({
+          startY: 60,
+          margin: { left: pageWidth / 2 + 20 }, // Positioning the right table
+          body: rightDetails,
+          theme: "grid",
+          styles: { fontSize: 10 },
+          columnStyles: {
+            0: { fontStyle: "bold", halign: "left" },
+            1: { halign: "left" },
+          },
+        });
+  
+        // Define additional details rows
+        const additionalRows = [
+          ["User Name:", formData.name, "Vehicle No.", formData.vehiclenumber, "Type of Car", formData.vehicle],
+          ["From", formData.from, "To", formData.to]
+        ];
+  
+        // Render additional details table
+        doc.autoTable({
+          startY: Math.max(doc.lastAutoTable.finalY + 10, 70), // Ensure it starts below the previous tables
+          body: additionalRows,
+          theme: "grid",
+          styles: { fontSize: 10 },
+          columnStyles: {
+            0: { fontStyle: "bold", halign: "left" },
+            1: { halign: "left" },
+            2: { fontStyle: "bold", halign: "left", cellWidth: 'auto' }, // Adjust the cell width for the third column
+    3: { halign: "left" },
+    4: { fontStyle: "bold", halign: "left", cellWidth: 'auto' }, // Adjust the cell width for the fifth column
+    5: { halign: "left" },
+          },
+        });
+  
+        // Define table columns and rows
+        const rows = [
+          [
+            "Closing Kms:",
+            formData.closingkm,
+            "Closing Time:",
+            formData.closingtime,
+            "8 Hrs. 80 Kms. @", formData.extrakm,
+          ],
+          [
+            "Starting KM:",
+            formData.startingkm,
+            "Reporting Time:",
+            formData.startingtime,
+            "Extra Kms. @", formData.extrakm,,
+          ],
+          ["Total Kms:", formData.totalkm, "Total Hours:", formData.totalhour, "Extra Hours:", formData.extrahour,],
+          [ "", "","","", "Total Amount", formData.totalamount],
+          ["", "",  "","","Less Advance", formData.advanceamount],
+          ["Customer's Signature:", "", "","", "Net Bill" ]
+        ];
+  
+        // Render bottom table
+        doc.autoTable({
+          startY: Math.max(doc.lastAutoTable.finalY + 10, 70), // Ensure it starts below the previous tables
+          body: rows,
+          theme: "grid",
+          styles: { fontSize: 10 },
+          columnStyles: {
+            0: { fontStyle: "bold", halign: "left" },
+            1: { halign: "left" },
+            2: { fontStyle: "bold", halign: "left" },
+            3: { halign: "left" },
+          },
+        });
+         // Add instruction and signature section
+      const instructionLines = [
+        "Instruction for Next Booking if any:",
+        "• Kms and hours ex-our office.",
+        "• Minimum 300 Km per day.",
+        "• The second day will starts at 12.00 midnight.",
+        "• Toll, Tax, Parking etc at passenger's account.",
+      ];
+
+      doc.setTextColor(255, 0, 0); // Set text color to red
+      doc.setFontSize(12); // Set font size to 12
+      doc.setFont("helvetica", "bold");  let yOffset = doc.lastAutoTable.finalY + 10;
+      doc.text(instructionLines[0], 20, yOffset);
+
+      // Normal lines
+      doc.setTextColor(0, 0, 0); // Set text color to black
+      doc.setFont("helvetica", "normal"); // Set font to normal
+      instructionLines.slice(1).forEach((line, index) => {
+        doc.text(line, 20, yOffset + (index + 1) * 10);
+      });
+
+      doc.setTextColor(255, 0, 0); // Set text color to red
+      doc.setFont("helvetica", "bold"); // Set font to bold
+      doc.text("FOR SHIVPUSHPA TRAVELS", pageWidth - 90, yOffset);
+
+      doc.setTextColor(0, 0, 0); // Set text color to black
+      doc.setFont("helvetica", "normal"); // Reset font to normal
+      doc.text("Authorized Signatory", pageWidth - 70, yOffset + 10);
+
+  
+        // Save the PDF or open in a new tab
+        doc.save(`Trip_Duty_Slip_${formData.date}.pdf`);
+      }
+    } catch (error) {
+      console.error("Error generating trip duty slip:", error);
+      alert("Failed to generate trip duty slip. Please try again.");
     }
-    const formData = await response.json();
-
-    console.log(formData);
-  const downloadConfirmed = window.confirm(
-    "Do you want to download the trip duty slip?"
-  );
-
-  if (downloadConfirmed) {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-// Center the "Trip Duty Slip" heading on the page
-const tripDutySlipX = (doc.internal.pageSize.getWidth() / 2) - (doc.getStringUnitWidth("Trip Duty Slip") * 18 / 2);
-doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
-    // Increment the invoice counter and pad it to ensure it's always three digits
-  invoiceCounter++;
-  const invoiceNo = invoiceCounter.toString().padStart(3, '0');
-    // Add left side details
-    doc.setFontSize(12);
-    doc.text("Report To: Shivpushpa Travels", 20, 30);
-    doc.text("Mobile: 9325501950 / 9325501978",20,40)
-    doc.text("Address: 332, Kasba Peth", 20, 50);
-    doc.text("Phadke Haud Chowk, Pune 411 0111",20,60)
-    doc.text("Mail: travelshivpushpa@gmail.com", 20, 70);
-
-    // Add space between left and right side details
-    doc.text("", 10, 80);
-
-    // Add right side details
-   
-    doc.setFontSize(12);
-
-    doc.text(`Date: ${formData.date}`, 140, 30);
-    doc.text(`Invoice No: ${invoiceNo}`, 140, 40);
-    doc.text(`Type Of Vehicle: ${formData.vehicle}`, 140,50);
-    doc.text(`Vehicle No.: ${formData.vehiclenumber}`, 140,60);
-
-
-    // Add a line to separate left and right side details
-    doc.line(30, 80, 200, 80);
-
-    // Add space between the header and the table
-    doc.text("", 10, 90);
-
-    // Add table
-    const columns = ["Field", "Value"];
-    const rows = [
-      
-      ["Reporting Address", formData.reportingaddress],
-      ["Customer Name", formData.name],
-      ["Type Of Vehicle", formData.vehicle],
-      ["Vehicle Number", formData.vehiclenumber],
-      ["Rate", formData.rate],
-      ["From", formData.from],
-      ["To", formData.to],
-      ["Duty Type", formData.title],
-      ["Amount", formData.amount],
-      ["Starting Time", formData.startingtime],
-      ["Closing Time", formData.closingtime],
-      ["Starting KM", formData.startingkm],
-      ["Closing KM", formData.closingkm],
-      ["Total Hour", formData.totalhour],
-      ["Total KM", formData.totalkm],
-      ["Extra Hour", formData.extrahour],
-      ["Extra Hours Amount", formData.extrahoursamount],
-      ["Extra KMS", formData.extrakm],
-      ["Extra KMS Amount", formData.extrakmamount],
-      // ["SubTotal Amount", formData.subtotalamount],
-      ["SGST 2.5%", formData.sgst],
-      ["CGST 2.5%", formData.cgst],
-      ["Total Amount", formData.totalamount],
-      ["Advanced Amount", formData.advanceamount],
-      ["Remaining Amount", formData.remainingamount],
-    ];
-
-    const startYPosition = 20; 
-    // Position the table below the left and right side details
-    doc.autoTable({
-      body: rows,
-      startY: 100,
-      theme: "grid",
-      styles: {
-        fontSize: 10,
-        halign: "center",
-      },
-      columnStyles: {
-        0: { fontStyle: "bold", halign: "left" },
-        1: { halign: "left" },
-      },
-    });
-
-    // Save the PDF or open in a new tab
-    doc.save(`Trip_Duty_Slip_${formData.date}.pdf`);
-  }
-}catch (error) {
-  console.error("Error generating trip duty slip:", error);
-  alert("Failed to generate trip duty slip. Please try again.");
-}
-};
+  };
 
   const handleEdit = (customer) => {
     setEditingCustomer({ ...customer });
@@ -153,20 +232,20 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
 
   const handleDelete = async (customer) => {
     const confirmDelete = window.confirm("Do you want to delete the customer?");
-  
+
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `https://carbookingbackend.onrender.com/api/customers/${customer._id}`,
+          `http://localhost:10000/api/customers/${customer._id}`,
           {
             method: "DELETE",
           }
         );
-  
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-  
+
         setFilteredCustomers((prevCustomers) =>
           prevCustomers.filter((c) => c._id !== customer._id)
         );
@@ -177,8 +256,6 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
       }
     }
   };
-  
-  
 
   // Function to toggle showing details for a specific customer
   const toggleShowDetails = (customerId) => {
@@ -272,9 +349,12 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
                           >
                             <FaTrash />
                           </button>
-                          <button className="btn btn-info"  onClick={() => generateTripDutySlip(customer._id)}>
-            Print
-          </button>
+                          <button
+                            className="btn btn-info"
+                            onClick={() => generateTripDutySlip(customer._id)}
+                          >
+                            Print
+                          </button>
                         </>
                       )}
                     </td>
@@ -282,96 +362,104 @@ doc.text("Trip Duty Slip", tripDutySlipX, 20, { className: "uppercase-text" });
                   {showDetails === customer._id && (
                     <tr>
                       <td colSpan="7" className="mb-4">
-                      <p className="mb-2">
-        <strong>Company Name:</strong> {customer.companyname}
-      </p>
-      <p className="mb-2">
-        <strong>GST No:</strong> {customer.gstno}
-      </p>
-      <p className="mb-2">
-        <strong>Reporting Address:</strong> {customer.reportingaddress}
-      </p>
-      <p className="mb-2">
-        <strong>Date:</strong> {customer.date}
-      </p>
-      <p className="mb-2">
-        <strong>Name:</strong> {customer.name}
-      </p>
-      <p className="mb-2">
-        <strong>Vehicle:</strong> {customer.vehicle}
-      </p>
-      <p className="mb-2">
-        <strong>Vehicle Number:</strong> {customer.vehiclenumber}
-      </p>
-      <p className="mb-2">
-        <strong>From:</strong> {customer.from}
-      </p>
-      <p className="mb-2">
-        <strong>To:</strong> {customer.to}
-      </p>
-      <p className="mb-2">
-        <strong>Closing KM:</strong> {customer.closingkm}
-      </p>
-      <p className="mb-2">
-        <strong>Closing Time:</strong> {customer.closingtime}
-      </p>
-      <p className="mb-2">
-        <strong>Starting KM:</strong> {customer.startingkm}
-      </p>
-      <p className="mb-2">
-        <strong>Starting Time:</strong> {customer.startingtime}
-      </p>
-      <p className="mb-2">
-        <strong>Total KM:</strong> {customer.totalkm}
-      </p>
-      <p className="mb-2">
-        <strong>Total Hour:</strong> {customer.totalhour}
-      </p>
-      <p className="mb-2">
-        <strong>Title:</strong> {customer.title}
-      </p>
-      <p className="mb-2">
-        <strong>Amount:</strong> {customer.amount}
-      </p>
-      <p className="mb-2">
-        <strong>Extra KM:</strong> {customer.extrakm}
-      </p>
-      <p className="mb-2">
-        <strong>Amount1:</strong> {customer.amount1}
-      </p>
-      <p className="mb-2">
-        <strong>Extra Hour:</strong> {customer.extrahour}
-      </p>
-      <p className="mb-2">
-        <strong>Amount2:</strong> {customer.amount2}
-      </p>
-      <p className="mb-2">
-        <strong>Total Amount:</strong> {customer.totalamount}
-      </p>
-      <p className="mb-2">
-        <strong>Advance Amount:</strong> {customer.advanceamount}
-      </p>
-      <p className="mb-2">
-        <strong>Payment Method:</strong> {customer.paymentmethod}
-      </p>
-      <p className="mb-2">
-        <strong>Cheque No:</strong> {customer.chequeNo}
-      </p>
-      <p className="mb-2">
-        <strong>IFSC Code:</strong> {customer.ifscCode}
-      </p>
-      <p className="mb-2">
-        <strong>UPI ID:</strong> {customer.upiId}
-      </p>
-      <p className="mb-2">
-        <strong>Cash Receiver:</strong> {customer.cashReceiver}
-      </p>
-      <p className="mb-2">
-        <strong>Transaction ID:</strong> {customer.transactionId}
-      </p>
-      <p className="mb-2">
-        <strong>Transaction Number:</strong> {customer.TransactionNumber}
-      </p>
+                        <p className="mb-2">
+                          <strong>Company Name:</strong> {customer.companyname}
+                        </p>
+                        <p className="mb-2">
+                          <strong>GST No:</strong> {customer.gstno}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Reporting Address:</strong>{" "}
+                          {customer.reportingaddress}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Date:</strong> {customer.date}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Name:</strong> {customer.name}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Vehicle:</strong> {customer.vehicle}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Vehicle Number:</strong>{" "}
+                          {customer.vehiclenumber}
+                        </p>
+                        <p className="mb-2">
+                          <strong>From:</strong> {customer.from}
+                        </p>
+                        <p className="mb-2">
+                          <strong>To:</strong> {customer.to}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Closing KM:</strong> {customer.closingkm}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Closing Time:</strong> {customer.closingtime}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Starting KM:</strong> {customer.startingkm}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Starting Time:</strong>{" "}
+                          {customer.startingtime}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Total KM:</strong> {customer.totalkm}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Total Hour:</strong> {customer.totalhour}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Title:</strong> {customer.title}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Amount:</strong> {customer.amount}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Extra KM:</strong> {customer.extrakm}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Amount1:</strong> {customer.amount1}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Extra Hour:</strong> {customer.extrahour}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Amount2:</strong> {customer.amount2}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Total Amount:</strong> {customer.totalamount}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Advance Amount:</strong>{" "}
+                          {customer.advanceamount}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Payment Method:</strong>{" "}
+                          {customer.paymentmethod}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Cheque No:</strong> {customer.chequeNo}
+                        </p>
+                        <p className="mb-2">
+                          <strong>IFSC Code:</strong> {customer.ifscCode}
+                        </p>
+                        <p className="mb-2">
+                          <strong>UPI ID:</strong> {customer.upiId}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Cash Receiver:</strong>{" "}
+                          {customer.cashReceiver}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Transaction ID:</strong>{" "}
+                          {customer.transactionId}
+                        </p>
+                        <p className="mb-2">
+                          <strong>Transaction Number:</strong>{" "}
+                          {customer.TransactionNumber}
+                        </p>
                       </td>
                     </tr>
                   )}

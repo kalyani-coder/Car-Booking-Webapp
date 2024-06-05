@@ -17,7 +17,7 @@ const ViewVendor = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch('https://carbookingbackend.onrender.com/api/add-venders');
+        const response = await fetch('http://localhost:10000/api/add-venders');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -40,7 +40,7 @@ const ViewVendor = () => {
     const confirmed = window.confirm("Are you sure you want to delete this vendor?");
     if (confirmed) {
       try {
-        const response = await fetch(`https://carbookingbackend.onrender.com/api/add-venders/${vendorId}`, {
+        const response = await fetch(`http://localhost:10000/api/add-venders/${vendorId}`, {
           method: 'DELETE',
         });
 
@@ -63,7 +63,7 @@ const ViewVendor = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-venders/${editedVendor._id}`, {
+      const response = await fetch(`http://localhost:10000/api/add-venders/${editedVendor._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ const ViewVendor = () => {
                 <th>Company Name</th>
                 <th>GST No</th>
                 <th>Mobile</th>
-                <th>Email</th>
+                {/* <th>Email</th> */}
                 <th>Address</th>
                 <th>Actions</th>
               </tr>
@@ -127,15 +127,17 @@ const ViewVendor = () => {
                   <td>{vendor.company_Name}</td>
                   <td>{vendor.GST_No}</td>
                   <td>{vendor.vender_Mobile}</td>
-                  <td>{vendor.Vender_Email}</td>
+                  {/* <td>{vendor.Vender_Email}</td> */}
                   <td>{vendor.address}</td>
                   <td>
+                  <div className="d-flex align-items-center gap-1">
                     <button className="btn btn-info" onClick={() => handleEditVendor(vendor)}>
                       <FaEdit /> 
                     </button>
                     <button className="btn btn-danger" onClick={() => handleDelete(vendor._id)}>
                       <FaTrash /> 
                     </button>
+                    </div>
                   </td>
                 </tr>
               ))}

@@ -26,12 +26,14 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{customer.cus_email}</td>
           <td>{customer.address}</td>
           <td>
+          <div className="d-flex align-items-center gap-1">
             <button className='btn btn-info' onClick={() => handleEditCustomer(customer)}>
               <FaEdit />
             </button>
             <button className='btn btn-danger' onClick={() => deleteCustomer(customer._id)}>
               <FaTrash />
             </button>
+            </div>
           </td>
         </tr>
       ))}
@@ -54,7 +56,7 @@ const ViewCustomer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('https://carbookingbackend.onrender.com/api/add-customers');
+        const response = await fetch('http://localhost:10000/api/add-customers');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -92,7 +94,7 @@ const ViewCustomer = () => {
     const confirmed = window.confirm("Are you sure you want to delete this customer?");
     if (confirmed) {
       try {
-        const response = await fetch(`https://carbookingbackend.onrender.com/api/add-customers/${customerId}`, {
+        const response = await fetch(`http://localhost:10000/api/add-customers/${customerId}`, {
           method: 'DELETE',
         });
 
@@ -118,7 +120,7 @@ const ViewCustomer = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-customers/${editedCustomer._id}`, {
+      const response = await fetch(`http://localhost:10000/api/add-customers/${editedCustomer._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

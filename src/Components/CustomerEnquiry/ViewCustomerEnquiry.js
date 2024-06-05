@@ -6,6 +6,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
     <thead>
       <tr>
+        <th>Sr No</th>
         <th>Customer Name</th>
         <th>Mobile No.</th>
         <th>Email</th>
@@ -17,8 +18,9 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
       </tr>
     </thead>
     <tbody>
-      {customers.map((customer) => (
+      {customers.map((customer, index) => (
         <tr key={customer._id}>
+          <td>{index + 1}</td>
           <td>{customer.customer_name}</td>
           <td>{customer.mobileno}</td>
           <td>{customer.email}</td>
@@ -28,7 +30,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{customer.pic_up}</td>
           <td>
             <>
-              <div className="d-flex align-items-center gap-2">
+              <div className="d-flex align-items-center gap-1">
                 <button
                   className="btn btn-info"
                   onClick={() => handleEditCustomer(customer)}
@@ -63,7 +65,7 @@ const ViewCustomerEnquiry = () => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "https://carbookingbackend.onrender.com/api/customer-enquiry"
+          "http://localhost:10000/api/customer-enquiry"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -166,7 +168,7 @@ const ViewCustomerEnquiry = () => {
     if (confirmed) {
       try {
         const response = await fetch(
-          `https://carbookingbackend.onrender.com/api/customer-enquiry/${customerId}`,
+          `http://localhost:10000/api/customer-enquiry/${customerId}`,
           {
             method: "DELETE",
           }

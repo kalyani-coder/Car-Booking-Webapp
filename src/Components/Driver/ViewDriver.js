@@ -47,7 +47,7 @@ const ViewDriver = () => {
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await fetch('https://carbookingbackend.onrender.com/api/add-Drivers');
+        const response = await fetch('http://localhost:10000/api/add-Drivers');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -75,7 +75,7 @@ const ViewDriver = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-Drivers/${editedDriver._id}`, {
+      const response = await fetch(`http://localhost:10000/api/add-Drivers/${editedDriver._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const ViewDriver = () => {
     const confirmed = window.confirm("Are you sure you want to delete this driver?");
     if (confirmed) {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-Drivers/${driverId}`, {
+      const response = await fetch(`http://localhost:10000/api/add-Drivers/${driverId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

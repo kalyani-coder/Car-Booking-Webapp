@@ -38,9 +38,9 @@ const CustomerRate = () => {
       try {
         const endpoint =
           formData.Cus_Type === "Corporate Customer"
-            ? "https://carbookingbackend.onrender.com/api/corporate-customer"
+            ? "http://localhost:10000/api/corporate-customer"
             : formData.Cus_Type === "Indivisual Customer"
-            ? "https://carbookingbackend.onrender.com/api/indivisual-customer"
+            ? "http://localhost:10000/api/indivisual-customer"
             : "";
 
         if (endpoint) {
@@ -80,7 +80,7 @@ const CustomerRate = () => {
   useEffect(() => {
     const fetchVehicleDetails = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/masterrate");
+        const response = await fetch("http://localhost:10000/api/masterrate");
         if (response.ok) {
           const data = await response.json();
           setVehicleList(data.map((item) => item.add_vehicle));
@@ -188,10 +188,10 @@ const CustomerRate = () => {
     let apiEndpoint = "";
     let customerType = "";
     if (formData.Cus_Type === "Corporate Customer") {
-      apiEndpoint = "https://carbookingbackend.onrender.com/api/corporate-customer";
+      apiEndpoint = "http://localhost:10000/api/corporate-customer";
       customerType = "Corporate";
     } else if (formData.Cus_Type === "Indivisual Customer") {
-      apiEndpoint = "https://carbookingbackend.onrender.com/api/indivisual-customer";
+      apiEndpoint = "http://localhost:10000/api/indivisual-customer";
       customerType = "Indivisual";
     } else {
       console.log("Invalid customer type");

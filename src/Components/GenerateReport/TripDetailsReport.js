@@ -21,7 +21,7 @@ function TripDetailsReport() {
 
   const fetchTripDetails = async () => {
     try {
-      const response = await fetch("https://carbookingbackend.onrender.com/api/trip-details");
+      const response = await fetch("http://localhost:10000/api/trip-details");
       const data = await response.json();
       setTripDetails(data);
       setFilteredTripDetails(data); // Initialize filtered trip details with all trip details

@@ -47,7 +47,7 @@ const CustomerEnquiry = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/add-customers");
+        const response = await fetch("http://localhost:10000/api/add-customers");
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
@@ -137,7 +137,7 @@ const CustomerEnquiry = () => {
     setError(""); // Clear any previous error
   
     try {
-      const response = await fetch("https://carbookingbackend.onrender.com/api/customer-enquiry", {
+      const response = await fetch("http://localhost:10000/api/customer-enquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

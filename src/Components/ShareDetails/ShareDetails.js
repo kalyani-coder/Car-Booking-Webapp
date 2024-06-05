@@ -33,7 +33,7 @@ const ShareDetails = () => {
     // Fetch data from the API endpoint
     const fetchData = async () => {
       try {
-        const response = await fetch('https://carbookingbackend.onrender.com/api/trip-details');
+        const response = await fetch('http://localhost:10000/api/trip-details');
         const data = await response.json();
         // Update the customers state with the fetched data
         setCustomers(data);
@@ -74,7 +74,7 @@ const ShareDetails = () => {
   const handleSave = async () => {
     try {
       // Make a POST request to the share-details API with the selected customer details
-      const response = await fetch('https://carbookingbackend.onrender.com/api/share-details', {
+      const response = await fetch('http://localhost:10000/api/share-details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -32,7 +32,7 @@ const ViewAllocateTrip = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/add-trip");
+        const response = await fetch("http://localhost:10000/api/add-trip");
         if (!response.ok) {
           throw Error("Network response was not ok");
         }
@@ -50,7 +50,7 @@ const ViewAllocateTrip = () => {
   useEffect(() => {
     const fetchShareDetails = async () => {
       try {
-        const response = await fetch("https://carbookingbackend.onrender.com/api/trip-details");
+        const response = await fetch("http://localhost:10000/api/trip-details");
         if (!response.ok) {
           throw Error("Network response was not ok");
         }
@@ -83,7 +83,7 @@ const ViewAllocateTrip = () => {
 
   const fetchVehicleDetails = async (tripDetails) => {
     try {
-      const response = await fetch("https://carbookingbackend.onrender.com/api/trip-details", {
+      const response = await fetch("http://localhost:10000/api/trip-details", {
         method: "GET", // Assuming the API requires a POST request
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const ViewAllocateTrip = () => {
   const handleEdit = (_id) => {
     setEditingId(_id);
 
-    fetch(`https://carbookingbackend.onrender.com/api/trip-details/${_id}`)
+    fetch(`http://localhost:10000/api/trip-details/${_id}`)
       .then((response) => response.json())
       .then((data) => {
         setEditedTrip(data);
@@ -141,7 +141,7 @@ const ViewAllocateTrip = () => {
     const successMessage = "Trip details successfully updated!";
     const errorMessage = "Error updating trip details. Please try again.";
 
-    const updateTripEndpoint = `https://carbookingbackend.onrender.com/api/trip-details/${editingId}`;
+    const updateTripEndpoint = `http://localhost:10000/api/trip-details/${editingId}`;
 
     fetch(updateTripEndpoint, {
       method: "PUT",
@@ -177,7 +177,7 @@ const ViewAllocateTrip = () => {
     );
     if (confirmed) {
       try {
-        fetch(`https://carbookingbackend.onrender.com/api/trip-details/${_id}`, {
+        fetch(`http://localhost:10000/api/trip-details/${_id}`, {
           method: "DELETE",
         })
           .then((response) => {

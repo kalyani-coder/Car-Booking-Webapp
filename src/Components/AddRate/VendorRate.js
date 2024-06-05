@@ -81,7 +81,7 @@ const VendorRate = () => {
 
     try {
       const response = await fetch(
-        "https://carbookingbackend.onrender.com/api/vender-rate",
+        "http://localhost:10000/api/vender-rate",
         {
           method: "POST",
           headers: {

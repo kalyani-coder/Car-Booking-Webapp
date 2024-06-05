@@ -42,7 +42,7 @@ function CustomerInvoice() {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "https://carbookingbackend.onrender.com/api/customer-payment"
+          "http://localhost:10000/api/customer-payment"
         );
         if (response.ok) {
           const data = await response.json();

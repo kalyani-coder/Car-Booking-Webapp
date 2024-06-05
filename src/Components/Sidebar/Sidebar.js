@@ -54,8 +54,8 @@ const Sidebar = () => {
   
   // const handleLogout = () => {
   //   try {
-  //     // https://carbookingbackend.onrender.com/api/user-login/logout
-  //     axios.get('https://carbookingbackend.onrender.com/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
+  //     // http://localhost:10000/api/user-login/logout
+  //     axios.get('http://localhost:10000/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
   //       .then((res) => {
   //         console.log(res)
   //         localStorage.removeItem('user');
@@ -389,6 +389,11 @@ const Sidebar = () => {
               <FaFileInvoiceDollar className='user-icon' />Generate Invoice
             </button>
             <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">
+                <Link to={'/customerinvoice'}>
+                  Corporate Fix Monthly
+                </Link>
+              </a></li>
               <li><a class="dropdown-item" href="#">
                 <Link to={'/customerinvoice'}>
                   Customer Invoice

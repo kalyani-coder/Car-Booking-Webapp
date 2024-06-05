@@ -69,7 +69,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
     const fetchTrips = async () => {
       try {
         const response = await fetch(
-          "https://carbookingbackend.onrender.com/api/add-trip"
+          "http://localhost:10000/api/add-trip"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -117,7 +117,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
     if (confirmed) {
       try {
         const response = await fetch(
-          `https://carbookingbackend.onrender.com/api/add-trip/${tripId}`,
+          `http://localhost:10000/api/add-trip/${tripId}`,
           {
             method: "DELETE",
           }
@@ -141,7 +141,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `https://carbookingbackend.onrender.com/api/add-trip/${editedTrip._id}`,
+        `http://localhost:10000/api/add-trip/${editedTrip._id}`,
         {
           method: "PATCH",
           headers: {
@@ -177,7 +177,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
 
   const fetchTripDetails = async (tripId) => {
     try {
-      const response = await fetch(`https://carbookingbackend.onrender.com/api/add-trip/${tripId}`);
+      const response = await fetch(`http://localhost:10000/api/add-trip/${tripId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -271,9 +271,10 @@ const [selectedTrip, setSelectedTrip] = useState(null);
             <table className="table">
               <thead>
                 <tr>
+                  <th>Sr. No.</th>
                   <th>Customer Name</th>
                   <th>Mobile No</th>
-                  <th>Email</th>
+                  {/* <th>Email</th> */}
                   <th>Address</th>
                   <th>Trip Type</th>
                   <th>Sub Type</th>
@@ -282,11 +283,12 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                 </tr>
               </thead>
               <tbody>
-                {filteredTrips.map((trip) => (
+                {filteredTrips.map((trip, index) => (
                   <tr key={trip._id}>
+                    <td>{index + 1}</td>
                     <td>{trip.customername}</td>
                     <td>{trip.mobileno}</td>
-                    <td>{trip.email}</td>
+                    {/* <td>{trip.email}</td> */}
                     <td>{trip.address}</td>
                     <td>{trip.triptype}</td>
                     <td>{trip.subtype}</td>

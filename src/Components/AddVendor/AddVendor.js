@@ -81,7 +81,7 @@ const AddVendor = () => {
       };
 
   
-      const response = await fetch("https://carbookingbackend.onrender.com/api/add-venders", {
+      const response = await fetch("http://localhost:10000/api/add-venders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

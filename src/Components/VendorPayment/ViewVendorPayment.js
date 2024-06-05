@@ -15,7 +15,7 @@ const ViewVendorPayment = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch('https://carbookingbackend.onrender.com/api/vender-payment');
+        const response = await fetch('http://localhost:10000/api/vender-payment');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }

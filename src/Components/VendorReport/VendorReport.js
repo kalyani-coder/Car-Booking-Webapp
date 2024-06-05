@@ -15,7 +15,7 @@ function VendorReport() {
   }, []);
 
   const fetchVendors = () => {
-    fetch(`https://carbookingbackend.onrender.com/api/vender-payment`)
+    fetch(`http://localhost:10000/api/vender-payment`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
