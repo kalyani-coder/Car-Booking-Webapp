@@ -272,6 +272,7 @@ const UpdateDuty = () => {
     }
   };
 
+
   const handleSubmit = async (event) => {
     // event.preventDefault();
 
@@ -280,7 +281,7 @@ const UpdateDuty = () => {
       gstno: gstNo,
       reportingaddress: reportingAddress,
       date: date,
-      customername: selectedCustomer.name,
+      name: selectedCustomer.customername,
       vehicle: selectedCustomer.vehicle,
       vehiclenumber: vehicleNumber,
       rate: rate,
@@ -299,6 +300,7 @@ const UpdateDuty = () => {
       totalamount: totalAmount,
       advanceamount: advanceAmount,
       paymentmethod: paymentMethod,
+      trip_duty_number : setSelectedCustomer.trip_duty_number
     };
     // Log the data to be sent
     console.log("Submitting data:", data);
@@ -367,6 +369,7 @@ const UpdateDuty = () => {
             >
               Add Duty Slip
             </h2>
+            <h4 className="font-bold text-danger">Duity Slip Number {selectedCustomer.trip_duty_number}</h4>
 
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
