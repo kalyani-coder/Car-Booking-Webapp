@@ -43,20 +43,20 @@ const ViewUpdateDuty = () => {
         throw new Error("Failed to fetch customer details");
       }
       const formData = await response.json();
-  
+
       console.log(formData);
-  
+
       const downloadConfirmed = window.confirm(
         "Do you want to download the trip duty slip?"
       );
       if (downloadConfirmed) {
         const doc = new jsPDF();
-  
+
         // Set heading properties
         const heading = "Shivpushpa Travels".toUpperCase();
         doc.setFont("helvetica", "bold"); // Set font to Helvetica Bold
         doc.setFontSize(22); // Set font size to 22
-  
+
         // Center the heading on the page and set it to red
         const pageWidth = doc.internal.pageSize.getWidth();
         const headingX =
@@ -64,40 +64,40 @@ const ViewUpdateDuty = () => {
           (doc.getStringUnitWidth(heading) * doc.internal.getFontSize()) / 6;
         doc.setTextColor(255, 0, 0); // Set text color to red
         doc.text(heading, headingX, 20);
-  
+
         // Reset text properties for the address lines
         doc.setTextColor(0, 0, 0); // Reset text color to black
         doc.setFontSize(12); // Reset font size to 12
         doc.setFont("helvetica", "normal"); // Reset font to normal
-  
+
         const addressLines = [
           "Address: 332, Kasba Peth Near Hero Honda Showroom, Pune 411 0111",
           "Cell: 9325501950 / 9325501978",
         ];
-  
+
         addressLines.forEach((line, index) => {
           const textWidth =
             doc.getStringUnitWidth(line) * doc.internal.getFontSize();
           const textX = pageWidth / 2 - textWidth / 6;
           doc.text(line, textX, 30 + index * 10);
         });
-  
+
         // Increment the invoice counter and pad it to ensure it's always three digits
         invoiceCounter++;
         const invoiceNo = invoiceCounter.toString().padStart(3, "0");
-  
+
         // Left side table details
         const leftDetails = [
           ["Company Name:", "Shivpushpa Travels"],
           ["Reporting Address:", formData.reportingaddress],
         ];
-  
+
         // Right side table details
         const rightDetails = [
           ["Duty Slip No:", invoiceNo],
           ["Date:", formData.date],
         ];
-  
+
         // Render left side table
         doc.autoTable({
           startY: 60,
@@ -106,11 +106,11 @@ const ViewUpdateDuty = () => {
           theme: "grid",
           styles: { fontSize: 10 },
           columnStyles: {
-            0: { fontStyle: "bold", halign: "left", cellWidth: 40 },       
-                 1: { halign: "left" }, // Style for the second column
+            0: { fontStyle: "bold", halign: "left", cellWidth: 40 },
+            1: { halign: "left" }, // Style for the second column
           },
         });
-  
+
         // Render right side table
         doc.autoTable({
           startY: 60,
@@ -123,13 +123,20 @@ const ViewUpdateDuty = () => {
             1: { halign: "left" },
           },
         });
-  
+
         // Define additional details rows
         const additionalRows = [
-          ["User Name:", formData.name, "Vehicle No.", formData.vehiclenumber, "Type of Car", formData.vehicle],
-          ["From", formData.from, "To", formData.to]
+          [
+            "User Name:",
+            formData.name,
+            "Vehicle No.",
+            formData.vehiclenumber,
+            "Type of Car",
+            formData.vehicle,
+          ],
+          ["From", formData.from, "To", formData.to],
         ];
-  
+
         // Render additional details table
         doc.autoTable({
           startY: Math.max(doc.lastAutoTable.finalY + 10, 70), // Ensure it starts below the previous tables
@@ -139,13 +146,13 @@ const ViewUpdateDuty = () => {
           columnStyles: {
             0: { fontStyle: "bold", halign: "left" },
             1: { halign: "left" },
-            2: { fontStyle: "bold", halign: "left", cellWidth: 'auto' }, // Adjust the cell width for the third column
-    3: { halign: "left" },
-    4: { fontStyle: "bold", halign: "left", cellWidth: 'auto' }, // Adjust the cell width for the fifth column
-    5: { halign: "left" },
+            2: { fontStyle: "bold", halign: "left", cellWidth: "auto" }, // Adjust the cell width for the third column
+            3: { halign: "left" },
+            4: { fontStyle: "bold", halign: "left", cellWidth: "auto" }, // Adjust the cell width for the fifth column
+            5: { halign: "left" },
           },
         });
-  
+
         // Define table columns and rows
         const rows = [
           [
@@ -153,21 +160,31 @@ const ViewUpdateDuty = () => {
             formData.closingkm,
             "Closing Time:",
             formData.closingtime,
-            "8 Hrs. 80 Kms. @", formData.extrakm,
+            "8 Hrs. 80 Kms. @",
+            formData.extrakm,
           ],
           [
             "Starting KM:",
             formData.startingkm,
             "Reporting Time:",
             formData.startingtime,
-            "Extra Kms. @", formData.extrakm,,
+            "Extra Kms. @",
+            formData.extrakm,
+            ,
           ],
-          ["Total Kms:", formData.totalkm, "Total Hours:", formData.totalhour, "Extra Hours:", formData.extrahour,],
-          [ "", "","","", "Total Amount", `${formData.totalamount} Rs.`],
-          ["", "",  "","","Less Advance", `Rs. ${formData.advanceamount} Rs.`],
-          ["Customer's Signature:", "", "","", "Net Bill" ]
+          [
+            "Total Kms:",
+            formData.totalkm,
+            "Total Hours:",
+            formData.totalhour,
+            "Extra Hours:",
+            formData.extrahour,
+          ],
+          ["", "", "", "", "Total Amount", `${formData.totalamount} Rs.`],
+          ["", "", "", "", "Less Advance", `Rs. ${formData.advanceamount} Rs.`],
+          ["Customer's Signature:", "", "", "", "Net Bill"],
         ];
-  
+
         // Render bottom table
         doc.autoTable({
           startY: Math.max(doc.lastAutoTable.finalY + 10, 70), // Ensure it starts below the previous tables
@@ -181,36 +198,36 @@ const ViewUpdateDuty = () => {
             3: { halign: "left" },
           },
         });
-         // Add instruction and signature section
-      const instructionLines = [
-        "Instruction for Next Booking if any:",
-        "• Kms and hours ex-our office.",
-        "• Minimum 300 Km per day.",
-        "• The second day will starts at 12.00 midnight.",
-        "• Toll, Tax, Parking etc at passenger's account.",
-      ];
+        // Add instruction and signature section
+        const instructionLines = [
+          "Instruction for Next Booking if any:",
+          "• Kms and hours ex-our office.",
+          "• Minimum 300 Km per day.",
+          "• The second day will starts at 12.00 midnight.",
+          "• Toll, Tax, Parking etc at passenger's account.",
+        ];
 
-      doc.setTextColor(255, 0, 0); // Set text color to red
-      doc.setFontSize(12); // Set font size to 12
-      doc.setFont("helvetica", "bold");  let yOffset = doc.lastAutoTable.finalY + 10;
-      doc.text(instructionLines[0], 20, yOffset);
+        doc.setTextColor(255, 0, 0); // Set text color to red
+        doc.setFontSize(12); // Set font size to 12
+        doc.setFont("helvetica", "bold");
+        let yOffset = doc.lastAutoTable.finalY + 10;
+        doc.text(instructionLines[0], 20, yOffset);
 
-      // Normal lines
-      doc.setTextColor(0, 0, 0); // Set text color to black
-      doc.setFont("helvetica", "normal"); // Set font to normal
-      instructionLines.slice(1).forEach((line, index) => {
-        doc.text(line, 20, yOffset + (index + 1) * 10);
-      });
+        // Normal lines
+        doc.setTextColor(0, 0, 0); // Set text color to black
+        doc.setFont("helvetica", "normal"); // Set font to normal
+        instructionLines.slice(1).forEach((line, index) => {
+          doc.text(line, 20, yOffset + (index + 1) * 10);
+        });
 
-      doc.setTextColor(255, 0, 0); // Set text color to red
-      doc.setFont("helvetica", "bold"); // Set font to bold
-      doc.text("FOR SHIVPUSHPA TRAVELS", pageWidth - 90, yOffset);
+        doc.setTextColor(255, 0, 0); // Set text color to red
+        doc.setFont("helvetica", "bold"); // Set font to bold
+        doc.text("FOR SHIVPUSHPA TRAVELS", pageWidth - 90, yOffset);
 
-      doc.setTextColor(0, 0, 0); // Set text color to black
-      doc.setFont("helvetica", "normal"); // Reset font to normal
-      doc.text("Authorized Signatory", pageWidth - 70, yOffset + 10);
+        doc.setTextColor(0, 0, 0); // Set text color to black
+        doc.setFont("helvetica", "normal"); // Reset font to normal
+        doc.text("Authorized Signatory", pageWidth - 70, yOffset + 10);
 
-  
         // Save the PDF or open in a new tab
         doc.save(`Trip_Duty_Slip_${formData.date}.pdf`);
       }
@@ -230,27 +247,37 @@ const ViewUpdateDuty = () => {
     setEditingCustomer(null);
   };
 
-  const handleDelete = async (customer) => {
-    const confirmDelete = window.confirm("Do you want to delete the customer?");
+  const handleDelete = async (customerId) => {
+    const confirmDelete = window.confirm("Do you want to delete the update duty?");
 
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `http://localhost:10000/api/customers/${customer._id}`,
+          `http://localhost:10000/api/update-duty/${customerId}`,
           {
             method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
         );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
+        } else {
+          // Customer deleted successfully, update UI
+          alert("Customer deleted successfully");
+
+          // Filter out the deleted customer from the list
+          setFilteredCustomers((prevCustomers) =>
+            prevCustomers.filter((c) => c._id !== customerId)
+          );
         }
 
-        setFilteredCustomers((prevCustomers) =>
-          prevCustomers.filter((c) => c._id !== customer._id)
-        );
-        alert("Customer deleted successfully");
+        // Log the response for debugging
+        console.log("Delete response:", response);
       } catch (error) {
+        // Handle errors
         console.error("Error deleting customer:", error);
         setError("Error deleting customer: " + error.message);
       }
@@ -311,7 +338,7 @@ const ViewUpdateDuty = () => {
                 <th>GST No</th>
                 <th>Reporting Address</th>
                 <th>Date</th>
-                <th>Customer Name</th>
+                {/* <th>Customer Name</th> */}
                 <th>Vehicle</th>
                 <th>Actions</th>
               </tr>
@@ -324,7 +351,7 @@ const ViewUpdateDuty = () => {
                     <td>{customer.gstno}</td>
                     <td>{customer.reportingaddress}</td>
                     <td>{customer.date}</td>
-                    <td>{customer.name}</td>
+                    {/* <td>{customer.name}</td> */}
                     <td>{customer.vehicle}</td>
                     <td>
                       {editingCustomer &&
@@ -345,10 +372,11 @@ const ViewUpdateDuty = () => {
                           </button>
                           <button
                             className="btn btn-danger"
-                            onClick={() => handleDelete(customer)}
+                            onClick={() => handleDelete(customer._id)}
                           >
                             <FaTrash />
                           </button>
+
                           <button
                             className="btn btn-info"
                             onClick={() => generateTripDutySlip(customer._id)}

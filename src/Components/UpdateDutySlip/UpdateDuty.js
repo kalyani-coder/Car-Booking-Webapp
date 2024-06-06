@@ -273,14 +273,14 @@ const UpdateDuty = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     const data = {
       companyname: companyName,
       gstno: gstNo,
       reportingaddress: reportingAddress,
       date: date,
-      customername: selectedCustomer.customername,
+      customername: selectedCustomer.name,
       vehicle: selectedCustomer.vehicle,
       vehiclenumber: vehicleNumber,
       rate: rate,
@@ -310,20 +310,48 @@ const UpdateDuty = () => {
         },
       });
   
-      if (response.status === 200) {
-        showAlert("Data added successfully!" , "success");
-        
-        // Reset form fields here if needed
+      if (response.status === 201) {
+        // showAlert("Data added successfully!", "success");
+        window.alert("Data added Successfully");
+        // Reset all form fields to their initial state
+        setCompanyName("");
+        setGstNo("");
+        setReportingAddress("");
+        setDate("");
+        setVehicleNumber("");
+        setRate("");
+        setStartingKms("");
+        setClosingKms("");
+        setHour("");
+        setTotalKm("");
+        setExtraHour("");
+        setExtraKm("");
+        setExtraHourAmount("");
+        setExtraKmAmount("");
+        setTotalAmount("");
+        setAdvanceAmount("");
+        setPaymentMethod("");
+        setFormData({
+          chequeNo: "",
+          ifscCode: "",
+          TransactionNumber: "",
+          upiId: "",
+          cashReceiver: "",
+          neftnumber: "",
+          accountnumber: "",
+          branchname: "",
+          transactionId: "",
+        });
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
+      
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
 
-  // Return JSX representing the component structure
   return (
     <>
       <Sidebar /> {/* Render the Sidebar component */}
