@@ -46,13 +46,14 @@ const AddTrip = () => {
   const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
-
- 
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("http://localhost:10000/api/add-customers");
+        const response = await fetch(
+          "http://localhost:10000/api/add-customers"
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -99,7 +100,9 @@ const AddTrip = () => {
 
   const fetchTripDetails = async (customerId) => {
     try {
-      const response = await fetch(`http://localhost:10000/api/add-trip/${customerId}`);
+      const response = await fetch(
+        `http://localhost:10000/api/add-trip/${customerId}`
+      );
 
       if (response.ok) {
         const tripDetails = await response.json();
@@ -115,26 +118,35 @@ const AddTrip = () => {
     }
   };
 
-  
-  
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     let newData = { ...formData, [name]: value };
-  
-    // Calculate total days and hours if both dates and times are provided
-  if ((name === "date" || name === "date1" || name === "time" || name === "time1") && formData.date && formData.date1 && formData.time && formData.time1) {
-    const startDate = new Date(`${formData.date}T${formData.time}`);
-    const endDate = new Date(`${formData.date1}T${formData.time1}`);
-    const timeDifference = endDate.getTime() - startDate.getTime();
-    const totalDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-    const hours = Math.floor(timeDifference / (1000 * 3600));
-    newData = { ...newData, totaldays: totalDays.toString(), hours: hours.toString() };
-  }
 
-  setFormData(newData);
-};
-  
+    // Calculate total days and hours if both dates and times are provided
+    if (
+      (name === "date" ||
+        name === "date1" ||
+        name === "time" ||
+        name === "time1") &&
+      formData.date &&
+      formData.date1 &&
+      formData.time &&
+      formData.time1
+    ) {
+      const startDate = new Date(`${formData.date}T${formData.time}`);
+      const endDate = new Date(`${formData.date1}T${formData.time1}`);
+      const timeDifference = endDate.getTime() - startDate.getTime();
+      const totalDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+      const hours = Math.floor(timeDifference / (1000 * 3600));
+      newData = {
+        ...newData,
+        totaldays: totalDays.toString(),
+        hours: hours.toString(),
+      };
+    }
+
+    setFormData(newData);
+  };
 
   const handleAddPerson = () => {
     if (numberOfPeople < 6) {
@@ -150,7 +162,6 @@ const AddTrip = () => {
           <div className="trip-form-group">
             <label htmlFor={`Person_${i}`} className="trip-form-label">
               Person {i}:
-              
             </label>
             <input
               type="text"
@@ -158,7 +169,7 @@ const AddTrip = () => {
               name={`Person_${i}`}
               placeholder={`Enter Person ${i}`}
               onChange={handleChange}
-              value={formData[`Person_${i}`] || ''}
+              value={formData[`Person_${i}`] || ""}
             />
           </div>
           <div className="trip-form-group">
@@ -171,7 +182,7 @@ const AddTrip = () => {
               name={`Mobile_Number_${i}`}
               placeholder={`Enter Mobile No. ${i}`}
               onChange={handleChange}
-              value={formData[`Mobile_Number_${i}`] || ''}
+              value={formData[`Mobile_Number_${i}`] || ""}
             />
           </div>
         </div>
@@ -191,7 +202,6 @@ const AddTrip = () => {
     return rows;
   };
 
-  
   const showAlert = (message, type) => {
     if (type === "success") {
       setSuccessAlert({ msg: message, type: type });
@@ -202,7 +212,7 @@ const AddTrip = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      });
     }
   };
 
@@ -229,40 +239,82 @@ const AddTrip = () => {
       });
   
       if (response.ok) {
-        showAlert("Data added successfully!" , "success");
+        showAlert("Data added successfully!", "success");
         setFormData(initialFormData);
+        setIsSubmitted(true); // Set form submission state to true
   
-        // Share trip details with the customer via WhatsApp API
-        const customerTextMessage = `Hello ${selectedCustomer.cus_name}, your booking is done. Your booking ID is ${formData.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
-  
-        const urlCustomer = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${selectedCustomer.mobileno}&msg=${customerTextMessage}`;
-        window.open(urlCustomer, "_blank");
-        console.log("Sending WhatsApp message to customer:", selectedCustomer.customername, "Mobile:", selectedCustomer.mobileno);
-        console.log("Opening link:", urlCustomer);
-  
-        // Share trip details with each person via WhatsApp API
-        for (let i = 1; i <= 6; i++) {
-          const personName = formData[`Person_${i}`];
-          const mobileNumber = formData[`Mobile_Number_${i}`];
-  
-          if (personName && mobileNumber) {
-            const personTextMessage = `Hello ${personName}, your booking is done. Your booking ID is ${response.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
-  
-            const urlPerson = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${mobileNumber}&msg=${personTextMessage}`;
-            window.open(urlPerson, "_blank");
-            console.log("Sending WhatsApp message to person:", personName, "Mobile:", mobileNumber);
-            console.log("Opening link:", urlPerson);
-          }
-        }
+        // Call handleSendEmail after successful data submission
+        handleSendEmail(dataWithCustomerId);
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        showAlert("Failed to add data!", "danger");
       }
     } catch (error) {
-      console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      showAlert("An error occurred while adding data!", "danger");
+      console.error("Error:", error);
     }
   };
   
+  const handleSendEmail = (formData) => {
+    const emailSubject = encodeURIComponent("Your Trip Details");
+    const emailBody = encodeURIComponent(`
+      Hello ${selectedCustomer.cus_name},
+  
+      Your booking is done. Here are the details:
+      Booking ID: ${formData.customerId}
+      Trip Type: ${formData.triptype}
+      Pickup Location: ${formData.pickup}
+      Dropoff Location: ${formData.dropoff}
+      Date: ${formData.date}
+      Time: ${formData.time}
+      Date (Return): ${formData.date1}
+      Time (Return): ${formData.time1}
+      Total Days: ${formData.totaldays}
+      Total Hours: ${formData.hours}
+      Vehicle Type: ${formData.vehicle}
+  
+      Thank you for choosing us.
+  
+      Best regards,
+      Your Company Name
+    `);
+    const mailtoLink = `mailto:${formData.email}?subject=${emailSubject}&body=${emailBody}`;
+    window.open(mailtoLink, "_blank");
+  };
+  
+
+  const handleSendWhatsApp = () => {
+    const customerTextMessage = `Hello ${selectedCustomer.cus_name}, your booking is done. Your booking ID is ${formData.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
+
+    const urlCustomer = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${selectedCustomer.mobileno}&msg=${customerTextMessage}`;
+    window.open(urlCustomer, "_blank");
+    console.log(
+      "Sending WhatsApp message to customer:",
+      selectedCustomer.customername,
+      "Mobile:",
+      selectedCustomer.mobileno
+    );
+    console.log("Opening link:", urlCustomer);
+
+    for (let i = 1; i <= numberOfPeople; i++) {
+      const personName = formData[`Person_${i}`];
+      const personMobile = formData[`Mobile_Number_${i}`];
+
+      if (personName && personMobile) {
+        const personTextMessage = `Hello ${personName}, your booking is done. Your booking ID is ${formData.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
+
+        const url = `http://api.paysmm.co.in/wapp/api/send?apikey=${apiKey}&mobile=${personMobile}&msg=${personTextMessage}`;
+        window.open(url, "_blank");
+        console.log(
+          "Sending WhatsApp message to person:",
+          personName,
+          "Mobile:",
+          personMobile
+        );
+        console.log("Opening link:", url);
+      }
+    }
+  };
+
   return (
     <>
       <Sidebar />
@@ -277,10 +329,10 @@ const AddTrip = () => {
           >
             Add Trip
           </h2>
-          
+
           {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+          {errorAlert && <Alert alert={errorAlert} />}
+
           <div className="trip-form-container">
             {error && <p className="trip-text-red-500">{error}</p>}
             <div className="trip-form-group">
@@ -392,13 +444,15 @@ const AddTrip = () => {
               </select>
             </div>
             <div>
-            <div>
-      {renderRows()}
-      {numberOfPeople < 6 && <button className="trip-btn-submit" onClick={handleAddPerson}>Add Person 6</button>}
-    </div>
-    </div>
-
-
+              <div>
+                {renderRows()}
+                {numberOfPeople < 6 && (
+                  <button className="trip-btn-submit" onClick={handleAddPerson}>
+                    Add Person 6
+                  </button>
+                )}
+              </div>
+            </div>
 
             <div className="d-flex gap-3">
               <div>
@@ -493,7 +547,7 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="totaldays" className="trip-form-label">
                 Total Days:
-                <span className="days" >Days</span>
+                <span className="days">Days</span>
               </label>
               <input
                 type="number"
@@ -507,7 +561,7 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="hours" className="trip-form-label">
                 Total Hours:
-                <span className="days" >Hours</span>
+                <span className="days">Hours</span>
               </label>
               <input
                 type="number"
@@ -561,20 +615,30 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <button
-              type="button"
-              className="trip-btn-submit"
-              onClick={handleSubmit}
-            >
-              Add
-            </button>
-            {/* <button
-              type="button"
-              className="trip-btn-submit ml-3"
-              onClick={handleShareClick}
-            >
-              Share With Customer
-            </button> */}
+            <div className="d-flex gap-3 mt-3">
+              <button
+                type="button"
+                className="trip-btn-submit"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+
+              <button
+                type="button"
+                className="trip-btn-submit"
+                onClick={handleSendEmail}
+              >
+                Send Email
+              </button>
+              <button
+                type="button"
+                className="trip-btn-submit"
+                onClick={handleSendWhatsApp}
+              >
+                Send WhatsApp
+              </button>
+            </div>
           </div>
         </div>
       </div>
