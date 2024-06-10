@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import Alert from "../AddCustomer/Alert";
+import axios from 'axios';
 
 const CustomerEnquiry = () => {
   const initialFormData = {
@@ -124,7 +125,7 @@ const CustomerEnquiry = () => {
       sub_type: formData.sub_type,
       pic_up: formData.pic_up,
       date1: formatDateForPost(formData.date1),
-      date2: formatDateForPost(formData.date2),
+    date2: formatDateForPost(formData.date2),
       time1: formData.time1,
       drop_off: formData.drop_off,
       time2: formData.time2,
@@ -134,33 +135,29 @@ const CustomerEnquiry = () => {
       address: formData.address,
     };
   
-    setError(""); // Clear any previous error
-  
     try {
-      const response = await fetch("http://localhost:10000/api/customer-enquiry", {
-        method: "POST",
+      console.log("Sending API request with data:", apiData);
+      const response = await axios.post("http://localhost:10000/api/customer-enquiry", apiData, {
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify(apiData),
+        }
       });
   
-      if (response.ok) {
-        const responseData = await response.json();
-        setApiResponse(responseData);
-        showAlert("Customer Enquiry Added successfully!" , "success");
-        console.log("Data");
+      if (response.status === 200 || response.status === 201) {
+        const responseData = response.data;
+        showAlert("Customer Enquiry Added successfully!", "success");
+        console.log("Data submitted successfully:", responseData);
         setFormData(initialFormData); // Clear form after successful submission
       } else {
-        const errorMessage = await response.text();
-        showAlert(`Failed to add data. ${errorMessage}`, "error");
-        console.log("error message", errorMessage);
+        showAlert(`Failed to add data. ${response.statusText}`, "error");
+        console.error("Failed to submit data:", response.statusText);
       }
     } catch (error) {
       console.error("API request error:", error);
       showAlert("Failed to add data. Please try again.", "error");
     }
   };
+  
   
  
 

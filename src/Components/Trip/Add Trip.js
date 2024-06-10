@@ -275,7 +275,7 @@ const AddTrip = () => {
       Thank you for choosing us.
   
       Best regards,
-      Your Company Name
+      Your Shivpushpa Travels
     `);
     const mailtoLink = `mailto:${formData.email}?subject=${emailSubject}&body=${emailBody}`;
     window.open(mailtoLink, "_blank");
