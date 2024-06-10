@@ -14,9 +14,11 @@ const initialFormData = {
   duty_type: "",
   rate: "",
   km: "",
-  // extra_km: "",
+  extra_km: "",
   hours: "",
   extra_hours: "",
+  from:"",
+  to:""
 };
 
 const CustomerRate = () => {
@@ -443,6 +445,42 @@ const CustomerRate = () => {
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
+                    <label htmlFor="from" className="form-label">
+                      From:
+                      <span className="required-asterisk">*</span>
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="text"
+                      id="from"
+                      name="from"
+                      placeholder="from"
+                      value={formData.from}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="to" className="form-label">
+                      To:
+                      <span className="required-asterisk">*</span>
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="text"
+                      id="to"
+                      name="to"
+                      placeholder="to"
+                      value={formData.to}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex gap-3">
+                <div>
+                  <div className="form-group">
                     <label htmlFor="km" className="form-label">
                       KM:
                       <span className="required-asterisk">*</span>
@@ -460,17 +498,17 @@ const CustomerRate = () => {
                 </div>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="rate_per_Km" className="form-label">
+                    <label htmlFor="extra_km" className="form-label">
                       (Rate Per Km) Extra KM:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
                       type="number"
-                      id="rate_per_Km"
-                      name="rate_per_Km"
+                      id="extra_km"
+                      name="extra_km"
                       placeholder="Extra KM"
-                      value={formData.rate_per_km}
+                      value={formData.extra_km}
                       onChange={handleChange}
                     />
                   </div>

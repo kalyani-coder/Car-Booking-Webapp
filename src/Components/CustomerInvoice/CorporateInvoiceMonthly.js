@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
-import Customer from "./../CustomerEnquiry/Customer";
 
 function CorporateInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -10,7 +9,7 @@ function CorporateInvoiceMonthly() {
     invoiceno: "",
     companyName: "Shivpushpa Travels Invoice",
     GST_No: "",
-    companyAddress: "332, Kasba Peth  Phadke Haud Chowk,  Pune 411 0111",
+    companyAddress: "332, Kasba Peth Phadke Haud Chowk, Pune 411 0111",
     contactno: "9325501950 / 9325501978",
     mail: "travelshivpushpa@gmail.com",
     kind_attn: '',
@@ -212,10 +211,10 @@ function CorporateInvoiceMonthly() {
       );
       doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 60);
 
-      doc.save("invoice.pdf");
       doc.save(`invoice_${updatedInvoiceNumber}.pdf`);
     }
   };
+
 
   return (
     <>

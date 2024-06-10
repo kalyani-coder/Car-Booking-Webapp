@@ -391,7 +391,7 @@ const Sidebar = () => {
             <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">
                 <Link to={'/corporatecustomermonthly'}>
-                  Corporate Fix Monthly
+                  Corporate Monthly Fixed
                 </Link>
               </a></li>
               <li><a class="dropdown-item" href="#">
