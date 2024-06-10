@@ -16,7 +16,9 @@ const indivisualCustomerSchema = new mongoose.Schema({
    km : String,
    extra_km :String,
    hours : String,
-   extra_hours : String
+   extra_hours : String,
+   from :String,
+   to : String,
 
 })
 
