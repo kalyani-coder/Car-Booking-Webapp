@@ -399,11 +399,11 @@ const Sidebar = () => {
                   Customer Invoice
                 </Link>
               </a></li>
-              <li><a class="dropdown-item" href="#">
+              {/* <li><a class="dropdown-item" href="#">
                 <Link to={'/vendorinvoice'}>
                   Vendor Invoice
                 </Link>
-              </a></li><hr />
+              </a></li><hr /> */}
               <li><a class="dropdown-item" href="#">
                 <Link to={'/customerinvoicemonthly'}>
                   Customer Monthly Invoice

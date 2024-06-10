@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
+import DatePicker from "react-datepicker"; // Import the DatePicker component
+import "react-datepicker/dist/react-datepicker.css";
 
 function CorporateInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -35,6 +37,49 @@ function CorporateInvoiceMonthly() {
   const [invoiceNumber, setInvoiceNumber] = useState(101); // Initialize with the starting invoice number
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+ 
+
+
+  // Get the current date
+const currentDate = new Date();
+
+// Extract day, month, and year
+const day = currentDate.getDate();
+const month = currentDate.getMonth() + 1; // Month is zero-indexed, so we add 1
+const year = currentDate.getFullYear();
+
+// Pad single-digit day and month with leading zeros if needed
+const formattedDay = day < 10 ? '0' + day : day;
+const formattedMonth = month < 10 ? '0' + month : month;
+
+// Concatenate day, month, and year in the desired format
+const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
+
+// Show the formatted date in the console
+console.log("Current date in dd-mm-yyyy format:", formattedDate);
+
+
+useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:10000/api/corporate-customer/customer/${selectedCustomer?.customerId}/getByDate/${formattedDate}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setCustomerList(data);
+          console.log("Fetched customer data:", data);
+        } else {
+          console.error("Failed to fetch customers");
+        }
+      } catch (error) {
+        console.error("API request error:", error);
+      }
+    };
+    fetchCustomers();
+  }, [selectedCustomer, formattedDate]);
+  
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -277,6 +322,25 @@ function CorporateInvoiceMonthly() {
     />
           </div>
         </div>
+         {/* Button to toggle the date picker visibility */}
+         <div>
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowDatePicker(!showDatePicker)}
+          >
+            Select Date
+          </button>
+        </div>
+
+        {/* Conditional rendering of the date picker */}
+        {showDatePicker && (
+          <DatePicker
+            selected={formData.Date}
+            onChange={(date) => setFormData({ ...formData, Date: date })}
+            dateFormat="dd-MM-yyyy"
+            className="form-control-vendor-invoice" // Add appropriate styling class
+          />
+        )}
         <div>
           {selectedCustomer && (
             <div>
@@ -304,7 +368,7 @@ function CorporateInvoiceMonthly() {
                     .map((trip) => (
                       <tr key={trip._id}>
                         <td>
-                          {`${trip.vehicle_Type} from ${trip.from} to ${trip.to} on ${trip.Date}`}
+                          {`${trip.type_of_vehicle} from ${trip.from} - ${trip.to} on ${trip.Date}`}
                           <br />
                           Total Km 
                           <br/>
@@ -316,13 +380,13 @@ function CorporateInvoiceMonthly() {
                         <strong>Toll Parking</strong>
                         </td>
                         <td>{trip.saccode}</td>
-                        <td>{trip.total_Km}<br/>
-                        {trip.total_hours}
+                        <td>{trip.km}<br/>
+                        {trip.hours}
                         <br/>
                         
-                        {trip.extra_Km}
+                        {trip.extra_km}
                         <br/>
-                        {trip.extra_Hours}
+                        {trip.extra_hours}
                         </td>
                         <td>{trip.total_Amount}</td>
                         <td>{trip.total}</td>
