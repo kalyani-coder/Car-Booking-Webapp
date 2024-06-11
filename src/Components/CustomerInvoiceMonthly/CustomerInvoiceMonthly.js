@@ -89,114 +89,100 @@ function CustomerInvoiceMonthly() {
   };
 
   const handleGenerate = () => {
-    const downloadConfirmed = window.confirm(
-      "Do you want to download the invoice?"
-    );
+    const downloadConfirmed = window.confirm("Do you want to download the invoice?");
 
     if (downloadConfirmed) {
-      const doc = new jsPDF();
+        const doc = new jsPDF();
 
-      // Add content to the PDF
-      doc.setFontSize(12);
+        // Add content to the PDF
+        doc.setFontSize(12);
 
-      // Header Section
-      doc.text("Shivpushpa Travels Invoice", 10, 10);
-      doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 10, 20);
-      doc.text("Contact No: 9325501950 / 9325501978", 10, 30);
-      doc.text("Mail: travelshivpushpa@gmail.com", 10, 40);
+        // Header Section
+        doc.text("Shivpushpa Travels Invoice", 10, 10);
+        doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 10, 20);
+        doc.text("Contact No: 9325501950 / 9325501978", 10, 30);
+        doc.text("Mail: travelshivpushpa@gmail.com", 10, 40);
 
-      // Title Section
-      doc.setFontSize(16);
-      doc.text("Invoice", 140, 20, { className: "uppercase-text" });
+        // Title Section
+        doc.setFontSize(16);
+        doc.text("Invoice", 140, 20);
 
-      // Invoice Details Section
-      doc.setFontSize(10);
-      doc.text("PO No: ", 140, 30);
-      doc.text("Invoice No: ", 140, 40);
-      doc.text("Date: ", 140, 50);
-      doc.text("Customer ID: ", 140, 60);
-      doc.text("GST No: ", 140, 70);
+        // Invoice Details Section
+        doc.setFontSize(10);
+        doc.text("PO No: ", 140, 30);
+        doc.text("Invoice No: ", 140, 40);
+        doc.text("Date: ", 140, 50);
+        doc.text("Customer ID: ", 140, 60);
+        doc.text("GST No: ", 140, 70);
 
-      // Customer Information Section
-      if (selectedCustomer) {
-        doc.text("Customer Name: " + (selectedCustomer.customer_Name || ''), 10, 80);
-        doc.text("Customer Address: " + (selectedCustomer.reporting_Address || ''), 10, 90);
-        doc.text("GST No:" + (selectedCustomer.GST_No || ''), 10, 100);
-      }
-      // Loop through each invoice entry for the selected date
-      invoicesForSelectedDate.forEach((trip) => {
-        // Add table with trip details for the current entry
-        const tableData = [
-          [
-            `${trip.vehicle_Type} from ${trip.from} to ${trip.to}`,
-            trip.saccode,
-            trip.total_Km,
-            trip.total_Amount,
-            trip.total,
-            trip.SGST,
-            trip.CGST,
-          ],
-        ];
+        // Customer Information Section
+        if (selectedCustomer) {
+            doc.text("Customer Name: " + (selectedCustomer.customer_Name || ''), 10, 80);
+            doc.text("Customer Address: " + (selectedCustomer.reporting_Address || ''), 10, 90);
+            doc.text("GST No: " + (selectedCustomer.GST_No || ''), 10, 100);
+        }
 
-        // Add table headers
-        const headers = [
-          "Description",
-          "Sac Code",
-          "Kms",
-          "Amount",
-          "Total",
-          "SGST",
-          "CGST",
-        ];
-        tableData.unshift(headers);
+        let startY = 110; // Starting position for table
+        invoicesForSelectedDate.forEach((trip, index) => {
+            // Add table with trip details for the current entry
+            const tableData = [
+                [
+                    `${trip.vehicle_Type} from ${trip.from} to ${trip.to}`,
+                    trip.saccode || '',
+                    trip.total_Km || '',
+                    trip.total_Amount || '',
+                    trip.total || '',
+                    trip.SGST || '',
+                    trip.CGST || '',
+                ],
+            ];
+
+            // Add table headers only once
+            if (index === 0) {
+                const headers = ["Description", "Sac Code", "Kms", "Amount", "Total", "SGST", "CGST"];
+                tableData.unshift(headers);
+            }
+
+            doc.autoTable({
+                head: tableData.slice(0, 1),
+                body: tableData.slice(1),
+                startY: startY,
+                theme: "plain",
+            });
+
+            startY = doc.autoTable.previous.finalY + 10;
+        });
+
+        // Add subtotal, SGST, CGST, and grand total row for all entries
+        const subtotal = invoicesForSelectedDate.reduce((total, trip) => total + (trip.total_Amount || 0), 0);
+        const sgstTotal = invoicesForSelectedDate.reduce((total, trip) => total + (trip.SGST || 0), 0);
+        const cgstTotal = invoicesForSelectedDate.reduce((total, trip) => total + (trip.CGST || 0), 0);
 
         doc.autoTable({
-          head: tableData.slice(0, 1),
-          body: tableData.slice(1),
-          startY: doc.autoTable.previous.finalY + 10,
-          theme: "plain",
+            head: [["", "Subtotal", "SGST Total", "CGST Total"]],
+            body: [["", subtotal.toString(), sgstTotal.toString(), cgstTotal.toString()]],
+            startY: startY,
         });
-      });
 
-      // Add subtotal, SGST, CGST, and grand total row for all entries
-      const subtotal = invoicesForSelectedDate.reduce(
-        (total, trip) => total + trip.total_Amount,
-        0
-      );
+        startY = doc.autoTable.previous.finalY + 10;
 
-      const sgstTotal = invoicesForSelectedDate.reduce(
-        (total, trip) => total + trip.SGST,
-        0
-      );
+        // Add Bank Details Section
+        doc.text("Bank Details:", 10, startY + 10);
+        doc.text("Bank Name: " + (formData.bankname || ''), 10, startY + 20);
+        doc.text("Branch Name: " + (formData.branchname || ''), 10, startY + 30);
+        doc.text("Account Holder Name: " + (formData.accountHoldername || ''), 10, startY + 40);
+        doc.text("Account Number: " + (formData.accountNumber || ''), 10, startY + 50);
+        doc.text("IFSC Code: " + (formData.ifsccode || ''), 10, startY + 60);
+        doc.text("MICR Code: " + (formData.micrcode || ''), 10, startY + 70);
 
-      const cgstTotal = invoicesForSelectedDate.reduce(
-        (total, trip) => total + trip.CGST,
-        0
-      );
+        // Footer Section
+        doc.text("For Shivpushpa Travels", 150, startY + 40);
+        doc.text("Authorised Signatory", 150, startY + 70);
 
-      doc.autoTable({
-        head: [["", "Subtotal", sgstTotal, cgstTotal]],
-        body: [["", subtotal, sgstTotal, cgstTotal]],
-        startY: doc.autoTable.previous.finalY + 10,
-      });
-
-      // Add Bank Details Section
-doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 20);
-doc.text("Bank Name: " + (formData.bankname || ''), 10, doc.autoTable.previous.finalY + 30);
-doc.text("Branch Name: " + (formData.branchname || ''), 10, doc.autoTable.previous.finalY + 40);
-doc.text("Account Holder Name: " + (formData.accountHoldername || ''), 10, doc.autoTable.previous.finalY + 50);
-doc.text("Account Number: " + (formData.accountNumber || ''), 10, doc.autoTable.previous.finalY + 60);
-doc.text("IFSC Code: " + (formData.ifsccode || ''), 10, doc.autoTable.previous.finalY + 70);
-doc.text("MICR Code: " + (formData.micrcode || ''), 10, doc.autoTable.previous.finalY + 80);
-
-
-      // Footer Section
-      doc.text("For Shivpushpa Travels", 150, doc.autoTable.previous.finalY + 30);
-      doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 60);
-
-      doc.save("invoice.pdf");
+        doc.save("invoice.pdf");
     }
-  };
+};
+
 
   // Function to filter trips for the selected date and customer
   const filterTripsForSelectedDate = () => {
