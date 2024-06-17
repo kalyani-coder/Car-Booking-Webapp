@@ -48,7 +48,7 @@ const CustomerEnquiry = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("http://localhost:10000/api/add-customers");
+        const response = await fetch("http://localhost:8787/api/add-customers");
         if (response.ok) {
           const data = await response.json();
           setCustomerList(data);
@@ -137,7 +137,7 @@ const CustomerEnquiry = () => {
   
     try {
       console.log("Sending API request with data:", apiData);
-      const response = await axios.post("http://localhost:10000/api/customer-enquiry", apiData, {
+      const response = await axios.post("http://localhost:8787/api/customer-enquiry", apiData, {
         headers: {
           "Content-Type": "application/json",
         }

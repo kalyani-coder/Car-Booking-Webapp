@@ -16,7 +16,7 @@ const ViewVendor = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch('http://localhost:10000/api/add-venders');
+        const response = await fetch('http://localhost:8787/api/add-venders');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -39,7 +39,7 @@ const ViewVendor = () => {
     const confirmed = window.confirm("Are you sure you want to delete this vendor?");
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:10000/api/add-venders/${vendorId}`, {
+        const response = await fetch(`http://localhost:8787/api/add-venders/${vendorId}`, {
           method: 'DELETE',
         });
   
@@ -65,7 +65,7 @@ const ViewVendor = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:10000/api/add-venders/${editedVendor._id}`, {
+      const response = await fetch(`http://localhost:8787/api/add-venders/${editedVendor._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
