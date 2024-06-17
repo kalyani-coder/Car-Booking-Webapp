@@ -16,7 +16,7 @@ const ViewCustomerPayment = () => {
     const fetchcustomers = async () => {
       try {
         const response = await fetch(
-          "http://localhost:10000/api/customer-payment"
+          "http://localhost:8787/api/customer-payment"
         );
         if (!response.ok) {
           throw Error("Network response was not ok");

@@ -10,7 +10,7 @@ const IndivisualCustomers = () => {
 
   useEffect(() => {
     // Fetch data from the new API endpoint when the component mounts
-    fetch('http://localhost:10000/api/indivisual-customer')
+    fetch('http://localhost:8787/api/indivisual-customer')
       .then(response => response.json())
       .then(data => setCustomers(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -22,7 +22,7 @@ const IndivisualCustomers = () => {
     if (confirmed) {
       try {
         // Send a DELETE request to delete the customer
-        fetch(`http://localhost:10000/api/indivisual-customer/${customerId}`, {
+        fetch(`http://localhost:8787/api/indivisual-customer/${customerId}`, {
           method: 'DELETE',
         })
           .then((response) => {
@@ -59,7 +59,7 @@ const IndivisualCustomers = () => {
 
   const handleSaveEdit = async () => {
     try {
-      const response = await fetch(`http://localhost:10000/api/indivisual-customer/${editedCustomer._id}`, {
+      const response = await fetch(`http://localhost:8787/api/indivisual-customer/${editedCustomer._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

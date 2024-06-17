@@ -102,7 +102,7 @@ const AddDriver = () => {
         driver_Mo2: formData.mobileno1,
       };
 
-      const response = await fetch("http://localhost:10000/api/add-drivers", {
+      const response = await fetch("http://localhost:8787/api/add-drivers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

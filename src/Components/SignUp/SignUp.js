@@ -20,7 +20,7 @@ const Signup = () => {
         // e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:10000/api/users', {
+            const response = await fetch('http://localhost:8787/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

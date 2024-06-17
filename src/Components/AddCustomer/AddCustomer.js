@@ -93,7 +93,7 @@ const AddCustomer = () => {
         address: formData.address,
       };
 
-      const response = await fetch("http://localhost:10000/api/add-customers", {
+      const response = await fetch("http://localhost:8787/api/add-customers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

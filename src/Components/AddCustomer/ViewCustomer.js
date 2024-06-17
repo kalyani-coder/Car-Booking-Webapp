@@ -56,7 +56,7 @@ const ViewCustomer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:10000/api/add-customers');
+        const response = await fetch('http://localhost:8787/api/add-customers');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -94,7 +94,7 @@ const ViewCustomer = () => {
     const confirmed = window.confirm("Are you sure you want to delete this customer?");
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:10000/api/add-customers/${customerId}`, {
+        const response = await fetch(`http://localhost:8787/api/add-customers/${customerId}`, {
           method: 'DELETE',
         });
 
@@ -120,7 +120,7 @@ const ViewCustomer = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:10000/api/add-customers/${editedCustomer._id}`, {
+      const response = await fetch(`http://localhost:8787/api/add-customers/${editedCustomer._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

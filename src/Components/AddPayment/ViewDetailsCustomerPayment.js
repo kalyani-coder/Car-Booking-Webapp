@@ -14,7 +14,7 @@ export default function ViewDetailsCustomerPayment() {
 
     try {
       const response = await axios.get(
-        `http://localhost:10000/api/customer-payment/${id}`
+        `http://localhost:8787/api/customer-payment/${id}`
       );
       setCustomerPayData(response.data);
     } catch (error) {

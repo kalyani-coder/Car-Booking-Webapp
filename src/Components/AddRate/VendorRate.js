@@ -81,7 +81,7 @@ const VendorRate = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:10000/api/vender-rate",
+        "http://localhost:8787/api/vender-rate",
         {
           method: "POST",
           headers: {

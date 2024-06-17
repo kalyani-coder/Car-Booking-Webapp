@@ -2,8 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const cors = require('cors');
+require("dotenv").config() 
 
-const port = process.env.PORT || 10000;
+
+const port = process.env.PORT || 8787;
 
 // Middleware
 app.use(express.json());
@@ -35,7 +37,7 @@ const venderRate = require('./src/routes/VenderRate');
 const corporateCustomer = require('./src/routes/CorporateCustomer');
 const indivisualCustomer = require('./src/routes/IndivisualCustomer');
 const newMasterRateSchema = require('./src/routes/MasterforCorporate');
-const gettrip = require("./src/routes/EditTripDetails")
+const gettrip = require("./src/routes/EditTripDetails");
 
 // Define API paths
 apiRouter.use('/customer-enquiry', CustomerEnquiry);
@@ -57,8 +59,9 @@ apiRouter.use('/indivisual-customer', indivisualCustomer);
 apiRouter.use('/masterrate', newMasterRateSchema);
 apiRouter.use("/get-trip",gettrip)
 
-mongoose.connect('mongodb+srv://vedantassignment05:0Q1CWhizw7a5VNG0@car-booking.tioi0b9.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.LOCAL_MONGODB_URL, {
 }, console.log("Connected to Database"));
+
 
 app.use('/api', apiRouter);
 

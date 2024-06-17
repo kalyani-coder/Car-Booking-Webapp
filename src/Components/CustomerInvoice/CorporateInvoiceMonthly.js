@@ -64,7 +64,7 @@ useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          `http://localhost:10000/api/corporate-customer/customer/${selectedCustomer?.customerId}/getByDate/${formattedDate}`
+          `http://localhost:8787/api/corporate-customer/customer/${selectedCustomer?.customerId}/getByDate/${formattedDate}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -85,7 +85,7 @@ useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "http://localhost:10000/api/corporate-customer"
+          "http://localhost:8787/api/corporate-customer"
         );
         if (response.ok) {
           const data = await response.json();

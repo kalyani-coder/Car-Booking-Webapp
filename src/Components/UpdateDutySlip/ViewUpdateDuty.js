@@ -16,7 +16,7 @@ const ViewUpdateDuty = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("http://localhost:10000/api/update-duty");
+        const response = await fetch("http://localhost:8787/api/update-duty");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -37,7 +37,7 @@ const ViewUpdateDuty = () => {
   const generateTripDutySlip = async (customerId) => {
     try {
       const response = await fetch(
-        `http://localhost:10000/api/update-duty/${customerId}`
+        `http://localhost:8787/api/update-duty/${customerId}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch customer details");
@@ -253,7 +253,7 @@ const ViewUpdateDuty = () => {
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `http://localhost:10000/api/update-duty/${customerId}`,
+          `http://localhost:8787/api/update-duty/${customerId}`,
           {
             method: "DELETE",
             headers: {

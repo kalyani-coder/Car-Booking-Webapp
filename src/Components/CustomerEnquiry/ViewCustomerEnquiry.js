@@ -65,7 +65,7 @@ const ViewCustomerEnquiry = () => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "http://localhost:10000/api/customer-enquiry"
+          "http://localhost:8787/api/customer-enquiry"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -168,7 +168,7 @@ const ViewCustomerEnquiry = () => {
     if (confirmed) {
       try {
         const response = await fetch(
-          `http://localhost:10000/api/customer-enquiry/${customerId}`,
+          `http://localhost:8787/api/customer-enquiry/${customerId}`,
           {
             method: "DELETE",
           }

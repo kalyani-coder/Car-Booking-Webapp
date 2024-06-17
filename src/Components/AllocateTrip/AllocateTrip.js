@@ -50,7 +50,7 @@ function AllocateTrip() {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:10000/api/add-trip');
+        const response = await fetch('http://localhost:8787/api/add-trip');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -86,7 +86,7 @@ function AllocateTrip() {
 
   const fetchTripDetails = async (customerId) => {
     try {
-      const response = await fetch(`http://localhost:10000/api/trip-details/${customerId}`);
+      const response = await fetch(`http://localhost:8787/api/trip-details/${customerId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch trip details');
       }
@@ -190,7 +190,7 @@ function AllocateTrip() {
     };
 
     // Make POST request to API endpoint
-    axios.post('http://localhost:10000/api/trip-details', payload)
+    axios.post('http://localhost:8787/api/trip-details', payload)
       .then(response => {
         // Handle success
         showAlert("Allocate Trip added successfully!" , "success");

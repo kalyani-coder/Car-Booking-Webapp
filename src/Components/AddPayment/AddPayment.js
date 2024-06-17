@@ -401,7 +401,7 @@ function AddPayment() {
   
     try {
       const response = await fetch(
-        "http://localhost:10000/api/customer-payment",
+        "http://localhost:8787/api/customer-payment",
         {
           method: "POST",
           headers: {

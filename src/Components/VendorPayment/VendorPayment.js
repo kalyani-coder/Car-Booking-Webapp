@@ -40,7 +40,7 @@ function VendorPayment() {
 
   const fetchVendors = async () => {
     try {
-      const response = await fetch("http://localhost:10000/api/vender-rate");
+      const response = await fetch("http://localhost:8787/api/vender-rate");
       if (!response.ok) {
         throw new Error("Failed to fetch vendors");
       }
@@ -102,7 +102,7 @@ function VendorPayment() {
     e.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:10000/api/vender-payment", {
+      const response = await fetch("http://localhost:8787/api/vender-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

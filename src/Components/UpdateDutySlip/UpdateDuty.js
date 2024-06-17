@@ -91,7 +91,7 @@ const UpdateDuty = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch("http://localhost:10000/api/add-trip");
+        const response = await fetch("http://localhost:8787/api/add-trip");
 
         if (response.ok) {
           const data = await response.json();
@@ -306,7 +306,7 @@ const UpdateDuty = () => {
     console.log("Submitting data:", data);
 
     try {
-      const response = await axios.post("http://localhost:10000/api/update-duty", data, {
+      const response = await axios.post("http://localhost:8787/api/update-duty", data, {
         headers: {
           "Content-Type": "application/json",
         },

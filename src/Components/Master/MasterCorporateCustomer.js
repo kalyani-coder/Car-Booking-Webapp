@@ -34,7 +34,7 @@ const MasterCorporateCustomer = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch("http://localhost:10000/api/masterrate", {
+      const response = await fetch("http://localhost:8787/api/masterrate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

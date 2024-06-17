@@ -54,8 +54,8 @@ const Sidebar = () => {
   
   // const handleLogout = () => {
   //   try {
-  //     // http://localhost:10000/api/user-login/logout
-  //     axios.get('http://localhost:10000/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
+  //     // http://localhost:8787/api/user-login/logout
+  //     axios.get('http://localhost:8787/api/user-login/logout', { withCredentials: true }) // Assuming your server is running on the same host
   //       .then((res) => {
   //         console.log(res)
   //         localStorage.removeItem('user');
