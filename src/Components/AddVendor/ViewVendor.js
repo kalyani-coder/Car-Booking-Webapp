@@ -3,6 +3,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import './ViewVender.css'; // Make sure you have a CSS file for this component
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
@@ -12,6 +13,7 @@ const ViewVendor = () => {
   const [viewType, setViewType] = useState('table');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [filteredVendors, setFilteredVendors] = useState([]);
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -22,6 +24,8 @@ const ViewVendor = () => {
         }
         const data = await response.json();
         setVendors(data);
+        // Initialize filteredVendors with all vendors on first load
+        setFilteredVendors(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -30,33 +34,14 @@ const ViewVendor = () => {
     fetchVendors();
   }, []);
 
-  const filteredVendors = vendors.filter((vendor) => {
-    const vendorName = vendor.vender_Name || '';
-    return vendorName.toLowerCase().includes(searchTerm.toLowerCase());
-  });
-
-  const handleDelete = async (vendorId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this vendor?");
-    if (confirmed) {
-      try {
-        const response = await fetch(`http://localhost:8787/api/add-venders/${vendorId}`, {
-          method: 'DELETE',
-        });
-  
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-  
-        // Update vendors state to remove the deleted vendor
-        setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
-        alert('Vendor deleted successfully');
-      } catch (error) {
-        console.error('Error deleting vendor:', error);
-        alert('Error deleting vendor. Please try again.');
-      }
-    }
-  };
-  
+  // Update filteredVendors when searchTerm changes
+  useEffect(() => {
+    const filtered = vendors.filter((vendor) => {
+      const vendorName = vendor.vender_Name || '';
+      return vendorName.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+    setFilteredVendors(filtered);
+  }, [searchTerm, vendors]); // Include vendors as a dependency here
 
   const handleEditVendor = (vendor) => {
     setEditedVendor(vendor);
@@ -79,6 +64,11 @@ const ViewVendor = () => {
             vendor._id === editedVendor._id ? editedVendor : vendor
           )
         );
+        setFilteredVendors((prevFilteredVendors) =>
+          prevFilteredVendors.map((vendor) =>
+            vendor._id === editedVendor._id ? editedVendor : vendor
+          )
+        );
         setIsEditing(false);
         alert('Vendor data updated successfully');
         setErrorMessage('');
@@ -94,16 +84,34 @@ const ViewVendor = () => {
     }
   };
 
-  // Clear success message after a few seconds
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000); // Clear the success message after 3 seconds
-
-      return () => clearTimeout(timer); // Clear timeout if component unmounts
+  const handleDelete = async (vendorId) => {
+    const confirmed = window.confirm('Are you sure you want to delete this vendor?');
+    if (confirmed) {
+      try {
+        const response = await axios.delete(`http://localhost:8787/api/add-venders/${vendorId}`);
+  
+        if (!response.status === 200) {
+          throw new Error('Network response was not ok');
+        }
+  
+        // Update vendors state to remove the deleted vendor
+        setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
+        setFilteredVendors((prevFilteredVendors) =>
+          prevFilteredVendors.filter((vendor) => vendor._id !== vendorId)
+        );
+        alert('Vendor deleted successfully');
+      } catch (error) {
+        console.error('Error deleting vendor:', error);
+        alert('Error deleting vendor. Please check console for details.');
+  
+        // Optionally, revert the state changes if deletion fails
+        // You can handle this based on your application's requirements
+        // Fetch vendors again or update state to reflect the actual server state
+      }
     }
-  }, [successMessage]);
+  };
+  
+
 
   return (
     <>

@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import "./AddVendor.css";
 import Sidebar from "../Sidebar/Sidebar";
-import Alert from "../AddCustomer/Alert"
+import Alert from "../AddCustomer/Alert";
 
 const AddVendor = () => {
   const initialFormData = {
@@ -12,19 +11,30 @@ const AddVendor = () => {
     mobileno: "",
     email: "",
     address: "",
-    drivername: "",
   };
+
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
+  const [mobilenoError, setMobilenoError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [gstnoError, setGstnoError] = useState("");
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    if (name === "vendorname" && !/^[A-Za-z\s]+$/.test(value)) {
+      return;
+    }
+    if (name === "companyname" && !/^[A-Za-z\s]+$/.test(value)) {
+      return;
+    }
+
     if (name === "mobileno" && value.length > 10) {
-      // Prevent further input if more than 10 digits
+      return;
+    }
+
+    if (name === "gstno" && value.length > 15) {
       return;
     }
 
@@ -34,11 +44,26 @@ const AddVendor = () => {
     }));
 
     if (name === "mobileno") {
-      // Validate mobile number (10 digits)
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
       } else {
         setMobilenoError("");
+      }
+    }
+
+    if (name === "gstno") {
+      if (!/^[A-Za-z0-9]{15}$/.test(value)) {
+        setGstnoError("GST number must be exactly 15 alphanumeric characters");
+      } else {
+        setGstnoError("");
+      }
+    }
+
+    if (name === "email") {
+      if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
+        setEmailError("Please enter a valid email address");
+      } else {
+        setEmailError("");
       }
     }
   };
@@ -53,23 +78,36 @@ const AddVendor = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      }, 5000);
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (
-      formData.vendorname.trim() === "" ||
-      formData.companyname.trim() === "" ||
-      formData.gstno.trim() === "" ||
-      formData.mobileno.trim() === "" ||
-      formData.email.trim() === "" ||
-      formData.address.trim() === ""
-    ) {
-      alert("All fields are required.");
+
+    if (!/^[A-Za-z\s]+$/.test(formData.vendorname)) {
+      alert("Vendor name must contain only letters and spaces.");
       return;
     }
+    if (!/^[A-Za-z\s]+$/.test(formData.companyname)) {
+      alert("Company name must contain only letters and spaces.");
+      return;
+    }
+    if (!/^\d{10}$/.test(formData.mobileno)) {
+      alert("Mobile number must be 10 digits.");
+      return;
+    }
+
+    if (!/^[A-Za-z0-9]{15}$/.test(formData.gstno)) {
+      alert("GST number must be exactly 15 alphanumeric characters.");
+      return;
+    }
+
+    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
     try {
       const requestBody = {
         vender_Name: formData.vendorname,
@@ -80,7 +118,6 @@ const AddVendor = () => {
         address: formData.address,
       };
 
-  
       const response = await fetch("http://localhost:8787/api/add-venders", {
         method: "POST",
         headers: {
@@ -90,8 +127,8 @@ const AddVendor = () => {
       });
 
       if (response.ok) {
-        showAlert("Vendor added successfully!" , "success");
-        setFormData(initialFormData); // Clear the form fields
+        showAlert("Vendor added successfully!", "success");
+        setFormData(initialFormData);
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
       }
@@ -106,17 +143,19 @@ const AddVendor = () => {
       <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-        <h2 style={{fontSize:"2rem",fontWeight:"bold",marginBottom:"8px"}}>Add Vendor</h2>
-        
-        {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+            Add Vendor
+          </h2>
+
+          {successAlert && <Alert alert={successAlert} />}
+          {errorAlert && <Alert alert={errorAlert} />}
+
           <div className="vendor-form-container">
             <form>
               <div className="vendor-form-group">
                 <label htmlFor="vendorname" className="form-label">
                   Vendor Name:
-                <span className="required-asterisk">*</span>
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -126,7 +165,6 @@ const AddVendor = () => {
                   placeholder="Vendor Name"
                   onChange={handleChange}
                   value={formData.vendorname}
-                  required
                 />
               </div>
               <div className="form-group">
@@ -142,13 +180,12 @@ const AddVendor = () => {
                   placeholder="Company Name"
                   onChange={handleChange}
                   value={formData.companyname}
-                  required
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="gstno" className="form-label">
                   GST No:
-                <span className="required-asterisk">*</span>
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -158,29 +195,29 @@ const AddVendor = () => {
                   placeholder="GST No."
                   onChange={handleChange}
                   value={formData.gstno}
-                  required
                 />
+                {gstnoError && <p className="error-message">{gstnoError}</p>}
               </div>
               <div className="form-group">
                 <label htmlFor="mobileno" className="form-label">
                   Mobile No:
-                <span className="required-asterisk">*</span>
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
-                  type="number"
+                  type="tel"
                   id="mobileno"
                   name="mobileno"
                   placeholder="Mobile No."
                   onChange={handleChange}
                   value={formData.mobileno}
-                  required
                 />
+                {mobilenoError && <p className="error-message">{mobilenoError}</p>}
               </div>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
                   Email Id:
-                <span className="required-asterisk">*</span>
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -190,13 +227,13 @@ const AddVendor = () => {
                   placeholder="Email"
                   onChange={handleChange}
                   value={formData.email}
-                  required
                 />
+                {emailError && <p className="error-message">{emailError}</p>}
               </div>
               <div className="form-group">
                 <label htmlFor="address" className="form-label">
                   Address:
-                <span className="required-asterisk">*</span>
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-ven-add-input"
@@ -206,24 +243,8 @@ const AddVendor = () => {
                   placeholder="Address"
                   onChange={handleChange}
                   value={formData.address}
-                  required
                 />
               </div>
-              {/* <div className="driver-form-group">
-              <label htmlFor="drivername" className="form-label">
-                Driver Name:
-              <span className="required-asterisk">*</span>
-              </label>
-              <input
-                className="form-control-dri-add-input"
-                type="text"
-                id="drivername"
-                name="drivername"
-                placeholder="Driver Name"
-                onChange={handleChange}
-                value={formData.drivername}
-              />
-            </div> */}
 
               <button
                 type="submit"
@@ -241,4 +262,3 @@ const AddVendor = () => {
 };
 
 export default AddVendor;
-
