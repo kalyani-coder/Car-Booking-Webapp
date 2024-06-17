@@ -4,20 +4,19 @@ import './ViewVender.css'; // Make sure you have a CSS file for this component
 import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
 
-
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [editedVendor, setEditedVendor] = useState({});
   const [viewType, setViewType] = useState('table');
-  const [successMessage, setSuccessMessage] = useState('');  // Ensure this line is present
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch('http://localhost:8787/api/add-venders');
+        const response = await fetch('http://localhost:10000/api/add-venders');
         if (!response.ok) {
           throw Error('Network response was not ok');
         }
@@ -40,21 +39,24 @@ const ViewVendor = () => {
     const confirmed = window.confirm("Are you sure you want to delete this vendor?");
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8787/api/add-venders/${vendorId}`, {
+        const response = await fetch(`http://localhost:10000/api/add-venders/${vendorId}`, {
           method: 'DELETE',
         });
-
+  
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-
+  
+        // Update vendors state to remove the deleted vendor
         setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
         alert('Vendor deleted successfully');
       } catch (error) {
         console.error('Error deleting vendor:', error);
+        alert('Error deleting vendor. Please try again.');
       }
     }
   };
+  
 
   const handleEditVendor = (vendor) => {
     setEditedVendor(vendor);
@@ -63,14 +65,14 @@ const ViewVendor = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-venders/${editedVendor._id}`, {
+      const response = await fetch(`http://localhost:10000/api/add-venders/${editedVendor._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(editedVendor),
       });
-  
+
       if (response.ok) {
         setVendors((prevVendors) =>
           prevVendors.map((vendor) =>
@@ -78,21 +80,30 @@ const ViewVendor = () => {
           )
         );
         setIsEditing(false);
-        setSuccessMessage('Vendor data updated successfully');
-        // showAlert("Vendor updated successfully!" , "success");
+        alert('Vendor data updated successfully');
         setErrorMessage('');
       } else {
         console.error('Error updating vendor:', response.status);
         setSuccessMessage('');
-        
+        setErrorMessage('Error updating vendor. Please try again.');
       }
     } catch (error) {
       console.error('Error updating vendor:', error);
       setSuccessMessage('');
-      
+      setErrorMessage('Error updating vendor. Please try again.');
     }
   };
-  
+
+  // Clear success message after a few seconds
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000); // Clear the success message after 3 seconds
+
+      return () => clearTimeout(timer); // Clear timeout if component unmounts
+    }
+  }, [successMessage]);
 
   return (
     <>
@@ -115,7 +126,6 @@ const ViewVendor = () => {
                 <th>Company Name</th>
                 <th>GST No</th>
                 <th>Mobile</th>
-                {/* <th>Email</th> */}
                 <th>Address</th>
                 <th>Actions</th>
               </tr>
@@ -127,16 +137,15 @@ const ViewVendor = () => {
                   <td>{vendor.company_Name}</td>
                   <td>{vendor.GST_No}</td>
                   <td>{vendor.vender_Mobile}</td>
-                  {/* <td>{vendor.Vender_Email}</td> */}
                   <td>{vendor.address}</td>
                   <td>
-                  <div className="d-flex align-items-center gap-1">
-                    <button className="btn btn-info" onClick={() => handleEditVendor(vendor)}>
-                      <FaEdit /> 
-                    </button>
-                    <button className="btn btn-danger" onClick={() => handleDelete(vendor._id)}>
-                      <FaTrash /> 
-                    </button>
+                    <div className="d-flex align-items-center gap-1">
+                      <button className="btn btn-info" onClick={() => handleEditVendor(vendor)}>
+                        <FaEdit />
+                      </button>
+                      <button className="btn btn-danger" onClick={() => handleDelete(vendor._id)}>
+                        <FaTrash />
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -147,15 +156,12 @@ const ViewVendor = () => {
       </div>
 
       <Modal show={isEditing}>
-  <Modal.Header className="d-flex justify-content-between align-items-center mb-2">
-    <h2 className="text-2xl font-bold">Edit Vendor</h2>
-    <div
-      className="close-icon"
-      onClick={() => setIsEditing(false)}
-    >
-      <FaTimes />
-    </div>
-  </Modal.Header>
+        <Modal.Header className="d-flex justify-content-between align-items-center mb-2">
+          <h2 className="text-2xl font-bold">Edit Vendor</h2>
+          <div className="close-icon" onClick={() => setIsEditing(false)}>
+            <FaTimes />
+          </div>
+        </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formVendorName" className="my-2">
@@ -212,15 +218,22 @@ const ViewVendor = () => {
               />
             </Form.Group>
 
-            <button  onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
+            <Button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
               Save
-            </button>
-            <button  onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">
+            </Button>
+            <Button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">
               Cancel
-            </button>
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>
+
+      {/* Display success message */}
+      {successMessage && (
+        <div className="alert alert-success fixed bottom-4 right-4">
+          {successMessage}
+        </div>
+      )}
     </>
   );
 };
