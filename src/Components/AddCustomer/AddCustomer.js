@@ -5,25 +5,37 @@ import Alert from "../AddCustomer/Alert";
 
 const AddCustomer = () => {
   const initialFormData = {
-    // customer_type: "",
     customername: "",
-    companyname: "",
+    // companyname: "",
     gstno: "",
     mobileno: "",
     email: "",
     address: "",
   };
-  const [formData, setFormData] = useState(initialFormData);
 
+  const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
+  const [emailError, setEmailError] = useState(""); // State for email validation error
+  const [gstnoError, setGstnoError] = useState(""); // State for GST number validation error
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
 
+  // Handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    // Validate customer name to allow only letters and spaces
+    if (name === "customername" && !/^[A-Za-z\s]+$/.test(value)) {
+      return;
+    }
+
+    // For mobile number, limit to 10 digits
     if (name === "mobileno" && value.length > 10) {
-      // Prevent further input if more than 10 digits
+      return;
+    }
+
+    // For GST number, limit to 15 characters
+    if (name === "gstno" && value.length > 15) {
       return;
     }
 
@@ -32,61 +44,63 @@ const AddCustomer = () => {
       [name]: value,
     }));
 
+    // Validate mobile number (10 digits)
     if (name === "mobileno") {
-      // Validate mobile number (10 digits)
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
       } else {
         setMobilenoError("");
       }
     }
-  };
 
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      },);
+    // Validate GST number (exactly 15 alphanumeric characters)
+    if (name === "gstno") {
+      if (!/^[A-Za-z0-9]{15}$/.test(value)) {
+        setGstnoError("GST number must be exactly 15 alphanumeric characters");
+      } else {
+        setGstnoError("");
+      }
+    }
+
+    // Validate email address
+    if (name === "email") {
+      if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
+        setEmailError("Please enter a valid email address");
+      } else {
+        setEmailError("");
+      }
     }
   };
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Check if any required fields are empty or undefined
-    if (
-      !formData.customername ||
-      // !formData.companyname ||
-      !formData.gstno ||
-      !formData.mobileno ||
-      !formData.email ||
-      !formData.address ||
-      formData.customername.trim() === "" ||
-      // formData.companyname.trim() === "" ||
-      formData.gstno.trim() === "" ||
-      formData.mobileno.trim() === "" ||
-      formData.email.trim() === "" ||
-      formData.address.trim() === ""
-    ) {
-      alert("All fields are required.");
+    // Additional validation checks
+    if (!/^[A-Za-z\s]+$/.test(formData.customername)) {
+      alert("Customer name must contain only letters and spaces.");
       return;
     }
 
-    if (mobilenoError) {
-      alert("Mobile number is not valid.");
+    if (!/^\d{10}$/.test(formData.mobileno)) {
+      alert("Mobile number must be 10 digits.");
+      return;
+    }
+
+    if (!/^[A-Za-z0-9]{15}$/.test(formData.gstno)) {
+      alert("GST number must be exactly 15 alphanumeric characters.");
+      return;
+    }
+
+    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)) {
+      alert("Please enter a valid email address.");
       return;
     }
 
     try {
       const requestBody = {
         cus_name: formData.customername,
-        company_name: formData.companyname,
+        // company_name: formData.companyname,
         gst_no: formData.gstno,
         cus_mobile: formData.mobileno,
         cus_email: formData.email,
@@ -103,8 +117,7 @@ const AddCustomer = () => {
 
       if (response.ok) {
         console.log("Response:", response);
-        showAlert("Data added successfully!" , "success");
-        console.log('Trip allocated successfully:', response.data);
+        alert("Data added successfully!", "success");
         setFormData(initialFormData); // Clear the form fields
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
@@ -112,6 +125,21 @@ const AddCustomer = () => {
     } catch (error) {
       console.error("API request error:", error);
       showAlert("Failed to add data. Please try again.", "danger");
+    }
+  };
+
+  // Function to show alerts
+  const showAlert = (message, type) => {
+    if (type === "success") {
+      setSuccessAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setSuccessAlert(null);
+      }, 5000);
+    } else if (type === "error") {
+      setErrorAlert({ msg: message, type: type });
+      setTimeout(() => {
+        setErrorAlert(null);
+      });
     }
   };
 
@@ -169,6 +197,7 @@ const AddCustomer = () => {
                 onChange={handleChange}
                 value={formData.gstno}
               />
+                {gstnoError && <p className="error-message">{gstnoError}</p>}
             </div>
             <div className="form-group">
               <label htmlFor="mobileno" className="form-label">
@@ -201,6 +230,7 @@ const AddCustomer = () => {
                 onChange={handleChange}
                 value={formData.email}
               />
+                {emailError && <p className="error-message">{emailError}</p>}
             </div>
             <div className="form-group">
               <label htmlFor="address" className="form-label">
