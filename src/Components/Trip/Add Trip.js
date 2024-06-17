@@ -121,32 +121,60 @@ const AddTrip = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     let newData = { ...formData, [name]: value };
-
+  
     // Calculate total days and hours if both dates and times are provided
     if (
       (name === "date" ||
         name === "date1" ||
         name === "time" ||
         name === "time1") &&
-      formData.date &&
-      formData.date1 &&
-      formData.time &&
-      formData.time1
+      newData.date &&
+      newData.date1 &&
+      newData.time &&
+      newData.time1
     ) {
-      const startDate = new Date(`${formData.date}T${formData.time}`);
-      const endDate = new Date(`${formData.date1}T${formData.time1}`);
-      const timeDifference = endDate.getTime() - startDate.getTime();
-      const totalDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-      const hours = Math.floor(timeDifference / (1000 * 3600));
-      newData = {
-        ...newData,
-        totaldays: totalDays.toString(),
-        hours: hours.toString(),
-      };
+      let startDate = new Date(`${newData.date}T${newData.time}`);
+      let endDate = new Date(`${newData.date1}T${newData.time1}`);
+  
+      if (startDate.getTime() === endDate.getTime()) {
+        newData = {
+          ...newData,
+          totaldays: "0",
+          hours: "0",
+          minutes: "0",
+        };
+      } else {
+        // If end time is earlier than start time on the same day, add one day to end time
+        if (endDate < startDate) {
+          endDate.setDate(endDate.getDate() + 1);
+        }
+  
+        const timeDifference = endDate - startDate;
+        const totalMinutes = Math.floor(timeDifference / (1000 * 60));
+        let totalHours = Math.floor(totalMinutes / 60);
+        const remainingMinutes = totalMinutes % 60;
+        const totalDays = Math.floor(totalHours / 24);
+  
+        // Ensure total hours is within 0-23 range
+        totalHours %= 24;
+        
+        // Convert totalHours and remainingMinutes to floating point number
+        const totalHoursWithMinutes = totalHours + (remainingMinutes / 60);
+  
+        newData = {
+          ...newData,
+          totaldays: totalDays.toString(),
+          hours: totalHoursWithMinutes.toFixed(2), // Display total hours with minutes
+          minutes: remainingMinutes.toString(), // Include minutes for more precision
+        };
+      }
     }
-
+  
     setFormData(newData);
-  };
+    setError(""); // Clear previous errors
+};
+
+  
 
   const handleAddPerson = () => {
     if (numberOfPeople < 6) {
@@ -561,7 +589,7 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="hours" className="trip-form-label">
                 Total Hours:
-                <span className="days">Hours</span>
+                <span className="days">   Hours</span>
               </label>
               <input
                 type="number"

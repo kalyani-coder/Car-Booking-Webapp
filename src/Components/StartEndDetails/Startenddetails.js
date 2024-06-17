@@ -494,12 +494,12 @@ const StartEndDetails = () => {
           </div>
 
           <div className="start-end-details-button-row">
-          <button
+          {/* <button
               type="button"
               className="customer-btn-submit mx-2"
             >
               Print
-            </button>
+            </button> */}
             <button
               type="button"
               className="customer-btn-submit mx-2"

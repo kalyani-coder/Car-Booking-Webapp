@@ -156,18 +156,18 @@ const ViewStartEndDetails = () => {
                     <td>{shareDetail.mobileno}</td>
                     <td>
                       <div className="d-flex justify-content-between">
-                        <button
+                        {/* <button
                           className='btn btn-info btn-sm'
                           onClick={() => handleEditShareDetail(shareDetail)}
                         >
-                          <FaEdit />
-                        </button>
-                        <button
+                          <FaEdit /> */}
+                        {/* </button> */}
+                        {/* <button
                           className='btn btn-success btn-sm'
                           onClick={() => handleSaveShareDetail(shareDetail)}
                         >
                            <FaSave />
-                        </button>
+                        </button> */}
                         <button
                           className='btn btn-danger btn-sm'
                           onClick={() => handleDeleteShareDetail(shareDetail)}

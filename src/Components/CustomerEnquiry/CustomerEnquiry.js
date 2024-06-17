@@ -32,9 +32,9 @@ const CustomerEnquiry = () => {
     return date ? moment(date).format("DD/MM/YYYY") : "";
   };
 
-  // Function to format the date for POST request
+  // Function to format the date as yyyy-mm-dd for POST request
   const formatDateForPost = (date) => {
-    return date ? moment(date, "DD/MM/YYYY").format("DD/MM/YYYY") : null;
+    return date ? moment(date).format("YYYY-MM-DD") : null;
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -158,23 +158,62 @@ const CustomerEnquiry = () => {
     }
   };
   
-  
- 
-
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    if (name === "date1" || name === "date2") {
-      updateTotal();
+    let newData = { ...formData, [name]: value };
+  
+    if (
+      (name === "date1" ||
+        name === "date2" ||
+        name === "time1" ||
+        name === "time2") &&
+      newData.date1 &&
+      newData.date2 &&
+      newData.time1 &&
+      newData.time2
+    ) {
+      let startDate = new Date(`${newData.date1}T${newData.time1}`);
+      let endDate = new Date(`${newData.date2}T${newData.time2}`);
+  
+      if (startDate.getTime() === endDate.getTime()) {
+        newData = {
+          ...newData,
+          totalDays: "0",
+          totalHours: "0",
+          totalMinutes: "0",
+        };
+      } else {
+        if (endDate < startDate) {
+          endDate.setDate(endDate.getDate() + 1);
+        }
+  
+        const timeDifference = endDate - startDate;
+        let totalHours = timeDifference / (1000 * 60 * 60);
+        let totalMinutes = (totalHours - Math.floor(totalHours)) * 60;
+  
+        // Handle rounding effect for 5:30
+        if (totalHours <= 0 && totalHours > -1) {
+          totalHours = 1;
+          totalMinutes = 30;
+        }
+  
+        newData = {
+          ...newData,
+          totalDays: Math.floor(totalHours / 24).toString(),
+          totalHours: (totalHours + (totalMinutes / 60)).toFixed(2),
+         totalMinutes: totalMinutes.toFixed(2).split('.')[1].padStart(2, '0'),
+          // Optional: totalHoursWithMinutes can be kept for consistency with the first version
+          totalHoursWithMinutes: (totalHours + (totalMinutes / 60)).toFixed(2),
+        };
+      }
     }
-  };
+  
+    setFormData(newData);
+    setError("");
+};
 
   const handleBlur = () => {
-    updateTotal();
+    // updateTotal();
   };
 
   return (
@@ -191,7 +230,9 @@ const CustomerEnquiry = () => {
             <div className="form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name / Company Name:
+                <span className="required-asterisk">*</span>
               </label>
+              
               <select
                 className="form-control-add-trip-input"
                 id="customername"
@@ -423,7 +464,7 @@ const CustomerEnquiry = () => {
               <label htmlFor="totalHours" className="form-label">
                 {/* <span className="required-asterisk">*</span> */}
                 Total Hours:
-                <span className="days" >Hours</span>
+                {/* <span className="days" >  Hours</span> */}
               </label>
               <input
                 type="number"
