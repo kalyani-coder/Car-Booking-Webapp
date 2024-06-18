@@ -57,7 +57,7 @@ apiRouter.use('/add-drivers', AddDriver);
 apiRouter.use('/corporate-customer', corporateCustomer);
 apiRouter.use('/indivisual-customer', indivisualCustomer);
 apiRouter.use('/masterrate', newMasterRateSchema);
-apiRouter.use("/get-trip",gettrip)
+apiRouter.use("/get-trip",gettrip);
 
 mongoose.connect(process.env.LOCAL_MONGODB_URL, {
 }, console.log("Connected to Database"));
