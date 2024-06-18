@@ -8,7 +8,11 @@ const ViewTrip = () => {
   const [error, setError] = useState(null);
   const [searchCustomerName, setSearchCustomerName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTrip, setEditedTrip] = useState({}); // Initialize with an empty object
+    const [editedTrip, setEditedTrip] = useState({
+      numberof_people: 0,
+      names: Array(6).fill(''),
+      mobiles: Array(6).fill(''),
+    });
   const [successMessage, setSuccessMessage] = useState("");
 const [errorMessage, setErrorMessage] = useState("");
 const [selectedTrip, setSelectedTrip] = useState(null); 
@@ -420,114 +424,10 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                                 >
                                   Number of People:
                                 </label>
-                                <select
-                                  className="form-control-add-trip-input1"
-                                  name="numberof_people"
-                                  value={editedTrip.numberof_people}
-                                  onChange={(e) =>
-                                    setEditedTrip({
-                                      ...editedTrip,
-                                      numberof_people: e.target.value,
-                                    })
-                                  }
-                                >
-                                  {[1, 2, 3, 4, 5, 6].map((number) => (
-                                    <option key={number} value={number}>
-                                      {number}
-                                    </option>
-                                  ))}
-                                </select>
+                               
                               </div>
                              
-                              {/* Editable fields for each person */}
-                              <div className="d-flex flex-wrap gap-3">
-                                {Array.from(
-                                  {
-                                    length: Math.ceil(
-                                      editedTrip.numberof_people / 2
-                                    ),
-                                  },
-                                  (_, rowIndex) => (
-                                    <div
-                                      key={rowIndex}
-                                      className="d-flex gap-3"
-                                    >
-                                      {Array.from(
-                                        { length: 2 },
-                                        (_, colIndex) => {
-                                          const personIndex =
-                                            rowIndex * 2 + colIndex;
-                                          return personIndex <
-                                            editedTrip.numberof_people ? (
-                                            <div
-                                              key={personIndex}
-                                              className="trip-person-row"
-                                            >
-                                              <label
-                                                htmlFor={`name${
-                                                  personIndex + 1
-                                                }`}
-                                                className="trip-form-label"
-                                              >
-                                                Name {personIndex + 1}:
-                                              </label>
-                                              <input
-                                                type="text"
-                                                id={`name${personIndex + 1}`}
-                                                name={`name${personIndex + 1}`}
-                                                value={
-                                                  editedTrip[
-                                                    `name${personIndex + 1}`
-                                                  ] || ""
-                                                }
-                                                onChange={(e) =>
-                                                  setEditedTrip({
-                                                    ...editedTrip,
-                                                    [`name${personIndex + 1}`]:
-                                                      e.target.value,
-                                                  })
-                                                }
-                                                className="form-control-add-trip-input1"
-                                              />
-
-                                              <label
-                                                htmlFor={`mobile${
-                                                  personIndex + 1
-                                                }`}
-                                                className="trip-form-label"
-                                              >
-                                                Mobile No :
-                                              </label>
-                                              <input
-                                                type="text"
-                                                id={`mobile${personIndex + 1}`}
-                                                name={`mobile${
-                                                  personIndex + 1
-                                                }`}
-                                                value={
-                                                  editedTrip[
-                                                    `mobile${personIndex + 1}`
-                                                  ] || ""
-                                                }
-                                                onChange={(e) =>
-                                                  setEditedTrip({
-                                                    ...editedTrip,
-                                                    [`mobile${
-                                                      personIndex + 1
-                                                    }`]: e.target.value,
-                                                  })
-                                                }
-                                                className="form-control-add-trip-input1"
-                                              />
-
-                                            </div>
-                                          ) : null;
-                                        }
-                                      )}
-                                    </div>
-                                  )
-                                )}
-                              </div>
+                             
                               <h5 className="fw-bold my-2">
                                 Pickup Location:
                               </h5>

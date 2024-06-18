@@ -41,7 +41,14 @@ const AddTrip = () => {
   const [error, setError] = useState("");
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [mobilenoError, setMobilenoError] = useState("");
+  const [mobilenoError, setMobilenoError] = useState({
+    Mobile_Number_1: "",
+    Mobile_Number_2: "",
+    Mobile_Number_3: "",
+    Mobile_Number_4: "",
+    Mobile_Number_5: "",
+    Mobile_Number_6: "",
+  });
   const [numberOfPeople, setNumberOfPeople] = useState(0);
   const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
   const [successAlert, setSuccessAlert] = useState(null);
@@ -120,6 +127,18 @@ const AddTrip = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+  
+    // Validate mobile number length
+    if (name === "mobileno" && value.length > 10) {
+      // Prevent further input if more than 10 digits
+      return;
+    }
+    // Validate mobile number length for specific fields
+  if (name.startsWith("Mobile_Number_") && value.length > 10) {
+    // Prevent further input if more than 10 digits
+    return;
+  }
+  
     let newData = { ...formData, [name]: value };
   
     // Calculate total days and hours if both dates and times are provided
@@ -172,8 +191,8 @@ const AddTrip = () => {
   
     setFormData(newData);
     setError(""); // Clear previous errors
-};
-
+  };
+  
   
 
   const handleAddPerson = () => {
@@ -252,6 +271,15 @@ const AddTrip = () => {
       return;
     }
   
+    // Validate mobile numbers for each person
+    for (let i = 1; i <= numberOfPeople; i++) {
+      const mobileNumber = formData[`Mobile_Number_${i}`];
+      if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
+        showAlert(`Mobile number for Person ${i} must be 10 digits.`, "danger");
+        return;
+      }
+    }
+  
     const dataWithCustomerId = {
       ...formData,
       customerId: selectedCustomer._id,
@@ -278,6 +306,7 @@ const AddTrip = () => {
       console.error("Error:", error);
     }
   };
+  
   
   
   const handleSendEmail = (formData) => {
@@ -364,6 +393,7 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="customername" className="trip-form-label">
                 Customer Name:
+                <span className="required-asterisk">*</span>
               </label>
               <select
                 className="form-control-add-trip-input"
