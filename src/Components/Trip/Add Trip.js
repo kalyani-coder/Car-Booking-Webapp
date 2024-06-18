@@ -52,7 +52,7 @@ const AddTrip = () => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
-          "http://localhost:10000/api/add-customers"
+          "http://localhost:8787/api/add-customers"
         );
 
         if (response.ok) {
@@ -101,7 +101,7 @@ const AddTrip = () => {
   const fetchTripDetails = async (customerId) => {
     try {
       const response = await fetch(
-        `http://localhost:10000/api/add-trip/${customerId}`
+        `http://localhost:8787/api/add-trip/${customerId}`
       );
 
       if (response.ok) {
@@ -258,7 +258,7 @@ const AddTrip = () => {
     };
   
     try {
-      const response = await fetch("http://localhost:10000/api/add-trip", {
+      const response = await fetch("http://localhost:8787/api/add-trip", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

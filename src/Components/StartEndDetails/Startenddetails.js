@@ -39,7 +39,7 @@ const StartEndDetails = () => {
     // Fetch data from the API endpoint
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:10000/api/share-details");
+        const response = await fetch("http://localhost:8787/api/share-details");
         const data = await response.json();
         // Log the fetched data to check if customer names are present
         console.log("Fetched Data:", data);
@@ -107,7 +107,7 @@ const StartEndDetails = () => {
     try {
       // Make a POST request to the share-details API with the selected customer details
       const response = await fetch(
-        "http://localhost:10000/api/getDetails-fromDriver",
+        "http://localhost:8787/api/getDetails-fromDriver",
         {
           method: "POST",
           headers: {

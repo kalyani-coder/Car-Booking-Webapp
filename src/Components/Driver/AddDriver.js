@@ -78,6 +78,8 @@ const AddDriver = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
+    // Validation checks
     if (
       formData.drivername.trim() === "" ||
       formData.address.trim() === "" ||
@@ -87,12 +89,12 @@ const AddDriver = () => {
       alert("All fields are required.");
       return;
     }
-
+  
     if (mobilenoError || mobileno1Error) {
       alert("Mobile number or alternate mobile number is not valid.");
       return;
     }
-
+  
     try {
       const requestBody = {
         driver_Name: formData.drivername,
@@ -101,7 +103,7 @@ const AddDriver = () => {
         driver_Mo1: formData.mobileno,
         driver_Mo2: formData.mobileno1,
       };
-
+  
       const response = await fetch("http://localhost:8787/api/add-drivers", {
         method: "POST",
         headers: {
@@ -109,18 +111,22 @@ const AddDriver = () => {
         },
         body: JSON.stringify(requestBody),
       });
-
+  
+      const responseData = await response.json();
+  
       if (response.ok) {
-        showAlert("Driver added successfully!" , "success");
+        showAlert("Driver added successfully!", "success");
         setFormData(initialFormData); // Clear the form fields
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        // Display backend error message if available
+        showAlert(responseData.message || "Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
       showAlert("Failed to add data. Please try again.", "danger");
     }
   };
+  
 
   return (
     <>
