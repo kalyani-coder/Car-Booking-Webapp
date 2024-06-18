@@ -87,40 +87,35 @@ const ViewVendor = () => {
   const handleDelete = async (vendorId) => {
     console.log(`Attempting to delete vendor with ID: ${vendorId}`); // Log vendor ID being deleted
     const confirmed = window.confirm('Are you sure you want to delete this vendor?');
+    
     if (confirmed) {
       try {
         console.log('User confirmed deletion. Sending DELETE request...');
-        const response = await axios.delete(`http://localhost:8787/api/add-venders/${vendorId}`);
-    
+        const response = await axios.delete(`http://localhost:8787/api/add-vendors/${vendorId}`);
+
         console.log('DELETE request sent. Awaiting response...');
+        
         if (response.status !== 200) {
           console.log(`Unexpected response status: ${response.status}`);
           throw new Error('Network response was not ok');
         }
-    
+
         console.log('Vendor deleted successfully on server.');
-        // Update vendors state to remove the deleted vendor
-        setVendors((prevVendors) => {
-          console.log('Updating vendors state...');
-          return prevVendors.filter((vendor) => vendor._id !== vendorId);
-        });
-        setFilteredVendors((prevFilteredVendors) => {
-          console.log('Updating filtered vendors state...');
-          return prevFilteredVendors.filter((vendor) => vendor._id !== vendorId);
-        });
+        
+        // Optimistic UI update: Remove the deleted vendor immediately
+        setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
+        setFilteredVendors((prevFilteredVendors) => prevFilteredVendors.filter((vendor) => vendor._id !== vendorId));
+        
         alert('Vendor deleted successfully');
       } catch (error) {
         console.error('Error deleting vendor:', error);
         alert('Error deleting vendor. Please check console for details.');
-  
-        // Optionally, revert the state changes if deletion fails
-        // You can handle this based on your application's requirements
-        // Fetch vendors again or update state to reflect the actual server state
       }
     } else {
       console.log('User canceled the deletion.');
     }
   };
+
   
   
 
