@@ -19,7 +19,7 @@ const CustomerEnquiry = () => {
     pic_up: "",
     date1: "",
     time1: "",
-    drop_off: "",
+    drop_of: "",
     date2: "",
     time2: "",
     totalDays: "",
@@ -127,7 +127,7 @@ const CustomerEnquiry = () => {
       date1: formatDateForPost(formData.date1),
     date2: formatDateForPost(formData.date2),
       time1: formData.time1,
-      drop_off: formData.drop_off,
+      drop_of: formData.drop_of,
       time2: formData.time2,
       vehicle: formData.vehicle,
       totalDays: formData.totalDays,
@@ -145,7 +145,7 @@ const CustomerEnquiry = () => {
   
       if (response.status === 200 || response.status === 201) {
         const responseData = response.data;
-        showAlert("Customer Enquiry Added successfully!", "success");
+        alert("Customer Enquiry Added successfully!", "success");
         console.log("Data submitted successfully:", responseData);
         setFormData(initialFormData); // Clear form after successful submission
       } else {
@@ -394,17 +394,17 @@ const CustomerEnquiry = () => {
             <div className="d-flex gap-3">
               <div>
                 <div className="form-group">
-                  <label htmlFor="dropoff" className="form-label">
+                  <label htmlFor="drop_of" className="form-label">
                     Dropoff Location:
                     <span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="text"
                     className="form-control cust-inq-input"
-                    name="drop_off"
+                    name="drop_of"
                     placeholder="Enter Dropoff Location"
                     onChange={handleChange}
-                    value={formData.drop_off}
+                    value={formData.drop_of}
                   />
                 </div>
               </div>

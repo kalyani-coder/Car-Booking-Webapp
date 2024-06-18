@@ -9,11 +9,12 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
         <th>Sr No</th>
         <th>Customer Name</th>
         <th>Mobile No.</th>
-        <th>Email</th>
+        {/* <th>Email</th> */}
         <th>Address</th>
         <th>Trip Type</th>
         <th>Sub Type</th>
         <th>Pickup Location</th>
+        <th>Dropff Location</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -23,28 +24,27 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{index + 1}</td>
           <td>{customer.customer_name}</td>
           <td>{customer.mobileno}</td>
-          <td>{customer.email}</td>
+          {/* <td>{customer.email}</td> */}
           <td>{customer.address}</td>
           <td>{customer.tripe_type}</td>
           <td>{customer.sub_type}</td>
           <td>{customer.pic_up}</td>
+          <td>{customer.drop_of}</td>
           <td>
-            <>
-              <div className="d-flex align-items-center gap-1">
-                <button
-                  className="btn btn-info"
-                  onClick={() => handleEditCustomer(customer)}
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deleteCustomer(customer._id)}
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            </>
+            <div className="d-flex align-items-center gap-1">
+              <button
+                className="btn btn-info"
+                onClick={() => handleEditCustomer(customer)}
+              >
+                <FaEdit />
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => deleteCustomer(customer._id)}
+              >
+                <FaTrash />
+              </button>
+            </div>
           </td>
         </tr>
       ))}
@@ -58,8 +58,19 @@ const ViewCustomerEnquiry = () => {
   const [error, setError] = useState(null);
   const [searchCustomerName, setSearchCustomerName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [editedCustomer, setEditedCustomer] = useState(null);
-  
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); 
+  const [editedCustomer, setEditedCustomer] = useState({
+    customer_name: '',
+    mobileno: '',
+    email: '',
+    address: '',
+    tripe_type: '',
+    sub_type: '',
+    pic_up: '',
+    date1: '',
+    date2: ''
+  });
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -82,19 +93,16 @@ const ViewCustomerEnquiry = () => {
     fetchCustomers();
   }, []);
 
-  // Function to filter customer inquiries based on search criteria
   const filterCustomerInquiries = () => {
     const filteredData = customers.filter((customer) => {
-      // Check if customer.customer_name is defined before calling toLowerCase()
       if (customer.customer_name) {
         return customer.customer_name
           .toLowerCase()
           .includes(searchCustomerName.toLowerCase());
       } else {
-        return false; // Return false if customer.customer_name is undefined
+        return false;
       }
     });
-
     setFilteredCustomers(filteredData);
   };
 
@@ -102,62 +110,96 @@ const ViewCustomerEnquiry = () => {
     filterCustomerInquiries();
   }, [searchCustomerName]);
 
-  const handleEdit = (customer) => {
-    console.log(`Editing customer with ID: ${customer._id}`);
-    setEditedCustomer(customer);
+  const handleEditCustomer = (customer) => {
+    const formattedCustomer = {
+      ...customer,
+      date1: customer.date1 ? customer.date1.split("T")[0] : "",
+      date2: customer.date2 ? customer.date2.split("T")[0] : "",
+    };
+    setEditedCustomer(formattedCustomer);
     setIsEditing(true);
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    setEditedCustomer(null);
+    setEditedCustomer({
+      customer_name: '',
+      mobileno: '',
+      email: '',
+      address: '',
+      tripe_type: '',
+      sub_type: '',
+      pic_up: '',
+      date1: '',
+      date2: ''
+    });
   };
-  const handleEditCustomer = (customerId) => {
-    const customerToEdit = filteredCustomers.find(
-      (customer) => customer._id === customerId
-    );
-    setEditedCustomer(customerToEdit);
-    setIsEditing(true);
-  };
+
   const handleSaveEditCustomer = async () => {
+    const prevCustomers = [...customers];
+    const prevFilteredCustomers = [...filteredCustomers];
+
+    // Optimistically update the UI
+    setCustomers((prevCustomers) =>
+      prevCustomers.map((customer) =>
+        customer._id === editedCustomer._id ? editedCustomer : customer
+      )
+    );
+    setFilteredCustomers((prevCustomers) =>
+      prevCustomers.map((customer) =>
+        customer._id === editedCustomer._id ? editedCustomer : customer
+      )
+    );
+
     try {
+      console.log("Edited Customer Data:", editedCustomer);
+
       const response = await fetch(
-        `https://your-backend-api.com/api/customers/${editedCustomer._id}`,
+        `http://localhost:8787/api/customer-enquiry/${editedCustomer._id}`,
         {
-          method: "PUT", // Assuming you are using PUT for updating, adjust if needed
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            // Add any other headers if needed
           },
           body: JSON.stringify(editedCustomer),
         }
       );
-  
-      if (response.ok) {
-        // Assuming the backend responds with the updated customer data
-        const updatedCustomer = await response.json();
-  
-        // Update the UI with the updated data
-        setFilteredCustomers((prevCustomers) =>
-          prevCustomers.map((customer) =>
-            customer._id === updatedCustomer._id ? updatedCustomer : customer
-          )
-        );
-  
-        // Close the edit form
-        setIsEditing(false);
-        alert("Customer information updated successfully");
-      } else {
-        // Log the actual error response for debugging purposes
-        const errorResponse = await response.json();
-        console.error("Error updating customer information:", errorResponse);
-        alert("Error updating customer information. Please try again.");
+
+      if (!response.ok) {
+        console.error("Response Status:", response.status);
+        console.error("Response Text:", await response.text());
+        throw new Error("Network response was not ok");
       }
+
+      const updatedCustomer = await response.json();
+      console.log("Updated Customer Data:", updatedCustomer);
+
+      // Confirm the update
+      setCustomers((prevCustomers) =>
+        prevCustomers.map((customer) =>
+          customer._id === updatedCustomer._id ? updatedCustomer : customer
+        )
+      );
+      setFilteredCustomers((prevCustomers) =>
+        prevCustomers.map((customer) =>
+          customer._id === updatedCustomer._id ? updatedCustomer : customer
+        )
+      );
+
+      setIsEditing(false);
+      alert("Customer enquiry updated successfully");
+      setErrorMessage('');
     } catch (error) {
-      console.error("Error updating customer information:", error);
-      alert("Error updating customer information. Please try again.");
+      console.error("Error updating customer enquiry:", error);
+      setSuccessMessage('');
+      setErrorMessage('Error updating customer enquiry. Please try again.');
+
+      // Revert optimistic update if there is an error
+      setCustomers(prevCustomers);
+      setFilteredCustomers(prevFilteredCustomers);
     }
   };
+
   
 
   const handleDelete = async (customerId) => {
@@ -345,7 +387,7 @@ const ViewCustomerEnquiry = () => {
                   />
                   <h5 className="fw-bold my-2">Time:</h5>
                   <input
-                    type="date"
+                    type="time"
                     value={editedCustomer.time1}
                     onChange={(e) =>
                       setEditedCustomer({
@@ -394,11 +436,11 @@ const ViewCustomerEnquiry = () => {
                   <h5 className="fw-bold my-2">Total Days:</h5>
                   <input
                     type="text"
-                    value={editedCustomer.days}
+                    value={editedCustomer.totalDays}
                     onChange={(e) =>
                       setEditedCustomer({
                         ...editedCustomer,
-                        days: e.target.value,
+                        totalDays: e.target.value,
                       })
                     }
                     className="w-full p-2 mb-2 border border-gray-300 rounded"
@@ -406,11 +448,11 @@ const ViewCustomerEnquiry = () => {
                   <h5 className="fw-bold my-2">Total Hours:</h5>
                   <input
                     type="text"
-                    value={editedCustomer.hours}
+                    value={editedCustomer.totalHours}
                     onChange={(e) =>
                       setEditedCustomer({
                         ...editedCustomer,
-                        hours: e.target.value,
+                        totalHours: e.target.value,
                       })
                     }
                     className="w-full p-2 mb-2 border border-gray-300 rounded"
@@ -478,9 +520,9 @@ const ViewCustomerEnquiry = () => {
           )}
           <div className="table-responsive">
             <TableView
-              customers={filteredCustomers}
-              handleEditCustomer={handleEdit}
-              deleteCustomer={handleDelete}
+               customers={filteredCustomers}
+            handleEditCustomer={handleEditCustomer}
+            deleteCustomer={handleDelete}
             />
           </div>
         </div>
