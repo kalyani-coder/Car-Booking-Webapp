@@ -47,7 +47,7 @@ router.delete("/:id", async (req, res) => {
   const tripDetailsId = req.params.id;
 
   try {
-    const deletedCustomeEnquiry = await newMasterRateSchema.findByIdAndRemove(
+    const deletedCustomeEnquiry = await newMasterRateSchema.findByIdAndDelete(
       tripDetailsId
     );
     res

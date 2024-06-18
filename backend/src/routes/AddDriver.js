@@ -68,21 +68,21 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedAddVenders = await Driver.findByIdAndUpdate(AddVendersId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "venders Successfully updated "})
+        res.status(201).json({message : "Driver Successfully updated "})
 
     }catch(e){
-        res.status(404).json({message : "Can not patch venders"})
+        res.status(404).json({message : "Can not patch Driver"})
     }
 })
 
+
+
 // DELETE METHOD
 router.delete('/:id' , async(req, res) => {
-
-    const AddVendersId = req.params.id 
-
     try{
-        const deletedCustomeEnquiry = await Driver.findByIdAndRemove(AddVendersId)
-        res.status(201).json({message : "venders Successfully Deleted "})
+        const id = req.params.id 
+        const deletedCustomeEnquiry = await Driver.findByIdAndDelete(id, {new : true})
+        res.status(201).json({message : "Driver Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})
     }

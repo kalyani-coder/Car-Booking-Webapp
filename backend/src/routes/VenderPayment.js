@@ -80,7 +80,7 @@ router.delete("/:id", async (req, res) => {
   const VenderpaymentId = req.params.id;
 
   try {
-    const deletedCustomeEnquiry = await NewVenderpayment.findByIdAndRemove(
+    const deletedCustomeEnquiry = await NewVenderpayment.findByIdAndDelete(
       VenderpaymentId
     );
     res

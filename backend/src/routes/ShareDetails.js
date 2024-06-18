@@ -68,7 +68,7 @@ router.delete('/:id' , async(req, res) => {
     const shareDetailsId = req.params.id 
 
     try{
-        const deletedCustomeEnquiry = await newShareDetailsSchema.findByIdAndRemove(shareDetailsId)
+        const deletedCustomeEnquiry = await newShareDetailsSchema.findByIdAndDelete(shareDetailsId)
         res.status(201).json({message : " Customer Enquiry Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})

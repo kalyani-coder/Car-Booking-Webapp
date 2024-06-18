@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const AddTrip = require('../models/AddTrip');
 const router = express.Router();
 router.use(bodyParser.json());
+const nodemailer = require("nodemailer")
 
 router.get('/', async (req, res) => {
     try {
@@ -15,35 +16,7 @@ router.get('/', async (req, res) => {
 })
 
 
-
-// router.post('/', async (req, res) => {
-//     try {
-//        console.log(req.body)
-//         // Create a new instance of AddTrip
-//         const addTripData = new AddTrip(req.body);
-//         // Save the data to the database
-//         await addTripData.save();
-
-//         // Return the created data in the response
-//         res.status(201).json(addTripData);
-//     } catch (error) {
-//         // Check if the error is a Mongoose validation error
-//         if (error.name === 'ValidationError') {
-//             const validationErrors = {};
-//             for (const key in error.errors) {
-//                 validationErrors[key] = error.errors[key].message;
-//             }
-//             res.status(400).json({ validationErrors });
-//         } else {
-//             // Handle other types of errors
-//             console.error(error);
-//             res.status(500).json({ error: 'Internal server error' });
-//         }
-//     }
-// });
-
-
-router.post('/', async (req, res) => {
+router.post('/', async (req, res) => {vend
     try {
         console.log(req.body);
 
@@ -121,5 +94,52 @@ router.get('/customer/:customerId', async (req, res) => {
         res.status(500).json(error);
     }
 });
+
+
+// Send email on the smtp server 
+router.post("/sendemail", async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+    }
+
+    try {
+        // Configure the email transporter
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: 'pat.ferry@ethereal.email',
+                pass: 'SjyMbfYt2MpnNH4zA8'
+            }
+        });
+
+        // Email options
+        const mailOptions = {
+            from: '<smtp.ethereal.email>',
+            to: email,
+            subject: 'New Trip Information',
+            text: `Hello New User,
+
+            Welcome to our service! Here is some information about your new trip.
+
+            Best Regards,
+            Your Company Team`,
+        };
+
+        // Send the email
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent to', email);
+
+        res.status(200).json({ message: "Email sent successfully" });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+});
+
+
+
 
 module.exports = router;

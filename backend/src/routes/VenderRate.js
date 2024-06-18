@@ -68,7 +68,7 @@ router.delete('/:id' , async(req, res) => {
     const AddVendersId = req.params.id 
 
     try{
-        const deletedCustomeEnquiry = await newRateSchemaVender.findByIdAndRemove(AddVendersId)
+        const deletedCustomeEnquiry = await newRateSchemaVender.findByIdAndDelete(AddVendersId)
         res.status(201).json({message : "venders Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})

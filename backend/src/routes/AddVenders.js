@@ -55,6 +55,9 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedAddVenders = await NewAddVenders.findByIdAndUpdate(AddVendersId , req.body ,{
             new : true
         })
+        if(!UpdatedAddVenders){
+            return res.status(201).json({message : "Vendor Id not Found"})
+        }
         res.status(201).json({message : "venders Successfully updated "})
 
     }catch(e){
@@ -63,16 +66,19 @@ router.patch('/:id' , async(req, res) => {
 })
 
 // DELETE METHOD
-router.delete('/:id' , async(req, res) => {
-
-    const AddVendersId = req.params.id 
-
+router.delete("/:id" , async(req, res) => {
     try{
-        const deletedCustomeEnquiry = await NewAddVenders.findByIdAndRemove(AddVendersId)
-        res.status(201).json({message : "venders Successfully Deleted "})
+
+        const id  = req.params.id
+
+        const deletedVendor = await NewAddVenders.findByIdAndDelete(id)
+        if(!id){
+            return res.status(404).json({message : "Vendor Id not Found"})
+        }
+        res.status(201).json({message : "Vendor Deleted Successfully"})
+
     }catch(e){
-        res.status(404).json({message : "Can not found" , e})
+
     }
 })
-
 module.exports = router;
