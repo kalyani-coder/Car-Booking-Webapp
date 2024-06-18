@@ -270,9 +270,6 @@ const AddTrip = () => {
         showAlert("Data added successfully!", "success");
         setFormData(initialFormData);
         setIsSubmitted(true); // Set form submission state to true
-  
-        // Call handleSendEmail after successful data submission
-        handleSendEmail(dataWithCustomerId);
       } else {
         showAlert("Failed to add data!", "danger");
       }
@@ -281,6 +278,7 @@ const AddTrip = () => {
       console.error("Error:", error);
     }
   };
+  
   
   const handleSendEmail = (formData) => {
     const emailSubject = encodeURIComponent("Your Trip Details");

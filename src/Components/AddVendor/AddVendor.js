@@ -127,7 +127,7 @@ const AddVendor = () => {
       });
 
       if (response.ok) {
-        showAlert("Vendor added successfully!", "success");
+        alert("Vendor added successfully!", "success");
         setFormData(initialFormData);
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
