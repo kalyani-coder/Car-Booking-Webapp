@@ -1,0 +1,11 @@
+.close-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem; /* Adjust as needed */
+    color: #333; /* Adjust color */
+  }
+  
+  .close-icon:focus {
+    outline: none;
+  }

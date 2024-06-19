@@ -48,6 +48,50 @@ const ViewVendor = () => {
     setIsEditing(true);
   };
 
+  // const handleDelete = async (vendorId) => {
+  //   try {
+  //     const response = await axios.delete(`http://localhost:8787/api/add-venders/${vendorId}`);
+
+  //     if (response.status === 200) {
+  //       setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
+  //       setFilteredVendors((prevFilteredVendors) =>
+  //         prevFilteredVendors.filter((vendor) => vendor._id !== vendorId)
+  //       );
+  //       setSuccessMessage('Vendor deleted successfully.');
+  //       setErrorMessage('');
+  //     } else {
+  //       console.error('Error deleting vendor:', response.status);
+  //       setSuccessMessage('');
+  //       setErrorMessage('Error deleting vendor. Please try again.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error deleting vendor:', error);
+  //     setSuccessMessage('');
+  //     setErrorMessage('Error deleting vendor. Please try again.');
+  //   }
+  // };
+
+  const handleDelete = async (vendorId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this vendor?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:8787/api/add-venders/${vendorId}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        setVendors((prevCustomers) => prevCustomers.filter((customer) => customer._id !== vendorId));
+        setFilteredVendors((prevCustomers) => prevCustomers.filter((customer) => customer._id !== vendorId));
+        alert('Vendor deleted successfully');
+      } catch (error) {
+        console.error('Error deleting vendors:', error);
+        setSuccessMessage('Error deleting customer: ' + error.message);
+      }
+    }
+  };
   const handleSave = async () => {
     try {
       const response = await fetch(`http://localhost:8787/api/add-venders/${editedVendor._id}`, {
@@ -70,7 +114,7 @@ const ViewVendor = () => {
           )
         );
         setIsEditing(false);
-        alert('Vendor data updated successfully');
+        setSuccessMessage('Vendor data updated successfully');
         setErrorMessage('');
       } else {
         console.error('Error updating vendor:', response.status);
@@ -83,42 +127,6 @@ const ViewVendor = () => {
       setErrorMessage('Error updating vendor. Please try again.');
     }
   };
-
-  const handleDelete = async (vendorId) => {
-    console.log(`Attempting to delete vendor with ID: ${vendorId}`); // Log vendor ID being deleted
-    const confirmed = window.confirm('Are you sure you want to delete this vendor?');
-    
-    if (confirmed) {
-      try {
-        console.log('User confirmed deletion. Sending DELETE request...');
-        const response = await axios.delete(`http://localhost:8787/api/add-vendors/${vendorId}`);
-
-        console.log('DELETE request sent. Awaiting response...');
-        
-        if (response.status !== 200) {
-          console.log(`Unexpected response status: ${response.status}`);
-          throw new Error('Network response was not ok');
-        }
-
-        console.log('Vendor deleted successfully on server.');
-        
-        // Optimistic UI update: Remove the deleted vendor immediately
-        setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
-        setFilteredVendors((prevFilteredVendors) => prevFilteredVendors.filter((vendor) => vendor._id !== vendorId));
-        
-        alert('Vendor deleted successfully');
-      } catch (error) {
-        console.error('Error deleting vendor:', error);
-        alert('Error deleting vendor. Please check console for details.');
-      }
-    } else {
-      console.log('User canceled the deletion.');
-    }
-  };
-
-  
-  
-
 
   return (
     <>

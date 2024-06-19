@@ -238,7 +238,7 @@ const ViewAllocateTrip = () => {
                   {/* <th>Date1</th>
                   <th>Time1</th> */}
                   <th>Driver Name</th>
-                  <th>Driver Email</th>
+                  {/* <th>Driver Email</th> */}
                   <th>Mobile No</th>
                   <th>Actions</th>
                 </tr>
@@ -257,7 +257,7 @@ const ViewAllocateTrip = () => {
                     {/* <td>{shareDetail.date1}</td>
                     <td>{shareDetail.time1}</td> */}
                     <td>{shareDetail.drivername}</td>
-                    <td>{shareDetail.mail}</td>
+                    {/* <td>{shareDetail.mail}</td> */}
                     <td>{shareDetail.customermobile}</td>
                     <td>
                       {editingId === shareDetail._id ? (
