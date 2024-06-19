@@ -43,7 +43,7 @@ const MasterCorporateCustomer = () => {
       });
   
       if (response.ok) {
-        showAlert("Data added successfully!", "success");
+        alert("Data added successfully!", "success");
         setFormData(initialFormData);
       } else {
         showAlert("Failed to add data. Please try again.", "danger");

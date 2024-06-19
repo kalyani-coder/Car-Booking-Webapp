@@ -130,6 +130,11 @@ const Sidebar = () => {
                   Master 
                 </Link>
               </a></li><hr />
+              <li><a class="dropdown-item" href="#">
+                <Link to={'/viewmaster'}>
+                  View Master 
+                </Link>
+              </a></li>
               
             </ul>
           </div> <br />
