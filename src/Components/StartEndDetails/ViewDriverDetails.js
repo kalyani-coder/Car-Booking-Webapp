@@ -201,17 +201,18 @@ const ViewStartEndDetails = () => {
               <thead>
                 <tr>
                   <th>Customer Name</th>
-                  {/* <th>Driver Name</th> */}
-                  <th>Pickup Location</th>
+                 <th>Vehicle</th>
+                 <th>Trip Type</th>
+                 <th>Sub Type</th>
                   <th>Date</th>
-                  <th>Time</th>
+                  {/* <th>Time</th> */}
                   <th>Drop Location</th>
                   <th>Date</th>
-                  <th>Time</th>
+                  {/* <th>Time</th> */}
                   {/* <th>Total Days</th> */}
                   {/* <th>Total Hours</th> */}
                   <th>Trip Type</th>
-                  <th>Trip Sub Type</th>
+                  <th>Sub Type</th>
                   <th>Mobile No</th>
                   <th>Actions</th>
                 </tr>
@@ -220,17 +221,18 @@ const ViewStartEndDetails = () => {
                 {filteredShareDetails.map((shareDetail) => (
                   <tr key={shareDetail._id}>
                     <td>{shareDetail.customername}</td>
-                    {/* <td>{shareDetail.drivername}</td> */}
-                    <td>{shareDetail.pickup}</td>
+                    <td>{shareDetail.vehicle}</td>
+                    <td>{shareDetail.triptype}</td>
+                    <td>{shareDetail.subtype}</td>
+                    {/* <td>{shareDetail.pickup}</td> */}
                     <td>{shareDetail.date}</td>
-                    <td>{shareDetail.time}</td>
+                    {/* <td>{shareDetail.time}</td> */}
                     <td>{shareDetail.Dropoff}</td>
                     <td>{shareDetail.date1}</td>
                     <td>{shareDetail.time1}</td>
                     {/* <td>{shareDetail.totalDays}</td> */}
                     {/* <td>{shareDetail.totalHours}</td> */}
-                    <td>{shareDetail.triptype}</td>
-                    <td>{shareDetail.subtype}</td>
+                    
                     <td>{shareDetail.mobileno}</td>
                     <td>
                       <div className="d-flex justify-content-between">

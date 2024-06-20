@@ -148,7 +148,7 @@ const StartEndDetails = () => {
 
       if (response.ok) {
         console.log("Details saved successfully!");
-        showAlert("Data added successfully!" , "success");
+        alert("Data added successfully!" , "success");
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
       }
