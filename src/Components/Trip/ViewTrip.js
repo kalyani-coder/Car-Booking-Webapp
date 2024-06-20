@@ -8,14 +8,14 @@ const ViewTrip = () => {
   const [error, setError] = useState(null);
   const [searchCustomerName, setSearchCustomerName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-    const [editedTrip, setEditedTrip] = useState({
-      numberof_people: 0,
-      names: Array(6).fill(''),
-      mobiles: Array(6).fill(''),
-    });
+  const [editedTrip, setEditedTrip] = useState({
+    numberof_people: 0,
+    names: Array(6).fill(""),
+    mobiles: Array(6).fill(""),
+  });
   const [successMessage, setSuccessMessage] = useState("");
-const [errorMessage, setErrorMessage] = useState("");
-const [selectedTrip, setSelectedTrip] = useState(null); 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedTrip, setSelectedTrip] = useState(null);
 
   const [formData, setFormData] = useState({
     members: 1,
@@ -72,9 +72,7 @@ const [selectedTrip, setSelectedTrip] = useState(null);
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8787/api/add-trip"
-        );
+        const response = await fetch("http://localhost:8787/api/add-trip");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -154,10 +152,12 @@ const [selectedTrip, setSelectedTrip] = useState(null);
           body: JSON.stringify(editedTrip),
         }
       );
-  
+
       if (response.ok) {
         setTrips((prevTrips) =>
-          prevTrips.map((trip) => (trip._id === editedTrip._id ? editedTrip : trip))
+          prevTrips.map((trip) =>
+            trip._id === editedTrip._id ? editedTrip : trip
+          )
         );
         setIsEditing(false);
         setSuccessMessage("Data updated successfully.");
@@ -173,15 +173,16 @@ const [selectedTrip, setSelectedTrip] = useState(null);
       setErrorMessage("Error updating trip. Please try again.");
     }
   };
-  
+
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-
   const fetchTripDetails = async (tripId) => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-trip/${tripId}`);
+      const response = await fetch(
+        `http://localhost:8787/api/add-trip/${tripId}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -201,9 +202,6 @@ const [selectedTrip, setSelectedTrip] = useState(null);
     setSelectedTrip(null);
   };
 
-
-  
-
   return (
     <>
       <Sidebar />
@@ -221,7 +219,10 @@ const [selectedTrip, setSelectedTrip] = useState(null);
           {/* Other JSX code */}
           {selectedTrip && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-4 rounded shadow-lg w-96" style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}>
+              <div
+                className="bg-white p-4 rounded shadow-lg w-96"
+                style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
+              >
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Trip Details</h2>
                   <button className="text-black-500" onClick={handleCloseModal}>
@@ -229,34 +230,94 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                   </button>
                 </div>
                 <div className="mt-4">
-                <p><strong>Customer Name:</strong> {selectedTrip.customername}</p>
-      <p className="mb-2"><strong>Mobile No:</strong> {selectedTrip.mobileno}</p>
-      <p className="mb-2"><strong>Email:</strong> {selectedTrip.email}</p>
-      <p className="mb-2"><strong>Address:</strong> {selectedTrip.address}</p>
-      <p className="mb-2"><strong>Trip Type:</strong> {selectedTrip.triptype}</p>
-      <p className="mb-2"><strong>Sub Type:</strong> {selectedTrip.subtype}</p>
-      <p className="mb-2"><strong>Pickup:</strong> {selectedTrip.pickup}</p>
-      <p className="mb-2"><strong>Date:</strong> {selectedTrip.date}</p>
-      <p className="mb-2"><strong>Time:</strong> {selectedTrip.time}</p>
-      <p className="mb-2"><strong>Drop Off Location:</strong> {selectedTrip.dropoff}</p>
-      <p className="mb-2"><strong>Date:</strong> {selectedTrip.date1}</p>
-      <p className="mb-2"><strong>Time:</strong> {selectedTrip.time1}</p>
-      <p className="mb-2"><strong>Total Days:</strong> {selectedTrip.totaldays}</p>
-      <p className="mb-2"><strong>Total Hour:</strong> {selectedTrip.hours}</p>
-      <p className="mb-2"><strong>Type of Vehicle:</strong> {selectedTrip.vehicle}</p>
-      <p className="mb-2"><strong>Person 1:</strong> {selectedTrip.Person_1}</p>
-      <p className="mb-2"><strong>Mobile Number 1:</strong> {selectedTrip.Mobile_Number_1}</p>
-      <p className="mb-2"><strong>Person 2:</strong> {selectedTrip.Person_2}</p>
-      <p className="mb-2"><strong>Mobile Number 2:</strong> {selectedTrip.Mobile_Number_2}</p>
-      <p className="mb-2"><strong>Person 3:</strong> {selectedTrip.Person_3}</p>
-      <p className="mb-2"><strong>Mobile Number 3:</strong> {selectedTrip.Mobile_Number_3}</p>
-      <p className="mb-2"><strong>Person 4:</strong> {selectedTrip.Person_4}</p>
-      <p className="mb-2"><strong>Mobile Number 4:</strong> {selectedTrip.Mobile_Number_4}</p>
-      <p className="mb-2"><strong>Person 5:</strong> {selectedTrip.Person_5}</p>
-      <p className="mb-2"><strong>Mobile Number 5:</strong> {selectedTrip.Mobile_Number_5}</p>
-      <p className="mb-2"><strong>Person 6:</strong> {selectedTrip.Person_6}</p>
-      <p className="mb-2"><strong>Mobile Number 6:</strong> {selectedTrip.Mobile_Number_6}</p>
-    </div>
+                  <p>
+                    <strong>Customer Name:</strong> {selectedTrip.customername}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile No:</strong> {selectedTrip.mobileno}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Email:</strong> {selectedTrip.email}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Address:</strong> {selectedTrip.address}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Trip Type:</strong> {selectedTrip.triptype}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Sub Type:</strong> {selectedTrip.subtype}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Pickup:</strong> {selectedTrip.pickup}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Date:</strong> {selectedTrip.date}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Time:</strong> {selectedTrip.time}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Drop Off Location:</strong> {selectedTrip.dropoff}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Date:</strong> {selectedTrip.date1}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Time:</strong> {selectedTrip.time1}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Total Days:</strong> {selectedTrip.totaldays}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Total Hour:</strong> {selectedTrip.hours}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Type of Vehicle:</strong> {selectedTrip.vehicle}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Person 1:</strong> {selectedTrip.Person_1}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile Number 1:</strong>{" "}
+                    {selectedTrip.Mobile_Number_1}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Person 2:</strong> {selectedTrip.Person_2}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile Number 2:</strong>{" "}
+                    {selectedTrip.Mobile_Number_2}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Person 3:</strong> {selectedTrip.Person_3}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile Number 3:</strong>{" "}
+                    {selectedTrip.Mobile_Number_3}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Person 4:</strong> {selectedTrip.Person_4}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile Number 4:</strong>{" "}
+                    {selectedTrip.Mobile_Number_4}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Person 5:</strong> {selectedTrip.Person_5}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile Number 5:</strong>{" "}
+                    {selectedTrip.Mobile_Number_5}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Person 6:</strong> {selectedTrip.Person_6}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Mobile Number 6:</strong>{" "}
+                    {selectedTrip.Mobile_Number_6}
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -424,13 +485,9 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                                 >
                                   Number of People:
                                 </label>
-                               
                               </div>
-                             
-                             
-                              <h5 className="fw-bold my-2">
-                                Pickup Location:
-                              </h5>
+
+                              <h5 className="fw-bold my-2">Pickup Location:</h5>
                               <input
                                 type="text"
                                 value={editedTrip.pickup}
@@ -605,9 +662,12 @@ const [selectedTrip, setSelectedTrip] = useState(null);
                       ) : (
                         <>
                           <div className="d-flex align-items-center gap-2">
-                          <button className="btn btn-primary" onClick={() => handleViewMore(trip._id)}>
-                        View More
-                      </button>
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => handleViewMore(trip._id)}
+                            >
+                              <i className="fas fa-eye"></i>
+                            </button>
                             <button
                               className="btn btn-info"
                               onClick={() => handleEditTrip(trip._id)}

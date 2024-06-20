@@ -33,6 +33,8 @@ const StartEndDetails = () => {
     drivermobileno: "",
     address: "",
     vehicleno: "",
+    totalDays:"",
+    totalHours:"",
   });
 
   useEffect(() => {
@@ -69,24 +71,30 @@ const StartEndDetails = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-
+  
+    // Update formData state with the changed field
+    setFormData({ ...formData, [name]: value });
+  
     // Calculate total days and total hours if relevant fields change
     if (name === "date" || name === "time" || name === "date1" || name === "time1") {
-      const pickupDateTime = new Date(selectedCustomerDetails.date + " " + selectedCustomerDetails.time);
-      const dropoffDateTime = new Date(selectedCustomerDetails.date1 + " " + selectedCustomerDetails.time1);
-      
-      const diffTime = Math.abs(dropoffDateTime - pickupDateTime);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-      const diffHours = Math.ceil(diffTime / (1000 * 60 * 60)); 
-      
-      setTotalDays(diffDays);
-      setTotalHours(diffHours);
+      const pickupDateTime = new Date(selectedCustomerDetails.date + "T" + selectedCustomerDetails.time);
+      const dropoffDateTime = new Date(selectedCustomerDetails.date1 + "T" + selectedCustomerDetails.time1);
+  
+      if (!isNaN(pickupDateTime.getTime()) && !isNaN(dropoffDateTime.getTime())) {
+        const diffTime = Math.abs(dropoffDateTime - pickupDateTime);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+        setTotalDays(diffDays);
+        setTotalHours(diffHours);
+      } else {
+        // Handle invalid dates/times if needed
+        console.error("Invalid date/time format");
+      }
     }
   };
+  
+  
   
   const showAlert = (message, type) => {
     if (type === "success") {
@@ -133,6 +141,7 @@ const StartEndDetails = () => {
             toll: formData.toll,
           allowance: formData.allowance,
           nightstay: formData.nightstay,
+          
           }),
         }
       );
@@ -339,8 +348,8 @@ const StartEndDetails = () => {
                       type="number"
                       name="totalDays"
                       placeholder="Enter Total Days"
-                      value={formData.totalDays}
-                      onChange={handleChange}
+                      value={totalDays}
+                      readOnly
                     />
                   </div>
                 
@@ -353,9 +362,9 @@ const StartEndDetails = () => {
                       className="rate-form-control-Startenddetails"
                       type="number"
                       name="totalDays"
-                      placeholder="Enter Total Hours "
-                      value={FormData.totalDays}
-                      onChange={handleChange}
+                      // placeholder="Enter Total Hours "
+                      value={totalHours}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -364,11 +373,15 @@ const StartEndDetails = () => {
             
             
           </div>
+         
+          
+
+          
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="vehicle" className="start-end-details-label">
-                  Type Of Vehicle:
+                   Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
@@ -382,15 +395,13 @@ const StartEndDetails = () => {
               </div>
             </div>
             <div className="start-end-details-column">
-              <div className="start-end-details-form-group">
-                <label
-                  htmlFor="triptype"
-                  className="start-end-details-label"
-                >
-                 Trip Type:
+            <div className="start-end-details-form-group">
+                <label htmlFor="triptype" className="start-end-details-label">
+                   Trip Type:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
-  x                className="start-end-details-input"
+                  className="start-end-details-input"
                   type="text"
                   name="triptype"
                   placeholder="Enter Trip Type"
@@ -400,9 +411,6 @@ const StartEndDetails = () => {
               </div>
             </div>
           </div>
-          
-
-          
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">

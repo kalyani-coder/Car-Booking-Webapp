@@ -4,7 +4,7 @@ import "jspdf-autotable";
 import { Table } from "react-bootstrap";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
-import "./ViewDriverDetails.css"
+import "./ViewDriverDetails.css";
 
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -14,7 +14,8 @@ const ViewStartEndDetails = () => {
   const [editMode, setEditMode] = useState(false);
   const [editedShareDetail, setEditedShareDetail] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [selectedTrip, setSelectedTrip] = useState(null);
 
   useEffect(() => {
     const fetchShareDetails = async () => {
@@ -74,7 +75,7 @@ const ViewStartEndDetails = () => {
       if (response.ok) {
         const updatedDetail = await response.json();
   
-        // Optimistically update state
+        // Optimistically update state with the actual response data
         setShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
             detail._id === updatedDetail._id ? updatedDetail : detail
@@ -92,7 +93,7 @@ const ViewStartEndDetails = () => {
   
         // Show success message
         alert("Share detail updated successfully");
-        setErrorMessage(''); // Clear any error messages
+        setErrorMessage(""); // Clear any error messages
       } else {
         console.error("Error updating share detail:", response.status);
         setErrorMessage("Error updating share detail. Please try again."); // Set error message
@@ -102,9 +103,6 @@ const ViewStartEndDetails = () => {
       setErrorMessage("Error updating share detail. Please try again."); // Set error message
     }
   };
-  
-  
-  
   
 
   const handleCloseEdit = () => {
@@ -142,6 +140,27 @@ const ViewStartEndDetails = () => {
         setError("Error deleting share detail: " + error.message);
       }
     }
+  };
+  const fetchShareDetails = async (_id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8787/api/getDetails-fromDriver/${_id}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setSelectedTrip(data);
+    } catch (error) {
+      console.error("Error fetching trip details:", error);
+      setErrorMessage("Error fetching trip details: " + error.message);
+    }
+  };
+  const handleViewMoreShareDetail = (_id) => {
+    fetchShareDetails(_id);
+  };
+  const handleCloseModal = () => {
+    setSelectedTrip(null);
   };
 
   const handleInputChange = (e) => {
@@ -216,21 +235,24 @@ const ViewStartEndDetails = () => {
                     <td>
                       <div className="d-flex justify-content-between">
                         <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() =>
+                            handleViewMoreShareDetail(shareDetail._id)
+                          }
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
+                        <button
                           className="btn btn-info btn-sm"
                           onClick={() => handleEditShareDetail(shareDetail)}
                         >
                           <FaEdit />
                         </button>
-                        {/* <button
-                          className='btn btn-success btn-sm'
-                          onClick={handleSaveShareDetail}
-                          disabled={editedShareDetail?._id !== shareDetail._id}
-                        >
-                          <FaSave />
-                        </button> */}
                         <button
                           className="btn btn-danger btn-sm"
-                          onClick={() => handleDeleteShareDetail(shareDetail)}
+                          onClick={() =>
+                            handleDeleteShareDetail(shareDetail._id)
+                          }
                         >
                           <FaTrash />
                         </button>
@@ -241,6 +263,7 @@ const ViewStartEndDetails = () => {
               </tbody>
             </Table>
           )}
+          {/* Edit View Driver Details */}
           <Modal
             show={editMode}
             onHide={handleCloseEdit}
@@ -447,6 +470,92 @@ const ViewStartEndDetails = () => {
               </Button>
             </Modal.Footer>
           </Modal>
+          {/* View DriverDetails */}
+          {errorMessage && <p>{errorMessage}</p>}
+
+          {/* Modal or Overlay for displaying trip details */}
+          {selectedTrip && (
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <div
+                className="bg-white p-4 rounded shadow-lg w-96"
+                style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-bold">View Driver Details</h2>
+                  <button className="text-black-500" onClick={handleCloseModal}>
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  <p>
+                  <p>
+                    <strong>Customer Name:</strong> {selectedTrip.customername}
+                  </p>
+                  <p>
+                    <strong>Customer Mobile:</strong>{" "}
+                    {selectedTrip.customermobile}
+                  </p>
+                    <strong>Driver Name:</strong> {selectedTrip.drivername}
+                  </p>
+                  <p>
+                    <strong>Driver Mobile:</strong> {selectedTrip.mobileno}
+                  </p>
+                  <p>
+                    <strong>Vehicle Number:</strong> {selectedTrip.vehicleno}
+                  </p>
+                  <p>
+                    <strong>Trip Type:</strong> {selectedTrip.triptype}
+                  </p>
+                  <p>
+                    <strong>Sub Type:</strong> {selectedTrip.subtype}
+                  </p>
+                  <p>
+                    <strong>Pickup:</strong> {selectedTrip.pickup}
+                  </p>
+                  <p>
+                    <strong>Time:</strong> {selectedTrip.time}
+                  </p>
+                  <p>
+                    <strong>Dropoff:</strong> {selectedTrip.Dropoff}
+                  </p>
+                  <p>
+                    <strong>Date:</strong> {selectedTrip.date1}
+                  </p>
+                  <p>
+                    <strong>Time:</strong> {selectedTrip.time1}
+                  </p>
+                  <p>
+                    <strong>Total Days:</strong> {selectedTrip.totalDays}
+                  </p>
+                  <p>
+                    <strong>Total Hours:</strong> {selectedTrip.totalHours}
+                  </p>
+                  <p>
+                    <strong>Toll:</strong> {selectedTrip.toll}
+                  </p>
+                  <p>
+                    <strong>Allowance:</strong> {selectedTrip.allowance}
+                  </p>
+                  <p>
+                    <strong>Night Stay:</strong> {selectedTrip.nightstay}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
