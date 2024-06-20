@@ -79,7 +79,7 @@ const ViewMaster = () => {
       }
     } catch (error) {
       console.error('Error updating master:', error);
-      setErrorMessage('Error updating master. Please try again.');
+      // setErrorMessage('Error updating master. Please try again.');
       setSuccessMessage('');
   
       // Revert the optimistic update if an exception occurs
