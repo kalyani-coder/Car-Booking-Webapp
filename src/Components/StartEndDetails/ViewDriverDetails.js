@@ -211,8 +211,6 @@ const ViewStartEndDetails = () => {
                   {/* <th>Time</th> */}
                   {/* <th>Total Days</th> */}
                   {/* <th>Total Hours</th> */}
-                  <th>Trip Type</th>
-                  <th>Sub Type</th>
                   <th>Mobile No</th>
                   <th>Actions</th>
                 </tr>
@@ -229,7 +227,7 @@ const ViewStartEndDetails = () => {
                     {/* <td>{shareDetail.time}</td> */}
                     <td>{shareDetail.Dropoff}</td>
                     <td>{shareDetail.date1}</td>
-                    <td>{shareDetail.time1}</td>
+                    {/* <td>{shareDetail.time1}</td> */}
                     {/* <td>{shareDetail.totalDays}</td> */}
                     {/* <td>{shareDetail.totalHours}</td> */}
                     
