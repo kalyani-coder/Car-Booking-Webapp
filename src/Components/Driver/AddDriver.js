@@ -169,7 +169,7 @@ const AddDriver = () => {
     <>
       <Sidebar />
       <div className="driver-Add-container">
-        <div className="driver-main-container">
+        <div className="driver-main-container relative left-[8rem] mt-7">
           <div className="driver-form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Driver</h2>
             <div className="driver-form-group">

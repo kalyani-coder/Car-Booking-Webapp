@@ -126,40 +126,41 @@ const ViewMaster = () => {
   return (
     <>
       <Sidebar />
-      <div className="customer-Add-container">
-        <div className="customer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Master</h2>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Sr No</th>
-                <th>Vehicle</th>
-                <th>Duty Type</th>
-                <th>Rate</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.add_vehicle}</td>
-                  <td>{item.add_duty_type}</td>
-                  <td>{item.add_rate}</td>
-                  <td>
-                    <div className="d-flex align-items-center gap-1">
-                      <button className='btn btn-info' onClick={() => handleEdit(item)}>
-                        <FaEdit />
-                      </button>
-                      <button className='btn btn-danger' onClick={() => handleDelete(item._id)}>
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="customer-Add-container ">
+        <div className="customer-main-container h-[98vh] p-2 mt-4">
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }} className='text-center'>View Master</h2>
+          <table className="w-[120vh] bg-white border-collapse">
+  <thead className='p-2 border-b-2 border-gray-300'>
+    <tr className='p-2'>
+      <th className='p-2 border-b-2 border-gray-300'>Sr No</th>
+      <th className='p-2 border-b-2 border-gray-300'>Vehicle</th>
+      <th className='border-b-2 border-gray-300'>Duty Type</th>
+      <th className='p-2 border-b-2 border-gray-300'>Rate</th>
+      <th className='p-2 relative left-16 border-b-2 border-gray-300'>Action</th>
+    </tr>
+  </thead>
+  <tbody className=''>
+    {data.map((item, index) => (
+      <tr key={index} className='p-2 border-b border-gray-200'>
+        <td className='p-2 border-b border-gray-200'>{index + 1}</td>
+        <td className='p-2 border-b border-gray-200'>{item.add_vehicle}</td>
+        <td className='p-2 border-b border-gray-200'>{item.add_duty_type}</td>
+        <td className='p-2 border-b border-gray-200'>{item.add_rate}</td>
+        <td className='p-2 border-b border-gray-200'>
+          <div className="d-flex align-items-center gap-4 relative left-10">
+            <button className='btn btn-info' onClick={() => handleEdit(item)}>
+              <FaEdit />
+            </button>
+            <button className='btn btn-danger' onClick={() => handleDelete(item._id)}>
+              <FaTrash />
+            </button>
+          </div>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
         </div>
       </div>
       {isEditing && (

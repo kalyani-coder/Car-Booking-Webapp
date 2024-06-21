@@ -17,8 +17,8 @@ const initialFormData = {
   extra_km: "",
   hours: "",
   extra_hours: "",
-  from:"",
-  to:""
+  from: "",
+  to: ""
 };
 
 const CustomerRate = () => {
@@ -42,8 +42,8 @@ const CustomerRate = () => {
           formData.Cus_Type === "Corporate Customer"
             ? "http://localhost:8787/api/corporate-customer"
             : formData.Cus_Type === "Indivisual Customer"
-            ? "http://localhost:8787/api/indivisual-customer"
-            : "";
+              ? "http://localhost:8787/api/indivisual-customer"
+              : "";
 
         if (endpoint) {
           const response = await fetch(endpoint);
@@ -168,7 +168,7 @@ const CustomerRate = () => {
     //   window.alert("Please fill in all required fields");
     //   return;
     // }
- 
+
     const formDataWithCustomer = {
       ...formData,
       customerId: selectedCustomer._id,
@@ -229,20 +229,20 @@ const CustomerRate = () => {
       <Sidebar />
       <div className="rate-Add-container">
         <div className="rate-main-container">
-          <div className="rate-form-container">
+          <div className="rate-form-container relative left-[6rem]">
             <h2
               style={{
                 fontSize: "2rem",
                 fontWeight: "bold",
-                marginBottom: "8px",
+                marginBottom: "1rem",
               }}
             >
               Corporate Customer
             </h2>
-            
+
             {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+            {errorAlert && <Alert alert={errorAlert} />}
+
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">
@@ -340,7 +340,7 @@ const CustomerRate = () => {
                   <p className="error-message">{mobilenoError}</p>
                 )}
               </div>
-             
+
               <div className="form-group">
                 <label htmlFor="type_of_vehicle" className="form-label">
                   Add Type Of Vehicle:

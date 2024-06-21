@@ -117,7 +117,7 @@ const ViewVenderRate = () => {
     <>
       <Sidebar />
       <div className="customer-Add-container">
-        <div className="customer-main-container">
+        <div className="customer-main-container h-[98vh]">
           <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '8px' }}>View Vendor Rate</h2>
 
           <div className="search-bar">

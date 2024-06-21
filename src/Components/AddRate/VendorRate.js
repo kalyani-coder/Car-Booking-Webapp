@@ -106,13 +106,13 @@ const VendorRate = () => {
     <>
       <Sidebar />
       <div className="rate-Add-container">
-        <div className="rate-main-container">
+        <div className="rate-main-container relative left-[6rem] mt-2">
           <div className="rate-form-container">
             <h2
               style={{
                 fontSize: "2rem",
                 fontWeight: "bold",
-                marginBottom: "8px",
+                marginBottom: "2rem",
               }}
             >
               Vendor Rate

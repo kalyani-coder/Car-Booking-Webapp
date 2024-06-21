@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
 
-const initialFormData = { 
+const initialFormData = {
   add_vehicle: "",
   add_duty_type: "",
   add_rate: "",
@@ -16,7 +16,7 @@ const MasterCorporateCustomer = () => {
   const [errorAlert, setErrorAlert] = useState(null);
 
 
-  
+
   const showAlert = (message, type) => {
     if (type === "success") {
       setSuccessAlert({ msg: message, type: type });
@@ -32,7 +32,7 @@ const MasterCorporateCustomer = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch("http://localhost:8787/api/masterrate", {
         method: "POST",
@@ -41,7 +41,7 @@ const MasterCorporateCustomer = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         alert("Data added successfully!", "success");
         setFormData(initialFormData);
@@ -54,26 +54,27 @@ const MasterCorporateCustomer = () => {
       showAlert("Failed to add data. Please try again.", "danger");
     }
   };
-  
+
 
   return (
     <>
       <Sidebar />
-      <div className="rate-Add-container">
-        <div className="rate-main-container">
+      <div className="rate-Add-container pt-4">
+        <div className="rate-main-container h-[98vh]">
           <div className="rate-form-container">
             <h2
               style={{
                 fontSize: "2rem",
                 fontWeight: "bold",
-                marginBottom: "8px",
+                marginBottom: "1rem",
+                
               }}
             >
               Master
             </h2>
 
             {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
+            {errorAlert && <Alert alert={errorAlert} />}
             {/* Form */}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -134,8 +135,8 @@ const MasterCorporateCustomer = () => {
                 </div>
               </div>
 
-              
-              
+
+
               <button type="submit" className="rate-btn-submit">
                 Save
               </button>
