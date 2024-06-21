@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./AddRate.css";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
@@ -15,20 +16,58 @@ const VendorRate = () => {
     rate_per_Km: "",
     hour: "",
     km: "",
-    // extra_km: "",
     extra_hour: "",
+    address: ""
   };
 
   const [formData, setFormData] = useState(initialFormData);
   const [mobilenoError, setMobilenoError] = useState(""); 
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
+  const [vendorList, setVendorList] = useState([]);
+  const [selectedVendor, setSelectedVendor] = useState(null);
+
+  useEffect(() => {
+    const fetchVendors = async () => {
+      try {
+        const response = await axios.get("http://localhost:8787/api/add-venders");
+        setVendorList(response.data);
+      } catch (error) {
+        console.error("Error fetching vendors:", error);
+      }
+    };
+
+    fetchVendors();
+  }, []);
+
+  const handleVendorChange = (e) => {
+    const vendorId = e.target.value;
+    const selectedVendor = vendorList.find((vendor) => vendor._id === vendorId);
+    setSelectedVendor(selectedVendor);
+    if (selectedVendor) {
+      setFormData({
+        company_Name: selectedVendor.company_Name,
+        GST_No: selectedVendor.GST_No,
+        vender_Name: selectedVendor.vender_Name,
+        mobile_Number: selectedVendor.vender_Mobile,
+        address: selectedVendor.address,
+        vehicle: "",
+        title: "",
+        rate: "",
+        rate_per_Km: "",
+        hour: "",
+        km: "",
+        extra_hour: ""
+      });
+    } else {
+      setFormData(initialFormData);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     if (name === "mobile_Number" && value.length > 10) {
-      // Prevent further input if more than 10 digits
       return;
     }
 
@@ -38,7 +77,6 @@ const VendorRate = () => {
     }));
 
     if (name === "mobile_Number") {
-      // Validate mobile number (10 digits)
       if (!/^\d{10}$/.test(value)) {
         setMobilenoError("Mobile number must be 10 digits");
       } else {
@@ -57,15 +95,13 @@ const VendorRate = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      }, 5000);
     }
   };
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the form from submitting and causing a page reload
+    e.preventDefault();
 
-    // Validate form fields
     for (const key in formData) {
       if (formData[key] === "") {
         window.alert("All fields are required");
@@ -73,7 +109,6 @@ const VendorRate = () => {
       }
     }
   
-    // Check if mobile number validation error exists
     if (mobilenoError) {
       window.alert(mobilenoError);
       return;
@@ -87,14 +122,14 @@ const VendorRate = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData), // Sending the updated formData instead of initialFormData
+          body: JSON.stringify(formData),
         });
 
       if (response.ok) {
-        showAlert("Vender added successfully!" , "success");
-        setFormData(initialFormData); // Reset the form fields to their initial values
+        alert("Vender added successfully!" , "success");
+        setFormData(initialFormData);
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
@@ -119,10 +154,34 @@ const VendorRate = () => {
             </h2>
             
             {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
+            {errorAlert && <Alert alert={errorAlert} />}
             
             <form onSubmit={handleSubmit}>
-            
+              <div className="form-group">
+                <label htmlFor="vender_Name" className="form-label">
+                  Vendor Name:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <select
+                  className="form-control-add-trip-input"
+                  id="vender_Name"
+                  name="vender_Name"
+                  onChange={handleVendorChange}
+                  value={selectedVendor ? selectedVendor._id : ""}
+                >
+                  <option value="">Select Vendor</option>
+                  {vendorList.length > 0 ? (
+                    vendorList.map((vendor) => (
+                      <option key={vendor._id} value={vendor._id}>
+                        {vendor.vender_Name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No Vendors Available</option>
+                  )}
+                </select>
+              </div>
+
               <div className="rate-form-group">
                 <label htmlFor="company_Name" className="form-label">
                   Company Name:
@@ -156,21 +215,6 @@ const VendorRate = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="vender_Name" className="form-label">
-                  Vendor Name:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="text"
-                  id="vender_Name"
-                  name="vender_Name"
-                  placeholder="Vendor Name"
-                  value={formData.vender_Name}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
                 <label htmlFor="mobile_Number" className="form-label">
                   Mobile No:
                   <span className="required-asterisk">*</span>
@@ -185,55 +229,55 @@ const VendorRate = () => {
                   onChange={handleChange}
                   required
                 />
+                {mobilenoError && <p className="error-text">{mobilenoError}</p>}
               </div>
-              <div className="trip-form-group">
-            <label htmlFor="vehicle" className="trip-form-label">
-              Type Of Vehicle:
-            </label>
-            <select
-              className="form-control-add-trip-input"
-              name="vehicle"
-              id="vehicle"
-              onChange={handleChange}
-              value={formData.vehicle}
-            >
-              <option value="">Vehicle</option>
-              <option value="Sedan Car">Sedan Car</option>
-              <option value="Mini Car">Mini Car</option>
-              <option value="SUV Car">SUV Car</option>
-              <option value="AC Bus 13-Seater">AC Bus 13-Seater</option>
-              <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
-              <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
-              <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
-              <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
-              <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
-              <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
-              <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
-              <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
-              <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
-              <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
-              <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
-              <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
-            </select>
-          </div>
-              {/* <div className="form-group">
-                <label htmlFor="rate_per_Km" className="form-label">
-                  Rate Per KM (Extra Km):
+              <div className="form-group">
+                <label htmlFor="address" className="form-label">
+                  Address:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-rate-add-input"
                   type="text"
-                  id="rate_per_Km"
-                  name="rate_per_Km"
-                  placeholder="Rate Per KM"
-                  value={formData.rate_per_Km}
+                  id="address"
+                  name="address"
+                  placeholder="Address"
+                  value={formData.address}
                   onChange={handleChange}
                   required
                 />
-              </div> */}
-
-
+              </div>
+              <div className="trip-form-group">
+                <label htmlFor="vehicle" className="trip-form-label">
+                  Type Of Vehicle:
+                </label>
+                <select
+                  className="form-control-add-trip-input"
+                  name="vehicle"
+                  id="vehicle"
+                  onChange={handleChange}
+                  value={formData.vehicle}
+                >
+                  <option value="">Vehicle</option>
+                  <option value="Sedan Car">Sedan Car</option>
+                  <option value="Mini Car">Mini Car</option>
+                  <option value="SUV Car">SUV Car</option>
+                  <option value="AC Bus 13-Seater">AC Bus 13-Seater</option>
+                  <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
+                  <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
+                  <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
+                  <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
+                  <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
+                  <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
+                  <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
+                  <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
+                  <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
+                  <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
+                  <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
+                  <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
+                </select>
+              </div>
+              
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -275,12 +319,12 @@ const VendorRate = () => {
                   </div>    
                 </div>
               </div>
-            
+              
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
-                    KM:
+                      KM:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
@@ -314,6 +358,7 @@ const VendorRate = () => {
                   </div>    
                 </div>
               </div>
+              
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -353,7 +398,7 @@ const VendorRate = () => {
                 </div>
               </div>
 
-              <button type="submit" className="rate-btn-submit" onClick={handleSubmit}>
+              <button type="submit" className="rate-btn-submit">
                 Save
               </button>
             </form>

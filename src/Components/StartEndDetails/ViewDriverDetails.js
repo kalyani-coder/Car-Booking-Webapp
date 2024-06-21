@@ -167,6 +167,14 @@ const ViewStartEndDetails = () => {
   };
 
   const generatePDF = (trip) => {
+    // Ensure numeric values and calculate total amount
+  const toll = parseFloat(trip.toll) || 0;
+  const allowance = parseFloat(trip.allowance) || 0;
+  const nightstay = parseFloat(trip.nightstay) || 0;
+  const totalAmt = toll + allowance + nightstay;
+   // Format total amount with currency symbol
+   const formattedTotalAmt = `Rs ${totalAmt.toFixed(2)}`;
+
     const doc = new jsPDF();
     
     // Set page dimensions
@@ -213,6 +221,7 @@ const ViewStartEndDetails = () => {
       ['Toll', trip.toll],
       ['Allowance', trip.allowance],
       ['Night Stay', trip.nightstay],
+      ["Total Amount", totalAmt.toFixed(2)],
     ];
     
     doc.autoTable({

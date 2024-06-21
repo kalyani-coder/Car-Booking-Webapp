@@ -26,7 +26,7 @@ const AddVendor = () => {
     if (name === "vendorname" && !/^[A-Za-z\s]+$/.test(value)) {
       return;
     }
-    if (name === "companyname" && !/^[A-Za-z\s]+$/.test(value)) {
+    if (name === "companyname" && !/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(value)) {
       return;
     }
 
@@ -89,8 +89,8 @@ const AddVendor = () => {
       alert("Vendor name must contain only letters and spaces.");
       return;
     }
-    if (!/^[A-Za-z\s]+$/.test(formData.companyname)) {
-      alert("Company name must contain only letters and spaces.");
+    if (!/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(formData.companyname)) {
+      alert("Company name must contain letters and spaces, but not only numbers.");
       return;
     }
     if (!/^\d{10}$/.test(formData.mobileno)) {
