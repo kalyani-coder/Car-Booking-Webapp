@@ -27,7 +27,7 @@ const ShareDetails = () => {
     vehicleno: '',
   });
 
-  
+
 
   useEffect(() => {
     // Fetch data from the API endpoint
@@ -102,7 +102,7 @@ const ShareDetails = () => {
 
       if (response.ok) {
         console.log('Details saved successfully!');
-        showAlert("Share Details Saved successfully!" , "success");
+        showAlert("Share Details Saved successfully!", "success");
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
       }
@@ -116,8 +116,8 @@ const ShareDetails = () => {
       <Sidebar />
       <div className="share-details-container">
         {/* {mobilenoError && <p className="text-red-500">{mobilenoError}</p>} */}
-        <div className="share-details-form">
-          <h2
+        <div className="share-details-form ml-12">
+          <h2 className='relative  left-[34%]'
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -128,24 +128,24 @@ const ShareDetails = () => {
           </h2>
 
           {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+          {errorAlert && <Alert alert={errorAlert} />}
+
           <div className="share-details-row">
             <div className="share-details-column">
               <div className="share-details-form-group">
-              <label htmlFor="vehicle" className="share-details-label">
+                <label htmlFor="vehicle" className="share-details-label">
                   Customer Name:
                 </label>
-                <select  className="share-details-input" value={selectedCustomer} onChange={(e) => handleCustomerChange(e.target.value)}>
-          {/* Default option */}
-          <option value="" disabled>Select a customer</option>
-          {/* Map over the customers array to populate the dropdown */}
-          {customers.map((customer, index) => (
-            <option key={index}   value={customer.customername}>
-              {customer.customername}
-            </option>
-          ))}
-        </select>
+                <select className="share-details-input" value={selectedCustomer} onChange={(e) => handleCustomerChange(e.target.value)}>
+                  {/* Default option */}
+                  <option value="" disabled>Select a customer</option>
+                  {/* Map over the customers array to populate the dropdown */}
+                  {customers.map((customer, index) => (
+                    <option key={index} value={customer.customername}>
+                      {customer.customername}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -307,7 +307,7 @@ const ShareDetails = () => {
                 <label htmlFor="date" className="share-details-label">
                   Pickup Date:
                 </label>
-                <input type="date"  className="share-details-input" value={selectedCustomerDetails.date} readOnly />
+                <input type="date" className="share-details-input" value={selectedCustomerDetails.date} readOnly />
               </div>
             </div>
 
@@ -316,7 +316,7 @@ const ShareDetails = () => {
                 <label htmlFor="date1" className="share-details-label">
                   Dropoff Date:
                 </label>
-                <input type="date"  className="share-details-input" value={selectedCustomerDetails.date1} readOnly />
+                <input type="date" className="share-details-input" value={selectedCustomerDetails.date1} readOnly />
               </div>
             </div>
           </div>
@@ -365,14 +365,14 @@ const ShareDetails = () => {
                   value={selectedCustomerDetails.drivername} readOnly
                 />
               </div>
-              
-          <button
-            type="button"
-            className="customer-btn-submit"
-            onClick={handleSave}
-          >
-            Save
-          </button>
+
+              <button
+                type="button"
+                className="customer-btn-submit"
+                onClick={handleSave}
+              >
+                Save
+              </button>
             </div>
 
             <div className="share-details-column">
