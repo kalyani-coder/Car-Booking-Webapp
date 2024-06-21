@@ -100,7 +100,7 @@ const ViewCustomerRate = () => {
     <>
       <Sidebar />
       <div className="customer-Add-container">
-        <div className="customer-main-container">
+        <div className="customer-main-container h-[98vh]">
           <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Customer List</h2>
 
 

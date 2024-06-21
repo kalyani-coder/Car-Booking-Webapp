@@ -143,14 +143,14 @@ const AddVendor = () => {
       <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }} className="text-center mb-4 mt-4">
             Add Vendor
           </h2>
 
           {successAlert && <Alert alert={successAlert} />}
           {errorAlert && <Alert alert={errorAlert} />}
 
-          <div className="vendor-form-container">
+          <div className="vendor-form-container relative left-[6rem]">
             <form>
               <div className="vendor-form-group">
                 <label htmlFor="vendorname" className="form-label">
