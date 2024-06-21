@@ -115,7 +115,7 @@ const CustomerEnquiry = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",
       customer_name: formData.customername,
@@ -125,7 +125,7 @@ const CustomerEnquiry = () => {
       sub_type: formData.sub_type,
       pic_up: formData.pic_up,
       date1: formatDateForPost(formData.date1),
-    date2: formatDateForPost(formData.date2),
+      date2: formatDateForPost(formData.date2),
       time1: formData.time1,
       drop_of: formData.drop_of,
       time2: formData.time2,
@@ -134,7 +134,7 @@ const CustomerEnquiry = () => {
       totalHours: formData.totalHours,
       address: formData.address,
     };
-  
+
     try {
       console.log("Sending API request with data:", apiData);
       const response = await axios.post("http://localhost:8787/api/customer-enquiry", apiData, {
@@ -142,7 +142,7 @@ const CustomerEnquiry = () => {
           "Content-Type": "application/json",
         }
       });
-  
+
       if (response.status === 200 || response.status === 201) {
         const responseData = response.data;
         alert("Customer Enquiry Added successfully!", "success");
@@ -157,11 +157,11 @@ const CustomerEnquiry = () => {
       showAlert("Failed to add data. Please try again.", "error");
     }
   };
-  
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     let newData = { ...formData, [name]: value };
-  
+
     if (
       (name === "date1" ||
         name === "date2" ||
@@ -174,7 +174,7 @@ const CustomerEnquiry = () => {
     ) {
       let startDate = new Date(`${newData.date1}T${newData.time1}`);
       let endDate = new Date(`${newData.date2}T${newData.time2}`);
-  
+
       if (startDate.getTime() === endDate.getTime()) {
         newData = {
           ...newData,
@@ -186,31 +186,31 @@ const CustomerEnquiry = () => {
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
         }
-  
+
         const timeDifference = endDate - startDate;
         let totalHours = timeDifference / (1000 * 60 * 60);
         let totalMinutes = (totalHours - Math.floor(totalHours)) * 60;
-  
+
         // Handle rounding effect for 5:30
         if (totalHours <= 0 && totalHours > -1) {
           totalHours = 1;
           totalMinutes = 30;
         }
-  
+
         newData = {
           ...newData,
           totalDays: Math.floor(totalHours / 24).toString(),
           totalHours: (totalHours + (totalMinutes / 60)).toFixed(2),
-         totalMinutes: totalMinutes.toFixed(2).split('.')[1].padStart(2, '0'),
+          totalMinutes: totalMinutes.toFixed(2).split('.')[1].padStart(2, '0'),
           // Optional: totalHoursWithMinutes can be kept for consistency with the first version
           totalHoursWithMinutes: (totalHours + (totalMinutes / 60)).toFixed(2),
         };
       }
     }
-  
+
     setFormData(newData);
     setError("");
-};
+  };
 
   const handleBlur = () => {
     // updateTotal();
@@ -220,19 +220,19 @@ const CustomerEnquiry = () => {
     <>
       <Sidebar />
       <div className="customer-inquiry-container">
-        <div className="main-container">
+        <div className="main-container relative left-[6rem] mt-4">
           <div className="form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Customer Enquiry</h2>
-           
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "2rem" }}>Add Customer Enquiry</h2>
+
             {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+            {errorAlert && <Alert alert={errorAlert} />}
+
             <div className="form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name / Company Name:
                 <span className="required-asterisk">*</span>
               </label>
-              
+
               <select
                 className="form-control-add-trip-input"
                 id="customername"

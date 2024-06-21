@@ -22,7 +22,7 @@ function AllocateTrip() {
     drivername: '',
     mail: '',
     address: '',
-    drivermobileno:'',
+    drivermobileno: '',
     vehicleno: '',
   };
 
@@ -65,7 +65,7 @@ function AllocateTrip() {
   }, []);
 
   useEffect(() => {
-     if (selectedCustomer){
+    if (selectedCustomer) {
       setTripDetails({
         ...initialTripDetails,
         customerId: selectedCustomer._id, // Preserve customerId
@@ -81,8 +81,8 @@ function AllocateTrip() {
         subtype: selectedCustomer.subtype || "",
         vehicle: selectedCustomer.vehicle || "",
       })
-     }
-  },[ selectedCustomer]);
+    }
+  }, [selectedCustomer]);
 
   const fetchTripDetails = async (customerId) => {
     try {
@@ -113,18 +113,18 @@ function AllocateTrip() {
     }
   };
 
-  
+
   const [apiKey, setApiKey] = useState("8d8f316a636542f4b5f75a7faf1be48e");
 
 
 
- 
+
 
   const handleShareClick = async () => {
     try {
       // Fetch trip details first
       await fetchTripDetails(selectedCustomer.customerId);
-  
+
       // Log the data from text input fields
       console.log('Pickup Location:', tripDetails.pickup);
       console.log('Pickup Date:', tripDetails.date);
@@ -144,17 +144,17 @@ function AllocateTrip() {
       const textMessage = `hello ${tripDetails.customername} your booking is done your booking id is 
            ${tripDetails._id} your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickup} and your drop location is ${tripDetails.dropoff} 
            your driver details are driver name: ${tripDetails.drivername} and his mobile number: ${tripDetails.drivermobileno}`;
-  
-           console.log(textMessage)
-  
+
+      console.log(textMessage)
+
       const Url = "http://api.paysmm.co.in/wapp/api/send";
       const mobileNumber = tripDetails.mobileno;
-      
+
       const url = `${Url}?apikey=${apiKey}&mobile=${mobileNumber}&msg=${textMessage}`;
-  
+
       // // Open the URL in a new browser window
       window.open(url, "_blank");
-  
+
       // // Log the request details if needed
       console.log("Opening link:", url);
     } catch (error) {
@@ -181,10 +181,10 @@ function AllocateTrip() {
     // Construct payload object
     const payload = {
       customerId: selectedCustomer?._id,
-    customername: selectedCustomer?.customername,
-    customermobile: tripDetails.mobileno,
-    pickuplocation: tripDetails.pickup,
-    dropofflocation: tripDetails.dropoff, // Assuming customer mobile is available
+      customername: selectedCustomer?.customername,
+      customermobile: tripDetails.mobileno,
+      pickuplocation: tripDetails.pickup,
+      dropofflocation: tripDetails.dropoff, // Assuming customer mobile is available
       // Add other fields from tripDetails
       ...tripDetails,
     };
@@ -193,7 +193,7 @@ function AllocateTrip() {
     axios.post('http://localhost:8787/api/trip-details', payload)
       .then(response => {
         // Handle success
-        showAlert("Allocate Trip added successfully!" , "success");
+        showAlert("Allocate Trip added successfully!", "success");
         console.log('Trip allocated successfully:', response.data);
         // Optionally, you can reset form fields or show a success message
       })
@@ -203,49 +203,49 @@ function AllocateTrip() {
         // Optionally, show an error message to the user
       });
   };
-  
+
   return (
     <>
       <Sidebar />
 
       <div className="trip-details-container">
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Allocate Trip Details</h2>
-        
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold"}} className='relative left-[22rem] mt-2 mb-2'>Allocate Trip Details</h2>
+
         {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-              
-        <div className='d-flex gap-3'>
-          <div className="trip-details-section">
+        {errorAlert && <Alert alert={errorAlert} />}
+    
+        <div className='d-flex gap-3'  style={{borderTop: "3px dashed black"}}>
+          <div className="trip-details-section mt-4">
             {error && <p className="text-red-500">{error}</p>}
             <h2 className="trip-details-heading">Trip Details</h2>
             <div className="trip-details-form">
-            
-              <div className="pt-4 mb-2 grid-gap-2">
-              <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
+
+              <div className="pt-4 mb-1 grid-gap-2">
+                <label htmlFor='triptype' className="trip-details-label">Customer Name:</label>
                 <span className="required-asterisk">*</span>
                 <select
-        className="driver-details-input"
-        id="customerId"
-        name="customerId"
-        onChange={(e) => {
-          const selectedCustomer = customers.find(
-            (customer) => customer.customername === e.target.value
-          );
-          setSelectedCustomer(selectedCustomer);
-        }}
-        value={selectedCustomer ? selectedCustomer.customername : ''}
-      >
-        <option value="">Select Customer</option>
-        {customers.map((customer) => (
-          <option key={customer._id} value={customer.customername}>
-            {customer.customername}
-          </option>
-        ))}
-      </select>
+                  className="driver-details-input"
+                  id="customerId"
+                  name="customerId"
+                  onChange={(e) => {
+                    const selectedCustomer = customers.find(
+                      (customer) => customer.customername === e.target.value
+                    );
+                    setSelectedCustomer(selectedCustomer);
+                  }}
+                  value={selectedCustomer ? selectedCustomer.customername : ''}
+                >
+                  <option value="">Select Customer</option>
+                  {customers.map((customer) => (
+                    <option key={customer._id} value={customer.customername}>
+                      {customer.customername}
+                    </option>
+                  ))}
+                </select>
 
                 <div className="d-flex gap-3">
                   <div>
-                  <label htmlFor='pickup' className="trip-details-label">Pickup Location:</label>
+                    <label htmlFor='pickup' className="trip-details-label">Pickup Location:</label>
                     <span className="required-asterisk">*</span>
                     <input
                       type="text"
@@ -276,7 +276,7 @@ function AllocateTrip() {
                     />
                   </div>
                 </div>
-                
+
                 <div className="d-flex gap-3">
                   <div>
                     <label className="trip-details-label">Dropoff Location:</label>
@@ -369,11 +369,11 @@ function AllocateTrip() {
             </div>
           </div>
 
-          <div className="driver-details-section">
+          <div className="driver-details-section mt-4">
             <h2 className="driver-details-heading">Driver Details</h2>
             <div className="driver-details-form">
-              <div className="pt-4 mb-2 grid-gap-2">
-              <label htmlFor="mobileno" className="driver-details-label">Customer Mobile No:</label>
+              <div className="pt-4 mb-1 grid-gap-2">
+                <label htmlFor="mobileno" className="driver-details-label">Customer Mobile No:</label>
                 <span className="required-asterisk">*</span>
                 <input
                   type="number"
@@ -424,7 +424,7 @@ function AllocateTrip() {
                   value={tripDetails.address}
                   onChange={(e) => handleFieldChange('address', e.target.value)}
                 />
-                 <label htmlFor="vehicleno" className="driver-details-label">Vehicle Number:</label>
+                <label htmlFor="vehicleno" className="driver-details-label">Vehicle Number:</label>
                 <input
                   type="text"
                   className="driver-details-input"
@@ -440,10 +440,10 @@ function AllocateTrip() {
 
         </div>
 
-        <div className="custom-button-container text-center mt-3">
-        <button className="custom-btn custom-allocate-btn" onClick={handleAllocateTrip}>
-        Allocate
-      </button>
+        <div className="custom-button-container text-center">
+          <button className="custom-btn custom-allocate-btn" onClick={handleAllocateTrip}>
+            Allocate
+          </button>
           <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
           </button>

@@ -374,12 +374,12 @@ const AddTrip = () => {
     <>
       <Sidebar />
       <div className="add-trip-container">
-        <div className="trip-main-container">
-          <h2
+        <div className="trip-main-container relative left-[6rem] mt-4">
+          <h2 className="text-center relative right-[5rem]"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
-              marginBottom: "8px",
+              marginBottom: "2rem",
             }}
           >
             Add Trip

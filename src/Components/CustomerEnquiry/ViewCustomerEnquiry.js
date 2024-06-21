@@ -235,12 +235,12 @@ const ViewCustomerEnquiry = () => {
     <>
       <Sidebar />
       <div className="customer-Add-container">
-        <div className="customer-main-container">
-          <h2
+        <div className="customer-main-container h-[100vh] mt-4">
+          <h2 className="text-center"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
-              marginBottom: "8px",
+              marginBottom: "1rem",
             }}
           >
             View Customer Enquiry
