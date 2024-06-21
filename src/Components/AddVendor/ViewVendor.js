@@ -48,28 +48,7 @@ const ViewVendor = () => {
     setIsEditing(true);
   };
 
-  // const handleDelete = async (vendorId) => {
-  //   try {
-  //     const response = await axios.delete(`http://localhost:8787/api/add-venders/${vendorId}`);
-
-  //     if (response.status === 200) {
-  //       setVendors((prevVendors) => prevVendors.filter((vendor) => vendor._id !== vendorId));
-  //       setFilteredVendors((prevFilteredVendors) =>
-  //         prevFilteredVendors.filter((vendor) => vendor._id !== vendorId)
-  //       );
-  //       setSuccessMessage('Vendor deleted successfully.');
-  //       setErrorMessage('');
-  //     } else {
-  //       console.error('Error deleting vendor:', response.status);
-  //       setSuccessMessage('');
-  //       setErrorMessage('Error deleting vendor. Please try again.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error deleting vendor:', error);
-  //     setSuccessMessage('');
-  //     setErrorMessage('Error deleting vendor. Please try again.');
-  //   }
-  // };
+  
 
   const handleDelete = async (vendorId) => {
     const confirmed = window.confirm("Are you sure you want to delete this vendor?");
@@ -114,11 +93,11 @@ const ViewVendor = () => {
           )
         );
         setIsEditing(false);
-        setSuccessMessage('Vendor data updated successfully');
+        alert('Vendor data updated successfully');
         setErrorMessage('');
       } else {
         console.error('Error updating vendor:', response.status);
-        setSuccessMessage('');
+        alert('');
         setErrorMessage('Error updating vendor. Please try again.');
       }
     } catch (error) {
