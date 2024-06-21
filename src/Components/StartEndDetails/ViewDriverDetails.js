@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { Table } from "react-bootstrap";
-import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTimes,FaFilePdf } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ViewDriverDetails.css";
+import img1 from "../../assects/images/shivpushpa_logo.png"
+
+
 
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -73,17 +77,14 @@ const ViewStartEndDetails = () => {
       );
   
       if (response.ok) {
-        const updatedDetail = await response.json();
-  
-        // Optimistically update state with the actual response data
         setShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
-            detail._id === updatedDetail._id ? updatedDetail : detail
+            detail._id === editedShareDetail._id ? editedShareDetail : detail
           )
         );
         setFilteredShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
-            detail._id === updatedDetail._id ? updatedDetail : detail
+            detail._id === editedShareDetail._id ? editedShareDetail : detail
           )
         );
   
@@ -105,42 +106,36 @@ const ViewStartEndDetails = () => {
   };
   
 
+  
+
   const handleCloseEdit = () => {
     setEditMode(false);
     setEditedShareDetail(null);
   };
 
-  const handleDeleteShareDetail = async (shareDetail) => {
-    const confirmed = window.confirm(
-      "Do you want to delete this share detail?"
-    );
+  const handleDeleteShareDetail = async (shareDetailId) => {
+    const confirmed = window.confirm("Are you sure you want to delete this share detail?");
     if (confirmed) {
       try {
-        const response = await fetch(
-          `http://localhost:8787/api/getDetails-fromDriver/${shareDetail._id}`,
-          {
-            method: "DELETE",
-          }
-        );
-
+        const response = await fetch(`http://localhost:8787/api/getDetails-fromDriver/${shareDetailId}`, {
+          method: 'DELETE',
+        });
+  
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
-
-        const updatedShareDetails = shareDetails.filter(
-          (detail) => detail._id !== shareDetail._id
-        );
-
-        setShareDetails(updatedShareDetails);
-        setFilteredShareDetails(updatedShareDetails);
-
-        alert("Share detail deleted successfully");
+  
+        setShareDetails((prevDetails) => prevDetails.filter((detail) => detail._id !== shareDetailId));
+        setFilteredShareDetails((prevDetails) => prevDetails.filter((detail) => detail._id !== shareDetailId));
+        alert('Share detail deleted successfully');
       } catch (error) {
-        console.error("Error deleting share detail:", error);
-        setError("Error deleting share detail: " + error.message);
+        console.error('Error deleting share detail:', error);
+        setErrorMessage('Error deleting share detail: ' + error.message);
       }
     }
   };
+  
+
   const fetchShareDetails = async (_id) => {
     try {
       const response = await fetch(
@@ -170,6 +165,92 @@ const ViewStartEndDetails = () => {
       [name]: value,
     }));
   };
+
+  const generatePDF = (trip) => {
+    const doc = new jsPDF();
+    
+    // Set page dimensions
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+  
+    // Draw border
+    const margin = 10;
+    doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
+
+    doc.addImage(img1, 'PNG', 15, 15, 45, 32);
+    // Header section 
+    doc.setFontSize(18);
+    doc.text("Shivpushpa Travels", 70, 30);
+    doc.setFontSize(12);
+    doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 70, 35);
+    doc.text("Mail: travelshivpushpa@gmail.com", 70, 40);
+
+    
+    // Title
+    doc.setFontSize(18);
+    doc.text("Driver Trip Details", 70 , 20);
+    
+    // Add a line to separate header and body
+    doc.line(10, 50, pageWidth - 10, 50);
+    
+    // Table
+    const columns = ["Field", "Value"];
+    const rows = [
+      ['Customer Name', trip.customername],
+      ['Customer Mobile', trip.customermobile],
+      ['Driver Name', trip.drivername],
+      ['Driver Mobile', trip.mobileno],
+      ['Vehicle Number', trip.vehicleno],
+      ['Trip Type', trip.triptype],
+      ['Sub Type', trip.subtype],
+      ['Pickup', trip.pickup],
+      ['Time', trip.time],
+      ['Dropoff', trip.Dropoff],
+      ['Drop Date', trip.date1],
+      ['Drop Time', trip.time1],
+      ['Total Days', trip.totalDays],
+      ['Total Hours', trip.totalHours],
+      ['Toll', trip.toll],
+      ['Allowance', trip.allowance],
+      ['Night Stay', trip.nightstay],
+    ];
+    
+    doc.autoTable({
+      startY: 60,
+      body: rows,
+      theme: "grid",
+      styles: {
+        fontSize: 10,
+        halign: "center",
+      },
+      columnStyles: {
+        0: { fontStyle: "bold", halign: "left" },
+        1: { halign: "left" },
+      },
+    });
+  
+    // Add space between the table and the "Bank Details" section
+    const tableEndY = doc.autoTable.previous.finalY + 10;
+  
+    // Bank Details section on the left
+    doc.setFontSize(10);
+    doc.text("Bank Details:", 15, tableEndY);
+    doc.text("Bank Name: The Cosmos Co-operative Bank Ltd", 15, tableEndY + 7);
+    doc.text("Branch Name: Kasba Raviwar Branch, Pune 411 002", 15, tableEndY + 14);
+    doc.text("Account Number: 015204301220061", 15, tableEndY + 21);
+    doc.text("IFSC Code: COSB0000015", 15, tableEndY + 28);
+    doc.text("MICR Code: 411164014", 15, tableEndY + 35);
+  
+    // Signature section
+    const signatureStartY = doc.autoTable.previous.finalY + 10;
+    doc.setFontSize(12);
+    doc.text("For Shivpushpa Travels", pageWidth - 60, signatureStartY);
+    doc.text("Authorised Signatory", pageWidth - 60, signatureStartY + 10);
+    
+    // Save the PDF
+    doc.save(`Trip_Details_${trip._id}.pdf`);
+  };
+  
 
   return (
     <>
@@ -255,6 +336,12 @@ const ViewStartEndDetails = () => {
                           }
                         >
                           <FaTrash />
+                        </button>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => generatePDF(shareDetail)}
+                        >
+                          <FaFilePdf />
                         </button>
                       </div>
                     </td>

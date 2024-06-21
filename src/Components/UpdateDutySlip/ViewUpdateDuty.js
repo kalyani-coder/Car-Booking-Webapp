@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
-import { FaEdit, FaSave, FaTrash } from "react-icons/fa";
+import { FaEdit, FaSave, FaTrash, FaFilePdf } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Customer from "./../CustomerEnquiry/Customer";
@@ -58,7 +58,18 @@ const ViewUpdateDuty = () => {
         doc.setFontSize(22); // Set font size to 22
 
         // Center the heading on the page and set it to red
+        // Set page dimensions
         const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+
+        // Draw border
+        const margin = 10;
+        doc.rect(
+          margin,
+          margin,
+          pageWidth - 2 * margin,
+          pageHeight - 2 * margin
+        );
         const headingX =
           pageWidth / 2 -
           (doc.getStringUnitWidth(heading) * doc.internal.getFontSize()) / 6;
@@ -208,28 +219,28 @@ const ViewUpdateDuty = () => {
         ];
 
         doc.setTextColor(255, 0, 0); // Set text color to red
-        doc.setFontSize(12); // Set font size to 12
+        doc.setFontSize(10); // Set font size to 12
         doc.setFont("helvetica", "bold");
-        let yOffset = doc.lastAutoTable.finalY + 10;
-        doc.text(instructionLines[0], 20, yOffset);
+        let yOffset = doc.lastAutoTable.finalY + 7;
+        doc.text(instructionLines[0], 15, yOffset);
 
         // Normal lines
         doc.setTextColor(0, 0, 0); // Set text color to black
         doc.setFont("helvetica", "normal"); // Set font to normal
         instructionLines.slice(1).forEach((line, index) => {
-          doc.text(line, 20, yOffset + (index + 1) * 10);
+          doc.text(line, 15, yOffset + (index + 1) * 7);
         });
 
         doc.setTextColor(255, 0, 0); // Set text color to red
         doc.setFont("helvetica", "bold"); // Set font to bold
-        doc.text("FOR SHIVPUSHPA TRAVELS", pageWidth - 90, yOffset);
+        doc.text("FOR SHIVPUSHPA TRAVELS", 145, yOffset);
 
         doc.setTextColor(0, 0, 0); // Set text color to black
         doc.setFont("helvetica", "normal"); // Reset font to normal
-        doc.text("Authorized Signatory", pageWidth - 70, yOffset + 10);
+        doc.text("Authorized Signatory", pageWidth - 60, yOffset + 10);
 
         // Save the PDF or open in a new tab
-        doc.save(`Trip_Duty_Slip_${formData.date}.pdf`);
+        doc.save(`Duty_Slip_${formData.date}.pdf`);
       }
     } catch (error) {
       console.error("Error generating trip duty slip:", error);
@@ -248,7 +259,9 @@ const ViewUpdateDuty = () => {
   };
 
   const handleDelete = async (customerId) => {
-    const confirmDelete = window.confirm("Do you want to delete the update duty?");
+    const confirmDelete = window.confirm(
+      "Do you want to delete the update duty?"
+    );
 
     if (confirmDelete) {
       try {
@@ -368,7 +381,7 @@ const ViewUpdateDuty = () => {
                             className="btn btn-primary"
                             onClick={() => toggleShowDetails(customer._id)}
                           >
-                            View More
+                            <i className="fas fa-eye"></i>
                           </button>
                           <button
                             className="btn btn-danger"
@@ -381,7 +394,7 @@ const ViewUpdateDuty = () => {
                             className="btn btn-info"
                             onClick={() => generateTripDutySlip(customer._id)}
                           >
-                            Print
+                            <FaFilePdf />
                           </button>
                         </>
                       )}

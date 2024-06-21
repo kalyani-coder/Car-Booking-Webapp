@@ -5,6 +5,8 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { FaEdit, FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
 // import ViewShareDetails from './ViewShareDetails.css';
+import img1 from "../../assects/images/shivpushpa_logo.png"
+
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -65,30 +67,42 @@ let invoiceCounter = 100;
             const invoiceNo = invoiceCounter.toString().padStart(3, '0');
       
       const doc = new jsPDF();
+      // Set page dimensions
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+  
+    // Draw border
+    const margin = 10;
+    doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
 
-      // For simplicity, we'll just add a sample table with the data
-      doc.text("Share Details Invoice", 10, 10);
       // Left side details
+      doc.addImage(img1, 'PNG', 15, 15, 45, 32);
+      doc.setFontSize(18);
+      doc.text("Shivpushpa Travels", 70, 30);
       doc.setFontSize(12);
-      doc.text("Shivpushpa Travels", 20, 30);
-      doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 20, 40);
-      doc.text("Mail: travelshivpushpa@gmail.com", 20, 50);
+      doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 70, 35);
+      doc.text("Mail: travelshivpushpa@gmail.com", 70, 40);
+      doc.text(`Date: ${shareDetail.date}`, 70, 45);
+
+       // Title
+    doc.setFontSize(18);
+    doc.text("Share Details", 70 , 20);
 
       // Add space between left and right side details
       doc.text("", 10, 70);
 
       // Right side details
       doc.setFontSize(18);
-      doc.text("Invoice", 150, 20, { className: "uppercase-text" });
+      // doc.text("Invoice", 150, 20, { className: "uppercase-text" });
       doc.setFontSize(12);
-      doc.text(`Invoice No: ${invoiceNo}`, 150, 30); 
-      doc.text(`Date: ${shareDetail.date}`, 150, 40);
+      // doc.text(`Invoice No: ${invoiceNo}`, 150, 30); 
+      
 
       // Add a line to separate left and right side details
-      doc.line(20, 70, 190, 70);
+      doc.line(10, 50, pageWidth - 10, 50);
 
       // Add space between the header and the table
-      doc.text("", 10, 40);
+      // doc.text("", 10, 40);
 
       // Table
       const columns = ["Field", "Value"];
@@ -96,7 +110,7 @@ let invoiceCounter = 100;
         
         ["Customer ID", shareDetail.customerId],
         ["Customer Name", shareDetail.customername],
-        ["Customer Mobile", shareDetail.customermobile], // <-- Add comma here
+        ["Customer Mobile", shareDetail.customermobile], 
         ["Vehicle", shareDetail.vehicle],
         ["Trip Type", shareDetail.triptype],
         ["Subtype", shareDetail.subtype],
@@ -109,13 +123,12 @@ let invoiceCounter = 100;
         ["Driver Name", shareDetail.drivername],
         ["Driver Email", shareDetail.drivermail],
         ["Mobile No", shareDetail.mobileno],
-        // ... (other table data)
       ];
 
       // Position the table below the left and right side details
       doc.autoTable({
         body: rows,
-        startY: 90,
+        startY: 60,
         theme: "grid",
         styles: {
           fontSize: 10,
@@ -132,28 +145,28 @@ let invoiceCounter = 100;
 
       // Bank Details section
       doc.setFontSize(10);
-      doc.text("Bank Details:", 20, doc.autoTable.previous.finalY + 20);
+      doc.text("Bank Details:", 15, doc.autoTable.previous.finalY + 7);
       doc.text(
         "Bank Name: The Cosmos Co-operative Bank Ltd",
-        20,
-        doc.autoTable.previous.finalY + 30
+        15,
+        doc.autoTable.previous.finalY + 14
       );
       doc.text(
         "Branch Name: Kasba Raviwar Branch, Pune 411 002",
-        20,
-        doc.autoTable.previous.finalY + 40
+        15,
+        doc.autoTable.previous.finalY + 21
       );
       doc.text(
         "Account Number: 015204301220061",
-        20,
-        doc.autoTable.previous.finalY + 50
+        15,
+        doc.autoTable.previous.finalY + 28
       );
       doc.text(
         "IFSC Code: COSB0000015",
-        20,
-        doc.autoTable.previous.finalY + 60
+        15,
+        doc.autoTable.previous.finalY + 35
       );
-      doc.text("MICR Code: 411164014", 20, doc.autoTable.previous.finalY + 70);
+      doc.text("MICR Code: 411164014", 15, doc.autoTable.previous.finalY + 42);
 
       // "Right side bottom details" section
       doc.setFontSize(12);
@@ -165,7 +178,7 @@ let invoiceCounter = 100;
       doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 30);
 
       // Save the PDF or open in a new tab
-      doc.save(`Invoice_${shareDetail._id}.pdf`);
+      doc.save(`Share_Details_${shareDetail._id}.pdf`);
     }
   };
 
@@ -264,14 +277,14 @@ let invoiceCounter = 100;
             <table className="table">
               <thead>
                 <tr>
+                  <th>Customer Name</th>
+                  <th>Customer Mobile</th>
                   <th>Vehicle</th>
-                  <th>Trip Type</th>
-                  <th>Subtype</th>
                   <th>Pickup</th>
                   <th>Pickup Date</th>
-                  <th>Time</th>
+                  {/* <th>Time</th> */}
                   <th>Dropoff</th>
-                  <th>Dropoff Date</th>
+                  {/* <th>Dropoff Date</th> */}
                   {/* <th>Time1</th>
                   <th>Driver Name</th>
                   <th>Driver Email</th>
@@ -283,14 +296,14 @@ let invoiceCounter = 100;
               <tbody>
                 {filteredShareDetails.map((shareDetail) => (
                   <tr key={shareDetail._id}>
+                    <td>{shareDetail.customername}</td>
+                    <td>{shareDetail.customermobile}</td>
                     <td>{shareDetail.vehicle}</td>
-                    <td>{shareDetail.triptype}</td>
-                    <td>{shareDetail.subtype}</td>
                     <td>{shareDetail.pickup}</td>
                     <td>{shareDetail.date}</td>
-                    <td>{shareDetail.time}</td>
+                    {/* <td>{shareDetail.time}</td> */}
                     <td>{shareDetail.Dropoff}</td>
-                    <td>{shareDetail.date1}</td>
+                    {/* <td>{shareDetail.date1}</td> */}
                     {/* <td>{shareDetail.time1}</td>
                     <td>{shareDetail.drivername}</td>
                     <td>{shareDetail.drivermail}</td>
