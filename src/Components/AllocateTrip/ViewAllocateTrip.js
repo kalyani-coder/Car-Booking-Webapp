@@ -203,7 +203,7 @@ const ViewAllocateTrip = () => {
       <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h2
+          <h2 className="text-center mt-2"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
