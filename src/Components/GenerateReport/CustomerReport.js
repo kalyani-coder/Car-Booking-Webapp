@@ -148,7 +148,7 @@ function CustomerReport() {
       <Sidebar />
 
       <div className="container-customer-invoice">
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center">
            Customer Report By Date
         </h2>
 

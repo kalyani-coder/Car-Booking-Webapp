@@ -69,7 +69,7 @@ function CustomerInvoice() {
   let invoiceCounter = 100;
   const handleGenerate = () => {
     const downloadConfirmed = window.confirm("Do you want to download the invoice?");
-  
+
     if (downloadConfirmed) {
       const doc = new jsPDF({
         unit: "mm",
@@ -78,35 +78,35 @@ function CustomerInvoice() {
         orientation: "portrait",
         height: 800,
       });
-  
+
       // Header Section
       doc.setFillColor(60, 181, 205);
       doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
-  
+
       const img = new Image();
       img.src = headerlogo;  // Make sure headerlogo is defined and accessible
       doc.addImage(img, 'JPEG', 5, 10, 45, 32);
-  
+
       doc.setFontSize(11);
       doc.text('Shivpushpa Travels', 65, 15);
       doc.text('332, Kasba Peth Phadke Haud Chowk', 65, 20);
       doc.text('Pune 411 0111', 65, 25);
       doc.text('9325501950 / 9325501978', 65, 30);
       doc.text('travelshivpushpa@gmail.com', 65, 35);
-  
+
       const currentDate = new Date();
       const formattedDate = currentDate.toLocaleDateString();
       invoiceCounter++;
       const invoiceNo = invoiceCounter.toString().padStart(3, '0');
-  
+
       doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
       doc.text(`Invoice Date: ${formattedDate}`, 150, 20);
-  
+
       doc.setDrawColor(0, 0, 255);
       doc.line(10, 60, 200, 60);
-  
+
       doc.text('INVOICE TO:', 10, 68);
-  
+
       // Customer Information Section
       if (selectedCustomer) {
         doc.text("Customer Name: " + (selectedCustomer.customer_Name || ''), 10, 75);
@@ -115,22 +115,22 @@ function CustomerInvoice() {
         doc.text("Vehicle Type: " + (selectedCustomer.vehicle_Type || ''), 10, 90);
         doc.text("Vehicle Number: " + (selectedCustomer.vehicle_Number || ''), 10, 95);
       }
-  
+
       doc.line(10, 105, 200, 105);
-  
+
       const numberToWords = require('number-to-words');
-  
+
       // Convert total amount to words
       const totalAmountInWords = numberToWords.toWords(selectedCustomer.total_Amount || 0);
-  
+
       // Function to capitalize the first letter of each word
       function capitalizeFirstLetter(str) {
         return str.toLowerCase().replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
       }
-  
+
       // Capitalize the totalAmountInWords
       const capitalizedTotalAmountInWords = capitalizeFirstLetter(totalAmountInWords);
-  
+
       // Create the table data
       const headers = ["Description", "Sac Code", "Kms", "Amount", "Total", "SGST", "CGST"];
       const tableData = customerList
@@ -144,7 +144,7 @@ function CustomerInvoice() {
             \nToll Parking: ${trip.toll_Parking}
             \nSub Total: ${trip.subtotal}
             \nGrand Total: ${trip.grandTotal}
-            \nTotal Amount: ${trip.capitalizedTotalAmountInWords} ` ,
+            \nTotal Amount: ${trip.capitalizedTotalAmountInWords} `,
           trip.saccode || '',
           trip.total_Km || '',
           trip.total_Amount || '',
@@ -152,7 +152,7 @@ function CustomerInvoice() {
           trip.SGST || '',
           trip.CGST || '',
         ]);
-  
+
       // Calculate totals
       const subtotal = customerList
         .filter(customer => customer.customerId === selectedCustomer.customerId)
@@ -164,7 +164,7 @@ function CustomerInvoice() {
         .filter(customer => customer.customerId === selectedCustomer.customerId)
         .reduce((total, trip) => total + trip.CGST, 0);
       const grandTotal = subtotal + sgstTotal + cgstTotal;
-  
+
       // Add table to the PDF
       const marginTop = 110;
       doc.autoTable({
@@ -174,7 +174,7 @@ function CustomerInvoice() {
         theme: 'grid',
         margin: { top: marginTop },
       });
-  
+
       // Add totals to the PDF
       doc.autoTable({
         body: [
@@ -186,7 +186,7 @@ function CustomerInvoice() {
         theme: 'plain',
         margin: { top: marginTop },
       });
-  
+
       // Bank Details section on the left side
       doc.setFontSize(10);
       doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
@@ -195,16 +195,16 @@ function CustomerInvoice() {
       doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
       doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
       doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
-  
+
       // Additional details on the right side
       doc.text("For Shivpushpa Travels", 150, doc.autoTable.previous.finalY + 20);
       doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 30);
-  
+
       // Save the PDF or open in a new tab
       doc.save(`Invoice_${selectedCustomer.customer_Name}.pdf`);
     }
   };
-  
+
 
 
   return (
@@ -213,7 +213,8 @@ function CustomerInvoice() {
 
       <div className="container-customer-invoice">
         <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
+          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
+          className="text-center mt-[1rem]"
         >
           Single Customer Invoice
         </h2>
@@ -222,15 +223,15 @@ function CustomerInvoice() {
           style={{
             fontSize: "1.5rem",
             fontWeight: "bold",
-            marginBottom: "5px",
+            marginBottom: "1rem",
           }}
         >
           Invoice To :
         </h2>
 
-        <div className="form-vendor-invoice">
+        <div className="form-vendor-invoice p-2 flex gap-14">
           <div className="grid-gap-2 col-6">
-            <label htmlFor="vendorName" className="form-label">
+            <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
             </label>
             {/* Dropdown to select a customer */}
@@ -259,13 +260,13 @@ function CustomerInvoice() {
               Kind Attn:
             </label>
             <input
-      className="form-control-vendor-invoice"
-      type="text"
-      placeholder="Kind Attn"
-      name="kind_attn"
-      value={formData.kind_attn}
-      onChange={handleChange}
-    />
+              className="form-control-vendor-invoice w-[80%] p-2 mt-2"
+              type="text"
+              placeholder="Kind Attn"
+              name="kind_attn"
+              value={formData.kind_attn}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div>
@@ -297,23 +298,23 @@ function CustomerInvoice() {
                         <td>
                           {`${trip.vehicle_Type} from ${trip.from} to ${trip.to} on ${trip.Date}`}
                           <br />
-                          Total Km 
-                          <br/>
+                          Total Km
+                          <br />
                           Total Hours
                           <br />
-                          Extra Km <br/>
-                          Extra Hours 
-                          <br/>
-                        <strong>Toll Parking</strong>
+                          Extra Km <br />
+                          Extra Hours
+                          <br />
+                          <strong>Toll Parking</strong>
                         </td>
                         <td>{trip.saccode}</td>
-                        <td>{trip.total_Km}<br/>
-                        {trip.total_hours}
-                        <br/>
-                        
-                        {trip.extra_Km}
-                        <br/>
-                        {trip.extra_Hours}
+                        <td>{trip.total_Km}<br />
+                          {trip.total_hours}
+                          <br />
+
+                          {trip.extra_Km}
+                          <br />
+                          {trip.extra_Hours}
                         </td>
                         <td>{trip.total_Amount}</td>
                         <td>{trip.total}</td>

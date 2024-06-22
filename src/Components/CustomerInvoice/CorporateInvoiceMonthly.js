@@ -38,29 +38,29 @@ function CorporateInvoiceMonthly() {
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
- 
+
 
 
   // Get the current date
-const currentDate = new Date();
+  const currentDate = new Date();
 
-// Extract day, month, and year
-const day = currentDate.getDate();
-const month = currentDate.getMonth() + 1; // Month is zero-indexed, so we add 1
-const year = currentDate.getFullYear();
+  // Extract day, month, and year
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1; // Month is zero-indexed, so we add 1
+  const year = currentDate.getFullYear();
 
-// Pad single-digit day and month with leading zeros if needed
-const formattedDay = day < 10 ? '0' + day : day;
-const formattedMonth = month < 10 ? '0' + month : month;
+  // Pad single-digit day and month with leading zeros if needed
+  const formattedDay = day < 10 ? '0' + day : day;
+  const formattedMonth = month < 10 ? '0' + month : month;
 
-// Concatenate day, month, and year in the desired format
-const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
+  // Concatenate day, month, and year in the desired format
+  const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
 
-// Show the formatted date in the console
-console.log("Current date in dd-mm-yyyy format:", formattedDate);
+  // Show the formatted date in the console
+  console.log("Current date in dd-mm-yyyy format:", formattedDate);
 
 
-useEffect(() => {
+  useEffect(() => {
     const fetchCustomers = async () => {
       try {
         const response = await fetch(
@@ -79,7 +79,7 @@ useEffect(() => {
     };
     fetchCustomers();
   }, [selectedCustomer, formattedDate]);
-  
+
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -262,12 +262,13 @@ useEffect(() => {
 
 
   return (
-    <>
+    <div>
       <Sidebar />
 
       <div className="container-customer-invoice">
         <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
+          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
+          className="text-center mt-[1rem]"
         >
           Corporate Customer Invoice
         </h2>
@@ -276,15 +277,16 @@ useEffect(() => {
           style={{
             fontSize: "1.5rem",
             fontWeight: "bold",
-            marginBottom: "5px",
+            marginBottom: "1rem",
+
           }}
         >
           Invoice To :
         </h2>
 
-        <div className="form-vendor-invoice">
+        <div className="form-vendor-invoice p-2 flex gap-14">
           <div className="grid-gap-2 col-6">
-            <label htmlFor="vendorName" className="form-label">
+            <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
             </label>
             {/* Dropdown to select a customer */}
@@ -309,21 +311,21 @@ useEffect(() => {
             </select>
           </div>
           <div className="mb-2 grid-gap-2 col-6">
-            <label htmlFor="vendorAddress" className="form-label">
+            <label htmlFor="vendorAddress" className="form-label ">
               Kind Attn:
             </label>
             <input
-      className="form-control-vendor-invoice"
-      type="text"
-      placeholder="Kind Attn"
-      name="kind_attn"
-      value={formData.kind_attn}
-      onChange={(e) => setFormData({ ...formData, kind_attn: e.target.value })}
-    />
+              className="form-control-vendor-invoice w-[80%] p-2 mt-2"
+              type="text"
+              placeholder="Kind Attn"
+              name="kind_attn"
+              value={formData.kind_attn}
+              onChange={(e) => setFormData({ ...formData, kind_attn: e.target.value })}
+            />
           </div>
         </div>
-         {/* Button to toggle the date picker visibility */}
-         <div>
+        {/* Button to toggle the date picker visibility */}
+        <div>
           <button
             className="btn btn-primary"
             onClick={() => setShowDatePicker(!showDatePicker)}
@@ -370,23 +372,23 @@ useEffect(() => {
                         <td>
                           {`${trip.type_of_vehicle} from ${trip.from} - ${trip.to} on ${trip.Date}`}
                           <br />
-                          Total Km 
-                          <br/>
+                          Total Km
+                          <br />
                           Total Hours
                           <br />
-                          Extra Km <br/>
-                          Extra Hours 
-                          <br/>
-                        <strong>Toll Parking</strong>
+                          Extra Km <br />
+                          Extra Hours
+                          <br />
+                          <strong>Toll Parking</strong>
                         </td>
                         <td>{trip.saccode}</td>
-                        <td>{trip.km}<br/>
-                        {trip.hours}
-                        <br/>
-                        
-                        {trip.extra_km}
-                        <br/>
-                        {trip.extra_hours}
+                        <td>{trip.km}<br />
+                          {trip.hours}
+                          <br />
+
+                          {trip.extra_km}
+                          <br />
+                          {trip.extra_hours}
                         </td>
                         <td>{trip.total_Amount}</td>
                         <td>{trip.total}</td>
@@ -470,7 +472,7 @@ useEffect(() => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

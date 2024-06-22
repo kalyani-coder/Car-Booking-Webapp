@@ -205,7 +205,7 @@ function CustomerInvoiceMonthly() {
       <Sidebar />
 
       <div className="container-customer-invoice">
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center mt-[1rem]">
           Monthly Customer Invoice By Date
         </h2>
 

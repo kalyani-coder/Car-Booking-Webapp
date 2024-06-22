@@ -125,7 +125,7 @@ function VendorReport() {
     <>
       <Sidebar />
       <div className="container-vendor-invoice">
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="ml-[30%] mt-[1rem]">
           Vendor Report
         </h2>
 

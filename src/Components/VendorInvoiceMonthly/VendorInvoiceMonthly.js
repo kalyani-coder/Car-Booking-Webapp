@@ -177,7 +177,7 @@ function VendorInvoiceMonthly() {
       <Sidebar />
 
       <div className="container-vendor-invoice-monthly">
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>
+        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center mt-[1rem]">
           Vendor Monthly Invoice
         </h2>
 
@@ -185,7 +185,7 @@ function VendorInvoiceMonthly() {
           style={{
             fontSize: "1.5rem",
             fontWeight: "bold",
-            marginBottom: "5px",
+            marginBottom: "1rem",
           }}
         >
           Invoice To:

@@ -108,7 +108,8 @@ function MonthlyCustomerReport() {
       <Sidebar />
       <div className="container-customer-invoice">
         <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
+          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
+          className="text-center"
         >
           Customer Report
         </h2>
