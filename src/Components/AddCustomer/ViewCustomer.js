@@ -169,7 +169,7 @@ const ViewCustomer = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="viewcustomer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Customer</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className='text-center' >View Customer</h2>
 
           <div className="search-bar">
             <input

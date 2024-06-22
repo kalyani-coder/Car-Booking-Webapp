@@ -112,7 +112,7 @@ const ViewVendor = () => {
       <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>View Vendors</h2>
+          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className='text-center'>View Vendors</h2>
           <input
             type="search"
             placeholder="Search By Vendor Name"

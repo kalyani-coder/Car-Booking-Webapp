@@ -10,7 +10,7 @@
   /* Global styles */
   body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: rgb(200, 205, 122);
   }
   
   /* Container for the entire page */
@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:rgb(200, 205, 122);
+    
     padding: 8px;
     margin-left: 300px;
     height: auto;

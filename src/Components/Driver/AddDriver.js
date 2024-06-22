@@ -171,7 +171,7 @@ const AddDriver = () => {
       <div className="driver-Add-container">
         <div className="driver-main-container relative left-[8rem] mt-7">
           <div className="driver-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}>Add Driver</h2>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center mr-[10rem]">Add Driver</h2>
             <div className="driver-form-group">
               <label htmlFor="drivername" className="form-label">
                 Driver Name:

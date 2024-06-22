@@ -274,7 +274,7 @@ const ViewShareDetails = () => {
     <>
       <Sidebar />
       <div className="share-details-container">
-        <div className="share-details-main-container h-[100vh]">
+        <div className="share-details-main-container h-[150vh]">
         <div className="pl-[40%]">
         <h2 
         style={{

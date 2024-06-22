@@ -62,7 +62,7 @@ const MasterCorporateCustomer = () => {
       <div className="rate-Add-container pt-4">
         <div className="rate-main-container h-[98vh]">
           <div className="rate-form-container">
-            <h2
+            <h2 className="text-center"
               style={{
                 fontSize: "2rem",
                 fontWeight: "bold",

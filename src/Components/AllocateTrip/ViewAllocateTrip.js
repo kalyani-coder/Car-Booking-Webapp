@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-import "./ViewAllocateTrip.css";
+// import "./ViewAllocateTrip.css";
 
 const ViewAllocateTrip = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -201,7 +201,7 @@ const ViewAllocateTrip = () => {
   return (
     <>
       <Sidebar />
-      <div className="share-details-container">
+      <div className="share-details-container h-[100vh]">
         <div className="share-details-main-container">
           <h2 className="text-center mt-2"
             style={{

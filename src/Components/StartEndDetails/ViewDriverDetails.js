@@ -266,7 +266,7 @@ const ViewStartEndDetails = () => {
       <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h2
+          <h2 className="ml-[37%]"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -275,7 +275,7 @@ const ViewStartEndDetails = () => {
           >
             View Driver Trip Details
           </h2>
-          <div className="p-4 space-y-4">
+          <div className="p-4 space-y-4 ml-10%">
             <input
               type="text"
               placeholder="Search by date or driver name"

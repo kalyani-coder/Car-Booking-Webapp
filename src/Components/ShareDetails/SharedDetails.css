@@ -7,8 +7,8 @@
   flex-wrap: wrap;
   margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
-  background-color:rgb(200, 205, 122);
-  height: auto;
+  
+  /* height: 150vh; */
 }
 
 .share-details-form {

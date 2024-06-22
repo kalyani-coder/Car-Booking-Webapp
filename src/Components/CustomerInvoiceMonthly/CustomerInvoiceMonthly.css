@@ -1,12 +1,12 @@
 /* .container-cust-invoice{
-     background-color:rgb(200, 205, 122);
+     
     height: auto;
     
 } */
 .container-customer-invoice-monthly{
     margin-left: 300px; /* Leave 300px from the left side */
   padding: 20px;
-  background-color:rgb(200, 205, 122);
+  
   height: 100vh;
 }
 button-customer{
