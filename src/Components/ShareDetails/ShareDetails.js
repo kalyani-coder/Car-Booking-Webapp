@@ -102,12 +102,30 @@ const ShareDetails = () => {
 
       if (response.ok) {
         console.log('Details saved successfully!');
-        showAlert("Share Details Saved successfully!", "success");
+        alert("Share Details Saved successfully!", "success");
+         // Clear all fields after successful save
+      setSelectedCustomerDetails({
+        customerId: '',
+        customername: '',
+        customermobile: '',
+        vehicle: '',
+        triptype: '',
+        subtype: '',
+        pickuplocation: '',
+        date: '',
+        time: '',
+        dropofflocation: '',
+        date1: '',
+        time1: '',
+        drivername: '',
+        drivermobileno: '',
+        vehicleno: '',
+      });
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
 

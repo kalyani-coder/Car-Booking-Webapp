@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { FaEdit, FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTrash,FaFilePdf, FaTimes } from "react-icons/fa";
 // import ViewShareDetails from './ViewShareDetails.css';
 import img1 from "../../assects/images/shivpushpa_logo.png"
 
@@ -15,6 +15,9 @@ const ViewShareDetails = () => {
   const [searchText, setSearchText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedShareDetail, setEditedShareDetail] = useState({});
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   useEffect(() => {
     const fetchShareDetails = async () => {
@@ -53,8 +56,7 @@ const ViewShareDetails = () => {
     filterShareDetails();
   }, [searchText]);
 
-  // Define a global variable to track the invoice number
-let invoiceCounter = 100;
+  
   const generateInvoice = (shareDetail) => {
     console.log(shareDetail);
     const downloadConfirmed = window.confirm(
@@ -62,10 +64,6 @@ let invoiceCounter = 100;
     );
 
     if (downloadConfirmed) {
-            // Increment the invoice counter and pad it to ensure it's always three digits
-            invoiceCounter++;
-            const invoiceNo = invoiceCounter.toString().padStart(3, '0');
-      
       const doc = new jsPDF();
       // Set page dimensions
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -212,6 +210,8 @@ let invoiceCounter = 100;
           )
         );
         setIsEditing(false);
+        // Alert after successful update
+      alert("Share detail updated successfully!");
       } else {
         console.error("Error updating share detail:", response.status);
       }
@@ -246,6 +246,28 @@ let invoiceCounter = 100;
         setError("Error deleting share detail: " + error.message);
       }
     }
+  };
+
+  const fetchShareDetails = async (_id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8787/api/share-details/${_id}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setSelectedTrip(data);
+    } catch (error) {
+      console.error("Error fetching trip details:", error);
+      setErrorMessage("Error fetching trip details: " + error.message);
+    }
+  };
+  const handleViewMore = (_id) => {
+    fetchShareDetails(_id);
+  };
+  const handleCloseModal = () => {
+    setSelectedTrip(null);
   };
 
   return (
@@ -284,14 +306,7 @@ let invoiceCounter = 100;
                   <th>Vehicle</th>
                   <th>Pickup</th>
                   <th>Pickup Date</th>
-                  {/* <th>Time</th> */}
-                  <th>Dropoff</th>
-                  {/* <th>Dropoff Date</th> */}
-                  {/* <th>Time1</th>
                   <th>Driver Name</th>
-                  <th>Driver Email</th>
-                  <th>Mobile No</th>
-                  <th>Mobile No1</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -303,15 +318,14 @@ let invoiceCounter = 100;
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.pickup}</td>
                     <td>{shareDetail.date}</td>
-                    {/* <td>{shareDetail.time}</td> */}
-                    <td>{shareDetail.Dropoff}</td>
-                    {/* <td>{shareDetail.date1}</td> */}
-                    {/* <td>{shareDetail.time1}</td>
-                    <td>{shareDetail.drivername}</td>
-                    <td>{shareDetail.drivermail}</td>
-                    <td>{shareDetail.mobileno}</td>
-                    <td>{shareDetail.mobileno1}</td> */}
+                   <td>{shareDetail.drivername}</td>
                     <td>
+                    <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleViewMore(shareDetail._id)}
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
                       <button
                         className="btn btn-info btn-sm"
                         onClick={() => handleEditShareDetail(shareDetail)}
@@ -354,8 +368,8 @@ let invoiceCounter = 100;
             <h5 className='fw-bold my-2'>Customer Name:</h5>
               <input
                 type="text"
-                value={editedShareDetail.cus_Name}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, cus_Name: e.target.value })}
+                value={editedShareDetail.customername}
+                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, customername: e.target.value })}
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
               <h5 className='fw-bold my-2'>Vehicle:</h5>
@@ -500,6 +514,76 @@ let invoiceCounter = 100;
           </div>
         </div>
       )}
+      {/* Display Share Details */}
+   {/* Modal or Overlay for displaying trip details */}
+   {selectedTrip && (
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <div
+                className="bg-white p-4 rounded shadow-lg w-96"
+                style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-bold">View Driver Details</h2>
+                  <button className="text-black-500" onClick={handleCloseModal}>
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  
+                  <p>
+                    <strong>Customer Name:</strong> {selectedTrip.customername}
+                  </p>
+                  <p>
+                    <strong>Customer Mobile:</strong>{" "}
+                    {selectedTrip.customermobile}
+                  </p>
+                  <p>
+                    <strong>Trip Type:</strong> {selectedTrip.triptype}
+                  </p>
+                  <p>
+                    <strong>Sub Type:</strong> {selectedTrip.subtype}
+                  </p>
+                  <p>
+                    <strong>Pickup:</strong> {selectedTrip.pickup}
+                  </p>
+                  <p>
+                    <strong>Time:</strong> {selectedTrip.time}
+                  </p>
+                  <p>
+                    <strong>Dropoff:</strong> {selectedTrip.Dropoff}
+                  </p>
+                  <p>
+                    <strong>Date:</strong> {selectedTrip.date1}
+                  </p>
+                  <p>
+                    <strong>Time:</strong> {selectedTrip.time1}
+                  </p>
+                  <p>
+                    <strong>Driver Name:</strong> {selectedTrip.drivername}
+                  </p>
+                  <p>
+                    <strong>Driver Mobile:</strong> {selectedTrip.mobileno}
+                  </p>
+                  <p>
+                    <strong>Vehicle Number:</strong> {selectedTrip.vehicleno}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
     </>
   );
 };
