@@ -120,18 +120,18 @@ function capitalizeFirstLetter(str) {
 // Capitalize the totalAmountInWords
 const capitalizedTotalAmountInWords = capitalizeFirstLetter(totalAmountInWords);
 
-    const customerDetails = [
-      ['Description', 'SAC Code', 'kms','AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
-      [`${customer.vehicle_Type} - ${customer.from} - ${customer.to} on ${customer.Date}`, '', '', '', '', '', ''], // Populate other fields accordingly
-      ['Total KM', '', customer.total_Km, '', '', '', ''],
-      ['Total Hr', '', customer.total_hours, '', '', '', ''], 
-      [`${customer.vehicle_Type} for @8hr 80km`, '', '80', '', '', customer.CGST, customer.SGST], // Line for "@8hr 80km"
-      ['Extra KM', '', customer.extra_Km, '', '', customer.extrakm_CGST, customer.extrakm_SGST],
-      ['Extra Hr', '', customer.extra_Hours, '', '', customer.extrahours_CGST, customer.extrahours_SGST],
-      ['Toll Parking', '', customer.toll, '', '', '', ''],
-      [{ content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.subtotal_Amount.toLocaleString()}`, '', '', ''],
-      [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.total_Amount.toLocaleString()}`, '', '']
-    ];
+const customerDetails = [
+  ['Description', 'SAC Code', 'kms', 'AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
+  [`${customer.vehicle_Type} - ${customer.from} - ${customer.to} on ${customer.Date}`, '', '', '', '', '', ''],
+  ['Total KM', '', customer.total_Km, '', '', '', ''],
+  ['Total Hr', '', customer.total_hours, '', '', '', ''],
+  [`${customer.vehicle_Type} for @8hr 80km`, '', '80', customer.title_Amount, customer.title_Amount, customer.CGST, customer.SGST],
+  ['Extra KM', '', customer.extra_Km, customer.extramkm_Amount, customer.extramkm_Amount, customer.extrakm_CGST, customer.extrakm_SGST],
+  ['Extra Hr', '', customer.extra_Hours, customer.extrahours_Amount, customer.extrahours_Amount, customer.extrahours_CGST, customer.extrahours_SGST],
+  ['Toll Parking', '',`Rs. ${customer.toll}`, `Rs. ${customer.toll}`, `Rs. ${customer.toll}`, '', '', ''],
+  [{ content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.subtotal_Amount.toLocaleString()}`, '', ''],
+  [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.total_Amount.toLocaleString()}`, '', '']
+];
     
 // Add a new row below the "Total Amount" row
 customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, styles: { textColor: [0, 0, 0] } }, '', '', '', '', '', '', ]);

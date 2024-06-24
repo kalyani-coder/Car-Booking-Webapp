@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./VendorPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
+import axios from "axios";
 
 function VendorPayment() {
   const [formData, setFormData] = useState({
@@ -51,37 +52,50 @@ function VendorPayment() {
     }
   };
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevFormData) => {
+      const updatedFormData = { ...prevFormData, [name]: value };
+  
+      // Parse values to floats or set them to 0 if they are not valid numbers
+      const km = parseFloat(updatedFormData.km) || 0;
+      const extra_km = parseFloat(updatedFormData.extra_km) || 0;
+      const hour = parseFloat(updatedFormData.hour) || 0;
+      const extra_hour = parseFloat(updatedFormData.extra_hour) || 0;
+  
+      // Calculate total_km
+      updatedFormData.total_km = km + extra_km;
+  
+      // Calculate total_hour
+      updatedFormData.total_hour = hour + extra_hour;
+  
+      return updatedFormData;
+    });
   };
+  
 
   const handleVendorChange = (e) => {
     const selectedId = e.target.value;
     setSelectedVendorId(selectedId);
     const selectedVendor = vendors.find((vendor) => vendor._id === selectedId);
     if (selectedVendor) {
-      setFormData((prevData) => ({
-        ...prevData,
+      setFormData({
+        ...formData,
         _id: selectedVendor._id,
         vender_Name: selectedVendor.vender_Name,
         company_Name: selectedVendor.company_Name,
         GST_No: selectedVendor.GST_No,
         mobile_Number: selectedVendor.mobile_Number,
         address: selectedVendor.address,
-        vehicle : selectedVendor.vehicle,
-        // rate_per_Km: selectedVendor.rate_per_Km,
+        vehicle: selectedVendor.vehicle,
         title: selectedVendor.title,
         rate: selectedVendor.rate,
         hour: selectedVendor.hour,
         km: selectedVendor.km,
         extra_km: selectedVendor.extra_km,
-        extra_hour: selectedVendor.extra_hour
-
-      }));
+        extra_hour: selectedVendor.extra_hour,
+      });
     }
   };
 
@@ -95,50 +109,43 @@ function VendorPayment() {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      }, 5000);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await fetch("http://localhost:8787/api/vender-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          
-          company_Name: formData.company_Name,
-          GST_No: formData.GST_No,
-          vender_Name: formData.vender_Name,
-          mobile_Number: formData.mobile_Number,
-          vehicle_type: formData.vehicle,
-          vehicle_number: formData.vehicle_no,
-          title: formData.title,
-          rate: formData.rate,
-          hour: formData.hour,
-          km: formData.km,
-          extra_km: formData.extra_km,
-          extra_hour: formData.extra_hour,
-          total_km: formData.total_km,
-          total_hour: formData.total_hour,
-          totalkm_amount: formData.totalkm_amount,
-          totalhour_amount: formData.totalhour_amount,
-          total_amount: formData.total_amount,
-          payment: formData.payment,
-          amount: formData.amount,
-          tds: formData.tds,
-          paid_amount: formData.paid_amount,
-          remaining_Amount: formData.remaining_Amount,
-          payment_Method: formData.payment_Method,
-        }),
+      const response = await axios.post("http://localhost:8787/api/vender-payment", {
+        company_Name: formData.company_Name,
+        GST_No: formData.GST_No,
+        vender_Name: formData.vender_Name,
+        mobile_Number: formData.mobile_Number,
+        vehicle_type: formData.vehicle,
+        vehicle_number: formData.vehicle_no,
+        title: formData.title,
+        rate: formData.rate,
+        hour: formData.hour,
+        km: formData.km,
+        extra_km: formData.extra_km,
+        extra_hour: formData.extra_hour,
+        total_km: formData.total_km,
+        total_hour: formData.total_hour,
+        totalkm_amount: formData.totalkm_amount,
+        totalhour_amount: formData.totalhour_amount,
+        total_amount: formData.total_amount,
+        payment: formData.payment,
+        amount: formData.amount,
+        tds: formData.tds,
+        paid_amount: formData.paid_amount,
+        remaining_Amount: formData.remaining_Amount,
+        payment_Method: formData.payment_Method,
       });
-  
-      if (response.ok) {
+
+      if (response.status === 200) {
         console.log("Data posted successfully!");
-        showAlert("Data added successfully!" , "success");
+        showAlert("Data added successfully!", "success");
       } else {
         console.error("Error posting data:", response.statusText);
         showAlert("Failed to add data. Please try again.", "danger");
@@ -446,17 +453,18 @@ function VendorPayment() {
                       </div>
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="totalhours" class="form-label">
+                          <label htmlFor="total_km" class="form-label">
                             Total Kms:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="number"
                             className="update-duty-form-control"
-                            name="totalkm_amount"
-                            placeholder="Enter Kms Amount"
-                            onChange={handleChange}
-                            value={formData.totalkm_amount}
+                            id="total_km"
+                            name="total_km"
+                            placeholder="Enter Total KM"
+                            value={formData.total_km}
+                            readOnly
                           />
                         </div>
                       </div>
@@ -507,24 +515,25 @@ function VendorPayment() {
                         </div>
                       </div>
                       <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="totalhoursamount" class="form-label">
+                      <div className="form-group">
+                          <label htmlFor="total_hour" className="form-label">
                             Total Hours:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="number"
                             className="update-duty-form-control"
+                            id="total_hour"
                             name="total_hour"
-                            placeholder="Enter Total Hours"
-                            onChange={handleChange}
+                            placeholder="Enter Total Hour"
                             value={formData.total_hour}
+                            readOnly
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="row grid-gap-5">
+                    {/* <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="total_amount" class="form-label">
@@ -559,7 +568,7 @@ function VendorPayment() {
                           />
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="row grid-gap-5">
                       <div className="col-md">
