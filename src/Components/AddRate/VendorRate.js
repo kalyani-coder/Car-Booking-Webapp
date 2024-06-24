@@ -13,9 +13,9 @@ const VendorRate = () => {
     vehicle: "",
     title: "",
     rate: "",
-    rate_per_Km: "",
     hour: "",
     km: "",
+    extra_km: "",
     extra_hour: "",
     address: ""
   };
@@ -54,9 +54,10 @@ const VendorRate = () => {
         vehicle: "",
         title: "",
         rate: "",
-        rate_per_Km: "",
+        // rate_per_Km: "",
         hour: "",
         km: "",
+        extra_km: "",
         extra_hour: ""
       });
     } else {
@@ -341,17 +342,17 @@ const VendorRate = () => {
                 </div>
                 <div>
                   <div className="form-group">
-                    <label htmlFor="rate_per_Km" className="form-label">
+                    <label htmlFor="extra_km" className="form-label">
                       Rate Per KM(Extra KM):
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"
                       type="number"
-                      id="rate_per_Km"
-                      name="rate_per_Km"
+                      id="extra_km"
+                      name="extra_km"
                       placeholder="Extra KM"
-                      value={formData.rate_per_Km}
+                      value={formData.extra_km}
                       onChange={handleChange}
                       required
                     />

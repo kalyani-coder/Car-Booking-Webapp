@@ -71,8 +71,9 @@ function VendorPayment() {
         company_Name: selectedVendor.company_Name,
         GST_No: selectedVendor.GST_No,
         mobile_Number: selectedVendor.mobile_Number,
+        address: selectedVendor.address,
         vehicle : selectedVendor.vehicle,
-        rate_per_Km: selectedVendor.rate_per_Km,
+        // rate_per_Km: selectedVendor.rate_per_Km,
         title: selectedVendor.title,
         rate: selectedVendor.rate,
         hour: selectedVendor.hour,
@@ -235,7 +236,7 @@ function VendorPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="mobile_Number" class="form-label">
-                            Mobile Number:
+                          Vendor Mobile Number:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -385,17 +386,18 @@ function VendorPayment() {
 
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="totalkms" class="form-label">
-                            Total Kms:
+                          <label htmlFor="address" class="form-label">
+                            Vendor Address:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="text"
                             className="update-duty-form-control"
-                            name="total_km"
-                            placeholder="Enter Total Kms"
+                            id="address"
+                            name="address"
+                            placeholder="Enter address"
+                            value={formData.address}
                             onChange={handleChange}
-                            value={formData.total_km}
                           />
                         </div>
                       </div>
@@ -445,7 +447,7 @@ function VendorPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="totalhours" class="form-label">
-                            Total Kms Amount:
+                            Total Kms:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input

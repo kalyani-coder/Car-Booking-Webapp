@@ -216,19 +216,6 @@ const ViewVenderRate = () => {
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
-                <h5>Rate Per Km</h5>
-                <input
-                  type="text"
-                  value={editedItem.rate_per_Km}
-                  onChange={(e) =>
-                    setEditedItem({
-                      ...editedItem,
-                      rate_per_Km: e.target.value,
-                    })
-                  }
-                  className="w-full p-2 mb-2 border border-gray-300 rounded"
-                />
-
                 <h5>Duty Type</h5>
                 <input
                   type="text"
@@ -334,7 +321,7 @@ const ViewVenderRate = () => {
                     <th>Company Name</th>
                     <th>GST No</th>
                     <th>Mobile Number</th>
-                    <th>Rate Per KM</th>
+                    {/* <th>Rate Per KM</th> */}
                     <th>Title</th>
                     <th>Rate</th>
                     <th>Action</th>
@@ -348,7 +335,7 @@ const ViewVenderRate = () => {
                       <td>{customerRate.company_Name}</td>
                       <td>{customerRate.GST_No}</td>
                       <td>{customerRate.mobile_Number}</td>
-                      <td>{customerRate.rate_per_Km}</td>
+                      {/* <td>{customerRate.rate_per_Km}</td> */}
                       <td>{customerRate.title}</td>
                       <td>{customerRate.rate}</td>
                       <td>

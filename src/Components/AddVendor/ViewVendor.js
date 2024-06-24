@@ -124,6 +124,7 @@ const ViewVendor = () => {
           <Table>
             <thead>
               <tr>
+              <th>Sr. No.</th>
                 <th>Vendor Name</th>
                 <th>Company Name</th>
                 <th>GST No</th>
@@ -133,8 +134,9 @@ const ViewVendor = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredVendors.map((vendor) => (
+              {filteredVendors.map((vendor,index) => (
                 <tr key={vendor._id}>
+                <td>{index + 1}</td>
                   <td>{vendor.vender_Name}</td>
                   <td>{vendor.company_Name}</td>
                   <td>{vendor.GST_No}</td>
