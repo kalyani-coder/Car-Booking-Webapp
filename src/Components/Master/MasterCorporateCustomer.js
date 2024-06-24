@@ -33,6 +33,16 @@ const MasterCorporateCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validation checks
+    if (formData.add_vehicle.trim() === "") {
+      alert("Add Vehicle is required.", "error");
+      return;
+    }
+    if (formData.add_rate.trim() === "") {
+      alert("Add Rate is required.", "error");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8787/api/masterrate", {
         method: "POST",
@@ -43,15 +53,15 @@ const MasterCorporateCustomer = () => {
       });
 
       if (response.ok) {
-        alert("Data added successfully!", "success");
+        showAlert("Data added successfully!", "success");
         setFormData(initialFormData);
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        showAlert("Failed to add data. Please try again.", "error");
         console.error("Error posting data:", response.statusText);
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      showAlert("Failed to add data. Please try again.", "error");
     }
   };
 
@@ -80,6 +90,7 @@ const MasterCorporateCustomer = () => {
               <div className="form-group">
                 <label htmlFor="add_vehicle" className="form-label">
                   Add Vehicle:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-cust-add-input"
@@ -119,6 +130,7 @@ const MasterCorporateCustomer = () => {
                   <div className="form-group">
                     <label htmlFor="add_rate" className="form-label">
                       Add Rate:
+                      <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="rate-form-control"

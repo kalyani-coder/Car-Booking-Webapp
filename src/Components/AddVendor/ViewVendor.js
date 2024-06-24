@@ -67,7 +67,7 @@ const ViewVendor = () => {
         alert('Vendor deleted successfully');
       } catch (error) {
         console.error('Error deleting vendors:', error);
-        setSuccessMessage('Error deleting customer: ' + error.message);
+        alert('Error deleting customer: ' + error.message);
       }
     }
   };
@@ -103,7 +103,7 @@ const ViewVendor = () => {
     } catch (error) {
       console.error('Error updating vendor:', error);
       setSuccessMessage('');
-      setErrorMessage('Error updating vendor. Please try again.');
+      alert('Error updating vendor. Please try again.');
     }
   };
 

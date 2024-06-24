@@ -295,14 +295,14 @@ const AddTrip = () => {
       });
   
       if (response.ok) {
-        showAlert("Data added successfully!", "success");
+        alert("Data added successfully!", "success");
         setFormData(initialFormData);
         setIsSubmitted(true); // Set form submission state to true
       } else {
         showAlert("Failed to add data!", "danger");
       }
     } catch (error) {
-      showAlert("An error occurred while adding data!", "danger");
+      alert("An error occurred while adding data!", "danger");
       console.error("Error:", error);
     }
   };

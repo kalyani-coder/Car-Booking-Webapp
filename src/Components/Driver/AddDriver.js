@@ -153,15 +153,15 @@ const AddDriver = () => {
       const responseData = await response.json();
 
       if (response.ok) {
-        showAlert("Driver added successfully!", "success");
+        alert("Driver added successfully!", "success");
         setFormData(initialFormData); // Clear the form fields
       } else {
         // Display backend error message if available
-        showAlert(responseData.message || "Failed to add data. Please try again.", "danger");
+        alert(responseData.message || "Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
 

@@ -24,12 +24,14 @@ const TableView = ({ drivers, handleEditDriver, handleDeleteDriver }) => (
           <td>{driver.driver_Mo1}</td>
           <td>{driver.driver_Mo2}</td>
           <td>
+          <div className="d-flex align-items-center gap-1">
             <button className='btn btn-info' onClick={() => handleEditDriver(driver)}>
               <FaEdit/>
             </button>
             <button className='btn btn-danger' onClick={() => handleDeleteDriver(driver._id)}>
               <FaTrash/>
             </button>
+            </div>
           </td>
         </tr>
       ))}

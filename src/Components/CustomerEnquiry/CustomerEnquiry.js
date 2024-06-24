@@ -9,8 +9,8 @@ import axios from 'axios';
 
 const CustomerEnquiry = () => {
   const initialFormData = {
+    customerId: "",
     customername: "",
-    cus_Id: "",
     mobileno: "",
     email: "",
     address: "",
