@@ -9,9 +9,9 @@ router.get('/', async (req, res) => {
     try {
         const addtrip = await AddTrip.find();
         res.status(200).json(addtrip)
-        
+
     } catch (error) {
-        res.status(500).json(error)   
+        res.status(500).json(error)
     }
 })
 
@@ -96,39 +96,74 @@ router.get('/customer/:customerId', async (req, res) => {
 });
 
 
-// Send email on the smtp server 
+
+// Send email on the SMTP server 
+
 router.post("/sendemail", async (req, res) => {
-    const { email } = req.body;
+    const { email, tripData } = req.body;
 
     if (!email) {
-        return res.status(400).json({ error: "Email is required" });
+        return res.status(400).json({ message: "Email is required" });
+    }
+    if (!tripData) {
+        return res.status(404).json({ message: "Trip Data is required" })
     }
 
     try {
-        // Configure the email transporter
+
         const transporter = nodemailer.createTransport({
-            host: 'smtp.ethereal.email',
-            port: 587,
+            host: "live.smtp.mailtrap.io",
+            port: 25,
             auth: {
-                user: 'pat.ferry@ethereal.email',
-                pass: 'SjyMbfYt2MpnNH4zA8'
+                user: "api",
+                pass: "3f4ebe0e1af80798535216a662822105"
             }
         });
 
-        // Email options
+        const {
+            _id,
+            customername,
+            mobileno,
+            address,
+            triptype,
+            vehicle,
+            pickup,
+            dropoff,
+            date,
+            time,
+            totaldays,
+            hours,
+
+        } = tripData
+
+
         const mailOptions = {
-            from: '<smtp.ethereal.email>',
+            from: '<mailtrap@ssdpune.org>',
             to: email,
             subject: 'New Trip Information',
-            text: `Hello New User,
+            text: `Hello,
 
             Welcome to our service! Here is some information about your new trip.
 
+            Booking Id  : ${_id},
+            Customer Name : ${customername},
+            Mobile No : ${mobileno},
+            Email : ${email},
+            Address : ${address},
+            TripType : ${triptype},
+            Vehicle Type : ${vehicle},
+            PickUp : ${pickup},
+            DropUp : ${dropoff},
+            Date : ${date},
+            Time : ${time},
+            Total Days : ${totaldays},
+            Total Hours : ${hours},
+
             Best Regards,
-            Your Company Team`,
+            Shivpushpa Travels`,
         };
 
-        // Send the email
+
         await transporter.sendMail(mailOptions);
         console.log('Email sent to', email);
 
