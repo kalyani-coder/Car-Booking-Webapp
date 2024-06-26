@@ -127,20 +127,20 @@ const AddTrip = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-  
+
     // Validate mobile number length
     if (name === "mobileno" && value.length > 10) {
       // Prevent further input if more than 10 digits
       return;
     }
     // Validate mobile number length for specific fields
-  if (name.startsWith("Mobile_Number_") && value.length > 10) {
-    // Prevent further input if more than 10 digits
-    return;
-  }
-  
+    if (name.startsWith("Mobile_Number_") && value.length > 10) {
+      // Prevent further input if more than 10 digits
+      return;
+    }
+
     let newData = { ...formData, [name]: value };
-  
+
     // Calculate total days and hours if both dates and times are provided
     if (
       (name === "date" ||
@@ -154,7 +154,7 @@ const AddTrip = () => {
     ) {
       let startDate = new Date(`${newData.date}T${newData.time}`);
       let endDate = new Date(`${newData.date1}T${newData.time1}`);
-  
+
       if (startDate.getTime() === endDate.getTime()) {
         newData = {
           ...newData,
@@ -167,19 +167,19 @@ const AddTrip = () => {
         if (endDate < startDate) {
           endDate.setDate(endDate.getDate() + 1);
         }
-  
+
         const timeDifference = endDate - startDate;
         const totalMinutes = Math.floor(timeDifference / (1000 * 60));
         let totalHours = Math.floor(totalMinutes / 60);
         const remainingMinutes = totalMinutes % 60;
         const totalDays = Math.floor(totalHours / 24);
-  
+
         // Ensure total hours is within 0-23 range
         totalHours %= 24;
-        
+
         // Convert totalHours and remainingMinutes to floating point number
         const totalHoursWithMinutes = totalHours + (remainingMinutes / 60);
-  
+
         newData = {
           ...newData,
           totaldays: totalDays.toString(),
@@ -188,12 +188,12 @@ const AddTrip = () => {
         };
       }
     }
-  
+
     setFormData(newData);
     setError(""); // Clear previous errors
   };
-  
-  
+
+
 
   const handleAddPerson = () => {
     if (numberOfPeople < 6) {
@@ -249,7 +249,7 @@ const AddTrip = () => {
     return rows;
   };
 
-  const showAlert = (message, type) => {
+  const alert = (message, type) => {
     if (type === "success") {
       setSuccessAlert({ msg: message, type: type });
       setTimeout(() => {
@@ -265,26 +265,26 @@ const AddTrip = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     if (!selectedCustomer || !selectedCustomer._id) {
-      showAlert("Please select a customer before adding a trip.", "danger");
+      alert("Please select a customer before adding a trip.", "danger");
       return;
     }
-  
+
     // Validate mobile numbers for each person
     for (let i = 1; i <= numberOfPeople; i++) {
       const mobileNumber = formData[`Mobile_Number_${i}`];
       if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
-        showAlert(`Mobile number for Person ${i} must be 10 digits.`, "danger");
+        alert(`Mobile number for Person ${i} must be 10 digits.`, "danger");
         return;
       }
     }
-  
+
     const dataWithCustomerId = {
       ...formData,
       customerId: selectedCustomer._id,
     };
-  
+
     try {
       const response = await fetch("http://localhost:8787/api/add-trip", {
         method: "POST",
@@ -293,49 +293,98 @@ const AddTrip = () => {
         },
         body: JSON.stringify(dataWithCustomerId),
       });
-  
+
       if (response.ok) {
-        alert("Data added successfully!", "success");
+        alert("Data added successfully!");
+        // Save Data in localStorage 
+        localStorage.setItem('submittedData', JSON.stringify(dataWithCustomerId));
         setFormData(initialFormData);
         setIsSubmitted(true); // Set form submission state to true
       } else {
-        showAlert("Failed to add data!", "danger");
+        alert("Failed to add data!");
       }
     } catch (error) {
       alert("An error occurred while adding data!", "danger");
       console.error("Error:", error);
     }
   };
-  
-  
-  
-  const handleSendEmail = (formData) => {
-    const emailSubject = encodeURIComponent("Your Trip Details");
-    const emailBody = encodeURIComponent(`
-      Hello ${selectedCustomer.cus_name},
-  
-      Your booking is done. Here are the details:
-      Booking ID: ${formData.customerId}
-      Trip Type: ${formData.triptype}
-      Pickup Location: ${formData.pickup}
-      Dropoff Location: ${formData.dropoff}
-      Date: ${formData.date}
-      Time: ${formData.time}
-      Date (Return): ${formData.date1}
-      Time (Return): ${formData.time1}
-      Total Days: ${formData.totaldays}
-      Total Hours: ${formData.hours}
-      Vehicle Type: ${formData.vehicle}
-  
-      Thank you for choosing us.
-  
-      Best regards,
-      Your Shivpushpa Travels
-    `);
-    const mailtoLink = `mailto:${formData.email}?subject=${emailSubject}&body=${emailBody}`;
-    window.open(mailtoLink, "_blank");
+
+
+
+  // Function to handle sending email
+  const handleSendEmail = async () => {
+    const storedData = localStorage.getItem('submittedData');
+
+    if (!storedData) {
+      alert("No data available to send email.");
+      return;
+    }
+
+
+    const parsedData = JSON.parse(storedData);
+    const {
+      customerId,
+      customername,
+      mobileno,
+      email,
+      address,
+      triptype,
+      vehicle,
+      pickup,
+      dropoff,
+      date,
+      time,
+      totaldays,
+      hours,
+    } = parsedData;
+
+    const emailData = {
+      customerId,
+      customername,
+      mobileno,
+      email,
+      address,
+      triptype,
+      vehicle,
+      pickup,
+      dropoff,
+      date,
+      time,
+      totaldays,
+      hours,
+    };
+
+    console.log('Sending email with data:', emailData);
+
+    try {
+      const response = await fetch("http://localhost:8787/api/add-trip/sendemail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ emailData }),
+      });
+
+      if (response.ok) {
+        alert("Email sent successfully!");
+        localStorage.clear()
+      }
+
+      if (!response.status === 404) {
+        alert("No data available to send email.");
+        return;
+      }
+
+      else {
+        const errorText = await response.text();
+        alert(`Failed to send email. Status: ${response.status}, ${errorText}`, "danger");
+      }
+    } catch (error) {
+      alert("An error occurred while sending email.", "danger");
+      console.error("Error:", error);
+    }
   };
-  
+
 
   const handleSendWhatsApp = () => {
     const customerTextMessage = `Hello ${selectedCustomer.cus_name}, your booking is done. Your booking ID is ${formData.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
