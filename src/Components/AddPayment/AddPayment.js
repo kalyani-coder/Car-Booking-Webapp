@@ -412,7 +412,7 @@ function AddPayment() {
       );
   
       if (response.ok) {
-        showAlert("Customer Payment added successfully!", "success");
+        alert("Customer Payment added successfully!", "success");
         setFormData(initialFormData); // Optionally reset the form after successful submission
       } else {
         const responseData = await response.json(); // Parse response body as JSON
@@ -422,11 +422,12 @@ function AddPayment() {
           response.statusText,
           responseData // Log additional error details from the server
         );
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
   
