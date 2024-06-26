@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../Sidebar/Sidebar';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { FaFilePdf } from 'react-icons/fa';
+import { FaTrash,FaFilePdf,FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import headerlogo from "../../assects/images/shivpushpa_logo.png"
 
@@ -10,6 +10,9 @@ const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedVendor, setSelectedVendor] = useState(null);
+  const [filteredShareDetails, setFilteredShareDetails] = useState([]);
+  const [error, setError] = useState(null);
+
 
 
   useEffect(() => {
@@ -28,6 +31,41 @@ const ViewVendorPayment = () => {
 
     fetchVendors();
   }, []);
+
+  
+
+  const handleVendorsDelete = async (vendorId) => {
+    const confirmed = window.confirm(
+      "Do you want to delete this Vendor Payment?"
+    );
+    if (confirmed) {
+      // Optimistically update the UI
+      const updatedDetails = filteredShareDetails.filter(item => item._id !== vendorId);
+      setFilteredShareDetails(updatedDetails);
+
+      try {
+        const response = await fetch(
+          `http://localhost:8787/api/vender-payment/${vendorId}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        alert("Vendor payment deleted successfully");
+      } catch (error) {
+        console.error("Error deleting vendor payment:", error);
+        setError("Error deleting vendor payment: " + error.message);
+
+        // Optionally, revert the UI update if the API call fails
+        setFilteredShareDetails(prevDetails => [...prevDetails, filteredShareDetails.find(item => item._id === vendorId)]);
+      }
+    }
+  };
+  
 
   // Define a global variable to track the invoice number
 let invoiceCounter = 100;
@@ -171,6 +209,7 @@ doc.line(10, 105, 200, 105);
           <table className="table">
             <thead>
               <tr>
+              <th>Sr. No.</th>
                 <th>Vendor Name</th>
                 <th>Company Name</th>
                 <th>GST No</th>
@@ -182,20 +221,27 @@ doc.line(10, 105, 200, 105);
               </tr>
             </thead>
             <tbody>
-              {filteredVendors.map((vendor) => (
+              {filteredVendors.map((vendor,index) => (
                 <React.Fragment key={vendor._id}>
                   <tr>
+                  <td>{index + 1}</td>
+                  <td>{vendor.vender_Name}</td>
                     <td>{vendor.company_Name}</td>
-                    <td>{vendor.vender_Name}</td>
                     <td>{vendor.GST_No}</td>
                     <td>{vendor.mobile_Number}</td>
                     <td>{vendor.payment}</td>
                     <td>{vendor.amount}</td>
                     <td>{vendor.tds}</td>
                     <td>
-                      <Link  className="btn btn-info ml-2" to={`/ViewVendorPayment/${vendor._id}`}>
-                        View More
+                      <Link  className="btn btn-primary btn-sm ml-2" to={`/ViewVendorPayment/${vendor._id}`}>
+                      <i className="fas fa-eye"></i>
                       </Link>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleVendorsDelete(vendor._id)}
+                      >
+                        <FaTrash />
+                      </button>
                       <button
                         className="btn btn-info"
                         onClick={() => handleGenerateInvoice(vendor)}

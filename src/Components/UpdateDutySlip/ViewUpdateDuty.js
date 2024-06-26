@@ -12,6 +12,7 @@ const ViewUpdateDuty = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showDetails, setShowDetails] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState({});
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -105,7 +106,7 @@ const ViewUpdateDuty = () => {
 
         // Right side table details
         const rightDetails = [
-          ["Duty Slip No:", formData.trip_duty_number],
+          ["Duty Slip No:", setSelectedCustomer.trip_duty_number],
           ["Date:", formData.date],
         ];
 

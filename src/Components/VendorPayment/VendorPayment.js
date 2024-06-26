@@ -5,7 +5,8 @@ import Alert from "../AddCustomer/Alert";
 import axios from "axios";
 
 function VendorPayment() {
-  const [formData, setFormData] = useState({
+  const initialFormData = useState({
+    vender_id: "",
     company_Name: "",
     GST_No: "",
     vender_Name: "",
@@ -20,10 +21,8 @@ function VendorPayment() {
     extra_hour: "",
     total_km: "",
     total_hour: "",
-    totalkm_amount: "",
-    totalhour_amount: "",
     total_amount: "",
-    payment: "",
+    // payment: "",
     amount: "",
     tds: "",
     paid_amount: "",
@@ -34,6 +33,9 @@ function VendorPayment() {
   const [selectedVendorId, setSelectedVendorId] = useState("");
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
+  const [formData, setFormData] = useState(initialFormData);
+  const [isPartialPayment, setIsPartialPayment] = useState(false);
+  
 
   useEffect(() => {
     fetchVendors();
@@ -52,37 +54,33 @@ function VendorPayment() {
     }
   };
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => {
-      const updatedFormData = { ...prevFormData, [name]: value };
-  
-      // Parse values to floats or set them to 0 if they are not valid numbers
-      const km = parseFloat(updatedFormData.km) || 0;
-      const extra_km = parseFloat(updatedFormData.extra_km) || 0;
-      const hour = parseFloat(updatedFormData.hour) || 0;
-      const extra_hour = parseFloat(updatedFormData.extra_hour) || 0;
-  
-      // Calculate total_km
-      updatedFormData.total_km = km + extra_km;
-  
-      // Calculate total_hour
-      updatedFormData.total_hour = hour + extra_hour;
-  
-      return updatedFormData;
-    });
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  
 
   const handleVendorChange = (e) => {
     const selectedId = e.target.value;
     setSelectedVendorId(selectedId);
     const selectedVendor = vendors.find((vendor) => vendor._id === selectedId);
     if (selectedVendor) {
+      const km = parseFloat(selectedVendor.km) || 0;
+      const extra_km = parseFloat(selectedVendor.extra_km) || 0;
+      const hour = parseFloat(selectedVendor.hour) || 0;
+      const extra_hour = parseFloat(selectedVendor.extra_hour) || 0;
+      const rate = parseFloat(selectedVendor.rate) || 0;
+
+      const total_km = km + extra_km;
+      const total_hour = hour + extra_hour;
+      const total_hour_Amt = total_hour * 100;
+      const total_amount = rate * total_km + total_hour_Amt;
+       // Calculate TDS and paid amount
+        const tds = total_amount * 0.01;
+        const paid_amount = total_amount + tds;
+
       setFormData({
         ...formData,
-        _id: selectedVendor._id,
+       vender_id: selectedVendor._id,
         vender_Name: selectedVendor.vender_Name,
         company_Name: selectedVendor.company_Name,
         GST_No: selectedVendor.GST_No,
@@ -95,7 +93,12 @@ function VendorPayment() {
         km: selectedVendor.km,
         extra_km: selectedVendor.extra_km,
         extra_hour: selectedVendor.extra_hour,
-      });
+        total_km: total_km,
+        total_hour: total_hour,
+        total_amount: total_amount,
+        tds: tds,
+        paid_amount: paid_amount
+      })
     }
   };
 
@@ -113,49 +116,206 @@ function VendorPayment() {
     }
   };
 
+  //
+  const renderPaymentMethodFields = () => {
+    if (formData.payment_Method === "Cheque") {
+      return (
+        <>
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">Cheque Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.chequeNo}
+              onChange={(e) =>
+                setFormData({ ...formData, chequeNo: e.target.value })
+              }
+            />
+          </div>
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">IFSC Code:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.ifscCode}
+              onChange={(e) =>
+                setFormData({ ...formData, ifscCode: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">Transaction Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.TransactionNumber}
+              onChange={(e) =>
+                setFormData({ ...formData, TransactionNumber: e.target.value })
+              }
+            />
+          </div>
+        </>
+      );
+    } else if (formData.payment_Method === "UPI / Wallet Payment") {
+      return (
+        <>
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">UPI ID:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.upiId}
+              onChange={(e) =>
+                setFormData({ ...formData, upiId: e.target.value })
+              }
+            />
+          </div>
+        </>
+      );
+    } else if (formData.payment_Method === "Cash") {
+      return (
+        <>
+          <div className="mb-3">
+            <label className="form-label">Name to Whom Submitted Cash:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.cashReceiver}
+              onChange={(e) =>
+                setFormData({ ...formData, cashReceiver: e.target.value })
+              }
+            />
+          </div>
+          {/* <div className="mb-3">
+            <label className="form-label">Upload Receipt:</label>
+            <input
+              type="file"
+              className="form-control"
+              onChange={handleFileChange} // Assuming you have a handleFileChange function
+            />
+          </div> */}
+        </>
+      );
+    } else if (formData.payment_Method === "Bank Transfer(NEFT)") {
+      return (
+        <>
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">NEFT Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.neftnumber}
+              onChange={(e) =>
+                setFormData({ ...formData, neftnumber: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">IFSC Code :</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.ifscCode}
+              onChange={(e) =>
+                setFormData({ ...formData, ifsccode: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">Account Number:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.accountnumber}
+              onChange={(e) =>
+                setFormData({ ...formData, accountnumber: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="mb-3" style={{ width: "50%" }}>
+            <label className="form-label">Branch Name:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.branchname}
+              onChange={(e) =>
+                setFormData({ ...formData, branchname: e.target.value })
+              }
+            />
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className="mb-3">
+            <label className="form-label">Transaction ID:</label>
+            <input
+              type="text"
+              className="form-control"
+              value={formData.transactionId}
+              onChange={(e) =>
+                setFormData({ ...formData, transactionId: e.target.value })
+              }
+            />
+          </div>
+        </>
+      );
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post("http://localhost:8787/api/vender-payment", {
-        company_Name: formData.company_Name,
-        GST_No: formData.GST_No,
-        vender_Name: formData.vender_Name,
-        mobile_Number: formData.mobile_Number,
-        vehicle_type: formData.vehicle,
-        vehicle_number: formData.vehicle_no,
-        title: formData.title,
-        rate: formData.rate,
-        hour: formData.hour,
-        km: formData.km,
-        extra_km: formData.extra_km,
-        extra_hour: formData.extra_hour,
-        total_km: formData.total_km,
-        total_hour: formData.total_hour,
-        totalkm_amount: formData.totalkm_amount,
-        totalhour_amount: formData.totalhour_amount,
-        total_amount: formData.total_amount,
-        payment: formData.payment,
-        amount: formData.amount,
-        tds: formData.tds,
-        paid_amount: formData.paid_amount,
-        remaining_Amount: formData.remaining_Amount,
-        payment_Method: formData.payment_Method,
-      });
 
-      if (response.status === 200) {
+      const response = await axios.post(
+        "http://localhost:8787/api/vender-payment",
+        {
+          vender_id: formData.vender_id,
+          company_Name: formData.company_Name,
+          GST_No: formData.GST_No,
+          vender_Name: formData.vender_Name,
+          mobile_Number: formData.mobile_Number,
+          vehicle_type: formData.vehicle,
+          vehicle_number: formData.vehicle_no,
+          title: formData.title,
+          rate: formData.rate,
+          hour: formData.hour,
+          km: formData.km,
+          extra_km: formData.extra_km,
+          extra_hour: formData.extra_hour,
+          total_km: formData.total_km,
+          total_hour: formData.total_hour,
+          // totalkm_amount: formData.totalkm_amount,
+          // totalhour_amount: formData.totalhour_amount,
+          total_amount: formData.total_amount,
+          payment: formData.payment,
+          amount: formData.amount,
+          tds: formData.tds,
+          paid_amount: formData.paid_amount,
+          remaining_Amount: formData.remaining_Amount,
+          payment_Method: formData.payment_Method,
+        }
+      );
+
+      if (response.status === 201) {
         console.log("Data posted successfully!");
-        showAlert("Data added successfully!", "success");
+        alert("Data added successfully!", "success");
+        setFormData(initialFormData);
       } else {
         console.error("Error posting data:", response.statusText);
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("Error posting data:", error.message);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
-  
+
   return (
     <>
       <Sidebar />
@@ -174,10 +334,10 @@ function VendorPayment() {
                   >
                     Add Vendor Payment
                   </h2>
-                  
-            {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+
+                  {successAlert && <Alert alert={successAlert} />}
+                  {errorAlert && <Alert alert={errorAlert} />}
+
                   <form onSubmit={handleSubmit}>
                     <div className="row grid-gap-5">
                       <div className="col-md">
@@ -243,7 +403,7 @@ function VendorPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="mobile_Number" class="form-label">
-                          Vendor Mobile Number:
+                            Vendor Mobile Number:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -515,7 +675,7 @@ function VendorPayment() {
                         </div>
                       </div>
                       <div className="col-md">
-                      <div className="form-group">
+                        <div className="form-group">
                           <label htmlFor="total_hour" className="form-label">
                             Total Hours:
                             <span className="required-asterisk">*</span>
@@ -533,43 +693,45 @@ function VendorPayment() {
                       </div>
                     </div>
 
-                    {/* <div className="row grid-gap-5">
+                    <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="total_amount" class="form-label">
-                            Total Hours Amount:
+                          <label htmlFor="tds" class="form-label">
+                            TDS 1%:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="number"
                             className="update-duty-form-control"
-                            id="totalhour_amount"
-                            name="totalhour_amount"
-                            placeholder="Total Hours  Amount"
-                            value={formData.totalhour_amount}
+                            id="tds"
+                            name="tds"
+                            placeholder="TDS 1% Amount"
+                            value={formData.tds}
                             onChange={handleChange}
+                            readOnly
                           />
                         </div>
                       </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="amount" class="form-label">
-                            Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="amount"
-                            name="amount"
-                            placeholder="Enter Amount"
-                            value={formData.amount}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                    </div> */}
 
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="total_Amount" class="form-label">
+                            Paid Amount:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="number"
+                            className="update-duty-form-control"
+                            id="paid_amount"
+                            name="paid_amount"
+                            placeholder="Enter Paid Amount"
+                            value={formData.paid_amount}
+                            onChange={handleChange}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
@@ -593,7 +755,7 @@ function VendorPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="total_amount" class="form-label">
-                            Total Amount:
+                            Total Pay Amount:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -603,49 +765,39 @@ function VendorPayment() {
                             name="total_amount"
                             placeholder="Total Amount"
                             value={formData.total_amount}
-                            onChange={handleChange}
+                            readOnly
                           />
                         </div>
                       </div>
                     </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
+                    <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="tds" class="form-label">
-                            TDS 1%:
+                          <label for="paymentmethod" className="form-label">
+                            Payment Method:
                             <span className="required-asterisk">*</span>
                           </label>
-                          <input
-                            type="number"
+                          <select
                             className="update-duty-form-control"
-                            id="tds"
-                            name="tds"
-                            placeholder="TDS 1% Amount"
-                            value={formData.tds}
+                            name="payment_Method"
+                            id="payment_Method"
                             onChange={handleChange}
-                          />
-                        </div>
-                      </div>
+                            value={formData.payment_Method}
+                          >
+                            <option value="">Payment Method</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="UPI / Wallet Payment">
+                              UPI /Wallet Payment
+                            </option>
+                            <option value="Bank Transfer(NEFT)">
+                              Bank Transfer(NEFT )
+                            </option>
+                          </select>
 
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="total_Amount" class="form-label">
-                            Paid Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="paid_amount"
-                            name="paid_amount"
-                            placeholder="Enter Paid Amount"
-                            value={formData.paid_amount}
-                            onChange={handleChange}
-                          />
+                          {/* Render payment method specific fields */}
+                          {renderPaymentMethodFields()}
                         </div>
                       </div>
-                    </div>
 
                     <div className="row grid-gap-5">
                       <div className="col-md">
@@ -665,31 +817,10 @@ function VendorPayment() {
                           />
                         </div>
                       </div>
+                     
 
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="payment_Method" class="form-label">
-                            Payment Method:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <select
-                            className="update-duty-form-control"
-                            id="payment_Method"
-                            name="payment_Method"
-                            value={formData.payment_Method}
-                            onChange={handleChange}
-                          >
-                            <option value="">Payment Method</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Cheque ">Cheque </option>
-                            <option value="UPI / Wallet Payment">
-                              UPI /Wallet Payment
-                            </option>
-                            <option value="Bank Transfer(NEFT)">
-                              Bank Transfer(NEFT )
-                            </option>
-                          </select>
-                        </div>
+                      <div className="row grid-gap-5">
+                        <div className="col-md"></div>
                       </div>
                     </div>
 

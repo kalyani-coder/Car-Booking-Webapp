@@ -3,6 +3,7 @@ import "./VendorInvoiceMonthly.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
+import headerlogo from "../../assects/images/shivpushpa_logo.png"
 
 function VendorInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -16,7 +17,6 @@ function VendorInvoiceMonthly() {
     mail: 'travelshivpushpa@gmail.com',
     kind_attn: "",
     date: "",
-    contactno: "",
     to: "",
     vendorName: "",
     vendorAddress: "",
@@ -61,7 +61,7 @@ function VendorInvoiceMonthly() {
     const { value } = e.target;
     const selectedVendor = vendors.find(vendor => vendor.vender_Name === value);
     setSelectedVendor(selectedVendor);
-    
+
     if (selectedVendor) {
       setFormData({
         ...formData,
@@ -101,6 +101,7 @@ function VendorInvoiceMonthly() {
     let extraKm = 0;
     let extraHour = 0;
     let totalAmount = 0;
+  
     formData.venderTripDetails.forEach(trip => {
       totalKm += trip.kms;
       totalHour += trip.total_hour;
@@ -108,34 +109,67 @@ function VendorInvoiceMonthly() {
       extraHour += trip.extra_hour;
       totalAmount += trip.amount;
     });
+  
     const subtotal = totalAmount;
     const tds = subtotal * 0.01;
     const finalAmount = subtotal - tds;
-
+  
     const downloadConfirmed = window.confirm('Do you want to download the invoice?');
     if (downloadConfirmed) {
-      const doc = new jsPDF();
-
-      // Add content to the PDF
-      doc.setFontSize(12);
-      doc.text(formData.companyName, 10, 10);
-      doc.text(formData.companyAddress, 10, 20);
-      doc.text('Invoice No: ' + formData.invoiceno, 10, 30);
-      doc.text('GST No: ' + formData.gstno, 10, 40);
-      doc.text('Mail: ' + formData.mail, 10, 60);
-
-      doc.text('PO No: ', 150, 30);
-      doc.text('Invoice No: ' + formData.invoiceno, 150, 40);
-      doc.text('Date: ' + formData.current_Date, 150, 50);
-      doc.text('GST No: ' + formData.GST_No, 150, 60);
-
-      doc.text('Vendor Name: ' + formData.vendorName, 10, 80);
-      doc.text('Vendor Address: ' + formData.vendorAddress, 10, 90);
-      doc.text('Vendor GST No: ' + formData.GST_No, 10, 100);
-      doc.text('Contact No: ' + formData.mobile_Number, 10, 110);
-
-      // Add vendor trip details table
-      doc.text('Vendor Trip Details', 10, 130);
+      const doc = new jsPDF({
+        unit: "mm",
+        format: "a4",
+        compress: true,
+        orientation: "portrait",
+        height: 800, // Increase the height as needed
+      });
+  
+      // Header Background
+      doc.setFillColor(60, 181, 205);
+      doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
+  
+      // Header Logo
+      const img = new Image();
+      img.src = headerlogo;
+      doc.addImage(img, 'JPEG', 5, 10, 45, 32);
+  
+      // Header Company Information
+      doc.setFontSize(11);
+      doc.text(formData.companyName, 65, 15);
+      doc.text(formData.companyAddress, 65, 20);
+      doc.text(formData.contactno, 65, 25);
+      doc.text(formData.mail, 65, 30);
+  
+      // Invoice Information
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString();
+      
+  
+      doc.setFontSize(11);
+      doc.text(`Invoice Date: ${formattedDate}`, 150, 20);
+  
+      // Separator Line
+      doc.setDrawColor(0, 0, 255);
+      doc.line(10, 60, 200, 60);
+  
+      // Invoice To Section
+      doc.text('INVOICE TO:', 10, 68);
+  
+      // Vendor Information
+      const vendorRows = [
+        { label: "Vendor Name", value: formData.vendorName, yPos: 75 },
+        { label: "Vendor Address", value: formData.vendorAddress, yPos: 80 },
+        { label: "Vendor GST No", value: formData.vendorGSTNo, yPos: 85 },
+        { label: "Contact No", value: formData.vendorContactNo, yPos: 90 },
+      ];
+  
+      vendorRows.forEach(row => {
+        doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
+      });
+  
+      doc.line(10, 105, 200, 105);
+  
+      // Trip Details Table
       const tripDetails = formData.venderTripDetails.map((trip, index) => [
         trip.Description,
         trip.vehicle_type,
@@ -146,31 +180,52 @@ function VendorInvoiceMonthly() {
         trip.amount,
         trip.tds
       ]);
+  
+      const marginLeft = 10;
+      const marginTop = 130;
+  
       doc.autoTable({
-        startY: 140,
+        startY: marginTop,
         head: [['Description', 'Vehicle Type', 'Kms', 'Total Hour', 'Extra KM', 'Extra Hour', 'Amount', 'TDS']],
-        body: tripDetails
+        body: tripDetails,
+        theme: 'grid',
+        margin: { left: marginLeft }
       });
-
-      // Add subtotal, TDS, and total amount
-      doc.text(`Subtotal: ${subtotal}`, 10, doc.autoTable.previous.finalY + 10);
-      doc.text(`TDS (1%): ${tds}`, 10, doc.autoTable.previous.finalY + 20);
-      doc.text(`Total Amount: ${finalAmount}`, 10, doc.autoTable.previous.finalY + 30);
-
-      doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 40);
-      doc.text('Bank Name: ' + formData.bankname, 10, doc.autoTable.previous.finalY + 50);
-      doc.text('Branch Name: ' + formData.branchname, 10, doc.autoTable.previous.finalY + 60);
-      doc.text('Account Holder Name: ' + formData.accountHoldername, 10, doc.autoTable.previous.finalY + 70);
-      doc.text('Account Number: ' + formData.accountNumber, 10, doc.autoTable.previous.finalY + 80);
-      doc.text('IFSC Code: ' + formData.ifsccode, 10, doc.autoTable.previous.finalY + 90);
-      doc.text('MICR Code: ' + formData.micrcode, 10, doc.autoTable.previous.finalY + 100);
-
-      doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 40);
-      doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 70);
-
-      doc.save('invoice.pdf');
+  
+      // Summary Table (Subtotal, TDS, Total Amount)
+      const summaryData = [
+        { label: 'Subtotal', value: subtotal },
+        { label: 'TDS (1%)', value: tds },
+        { label: 'Total Amount', value: finalAmount }
+      ];
+  
+      doc.autoTable({
+        startY: doc.autoTable.previous.finalY + 10,
+        head: [['Label', 'Value']],
+        body: summaryData.map(row => [row.label, row.value]),
+        theme: 'plain',
+        margin: { left: marginLeft }
+      });
+  
+      // Bank Details
+      doc.setFontSize(10);
+      doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
+      doc.text(`Bank Name: ${formData.bankname}`, 20, doc.autoTable.previous.finalY + 30);
+      doc.text(`Branch Name: ${formData.branchname}`, 20, doc.autoTable.previous.finalY + 40);
+      doc.text(`Account Number: ${formData.accountNumber}`, 20, doc.autoTable.previous.finalY + 50);
+      doc.text(`IFSC Code: ${formData.ifsccode}`, 20, doc.autoTable.previous.finalY + 60);
+      doc.text(`MICR Code: ${formData.micrcode}`, 20, doc.autoTable.previous.finalY + 70);
+  
+      // Authorised Signatory
+      doc.text("For Shivpushpa Travels", 150, doc.autoTable.previous.finalY + 20);
+      doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 30);
+  
+      // Save the PDF
+      doc.save(`Invoice_${formData.vendorId}.pdf`);
     }
   };
+  
+  
 
   return (
     <>
@@ -181,13 +236,7 @@ function VendorInvoiceMonthly() {
           Vendor Monthly Invoice
         </h2>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            marginBottom: "1rem",
-          }}
-        >
+        <h2 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>
           Invoice To:
         </h2>
 
@@ -233,18 +282,18 @@ function VendorInvoiceMonthly() {
                 <tbody>
                   {formData.venderTripDetails.map((trip, index) => (
                     <tr key={index}>
-                      <td>{trip.Description}
-                      {`${trip.vehicle_Type} from  on ${trip.current_Date}`}
-                          <br />
-                          Total Km 
-                          <br/>
-                          Total Hours
-                          <br />
-                          Extra Km <br/>
-                          Extra Hours 
-                          <br/>
+                      <td>
+                        {`${trip.vehicle_Type} from ${trip.startLocation} on ${trip.current_Date}`}
+                        <br />
+                        Total Km: {trip.kms}
+                        <br />
+                        Total Hours: {trip.total_hour}
+                        <br />
+                        Extra Km: {trip.extra_km}
+                        <br />
+                        Extra Hours: {trip.extra_hour}
                       </td>
-                      
+                      <td>{trip.vehicle_type}</td>
                       <td>{trip.kms}</td>
                       <td>{trip.total_hour}</td>
                       <td>{trip.extra_km}</td>

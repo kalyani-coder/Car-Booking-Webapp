@@ -848,7 +848,7 @@ function AddPayment() {
 
                       <div className="col-md">
                         <div className="form-group">
-                          <label for="titleamount" className="form-label">
+                          <label for="8Hrs 80km amount" className="form-label">
                             Title Amount:
                             <span className="required-asterisk">*</span>
                           </label>
