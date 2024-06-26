@@ -125,4 +125,45 @@ router.get("/vender/:vender_id", async (req, res) => {
   }
 });
 
+// Get By VendorId and VehicleType 
+router.get('/vendor/:vendorId/vehicle/:vehicleType', async (req, res) => {
+  try {
+    const { vendorId, vehicleType } = req.params;
+
+    // Normalize vehicleType to handle case sensitivity and encoded spaces
+    const normalizedVehicleType = decodeURIComponent(vehicleType).toLowerCase();
+
+    const data = await NewVenderpayment.find({
+      vender_id: vendorId,
+      vehicle_type: { $regex: new RegExp(normalizedVehicleType, 'i') } // Case insensitive regex match
+    });
+
+    if (data.length === 0) {
+      return res.status(404).json({ message: 'No data found for the specified vendor ID and vehicle type' });
+    }
+
+    res.status(200).json(data);
+  } catch (e) {
+    console.error('Error:', e);
+    res.status(500).json({ message: 'Internal server error', error: e.message });
+  }
+});
+
+
+router.get("vendor/:vendorId/date/:getByDate" , async(req, res) => {
+  try{
+
+    const {vendorId, getByDate} = req.params
+    const data = await NewVenderpayment.find({vender_id : vendorId, current_Date : getByDate})
+
+    if(data.length === 0){
+      return res.status(404).json({message : "Data not fetch by vendor id and date"})
+    }
+    res.status(201).json(data)
+  }catch(e){
+    res.status(500).json({message : "Internal server error"})
+  }
+})
+
+
 module.exports = router;

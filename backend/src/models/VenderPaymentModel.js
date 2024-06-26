@@ -2,6 +2,16 @@
 
 const mongoose = require('mongoose')
 
+
+function formatDateToDDMMYYYY(date) {
+  const d = new Date(date);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0'); // January is 0
+  const year = d.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
 const VenderPaymentSchema = new mongoose.Schema({
   // company_Name : String,
   // GST_No : String,
@@ -41,8 +51,8 @@ const VenderPaymentSchema = new mongoose.Schema({
   vender_id: String,
   // Add a field for storing the current date
   current_Date: {
-    type: Date,
-    default: () => new Date().toISOString().split("T")[0], // Set default value to current date without time
+    type: String,
+    default: () => formatDateToDDMMYYYY(new Date()),
   },
 
   // reporting_Address : String,
