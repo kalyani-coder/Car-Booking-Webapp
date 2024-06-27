@@ -13,12 +13,25 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get by customer type 
+router.get("/customer/:customerType", async (req, res) => {
+  try {
+    const customerType = req.params.customerType;
+    const data = await NewAddCustomer.find({ Cus_Type: customerType });
+
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Data Not Found" });
+    }
+
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // GET BY ID
 router.get("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
-
-
-
   try {
     const AddVenders = await NewAddCustomer.findById(AddVendersId);
     if (!AddVenders) {

@@ -276,8 +276,8 @@ const AddCustomer = () => {
                 value={formData.Cus_Type}
               >
                 <option value="" disabled selected>Select Customer Type</option>
-                <option value="Indivisual Customer">Indivisual Customer</option>
-                <option value="Corporate Customer">Corporate Customer</option>
+                <option value="Indivisual">Indivisual Customer</option>
+                <option value="Corporate">Corporate Customer</option>
               </select>
             </div>
 
