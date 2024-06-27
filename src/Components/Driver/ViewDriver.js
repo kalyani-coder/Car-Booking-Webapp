@@ -7,6 +7,7 @@ const TableView = ({ drivers, handleEditDriver, handleDeleteDriver }) => (
   <table className="table">
     <thead>
       <tr>
+        <th>Sr. No.</th>
         <th>Driver Name</th>
         <th>Email</th>
         <th>Address</th>
@@ -16,8 +17,9 @@ const TableView = ({ drivers, handleEditDriver, handleDeleteDriver }) => (
       </tr>
     </thead>
     <tbody>
-      {drivers.map((driver) => (
+      {drivers.map((driver,index) => (
         <tr key={driver._id}>
+          <td>{index + 1}</td>
           <td>{driver.driver_Name}</td>
           <td>{driver.driver_Email}</td>
           <td>{driver.address}</td>

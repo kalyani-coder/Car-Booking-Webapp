@@ -137,39 +137,44 @@ const ViewAllocateTrip = () => {
     setEditingId(null);
   };
 
-  const handleSaveEdit = () => {
-    const successMessage = "Trip details successfully updated!";
-    const errorMessage = "Error updating trip details. Please try again.";
-
-    const updateTripEndpoint = `http://localhost:8787/api/trip-details/${editingId}`;
-
-    fetch(updateTripEndpoint, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedTrip),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const handleSaveEdit = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8787/api/trip-details/${editingId._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editedTrip),
         }
-        return response.json();
-      })
-      .then((data) => {
-        setShareDetails((prevDetails) => {
-          return prevDetails.map((detail) =>
-            detail._id === editingId ? data : detail
-          );
-        });
-        setEditingId(null);
-        alert(successMessage);
-      })
-      .catch((error) => {
-        setError(`Error updating trip details: ${error.message}`);
-        alert(errorMessage);
-      });
+      );
+  
+      if (response.ok) {
+        const updatedTrip = await response.json();
+        setShareDetails((prevDetails) =>
+          prevDetails.map((detail) =>
+            detail._id === editingId ? updatedTrip : detail
+          )
+        );
+        setFilteredShareDetails((prevDetails) =>
+          prevDetails.map((detail) =>
+            detail._id === editingId ? updatedTrip : detail
+          )
+        );
+        alert("Trip details successfully updated!");
+      } else {
+        console.error("Error updating trip details:", response.status);
+        alert("Error updating trip details. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating trip details:", error);
+      alert("Error updating trip details. Please try again.");
+    }
   };
+  
+  
+  
 
   const handleDelete = (_id) => {
     const confirmed = window.confirm(
@@ -203,7 +208,8 @@ const ViewAllocateTrip = () => {
       <Sidebar />
       <div className="share-details-container h-[100vh]">
         <div className="share-details-main-container">
-          <h2 className="text-center mt-2"
+          <h2
+            className="text-center mt-2"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -282,31 +288,30 @@ const ViewAllocateTrip = () => {
                                   <FaTimes />
                                 </button>
                               </div>
-                              {/* <h5 className="fw-bold my-2">Customer Name:</h5>
-                              <select
-                                className="trip-details-input"
-                                id="customerId"
-                                name="customerId"
+                             
+                              <h5 className="fw-bold my-2">Customer Name:</h5>
+                              <input
+                                type="text"
+                                value={editedTrip.customername}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
                                     customername: e.target.value,
                                   })
                                 }
-                                value={editedTrip.customername}
-                              >
-                                <option value="">Select Customer</option>
-                                {customers &&
-                                  customers.map &&
-                                  customers.map((customer) => (
-                                    <option
-                                      key={customer._id}
-                                      value={customer.customername}
-                                    >
-                                      {customer.customername}
-                                    </option>
-                                  ))}
-                              </select> */}
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              /> <h5 className="fw-bold my-2">Customer Mobile No:</h5>
+                              <input
+                                type="text"
+                                value={editedTrip.customermobile}
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    customermobile: e.target.value,
+                                  })
+                                }
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
                               <h5 className="fw-bold my-2">Pickup Location:</h5>
                               <input
                                 type="text"
@@ -383,24 +388,27 @@ const ViewAllocateTrip = () => {
                               />
                               <h5 className="fw-bold my-2">Type of Vehicle:</h5>
                               <select
-        className="form-control-add-trip-input"
-        name="vehicle"
-        id="vehicle"
-        onChange={(e) =>
-          setEditedTrip({
-            ...editedTrip,
-            vehicle: e.target.value,
-          })
-        }
-        value={editedTrip.vehicle}
-      >
-        <option value="">Vehicle</option>
-        {vehicleDetails.map((vehicle) => (
-          <option key={vehicle._id} value={vehicle.vehicleType}>
-            {vehicle.vehicleType}
-          </option>
-        ))}
-      </select>
+                                className="form-control-add-trip-input"
+                                name="vehicle"
+                                id="vehicle"
+                                onChange={(e) =>
+                                  setEditedTrip({
+                                    ...editedTrip,
+                                    vehicle: e.target.value,
+                                  })
+                                }
+                                value={editedTrip.vehicle}
+                              >
+                                <option value="">Vehicle</option>
+                                {vehicleDetails.map((vehicle) => (
+                                  <option
+                                    key={vehicle._id}
+                                    value={vehicle.vehicleType}
+                                  >
+                                    {vehicle.vehicleType}
+                                  </option>
+                                ))}
+                              </select>
                               <h5 className="fw-bold my-2">Trip Type:</h5>
                               <select
                                 className="share-details-input"
@@ -529,7 +537,7 @@ const ViewAllocateTrip = () => {
                         </div>
                       ) : (
                         <>
-                           <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex align-items-center gap-2">
                             <button
                               className="btn btn-info"
                               onClick={() => handleEdit(shareDetail._id)}
