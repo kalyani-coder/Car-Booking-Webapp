@@ -164,7 +164,7 @@ const AddCustomer = () => {
       <div className="customer-Add-container">
         <div className="addcustomer-main-container">
           <div className="customer-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center mr-28">Add Customer</h2>
+            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center">Add Customer</h2>
 
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
