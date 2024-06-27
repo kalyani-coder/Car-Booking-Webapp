@@ -3,87 +3,56 @@
 const mongoose = require("mongoose")
 
 const getDetailsFromDriverSchema = new mongoose.Schema({
-    customerId: {
-        type: String,
-        required: [true, 'Customer ID is required']
-    },
-    customername: {
-        type: String,
-        required: [true, 'Customer name is required']
-    },
+    // customerId : String,
+    // customername : String, 
+    // customermobile : Number,
+    // vehicle :String,
+    // pickuplocation: String,
+    // date: Date,
+    // time: String,
+    // dropoffLocation: String,
+    // date1: Date,
+    // time1: String,
+    // totalDays: String,
+    // totalHours: String,
+    // triptype: String,
+    // tripsubtype: String,
+    // drivername: String,
+    // mobileNumber: Number,
+    // toll : String,
+    // allowance : Number,
+    // nightstay : String,
+
+
+
+    customerId: String,
+    customername: String,
     cus_Name: String,
-    customermobile: {
-        type: String,
-        required: [true, 'Mobile number is required']
+    customermobile: String,
+    vehicle: String,
+    triptype: String,
+    subtype: String,
+    pickup: String,
+    date: String,
+    time: String,
+    Dropoff: String,
+    date1: String,
+    time1: String,
+    totalDays: String,
+    totalHours: String,
+    drivername: String,
+    mobileno: String,
+    vehicleno: String,
+    toll : {type : String,
+        default : ""
     },
-    vehicle: {
-        type: String,
-        required: [true, 'Vehicle is required']
+    allowance :{type : String,
+        default : ""
     },
-    triptype: {
-        type: String,
-        required: [true, 'Trip type is required']
+    nightstay : {type : String,
+        default : ""
     },
-    subtype: {
-        type: String,
-        required: [true, 'Sub type is required']
-    },
-    pickup: {
-        type: String,
-        required: [true, 'Pick up location is required']
-    },
-    date: {
-        type: String,
-        required: [true, 'Pick up date is required']
-    },
-    time: {
-        type: String,
-        required: [true, 'Pick up time is required']
-    },
-    Dropoff: {
-        type: String,
-        required: [true, 'Drop off location is required']
-    },
-    date1: {
-        type: String,
-        required: [true, 'Drop off date is required']
-    },
-    time1: {
-        type: String,
-        required: [true, 'Drop off time is required']
-    },
-    totalDays: {
-        type: String,
-        required: [true, 'Total days are required']
-    },
-    totalHours: {
-        type: String,
-        required: [true, 'Total hours are required']
-    },
-    drivername: {
-        type: String,
-        required: [true, 'Driver name is required']
-    },
-    mobileno: {
-        type: String,
-        required: [true, 'Mobile number is required']
-    },
-    vehicleno: {
-        type: String,
-        required: [true, 'Vehicle number is required']
-    },
-    toll: {
-        type: String,
-        default: ""
-    },
-    allowance: {
-        type: String,
-        default: ""
-    },
-    nightstay: {
-        type: String,
-        default: ""
-    },
+
 
 })
 
