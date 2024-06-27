@@ -150,7 +150,7 @@ const AddVendor = () => {
           {successAlert && <Alert alert={successAlert} />}
           {errorAlert && <Alert alert={errorAlert} />}
 
-          <div className="vendor-form-container relative left-[6rem]">
+          <div className="vendor-form-container relative pl-[14%]">
             <form>
               <div className="vendor-form-group">
                 <label htmlFor="vendorname" className="form-label">
