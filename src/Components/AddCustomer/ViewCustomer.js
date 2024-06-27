@@ -139,6 +139,7 @@ const ViewCustomer = () => {
         setErrorMessage('');
       } else {
         console.error('Error updating customer:', response.status);
+        alert('Error updating customer. Please try again.');
         setSuccessMessage('');
         setErrorMessage('Error updating customer. Please try again.');
       }

@@ -240,7 +240,7 @@ const ViewCustomerEnquiry = () => {
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
-              marginBottom: "1rem",
+              marginBottom: "10rem",
             }}
           >
             View Customer Enquiry
