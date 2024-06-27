@@ -24,6 +24,10 @@ const newAddCustomerSchema = new mongoose.Schema({
   cus_mobile: Number,
   cus_email: String,
   address: String,
+  Cus_Type : {
+    type : String,
+    required : true
+  }
 });
 
 const NewAddCustomer = mongoose.model('NewAddCustomer', newAddCustomerSchema);

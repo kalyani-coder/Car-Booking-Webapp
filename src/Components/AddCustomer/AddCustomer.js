@@ -11,6 +11,8 @@ const AddCustomer = () => {
     mobileno: "",
     email: "",
     address: "",
+    Cus_Type : "",
+
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -19,6 +21,12 @@ const AddCustomer = () => {
   const [gstnoError, setGstnoError] = useState(""); // State for GST number validation error
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
+
+  const [selectCusType, setSelectCusType] = useState('');
+
+  const handleSelectCustomer = (event) => {
+    setSelectCusType(event.target.value);
+  };
 
   // Handle form input changes
   const handleChange = (event) => {
@@ -74,7 +82,7 @@ const AddCustomer = () => {
 
   // Handle form submission
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     // Additional validation checks
     if (!/^[A-Za-z\s]+$/.test(formData.customername)) {
@@ -96,6 +104,10 @@ const AddCustomer = () => {
       alert("Please enter a valid email address.");
       return;
     }
+    if (!formData.Cus_Type) {
+      alert("Please Select Customer Type.");
+      return;
+    }
 
     try {
       const requestBody = {
@@ -105,6 +117,7 @@ const AddCustomer = () => {
         cus_mobile: formData.mobileno,
         cus_email: formData.email,
         address: formData.address,
+        Cus_Type : formData.Cus_Type,
       };
 
       const response = await fetch("http://localhost:8787/api/add-customers", {
@@ -142,6 +155,8 @@ const AddCustomer = () => {
       });
     }
   };
+
+
 
   return (
     <>
@@ -246,6 +261,24 @@ const AddCustomer = () => {
                 onChange={handleChange}
                 value={formData.address}
               />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="Cus_Type" className="form-label">
+                Select Customer Type: 
+                <span className="required-asterisk">*</span>
+              </label>
+              <select
+                className="form-control-cust-add-input"
+                id="Cus_Type"
+                name="Cus_Type"
+                onChange={handleChange}
+                value={formData.Cus_Type}
+              >
+                <option value="" disabled selected>Select Customer Type</option>
+                <option value="Indivisual Customer">Indivisual Customer</option>
+                <option value="Corporate Customer">Corporate Customer</option>
+              </select>
             </div>
 
             <button type="button" className="customer-btn-submit" onClick={handleSubmit}>
