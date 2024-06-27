@@ -66,9 +66,13 @@ router.patch("/:id", async (req, res) => {
       VenderpaymentId,
       req.body,
       {
-        new: true,
+        new: true, 
+        runValidators: true,
       }
     );
+    if(!UpdatedVenderpayment){
+      return res.status(400).json({ message: "failed to update" });
+    }
     res.status(201).json({ message: "Customer Enquiry Successfully updated " });
   } catch (e) {
     res.status(404).json({ message: "Can not patch Customer enquiry" });
