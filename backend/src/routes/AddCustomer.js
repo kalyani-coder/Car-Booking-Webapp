@@ -65,7 +65,7 @@ router.patch("/:id", async (req, res) => {
       req.body,
       {
         new: true,
-        
+        runValidators: true,
       }
     );
     res.status(201).json({ message: "venders Successfully updated " });
