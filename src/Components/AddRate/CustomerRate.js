@@ -1,161 +1,72 @@
-import React, { useState, useEffect } from "react";
-import "./AddRate.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Sidebar from "../Sidebar/Sidebar";
-import Alert from "../AddCustomer/Alert";
-
-const initialFormData = {
-  Cus_Type: "",
-  Cus_name: "",
-  company_name: "",
-  gst_no: "",
-  Cus_Mobile: "",
-  type_of_vehicle: "",
-  rate_per_km: "",
-  duty_type: "",
-  rate: "",
-  km: "",
-  extra_km: "",
-  hours: "",
-  extra_hours: "",
-  from: "",
-  to: ""
-};
+import "./AddRate.css";
 
 const CustomerRate = () => {
-  const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState("");
-  const [customerList, setCustomerList] = useState([]);
+  const [customerType, setCustomerType] = useState('');
+  const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [formErrors, setFormErrors] = useState({});
-  const [customerListByType, setCustomerListByType] = useState([]);
-  const [vehicleList, setVehicleList] = useState([]);
-  const [dutyTypeList, setDutyTypeList] = useState([]);
-  const [rateList, setRateList] = useState([]);
-  const [successAlert, setSuccessAlert] = useState(null);
-  const [errorAlert, setErrorAlert] = useState(null);
+  const [customerDetails, setCustomerDetails] = useState({ gst_no: '', cus_mobile: '' });
+  const [formData, setFormData] = useState({
+    Cus_Type: '',
+    Cus_name : '',
+    type_of_vehicle: '',
+    duty_type: '',
+    rate: '',
+    from: '',
+    to: '',
+    km: '',
+    extra_km: '',
+    hours: '',
+    extra_hours: ''
+  });
 
-  useEffect(() => {
-    const fetchCustomers = async () => {
+  const initialFormData = {
+    Cus_Type: '',
+    type_of_vehicle: '',
+    duty_type: '',
+    rate: '',
+    from: '',
+    to: '',
+    km: '',
+    extra_km: '',
+    hours: '',
+    extra_hours: ''
+  };
+
+  const handleCustomerTypeChange = async (e) => {
+    const selectedType = e.target.value;
+    setCustomerType(selectedType);
+    setFormData({ ...formData, Cus_Type: selectedType });
+
+    if (selectedType) {
       try {
-        const endpoint =
-          formData.Cus_Type === "Corporate Customer"
-            ? "http://localhost:8787/api/corporate-customer"
-            : formData.Cus_Type === "Indivisual Customer"
-              ? "http://localhost:8787/api/indivisual-customer"
-              : "";
-
-        if (endpoint) {
-          const response = await fetch(endpoint);
-
-          if (response.ok) {
-            const data = await response.json();
-            setCustomerList(data);
-          } else {
-            console.error("Failed to fetch customers");
-          }
-        }
+        const response = await axios.get(`http://localhost:8787/api/add-customers/customer/${selectedType}`);
+        setCustomers(response.data);
       } catch (error) {
-        console.error("API request error:", error);
+        console.error('Error fetching customers:', error);
       }
-    };
-
-    fetchCustomers();
-  }, [formData.Cus_Type]);
-
-  useEffect(() => {
-    if (formData.Cus_Type === "Corporate Customer") {
-      setCustomerListByType(
-        customerList.filter(
-          (customer) => customer.Cus_Type === "Corporate Customer"
-        )
-      );
-    } else if (formData.Cus_Type === "Indivisual Customer") {
-      setCustomerListByType(
-        customerList.filter(
-          (customer) => customer.Cus_Type === "Indivisual Customer"
-        )
-      );
+    } else {
+      setCustomers([]);
     }
-  }, [formData.Cus_Type, customerList]);
+  };
 
-  useEffect(() => {
-    const fetchVehicleDetails = async () => {
-      try {
-        const response = await fetch("http://localhost:8787/api/masterrate");
-        if (response.ok) {
-          const data = await response.json();
-          setVehicleList(data.map((item) => item.add_vehicle));
-          setDutyTypeList(data.map((item) => item.add_duty_type));
-          setRateList(data.map((item) => item.add_rate));
-        } else {
-          console.error("Failed to fetch vehicle details");
-        }
-      } catch (error) {
-        console.error("API request error:", error);
-      }
-    };
-
-    fetchVehicleDetails();
-  }, []);
+  const handleCustomerNameChange = (e) => {
+    const selectedCusName = e.target.value;
+    const customer = customers.find(cust => cust.cus_name === selectedCusName);
+    setSelectedCustomer(customer || {});
+    setCustomerDetails({
+      gst_no: customer?.gst_no || '',
+      cus_mobile: customer?.cus_mobile || ''
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "Cus_Mobile" && value.length > 10) {
-      setMobilenoError("Mobile number must be 10 digits");
-      return;
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    // Check if the changed field is "Cus_name" (Customer Name)
-    // If it is, find the selected customer from the customerList array
-    if (name === "Cus_name") {
-      const selectedCustomerId = e.target.value;
-      setSelectedCustomer(
-        customerList.find((customer) => customer._id === selectedCustomerId)
-      );
-    }
-
-    if (name === "Cus_Mobile") {
-      if (!/^\d{10}$/.test(value)) {
-        setMobilenoError("Mobile number must be 10 digits");
-      } else {
-        setMobilenoError("");
-      }
-    }
+    setFormData({ ...formData, [name]: value });
   };
 
-  // const validateForm = () => {
-  //   const errors = {};
-
-  //   for (const key in formData) {
-  //     if (!formData[key] || formData[key].trim() === "") {
-  //       errors[key] = "This field is required";
-  //     }
-  //   }
-
-  //   setFormErrors(errors);
-
-  //   return Object.keys(errors).length === 0 && !mobilenoError;
-  // };
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      },);
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -164,35 +75,28 @@ const CustomerRate = () => {
       return;
     }
 
-    //  if (!validateForm()) {
-    //   window.alert("Please fill in all required fields");
-    //   return;
-    // }
-
     const formDataWithCustomer = {
       ...formData,
+      Cus_name : selectedCustomer.cus_name,
       customerId: selectedCustomer._id,
-      Cus_Type: selectedCustomer.Cus_Type,
-      Cus_name: selectedCustomer.Cus_name,
-      company_name: selectedCustomer.company_name,
       gst_no: selectedCustomer.gst_no,
-      Cus_Mobile: selectedCustomer.Cus_Mobile,
-      type_of_vehicle: selectedCustomer.type_of_vehicle,
+      Cus_Mobile: selectedCustomer.cus_mobile,
+      type_of_vehicle: formData.type_of_vehicle,
       rate_per_km: selectedCustomer.rate_per_km,
-      duty_type: selectedCustomer.duty_type,
-      rate: selectedCustomer.rate,
-      km: selectedCustomer.km,
-      extra_km: selectedCustomer.extra_km,
-      hours: selectedCustomer.hours,
-      extra_hours: selectedCustomer.extra_hours,
+      duty_type: formData.duty_type,
+      rate: formData.rate,
+      km: formData.km,
+      extra_km: formData.extra_km,
+      hours: formData.hours,
+      extra_hours: formData.extra_hours,
     };
 
     let apiEndpoint = "";
     let customerType = "";
-    if (formData.Cus_Type === "Corporate Customer") {
+    if (formData.Cus_Type === "Corporate") {
       apiEndpoint = "http://localhost:8787/api/corporate-customer";
       customerType = "Corporate";
-    } else if (formData.Cus_Type === "Indivisual Customer") {
+    } else if (formData.Cus_Type === "Indivisual") {
       apiEndpoint = "http://localhost:8787/api/indivisual-customer";
       customerType = "Indivisual";
     } else {
@@ -215,7 +119,6 @@ const CustomerRate = () => {
         alert(`${customerType} customer data added successfully!`, "success");
         setFormData(initialFormData);
         setSelectedCustomer(null);
-        // window.alert("Data added successfully!");
       } else {
         alert("Failed to add data. Please try again.", "danger");
       }
@@ -224,12 +127,37 @@ const CustomerRate = () => {
     }
   };
 
+  const [vehicleList, setVehicleList] = useState([]);
+  const [dutyTypeList, setDutyTypeList] = useState([]);
+  const [rateList, setRateList] = useState([]);
+
+  useEffect(() => {
+    const fetchVehicleDetails = async () => {
+      try {
+        const response = await fetch("http://localhost:8787/api/masterrate");
+        if (response.ok) {
+          const data = await response.json();
+          setVehicleList(data.map((item) => item.add_vehicle));
+          setDutyTypeList(data.map((item) => item.add_duty_type));
+          setRateList(data.map((item) => item.add_rate));
+        } else {
+          console.error("Failed to fetch vehicle details");
+        }
+      } catch (error) {
+        console.error("API request error:", error);
+      }
+    };
+
+    fetchVehicleDetails();
+  }, []);
+
   return (
     <>
       <Sidebar />
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container relative left-[6rem]">
+
             <h2
               style={{
                 fontSize: "2rem",
@@ -240,73 +168,46 @@ const CustomerRate = () => {
               Corporate Customer
             </h2>
 
-            {successAlert && <Alert alert={successAlert} />}
-            {errorAlert && <Alert alert={errorAlert} />}
 
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">
-                  Customer Type:
+                  New Customer Type:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
                   className="form-control-cust-add-input"
                   name="Cus_Type"
                   id="Cus_Type"
-                  onChange={handleChange}
-                  value={formData.Cus_Type}
+                  value={customerType}
+                  onChange={handleCustomerTypeChange}
                 >
                   <option value="">Customer</option>
-                  <option value="Corporate Customer">Corporate Customer</option>
-                  <option value="Indivisual Customer">
-                    Indivisual Customer
-                  </option>
+                  <option value="Corporate">Corporate Customer</option>
+                  <option value="Indivisual">Indivisual Customer</option>
                 </select>
               </div>
 
               <div className="form-group">
                 <label htmlFor="Cus_name" className="form-label">
-                  Customer Name/ Company Name:
+                  New Customer Name/ New Company Name:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
                   className="form-control-rate-add-input"
                   name="Cus_name"
                   id="Cus_name"
-                  onChange={(e) => {
-                    const selectedCustomerId = e.target.value;
-                    setSelectedCustomer(
-                      customerList.find(
-                        (customer) => customer._id === selectedCustomerId
-                      )
-                    );
-                  }}
-                  value={selectedCustomer ? selectedCustomer._id : ""}
+                  onChange={handleCustomerNameChange}
                 >
                   <option value="">Select Customer</option>
-                  {customerList.map((customer) => (
-                    <option key={customer._id} value={customer._id}>
-                      {customer.Cus_name}
+                  {customers.map((customer) => (
+                    <option key={customer._id} value={customer.cus_name}>
+                      {customer.cus_name}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* <div className="rate-form-group">
-                <label htmlFor="company_name" className="form-label">
-                  Company Name:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <input
-                  className="form-control-rate-add-input"
-                  type="text"
-                  id="company_name"
-                  name="company_name"
-                  placeholder="Company Name"
-                  value={formData.company_name}
-                  onChange={handleChange}
-                />
-              </div> */}
               <div className="form-group">
                 <label htmlFor="gst_no" className="form-label">
                   GST No:
@@ -318,10 +219,11 @@ const CustomerRate = () => {
                   id="gst_no"
                   name="gst_no"
                   placeholder="GST No."
-                  value={formData.gst_no}
-                  onChange={handleChange}
+                  value={customerDetails.gst_no}
+                  readOnly
                 />
               </div>
+
               <div className="form-group">
                 <label htmlFor="Cus_Mobile" className="form-label">
                   Mobile No:
@@ -333,12 +235,9 @@ const CustomerRate = () => {
                   id="Cus_Mobile"
                   name="Cus_Mobile"
                   placeholder="Mobile No."
-                  onChange={handleChange}
-                  value={formData.Cus_Mobile}
+                  value={customerDetails.cus_mobile}
+                  readOnly
                 />
-                {mobilenoError && (
-                  <p className="error-message">{mobilenoError}</p>
-                )}
               </div>
 
               <div className="form-group">
@@ -384,6 +283,9 @@ const CustomerRate = () => {
                   ))}
                 </select>
               </div>
+
+
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -442,6 +344,7 @@ const CustomerRate = () => {
                   </div>
                 </div>
               </div>
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -478,6 +381,7 @@ const CustomerRate = () => {
                   </div>
                 </div>
               </div>
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -514,6 +418,7 @@ const CustomerRate = () => {
                   </div>
                 </div>
               </div>
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -550,13 +455,13 @@ const CustomerRate = () => {
                   </div>
                 </div>
               </div>
+
               <button type="submit" className="rate-btn-submit">
                 Submit
               </button>
             </form>
-            {successMessage && (
-              <p className="success-message">{successMessage}</p>
-            )}
+
+
           </div>
         </div>
       </div>
