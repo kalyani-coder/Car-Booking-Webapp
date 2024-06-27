@@ -73,8 +73,8 @@ function App() {
             path="/viewcustomerpayment"
             element={<ViewCustomerPayment />}
           />
-          <Route path="/companyrate" element={<CustomerRate />} />
-          <Route path="/viewcompanyrate" element={<ViewCustomerRate />} />
+          <Route path="/corporatecutomer" element={<CustomerRate />} />
+          <Route path="/viewcorporatecutomer" element={<ViewCustomerRate />} />
           {/* <Route path='/indivisualcustomerrate'  element={<IndivisualCustomerRate/>}/> */}
           <Route path="/vendorrate" element={<VendorRate />} />
           <Route path="/viewvendorrate" element={<ViewVendorRate />} />

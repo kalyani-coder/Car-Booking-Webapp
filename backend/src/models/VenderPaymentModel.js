@@ -29,6 +29,7 @@ const VenderPaymentSchema = new mongoose.Schema({
   GST_No: String,
   vender_Name: String,
   mobile_Number: String,
+  address: String,
   vehicle_type: String,
   vehicle_number: String,
   title: String,

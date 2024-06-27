@@ -62,3 +62,29 @@ button-vendor{
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     margin-bottom: 5px;
 }
+
+.form-vendor-invoice {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjust the gap as needed */
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Adjust the gap between the inputs as needed */
+  }
+  
+  .form-group {
+    flex: 1; /* Allows the elements to grow equally */
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 5px; /* Adjust the spacing between the label and input */
+  }
+  
+  .form-control-cust-inq-input {
+    width: 80%; /* Make the input take the full width of its parent */
+  }
+  
