@@ -212,15 +212,15 @@ const CustomerRate = () => {
 
       if (response.ok) {
         console.log("Customer data added successfully");
-        showAlert(`${customerType} customer data added successfully!`, "success");
+        alert(`${customerType} customer data added successfully!`, "success");
         setFormData(initialFormData);
         setSelectedCustomer(null);
         // window.alert("Data added successfully!");
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
 
