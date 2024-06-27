@@ -24,12 +24,12 @@ const newAddCustomerSchema = new mongoose.Schema({
     minlength: [2, 'Customer name must be at least 2 characters long'],
     maxlength: [100, 'Customer name must be less than 100 characters long']
   },
-  company_name: {
-    type: String,
-    required: [true, 'Company name is required'],
-    minlength: [2, 'Company name must be at least 2 characters long'],
-    maxlength: [100, 'Company name must be less than 100 characters long']
-  },
+  // company_name: {
+  //   type: String,
+  //   required: [true, 'Company name is required'],
+  //   minlength: [2, 'Company name must be at least 2 characters long'],
+  //   maxlength: [100, 'Company name must be less than 100 characters long']
+  // },
   gst_no: {
     type: String,
     required: [true, 'GST number is required'],
