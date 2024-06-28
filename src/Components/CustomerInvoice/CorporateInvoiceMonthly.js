@@ -284,7 +284,7 @@ function CorporateInvoiceMonthly() {
           Invoice To :
         </h2>
 
-        <div className="form-vendor-invoice p-2 flex gap-14">
+        <div className="form-row">
           <div className="grid-gap-2 col-6">
             <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
@@ -310,39 +310,33 @@ function CorporateInvoiceMonthly() {
               ))}
             </select>
           </div>
-          <div className="mb-2 grid-gap-2 col-6">
-            <label htmlFor="vendorAddress" className="form-label ">
-              Kind Attn:
-            </label>
-            <input
-              className="form-control-vendor-invoice w-[80%] p-2 mt-2"
-              type="text"
-              placeholder="Kind Attn"
-              name="kind_attn"
-              value={formData.kind_attn}
-              onChange={(e) => setFormData({ ...formData, kind_attn: e.target.value })}
-            />
-          </div>
+          <div className="form-group col-6">
+              <label htmlFor="kind_attn" className="form-label">
+                Kind Attn:
+              </label>
+              <input
+                type="text"
+                className="form-control-cust-inq-input"
+                name="kind_attn"
+                placeholder="Kind Attn"
+                value={formData.kind_attn}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-group col-6">
+              <label htmlFor="invoiceDate" className="form-label">
+                Invoice Date:
+              </label>
+              <input
+                type="date"
+                className="form-control-cust-inq-input"
+                name="invoiceDate"
+                value={formData.invoiceDate}
+                onChange={handleChange}
+              />
+            </div>
         </div>
-        {/* Button to toggle the date picker visibility */}
-        <div>
-          <button
-            className="btn btn-primary"
-            onClick={() => setShowDatePicker(!showDatePicker)}
-          >
-            Select Date
-          </button>
-        </div>
-
-        {/* Conditional rendering of the date picker */}
-        {showDatePicker && (
-          <DatePicker
-            selected={formData.Date}
-            onChange={(date) => setFormData({ ...formData, Date: date })}
-            dateFormat="dd-MM-yyyy"
-            className="form-control-vendor-invoice" // Add appropriate styling class
-          />
-        )}
+      
         <div>
           {selectedCustomer && (
             <div>

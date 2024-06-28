@@ -172,7 +172,7 @@ const CustomerRate = () => {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">
-                  New Customer Type:
+                   Customer Type:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
@@ -190,7 +190,7 @@ const CustomerRate = () => {
 
               <div className="form-group">
                 <label htmlFor="Cus_name" className="form-label">
-                  New Customer Name/ New Company Name:
+                   Customer Name/ Company Name:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
