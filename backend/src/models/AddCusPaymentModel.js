@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const AddPaymentSchema = new mongoose.Schema({
   
-  company_Name: String,
+  cus_name : String,
+  cus_id : String,
+  cus_type : String,
   GST_No: String,
   reporting_Address: String,
   Date: String,
