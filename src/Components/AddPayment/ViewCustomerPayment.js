@@ -202,6 +202,7 @@ customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWo
           <table className="table">
             <thead>
               <tr>
+                <th>Sr.No.</th>
                 <th>Customer Name</th>
                 {/* <th>Company Name</th> */}
                 <th>GST No</th>
@@ -211,8 +212,9 @@ customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWo
               </tr>
             </thead>
             <tbody>
-              {filteredCustomers.map((customer) => (
+                {filteredCustomers.map((customer,index) => (
                 <tr key={customer._id}>
+                <td>{index + 1}</td>
                   <td>{customer.cus_name}</td>
                   {/* <td>{customer.company_Name}</td> */}
                   <td>{customer.GST_No}</td>

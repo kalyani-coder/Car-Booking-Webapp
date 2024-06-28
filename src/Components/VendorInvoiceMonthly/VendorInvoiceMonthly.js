@@ -46,7 +46,7 @@ function VendorInvoiceMonthly() {
     const fetchVendors = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8787/api/vender-payment"
+          "http://localhost:8787/api/vender-rate"
         );
         if (response.ok) {
           const data = await response.json();
@@ -68,40 +68,7 @@ function VendorInvoiceMonthly() {
     );
     setSelectedVendor(selectedVendor);
 
-    if (selectedVendor) {
-      setFormData({
-        ...formData,
-        vendorId: selectedVendor._id,
-        vendorName: selectedVendor.vender_Name,
-        vendorGSTNo: selectedVendor.GST_No,
-        vendorContactNo: selectedVendor.vender_Mobile,
-        vendorAddress: selectedVendor.address,
-      });
-
-      // Fetch vendor trip details
-      fetchVendorTripDetails(selectedVendor.vender_Name);
-    }
-  };
-
-  
-
-  const fetchVendorTripDetails = async (vendorName) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8787/api/vender-payment?vendorName=${vendorName}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setFormData((prevState) => ({
-          ...prevState,
-          venderTripDetails: data,
-        }));
-      } else {
-        console.error("Failed to fetch vendor trip details");
-      }
-    } catch (error) {
-      console.error("API request error:", error);
-    }
+    
   };
 
   // Define a function to format the date

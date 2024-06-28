@@ -301,6 +301,7 @@ const ViewShareDetails = () => {
             <table className="table">
               <thead>
                 <tr>
+                <th>Sr.No.</th>
                   <th>Customer Name</th>
                   <th>Customer Mobile</th>
                   <th>Vehicle</th>
@@ -311,8 +312,9 @@ const ViewShareDetails = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredShareDetails.map((shareDetail) => (
+                {filteredShareDetails.map((shareDetail,index) => (
                   <tr key={shareDetail._id}>
+                  <td>{index + 1}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.customermobile}</td>
                     <td>{shareDetail.vehicle}</td>

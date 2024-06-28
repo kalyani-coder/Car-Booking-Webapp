@@ -348,7 +348,8 @@ const ViewUpdateDuty = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>Company Name</th>
+                <th>Sr.No.</th>
+                <th>Customer  Name</th>
                 <th>GST No</th>
                 <th>Reporting Address</th>
                 <th>Date</th>
@@ -358,9 +359,10 @@ const ViewUpdateDuty = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCustomers.map((customer) => (
+              {filteredCustomers.map((customer,index) => (
                 <React.Fragment key={customer._id}>
                   <tr>
+                    <td>{index + 1}</td>
                     <td>{customer.companyname}</td>
                     <td>{customer.gstno}</td>
                     <td>{customer.reportingaddress}</td>

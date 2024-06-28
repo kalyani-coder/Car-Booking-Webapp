@@ -290,6 +290,7 @@ const ViewStartEndDetails = () => {
             <Table>
               <thead>
                 <tr>
+                <th>Sr.No.</th>
                   <th>Customer Name</th>
                  <th>Vehicle</th>
                  <th>Trip Type</th>
@@ -306,8 +307,9 @@ const ViewStartEndDetails = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredShareDetails.map((shareDetail) => (
+                {filteredShareDetails.map((shareDetail,index) => (
                   <tr key={shareDetail._id}>
+                  <td>{index + 1}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.triptype}</td>
