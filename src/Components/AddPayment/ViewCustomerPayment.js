@@ -94,7 +94,7 @@ let invoiceCounter = 100;
    
 
     const rows = [
-      { label: "Customer Name", value: customer.customer_Name, yPos: 75 },
+      { label: "Customer Name", value: customer.cus_name, yPos: 75 },
       { label: "Mobile No", value: customer.mobile_no, yPos: 80 },
       { label: "GST No", value: customer.GST_No, yPos: 85 },
       { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 90 },
@@ -213,7 +213,7 @@ customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWo
             <tbody>
               {filteredCustomers.map((customer) => (
                 <tr key={customer._id}>
-                  <td>{customer.customer_Name}</td>
+                  <td>{customer.cus_name}</td>
                   {/* <td>{customer.company_Name}</td> */}
                   <td>{customer.GST_No}</td>
                   <td>{customer.reporting_Address}</td>

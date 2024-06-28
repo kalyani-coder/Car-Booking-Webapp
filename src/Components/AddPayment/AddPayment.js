@@ -3,15 +3,15 @@ import "./AddPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
 import axios from "axios";
+import { Form } from "react-bootstrap";
 
 function AddPayment() {
   const [customerList, setCustomerList] = useState([]);
 
   const initialFormData = {
-    cus_id: "",
-    cus_name: "",
-    cus_type:"",
-    // company_Name: "",
+    customerId: '',
+    Cus_Type: '',
+    Cus_name: '',
     GST_No: "",
     reporting_Address: "",
     Date: "",
@@ -82,7 +82,7 @@ function AddPayment() {
   const handleCustomerTypeChange = async (e) => {
     const selectedType = e.target.value;
     setCustomerType(selectedType);
-    setFormData({ ...formData, Cus_Type: selectedType });
+    setFormData({ ...formData, cus_type: selectedType });
 
     if (selectedType) {
       try {
@@ -293,6 +293,8 @@ function AddPayment() {
     }));
   };
 
+  
+
   //
   //
   const renderPaymentMethodFields = () => {
@@ -448,22 +450,30 @@ function AddPayment() {
   //
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    console.log("Form Data:", formData);
-    setError(""); // Clear any previous error messages
-
+    event.preventDefault(); // Prevent the default form submission behavior
+  
+    if (!selectedCustomer) {
+      window.alert("Please select a customer");
+      return;
+    }
+  
+    // Extract and construct the data to submit
+    const dataToSubmit = {
+      ...formData,
+      cus_id: selectedCustomer._id,
+      cus_name: selectedCustomer.cus_name,
+      // Add any other required fields here
+    };
+  
     try {
-      const response = await fetch(
-        "http://localhost:8787/api/customer-payment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData), // Send the form data directly
-        }
-      );
-
+      const response = await fetch("http://localhost:8787/api/customer-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSubmit), // Send the form data directly
+      });
+  
       if (response.ok) {
         alert("Customer Payment added successfully!", "success");
         setFormData(initialFormData); // Optionally reset the form after successful submission
@@ -480,9 +490,11 @@ function AddPayment() {
     } catch (error) {
       console.error("API request error:", error);
       alert("Failed to add data. Please try again.", "danger");
-      alert("Failed to add data. Please try again.", "danger");
     }
   };
+  
+
+
 
   return (
     <>
@@ -736,7 +748,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="from" className="form-label" l>
-                            Pickup Location:
+                            From:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
@@ -752,7 +764,7 @@ function AddPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label for="to" className="form-label">
-                            Dropoff Location:
+                            To:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input

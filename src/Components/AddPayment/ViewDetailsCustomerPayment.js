@@ -69,7 +69,7 @@ export default function ViewDetailsCustomerPayment() {
                   <FaTimes />
                 </button>
                 <p className="mb-2">
-                  <strong>Company Name:</strong>  {customerPayData.company_Name}
+                  <strong>Customer Name:</strong>  {customerPayData.cus_name}
                 </p>
                 <p className="mb-2"p>
                   <strong>GST No:</strong>  {customerPayData.GST_No}
