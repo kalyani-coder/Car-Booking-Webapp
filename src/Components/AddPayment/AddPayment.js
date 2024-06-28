@@ -8,12 +8,13 @@ function AddPayment() {
   const [customerList, setCustomerList] = useState([]);
 
   const initialFormData = {
-    customerId: "",
-    company_Name: "",
+    cus_id: "",
+    cus_name: "",
+    cus_type:"",
+    // company_Name: "",
     GST_No: "",
     reporting_Address: "",
     Date: "",
-    customer_Name: "",
     mobile_no: "",
     vehicle_Number: "",
     vehicle_Type: "",
@@ -447,7 +448,7 @@ function AddPayment() {
   //
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     console.log("Form Data:", formData);
     setError(""); // Clear any previous error messages
 
@@ -503,33 +504,34 @@ function AddPayment() {
                       Add Customer Payment
                     </h2>
 
-                    {successAlert && <Alert alert={successAlert} />}
-                    {errorAlert && <Alert alert={errorAlert} />}
+                    <div className="row grid-gap-2">
+                    <div className="col-md">
                     <div className="form-group">
                       <label htmlFor="Cus_Type" className="form-label">
-                        New Customer Type:
+                        Customer Type:
                         <span className="required-asterisk">*</span>
                       </label>
                       <select
-                        className="form-control-cust-add-input"
+                        className="update-duty-form-control"
                         name="Cus_Type"
                         id="Cus_Type"
                         value={customerType}
                         onChange={handleCustomerTypeChange}
                       >
-                        <option value="">Customer</option>
+                        <option value="">Select Customer TYpe</option>
                         <option value="Corporate">Corporate Customer</option>
                         <option value="Indivisual">Indivisual Customer</option>
                       </select>
                     </div>
-
+                    </div>
+                    <div className="col-md">
                     <div className="form-group">
                       <label htmlFor="Cus_name" className="form-label">
-                        New Customer Name/ New Company Name:
+                        Customer Name / Company Name:
                         <span className="required-asterisk">*</span>
                       </label>
                       <select
-                        className="form-control-rate-add-input"
+                        className="update-duty-form-control"
                         name="Cus_name"
                         id="Cus_name"
                         onChange={handleCustomerNameChange}
@@ -543,6 +545,10 @@ function AddPayment() {
                       </select>
                     </div>
 
+                    </div>
+                    </div>
+
+                    
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
@@ -1137,7 +1143,6 @@ function AddPayment() {
                           />
                         </div>
                       </div>
-
                       {/* Third field - SGST */}
                       <div className="col-md">
                         <div className="form-group">

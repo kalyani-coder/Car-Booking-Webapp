@@ -229,8 +229,8 @@ function CustomerInvoice() {
           Invoice To :
         </h2>
 
-        <div className="form-vendor-invoice p-2 flex gap-14">
-          <div className="grid-gap-2 col-6">
+        <div className="form-row">
+          <div className="form-group col-6">
             <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
             </label>
@@ -255,7 +255,7 @@ function CustomerInvoice() {
               ))}
             </select>
           </div>
-          <div className="mb-2 grid-gap-2 col-6">
+          <div className="form-group col-6">
             <label htmlFor="vendorAddress" className="form-label">
               Kind Attn:
             </label>
