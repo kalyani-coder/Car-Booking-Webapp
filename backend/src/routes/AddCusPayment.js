@@ -104,7 +104,7 @@ router.delete("/:id", async (req, res) => {
   const NewAddPaymentId = req.params.id;
 
   try {
-    const deletedCustomeEnquiry = await NewAddPaymentSchema.findByIdAndRemove(
+    const deletedCustomeEnquiry = await NewAddPaymentSchema.findByIdAndDelete(
       NewAddPaymentId
     );
     res

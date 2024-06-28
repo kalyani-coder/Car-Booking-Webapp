@@ -4,6 +4,7 @@ import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
 import DatePicker from "react-datepicker"; // Import the DatePicker component
 import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios'
 
 function CorporateInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -37,7 +38,10 @@ function CorporateInvoiceMonthly() {
   const [invoiceNumber, setInvoiceNumber] = useState(101); // Initialize with the starting invoice number
   const [customerList, setCustomerList] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [customerData, setCustomerData] = useState([])
+  const [selectedDate, setSelectedDate] = useState('');
+
+  console.log("mmmm", customerData)
 
 
 
@@ -61,50 +65,67 @@ function CorporateInvoiceMonthly() {
 
 
   useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8787/api/corporate-customer/customer/${selectedCustomer?.customerId}/getByDate/${formattedDate}`
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setCustomerList(data);
-          console.log("Fetched customer data:", data);
-        } else {
-          console.error("Failed to fetch customers");
+    if (selectedCustomer) {
+      const fetchCustomerData = async () => {
+        try {
+          let response;
+          if (selectedDate) {
+            const formattedDate = formatDate(selectedDate);
+            response = await axios.get(
+              `http://localhost:8787/api/customer-payment/customer/${selectedCustomer.customerId}/date/${formattedDate}`
+            );
+          } else {
+            response = await axios.get(
+              `http://localhost:8787/api/customer-payment/customer/${selectedCustomer.customerId}`
+            );
+          }
+          if (response.status === 200) {
+            setCustomerData(response.data);
+            console.log("Fetched customer data:", response.data);
+          } else {
+            console.error("Failed to fetch customer data");
+          }
+        } catch (error) {
+          console.error("API request error:", error);
         }
-      } catch (error) {
-        console.error("API request error:", error);
-      }
-    };
-    fetchCustomers();
-  }, [selectedCustomer, formattedDate]);
+      };
+      fetchCustomerData();
+    }
+  }, [selectedCustomer, selectedDate]);
+
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8787/api/corporate-customer"
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setCustomerList(data);
+        const response = await axios.get('http://localhost:8787/api/corporate-customer');
+        if (response.status === 201) {
+          setCustomerList(response.data);
         } else {
-          console.error("Failed to fetch customers");
+          console.error('Failed to fetch customers');
         }
       } catch (error) {
-        console.error("API request error:", error);
+        console.error('API request error:', error);
       }
     };
     fetchCustomers();
   }, []);
 
+
   const handleChange = (e) => {
-    const selectedCustomer = customerList.find(
-      (customer) => customer.Cus_name === e.target.value
-    );
-    setSelectedCustomer(selectedCustomer);
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
   const handleGenerate = () => {
@@ -261,6 +282,7 @@ function CorporateInvoiceMonthly() {
   };
 
 
+
   return (
     <div>
       <Sidebar />
@@ -289,7 +311,6 @@ function CorporateInvoiceMonthly() {
             <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
             </label>
-            {/* Dropdown to select a customer */}
             <select
               className="form-control-cust-inq-input"
               id="customername"
@@ -310,156 +331,114 @@ function CorporateInvoiceMonthly() {
               ))}
             </select>
           </div>
+
+
+
           <div className="form-group col-6">
-              <label htmlFor="kind_attn" className="form-label">
-                Kind Attn:
-              </label>
-              <input
-                type="text"
-                className="form-control-cust-inq-input"
-                name="kind_attn"
-                placeholder="Kind Attn"
-                value={formData.kind_attn}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group col-6">
-              <label htmlFor="invoiceDate" className="form-label">
-                Invoice Date:
-              </label>
-              <input
-                type="date"
-                className="form-control-cust-inq-input"
-                name="invoiceDate"
-                value={formData.invoiceDate}
-                onChange={handleChange}
-              />
-            </div>
+            <label htmlFor="kind_attn" className="form-label">
+              Kind Attn:
+            </label>
+            <input
+              type="text"
+              className="form-control-cust-inq-input"
+              name="kind_attn"
+              placeholder="Kind Attn"
+              value={formData.kind_attn}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group col-6">
+          <label htmlFor="invoiceDate" className="form-label">
+            Invoice Date:
+          </label>
+          <input
+            type="date"
+            className="form-control-cust-inq-input"
+            name="invoiceDate"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
         </div>
-      
+        </div>
+
+
         <div>
-          {selectedCustomer && (
-            <div>
-              <h3>Customer Trip Details:</h3>
-              <table className="invoice-table">
-                <thead>
-                  <tr>
-                    <th>Description</th>
-                    <th>Sac Code</th>
-                    <th>Kms</th>
-                    <th>Amount</th>
-                    <th>Total</th>
-                    <th>SGST</th>
-                    <th>CGST</th>
-                    {/* Add more headers as needed */}
-                  </tr>
-                </thead>
 
-                <tbody>
-                  {customerList
-                    .filter(
-                      (customer) =>
-                        customer.customerId === selectedCustomer.customerId
-                    )
-                    .map((trip) => (
-                      <tr key={trip._id}>
-                        <td>
-                          {`${trip.type_of_vehicle} from ${trip.from} - ${trip.to} on ${trip.Date}`}
-                          <br />
-                          Total Km
-                          <br />
-                          Total Hours
-                          <br />
-                          Extra Km <br />
-                          Extra Hours
-                          <br />
-                          <strong>Toll Parking</strong>
-                        </td>
-                        <td>{trip.saccode}</td>
-                        <td>{trip.km}<br />
-                          {trip.hours}
-                          <br />
-
-                          {trip.extra_km}
-                          <br />
-                          {trip.extra_hours}
-                        </td>
-                        <td>{trip.total_Amount}</td>
-                        <td>{trip.total}</td>
-                        <td>{trip.SGST}</td>
-                        <td>{trip.CGST}</td>
-                        {/* Add more rows as needed */}
-                      </tr>
-                    ))}
-                  {/* Add subtotal, SGST, CGST, and grand total row */}
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Subtotal</td>
-                    <td>
-                      {customerList
-                        .filter(
-                          (customer) =>
-                            customer.customerId === selectedCustomer.customerId
-                        )
-                        .reduce((total, trip) => total + trip.total_Amount, 0)}
-                    </td>
-                    <td>
-                      {customerList
-                        .filter(
-                          (customer) =>
-                            customer.customerId === selectedCustomer.customerId
-                        )
-                        .reduce((total, trip) => total + trip.SGST, 0)}
-                    </td>
-                    <td>
-                      {customerList
-                        .filter(
-                          (customer) =>
-                            customer.customerId === selectedCustomer.customerId
-                        )
-                        .reduce((total, trip) => total + trip.CGST, 0)}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>Grand Total</td>
-                    <td>
-                      {customerList
-                        .filter(
-                          (customer) =>
-                            customer.customerId === selectedCustomer.customerId
-                        )
-                        .reduce(
-                          (total, trip) =>
-                            total + trip.total_Amount + trip.SGST + trip.CGST,
-                          0
-                        )}
-                    </td>
-                    <td>
-                      {customerList
-                        .filter(
-                          (customer) =>
-                            customer.customerId === selectedCustomer.customerId
-                        )
-                        .reduce((total, trip) => total + trip.SGST, 0)}
-                    </td>
-                    <td>
-                      {customerList
-                        .filter(
-                          (customer) =>
-                            customer.customerId === selectedCustomer.customerId
-                        )
-                        .reduce((total, trip) => total + trip.CGST, 0)}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
+        {selectedCustomer && (
+        <div>
+          <h3>Customer Trip Details:</h3>
+          <table className="invoice-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Sac Code</th>
+                <th>Kms</th>
+                <th>Amount</th>
+                <th>Total</th>
+                <th>SGST</th>
+                <th>CGST</th>
+              </tr>
+            </thead>
+            <tbody>
+              {customerData.map((trip) => (
+                <tr key={trip._id}>
+                  <td>
+                    {`${trip.vehicle_Type} from ${trip.from} - ${trip.to} on ${trip.Date}`}
+                    <br />
+                  </td>
+                  <td>9906</td>
+                  <td>
+                    {trip.total_Km}
+                    <br />
+                    {trip.hours}
+                    <br />
+                    {trip.extra_km}
+                    <br />
+                    {trip.extra_hours}
+                  </td>
+                  <td>{trip.total_Amount}</td>
+                  <td>{trip.total}</td>
+                  <td>{trip.SGST}</td>
+                  <td>{trip.CGST}</td>
+                </tr>
+              ))}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Subtotal</td>
+                <td>
+                  {customerData.reduce((total, trip) => total + trip.total_Amount, 0)}
+                </td>
+                <td>
+                  {customerData.reduce((total, trip) => total + trip.SGST, 0)}
+                </td>
+                <td>
+                  {customerData.reduce((total, trip) => total + trip.CGST, 0)}
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Grand Total</td>
+                <td>
+                  {customerData.reduce(
+                    (total, trip) => total + trip.total_Amount + trip.SGST + trip.CGST,
+                    0
+                  )}
+                </td>
+                <td>
+                  {customerData.reduce((total, trip) => total + trip.SGST, 0)}
+                </td>
+                <td>
+                  {customerData.reduce((total, trip) => total + trip.CGST, 0)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
 
           <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate

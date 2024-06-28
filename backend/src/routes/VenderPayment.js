@@ -154,7 +154,7 @@ router.get('/vendor/:vendorId/vehicle/:vehicleType', async (req, res) => {
 });
 
 
-router.get("vendor/:vendorId/date/:getByDate" , async(req, res) => {
+router.get("/vendor/:vendorId/date/:getByDate" , async(req, res) => {
   try{
 
     const {vendorId, getByDate} = req.params
