@@ -2,6 +2,9 @@ const express = require("express");
 const NewAddPaymentSchema = require("../models/AddCusPaymentModel");
 const router = express.Router();
 
+
+// GET BY CUS ID AND DATE ROUTE 
+
 // GET METHOD
 router.get("/", async (req, res) => {
   try {
@@ -111,10 +114,13 @@ router.delete("/:id", async (req, res) => {
     res.status(404).json({ message: "Can not found", e });
   }
 });
+
+// get by customer/
+
 router.get("/customer/:customerId", async (req, res) => {
   try {
     const custPayment = await NewAddPaymentSchema.find({
-      customerId: req.params.customerId,
+      cus_id: req.params.customerId,
     });
 
     if (custPayment.length === 0) {
@@ -128,6 +134,28 @@ router.get("/customer/:customerId", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+
+// get by date 
+router.get("/customer/:customerId/date/:date", async (req, res) => {
+  try {
+    const custPayment = await NewAddPaymentSchema.find({
+      cus_id: req.params.customerId,
+      Date: req.params.date // Ensure this is in the correct format 'yyyy-mm-dd'
+    });
+
+    if (custPayment.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Trips not found for the given customer ID and date" });
+    }
+
+    res.status(200).json(custPayment);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // API endpoint to fetch advance amount and remaining amount by ID
 router.get("/amounts/:id", async (req, res) => {
   try {
