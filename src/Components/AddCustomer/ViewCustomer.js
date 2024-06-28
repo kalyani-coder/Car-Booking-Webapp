@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import './ViewCustomer.css';
-import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import "./ViewCustomer.css";
+import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
 const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
     <thead>
       <tr>
+        <th>Sr. No.</th>
         <th>Customer Name</th>
         <th>GST No</th>
         <th>Mobile</th>
@@ -16,8 +17,9 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
       </tr>
     </thead>
     <tbody>
-      {customers.map((customer) => (
+      {customers.map((customer,index) => (
         <tr key={customer._id}>
+          <td>{index + 1}</td>
           <td>{customer.cus_name}</td>
           <td>{customer.gst_no}</td>
           <td>{customer.cus_mobile}</td>
@@ -25,10 +27,16 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{customer.address}</td>
           <td>
             <div className="d-flex align-items-center gap-1">
-              <button className='btn btn-info' onClick={() => handleEditCustomer(customer)}>
+              <button
+                className="btn btn-info"
+                onClick={() => handleEditCustomer(customer)}
+              >
                 <FaEdit />
               </button>
-              <button className='btn btn-danger' onClick={() => deleteCustomer(customer._id)}>
+              <button
+                className="btn btn-danger"
+                onClick={() => deleteCustomer(customer._id)}
+              >
                 <FaTrash />
               </button>
             </div>
@@ -43,26 +51,26 @@ const ViewCustomer = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState({});
-  const [viewType, setViewType] = useState('table');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [viewType, setViewType] = useState("table");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch('http://localhost:8787/api/add-customers');
+        const response = await fetch("http://localhost:8787/api/add-customers");
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setCustomers(data);
         setFilteredCustomers(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
-        setError('Error fetching data: ' + error.message);
+        console.error("Error fetching data:", error);
+        setError("Error fetching data: " + error.message);
       }
     };
 
@@ -72,9 +80,13 @@ const ViewCustomer = () => {
   const filterCustomers = () => {
     const filteredData = customers.filter((customer) => {
       const customerNameMatches =
-        customer && customer.cus_name && customer.cus_name.toLowerCase().includes(searchQuery.toLowerCase());
+        customer &&
+        customer.cus_name &&
+        customer.cus_name.toLowerCase().includes(searchQuery.toLowerCase());
       const companyNameMatches =
-        customer && customer.company_name && customer.company_name.toLowerCase().includes(searchQuery.toLowerCase());
+        customer &&
+        customer.company_name &&
+        customer.company_name.toLowerCase().includes(searchQuery.toLowerCase());
 
       return customerNameMatches || companyNameMatches;
     });
@@ -87,23 +99,32 @@ const ViewCustomer = () => {
   }, [searchQuery, customers]);
 
   const deleteCustomer = async (customerId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this customer?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this customer?"
+    );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8787/api/add-customers/${customerId}`, {
-          method: 'DELETE',
-        });
+        const response = await fetch(
+          `http://localhost:8787/api/add-customers/${customerId}`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
 
-        setCustomers((prevCustomers) => prevCustomers.filter((customer) => customer._id !== customerId));
-        setFilteredCustomers((prevCustomers) => prevCustomers.filter((customer) => customer._id !== customerId));
-        alert('Customer deleted successfully');
+        setCustomers((prevCustomers) =>
+          prevCustomers.filter((customer) => customer._id !== customerId)
+        );
+        setFilteredCustomers((prevCustomers) =>
+          prevCustomers.filter((customer) => customer._id !== customerId)
+        );
+        alert("Customer deleted successfully");
       } catch (error) {
-        console.error('Error deleting customer:', error);
-        setError('Error deleting customer: ' + error.message);
+        console.error("Error deleting customer:", error);
+        setError("Error deleting customer: " + error.message);
       }
     }
   };
@@ -115,13 +136,16 @@ const ViewCustomer = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-customers/${editedCustomer._id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedCustomer),
-      });
+      const response = await fetch(
+        `http://localhost:8787/api/add-customers/${editedCustomer._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editedCustomer),
+        }
+      );
 
       if (response.ok) {
         setCustomers((prevCustomers) =>
@@ -135,18 +159,18 @@ const ViewCustomer = () => {
           )
         );
         setIsEditing(false);
-        alert('Customer data updated successfully');
-        setErrorMessage('');
+        alert("Customer data updated successfully");
+        setErrorMessage("");
       } else {
-        console.error('Error updating customer:', response.status);
-        alert('Error updating customer. Please try again.');
-        setSuccessMessage('');
-        setErrorMessage('Error updating customer. Please try again.');
+        console.error("Error updating customer:", response.status);
+        alert("Error updating customer. Please try again.");
+        setSuccessMessage("");
+        setErrorMessage("Error updating customer. Please try again.");
       }
     } catch (error) {
-      console.error('Error updating customer:', error);
-      setSuccessMessage('');
-      setErrorMessage('Error updating customer. Please try again.');
+      console.error("Error updating customer:", error);
+      setSuccessMessage("");
+      setErrorMessage("Error updating customer. Please try again.");
     }
   };
 
@@ -154,7 +178,7 @@ const ViewCustomer = () => {
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
-        setSuccessMessage('');
+        setSuccessMessage("");
       }, 3000); // Clear the success message after 3 seconds
 
       return () => clearTimeout(timer); // Clear timeout if component unmounts
@@ -170,7 +194,16 @@ const ViewCustomer = () => {
       <Sidebar />
       <div className="customer-Add-container">
         <div className="viewcustomer-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className='text-center' >View Customer</h2>
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginBottom: "1rem",
+            }}
+            className="text-center"
+          >
+            View Customer
+          </h2>
 
           <div className="search-bar">
             <input
@@ -182,8 +215,12 @@ const ViewCustomer = () => {
             />
           </div>
 
-          {viewType === 'table' && (
-            <TableView customers={filteredCustomers} handleEditCustomer={handleEditCustomer} deleteCustomer={deleteCustomer} />
+          {viewType === "table" && (
+            <TableView
+              customers={filteredCustomers}
+              handleEditCustomer={handleEditCustomer}
+              deleteCustomer={deleteCustomer}
+            />
           )}
         </div>
       </div>
@@ -193,47 +230,82 @@ const ViewCustomer = () => {
           <div className="bg-white p-4 rounded shadow-lg w-96">
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Customer</h2>
-              <button onClick={() => setIsEditing(false)} className="close-icon">
+              <button
+                onClick={() => setIsEditing(false)}
+                className="close-icon"
+              >
                 <FaTimes />
               </button>
             </div>
-            <h5 className='fw-bold my-2'>Customer Name</h5>
+            <h5 className="fw-bold my-2">Customer Name</h5>
             <input
               type="text"
               value={editedCustomer.cus_name}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_name: e.target.value })}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_name: e.target.value,
+                })
+              }
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold my-2'>GST No </h5>
+            <h5 className="fw-bold my-2">GST No </h5>
             <input
               type="text"
               value={editedCustomer.gst_no}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })}
+              onChange={(e) =>
+                setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })
+              }
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold my-2'>Customer Mobile</h5>
+            <h5 className="fw-bold my-2">Customer Mobile</h5>
             <input
               type="text"
               value={editedCustomer.cus_mobile}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_mobile: e.target.value })}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_mobile: e.target.value,
+                })
+              }
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold my-2'>Customer Email</h5>
+            <h5 className="fw-bold my-2">Customer Email</h5>
             <input
               type="text"
               value={editedCustomer.cus_email}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, cus_email: e.target.value })}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_email: e.target.value,
+                })
+              }
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <h5 className='fw-bold my-2'>Address</h5>
+            <h5 className="fw-bold my-2">Address</h5>
             <input
               type="text"
               value={editedCustomer.address}
-              onChange={(e) => setEditedCustomer({ ...editedCustomer, address: e.target.value })}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  address: e.target.value,
+                })
+              }
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
-            <button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">Cancel</button>
+            <button
+              onClick={handleSave}
+              className="px-4 py-2 bg-blue-500 text-white rounded"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => setIsEditing(false)}
+              className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AddPayment.css";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
+import axios from "axios";
 
 function AddPayment() {
   const [customerList, setCustomerList] = useState([]);
@@ -45,13 +46,13 @@ function AddPayment() {
     advance_Amount: "",
     remaining_Amount: "",
     payment_Method: "",
-    paymentmethod: '',
-    chequeNo: '',
-    ifscCode: '',
-    upiId: '',
-    cashReceiver: '',
-    transactionId: '',
-    TransactionNumber : '',
+    paymentmethod: "",
+    chequeNo: "",
+    ifscCode: "",
+    upiId: "",
+    cashReceiver: "",
+    transactionId: "",
+    TransactionNumber: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -59,8 +60,40 @@ function AddPayment() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
+  const [customerType, setCustomerType] = useState("");
+  const [customers, setCustomers] = useState([]);
+  const [customerDetails, setCustomerDetails] = useState({ gst_no: '', cus_mobile: '' });
 
- 
+  
+
+  const handleCustomerNameChange = (e) => {
+    const selectedCusName = e.target.value;
+    const customer = customers.find(
+      (cust) => cust.cus_name === selectedCusName
+    );
+    setSelectedCustomer(customer || {});
+    setCustomerDetails({
+      gst_no: customer?.gst_no || "",
+      cus_mobile: customer?.cus_mobile || "",
+    });
+  };
+
+  const handleCustomerTypeChange = async (e) => {
+    const selectedType = e.target.value;
+    setCustomerType(selectedType);
+    setFormData({ ...formData, Cus_Type: selectedType });
+
+    if (selectedType) {
+      try {
+        const response = await axios.get(`http://localhost:8787/api/add-customers/customer/${selectedType}`);
+        setCustomers(response.data);
+      } catch (error) {
+        console.error('Error fetching customers:', error);
+      }
+    } else {
+      setCustomers([]);
+    }
+  };
 
   // calculations start
   const calculateTotalKmAndExtraKm = () => {
@@ -260,37 +293,43 @@ function AddPayment() {
   };
 
   //
-  // 
+  //
   const renderPaymentMethodFields = () => {
     if (formData.paymentmethod === "Cheque") {
       return (
         <>
-          <div className="mb-3"style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">Cheque Number:</label>
             <input
               type="text"
               className="form-control"
               value={formData.chequeNo}
-              onChange={(e) => setFormData({ ...formData, chequeNo: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, chequeNo: e.target.value })
+              }
             />
           </div>
-          <div className="mb-3"style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">IFSC Code:</label>
             <input
               type="text"
               className="form-control"
               value={formData.ifscCode}
-              onChange={(e) => setFormData({ ...formData, ifscCode: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, ifscCode: e.target.value })
+              }
             />
           </div>
 
-          <div className="mb-3" style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">Transaction Number:</label>
             <input
               type="text"
               className="form-control"
               value={formData.TransactionNumber}
-              onChange={(e) => setFormData({ ...formData, TransactionNumber: e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, TransactionNumber: e.target.value })
+              }
             />
           </div>
         </>
@@ -298,13 +337,15 @@ function AddPayment() {
     } else if (formData.paymentmethod === "UPI / Wallet Payment") {
       return (
         <>
-          <div className="mb-3" style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">UPI ID:</label>
             <input
               type="text"
               className="form-control"
               value={formData.upiId}
-              onChange={(e) => setFormData({ ...formData, upiId: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, upiId: e.target.value })
+              }
             />
           </div>
         </>
@@ -318,7 +359,9 @@ function AddPayment() {
               type="text"
               className="form-control"
               value={formData.cashReceiver}
-              onChange={(e) => setFormData({ ...formData, cashReceiver: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, cashReceiver: e.target.value })
+              }
             />
           </div>
           {/* <div className="mb-3">
@@ -334,49 +377,56 @@ function AddPayment() {
     } else if (formData.paymentmethod === "Bank Transfer(NEFT)") {
       return (
         <>
-          <div className="mb-3" style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">NEFT Number:</label>
             <input
               type="text"
               className="form-control"
               value={formData.neftnumber}
-              onChange={(e) => setFormData({ ...formData, neftnumber: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, neftnumber: e.target.value })
+              }
             />
           </div>
 
-          <div className="mb-3" style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">IFSC Code :</label>
             <input
               type="text"
               className="form-control"
               value={formData.ifscCode}
-              onChange={(e) => setFormData({ ...formData, ifsccode: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, ifsccode: e.target.value })
+              }
             />
           </div>
 
-          <div className="mb-3" style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">Account Number:</label>
             <input
               type="text"
               className="form-control"
               value={formData.accountnumber}
-              onChange={(e) => setFormData({ ...formData, accountnumber: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, accountnumber: e.target.value })
+              }
             />
           </div>
 
-          <div className="mb-3" style={{width : "50%"}}>
+          <div className="mb-3" style={{ width: "50%" }}>
             <label className="form-label">Branch Name:</label>
             <input
               type="text"
               className="form-control"
               value={formData.branchname}
-              onChange={(e) => setFormData({ ...formData, branchname: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, branchname: e.target.value })
+              }
             />
           </div>
         </>
       );
-    } 
-    else {
+    } else {
       return (
         <>
           <div className="mb-3">
@@ -385,20 +435,22 @@ function AddPayment() {
               type="text"
               className="form-control"
               value={formData.transactionId}
-              onChange={(e) => setFormData({ ...formData, transactionId: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, transactionId: e.target.value })
+              }
             />
           </div>
         </>
       );
     }
-  }
-  // 
+  };
+  //
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data:", formData);
     setError(""); // Clear any previous error messages
-  
+
     try {
       const response = await fetch(
         "http://localhost:8787/api/customer-payment",
@@ -410,7 +462,7 @@ function AddPayment() {
           body: JSON.stringify(formData), // Send the form data directly
         }
       );
-  
+
       if (response.ok) {
         alert("Customer Payment added successfully!", "success");
         setFormData(initialFormData); // Optionally reset the form after successful submission
@@ -430,7 +482,6 @@ function AddPayment() {
       alert("Failed to add data. Please try again.", "danger");
     }
   };
-  
 
   return (
     <>
@@ -454,40 +505,42 @@ function AddPayment() {
 
                     {successAlert && <Alert alert={successAlert} />}
                     {errorAlert && <Alert alert={errorAlert} />}
+                    <div className="form-group">
+                      <label htmlFor="Cus_Type" className="form-label">
+                        New Customer Type:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <select
+                        className="form-control-cust-add-input"
+                        name="Cus_Type"
+                        id="Cus_Type"
+                        value={customerType}
+                        onChange={handleCustomerTypeChange}
+                      >
+                        <option value="">Customer</option>
+                        <option value="Corporate">Corporate Customer</option>
+                        <option value="Indivisual">Indivisual Customer</option>
+                      </select>
+                    </div>
 
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label for="companyname" class="form-label">
-                            Customer Name:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="update-duty-form-control"
-                            name="customer_Name"
-                            placeholder="Enter Customer name"
-                            value={formData.customer_Name}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label for="gstno" class="form-label">
-                            GST No:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="update-duty-form-control"
-                            name="GST_No"
-                            placeholder="Enter GST No"
-                            value={formData.GST_No}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
+                    <div className="form-group">
+                      <label htmlFor="Cus_name" className="form-label">
+                        New Customer Name/ New Company Name:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <select
+                        className="form-control-rate-add-input"
+                        name="Cus_name"
+                        id="Cus_name"
+                        onChange={handleCustomerNameChange}
+                      >
+                        <option value="">Select Customer</option>
+                        {customers.map((customer) => (
+                          <option key={customer._id} value={customer.cus_name}>
+                            {customer.cus_name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div className="row grid-gap-5">
@@ -562,17 +615,17 @@ function AddPayment() {
                           )}
                         </select> */}
                         <label for="mobile_no" className="form-label">
-                            Customer Mobile Number:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            name="mobile_no"
-                            placeholder="Enter Customer Number"
-                            value={formData.mobile_no}
-                            onChange={handleChange}
-                          />
+                          Customer Mobile Number:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          className="update-duty-form-control"
+                          name="mobile_no"
+                          placeholder="Enter Customer Number"
+                          value={formData.mobile_no}
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div className="col-md">
@@ -1184,22 +1237,25 @@ function AddPayment() {
                             <span className="required-asterisk">*</span>
                           </label>
                           <select
-                className="update-duty-form-control"
-                name="paymentmethod"
-                id="paymentmethod"
-                onChange={handleChange}
-                value={formData.paymentmethod}
-              >
-                <option value="">Payment Method</option>
-                <option value="Cash">Cash</option>
-                <option value="Cheque">Cheque</option>
-                <option value="UPI / Wallet Payment">UPI /Wallet Payment</option>
-                <option value="Bank Transfer(NEFT)">Bank Transfer(NEFT )</option>
-              </select>
-              
-            {/* Render payment method specific fields */}
-            {renderPaymentMethodFields()}
+                            className="update-duty-form-control"
+                            name="paymentmethod"
+                            id="paymentmethod"
+                            onChange={handleChange}
+                            value={formData.paymentmethod}
+                          >
+                            <option value="">Payment Method</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="UPI / Wallet Payment">
+                              UPI /Wallet Payment
+                            </option>
+                            <option value="Bank Transfer(NEFT)">
+                              Bank Transfer(NEFT )
+                            </option>
+                          </select>
 
+                          {/* Render payment method specific fields */}
+                          {renderPaymentMethodFields()}
                         </div>
                       </div>
                       <div className="col-md"></div>
