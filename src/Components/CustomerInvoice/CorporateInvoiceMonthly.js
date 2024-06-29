@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
-import DatePicker from "react-datepicker"; // Import the DatePicker component
+import DatePicker from "react-datepicker"; 
 import "react-datepicker/dist/react-datepicker.css";
-import axios from 'axios'
+import axios from 'axios';
+import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import numberToWords from "number-to-words";
 
 function CorporateInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -40,6 +42,7 @@ function CorporateInvoiceMonthly() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customerData, setCustomerData] = useState([])
   const [selectedDate, setSelectedDate] = useState('');
+  const [customers, setcustomers] = useState([]);
 
   console.log("mmmm", customerData)
 
@@ -127,159 +130,130 @@ function CorporateInvoiceMonthly() {
       [name]: value
     });
   };
+  
 
-  const handleGenerate = () => {
-    const downloadConfirmed = window.confirm(
-      "Do you want to download the invoice?"
-    );
+ // Define a global variable to track the invoice number
+let invoiceCounter = 100;
+const handleGenerateInvoice = () => {
+  const downloadConfirmed = window.confirm("Do you want to download the invoice?");
+  if (downloadConfirmed) {
+    if (selectedCustomer) {
+      console.log("Selected customer data:", selectedCustomer);
 
-    if (downloadConfirmed) {
-      const doc = new jsPDF();
-
-      // Add content to the PDF
-      doc.setFontSize(12);
-
-      // Header Section
-      doc.text("Shivpushpa Travels Invoice", 10, 10);
-      doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 10, 20);
-      doc.text("Contact No: 9325501950 / 9325501978", 10, 30);
-      doc.text("Mail: travelshivpushpa@gmail.com", 10, 40);
-
-      // Title Section
-      doc.setFontSize(16);
-      doc.text("Invoice", 140, 20, { className: "uppercase-text" });
-
-      // Invoice Details Section
-      doc.setFontSize(10);
-      doc.text("PO No: ", 140, 30);
-      const updatedInvoiceNumber = invoiceNumber + 1;
-      setInvoiceNumber(updatedInvoiceNumber); // Increment the invoice number
-
-      setFormData({
-        ...formData,
-        invoiceno: `INV-${updatedInvoiceNumber}`, // Update the invoice number in the form data
+      const doc = new jsPDF({
+        unit: "mm",
+        format: "a4",
+        compress: true,
+        orientation: "portrait",
       });
 
-      doc.text("Invoice No: ", 140, 40);
-      doc.text("Date:" + (selectedCustomer.Date || ''), 140, 50);
-      doc.text("Customer ID:" + (selectedCustomer.customerId || ''), 140, 60);
-      doc.text("GST No:" + (selectedCustomer.GST_No || ''), 140, 70);
+      doc.setFillColor(60, 181, 205);
+      doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
 
-      // Customer Information Section
-      if (selectedCustomer) {
-        doc.text("Customer Name: " + (selectedCustomer.Cus_name || ''), 10, 80);
-        doc.text("Customer Address: " + (selectedCustomer.reporting_Address || ''), 10, 90);
-        doc.text("GST No:" + (selectedCustomer.GST_No || ''), 10, 100);
-      }
+      const img = new Image();
+      img.src = headerlogo;
+      doc.addImage(img, 'JPEG', 5, 10, 45, 32);
 
-      // Add table with trip details
-      const tableData = customerList
-        .filter(
-          (customer) => customer.customerId === selectedCustomer.customerId
-        )
-        .map((trip) => [
-          `${trip.vehicle_Type} from ${trip.from} to ${trip.to} on ${trip.Date}
-          \nTotal Km
-          \nTotal Hours 
-          \nExtra Km
-          \nExtra Hours
-          \nToll Parking`,
-          trip.saccode,
-          `${trip.total_Km}\n${trip.total_hours}\n${trip.extra_Km}\n${trip.extra_Hours}\n${trip.toll_Parking}`,
-          trip.total_Amount,
-          trip.total,
-          trip.SGST,
-          trip.CGST,
-        ]);
+      doc.setFillColor(211, 211, 211);
 
-      // Add table headers
+      doc.setFontSize(12);
+      doc.text('Shivpushpa Travels', 55, 15);
+      doc.text('332, Kasba Peth Phadke Haud Chowk', 55, 20);
+      doc.text('Pune 411 0111', 55, 25);
+      doc.text('Contact No: 9325501950 / 9325501978', 55, 30);
+      doc.text('Mail: travelshivpushpa@gmail.com', 55, 35);
+
+      doc.setFontSize(16);
+      doc.text("Invoice", 140, 15);
+
+      doc.setFontSize(10);
+      const formattedDate = new Date().toLocaleDateString();
+      const invoiceNo = (invoiceNumber + 1).toString().padStart(3, '0');
+      setInvoiceNumber(invoiceNumber + 1);
+
+      doc.text(`Invoice No: ${invoiceNo}`, 140, 20);
+      doc.text(`Invoice Date: ${formattedDate}`, 140, 27);
+      doc.text(`Customer ID: ${selectedCustomer.customerId}`, 140, 34);
+      doc.text(`GST No: ${selectedCustomer.GST_No}`, 140, 41);
+
+      doc.setDrawColor(0, 0, 255); 
+    doc.line(10, 60, 200, 60); 
+
+    doc.text('INVOICE TO:', 10, 68); 
+
+      doc.text(`Customer Name: ${selectedCustomer.Cus_name}`, 10, 80);
+      doc.text(`Customer Address: ${selectedCustomer.reporting_Address}`, 10, 90);
+      doc.text(`GST No: ${selectedCustomer.GST_No}`, 10, 100);
+
+      doc.line(10, 105, 200, 105);
+
+      const tripDetails = customerData.map((trip) => [
+        `${trip.vehicle_Type}\n${trip.from}, ${trip.to} - ${trip.Date}`,
+        trip.saccode,
+        trip.total_Km,
+        trip.total_Amount,
+        trip.SGST,
+        trip.CGST
+      ]);
+
       const headers = [
         "Description",
         "Sac Code",
-        "Kms",
+        "Total KM",
         "Amount",
-        "Total",
         "SGST",
         "CGST",
       ];
-      tableData.unshift(headers);
+
+      const subtotal = customerData.reduce((total, trip) => total + trip.total_Amount, 0);
+      const sgstTotal = customerData.reduce((total, trip) => total + trip.SGST, 0);
+      const cgstTotal = customerData.reduce((total, trip) => total + trip.CGST, 0);
+      const grandTotal = subtotal + sgstTotal + cgstTotal;
+
+      
+
+      tripDetails.push([
+        { content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', `Rs. ${subtotal.toLocaleString()}`, `Rs. ${sgstTotal.toLocaleString()}`, `Rs. ${cgstTotal.toLocaleString()}`
+      ]);
+      tripDetails.push([
+        { content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', `Rs. ${grandTotal.toLocaleString()}`
+      ]);
+      // tripDetails.push([
+      //   { content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, styles: { textColor: [0, 0, 0] } }, '', '', '', '', '']);
 
       doc.autoTable({
-        head: tableData.slice(0, 1),
-        body: tableData.slice(1),
+        head: [headers],
+        body: tripDetails,
         startY: 120,
-        theme: "plain",
+        theme: "grid",
+        styles: { overflow: 'linebreak' },
+        columnStyles: {
+          0: { cellWidth: 'wrap' }
+        }
       });
 
-      // Add subtotal, SGST, CGST, and grand total row
-      const subtotal = customerList
-        .filter(
-          (customer) => customer.customerId === selectedCustomer.customerId
-        )
-        .reduce((total, trip) => total + trip.total_Amount, 0);
+      // Bank Details section on the left side
+      doc.setFontSize(10);
+      doc.text('Bank Details:', 15, doc.autoTable.previous.finalY + 17);
+      doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 15, doc.autoTable.previous.finalY + 24);
+      doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 15, doc.autoTable.previous.finalY + 31);
+      doc.text('Account Number: 015204301220061', 15, doc.autoTable.previous.finalY + 38);
+      doc.text('IFSC Code: COSB0000015', 15, doc.autoTable.previous.finalY + 45);
+      doc.text('MICR Code: 411164014', 15, doc.autoTable.previous.finalY + 52);
 
-      const sgstTotal = customerList
-        .filter(
-          (customer) => customer.customerId === selectedCustomer.customerId
-        )
-        .reduce((total, trip) => total + trip.SGST, 0);
+      doc.text("For Shivpushpa Travels", 160, doc.autoTable.previous.finalY + 20);
+      doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
 
-      const cgstTotal = customerList
-        .filter(
-          (customer) => customer.customerId === selectedCustomer.customerId
-        )
-        .reduce((total, trip) => total + trip.CGST, 0);
-
-      doc.autoTable({
-        head: [["", "Subtotal", sgstTotal, cgstTotal]],
-        body: [["", subtotal, sgstTotal, cgstTotal]],
-        startY: doc.autoTable.previous.finalY + 10,
-      });
-
-      // Add Bank Details Section
-      doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 20);
-      doc.text(
-        "Bank Name: " + formData.bankname,
-        10,
-        doc.autoTable.previous.finalY + 30
-      );
-      doc.text(
-        "Branch Name: " + formData.branchname,
-        10,
-        doc.autoTable.previous.finalY + 40
-      );
-      doc.text(
-        "Account Holder Name: " + formData.accountHoldername,
-        10,
-        doc.autoTable.previous.finalY + 50
-      );
-      doc.text(
-        "Account Number: " + formData.accountNumber,
-        10,
-        doc.autoTable.previous.finalY + 60
-      );
-      doc.text(
-        "IFSC Code: " + formData.ifsccode,
-        10,
-        doc.autoTable.previous.finalY + 70
-      );
-      doc.text(
-        "MICR Code: " + formData.micrcode,
-        10,
-        doc.autoTable.previous.finalY + 80
-      );
-
-      // Footer Section
-      doc.text(
-        "For Shivpushpa Travels",
-        150,
-        doc.autoTable.previous.finalY + 30
-      );
-      doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 60);
-
-      doc.save(`invoice_${updatedInvoiceNumber}.pdf`);
+      doc.save(`Invoice_${selectedCustomer.customerId}.pdf`);
+    } else {
+      console.error("Customer not found.");
     }
-  };
+  }
+};
+
+
+
+
 
 
 
@@ -386,7 +360,7 @@ function CorporateInvoiceMonthly() {
                     {`${trip.vehicle_Type} from ${trip.from} - ${trip.to} on ${trip.Date}`}
                     <br />
                   </td>
-                  <td>9906</td>
+                  <td>996601</td>
                   <td>
                     {trip.total_Km}
                     <br />
@@ -440,7 +414,7 @@ function CorporateInvoiceMonthly() {
         </div>
       )}
 
-          <button className="btn btn-danger mt-2" onClick={handleGenerate}>
+          <button className="btn btn-danger mt-2" onClick={handleGenerateInvoice}>
             Generate
           </button>
         </div>

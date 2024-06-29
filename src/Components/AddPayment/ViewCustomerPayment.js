@@ -148,22 +148,21 @@ customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWo
          
       // Bank Details section on the left side
       doc.setFontSize(10);
-      doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
-      doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
-      doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
-      doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
-      doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
-      doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
-
+      doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 17);
+      doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 10, doc.autoTable.previous.finalY + 24);
+      doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 10, doc.autoTable.previous.finalY + 31);
+      doc.text('Account Number: 015204301220061', 10, doc.autoTable.previous.finalY + 38);
+      doc.text('IFSC Code: COSB0000015', 10, doc.autoTable.previous.finalY + 45);
+      doc.text('MICR Code: 411164014', 10, doc.autoTable.previous.finalY + 52);
       // Additional details on the right side
       doc.text(
         "For Shivpushpa Travels",
-        150,
+        160,
         doc.autoTable.previous.finalY + 20
       );
       doc.text(
         "Authorised Signatory",
-        150,
+        160,
         doc.autoTable.previous.finalY + 30
       );
 
