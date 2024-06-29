@@ -4,8 +4,9 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
 import headerlogo from "../../assects/images/shivpushpa_logo.png";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 function VendorInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -36,18 +37,17 @@ function VendorInvoiceMonthly() {
     accountHoldername: "",
     ifsccode: "COSB0000015",
     micrcode: "411164014",
-    venderTripDetails: [], // State to store fetched vendor trip details
+    venderTripDetails: [],
   });
 
   const [vendors, setVendors] = useState([]); // State to store fetched vendors
   const [selectedVendor, setSelectedVendor] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8787/api/vender-rate"
-        );
+        const response = await fetch("http://localhost:8787/api/vender-rate");
         if (response.ok) {
           const data = await response.json();
           setVendors(data);
@@ -61,14 +61,37 @@ function VendorInvoiceMonthly() {
     fetchVendors();
   }, []);
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    const selectedVendor = vendors.find(
-      (vendor) => vendor.vender_Name === value
-    );
-    setSelectedVendor(selectedVendor);
+  const handleChange = async (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
 
-    
+    if (name === "vendorId") {
+      const selectedVendor = vendors.find(
+        (vendor) => vendor.vender_Name === value
+      );
+      setSelectedVendor(selectedVendor);
+
+      if (selectedVendor) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8787/api/vender-payment/vender/${selectedVendor.vendorId}`
+          );
+          if (response.status === 200) {
+            setFormData((prevData) => ({
+              ...prevData,
+              venderTripDetails: response.data,
+            }));
+          } else {
+            console.error("Failed to fetch vendor data");
+          }
+        } catch (error) {
+          console.error("API request error:", error);
+        }
+      }
+    }
   };
 
   // Define a function to format the date
@@ -342,15 +365,47 @@ function VendorInvoiceMonthly() {
                   </tr>
                 </thead>
                 <tbody>
-                  {formData.venderTripDetails.map((trip, index) => (
-                    <tr key={index}>
-                      <td>
-                        {`${trip.vehicle_type} for  on ${trip.formattedDate}`}
-                      </td>
-                      <td>{trip.saccode}</td>
-                    </tr>
-                  ))}
-                </tbody>
+  {formData.venderTripDetails.map((trip, index) => (
+    <tr key={index}>
+      <td>
+        {`${trip.vehicle_type} from ${trip.from} - ${trip.to} on ${trip.formattedDate}`}
+      </td>
+      <td>{trip.saccode}</td>
+      <td>
+        {trip.total_km}
+        <br />
+        {trip.total_hour}
+        <br />
+        {trip.extra_km}
+        <br />
+        {trip.extra_hour}
+      </td>
+      <td>{trip.total_amount}</td>
+      <td>{trip.rate}</td>
+      <td>{trip.tds}</td>
+    </tr>
+  ))}
+  <tr>
+    <td colSpan="4" style={{ textAlign: "right" }}>Subtotal</td>
+    <td>
+      {formData.venderTripDetails.reduce((total, trip) => total + trip.total_amount, 0)}
+    </td>
+    <td>
+      {formData.venderTripDetails.reduce((total, trip) => total + trip.tds, 0)}
+    </td>
+  </tr>
+  <tr>
+    <td colSpan="4" style={{ textAlign: "right" }}>Grand Total</td>
+    <td>
+      {formData.venderTripDetails.reduce((total, trip) => total + trip.total_amount, 0) -
+      formData.venderTripDetails.reduce((total, trip) => total + trip.tds, 0)}
+    </td>
+    <td>
+      {formData.venderTripDetails.reduce((total, trip) => total + trip.tds, 0)}
+    </td>
+  </tr>
+</tbody>
+
               </table>
             </div>
           )}
