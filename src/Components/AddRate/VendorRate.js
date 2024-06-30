@@ -320,7 +320,44 @@ const VendorRate = () => {
                   </div>    
                 </div>
               </div>
-              
+              <div className="d-flex gap-3">
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="from" className="form-label">
+                      From:
+                      <span className="required-asterisk">*</span>
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="text"
+                      id="from"
+                      name="from"
+                      placeholder="from"
+                      value={formData.from}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="rate" className="form-label">
+                      To:
+                      <span className="required-asterisk">*</span>
+                    </label>
+                    <input
+                      className="rate-form-control"
+                      type="text"
+                      id="to"
+                      name="to"
+                      placeholder="to"
+                      value={formData.to}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>    
+                </div>
+              </div>
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">

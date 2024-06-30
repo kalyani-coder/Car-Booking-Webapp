@@ -67,7 +67,7 @@ const ViewVendorPayment = () => {
   };
   
 
-  // Define a global variable to track the invoice number
+ // Define a global variable to track the invoice number
 let invoiceCounter = 100;
 
 const handleGenerateInvoice = (vendor) => {
@@ -86,7 +86,7 @@ const handleGenerateInvoice = (vendor) => {
     doc.setFillColor(60, 181, 205);
     doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
 
-    // image 
+    // Add header image
     const img = new Image();
     img.src = headerlogo;
     doc.addImage(img, 'JPEG', 5, 10, 45, 32);
@@ -107,71 +107,63 @@ const handleGenerateInvoice = (vendor) => {
 
     doc.setFontSize(11);
     doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
-    doc.text(`Invoice Date : ${formattedDate}`, 150, 20);
+    doc.text(`Invoice Date: ${formattedDate}`, 150, 20);
 
     doc.setDrawColor(0, 0, 255);
     doc.line(10, 60, 200, 60);
 
     doc.text('INVOICE TO:', 10, 68);
 
-
     const rows = [
-      { label: "Vender Name", value: vendor.vender_Name, yPos: 75 },
+      { label: "Vendor Name", value: vendor.vendor_Name, yPos: 75 },
       { label: "Mobile No", value: vendor.mobile_Number, yPos: 80 },
       { label: "GST No", value: vendor.GST_No, yPos: 85 },
-      { label: "Vehicle Type", value: vendor.vehicle_type, yPos: 90 },
-      { label: "Vehicle Number", value: vendor.vehicle_Number, yPos: 95 }
-    ];
-    
-   
-// Add the rows to the PDF
-rows.forEach(row => {
-  doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
-});
-doc.line(10, 105, 200, 105);
-    // Add the table to the PDF
-    doc.autoTable({
-      // body: rows,
-      startY: 50,
-      theme: 'grid',
-      styles: {
-        fontSize: 10, // Default font size for the entire table
-      },
-      columnStyles: {
-        0: { fontSize: 10, fontStyle: "bold" }, // Field names - larger and bold
-        1: { fontSize: 10 }, // Values - default font size
-      },
-    });
-
-    const vendorDetails =[
-      ['Description', 'kms','AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
-      [`${vendor.vehicle_Type} - ${vendor.from} - ${vendor.to} on ${vendor.Date}`, '', '', '', '', '', ''], // Populate other fields accordingly
-      ['Total KM', '', vendor.total_Km, '', '', '', ''],
-      ['Total Hr', '', vendor.total_hours, '', '', '', ''], 
-      [`${vendor.vehicle_Type} for @8hr 80km`, '', '80', '', '', vendor.CGST, vendor.SGST], // Line for "@8hr 80km"
-      ['Extra KM', '', vendor.extra_Km, '', '', vendor.extrakm_CGST, vendor.extrakm_SGST],
-      ['Extra Hr', '', vendor.extra_Hours, '', '', vendor.extrahours_CGST, vendor.extrahours_SGST],
-      ['Toll Parking', '', vendor.toll, '', '', '', ''],
-      // [{ content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${vendor.subtotal_Amount.toLocaleString()}`, '', '', ''],
-      // [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${vendor.total_amount.toLocaleString()}`, '', '']
     ]
 
-    // Add space between the table and the "Bank Details" section
-    doc.text('', 20, doc.autoTable.previous.finalY + 10);
+    // Add the rows to the PDF
+    rows.forEach(row => {
+      doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
+    });
+    doc.line(10, 105, 200, 105);
 
-    // Bank Details section
-    // doc.setFontSize(10);
-    // doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
-    // doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
-    // doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
-    // doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
-    // doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
-    // doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
+    const vendorDetails = [
+      ['Description', 'kms', 'AMOUNT', 'TOTAL', 'TDS 1%'],
+      [`${vendor.vehicle_type} - ${vendor.from} - ${vendor.to} on ${vendor.current_Date}`, '', '', '', '', ''],
+      ['',`${vendor.total_km}`,'', '', '']
+      // [{ content: 'Sub Total:', colSpan: 4, styles: { fillColor: [169, 169, 169] } }, `Rs. ${vendor.subtotal_Amount.toLocaleString()}`],
+      // [{ content: 'Total Amount:', colSpan: 4, styles: { fillColor: [169, 169, 169] } }, `Rs. ${vendor.total_amount.toLocaleString()}`]
+    ];
 
-    // "Right side bottom details" section
-    // doc.setFontSize(12);
-    // doc.text('For Shivpushpa Travels', 150, doc.autoTable.previous.finalY + 20);
-    // doc.text('Authorised Signatory', 150, doc.autoTable.previous.finalY + 40);
+    // Convert total amount to words
+    const numberToWords = require('number-to-words');
+    // const totalAmountInWords = numberToWords.toWords(vendor.total_amount);
+    // const capitalizedTotalAmountInWords = totalAmountInWords.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+
+    // Add the total amount in words below the table
+    // vendorDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, colSpan: 6, styles: { textColor: [0, 0, 0] } }]);
+
+    const marginLeft = 10;
+    const marginTop = 110;
+
+    doc.autoTable({
+      startY: marginTop,
+      body: vendorDetails,
+      theme: 'grid',
+      margin: { left: marginLeft }
+    });
+
+    // Bank Details section on the left side
+    doc.setFontSize(10);
+    doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 17);
+    doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 10, doc.autoTable.previous.finalY + 24);
+    doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 10, doc.autoTable.previous.finalY + 31);
+    doc.text('Account Number: 015204301220061', 10, doc.autoTable.previous.finalY + 38);
+    doc.text('IFSC Code: COSB0000015', 10, doc.autoTable.previous.finalY + 45);
+    doc.text('MICR Code: 411164014', 10, doc.autoTable.previous.finalY + 52);
+
+    // Additional details on the right side
+    doc.text("For Shivpushpa Travels", 160, doc.autoTable.previous.finalY + 20);
+    doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
 
     // Save the PDF or open in a new tab
     doc.save(`Invoice_${vendor._id}.pdf`);

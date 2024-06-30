@@ -16,6 +16,10 @@ const venderRateSchema = new mongoose.Schema({
     km: String,
      extra_km: String,
     extra_hour: String,
+    from: String,
+    to: String,
+    date: String
+,
 })
 
 const newRateSchemaVender = mongoose.model('vender-rate' , venderRateSchema)

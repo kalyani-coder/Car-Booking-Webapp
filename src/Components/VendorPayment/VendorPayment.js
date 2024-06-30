@@ -28,6 +28,9 @@ function VendorPayment() {
     paid_amount: "",
     remaining_Amount: "",
     payment_Method: "",
+    from:"",
+    to:"",
+    date:""
   });
   const [vendors, setVendors] = useState([]);
   const [selectedVendorId, setSelectedVendorId] = useState("");
@@ -87,6 +90,8 @@ function VendorPayment() {
         mobile_Number: selectedVendor.mobile_Number,
         address: selectedVendor.address,
         vehicle: selectedVendor.vehicle,
+        from: selectedVendor.from,
+        to: selectedVendor.to,
         title: selectedVendor.title,
         rate: selectedVendor.rate,
         hour: selectedVendor.hour,
@@ -280,8 +285,12 @@ function VendorPayment() {
           GST_No: formData.GST_No,
           vender_Name: formData.vender_Name,
           mobile_Number: formData.mobile_Number,
+          address:formData.address,
           vehicle_type: formData.vehicle,
           vehicle_number: formData.vehicle_no,
+          from: formData.from,
+          to:formData.to,
+          Date:formData.Date,
           title: formData.title,
           rate: formData.rate,
           hour: formData.hour,
@@ -550,7 +559,6 @@ function VendorPayment() {
                           </div>
                         </div>
                       </div>
-
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="address" class="form-label">
@@ -564,12 +572,67 @@ function VendorPayment() {
                             name="address"
                             placeholder="Enter address"
                             value={formData.address}
-                            onChange={handleChange}
                           />
                         </div>
                       </div>
                     </div>
-
+                    <div className="row grid-gap-5">
+                      <div className="col-md">
+                        <div className="d-flex gap-3">
+                          <div>
+                            <div className="form-group">
+                              <label htmlFor="from" className="form-label">
+                                From:
+                                <span className="required-asterisk">*</span>
+                              </label>
+                              <input
+                                className="rate-form-control-payment"
+                                type="text"
+                                id="from"
+                                name="from"
+                                placeholder="from"
+                                value={formData.from}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="form-group">
+                              <label htmlFor="to" className="form-label">
+                                To:
+                                <span className="required-asterisk">*</span>
+                              </label>
+                              <input
+                                className="rate-form-control-payment"
+                                type="text"
+                                id="to"
+                                name="to"
+                                placeholder="to"
+                                value={formData.to}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="date" class="form-label">
+                           Payment Date:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="date"
+                            className="update-duty-form-control"
+                            id="date"
+                            name="date"
+                            value={formData.date}
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="d-flex gap-3">
