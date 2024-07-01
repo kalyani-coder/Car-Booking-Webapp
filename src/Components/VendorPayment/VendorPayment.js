@@ -107,20 +107,7 @@ function VendorPayment() {
     }
   };
 
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      }, 5000);
-    }
-  };
-
+ 
   //
   const renderPaymentMethodFields = () => {
     if (formData.payment_Method === "Cheque") {

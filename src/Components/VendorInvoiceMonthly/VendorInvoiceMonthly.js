@@ -77,7 +77,7 @@ function VendorInvoiceMonthly() {
       if (selectedVendor) {
         try {
           const response = await axios.get(
-            `http://localhost:8787/api/vender-payment/vender/${selectedVendor.vendorId}`
+            `http://localhost:8787/api/vender-payment/vender/${selectedVendor.vender_id}`
           );
           if (response.status === 200) {
             setFormData((prevData) => ({
@@ -365,47 +365,65 @@ function VendorInvoiceMonthly() {
                   </tr>
                 </thead>
                 <tbody>
-  {formData.venderTripDetails.map((trip, index) => (
-    <tr key={index}>
-      <td>
-        {`${trip.vehicle_type} from ${trip.from} - ${trip.to} on ${trip.formattedDate}`}
-      </td>
-      <td>{trip.saccode}</td>
-      <td>
-        {trip.total_km}
-        <br />
-        {trip.total_hour}
-        <br />
-        {trip.extra_km}
-        <br />
-        {trip.extra_hour}
-      </td>
-      <td>{trip.total_amount}</td>
-      <td>{trip.rate}</td>
-      <td>{trip.tds}</td>
-    </tr>
-  ))}
-  <tr>
-    <td colSpan="4" style={{ textAlign: "right" }}>Subtotal</td>
-    <td>
-      {formData.venderTripDetails.reduce((total, trip) => total + trip.total_amount, 0)}
-    </td>
-    <td>
-      {formData.venderTripDetails.reduce((total, trip) => total + trip.tds, 0)}
-    </td>
-  </tr>
-  <tr>
-    <td colSpan="4" style={{ textAlign: "right" }}>Grand Total</td>
-    <td>
-      {formData.venderTripDetails.reduce((total, trip) => total + trip.total_amount, 0) -
-      formData.venderTripDetails.reduce((total, trip) => total + trip.tds, 0)}
-    </td>
-    <td>
-      {formData.venderTripDetails.reduce((total, trip) => total + trip.tds, 0)}
-    </td>
-  </tr>
-</tbody>
-
+                  {formData.venderTripDetails.map((trip, index) => (
+                    <tr key={index}>
+                      <td>
+                        {`${trip.vehicle_type} from ${trip.from} - ${trip.to} on ${trip.formattedDate}`}
+                      </td>
+                      <td>{trip.saccode}</td>
+                      <td>
+                        {trip.total_km}
+                        <br />
+                        {trip.total_hour}
+                        <br />
+                        {trip.extra_km}
+                        <br />
+                        {trip.extra_hour}
+                      </td>
+                      <td>{trip.total_amount}</td>
+                      <td>{trip.rate}</td>
+                      <td>{trip.tds}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "right" }}>
+                      Subtotal
+                    </td>
+                    <td>
+                      {formData.venderTripDetails.reduce(
+                        (total, trip) => total + trip.total_amount,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {formData.venderTripDetails.reduce(
+                        (total, trip) => total + trip.tds,
+                        0
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "right" }}>
+                      Grand Total
+                    </td>
+                    <td>
+                      {formData.venderTripDetails.reduce(
+                        (total, trip) => total + trip.total_amount,
+                        0
+                      ) -
+                        formData.venderTripDetails.reduce(
+                          (total, trip) => total + trip.tds,
+                          0
+                        )}
+                    </td>
+                    <td>
+                      {formData.venderTripDetails.reduce(
+                        (total, trip) => total + trip.tds,
+                        0
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           )}

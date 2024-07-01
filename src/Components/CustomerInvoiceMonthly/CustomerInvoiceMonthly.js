@@ -94,94 +94,110 @@ function CustomerInvoiceMonthly() {
     if (downloadConfirmed) {
         const doc = new jsPDF();
 
+        // Set initial Y position and page margins
+        let startY = 20;
+        const margin = 10;
+
         // Add content to the PDF
         doc.setFontSize(12);
 
         // Header Section
-        doc.text("Shivpushpa Travels Invoice", 10, 10);
-        doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 10, 20);
-        doc.text("Contact No: 9325501950 / 9325501978", 10, 30);
-        doc.text("Mail: travelshivpushpa@gmail.com", 10, 40);
+        doc.text("Shivpushpa Travels Invoice", margin, startY);
+        doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", margin, startY + 10);
+        doc.text("Contact No: 9325501950 / 9325501978", margin, startY + 20);
+        doc.text("Mail: travelshivpushpa@gmail.com", margin, startY + 30);
 
         // Title Section
         doc.setFontSize(16);
-        doc.text("Invoice", 140, 20);
+        doc.text("Invoice", 140, startY);
 
         // Invoice Details Section
         doc.setFontSize(10);
-        doc.text("PO No: ", 140, 30);
-        doc.text("Invoice No: ", 140, 40);
-        doc.text("Date: ", 140, 50);
-        doc.text("Customer ID: ", 140, 60);
-        doc.text("GST No: ", 140, 70);
+        doc.text("PO No: ", 140, startY + 10);
+        doc.text("Invoice No: ", 140, startY + 20);
+        doc.text("Date: ", 140, startY + 30);
+        doc.text("Customer ID: ", 140, startY + 40);
+        doc.text("GST No: ", 140, startY + 50);
 
         // Customer Information Section
         if (selectedCustomer) {
-            doc.text("Customer Name: " + (selectedCustomer.customer_Name || ''), 10, 80);
-            doc.text("Customer Address: " + (selectedCustomer.reporting_Address || ''), 10, 90);
-            doc.text("GST No: " + (selectedCustomer.GST_No || ''), 10, 100);
+            doc.text("Customer Name: " + (selectedCustomer.customer_Name || ''), margin, startY + 60);
+            doc.text("Customer Address: " + (selectedCustomer.reporting_Address || ''), margin, startY + 70);
+            doc.text("GST No: " + (selectedCustomer.GST_No || ''), margin, startY + 80);
         }
 
-        let startY = 110; // Starting position for table
-        invoicesForSelectedDate.forEach((trip, index) => {
-            // Add table with trip details for the current entry
-            const tableData = [
-                [
-                    `${trip.vehicle_Type} from ${trip.from} to ${trip.to}`,
-                    trip.saccode || '',
-                    trip.total_Km || '',
-                    trip.total_Amount || '',
-                    trip.total || '',
-                    trip.SGST || '',
-                    trip.CGST || '',
-                ],
-            ];
+        // Move startY down to prepare for the table
+        startY += 100;
 
-            // Add table headers only once
-            if (index === 0) {
-                const headers = ["Description", "Sac Code", "Kms", "Amount", "Total", "SGST", "CGST"];
-                tableData.unshift(headers);
+        // Add table with trip details
+        const headers = ["Description", "Sac Code", "Kms", "Amount", "Total", "SGST", "CGST"];
+        const tableData = invoicesForSelectedDate.map(trip => [
+            `${trip.vehicle_Type} from ${trip.from} to ${trip.to}`,
+            trip.saccode || '',
+            trip.total_Km || '',
+            trip.total_Amount || '',
+            trip.total || '',
+            trip.SGST || '',
+            trip.CGST || '',
+        ]);
+
+        // Insert headers at the beginning of the tableData
+        tableData.unshift(headers);
+
+        // Function to check if content height exceeds the page and add a new page
+        const addPageIfExceeds = () => {
+            const totalPages = doc.internal.getNumberOfPages();
+            const currentY = doc.autoTable.previous.finalY + margin;
+
+            if (currentY > 250) { // Adjust this height based on your layout
+                doc.addPage();
+                startY = margin;
             }
+        };
 
-            doc.autoTable({
-                head: tableData.slice(0, 1),
-                body: tableData.slice(1),
-                startY: startY,
-                theme: "plain",
-            });
-
-            startY = doc.autoTable.previous.finalY + 10;
+        // Add autoTable with options for table formatting
+        doc.autoTable({
+            head: [tableData[0]],
+            body: tableData.slice(1),
+            startY: startY,
+            theme: "grid",
+            styles: { halign: 'center' },
+            columnStyles: { 0: { cellWidth: 'wrap' } }, // Adjust cellWidth based on content
+            addPageContent: addPageIfExceeds,
         });
 
-        // Add subtotal, SGST, CGST, and grand total row for all entries
+        // Calculate subtotal, SGST, CGST, and grand total row
         const subtotal = invoicesForSelectedDate.reduce((total, trip) => total + (trip.total_Amount || 0), 0);
         const sgstTotal = invoicesForSelectedDate.reduce((total, trip) => total + (trip.SGST || 0), 0);
         const cgstTotal = invoicesForSelectedDate.reduce((total, trip) => total + (trip.CGST || 0), 0);
 
+        // Add table for subtotal and totals
         doc.autoTable({
             head: [["", "Subtotal", "SGST Total", "CGST Total"]],
             body: [["", subtotal.toString(), sgstTotal.toString(), cgstTotal.toString()]],
-            startY: startY,
+            startY: doc.autoTable.previous.finalY + margin,
+            theme: "grid",
+            styles: { halign: 'center' },
         });
 
-        startY = doc.autoTable.previous.finalY + 10;
-
         // Add Bank Details Section
-        doc.text("Bank Details:", 10, startY + 10);
-        doc.text("Bank Name: " + (formData.bankname || ''), 10, startY + 20);
-        doc.text("Branch Name: " + (formData.branchname || ''), 10, startY + 30);
-        doc.text("Account Holder Name: " + (formData.accountHoldername || ''), 10, startY + 40);
-        doc.text("Account Number: " + (formData.accountNumber || ''), 10, startY + 50);
-        doc.text("IFSC Code: " + (formData.ifsccode || ''), 10, startY + 60);
-        doc.text("MICR Code: " + (formData.micrcode || ''), 10, startY + 70);
+        doc.text("Bank Details:", margin, doc.autoTable.previous.finalY + margin + 10);
+        doc.text("Bank Name: " + (formData.bankname || ''), margin, doc.autoTable.previous.finalY + margin + 20);
+        doc.text("Branch Name: " + (formData.branchname || ''), margin, doc.autoTable.previous.finalY + margin + 30);
+        doc.text("Account Holder Name: " + (formData.accountHoldername || ''), margin, doc.autoTable.previous.finalY + margin + 40);
+        doc.text("Account Number: " + (formData.accountNumber || ''), margin, doc.autoTable.previous.finalY + margin + 50);
+        doc.text("IFSC Code: " + (formData.ifsccode || ''), margin, doc.autoTable.previous.finalY + margin + 60);
+        doc.text("MICR Code: " + (formData.micrcode || ''), margin, doc.autoTable.previous.finalY + margin + 70);
 
         // Footer Section
-        doc.text("For Shivpushpa Travels", 150, startY + 40);
-        doc.text("Authorised Signatory", 150, startY + 70);
+        doc.text("For Shivpushpa Travels", 150, doc.internal.pageSize.height - 20);
+        doc.text("Authorised Signatory", 150, doc.internal.pageSize.height - 10);
 
+        // Save the PDF
         doc.save("invoice.pdf");
     }
 };
+
 
 
   // Function to filter trips for the selected date and customer

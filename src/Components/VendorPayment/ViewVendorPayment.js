@@ -115,7 +115,7 @@ const handleGenerateInvoice = (vendor) => {
     doc.text('INVOICE TO:', 10, 68);
 
     const rows = [
-      { label: "Vendor Name", value: vendor.vendor_Name, yPos: 75 },
+      { label: "Vendor Name", value: vendor.vender_Name, yPos: 75 },
       { label: "Mobile No", value: vendor.mobile_Number, yPos: 80 },
       { label: "GST No", value: vendor.GST_No, yPos: 85 },
     ]
@@ -129,7 +129,10 @@ const handleGenerateInvoice = (vendor) => {
     const vendorDetails = [
       ['Description', 'kms', 'AMOUNT', 'TOTAL', 'TDS 1%'],
       [`${vendor.vehicle_type} - ${vendor.from} - ${vendor.to} on ${vendor.current_Date}`, '', '', '', '', ''],
-      ['',`${vendor.total_km}`,'', '', '']
+      ['Total KM', vendor.total_km, '', vendor.total_amount,vendor.tds],
+      ['Total Hr', vendor.total_hour, '', '', '', ''],
+      // ['Extra KM',  vendor.extra_km, vendor.total_amount, vendor.extramkm_Amount,'' ],
+      // ['Extra Hr', vendor.extra_hour, vendor.extrahours_Amount, vendor.extrahours_Amount],
       // [{ content: 'Sub Total:', colSpan: 4, styles: { fillColor: [169, 169, 169] } }, `Rs. ${vendor.subtotal_Amount.toLocaleString()}`],
       // [{ content: 'Total Amount:', colSpan: 4, styles: { fillColor: [169, 169, 169] } }, `Rs. ${vendor.total_amount.toLocaleString()}`]
     ];
@@ -207,7 +210,7 @@ const handleGenerateInvoice = (vendor) => {
                 <th>GST No</th>
                 <th>Mobile Number</th>
                 <th>Payment</th>
-                <th>Amount</th>
+                {/* <th>Amount</th> */}
                 <th>Tds 1 %</th>
                 <th>Action</th>
               </tr>
@@ -222,7 +225,7 @@ const handleGenerateInvoice = (vendor) => {
                     <td>{vendor.GST_No}</td>
                     <td>{vendor.mobile_Number}</td>
                     <td>{vendor.payment}</td>
-                    <td>{vendor.amount}</td>
+                    {/* <td>{vendor.amount}</td> */}
                     <td>{vendor.tds}</td>
                     <td>
                       <Link  className="btn btn-primary btn-sm ml-2" to={`/ViewVendorPayment/${vendor._id}`}>
