@@ -69,141 +69,140 @@ function CustomerInvoice() {
   let invoiceCounter = 100;
   const handleGenerate = () => {
     const downloadConfirmed = window.confirm("Do you want to download the invoice?");
-
+  
     if (downloadConfirmed) {
       const doc = new jsPDF({
         unit: "mm",
         format: "a4",
         compress: true,
         orientation: "portrait",
-        height: 800,
+        height: 1000,
       });
+  
+     
+    doc.setFillColor(60,181,205);
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
 
-      // Header Section
-      doc.setFillColor(60, 181, 205);
-      doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
 
-      const img = new Image();
-      img.src = headerlogo;  // Make sure headerlogo is defined and accessible
-      doc.addImage(img, 'JPEG', 5, 10, 45, 32);
+    // image 
+    const img = new Image();
+    img.src = headerlogo;
+    doc.addImage(img, 'JPEG', 5, 10, 45, 32); 
 
-      doc.setFontSize(11);
-      doc.text('Shivpushpa Travels', 65, 15);
-      doc.text('332, Kasba Peth Phadke Haud Chowk', 65, 20);
-      doc.text('Pune 411 0111', 65, 25);
-      doc.text('9325501950 / 9325501978', 65, 30);
-      doc.text('travelshivpushpa@gmail.com', 65, 35);
 
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString();
-      invoiceCounter++;
-      const invoiceNo = invoiceCounter.toString().padStart(3, '0');
+    doc.setFillColor(211, 211, 211);
 
-      doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
-      doc.text(`Invoice Date: ${formattedDate}`, 150, 20);
+    doc.setFontSize(11);
+    doc.text('Shivpushpa Travels', 65, 15);
+    doc.text('332, Kasba Peth Phadke Haud Chowk', 65, 20);
+    doc.text('Pune 411 0111', 65, 25);
+    doc.text('9325501950 / 9325501978', 65, 30);
+    doc.text('travelshivpushpa@gmail.com', 65, 35);
 
-      doc.setDrawColor(0, 0, 255);
-      doc.line(10, 60, 200, 60);
+    
+    const currentDate = new Date();
 
-      doc.text('INVOICE TO:', 10, 68);
+    const formattedDate = currentDate.toLocaleDateString(); 
+    invoiceCounter++;
+  const invoiceNo = invoiceCounter.toString().padStart(3, '0');
 
-      // Customer Information Section
-      if (selectedCustomer) {
-        doc.text("Customer Name: " + (selectedCustomer.customer_Name || ''), 10, 75);
-        doc.text("Mobile No: " + (selectedCustomer.mobile_no || ''), 10, 80);
-        doc.text("GST No: " + (selectedCustomer.GST_No || ''), 10, 85);
-        doc.text("Vehicle Type: " + (selectedCustomer.vehicle_Type || ''), 10, 90);
-        doc.text("Vehicle Number: " + (selectedCustomer.vehicle_Number || ''), 10, 95);
-      }
+    doc.setFontSize(11);
+    doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
+    doc.text(`Invoice Date : ${formattedDate}`, 150, 20);
+   
 
-      doc.line(10, 105, 200, 105);
+    doc.setDrawColor(0, 0, 255); 
+    doc.line(10, 45, 200, 45); 
 
-      const numberToWords = require('number-to-words');
-
-      // Convert total amount to words
-      const totalAmountInWords = numberToWords.toWords(selectedCustomer.total_Amount || 0);
-
-      // Function to capitalize the first letter of each word
-      function capitalizeFirstLetter(str) {
-        return str.toLowerCase().replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
-      }
-
-      // Capitalize the totalAmountInWords
-      const capitalizedTotalAmountInWords = capitalizeFirstLetter(totalAmountInWords);
-
-      // Create the table data
-      const headers = ["Description", "Sac Code", "Kms", "Amount", "Total", "SGST", "CGST"];
-      const tableData = customerList
-        .filter(customer => customer.customerId === selectedCustomer.customerId)
-        .map(trip => [
-          `${trip.vehicle_Type} from ${trip.from} to ${trip.to} on ${trip.Date}
-            \nTotal Km: ${trip.total_Km}
-            \nTotal Hours: ${trip.total_hours}
-            \nExtra Km: ${trip.extra_Km}
-            \nExtra Hours: ${trip.extra_Hours}
-            \nToll Parking: ${trip.toll_Parking}
-            \nSub Total: ${trip.subtotal}
-            \nGrand Total: ${trip.grandTotal}
-            \nTotal Amount: ${trip.capitalizedTotalAmountInWords} `,
-          trip.saccode || '',
-          trip.total_Km || '',
-          trip.total_Amount || '',
-          trip.total || '',
-          trip.SGST || '',
-          trip.CGST || '',
-        ]);
-
+    doc.text('INVOICE TO:', 10, 55); 
+    const rows = [
+      { label: "Customer Name", value: selectedCustomer.cus_name, yPos: 62 },
+      { label: "Mobile No", value: selectedCustomer.mobile_no, yPos: 67 },
+      { label: "GST No", value: selectedCustomer.GST_No, yPos: 72 },
+    ];
+    
+    // Add the rows to the PDF
+    rows.forEach(row => {
+      doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
+    });
+    doc.line(10, 80, 200, 80);
+  
+      // Calculate totals and prepare table data
+      const filteredCustomerList = customerList.filter(customer => customer.customerId === selectedCustomer.customerId);
+  
+      const tableData = filteredCustomerList.map(trip => [
+        `${trip.vehicle_Type} from ${trip.from} to ${trip.to} on ${trip.Date}`,
+        trip.saccode || '',
+        trip.total_Km || '',
+        trip.total_Amount ? `Rs. ${trip.total_Amount.toLocaleString()}` : '', // Safely access total_Amount
+        trip.total ? `Rs. ${trip.total.toLocaleString()}` : '', // Safely access total
+        trip.SGST ? `Rs. ${trip.SGST.toLocaleString()}` : '', // Safely access SGST
+        trip.CGST ? `Rs. ${trip.CGST.toLocaleString()}` : '', // Safely access CGST
+      ]);
+  
       // Calculate totals
-      const subtotal = customerList
-        .filter(customer => customer.customerId === selectedCustomer.customerId)
-        .reduce((total, trip) => total + trip.total_Amount, 0);
-      const sgstTotal = customerList
-        .filter(customer => customer.customerId === selectedCustomer.customerId)
-        .reduce((total, trip) => total + trip.SGST, 0);
-      const cgstTotal = customerList
-        .filter(customer => customer.customerId === selectedCustomer.customerId)
-        .reduce((total, trip) => total + trip.CGST, 0);
+      const subtotal = filteredCustomerList.reduce((total, trip) => total + (trip.total_Amount || 0), 0);
+      const sgstTotal = filteredCustomerList.reduce((total, trip) => total + (trip.SGST || 0), 0);
+      const cgstTotal = filteredCustomerList.reduce((total, trip) => total + (trip.CGST || 0), 0);
       const grandTotal = subtotal + sgstTotal + cgstTotal;
-
+  
+      // Convert total amount to words and capitalize
+      const numberToWords = require('number-to-words');
+      const totalAmountInWords = numberToWords.toWords(grandTotal || 0);
+      const capitalizedTotalAmountInWords = totalAmountInWords.charAt(0).toUpperCase() + totalAmountInWords.slice(1);
+  
+      // Add subtotal, grand total, and total amount rows to the tableData array
+      const subtotalRow = ['Subtotal','','','', `Rs. ${subtotal.toLocaleString()}`, `Rs. ${sgstTotal.toLocaleString()}`, `Rs. ${cgstTotal.toLocaleString()}`];
+      const grandTotalRow = ['Grand Total', '','','',`Rs. ${grandTotal.toLocaleString()}`, '', ''];
+      const totalAmountRow = [`Total Amount: Rs. ${capitalizedTotalAmountInWords}`, '', '', ''];
+      
+      tableData.push(subtotalRow);
+      tableData.push(grandTotalRow);
+      tableData.push(totalAmountRow);
+  
       // Add table to the PDF
-      const marginTop = 110;
       doc.autoTable({
-        startY: marginTop,
-        head: [headers],
+        startY: 90, // Adjust as needed
+        head: [['Description', 'Sac Code', 'Kms', 'Amount', 'Total', 'SGST', 'CGST']], // Headers
         body: tableData,
-        theme: 'grid',
-        margin: { top: marginTop },
+        theme: 'grid', // Theme for the table
+        margin: { top: 90 }, // Margin top for the table
+        didDrawPage: function (data) {
+          // Check if a new page is being added
+          if (data.pageNumber > 1) {
+            // Adjust the margin top for subsequent pages
+            data.settings.margin.top = 10; // Set your desired margin top for subsequent pages
+          }
+        }
       });
-
-      // Add totals to the PDF
-      doc.autoTable({
-        body: [
-          ['', '', '', 'Subtotal', `Rs. ${subtotal.toLocaleString()}`, `Rs. ${sgstTotal.toLocaleString()}`, `Rs. ${cgstTotal.toLocaleString()}`],
-          ['', '', '', 'Grand Total', `Rs. ${grandTotal.toLocaleString()}`, `Rs. ${sgstTotal.toLocaleString()}`, `Rs. ${cgstTotal.toLocaleString()}`],
-          ['', '', '', `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, '', '', '']
-        ],
-        startY: doc.autoTable.previous.finalY + 10,
-        theme: 'plain',
-        margin: { top: marginTop },
-      });
-
-      // Bank Details section on the left side
-      doc.setFontSize(10);
-      doc.text('Bank Details:', 20, doc.autoTable.previous.finalY + 20);
-      doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 20, doc.autoTable.previous.finalY + 30);
-      doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 20, doc.autoTable.previous.finalY + 40);
-      doc.text('Account Number: 015204301220061', 20, doc.autoTable.previous.finalY + 50);
-      doc.text('IFSC Code: COSB0000015', 20, doc.autoTable.previous.finalY + 60);
-      doc.text('MICR Code: 411164014', 20, doc.autoTable.previous.finalY + 70);
-
-      // Additional details on the right side
-      doc.text("For Shivpushpa Travels", 150, doc.autoTable.previous.finalY + 20);
-      doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 30);
-
+  
+       // Bank Details section on the left side
+       doc.setFontSize(10);
+       doc.text('Bank Details:', 15, doc.autoTable.previous.finalY + 17);
+       doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 15, doc.autoTable.previous.finalY + 24);
+       doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 15, doc.autoTable.previous.finalY + 31);
+       doc.text('Account Number: 015204301220061', 15, doc.autoTable.previous.finalY + 38);
+       doc.text('IFSC Code: COSB0000015', 15, doc.autoTable.previous.finalY + 45);
+       doc.text('MICR Code: 411164014', 15, doc.autoTable.previous.finalY + 52);
+       // Additional details on the right side
+       doc.text(
+         "For Shivpushpa Travels",
+         160,
+         doc.autoTable.previous.finalY + 20
+       );
+       doc.text(
+         "Authorised Signatory",
+         160,
+         doc.autoTable.previous.finalY + 30
+       );
+ 
+  
       // Save the PDF or open in a new tab
       doc.save(`Invoice_${selectedCustomer.customer_Name}.pdf`);
     }
   };
+  
+  
 
 
 
