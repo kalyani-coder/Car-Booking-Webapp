@@ -22,15 +22,15 @@ function VendorPayment() {
     total_km: "",
     total_hour: "",
     total_amount: "",
-    // payment: "",
+    payment: "",
     amount: "",
     tds: "",
     paid_amount: "",
     remaining_Amount: "",
     payment_Method: "",
-    from:"",
-    to:"",
-    date:""
+    from: "",
+    to: "",
+    date: "",
   });
   const [vendors, setVendors] = useState([]);
   const [selectedVendorId, setSelectedVendorId] = useState("");
@@ -38,7 +38,6 @@ function VendorPayment() {
   const [errorAlert, setErrorAlert] = useState(null);
   const [formData, setFormData] = useState(initialFormData);
   const [isPartialPayment, setIsPartialPayment] = useState(false);
-  
 
   useEffect(() => {
     fetchVendors();
@@ -77,13 +76,13 @@ function VendorPayment() {
       const total_hour = hour + extra_hour;
       const total_hour_Amt = total_hour * 100;
       const total_amount = rate * total_km + total_hour_Amt;
-       // Calculate TDS and paid amount
-        const tds = total_amount * 0.01;
-        const paid_amount = total_amount + tds;
+      // Calculate TDS and paid amount
+      const tds = total_amount * 0.01;
+      const paid_amount = total_amount + tds;
 
       setFormData({
         ...formData,
-       vender_id: selectedVendor._id,
+        vender_id: selectedVendor._id,
         vender_Name: selectedVendor.vender_Name,
         company_Name: selectedVendor.company_Name,
         GST_No: selectedVendor.GST_No,
@@ -102,12 +101,12 @@ function VendorPayment() {
         total_hour: total_hour,
         total_amount: total_amount,
         tds: tds,
-        paid_amount: paid_amount
-      })
+        paid_amount: paid_amount,
+        payment: formData.payment,
+      });
     }
   };
 
- 
   //
   const renderPaymentMethodFields = () => {
     if (formData.payment_Method === "Cheque") {
@@ -263,42 +262,48 @@ function VendorPayment() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Log the from, to, and date fields to the console
+      console.log("From:", formData.from);
+      console.log("To:", formData.to);
+      console.log("Date:", formData.date);
 
-      const response = await axios.post(
-        "http://localhost:8787/api/vender-payment",
-        {
-          vender_id: formData.vender_id,
-          company_Name: formData.company_Name,
-          GST_No: formData.GST_No,
-          vender_Name: formData.vender_Name,
-          mobile_Number: formData.mobile_Number,
-          address:formData.address,
-          vehicle_type: formData.vehicle,
-          vehicle_number: formData.vehicle_no,
-          from: formData.from,
-          to:formData.to,
-          Date:formData.Date,
-          title: formData.title,
-          rate: formData.rate,
-          hour: formData.hour,
-          km: formData.km,
-          extra_km: formData.extra_km,
-          extra_hour: formData.extra_hour,
-          total_km: formData.total_km,
-          total_hour: formData.total_hour,
-          // totalkm_amount: formData.totalkm_amount,
-          // totalhour_amount: formData.totalhour_amount,
-          total_amount: formData.total_amount,
-          payment: formData.payment,
-          amount: formData.amount,
-          tds: formData.tds,
-          paid_amount: formData.paid_amount,
-          remaining_Amount: formData.remaining_Amount,
-          payment_Method: formData.payment_Method,
-        }
-      );
+      // Create a new object excluding the from, to, and date fields
+      const postData = {
+        vender_id: formData.vender_id,
+        company_Name: formData.company_Name,
+        GST_No: formData.GST_No,
+        vender_Name: formData.vender_Name,
+        mobile_Number: formData.mobile_Number,
+        address: formData.address,
+        vehicle_type: formData.vehicle,
+        vehicle_number: formData.vehicle_no,
+        title: formData.title,
+        rate: formData.rate,
+        hour: formData.hour,
+        km: formData.km,
+        extra_km: formData.extra_km,
+        extra_hour: formData.extra_hour,
+        total_km: formData.total_km,
+        total_hour: formData.total_hour,
+        total_amount: formData.total_amount,
+        payment: formData.payment,
+        amount: formData.amount,
+        tds: formData.tds,
+        paid_amount: formData.paid_amount,
+        remaining_Amount: formData.remaining_Amount,
+        payment_Method: formData.payment_Method,
+      };
 
-      if (response.status === 201) {
+      // Make the POST request with the new object using fetch
+      const response = await fetch("http://localhost:8787/api/vender-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      if (response.ok) {
         console.log("Data posted successfully!");
         alert("Data added successfully!", "success");
         setFormData(initialFormData);
@@ -580,7 +585,6 @@ function VendorPayment() {
                                 placeholder="from"
                                 value={formData.from}
                                 onChange={handleChange}
-                                required
                               />
                             </div>
                           </div>
@@ -598,7 +602,6 @@ function VendorPayment() {
                                 placeholder="to"
                                 value={formData.to}
                                 onChange={handleChange}
-                                required
                               />
                             </div>
                           </div>
@@ -607,14 +610,14 @@ function VendorPayment() {
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="date" class="form-label">
-                           Payment Date:
+                            Payment Date:
                             <span className="required-asterisk">*</span>
                           </label>
                           <input
                             type="date"
                             className="update-duty-form-control"
-                            id="date"
                             name="date"
+                            onChange={handleChange}
                             value={formData.date}
                           />
                         </div>
@@ -785,7 +788,7 @@ function VendorPayment() {
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="payment" class="form-label">
+                          <label htmlFor="payment" className="form-label">
                             Payment:
                             <span className="required-asterisk">*</span>
                           </label>
@@ -801,6 +804,27 @@ function VendorPayment() {
                             <option value="Full Payment">Full Payment</option>
                           </select>
                         </div>
+
+                        {formData.payment === "Partial" && (
+                          <div className="form-group">
+                            <label
+                              htmlFor="remaining_Amount"
+                              className="form-label"
+                            >
+                              Remaining Amount:
+                              <span className="required-asterisk">*</span>
+                            </label>
+                            <input
+                              type="number"
+                              className="update-duty-form-control"
+                              id="remaining_Amount"
+                              name="remaining_Amount"
+                              placeholder="Enter Remaining Amount"
+                              value={formData.remaining_Amount}
+                              onChange={handleChange}
+                            />
+                          </div>
+                        )}
                       </div>
                       <div className="col-md">
                         <div className="form-group">
@@ -821,53 +845,36 @@ function VendorPayment() {
                       </div>
                     </div>
                     <div className="col-md">
-                        <div className="form-group">
-                          <label for="paymentmethod" className="form-label">
-                            Payment Method:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <select
-                            className="update-duty-form-control"
-                            name="payment_Method"
-                            id="payment_Method"
-                            onChange={handleChange}
-                            value={formData.payment_Method}
-                          >
-                            <option value="">Payment Method</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Cheque">Cheque</option>
-                            <option value="UPI / Wallet Payment">
-                              UPI /Wallet Payment
-                            </option>
-                            <option value="Bank Transfer(NEFT)">
-                              Bank Transfer(NEFT )
-                            </option>
-                          </select>
+                      <div className="form-group">
+                        <label for="paymentmethod" className="form-label">
+                          Payment Method:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <select
+                          className="update-duty-form-control"
+                          name="payment_Method"
+                          id="payment_Method"
+                          onChange={handleChange}
+                          value={formData.payment_Method}
+                        >
+                          <option value="">Payment Method</option>
+                          <option value="Cash">Cash</option>
+                          <option value="Cheque">Cheque</option>
+                          <option value="UPI / Wallet Payment">
+                            UPI /Wallet Payment
+                          </option>
+                          <option value="Bank Transfer(NEFT)">
+                            Bank Transfer(NEFT )
+                          </option>
+                        </select>
 
-                          {/* Render payment method specific fields */}
-                          {renderPaymentMethodFields()}
-                        </div>
+                        {/* Render payment method specific fields */}
+                        {renderPaymentMethodFields()}
                       </div>
+                    </div>
 
                     <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="remaining_Amount" class="form-label">
-                            Remaining Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="remaining_Amount"
-                            name="remaining_Amount"
-                            placeholder="Enter Remaining Amount"
-                            value={formData.remaining_Amount}
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                     
+                      <div className="col-md"></div>
 
                       <div className="row grid-gap-5">
                         <div className="col-md"></div>

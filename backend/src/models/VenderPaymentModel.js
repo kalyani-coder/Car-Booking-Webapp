@@ -56,7 +56,7 @@ const VenderPaymentSchema = new mongoose.Schema({
     default: () => formatDateToDDMMYYYY(new Date()),
     from: String,
     to: String,
-    date: String,
+    date: String
   },
 
   // reporting_Address : String,

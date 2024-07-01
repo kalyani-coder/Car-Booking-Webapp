@@ -43,6 +43,7 @@ function VendorInvoiceMonthly() {
   const [vendors, setVendors] = useState([]); // State to store fetched vendors
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
+  const [venderTripDetails, setvenderTripDetails] = useState([]);
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -180,27 +181,27 @@ function VendorInvoiceMonthly() {
 
       // Separator Line
       doc.setDrawColor(0, 0, 255);
-      doc.line(10, 60, 200, 60);
+      doc.line(10, 45, 200, 45); 
 
       // Invoice To Section
-      doc.text("INVOICE TO:", 10, 68);
+      doc.text("INVOICE TO:", 10, 55);
 
       // Vendor Information
       const vendorRows = [
-        { label: "Vendor Name", value: formData.vender_Name, yPos: 75 },
-        { label: "Vendor Address", value: formData.address, yPos: 80 },
-        { label: "Vendor GST No", value: formData.GST_No, yPos: 85 },
-        { label: "Contact No", value: formData.mobile_Number, yPos: 90 },
+        { label: "Vendor Name", value: selectedVendor.vender_Name, yPos: 62 },
+        { label: "Vendor Address", value: selectedVendor.address, yPos: 67 },
+        { label: "Vendor GST No", value: selectedVendor.GST_No, yPos: 72 },
+        { label: "Contact No", value: selectedVendor.mobile_Number, yPos: 77 },
       ];
 
       vendorRows.forEach((row) => {
         doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
       });
 
-      doc.line(10, 105, 200, 105);
+      doc.line(10, 90, 200, 90);
 
       // Trip Details Table
-      const tripDetails = formData.venderTripDetails.map((trip, index) => [
+      const tripDetails = venderTripDetails.map((trip) => [
         trip.Description,
         trip.vehicle_type,
         trip.kms,
@@ -250,40 +251,40 @@ function VendorInvoiceMonthly() {
 
       // Bank Details
       doc.setFontSize(10);
-      doc.text("Bank Details:", 20, doc.autoTable.previous.finalY + 20);
+      doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 17);
       doc.text(
         `Bank Name: ${formData.bankname}`,
-        20,
-        doc.autoTable.previous.finalY + 30
+        10,
+        doc.autoTable.previous.finalY + 24
       );
       doc.text(
         `Branch Name: ${formData.branchname}`,
-        20,
-        doc.autoTable.previous.finalY + 40
+        10,
+        doc.autoTable.previous.finalY + 31
       );
       doc.text(
         `Account Number: ${formData.accountNumber}`,
-        20,
-        doc.autoTable.previous.finalY + 50
+        10,
+        doc.autoTable.previous.finalY + 38
       );
       doc.text(
         `IFSC Code: ${formData.ifsccode}`,
-        20,
-        doc.autoTable.previous.finalY + 60
+        10,
+        doc.autoTable.previous.finalY + 45
       );
       doc.text(
         `MICR Code: ${formData.micrcode}`,
-        20,
-        doc.autoTable.previous.finalY + 70
+        10,
+        doc.autoTable.previous.finalY + 52
       );
 
       // Authorised Signatory
       doc.text(
         "For Shivpushpa Travels",
-        150,
+        160,
         doc.autoTable.previous.finalY + 20
       );
-      doc.text("Authorised Signatory", 150, doc.autoTable.previous.finalY + 30);
+      doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
 
       // Save the PDF
       doc.save(`Invoice_${formData.vender_Name}.pdf`);
@@ -365,8 +366,8 @@ function VendorInvoiceMonthly() {
                   </tr>
                 </thead>
                 <tbody>
-                  {formData.venderTripDetails.map((trip, index) => (
-                    <tr key={index}>
+                  {venderTripDetails.map((trip) => (
+                    <tr key={trip._id}>
                       <td>
                         {`${trip.vehicle_type} from ${trip.from} - ${trip.to} on ${trip.formattedDate}`}
                       </td>
@@ -427,6 +428,7 @@ function VendorInvoiceMonthly() {
               </table>
             </div>
           )}
+
           <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>

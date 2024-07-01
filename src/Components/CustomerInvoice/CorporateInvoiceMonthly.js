@@ -251,12 +251,6 @@ const handleGenerateInvoice = () => {
   }
 };
 
-
-
-
-
-
-
   return (
     <div>
       <Sidebar />
@@ -305,9 +299,6 @@ const handleGenerateInvoice = () => {
               ))}
             </select>
           </div>
-
-
-
           <div className="form-group col-6">
             <label htmlFor="kind_attn" className="form-label">
               Kind Attn:
