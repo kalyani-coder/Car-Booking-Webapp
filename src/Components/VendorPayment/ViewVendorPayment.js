@@ -110,21 +110,22 @@ const handleGenerateInvoice = (vendor) => {
     doc.text(`Invoice Date: ${formattedDate}`, 150, 20);
 
     doc.setDrawColor(0, 0, 255);
-    doc.line(10, 60, 200, 60);
+    doc.line(10, 45, 200, 45); 
 
-    doc.text('INVOICE TO:', 10, 68);
+    doc.text('INVOICE TO:', 10, 55);
 
     const rows = [
-      { label: "Vendor Name", value: vendor.vender_Name, yPos: 75 },
-      { label: "Mobile No", value: vendor.mobile_Number, yPos: 80 },
-      { label: "GST No", value: vendor.GST_No, yPos: 85 },
+      { label: "Vendor Name", value: vendor.vender_Name, yPos: 62 },
+      { label: "Mobile No", value: vendor.mobile_Number, yPos: 67 },
+      { label: "GST No", value: vendor.GST_No, yPos: 72 },
     ]
 
     // Add the rows to the PDF
     rows.forEach(row => {
       doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
     });
-    doc.line(10, 105, 200, 105);
+    doc.line(10, 80, 200, 80);
+  
 
     const vendorDetails = [
       ['Description', 'kms', 'AMOUNT', 'TOTAL', 'TDS 1%'],

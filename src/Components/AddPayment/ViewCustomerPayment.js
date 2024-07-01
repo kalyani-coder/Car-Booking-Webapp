@@ -87,25 +87,25 @@ let invoiceCounter = 100;
    
 
     doc.setDrawColor(0, 0, 255); 
-    doc.line(10, 60, 200, 60); 
+    doc.line(10, 45, 200, 45); 
 
-    doc.text('INVOICE TO:', 10, 68); 
+    doc.text('INVOICE TO:', 10, 55); 
     
    
 
     const rows = [
-      { label: "Customer Name", value: customer.cus_name, yPos: 75 },
-      { label: "Mobile No", value: customer.mobile_no, yPos: 80 },
-      { label: "GST No", value: customer.GST_No, yPos: 85 },
-      { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 90 },
-      { label: "Vehicle Number", value: customer.vehicle_Number, yPos: 95 }
+      { label: "Customer Name", value: customer.cus_name, yPos: 62 },
+      { label: "Mobile No", value: customer.mobile_no, yPos: 67 },
+      { label: "GST No", value: customer.GST_No, yPos: 72 },
+      { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 77 },
+      { label: "Vehicle Number", value: customer.vehicle_Number, yPos: 82 }
     ];
     
     // Add the rows to the PDF
     rows.forEach(row => {
       doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
     });
-    doc.line(10, 105, 200, 105);
+    doc.line(10, 90, 200, 90);
 
     const numberToWords = require('number-to-words');
 
@@ -137,7 +137,7 @@ const customerDetails = [
 customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, styles: { textColor: [0, 0, 0] } }, '', '', '', '', '', '', ]);
 
   const marginLeft = 10;
-  const marginTop = 130;
+  const marginTop = 110;
 
   doc.autoTable({
     startY: marginTop,
