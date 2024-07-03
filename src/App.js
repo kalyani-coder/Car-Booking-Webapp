@@ -36,8 +36,8 @@ import ViewDriver from "./Components/Driver/ViewDriver";
 import ViewCustomerPayment from "./Components/AddPayment/ViewCustomerPayment";
 import ViewDriverDetails from "./Components/StartEndDetails/ViewDriverDetails";
 import Customer from "./Components/CustomerEnquiry/Customer";
-import ViewCorporateCustomr from "./Components/ViewCustomers/ViewCorporateCustomr";
-import IndivisualCustomers from "./Components/ViewCustomers/IndivisualCustomers";
+// import ViewCorporateCustomr from "./Components/ViewCustomers/ViewCorporateCustomr";
+// import IndivisualCustomers from "./Components/ViewCustomers/IndivisualCustomers";
 import ViewDetailsPayment from "./Components/VendorPayment/ViewDetailsPayment";
 import ViewDetailsCustomerPayment from "./Components/AddPayment/ViewDetailsCustomerPayment";
 import CustomerReport from "./Components/GenerateReport/CustomerReport";
@@ -48,6 +48,7 @@ import VendorReport from "./Components/VendorReport/VendorReport";
 import MasterCorporateCustomer from "./Components/Master/MasterCorporateCustomer";
 import CorporateInvoiceMonthly from "./Components/CustomerInvoice/CorporateInvoiceMonthly";
 import ViewMaster from "./Components/Master/ViewMaster";
+import ViewCorporateCustomer from "./Components/AddRate/ViewCorporateCustomer";
 
 
 function App() {
@@ -74,7 +75,7 @@ function App() {
             element={<ViewCustomerPayment />}
           />
           <Route path="/corporatecustomer" element={<CustomerRate />} />
-          <Route path="/viewcorporatecustomer" element={<ViewCustomerRate />} />
+          {/* <Route path="/viewcorporatecustomer" element={<ViewCustomerRate />} /> */}
           {/* <Route path='/indivisualcustomerrate'  element={<IndivisualCustomerRate/>}/> */}
           <Route path="/vendorrate" element={<VendorRate />} />
           <Route path="/viewvendorrate" element={<ViewVendorRate />} />
@@ -110,14 +111,14 @@ function App() {
             element={<ViewDriverDetails />}
           />
           <Route path="/Customer" element={<Customer />} />
-          <Route
+          {/* <Route
             path="/viewcorporatecustomer"
             element={<ViewCorporateCustomr />}
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/indivisualcustomers"
             element={<IndivisualCustomers />}
-          />
+          /> */}
           <Route
             path="/viewvendorpayment/:_id"
             element={<ViewDetailsPayment />}
@@ -135,6 +136,7 @@ function App() {
           <Route path="/vendorreport" element={<VendorReport />} />
           <Route path="/corporatecustomermonthly" element={<CorporateInvoiceMonthly />} />
           <Route path="/viewmaster" element={<ViewMaster />} />
+          <Route path="/viewcorporatecustomer" element={<ViewCorporateCustomer />} />
         </Routes>
       </Router>
     </>

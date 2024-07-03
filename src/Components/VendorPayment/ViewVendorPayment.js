@@ -208,7 +208,7 @@ const handleGenerateInvoice = (vendor) => {
               <th>Sr. No.</th>
                 <th>Vendor Name</th>
                 <th>Company Name</th>
-                <th>GST No</th>
+                <th>Vehicle Type</th>
                 <th>Mobile Number</th>
                 <th>Payment</th>
                 {/* <th>Amount</th> */}
@@ -223,7 +223,7 @@ const handleGenerateInvoice = (vendor) => {
                   <td>{index + 1}</td>
                   <td>{vendor.vender_Name}</td>
                     <td>{vendor.company_Name}</td>
-                    <td>{vendor.GST_No}</td>
+                    <td>{vendor.vehicle_type}</td>
                     <td>{vendor.mobile_Number}</td>
                     <td>{vendor.payment}</td>
                     {/* <td>{vendor.amount}</td> */}
