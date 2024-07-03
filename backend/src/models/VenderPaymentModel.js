@@ -24,10 +24,11 @@ const VenderPaymentSchema = new mongoose.Schema({
   // paid_Amount:Number,
   // remaining_Amount : Number,
   // payment_Method : String,
-
+  
   company_Name: String,
   GST_No: String,
   vender_Name: String,
+  vender_id: String,
   mobile_Number: String,
   address: String,
   vehicle_type: String,
@@ -49,41 +50,17 @@ const VenderPaymentSchema = new mongoose.Schema({
   paid_amount: Number,
   remaining_Amount: Number,
   payment_Method: String,
-  vender_id: String,
   // Add a field for storing the current date
   current_Date: {
     type: String,
     default: () => formatDateToDDMMYYYY(new Date()),
-    from: String,
-    to: String,
-    date: String
   },
+  from: String,
+  to: String,
+  date: String,
 
-  // reporting_Address : String,
-  // date : String,
-  // vehicle_Number : String,
-  // vehicle_Type : String,
-  // from : String,
-  // to : String,
-  // closing_Km : String,
-  // closing_Time : String,
-  // starting_Km : String,
-  // starting_Time : String,
-  // total_km : String,
-  // total_Hours : String,
-  // title : String,
-  // amount : Number,
-  // extra_Km :String,
-  // extra_km_amount : Number,
-  // amount_extra_hours : String,
-  // extra_Hours :String,
-  // amount2 : Number,
-  // total_Amount : Number,
-  // advance_Amount : Number,
-  // remaining_Amount : Number,
-  // payment_Type : String
 });
 
-const NewVenderpayment = mongoose.model('vender-payment' , VenderPaymentSchema)
+const NewVenderpayment = mongoose.model('vender-payment', VenderPaymentSchema)
 
 module.exports = NewVenderpayment
