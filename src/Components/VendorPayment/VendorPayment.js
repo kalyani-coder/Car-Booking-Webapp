@@ -118,7 +118,7 @@ function VendorPayment() {
     }
   };
 
-  //
+  
   const renderPaymentMethodFields = () => {
     if (formData.payment_Method === "Cheque") {
       return (
@@ -189,14 +189,7 @@ function VendorPayment() {
               }
             />
           </div>
-          {/* <div className="mb-3">
-            <label className="form-label">Upload Receipt:</label>
-            <input
-              type="file"
-              className="form-control"
-              onChange={handleFileChange} // Assuming you have a handleFileChange function
-            />
-          </div> */}
+        
         </>
       );
     } else if (formData.payment_Method === "Bank Transfer(NEFT)") {
@@ -271,10 +264,10 @@ function VendorPayment() {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault(); // Prevent default form submission behavior
+  
     try {
-     
-      // Create a new object excluding the from, to, and date fields
+      // Construct postData object with form data
       const postData = {
         vender_id: selectedVendorId,
         company_Name: selectedVehicle.company_Name,
@@ -300,8 +293,8 @@ function VendorPayment() {
         remaining_Amount: formData.remaining_Amount,
         payment_Method: formData.payment_Method,
       };
-
-      // Make the POST request with the new object using fetch
+  
+      // Make POST request to API endpoint
       const response = await fetch("http://localhost:8787/api/vender-payment", {
         method: "POST",
         headers: {
@@ -309,11 +302,12 @@ function VendorPayment() {
         },
         body: JSON.stringify(postData),
       });
-
+  
+      // Handle response
       if (response.ok) {
         console.log("Data posted successfully!");
         alert("Data added successfully!", "success");
-        setFormData(initialFormData);
+        setFormData(initialFormData); // Reset form data after successful submission
       } else {
         console.error("Error posting data:", response.statusText);
         alert("Failed to add data. Please try again.", "danger");
@@ -323,7 +317,7 @@ function VendorPayment() {
       alert("Failed to add data. Please try again.", "danger");
     }
   };
-
+  
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 

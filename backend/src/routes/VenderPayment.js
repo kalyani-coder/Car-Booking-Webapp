@@ -127,47 +127,82 @@ router.get("/vender/:vender_id", async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
+}); 
+
+router.get('/vender/:vender_id/month/:month', async (req, res) => {
+  try {
+    const { vender_id, month } = req.params;
+
+    // Ensure month is a valid number between 1 and 12
+    const numericMonth = parseInt(month);
+    if (isNaN(numericMonth) || numericMonth < 1 || numericMonth > 12) {
+      return res.status(400).json({ message: 'Invalid month number. Please provide a number between 1 and 12.' });
+    }
+
+    // Format month as two digits
+    const formattedMonth = numericMonth < 10 ? `0${numericMonth}` : `${numericMonth}`;
+
+    // Construct regex to match dates in DD-MM-YYYY format
+    const regexPattern = new RegExp(`^..-${formattedMonth}-`);
+
+    // Find payments matching vendor_id and month
+    const venderPayments = await NewVenderpayment.find({ vender_id })
+      .where('current_Date')
+      .regex(regexPattern);
+
+    if (venderPayments.length === 0) {
+      return res
+        .status(404)
+        .json({ message: `Payments not found for vendor ID ${vender_id} in month ${month}` });
+    }
+
+    res.status(200).json(venderPayments);
+  } catch (error) {
+    console.error('Error fetching payments:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
+
 
 // Get By VendorId and VehicleType 
-router.get('/vendor/:vendorId/vehicle/:vehicleType', async (req, res) => {
-  try {
-    const { vendorId, vehicleType } = req.params;
+// router.get('/vendor/:vendorId/vehicle/:vehicleType', async (req, res) => {
+//   try {
+//     const { vendorId, vehicleType } = req.params;
 
-    // Normalize vehicleType to handle case sensitivity and encoded spaces
-    const normalizedVehicleType = decodeURIComponent(vehicleType).toLowerCase();
+//     // Normalize vehicleType to handle case sensitivity and encoded spaces
+//     const normalizedVehicleType = decodeURIComponent(vehicleType).toLowerCase();
 
-    const data = await NewVenderpayment.find({
-      vender_id: vendorId,
-      vehicle_type: { $regex: new RegExp(normalizedVehicleType, 'i') } // Case insensitive regex match
-    });
+//     const data = await NewVenderpayment.find({
+//       vender_id: vendorId,
+//       vehicle_type: { $regex: new RegExp(normalizedVehicleType, 'i') } // Case insensitive regex match
+//     });
 
-    if (data.length === 0) {
-      return res.status(404).json({ message: 'No data found for the specified vendor ID and vehicle type' });
-    }
+//     if (data.length === 0) {
+//       return res.status(404).json({ message: 'No data found for the specified vendor ID and vehicle type' });
+//     }
 
-    res.status(200).json(data);
-  } catch (e) {
-    console.error('Error:', e);
-    res.status(500).json({ message: 'Internal server error', error: e.message });
-  }
-});
+//     res.status(200).json(data);
+//   } catch (e) {
+//     console.error('Error:', e);
+//     res.status(500).json({ message: 'Internal server error', error: e.message });
+//   }
+// });
 
 
-router.get("/vendor/:vendorId/date/:getByDate" , async(req, res) => {
-  try{
+// router.get("/vendor/:vendorId/date/:getByDate" , async(req, res) => {
+//   try{
 
-    const {vendorId, getByDate} = req.params
-    const data = await NewVenderpayment.find({vender_id : vendorId, current_Date : getByDate})
+//     const {vendorId, getByDate} = req.params
+//     const data = await NewVenderpayment.find({vender_id : vendorId, current_Date : getByDate})
 
-    if(data.length === 0){
-      return res.status(404).json({message : "Data not fetch by vendor id and date"})
-    }
-    res.status(201).json(data)
-  }catch(e){
-    res.status(500).json({message : "Internal server error"})
-  }
-})
+//     if(data.length === 0){
+//       return res.status(404).json({message : "Data not fetch by vendor id and date"})
+//     }
+//     res.status(201).json(data)
+//   }catch(e){
+//     res.status(500).json({message : "Internal server error"})
+//   }
+// })
 
 
 module.exports = router;
