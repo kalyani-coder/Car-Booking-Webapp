@@ -6,6 +6,7 @@ const venderRateSchema = new mongoose.Schema({
     company_Name :String,
     GST_No : String,
     vender_Name : String,
+    vendor_Id : String,
     mobile_Number : Number,
     vehicle: String,
     address: String,
