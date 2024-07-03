@@ -15,7 +15,9 @@ const ViewCorporateCustomer = () => {
   useEffect(() => {
     const fetchCustomerRates = async () => {
       try {
-        const response = await fetch("http://localhost:8787/api/corporate-customer");
+        const response = await fetch(
+          "http://localhost:8787/api/corporate-customer"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -48,9 +50,7 @@ const ViewCorporateCustomer = () => {
     const filteredData = customerRates.filter((customerRate) => {
       const vendorNameMatches =
         customerRate.Cus_name &&
-        customerRate.Cus_name
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase());
+        customerRate.Cus_name.toLowerCase().includes(searchQuery.toLowerCase());
 
       return vendorNameMatches;
     });
@@ -161,178 +161,200 @@ const ViewCorporateCustomer = () => {
             />
           </div>
 
-          {isEditing && editedItem && (
-  <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-    <div className="bg-white p-4 rounded shadow-xl w-110 overflow-y-auto max-h-[80vh]">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Edit Corporate Customer</h2>
-        <button onClick={handleCancelEdit} className="text-gray-500 hover:text-gray-700">
-          <FaTimes />
-        </button>
-      </div>
-      <div className="grid grid-cols-1 gap-4">
-        <div>
-          <h5 className="font-medium mb-1">Customer Name</h5>
-          <input
-            type="text"
-            value={editedData.Cus_name}
-            onChange={(e) =>
-              setEditedData({ ...editedData, Cus_name: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">GST No</h5>
-          <input
-            type="text"
-            value={editedData.gst_no}
-            onChange={(e) =>
-              setEditedData({ ...editedData, gst_no: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Mobile Number</h5>
-          <input
-            type="text"
-            value={editedData.Cus_Mobile}
-            onChange={(e) =>
-              setEditedData({ ...editedData, Cus_Mobile: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Type of Vehicle</h5>
-          <input
-            type="text"
-            value={editedData.type_of_vehicle}
-            onChange={(e) =>
-              setEditedData({ ...editedData, type_of_vehicle: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Duty Type</h5>
-          <input
-            type="text"
-            value={editedData.duty_type}
-            onChange={(e) =>
-              setEditedData({ ...editedData, duty_type: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Rate</h5>
-          <input
-            type="text"
-            value={editedData.rate}
-            onChange={(e) =>
-              setEditedData({ ...editedData, rate: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">KM</h5>
-          <input
-            type="number"
-            value={editedData.km}
-            onChange={(e) =>
-              setEditedData({ ...editedData, km: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Extra KM</h5>
-          <input
-            type="number"
-            value={editedData.extra_km}
-            onChange={(e) =>
-              setEditedData({ ...editedData, extra_km: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Hour</h5>
-          <input
-            type="number"
-            value={editedData.hours}
-            onChange={(e) =>
-              setEditedData({ ...editedData, hours: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Extra Hour</h5>
-          <input
-            type="number"
-            value={editedData.extra_hours}
-            onChange={(e) =>
-              setEditedData({ ...editedData, extra_hours: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">From</h5>
-          <input
-            type="text"
-            value={editedData.from}
-            onChange={(e) =>
-              setEditedData({ ...editedData, from: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">To</h5>
-          <input
-            type="text"
-            value={editedData.to}
-            onChange={(e) =>
-              setEditedData({ ...editedData, to: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div>
-          <h5 className="font-medium mb-1">Date</h5>
-          <input
-            type="date"
-            value={editedData.date}
-            onChange={(e) =>
-              setEditedData({ ...editedData, date: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-        </div>
-      </div>
-      <div className="flex justify-end mt-4">
-        <button
-          onClick={() => handleSave(editedData)}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Save
-        </button>
-        <button
-          onClick={handleCancelEdit}
-          className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+          {isEditing && editedData && (
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded shadow-xl w-110 overflow-y-auto max-h-[80vh]">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-bold">
+                    Edit Corporate Customer
+                  </h2>
+                  <button
+                    onClick={handleCancelEdit}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <h5 className="font-medium mb-1">Customer Name</h5>
+                    <input
+                      type="text"
+                      value={editedData.Cus_name}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          Cus_name: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">GST No</h5>
+                    <input
+                      type="text"
+                      value={editedData.gst_no}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, gst_no: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Mobile Number</h5>
+                    <input
+                      type="text"
+                      value={editedData.Cus_Mobile}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          Cus_Mobile: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Type of Vehicle</h5>
+                    <input
+                      type="text"
+                      value={editedData.type_of_vehicle}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          type_of_vehicle: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Duty Type</h5>
+                    <input
+                      type="text"
+                      value={editedData.duty_type}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          duty_type: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Rate</h5>
+                    <input
+                      type="text"
+                      value={editedData.rate}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, rate: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">KM</h5>
+                    <input
+                      type="number"
+                      value={editedData.km}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, km: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Extra KM</h5>
+                    <input
+                      type="number"
+                      value={editedData.extra_km}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          extra_km: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Hour</h5>
+                    <input
+                      type="number"
+                      value={editedData.hours}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, hours: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Extra Hour</h5>
+                    <input
+                      type="number"
+                      value={editedData.extra_hours}
+                      onChange={(e) =>
+                        setEditedData({
+                          ...editedData,
+                          extra_hours: e.target.value,
+                        })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">From</h5>
+                    <input
+                      type="text"
+                      value={editedData.from}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, from: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">To</h5>
+                    <input
+                      type="text"
+                      value={editedData.to}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, to: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Date</h5>
+                    <input
+                      type="date"
+                      value={editedData.date}
+                      onChange={(e) =>
+                        setEditedData({ ...editedData, date: e.target.value })
+                      }
+                      className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end mt-4">
+                  <button
+                    onClick={() => handleSave(editedData)}
+                    className="px-4 py-2 bg-blue-500 text-white rounded"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={handleCancelEdit}
+                    className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="table-view">
             {filteredCustomerRates.length === 0 ? (
@@ -343,7 +365,7 @@ const ViewCorporateCustomer = () => {
                   <tr>
                     <th>Sr No.</th>
                     <th>Customer Name</th>
-                    <th>type_of_vehicle</th>
+                    <th>Type Of vehicle</th>
                     <th>Duty Type</th>
                     <th>Rate</th>
                     <th>From</th>

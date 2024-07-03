@@ -45,55 +45,45 @@ function VendorInvoiceMonthly() {
   const [venderTripDetails, setvenderTripDetails] = useState([]);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendorList, setVendorList] = useState([]);
+  const [selectedVendorId, setSelectedVendorId] = useState("");
 
   useEffect(() => {
-    const fetchVendors = async () => {
-      try {
-        const response = await fetch("http://localhost:8787/api/vender-rate");
-        if (response.ok) {
-          const data = await response.json();
-          setVendors(data);
-        } else {
-          console.error("Failed to fetch vendors");
-        }
-      } catch (error) {
-        console.error("API request error:", error);
-      }
-    };
     fetchVendors();
   }, []);
 
+  const fetchVendors = async () => {
+    try {
+      const response = await fetch("http://localhost:8787/api/vender-payment");
+      if (!response.ok) {
+        throw new Error("Failed to fetch vendors");
+      }
+      const data = await response.json();
+
+      // Filter to get unique vendors by _id
+      const uniqueVendors = [];
+      const vendorMap = new Map();
+      data.forEach(vendor => {
+        if (!vendorMap.has(vendor.vender_id)) {
+          vendorMap.set(vendor.vender_id, true);
+          uniqueVendors.push(vendor);
+        }
+      });
+
+      setVendors(uniqueVendors);
+    } catch (error) {
+      console.error("Error fetching vendors:", error.message);
+    }
+  };
+
+
   const handleChange = async (e) => {
+    setSelectedVendorId(e.target.value);
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
-    if (name === "vendorId") {
-      const selectedVendor = vendors.find(
-        (vendor) => vendor.vender_Name === value
-      );
-      setSelectedVendor(selectedVendor);
-
-      if (selectedVendor) {
-        try {
-          const response = await axios.get(
-            `http://localhost:8787/api/vender-payment/vender/${selectedVendor.vender_id}`
-          );
-          if (response.status === 200) {
-            setFormData((prevData) => ({
-              ...prevData,
-              venderTripDetails: response.data,
-            }));
-          } else {
-            console.error("Failed to fetch vendor data");
-          }
-        } catch (error) {
-          console.error("API request error:", error);
-        }
-      }
-    }
   };
 
   // Define a function to format the date
@@ -316,27 +306,26 @@ function VendorInvoiceMonthly() {
 
         <div className="form-vendor-invoice">
           <div className="form-row">
-            <div className="form-group col-6">
-              <label htmlFor="vendorId" className="form-label">
-                Vendor Name:
-              </label>
-
-              <select
-                className="form-control-cust-inq-input"
-                name="vendorId"
-                value={formData.vendorId}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select Vendor
-                </option>
-                {vendors.map((vendor) => (
-                  <option key={vendor._id} value={vendor.vender_Name}>
-                    {vendor.vender_Name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="form-group">
+      <label htmlFor="vender_Name" className="form-label">
+        Vendor Name:
+        <span className="required-asterisk">*</span>
+      </label>
+      <select
+        className="update-duty-form-control"
+        name="vender_Name"
+        id="vender_Name"
+        value={selectedVendorId}
+        onChange={handleChange}
+      >
+        <option value="">Select Vendor</option>
+        {vendors.map((vendor) => (
+          <option key={vendor._id} value={vendor.vender_id}>
+            {vendor.vender_Name}
+          </option>
+        ))}
+      </select>
+    </div>
             <div className="form-group col-6">
               <label htmlFor="invoiceDate" className="form-label">
                 Invoice Date:
