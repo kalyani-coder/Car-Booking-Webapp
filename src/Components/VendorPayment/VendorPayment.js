@@ -50,7 +50,18 @@ function VendorPayment() {
         throw new Error("Failed to fetch vendors");
       }
       const data = await response.json();
-      setVendors(data);
+
+      // Filter to get unique vendors by _id
+      const uniqueVendors = [];
+      const vendorMap = new Map();
+      data.forEach(vendor => {
+        if (!vendorMap.has(vendor.vender_id)) {
+          vendorMap.set(vendor.vender_id, true); // set any value to Map
+          uniqueVendors.push(vendor);
+        }
+      });
+
+      setVendors(uniqueVendors);
     } catch (error) {
       console.error("Error fetching vendors:", error.message);
     }
@@ -260,24 +271,20 @@ function VendorPayment() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
-      // Log the from, to, and date fields to the console
-      console.log("From:", formData.from);
-      console.log("To:", formData.to);
-      console.log("Date:", formData.date);
-
+     
       // Create a new object excluding the from, to, and date fields
       const postData = {
-        vender_id: formData.vender_id,
-        company_Name: formData.company_Name,
-        GST_No: formData.GST_No,
-        vender_Name: formData.vender_Name,
-        mobile_Number: formData.mobile_Number,
-        address: formData.address,
-        vehicle_type: formData.vehicle,
+        vender_id: selectedVendorId,
+        company_Name: selectedVehicle.company_Name,
+        GST_No: selectedVehicle.GST_No,
+        vender_Name: selectedVehicle.vender_Name,
+        mobile_Number: selectedVehicle.mobile_Number,
+        address: selectedVehicle.address,
+        vehicle_type: selectedVehicle.vehicle,
         vehicle_number: formData.vehicle_no,
-        title: formData.title,
+        title: selectedVehicle.title,
         rate: formData.rate,
         hour: formData.hour,
         km: formData.km,
@@ -317,6 +324,59 @@ function VendorPayment() {
     }
   };
 
+  const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+
+  const fetchVehicleTypes = async (vendorId) => {
+    console.log("Selected Vendor ID:", vendorId);
+    try {
+      const response = await fetch(`http://localhost:8787/api/vender-rate/venderid/${vendorId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch vehicle types");
+      }
+      const data = await response.json();
+      setVehicleTypes(data);
+    } catch (error) {
+      console.error("Error fetching vehicle types:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedVendorId) {
+      fetchVehicleTypes(selectedVendorId);
+    }
+  }, [selectedVendorId]);
+
+  const handleVehicleChange = (event) => {
+    const selectedVehicle = vehicleTypes.find(vehicle => vehicle.vehicle === event.target.value);
+    if (selectedVehicle) {
+      const total_km = parseFloat(selectedVehicle.km || 0) + parseFloat(selectedVehicle.extra_km || 0);
+      const total_hour = parseFloat(selectedVehicle.hour || 0) + parseFloat(selectedVehicle.extra_hour || 0);
+      // const total_amount = rate * total_km + total_hour_Amt;
+      const total_hour_Amt = total_hour * 100;
+      const total_amount = parseFloat(selectedVehicle.rate || 0) * parseFloat(selectedVehicle.total_km || 0) + parseFloat(total_hour_Amt)
+       const tds = total_amount * 0.01;
+       const paid_amount = parseFloat(total_amount || 0) + parseFloat(tds || 0);
+
+      setSelectedVehicle(selectedVehicle);
+      setFormData((prevData) => ({
+        ...prevData,
+        km: selectedVehicle.km || '',
+        extra_km: selectedVehicle.extra_km || '',
+        GST_No: selectedVehicle.GST_No || '',
+        total_km,
+        hour : selectedVehicle.hour || '' ,
+        extra_hour : selectedVehicle.extra_hour || '' ,
+        total_hour,
+        tds : tds,
+        rate :  selectedVehicle.rate || '' ,
+        total_amount ,
+        paid_amount,
+
+      }));
+    }
+  };
+
   return (
     <>
       <Sidebar />
@@ -342,8 +402,9 @@ function VendorPayment() {
                   <form onSubmit={handleSubmit}>
                     <div className="row grid-gap-5">
                       <div className="col-md">
+
                         <div className="form-group">
-                          <label htmlFor="vender_Name" class="form-label">
+                          <label htmlFor="vender_Name" className="form-label">
                             Vendor Name:
                             <span className="required-asterisk">*</span>
                           </label>
@@ -356,16 +417,44 @@ function VendorPayment() {
                           >
                             <option value="">Select Vendor</option>
                             {vendors.map((vendor) => (
-                              <option key={vendor._id} value={vendor._id}>
+                              <option key={vendor._id} value={vendor.vender_id}>
                                 {vendor.vender_Name}
                               </option>
                             ))}
                           </select>
                         </div>
                       </div>
+
+
+
+
+                      <div className="form-group">
+                        <label htmlFor="vehicletype" className="form-label">
+                          Vehicle Type:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <select
+                          className="update-duty-form-control"
+                          name="vehicletype"
+                          id="vehicletype"
+                          onChange={handleVehicleChange}
+                        >
+                          <option value="">Select Vehicle Type</option>
+                          {vehicleTypes.map((vehicle, index) => (
+                            <option key={index} value={vehicle.vehicle}>
+                              {vehicle.vehicle}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+
+
+
+
                       <div className="col-md">
                         <div className="form-group">
-                          <label htmlFor="GST_No" class="form-label">
+                          <label htmlFor="GST_No" className="form-label">
                             GST No:
                             <span className="required-asterisk">*</span>
                           </label>
@@ -375,7 +464,7 @@ function VendorPayment() {
                             id="GST_No"
                             name="GST_No"
                             placeholder="Enter GST No"
-                            value={formData.GST_No}
+                            value={selectedVehicle ? selectedVehicle.GST_No : ''}
                             onChange={handleChange}
                           />
                         </div>
@@ -396,7 +485,7 @@ function VendorPayment() {
                             id="company_Name"
                             name="company_Name"
                             placeholder="Enter Company Name"
-                            value={formData.company_Name}
+                            value={selectedVehicle ? selectedVehicle.company_Name : ''}
                             onChange={handleChange}
                           />
                         </div>
@@ -413,7 +502,7 @@ function VendorPayment() {
                             id="mobile_Number"
                             name="mobile_Number"
                             placeholder="Enter Mobile Number"
-                            value={formData.mobile_Number}
+                            value={selectedVehicle ? selectedVehicle.mobile_Number : ''}
                             onChange={handleChange}
                           />
                         </div>
@@ -432,8 +521,8 @@ function VendorPayment() {
                             className="update-duty-form-control mb-2"
                             name="vehicle"
                             id="vehicle"
+                            value={selectedVehicle ? selectedVehicle.vehicle : ''}
                             onChange={handleChange}
-                            value={formData.vehicle}
                           >
                             <option value="">Vehicle</option>
                             <option value="Sedan Car">Sedan Car</option>
@@ -499,6 +588,7 @@ function VendorPayment() {
                         </div>
                       </div>
                     </div>
+
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="d-flex gap-3">
@@ -512,7 +602,7 @@ function VendorPayment() {
                                 className="rate-form-control-payment"
                                 name="title"
                                 id="title"
-                                value={formData.title}
+                                value={selectedVehicle ? selectedVehicle.title : ''}
                                 onChange={handleChange}
                               >
                                 <option value="">Duty Type</option>
@@ -543,7 +633,7 @@ function VendorPayment() {
                                 id="rate"
                                 name="rate"
                                 placeholder="rate"
-                                value={formData.rate}
+                                value={selectedVehicle ? selectedVehicle.rate : ''}
                                 onChange={handleChange}
                                 required
                               />
@@ -563,11 +653,13 @@ function VendorPayment() {
                             id="address"
                             name="address"
                             placeholder="Enter address"
-                            value={formData.address}
+                            value={selectedVehicle ? selectedVehicle.address : ''}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
                     </div>
+
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="d-flex gap-3">
@@ -583,7 +675,7 @@ function VendorPayment() {
                                 id="from"
                                 name="from"
                                 placeholder="from"
-                                value={formData.from}
+                                value={selectedVehicle ? selectedVehicle.from : ''}
                                 onChange={handleChange}
                               />
                             </div>
@@ -600,7 +692,7 @@ function VendorPayment() {
                                 id="to"
                                 name="to"
                                 placeholder="to"
-                                value={formData.to}
+                                value={selectedVehicle ? selectedVehicle.to : ''}
                                 onChange={handleChange}
                               />
                             </div>
@@ -623,6 +715,7 @@ function VendorPayment() {
                         </div>
                       </div>
                     </div>
+
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="d-flex gap-3">
@@ -656,7 +749,7 @@ function VendorPayment() {
                                 id="extra_km"
                                 name="extra_km"
                                 placeholder="extrakm"
-                                value={formData.extra_km}
+                                value={selectedVehicle ? selectedVehicle.extra_km : ''}
                                 onChange={handleChange}
                                 required
                               />
@@ -698,7 +791,7 @@ function VendorPayment() {
                                 id="hour"
                                 name="hour"
                                 placeholder="hour"
-                                value={formData.hour}
+                                value={selectedVehicle ? selectedVehicle.hour : ''}
                                 onChange={handleChange}
                                 required
                               />
@@ -719,7 +812,7 @@ function VendorPayment() {
                                 id="extra_hour"
                                 name="extra_hour"
                                 placeholder="Extra Hour"
-                                value={formData.extra_hour}
+                                value={selectedVehicle ? selectedVehicle.extra_hour : ''}
                                 onChange={handleChange}
                                 required
                               />

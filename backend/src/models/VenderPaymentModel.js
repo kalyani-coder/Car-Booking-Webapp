@@ -50,7 +50,6 @@ const VenderPaymentSchema = new mongoose.Schema({
   paid_amount: Number,
   remaining_Amount: Number,
   payment_Method: String,
-  // Add a field for storing the current date
   current_Date: {
     type: String,
     default: () => formatDateToDDMMYYYY(new Date()),
