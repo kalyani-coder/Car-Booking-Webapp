@@ -6,6 +6,7 @@ import Alert from "../AddCustomer/Alert";
 
 const VendorRate = () => {
   const initialFormData = {
+    vender_id:"",
     company_Name: "",
     GST_No: "",
     vender_Name: "",
@@ -46,6 +47,7 @@ const VendorRate = () => {
     setSelectedVendor(selectedVendor);
     if (selectedVendor) {
       setFormData({
+        vender_id: selectedVendor._id,
         company_Name: selectedVendor.company_Name,
         GST_No: selectedVendor.GST_No,
         vender_Name: selectedVendor.vender_Name,
@@ -86,20 +88,6 @@ const VendorRate = () => {
     }
   };
 
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      }, 5000);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -109,11 +97,14 @@ const VendorRate = () => {
         return;
       }
     }
+
   
     if (mobilenoError) {
       window.alert(mobilenoError);
       return;
     }
+
+   
 
     try {
       const response = await fetch(
@@ -134,7 +125,7 @@ const VendorRate = () => {
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
 

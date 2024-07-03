@@ -40,10 +40,11 @@ function VendorInvoiceMonthly() {
     venderTripDetails: [],
   });
 
-  const [vendors, setVendors] = useState([]); // State to store fetched vendors
-  const [selectedVendor, setSelectedVendor] = useState(null);
+  const [vendors, setVendors] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [venderTripDetails, setvenderTripDetails] = useState([]);
+  const [selectedVendor, setSelectedVendor] = useState(null);
+  const [vendorList, setVendorList] = useState([]);
 
   useEffect(() => {
     const fetchVendors = async () => {
@@ -181,7 +182,7 @@ function VendorInvoiceMonthly() {
 
       // Separator Line
       doc.setDrawColor(0, 0, 255);
-      doc.line(10, 45, 200, 45); 
+      doc.line(10, 45, 200, 45);
 
       // Invoice To Section
       doc.text("INVOICE TO:", 10, 55);
@@ -198,35 +199,53 @@ function VendorInvoiceMonthly() {
         doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
       });
 
-      doc.line(10, 90, 200, 90);
+      doc.line(10, 80, 200, 80);
 
-      // Trip Details Table
-      const tripDetails = venderTripDetails.map((trip) => [
+      const marginLeft = 10;
+      const marginTop = 90;
+
+      // Prepare trip details data including summary
+      const tripDetails = formData.venderTripDetails.map((trip) => [
         trip.Description,
-        trip.vehicle_type,
         trip.kms,
-        trip.total_hour,
-        trip.extra_km,
-        trip.extra_hour,
         trip.amount,
+        trip.totalAmount,
         trip.tds,
       ]);
 
-      const marginLeft = 10;
-      const marginTop = 130;
+      // Add summary rows to tripDetails array
+      tripDetails.push([
+        { content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } },
+        '',
+        '',
+        `Rs. ${subtotal.toLocaleString()}`,
+        '', // Assuming sgstTotal and cgstTotal are not defined in your provided context
+      ]);
+      tripDetails.push([
+        { content: 'TDS (1%)', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } },
+        '',
+        '',
+        `Rs. ${tds.toFixed(2).toLocaleString()}`,
+        '',
+      ]);
+      tripDetails.push([
+        { content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } },
+        '',
+        '',
+        `Rs. ${finalAmount.toFixed(2).toLocaleString()}`,
+        '',
+      ]);
+      
 
       doc.autoTable({
         startY: marginTop,
         head: [
           [
-            "Description",
-            "Vehicle Type",
-            "Kms",
-            "Total Hour",
-            "Extra KM",
-            "Extra Hour",
-            "Amount",
-            "TDS",
+            { content: "DESCRIPTION", },
+            { content: "Kms", },
+            { content: "Amount", },
+            { content: "Total",  },
+            { content: "TDS", },
           ],
         ],
         body: tripDetails,
@@ -234,29 +253,11 @@ function VendorInvoiceMonthly() {
         margin: { left: marginLeft },
       });
 
-      // Summary Table (Subtotal, TDS, Total Amount)
-      const summaryData = [
-        { label: "Subtotal", value: subtotal },
-        { label: "TDS (1%)", value: tds },
-        { label: "Total Amount", value: finalAmount },
-      ];
-
-      doc.autoTable({
-        startY: doc.autoTable.previous.finalY + 10,
-        head: [["Label", "Value"]],
-        body: summaryData.map((row) => [row.label, row.value]),
-        theme: "plain",
-        margin: { left: marginLeft },
-      });
-
       // Bank Details
       doc.setFontSize(10);
       doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 17);
       doc.text(
-        `Bank Name: ${formData.bankname}`,
-        10,
-        doc.autoTable.previous.finalY + 24
-      );
+        `Bank Name: ${formData.bankname}`, 10, doc.autoTable.previous.finalY + 24);
       doc.text(
         `Branch Name: ${formData.branchname}`,
         10,
@@ -287,7 +288,7 @@ function VendorInvoiceMonthly() {
       doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
 
       // Save the PDF
-      doc.save(`Invoice_${formData.vender_Name}.pdf`);
+      doc.save(`Invoice_${selectedVendor.vender_Name}.pdf`);
     }
   };
 
@@ -319,6 +320,7 @@ function VendorInvoiceMonthly() {
               <label htmlFor="vendorId" className="form-label">
                 Vendor Name:
               </label>
+
               <select
                 className="form-control-cust-inq-input"
                 name="vendorId"
@@ -366,23 +368,14 @@ function VendorInvoiceMonthly() {
                   </tr>
                 </thead>
                 <tbody>
-                  {venderTripDetails.map((trip) => (
-                    <tr key={trip._id}>
-                      <td>
-                        {`${trip.vehicle_type} from ${trip.from} - ${trip.to} on ${trip.formattedDate}`}
-                      </td>
-                      <td>{trip.saccode}</td>
-                      <td>
-                        {trip.total_km}
-                        <br />
-                        {trip.total_hour}
-                        <br />
-                        {trip.extra_km}
-                        <br />
-                        {trip.extra_hour}
-                      </td>
+                  {formData.venderTripDetails.map((trip, index) => (
+                    <tr key={index}>
+                      <td>{trip.Description}</td>
+                      <td>{trip.vehicle_type}</td> {/* Add this line */}
+                      <td>{trip.SAC_Code}</td>
+                      <td>{trip.kms}</td>
+                      <td>{trip.amount}</td>
                       <td>{trip.total_amount}</td>
-                      <td>{trip.rate}</td>
                       <td>{trip.tds}</td>
                     </tr>
                   ))}
@@ -428,7 +421,6 @@ function VendorInvoiceMonthly() {
               </table>
             </div>
           )}
-
           <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
