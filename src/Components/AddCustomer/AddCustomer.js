@@ -16,10 +16,9 @@ const AddCustomer = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState(""); // State for mobile number validation error
-  const [emailError, setEmailError] = useState(""); // State for email validation error
-  const [gstnoError, setGstnoError] = useState(""); // State for GST number validation error
-  const [successAlert, setSuccessAlert] = useState(null);
+  const [mobilenoError, setMobilenoError] = useState(""); 
+  const [emailError, setEmailError] = useState(""); 
+  const [gstnoError, setGstnoError] = useState(""); 
   const [errorAlert, setErrorAlert] = useState(null);
 
   const [selectCusType, setSelectCusType] = useState('');
@@ -133,30 +132,13 @@ const AddCustomer = () => {
         alert("Data added successfully!", "success");
         setFormData(initialFormData); // Clear the form fields
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.", "danger");
     }
   };
-
-  // Function to show alerts
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      });
-    }
-  };
-
-
 
   return (
     <>
@@ -165,9 +147,6 @@ const AddCustomer = () => {
         <div className="addcustomer-main-container">
           <div className="customer-form-container">
             <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center">Add Customer</h2>
-
-            {successAlert && <Alert alert={successAlert} />}
-            {errorAlert && <Alert alert={errorAlert} />}
 
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
