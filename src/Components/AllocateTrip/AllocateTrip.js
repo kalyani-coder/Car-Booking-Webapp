@@ -120,62 +120,47 @@ function AllocateTrip() {
 
 
 
-  const handleShareClick = async () => {
-    try {
-      // Fetch trip details first
-      await fetchTripDetails(selectedCustomer.customerId);
+  // const handleShareClick = async () => {
+  //   try {
+  //     await fetchTripDetails(selectedCustomer.customerId);
+  //     console.log('Pickup Location:', tripDetails.pickup);
+  //     console.log('Pickup Date:', tripDetails.date);
+  //     console.log('Time:', tripDetails.time);
+  //     console.log('Drop-off Location:', tripDetails.dropoff);
+  //     console.log("customer Mobile number: ", tripDetails.mobileno);
+  //     console.log('Drop-off Date:', tripDetails.date1);
+  //     console.log('Drop-off Time:', tripDetails.time1);
+  //     console.log('Type Of Vehicle:', tripDetails.vehicle);
+  //     console.log('Trip Type:', tripDetails.triptype);
+  //     console.log('Sub Type:', tripDetails.subtype);
+  //     console.log('Driver Name:', tripDetails.drivername);
+  //     console.log('Mail:', tripDetails.mail);
+  //     console.log('Mobile No:', tripDetails.drivermobileno);
+  //     console.log('Driver Address:', tripDetails.address);
+  //     console.log('Vehicle Number:', tripDetails.vehicleno);
+  //     const textMessage = `hello ${tripDetails.customername} your booking is done your booking id is 
+  //          ${tripDetails._id} your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickup} and your drop location is ${tripDetails.dropoff} 
+  //          your driver details are driver name: ${tripDetails.drivername} and his mobile number: ${tripDetails.drivermobileno}`;
 
-      // Log the data from text input fields
-      console.log('Pickup Location:', tripDetails.pickup);
-      console.log('Pickup Date:', tripDetails.date);
-      console.log('Time:', tripDetails.time);
-      console.log('Drop-off Location:', tripDetails.dropoff);
-      console.log("customer Mobile number: ", tripDetails.mobileno);
-      console.log('Drop-off Date:', tripDetails.date1);
-      console.log('Drop-off Time:', tripDetails.time1);
-      console.log('Type Of Vehicle:', tripDetails.vehicle);
-      console.log('Trip Type:', tripDetails.triptype);
-      console.log('Sub Type:', tripDetails.subtype);
-      console.log('Driver Name:', tripDetails.drivername);
-      console.log('Mail:', tripDetails.mail);
-      console.log('Mobile No:', tripDetails.drivermobileno);
-      console.log('Driver Address:', tripDetails.address);
-      console.log('Vehicle Number:', tripDetails.vehicleno);
-      const textMessage = `hello ${tripDetails.customername} your booking is done your booking id is 
-           ${tripDetails._id} your trip type is ${tripDetails.triptype} and your pickup location is ${tripDetails.pickup} and your drop location is ${tripDetails.dropoff} 
-           your driver details are driver name: ${tripDetails.drivername} and his mobile number: ${tripDetails.drivermobileno}`;
+  //     console.log(textMessage)
 
-      console.log(textMessage)
+  //     const Url = "http://api.paysmm.co.in/wapp/api/send";
+  //     const mobileNumber = tripDetails.mobileno;
 
-      const Url = "http://api.paysmm.co.in/wapp/api/send";
-      const mobileNumber = tripDetails.mobileno;
+  //     const url = `${Url}?apikey=${apiKey}&mobile=${mobileNumber}&msg=${textMessage}`;
 
-      const url = `${Url}?apikey=${apiKey}&mobile=${mobileNumber}&msg=${textMessage}`;
+  //     // // Open the URL in a new browser window
+  //     window.open(url, "_blank");
 
-      // // Open the URL in a new browser window
-      window.open(url, "_blank");
+  //     // // Log the request details if needed
+  //     console.log("Opening link:", url);
+  //   } catch (error) {
+  //     console.error('Error fetching trip details:', error);
+  //     alert('Failed to share trip details. Please try again.');
+  //   }
+  // };
 
-      // // Log the request details if needed
-      console.log("Opening link:", url);
-    } catch (error) {
-      console.error('Error fetching trip details:', error);
-      alert('Failed to share trip details. Please try again.');
-    }
-  };
-
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      },);
-    }
-  };
+  
 
   const handleAllocateTrip = () => {
     // Construct payload object
@@ -184,8 +169,7 @@ function AllocateTrip() {
       customername: selectedCustomer?.customername,
       customermobile: tripDetails.mobileno,
       pickuplocation: tripDetails.pickup,
-      dropofflocation: tripDetails.dropoff, // Assuming customer mobile is available
-      // Add other fields from tripDetails
+      dropofflocation: tripDetails.dropoff,
       ...tripDetails,
     };
 
@@ -193,13 +177,13 @@ function AllocateTrip() {
     axios.post('http://localhost:8787/api/trip-details', payload)
       .then(response => {
         // Handle success
-        showAlert("Allocate Trip added successfully!", "success");
+        alert("Allocate Trip added successfully!", "success");
         console.log('Trip allocated successfully:', response.data);
         // Optionally, you can reset form fields or show a success message
       })
       .catch(error => {
         // Handle error
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.", "danger");
         // Optionally, show an error message to the user
       });
   };
@@ -210,10 +194,6 @@ function AllocateTrip() {
 
       <div className="trip-details-container">
         <h2 style={{ fontSize: "2rem", fontWeight: "bold"}} className='relative left-[22rem] mt-2 mb-2'>Allocate Trip Details</h2>
-
-        {successAlert && <Alert alert={successAlert} />}
-        {errorAlert && <Alert alert={errorAlert} />}
-    
         <div className='d-flex gap-3'  style={{borderTop: "3px dashed black"}}>
           <div className="trip-details-section mt-4">
             {error && <p className="text-red-500">{error}</p>}
@@ -444,9 +424,9 @@ function AllocateTrip() {
           <button className="custom-btn custom-allocate-btn" onClick={handleAllocateTrip}>
             Allocate
           </button>
-          <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
+          {/* <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
-          </button>
+          </button> */}
         </div>
       </div>
 

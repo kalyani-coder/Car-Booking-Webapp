@@ -172,26 +172,20 @@ function VendorInvoiceMonthly() {
   const handleGenerate = () => {
     // Calculate total values and TDS
     let totalKm = 0;
-    let totalHour = 0;
-    let extraKm = 0;
-    let extraHour = 0;
     let totalAmount = 0;
-
-    formData.venderTripDetails.forEach((trip) => {
-      totalKm += trip.kms;
-      totalHour += trip.total_hour;
-      extraKm += trip.extra_km;
-      extraHour += trip.extra_hour;
-      totalAmount += trip.amount;
+    let totalTds = 0;
+  
+    selectedVendorTrips.forEach((trip) => {
+      totalKm += trip.km;
+      totalAmount += trip.total_amount;
+      totalTds += trip.tds;
     });
-
+  
     const subtotal = totalAmount;
-    const tds = subtotal * 0.01;
+    const tds = totalTds;
     const finalAmount = subtotal - tds;
-
-    const downloadConfirmed = window.confirm(
-      "Do you want to download the invoice?"
-    );
+  
+    const downloadConfirmed = window.confirm("Do you want to download the invoice?");
     if (downloadConfirmed) {
       const doc = new jsPDF({
         unit: "mm",
@@ -200,37 +194,37 @@ function VendorInvoiceMonthly() {
         orientation: "portrait",
         height: 800, // Increase the height as needed
       });
-
+  
       // Header Background
       doc.setFillColor(60, 181, 205);
       doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, "F");
-
+  
       // Header Logo
       const img = new Image();
       img.src = headerlogo;
       doc.addImage(img, "JPEG", 5, 10, 45, 32);
-
+  
       // Header Company Information
       doc.setFontSize(11);
       doc.text(formData.companyName, 65, 15);
       doc.text(formData.companyAddress, 65, 20);
       doc.text(formData.contactno, 65, 25);
       doc.text(formData.mail, 65, 30);
-
+  
       // Invoice Information
       const currentDate = new Date();
       const formattedDate = currentDate.toLocaleDateString();
-
+  
       doc.setFontSize(11);
       doc.text(`Invoice Date: ${formattedDate}`, 65, 35);
-
+  
       // Separator Line
       doc.setDrawColor(0, 0, 255);
       doc.line(10, 45, 200, 45);
-
+  
       // Invoice To Section
       doc.text("INVOICE TO:", 10, 55);
-
+  
       // Vendor Information
       const vendorRows = [
         { label: "Vendor Name", value: selectedVendorId.vender_Name, yPos: 62 },
@@ -238,99 +232,74 @@ function VendorInvoiceMonthly() {
         { label: "Vendor GST No", value: selectedVendorId.GST_No, yPos: 72 },
         { label: "Contact No", value: selectedVendorId.mobile_Number, yPos: 77 },
       ];
-
+  
       vendorRows.forEach((row) => {
         doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
       });
-
+  
       doc.line(10, 80, 200, 80);
-
+  
       const marginLeft = 10;
       const marginTop = 90;
-
+  
       // Prepare trip details data including summary
-      const tripDetails = formData.venderTripDetails.map((trip) => [
-        trip.Description,
-        trip.kms,
-        trip.amount,
-        trip.totalAmount,
+      const tripDetails = selectedVendorTrips.map((trip) => [
+        trip.title,
+        trip.vehicle_type,
+        trip.km,
+        trip.rate,
+        trip.total_amount,
         trip.tds,
       ]);
-
+  
       // Add summary rows to tripDetails array
       tripDetails.push([
-        { content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } },
-        '',
-        '',
-        `Rs. ${subtotal.toLocaleString()}`,
-        '', // Assuming sgstTotal and cgstTotal are not defined in your provided context
+        { content: "Subtotal:", styles: { halign: "right" } },
+        "",
+        "",
+        "",
+        subtotal.toFixed(2),
+        totalTds.toFixed(2),
       ]);
       tripDetails.push([
-        { content: 'TDS (1%)', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } },
-        '',
-        '',
-        `Rs. ${tds.toFixed(2).toLocaleString()}`,
-        '',
+        { content: "Grand Total:", styles: { halign: "right" } },
+        "",
+        "",
+        "",
+        finalAmount.toFixed(2),
+        totalTds.toFixed(2),
       ]);
-      tripDetails.push([
-        { content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } },
-        '',
-        '',
-        `Rs. ${finalAmount.toFixed(2).toLocaleString()}`,
-        '',
-      ]);
-
-
+  
       doc.autoTable({
         startY: marginTop,
         head: [
           [
-            { content: "DESCRIPTION", },
-            { content: "Kms", },
-            { content: "Amount", },
-            { content: "Total", },
-            { content: "TDS", },
+            "DESCRIPTION",
+            "SAC Code",
+            "Kms",
+            "AMOUNT",
+            "TOTAL",
+            "TDS",
           ],
         ],
         body: tripDetails,
         theme: "grid",
         margin: { left: marginLeft },
       });
-
+  
       // Bank Details
       doc.setFontSize(10);
       doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 17);
-      doc.text(
-        `Bank Name: ${formData.bankname}`, 10, doc.autoTable.previous.finalY + 24);
-      doc.text(
-        `Branch Name: ${formData.branchname}`,
-        10,
-        doc.autoTable.previous.finalY + 31
-      );
-      doc.text(
-        `Account Number: ${formData.accountNumber}`,
-        10,
-        doc.autoTable.previous.finalY + 38
-      );
-      doc.text(
-        `IFSC Code: ${formData.ifsccode}`,
-        10,
-        doc.autoTable.previous.finalY + 45
-      );
-      doc.text(
-        `MICR Code: ${formData.micrcode}`,
-        10,
-        doc.autoTable.previous.finalY + 52
-      );
-
+      doc.text(`Bank Name: ${formData.bankname}`, 10, doc.autoTable.previous.finalY + 24);
+      doc.text(`Branch Name: ${formData.branchname}`, 10, doc.autoTable.previous.finalY + 31);
+      doc.text(`Account Number: ${formData.accountNumber}`, 10, doc.autoTable.previous.finalY + 38);
+      doc.text(`IFSC Code: ${formData.ifsccode}`, 10, doc.autoTable.previous.finalY + 45);
+      doc.text(`MICR Code: ${formData.micrcode}`, 10, doc.autoTable.previous.finalY + 52);
+  
       // Authorised Signatory
-      doc.text(
-        "For Shivpushpa Travels",
-        160,
-        doc.autoTable.previous.finalY + 20
-      );
+      doc.text("For Shivpushpa Travels", 160, doc.autoTable.previous.finalY + 20);
       doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
-
+  
       // Save the PDF
       doc.save(`Invoice_${selectedVendorId.vender_Name}.pdf`);
     }
