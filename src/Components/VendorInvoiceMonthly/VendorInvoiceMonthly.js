@@ -77,7 +77,7 @@ function VendorInvoiceMonthly() {
   const handleVendorChange = async (e) => {
     const vendorId = e.target.value;
     setSelectedVendorId(vendorId);
-    setSelectedDate(""); // Reset date selection
+    setSelectedDate(""); 
 
     if (vendorId) {
       fetchVendorTrips(vendorId);
@@ -127,16 +127,31 @@ function VendorInvoiceMonthly() {
     }
   };
 
+  const fetchVendorDetails = async (vendorId) => {
+    try {
+      const response = await fetch(`http://localhost:8787/api/vender-payment`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch vendor details");
+      }
+      const data = await response.json();
+      const vendor = data.find(v => v.vender_id === vendorId);
+      if (!vendor) {
+        throw new Error("Vendor not found");
+      }
+      return {
+        vender_Name: vendor.vender_Name,
+        GST_No: vendor.GST_No,
+        address: vendor.address,
+        mobile_Number: vendor.mobile_Number
+      };
+    } catch (error) {
+      console.error("Error fetching vendor details:", error.message);
+      return null;
+    }
+  };
 
 
-  // const filterTripsByDate = (date) => {
-  //   const month = new Date(date).getMonth() + 1;
-  //   const filteredTrips = allVendorTrips.filter(trip => {
-  //     const tripMonth = new Date(trip.current_Date).getMonth() + 1;
-  //     return tripMonth === month;
-  //   });
-  //   setSelectedVendorTrips(filteredTrips);
-  // };
+  
 
 
 
@@ -169,7 +184,14 @@ function VendorInvoiceMonthly() {
   // Update formData with the new venderTripDetails containing formattedDate
   formData.venderTripDetails = updatedVenderTripDetails;
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
+    const vendorDetails = await fetchVendorDetails(selectedVendorId);
+
+    if (!vendorDetails) {
+      alert("Failed to fetch vendor details. Please try again.");
+      return;
+    }
+
     // Calculate total values and TDS
     let totalKm = 0;
     let totalAmount = 0;
@@ -227,10 +249,10 @@ function VendorInvoiceMonthly() {
   
       // Vendor Information
       const vendorRows = [
-        { label: "Vendor Name", value: selectedVendorId.vender_Name, yPos: 62 },
-        { label: "Vendor Address", value: selectedVendorId.address, yPos: 67 },
-        { label: "Vendor GST No", value: selectedVendorId.GST_No, yPos: 72 },
-        { label: "Contact No", value: selectedVendorId.mobile_Number, yPos: 77 },
+        { label: "Vendor Name", value: vendorDetails.vender_Name, yPos: 62 },
+        { label: "Vendor Address", value: vendorDetails.address, yPos: 67 },
+        { label: "Vendor GST No", value: vendorDetails.GST_No, yPos: 72 },
+        { label: "Contact No", value: vendorDetails.mobile_Number, yPos: 77 },
       ];
   
       vendorRows.forEach((row) => {
@@ -244,8 +266,8 @@ function VendorInvoiceMonthly() {
   
       // Prepare trip details data including summary
       const tripDetails = selectedVendorTrips.map((trip) => [
-        trip.title,
         trip.vehicle_type,
+        996601,
         trip.km,
         trip.rate,
         trip.total_amount,
@@ -287,8 +309,7 @@ function VendorInvoiceMonthly() {
         margin: { left: marginLeft },
       });
   
-      // Bank Details
-      doc.setFontSize(10);
+  
       doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 17);
       doc.text(`Bank Name: ${formData.bankname}`, 10, doc.autoTable.previous.finalY + 24);
       doc.text(`Branch Name: ${formData.branchname}`, 10, doc.autoTable.previous.finalY + 31);
@@ -301,9 +322,10 @@ function VendorInvoiceMonthly() {
       doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
   
       // Save the PDF
-      doc.save(`Invoice_${selectedVendorId.vender_Name}.pdf`);
+      doc.save(`Invoice_${vendorDetails.vender_Name}.pdf`);
     }
   };
+
 
   return (
     <>
