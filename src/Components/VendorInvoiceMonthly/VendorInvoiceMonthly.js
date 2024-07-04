@@ -41,11 +41,8 @@ function VendorInvoiceMonthly() {
   });
 
   const [vendors, setVendors] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [venderTripDetails, setvenderTripDetails] = useState([]);
-  const [selectedVendor, setSelectedVendor] = useState(null);
-  const [vendorList, setVendorList] = useState([]);
   const [selectedVendorId, setSelectedVendorId] = useState("");
+  const [selectedVendorTrips, setSelectedVendorTrips] = useState([]);
 
   useEffect(() => {
     fetchVendors();
@@ -59,7 +56,7 @@ function VendorInvoiceMonthly() {
       }
       const data = await response.json();
 
-      // Filter to get unique vendors by _id
+      // Filter to get unique vendors by vender_id
       const uniqueVendors = [];
       const vendorMap = new Map();
       data.forEach(vendor => {
@@ -75,15 +72,24 @@ function VendorInvoiceMonthly() {
     }
   };
 
-
   const handleChange = async (e) => {
-    setSelectedVendorId(e.target.value);
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const vendorId = e.target.value;
+    setSelectedVendorId(vendorId);
 
+    if (vendorId) {
+      try {
+        const response = await fetch(`http://localhost:8787/api/vender-payment/vender/${vendorId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch vendor details");
+        }
+        const data = await response.json();
+        setSelectedVendorTrips(data);
+      } catch (error) {
+        console.error("Error fetching vendor details:", error.message);
+      }
+    } else {
+      setSelectedVendorTrips([]);
+    }
   };
 
   // Define a function to format the date
@@ -179,10 +185,10 @@ function VendorInvoiceMonthly() {
 
       // Vendor Information
       const vendorRows = [
-        { label: "Vendor Name", value: selectedVendor.vender_Name, yPos: 62 },
-        { label: "Vendor Address", value: selectedVendor.address, yPos: 67 },
-        { label: "Vendor GST No", value: selectedVendor.GST_No, yPos: 72 },
-        { label: "Contact No", value: selectedVendor.mobile_Number, yPos: 77 },
+        { label: "Vendor Name", value: selectedVendorId.vender_Name, yPos: 62 },
+        { label: "Vendor Address", value: selectedVendorId.address, yPos: 67 },
+        { label: "Vendor GST No", value: selectedVendorId.GST_No, yPos: 72 },
+        { label: "Contact No", value: selectedVendorId.mobile_Number, yPos: 77 },
       ];
 
       vendorRows.forEach((row) => {
@@ -225,7 +231,7 @@ function VendorInvoiceMonthly() {
         `Rs. ${finalAmount.toFixed(2).toLocaleString()}`,
         '',
       ]);
-      
+
 
       doc.autoTable({
         startY: marginTop,
@@ -234,7 +240,7 @@ function VendorInvoiceMonthly() {
             { content: "DESCRIPTION", },
             { content: "Kms", },
             { content: "Amount", },
-            { content: "Total",  },
+            { content: "Total", },
             { content: "TDS", },
           ],
         ],
@@ -278,7 +284,7 @@ function VendorInvoiceMonthly() {
       doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
 
       // Save the PDF
-      doc.save(`Invoice_${selectedVendor.vender_Name}.pdf`);
+      doc.save(`Invoice_${selectedVendorId.vender_Name}.pdf`);
     }
   };
 
@@ -306,26 +312,29 @@ function VendorInvoiceMonthly() {
 
         <div className="form-vendor-invoice">
           <div className="form-row">
+
           <div className="form-group">
-      <label htmlFor="vender_Name" className="form-label">
-        Vendor Name:
-        <span className="required-asterisk">*</span>
-      </label>
-      <select
-        className="update-duty-form-control"
-        name="vender_Name"
-        id="vender_Name"
-        value={selectedVendorId}
-        onChange={handleChange}
-      >
-        <option value="">Select Vendor</option>
-        {vendors.map((vendor) => (
-          <option key={vendor._id} value={vendor.vender_id}>
-            {vendor.vender_Name}
-          </option>
-        ))}
-      </select>
-    </div>
+        <label htmlFor="vender_Name" className="form-label">
+          Vendor Name:
+          <span className="required-asterisk">*</span>
+        </label>
+        <select
+          className="update-duty-form-control"
+          name="vender_Name"
+          id="vender_Name"
+          value={selectedVendorId}
+          onChange={handleChange}
+        >
+          <option value="">Select Vendor</option>
+          {vendors.map((vendor) => (
+            <option key={vendor._id} value={vendor.vender_id}>
+              {vendor.vender_Name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+
             <div className="form-group col-6">
               <label htmlFor="invoiceDate" className="form-label">
                 Invoice Date:
@@ -342,74 +351,75 @@ function VendorInvoiceMonthly() {
         </div>
 
         <div>
-          {selectedVendor && (
-            <div>
-              <h3>Vendor Trip Details:</h3>
-              <table className="invoice-table">
-                <thead>
-                  <tr>
-                    <th>DESCRIPTION</th>
-                    <th>SAC Code</th>
-                    <th>Kms</th>
-                    <th>AMOUNT</th>
-                    <th>TOTAL</th>
-                    <th>TDS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {formData.venderTripDetails.map((trip, index) => (
-                    <tr key={index}>
-                      <td>{trip.Description}</td>
-                      <td>{trip.vehicle_type}</td> {/* Add this line */}
-                      <td>{trip.SAC_Code}</td>
-                      <td>{trip.kms}</td>
-                      <td>{trip.amount}</td>
-                      <td>{trip.total_amount}</td>
-                      <td>{trip.tds}</td>
-                    </tr>
-                  ))}
-                  <tr>
-                    <td colSpan="4" style={{ textAlign: "right" }}>
-                      Subtotal
-                    </td>
-                    <td>
-                      {formData.venderTripDetails.reduce(
-                        (total, trip) => total + trip.total_amount,
-                        0
-                      )}
-                    </td>
-                    <td>
-                      {formData.venderTripDetails.reduce(
-                        (total, trip) => total + trip.tds,
-                        0
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan="4" style={{ textAlign: "right" }}>
-                      Grand Total
-                    </td>
-                    <td>
-                      {formData.venderTripDetails.reduce(
-                        (total, trip) => total + trip.total_amount,
-                        0
-                      ) -
-                        formData.venderTripDetails.reduce(
-                          (total, trip) => total + trip.tds,
-                          0
-                        )}
-                    </td>
-                    <td>
-                      {formData.venderTripDetails.reduce(
-                        (total, trip) => total + trip.tds,
-                        0
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
+        {selectedVendorTrips.length > 0 && (
+        <div>
+          <h3>Vendor Trip Details:</h3>
+          <table className="invoice-table">
+            <thead>
+              <tr>
+                <th>DESCRIPTION</th>
+                <th>SAC Code</th>
+                <th>Kms</th>
+                <th>AMOUNT</th>
+                <th>TOTAL</th>
+                <th>TDS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedVendorTrips.map((trip, index) => (
+                <tr key={index}>
+                  <td>{trip.title}</td>
+                  <td>{trip.vehicle_type}</td>
+                  <td>{trip.km}</td>
+                  <td>{trip.rate}</td>
+                  <td>{trip.total_amount}</td>
+                  <td>{trip.tds}</td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan="4" style={{ textAlign: "right" }}>
+                  Subtotal
+                </td>
+                <td>
+                  {selectedVendorTrips.reduce(
+                    (total, trip) => total + trip.total_amount,
+                    0
+                  )}
+                </td>
+                <td>
+                  {selectedVendorTrips.reduce(
+                    (total, trip) => total + trip.tds,
+                    0
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td colSpan="4" style={{ textAlign: "right" }}>
+                  Grand Total
+                </td>
+                <td>
+                  {selectedVendorTrips.reduce(
+                    (total, trip) => total + trip.total_amount,
+                    0
+                  ) -
+                    selectedVendorTrips.reduce(
+                      (total, trip) => total + trip.tds,
+                      0
+                    )}
+                </td>
+                <td>
+                  {selectedVendorTrips.reduce(
+                    (total, trip) => total + trip.tds,
+                    0
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
+
+         
           <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>

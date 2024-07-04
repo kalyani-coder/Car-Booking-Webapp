@@ -89,11 +89,21 @@ router.delete("/:id", async (req, res) => {
     );
     res
       .status(201)
-      .json({ message: " Customer Enquiry Successfully Deleted " });
+      .json({ message: " Vendor Payment Successfully Deleted " });
   } catch (e) {
     res.status(404).json({ message: "Can not found", e });
   }
 });
+
+// Route to delete all vendor payments
+// router.delete("/", async (req, res) => {
+//   try {
+//     await NewVenderpayment.deleteMany({});
+//     res.status(201).json({ message: "All Vendor Payments Successfully Deleted" });
+//   } catch (e) {
+//     res.status(500).json({ message: "Failed to delete all vendor payments", e });
+//   }
+// });
 
 // GET BY VENDOR ID
 
