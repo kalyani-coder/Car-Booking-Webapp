@@ -49,6 +49,7 @@ import MasterCorporateCustomer from "./Components/Master/MasterCorporateCustomer
 import CorporateInvoiceMonthly from "./Components/CustomerInvoice/CorporateInvoiceMonthly";
 import ViewMaster from "./Components/Master/ViewMaster";
 import ViewCorporateCustomer from "./Components/AddRate/ViewCorporateCustomer";
+import ViewIndivisualCustomer from "./Components/AddRate/ViewIndivisualCustomer";
 
 
 function App() {
@@ -137,6 +138,7 @@ function App() {
           <Route path="/corporatecustomermonthly" element={<CorporateInvoiceMonthly />} />
           <Route path="/viewmaster" element={<ViewMaster />} />
           <Route path="/viewcorporatecustomer" element={<ViewCorporateCustomer />} />
+          <Route path="/viewindivisualcustomer" element={<ViewIndivisualCustomer />} />
         </Routes>
       </Router>
     </>

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-import "./ViewCustomerRate.css";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const ViewCorporateCustomer = () => {
+const ViewIndivisualCustomer = () => {
   const [customerRates, setCustomerRates] = useState([]);
   const [filteredCustomerRates, setFilteredCustomerRates] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -18,7 +16,7 @@ const ViewCorporateCustomer = () => {
     const fetchCustomerRates = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8787/api/corporate-customer"
+          "http://localhost:8787/api/indivisual-customer"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -76,7 +74,7 @@ const ViewCorporateCustomer = () => {
   const handleSave = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8787/api/corporate-customer/${editedItem._id}`,
+        `http://localhost:8787/api/indivisual-customer/${editedItem._id}`,
         {
           method: "PATCH",
           headers: {
@@ -96,7 +94,7 @@ const ViewCorporateCustomer = () => {
 
         // Remove the edited item from localStorage
         localStorage.removeItem("editedItem");
-        alert("Corporate Cutomer rate updated successfully");
+        alert("Indivisual Cutomer rate updated successfully");
       } else {
         console.error("Error updating vendor rate:", response.status);
         alert("Error updating vendor rate. Please try again.");
@@ -118,12 +116,12 @@ const ViewCorporateCustomer = () => {
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete this Corporate Customer rate?"
+      "Are you sure you want to delete this Indivisual Customer rate?"
     );
     if (!confirmed) return;
     try {
       const response = await fetch(
-        `http://localhost:8787/api/corporate-customer/${id}`,
+        `http://localhost:8787/api/indivisual-customer/${id}`,
         {
           method: "DELETE",
         }
@@ -147,7 +145,7 @@ const ViewCorporateCustomer = () => {
   };
 
   const ViewIndivisualCustomer = () => {
-    return <div>Indivisual Customer View</div>;
+    return <div>Individual Customer View</div>;
   };
 
   return (
@@ -162,14 +160,14 @@ const ViewCorporateCustomer = () => {
               marginBottom: "8px",
             }}
           >
-            View Corporate Customer Rate
+            View Indivisual Customer Rate
           </h2>
 
           <div className="flex items-center space-x-4">
             <div className="flex-grow-0 flex-shrink-0 w-10/12 search-bar">
               <input
                 type="text"
-                placeholder="Search by Corporate Customer Name"
+                placeholder="Search by Indivisual  Customer Name"
                 className="w-full p-2 rounded border"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -178,10 +176,10 @@ const ViewCorporateCustomer = () => {
             <div className="flex-grow-0 flex-shrink-0 w-2/12">
               <button className="btn btn-primary w-full">
                 <Link
-                  to="/viewindivisualcustomer"
+                  to="/viewcorporatecustomer"
                   className="text-white text-decoration-none"
                 >
-                   Indivisual Customer
+                 Corporate Customer
                 </Link>
               </button>
             </div>
@@ -192,7 +190,7 @@ const ViewCorporateCustomer = () => {
               <div className="bg-white p-4 rounded shadow-lg w-full max-w-2xl overflow-y-auto max-h-[80vh]">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-2xl font-bold">
-                    Edit Corporate Customer
+                    Edit Indivisual Customer
                   </h2>
                   <button
                     onClick={handleCancelEdit}
@@ -410,4 +408,4 @@ const ViewCorporateCustomer = () => {
   );
 };
 
-export default ViewCorporateCustomer;
+export default ViewIndivisualCustomer;
