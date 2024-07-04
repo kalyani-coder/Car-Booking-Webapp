@@ -34,7 +34,7 @@ function AddPayment() {
     extramkm_Amount: 0,
     extrakm_CGST: "",
     extrakm_SGST: "",
-    ratePerHour: 0, // Initial value for rate per hour
+    ratePerHour: 0, 
     extra_Hours: 0,
     extrahours_CGST: "",
     extrahours_SGST: "",

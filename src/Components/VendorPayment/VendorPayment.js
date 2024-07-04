@@ -463,6 +463,22 @@ function VendorPayment() {
                           />
                         </div>
                       </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="vehicleno" class="form-label">
+                            Vehicle No:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <input
+                            type="string"
+                            className="update-duty-form-control"
+                            name="vehicle_no"
+                            placeholder="Vehicle Number"
+                            onChange={handleChange}
+                            value={formData.vehicle_no}
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     <div className="row grid-gap-5">
@@ -504,13 +520,12 @@ function VendorPayment() {
                     </div>
 
                     <div className="row grid-gap-5">
-                      <div className="col-md">
+                      {/* <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="vehicle" class="form-label">
                             Type Of Vehicle:
                             <span className="required-asterisk">*</span>
                           </label>
-                          {/* <input type="text" className="form-control" placeholder="Vehicle" /> */}
                           <select
                             className="update-duty-form-control mb-2"
                             name="vehicle"
@@ -563,24 +578,9 @@ function VendorPayment() {
                             </option>
                           </select>
                         </div>
-                      </div>
+                      </div> */}
 
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="vehicleno" class="form-label">
-                            Vehicle No:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="string"
-                            className="update-duty-form-control"
-                            name="vehicle_no"
-                            placeholder="Vehicle Number"
-                            onChange={handleChange}
-                            value={formData.vehicle_no}
-                          />
-                        </div>
-                      </div>
+                     
                     </div>
 
                     <div className="row grid-gap-5">
