@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 function VendorInvoiceMonthly() {
+
   const [formData, setFormData] = useState({
     vendorId: "",
     vender_Name: "",
@@ -43,6 +44,7 @@ function VendorInvoiceMonthly() {
   const [vendors, setVendors] = useState([]);
   const [selectedVendorId, setSelectedVendorId] = useState("");
   const [selectedVendorTrips, setSelectedVendorTrips] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     fetchVendors();
@@ -59,7 +61,7 @@ function VendorInvoiceMonthly() {
       // Filter to get unique vendors by vender_id
       const uniqueVendors = [];
       const vendorMap = new Map();
-      data.forEach(vendor => {
+      data.forEach((vendor) => {
         if (!vendorMap.has(vendor.vender_id)) {
           vendorMap.set(vendor.vender_id, true);
           uniqueVendors.push(vendor);
@@ -72,25 +74,71 @@ function VendorInvoiceMonthly() {
     }
   };
 
-  const handleChange = async (e) => {
+  const handleVendorChange = async (e) => {
     const vendorId = e.target.value;
     setSelectedVendorId(vendorId);
+    setSelectedDate(""); // Reset date selection
 
     if (vendorId) {
-      try {
-        const response = await fetch(`http://localhost:8787/api/vender-payment/vender/${vendorId}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch vendor details");
-        }
-        const data = await response.json();
-        setSelectedVendorTrips(data);
-      } catch (error) {
-        console.error("Error fetching vendor details:", error.message);
-      }
-    } else {
-      setSelectedVendorTrips([]);
+      fetchVendorTrips(vendorId);
     }
   };
+
+  const handleDateChange = async (e) => {
+    const date = e.target.value;
+    setSelectedDate(date);
+
+    if (date && selectedVendorId) {
+      const selectedDateObj = new Date(date);
+      const month = (selectedDateObj.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }); // Extract and format month with leading zero
+      fetchVendorTripsByMonth(selectedVendorId, month);
+    }
+  };
+
+
+  const fetchVendorTrips = async (vendorId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8787/api/vender-payment/vender/${vendorId}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch vendor details");
+      }
+      const data = await response.json();
+      setSelectedVendorTrips(data);
+    } catch (error) {
+      console.error("Error fetching vendor details:", error.message);
+    }
+  };
+
+  const fetchVendorTripsByMonth = async (vendorId, month) => {
+    try {
+
+      const response = await fetch(
+        `http://localhost:8787/api/vender-payment/vender/${vendorId}/month/${month}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch vendor details for the selected month");
+      }
+      const data = await response.json();
+      setSelectedVendorTrips(data);
+    } catch (error) {
+      console.error("Error fetching vendor details for the selected month:", error.message);
+    }
+  };
+
+
+
+  // const filterTripsByDate = (date) => {
+  //   const month = new Date(date).getMonth() + 1;
+  //   const filteredTrips = allVendorTrips.filter(trip => {
+  //     const tripMonth = new Date(trip.current_Date).getMonth() + 1;
+  //     return tripMonth === month;
+  //   });
+  //   setSelectedVendorTrips(filteredTrips);
+  // };
+
+
 
   // Define a function to format the date
   function formatDate(dateString) {
@@ -313,113 +361,120 @@ function VendorInvoiceMonthly() {
         <div className="form-vendor-invoice">
           <div className="form-row">
 
-          <div className="form-group">
-        <label htmlFor="vender_Name" className="form-label">
-          Vendor Name:
-          <span className="required-asterisk">*</span>
-        </label>
-        <select
-          className="update-duty-form-control"
-          name="vender_Name"
-          id="vender_Name"
-          value={selectedVendorId}
-          onChange={handleChange}
-        >
-          <option value="">Select Vendor</option>
-          {vendors.map((vendor) => (
-            <option key={vendor._id} value={vendor.vender_id}>
-              {vendor.vender_Name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-
-            <div className="form-group col-6">
-              <label htmlFor="invoiceDate" className="form-label">
-                Invoice Date:
+            <div className="form-group">
+              <label htmlFor="vender_Name" className="form-label">
+                Vendor Name:
+                <span className="required-asterisk">*</span>
               </label>
-              <input
-                type="date"
-                className="form-control-cust-inq-input"
-                name="invoiceDate"
-                value={formData.invoiceDate}
-                onChange={handleChange}
-              />
+              <select
+                className="update-duty-form-control"
+                name="vender_Name"
+                id="vender_Name"
+                value={selectedVendorId}
+                onChange={handleVendorChange}
+              >
+                <option value="">Select Vendor</option>
+                {vendors.map((vendor) => (
+                  <option key={vendor._id} value={vendor.vender_id}>
+                    {vendor.vender_Name}
+                  </option>
+                ))}
+              </select>
             </div>
+
+            {selectedVendorId && (
+              <div className="form-group col-6">
+                <label htmlFor="invoiceDate" className="form-label">
+                  Invoice Date:
+                </label>
+                <input
+                  type="date"
+                  className="form-control-cust-inq-input"
+                  name="invoiceDate"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                />
+              </div>
+            )}
           </div>
         </div>
 
         <div>
-        {selectedVendorTrips.length > 0 && (
-        <div>
-          <h3>Vendor Trip Details:</h3>
-          <table className="invoice-table">
-            <thead>
-              <tr>
-                <th>DESCRIPTION</th>
-                <th>SAC Code</th>
-                <th>Kms</th>
-                <th>AMOUNT</th>
-                <th>TOTAL</th>
-                <th>TDS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedVendorTrips.map((trip, index) => (
-                <tr key={index}>
-                  <td>{trip.title}</td>
-                  <td>{trip.vehicle_type}</td>
-                  <td>{trip.km}</td>
-                  <td>{trip.rate}</td>
-                  <td>{trip.total_amount}</td>
-                  <td>{trip.tds}</td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="4" style={{ textAlign: "right" }}>
-                  Subtotal
-                </td>
-                <td>
-                  {selectedVendorTrips.reduce(
-                    (total, trip) => total + trip.total_amount,
-                    0
-                  )}
-                </td>
-                <td>
-                  {selectedVendorTrips.reduce(
-                    (total, trip) => total + trip.tds,
-                    0
-                  )}
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="4" style={{ textAlign: "right" }}>
-                  Grand Total
-                </td>
-                <td>
-                  {selectedVendorTrips.reduce(
-                    (total, trip) => total + trip.total_amount,
-                    0
-                  ) -
-                    selectedVendorTrips.reduce(
-                      (total, trip) => total + trip.tds,
-                      0
-                    )}
-                </td>
-                <td>
-                  {selectedVendorTrips.reduce(
-                    (total, trip) => total + trip.tds,
-                    0
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
 
-         
+          {selectedVendorTrips.length > 0 ? (
+            <div>
+              <h3>Vendor Trip Details:</h3>
+              <table className="invoice-table">
+                <thead>
+                  <tr>
+                    <th>DESCRIPTION</th>
+                    <th>SAC Code</th>
+                    <th>Kms</th>
+                    <th>AMOUNT</th>
+                    <th>TOTAL</th>
+                    <th>TDS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedVendorTrips.map((trip, index) => (
+                    <tr key={index}>
+                      <td>{trip.vehicle_type}</td>
+                      <td>209</td>
+                      <td>{trip.km}</td>
+                      <td>{trip.rate}</td>
+                      <td>{trip.total_amount}</td>
+                      <td>{trip.tds}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "right" }}>
+                      Subtotal
+                    </td>
+                    <td>
+                      {selectedVendorTrips.reduce(
+                        (total, trip) => total + trip.total_amount,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {selectedVendorTrips.reduce(
+                        (total, trip) => total + trip.tds,
+                        0
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "right" }}>
+                      Grand Total
+                    </td>
+                    <td>
+                      {selectedVendorTrips.reduce(
+                        (total, trip) => total + trip.total_amount,
+                        0
+                      ) -
+                        selectedVendorTrips.reduce(
+                          (total, trip) => total + trip.tds,
+                          0
+                        )}
+                    </td>
+                    <td>
+                      {selectedVendorTrips.reduce(
+                        (total, trip) => total + trip.tds,
+                        0
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            selectedVendorId && (
+              <p>
+                No data available for the selected vendor{" "}
+                {selectedDate && `and date ${selectedDate}.`}
+              </p>
+            )
+          )}
           <button className="btn btn-danger mt-2" onClick={handleGenerate}>
             Generate
           </button>
