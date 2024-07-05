@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
-
+import "./MasterCorporateCustomer.css";
 const initialFormData = {
   add_vehicle: "",
   add_duty_type: "",
@@ -15,8 +15,6 @@ const MasterCorporateCustomer = () => {
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
 
-
-
   const showAlert = (message, type) => {
     if (type === "success") {
       setSuccessAlert({ msg: message, type: type });
@@ -27,7 +25,7 @@ const MasterCorporateCustomer = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      });
     }
   };
   const handleSubmit = async (e) => {
@@ -65,19 +63,17 @@ const MasterCorporateCustomer = () => {
     }
   };
 
-
   return (
     <>
-      <Sidebar />
       <div className="rate-Add-container pt-4">
         <div className="rate-main-container h-[98vh]">
           <div className="rate-form-container">
-            <h2 className="text-center"
+            <h2
+              className="text-center"
               style={{
                 fontSize: "2rem",
                 fontWeight: "bold",
                 marginBottom: "1rem",
-                
               }}
             >
               Master
@@ -104,50 +100,45 @@ const MasterCorporateCustomer = () => {
                   value={formData.add_vehicle}
                 />
               </div>
-              <div className="d-flex gap-3">
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="add_duty_type" className="form-label">
-                      Add Duty Type:
-                    </label>
-                    <input
-                      className="rate-form-control"
-                      type="text"
-                      id="add_duty_type"
-                      name="add_duty_type"
-                      placeholder="Add Duty Type"
-                      value={formData.add_duty_type}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          add_duty_type: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
+              <div className="add-duty-type-and-add-rate-inputs">
+                <div className="w-full">
+                  <label htmlFor="add_duty_type" className="form-label">
+                    Add Duty Type:
+                  </label>
+                  <input
+                    className="rate-form-control"
+                    type="text"
+                    id="add_duty_type"
+                    name="add_duty_type"
+                    placeholder="Add Duty Type"
+                    value={formData.add_duty_type}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        add_duty_type: e.target.value,
+                      })
+                    }
+                  />
                 </div>
-                <div>
-                  <div className="form-group">
-                    <label htmlFor="add_rate" className="form-label">
-                      Add Rate:
-                      <span className="required-asterisk">*</span>
-                    </label>
-                    <input
-                      className="rate-form-control"
-                      type="number"
-                      id="add_rate"
-                      name="add_rate"
-                      placeholder="Add Rate"
-                      value={formData.add_rate}
-                      onChange={(e) =>
-                        setFormData({ ...formData, add_rate: e.target.value })
-                      }
-                    />
-                  </div>
+
+                <div className="w-full">
+                  <label htmlFor="add_rate" className="form-label">
+                    Add Rate:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    className="rate-form-control"
+                    type="number"
+                    id="add_rate"
+                    name="add_rate"
+                    placeholder="Add Rate"
+                    value={formData.add_rate}
+                    onChange={(e) =>
+                      setFormData({ ...formData, add_rate: e.target.value })
+                    }
+                  />
                 </div>
               </div>
-
-
 
               <button type="submit" className="rate-btn-submit">
                 Save

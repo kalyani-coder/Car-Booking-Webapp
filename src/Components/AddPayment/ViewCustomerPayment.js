@@ -4,9 +4,8 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { FaFilePdf } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import headerlogo from "../../assects/images/shivpushpa_logo.png"
-import Customer from './../CustomerEnquiry/Customer';
-
+import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import Customer from "./../CustomerEnquiry/Customer";
 
 const ViewCustomerPayment = () => {
   const [customers, setcustomers] = useState([]);
@@ -32,12 +31,11 @@ const ViewCustomerPayment = () => {
   }, []);
 
   // Define a global variable to track the invoice number
-let invoiceCounter = 100;
+  let invoiceCounter = 100;
   const handleGenerateInvoice = (customerId) => {
     const downloadConfirmed = window.confirm(
       "Do you want to download the invoice?"
     );
-
 
     // Fetch customer data for the specified customer ID
     const customer = customers.find((customer) => customer._id === customerId);
@@ -53,120 +51,215 @@ let invoiceCounter = 100;
           height: 800,
         });
 
-      
+        doc.setFillColor(60, 181, 205);
+        doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, "F");
 
-    doc.setFillColor(60,181,205);
-    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, 'F');
+        // image
+        const img = new Image();
+        img.src = headerlogo;
+        doc.addImage(img, "JPEG", 5, 10, 45, 32);
 
+        doc.setFillColor(211, 211, 211);
 
-    // image 
-    const img = new Image();
-    img.src = headerlogo;
-    doc.addImage(img, 'JPEG', 5, 10, 45, 32); 
+        doc.setFontSize(11);
+        doc.text("Shivpushpa Travels", 65, 15);
+        doc.text("332, Kasba Peth Phadke Haud Chowk", 65, 20);
+        doc.text("Pune 411 0111", 65, 25);
+        doc.text("9325501950 / 9325501978", 65, 30);
+        doc.text("travelshivpushpa@gmail.com", 65, 35);
 
+        const currentDate = new Date();
 
-    doc.setFillColor(211, 211, 211);
+        const formattedDate = currentDate.toLocaleDateString();
+        invoiceCounter++;
+        const invoiceNo = invoiceCounter.toString().padStart(3, "0");
 
-    doc.setFontSize(11);
-    doc.text('Shivpushpa Travels', 65, 15);
-    doc.text('332, Kasba Peth Phadke Haud Chowk', 65, 20);
-    doc.text('Pune 411 0111', 65, 25);
-    doc.text('9325501950 / 9325501978', 65, 30);
-    doc.text('travelshivpushpa@gmail.com', 65, 35);
+        doc.setFontSize(11);
+        doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
+        doc.text(`Invoice Date : ${formattedDate}`, 150, 20);
 
-    
-    const currentDate = new Date();
+        doc.setDrawColor(0, 0, 255);
+        doc.line(10, 45, 200, 45);
 
-    const formattedDate = currentDate.toLocaleDateString(); 
-    invoiceCounter++;
-  const invoiceNo = invoiceCounter.toString().padStart(3, '0');
+        doc.text("INVOICE TO:", 10, 55);
 
-    doc.setFontSize(11);
-    doc.text(`Invoice No: ${invoiceNo}`, 150, 15);
-    doc.text(`Invoice Date : ${formattedDate}`, 150, 20);
-   
+        const rows = [
+          { label: "Customer Name", value: customer.cus_name, yPos: 62 },
+          { label: "Mobile No", value: customer.mobile_no, yPos: 67 },
+          { label: "GST No", value: customer.GST_No, yPos: 72 },
+          { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 77 },
+          { label: "Vehicle Number", value: customer.vehicle_Number, yPos: 82 },
+        ];
 
-    doc.setDrawColor(0, 0, 255); 
-    doc.line(10, 45, 200, 45); 
+        // Add the rows to the PDF
+        rows.forEach((row) => {
+          doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
+        });
+        doc.line(10, 90, 200, 90);
 
-    doc.text('INVOICE TO:', 10, 55); 
-    
-   
+        const numberToWords = require("number-to-words");
 
-    const rows = [
-      { label: "Customer Name", value: customer.cus_name, yPos: 62 },
-      { label: "Mobile No", value: customer.mobile_no, yPos: 67 },
-      { label: "GST No", value: customer.GST_No, yPos: 72 },
-      { label: "Vehicle Type", value: customer.vehicle_Type, yPos: 77 },
-      { label: "Vehicle Number", value: customer.vehicle_Number, yPos: 82 }
-    ];
-    
-    // Add the rows to the PDF
-    rows.forEach(row => {
-      doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
-    });
-    doc.line(10, 90, 200, 90);
+        // Convert total amount to words
+        const totalAmountInWords = numberToWords.toWords(customer.total_Amount);
 
-    const numberToWords = require('number-to-words');
+        // Function to capitalize the first letter of each word
+        function capitalizeFirstLetter(str) {
+          return str.toLowerCase().replace(/(?:^|\s)\S/g, function (a) {
+            return a.toUpperCase();
+          });
+        }
 
-// Convert total amount to words
-const totalAmountInWords = numberToWords.toWords(customer.total_Amount);
+        // Capitalize the totalAmountInWords
+        const capitalizedTotalAmountInWords =
+          capitalizeFirstLetter(totalAmountInWords);
 
-// Function to capitalize the first letter of each word
-function capitalizeFirstLetter(str) {
-  return str.toLowerCase().replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-}
+        const customerDetails = [
+          [
+            "Description",
+            "SAC Code",
+            "kms",
+            "AMOUNT",
+            "TOTAL",
+            "CGST 2.5%",
+            "SGST 2.5%",
+          ],
+          [
+            `${customer.vehicle_Type} - ${customer.from} - ${customer.to} on ${customer.Date}`,
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+          ],
+          ["Total KM", "", customer.total_Km, "", "", "", ""],
+          ["Total Hr", "", customer.total_hours, "", "", "", ""],
+          [
+            `${customer.vehicle_Type} for @8hr 80km`,
+            "",
+            "80",
+            customer.title_Amount,
+            customer.title_Amount,
+            customer.CGST,
+            customer.SGST,
+          ],
+          [
+            "Extra KM",
+            "",
+            customer.extra_Km,
+            customer.extramkm_Amount,
+            customer.extramkm_Amount,
+            customer.extrakm_CGST,
+            customer.extrakm_SGST,
+          ],
+          [
+            "Extra Hr",
+            "",
+            customer.extra_Hours,
+            customer.extrahours_Amount,
+            customer.extrahours_Amount,
+            customer.extrahours_CGST,
+            customer.extrahours_SGST,
+          ],
+          [
+            "Toll Parking",
+            "",
+            `Rs. ${customer.toll}`,
+            `Rs. ${customer.toll}`,
+            `Rs. ${customer.toll}`,
+            "",
+            "",
+            "",
+          ],
+          [
+            {
+              content: "Sub Total:",
+              styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] },
+            },
+            "",
+            "",
+            "",
+            `Rs. ${customer.subtotal_Amount.toLocaleString()}`,
+            "",
+            "",
+          ],
+          [
+            {
+              content: "Total Amount:",
+              styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] },
+            },
+            "",
+            "",
+            "",
+            `Rs. ${customer.total_Amount.toLocaleString()}`,
+            "",
+            "",
+          ],
+        ];
 
-// Capitalize the totalAmountInWords
-const capitalizedTotalAmountInWords = capitalizeFirstLetter(totalAmountInWords);
+        // Add a new row below the "Total Amount" row
+        customerDetails.push([
+          {
+            content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`,
+            styles: { textColor: [0, 0, 0] },
+          },
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+        ]);
 
-const customerDetails = [
-  ['Description', 'SAC Code', 'kms', 'AMOUNT', 'TOTAL', 'CGST 2.5%', 'SGST 2.5%'],
-  [`${customer.vehicle_Type} - ${customer.from} - ${customer.to} on ${customer.Date}`, '', '', '', '', '', ''],
-  ['Total KM', '', customer.total_Km, '', '', '', ''],
-  ['Total Hr', '', customer.total_hours, '', '', '', ''],
-  [`${customer.vehicle_Type} for @8hr 80km`, '', '80', customer.title_Amount, customer.title_Amount, customer.CGST, customer.SGST],
-  ['Extra KM', '', customer.extra_Km, customer.extramkm_Amount, customer.extramkm_Amount, customer.extrakm_CGST, customer.extrakm_SGST],
-  ['Extra Hr', '', customer.extra_Hours, customer.extrahours_Amount, customer.extrahours_Amount, customer.extrahours_CGST, customer.extrahours_SGST],
-  ['Toll Parking', '',`Rs. ${customer.toll}`, `Rs. ${customer.toll}`, `Rs. ${customer.toll}`, '', '', ''],
-  [{ content: 'Sub Total:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.subtotal_Amount.toLocaleString()}`, '', ''],
-  [{ content: 'Total Amount:', styles: { fillColor: [169, 169, 169], textColor: [0, 0, 0] } }, '', '', '', `Rs. ${customer.total_Amount.toLocaleString()}`, '', '']
-];
-    
-// Add a new row below the "Total Amount" row
-customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWords}`, styles: { textColor: [0, 0, 0] } }, '', '', '', '', '', '', ]);
+        const marginLeft = 10;
+        const marginTop = 110;
 
-  const marginLeft = 10;
-  const marginTop = 110;
+        doc.autoTable({
+          startY: marginTop,
+          body: customerDetails,
+          theme: "grid",
+          margin: { left: marginLeft },
+        });
 
-  doc.autoTable({
-    startY: marginTop,
-    body: customerDetails,
-    theme: 'grid',
-    margin: { left: marginLeft }
-});
-         
-      // Bank Details section on the left side
-      doc.setFontSize(10);
-      doc.text('Bank Details:', 10, doc.autoTable.previous.finalY + 17);
-      doc.text('Bank Name: The Cosmos Co-operative Bank Ltd', 10, doc.autoTable.previous.finalY + 24);
-      doc.text('Branch Name: Kasba Raviwar Branch, Pune 411 002', 10, doc.autoTable.previous.finalY + 31);
-      doc.text('Account Number: 015204301220061', 10, doc.autoTable.previous.finalY + 38);
-      doc.text('IFSC Code: COSB0000015', 10, doc.autoTable.previous.finalY + 45);
-      doc.text('MICR Code: 411164014', 10, doc.autoTable.previous.finalY + 52);
-      // Additional details on the right side
-      doc.text(
-        "For Shivpushpa Travels",
-        160,
-        doc.autoTable.previous.finalY + 20
-      );
-      doc.text(
-        "Authorised Signatory",
-        160,
-        doc.autoTable.previous.finalY + 30
-      );
-
-       
+        // Bank Details section on the left side
+        doc.setFontSize(10);
+        doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 17);
+        doc.text(
+          "Bank Name: The Cosmos Co-operative Bank Ltd",
+          10,
+          doc.autoTable.previous.finalY + 24
+        );
+        doc.text(
+          "Branch Name: Kasba Raviwar Branch, Pune 411 002",
+          10,
+          doc.autoTable.previous.finalY + 31
+        );
+        doc.text(
+          "Account Number: 015204301220061",
+          10,
+          doc.autoTable.previous.finalY + 38
+        );
+        doc.text(
+          "IFSC Code: COSB0000015",
+          10,
+          doc.autoTable.previous.finalY + 45
+        );
+        doc.text(
+          "MICR Code: 411164014",
+          10,
+          doc.autoTable.previous.finalY + 52
+        );
+        // Additional details on the right side
+        doc.text(
+          "For Shivpushpa Travels",
+          160,
+          doc.autoTable.previous.finalY + 20
+        );
+        doc.text(
+          "Authorised Signatory",
+          160,
+          doc.autoTable.previous.finalY + 30
+        );
 
         // Save the PDF or open in a new tab
         doc.save(`Invoice_${customer._id}.pdf`);
@@ -187,7 +280,6 @@ customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWo
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
           <h1 className="text-2xl font-semibold mb-4">View Customer Payment</h1>
@@ -211,9 +303,9 @@ customerDetails.push([{ content: `Total Amount: Rs. ${capitalizedTotalAmountInWo
               </tr>
             </thead>
             <tbody>
-                {filteredCustomers.map((customer,index) => (
+              {filteredCustomers.map((customer, index) => (
                 <tr key={customer._id}>
-                <td>{index + 1}</td>
+                  <td>{index + 1}</td>
                   <td>{customer.cus_name}</td>
                   {/* <td>{customer.company_Name}</td> */}
                   <td>{customer.GST_No}</td>

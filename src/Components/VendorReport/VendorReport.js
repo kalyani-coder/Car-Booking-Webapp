@@ -28,7 +28,6 @@ function VendorReport() {
       .catch((error) => console.error("Error fetching vendors:", error));
   };
 
-
   const handleFilterByVendorName = (event) => {
     setFilterByVendorName(event.target.value);
   };
@@ -65,14 +64,14 @@ function VendorReport() {
     const vendorName = vendor.vender_Name
       ? vendor.vender_Name.toLowerCase()
       : "";
-    const paymentStatus = filterByPayment === "Partial"
-      ? vendor.payment === "Partial"
-      : filterByPayment === "Partial"
-      ? vendor.payment === "Full Payment"
-      : true;
+    const paymentStatus =
+      filterByPayment === "Partial"
+        ? vendor.payment === "Partial"
+        : filterByPayment === "Partial"
+        ? vendor.payment === "Full Payment"
+        : true;
     return (
-      vendorName.includes(filterByVendorName.toLowerCase()) &&
-      paymentStatus
+      vendorName.includes(filterByVendorName.toLowerCase()) && paymentStatus
     );
   });
 
@@ -85,15 +84,15 @@ function VendorReport() {
     const vendorData = filteredVendors.map((vendor, index) => ({
       "Sr. No.": index + 1,
       "Vendor Name": vendor.vender_Name,
-      "GSTIN": vendor.GST_No,
+      GSTIN: vendor.GST_No,
       "Mobile No.": vendor.mobile_Number,
       "Company Name": vendor.company_Name,
-      "Amount": vendor.total_Amount,
-      "TDS": vendor.tds,
+      Amount: vendor.total_Amount,
+      TDS: vendor.tds,
       "Total Amt": vendor.amount,
       // "Paid Amount": vendor.paid_Amount,
       // "Remaining Amount": vendor.remaining_Amount,
-      "Payment": vendor.payment,
+      Payment: vendor.payment,
       "Payment Method": vendor.payment_Method,
     }));
 
@@ -123,15 +122,16 @@ function VendorReport() {
 
   return (
     <>
-      <Sidebar />
       <div className="container-vendor-invoice">
-        <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="ml-[30%] mt-[1rem]">
+        <h2
+          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
+          className="ml-[30%] mt-[1rem]"
+        >
           Vendor Report
         </h2>
 
         <div className="grid-container">
           <div className="filters">
-           
             <div className="filter-input">
               <input
                 type="text"
@@ -149,7 +149,10 @@ function VendorReport() {
               </select>
             </div>
             <div className="filter-dropdown">
-              <select value={selectedVehicle} onChange={(e) => handleFieldChange("vehicle", e.target.value)}>
+              <select
+                value={selectedVehicle}
+                onChange={(e) => handleFieldChange("vehicle", e.target.value)}
+              >
                 <option value="">Vehicle</option>
                 <option value="Sedan Car">Sedan Car</option>
                 <option value="Mini Car">Mini Car</option>
@@ -161,22 +164,36 @@ function VendorReport() {
                 <option value="Ac Bus 35-Seater">AC Bus 35-Seater</option>
                 <option value="Ac Bus 40-Seater">AC Bus 40-Seater</option>
                 <option value="Ac Bus 45-Seater">AC Bus 45-Seater</option>
-                <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-                <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-                <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-                <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-                <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-                <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+                <option value="Non-AC Bus 17-Seater">
+                  Non-AC Bus 17 Seater
+                </option>
+                <option value="Non-AC Bus 20-Seater">
+                  Non-AC Bus 20 Seater
+                </option>
+                <option value="Non-AC Bus 32-Seater">
+                  Non-AC Bus 32 Seater
+                </option>
+                <option value="Non-AC Bus 40-Seater">
+                  Non-AC Bus 40 Seater
+                </option>
+                <option value="Non-AC Bus 45-Seater">
+                  Non-AC Bus 45 Seater
+                </option>
+                <option value="Non-AC Bus 49-Seater">
+                  Non-AC Bus 49 Seater
+                </option>
               </select>
               {selectedVehicle && (
                 <div className="trip-counts">
-                  <span className="mb-3"><strong>Vehicle Type: {selectedVehicle}:</strong> </span>
+                  <span className="mb-3">
+                    <strong>Vehicle Type: {selectedVehicle}:</strong>{" "}
+                  </span>
                   <span>{tripCounts[selectedVehicle] || 0}</span>
                 </div>
               )}
             </div>
           </div>
-         
+
           <div className="export-button">
             <button className="rate-btn-submit" onClick={downloadExcel}>
               Export to Excel
@@ -196,7 +213,7 @@ function VendorReport() {
               <th>Vehicle Type</th>
               <th>Amount</th>
               <th>TDS</th>
-              <th>Payables  Amount</th>
+              <th>Payables Amount</th>
               {/* <th>Paid Amount</th>
               <th>Remaining Amount</th> */}
               <th>Payment</th>

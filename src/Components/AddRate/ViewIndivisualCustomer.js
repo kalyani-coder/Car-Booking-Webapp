@@ -150,7 +150,6 @@ const ViewIndivisualCustomer = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container h-[98vh]">
           <h2
@@ -179,7 +178,7 @@ const ViewIndivisualCustomer = () => {
                   to="/viewcorporatecustomer"
                   className="text-white text-decoration-none"
                 >
-                 Corporate Customer
+                  Corporate Customer
                 </Link>
               </button>
             </div>

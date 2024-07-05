@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./CustomerEnquiry.css";
 import Sidebar from "../Sidebar/Sidebar";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 import Alert from "../AddCustomer/Alert";
-import axios from 'axios';
+import axios from "axios";
 
 const CustomerEnquiry = () => {
   const initialFormData = {
@@ -108,10 +108,9 @@ const CustomerEnquiry = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      });
     }
   };
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -137,11 +136,15 @@ const CustomerEnquiry = () => {
 
     try {
       console.log("Sending API request with data:", apiData);
-      const response = await axios.post("http://localhost:8787/api/customer-enquiry", apiData, {
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        "http://localhost:8787/api/customer-enquiry",
+        apiData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (response.status === 200 || response.status === 201) {
         const responseData = response.data;
@@ -200,10 +203,10 @@ const CustomerEnquiry = () => {
         newData = {
           ...newData,
           totalDays: Math.floor(totalHours / 24).toString(),
-          totalHours: (totalHours + (totalMinutes / 60)).toFixed(2),
-          totalMinutes: totalMinutes.toFixed(2).split('.')[1].padStart(2, '0'),
+          totalHours: (totalHours + totalMinutes / 60).toFixed(2),
+          totalMinutes: totalMinutes.toFixed(2).split(".")[1].padStart(2, "0"),
           // Optional: totalHoursWithMinutes can be kept for consistency with the first version
-          totalHoursWithMinutes: (totalHours + (totalMinutes / 60)).toFixed(2),
+          totalHoursWithMinutes: (totalHours + totalMinutes / 60).toFixed(2),
         };
       }
     }
@@ -218,11 +221,18 @@ const CustomerEnquiry = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-inquiry-container">
         <div className="main-container relative left-[6rem] mt-4">
           <div className="form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "2rem" }}>Add Customer Enquiry</h2>
+            <h2
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "2rem",
+              }}
+            >
+              Add Customer Enquiry
+            </h2>
 
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
@@ -332,8 +342,12 @@ const CustomerEnquiry = () => {
                 <option value="">Sub Type</option>
                 <option value="Local Trip">Local Trip</option>
                 <option value="Outstation Trip">Outstation Trip</option>
-                <option value="Outstation Local Trip">Outstation Local Trip</option>
-                <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
+                <option value="Outstation Local Trip">
+                  Outstation Local Trip
+                </option>
+                <option value="Outstation Outstation Trip">
+                  Outstation Outstation Trip
+                </option>
               </select>
             </div>
             <div className="d-flex gap-3">
@@ -356,8 +370,7 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="date1" className="form-label">
-                    Date :
-                    <span className="required-asterisk">*</span>
+                    Date :<span className="required-asterisk">*</span>
                   </label>
 
                   <input
@@ -372,13 +385,11 @@ const CustomerEnquiry = () => {
                   <p>Formatted Date : {formatDate(new Date(formData.date1))}</p>
                   )} */}
                 </div>
-
               </div>
               <div>
                 <div className="form-group">
                   <label htmlFor="time1" className="form-label">
-                    Time :
-                    <span className="required-asterisk">*</span>
+                    Time :<span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="time"
@@ -411,8 +422,7 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="date2" className="form-label">
-                    Date :
-                    <span className="required-asterisk">*</span>
+                    Date :<span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="date"
@@ -430,8 +440,7 @@ const CustomerEnquiry = () => {
               <div>
                 <div className="form-group">
                   <label htmlFor="time2" className="form-label">
-                    Time :
-                    <span className="required-asterisk">*</span>
+                    Time :<span className="required-asterisk">*</span>
                   </label>
                   <input
                     type="time"
@@ -449,7 +458,7 @@ const CustomerEnquiry = () => {
               <label htmlFor="totalDays" className="form-label">
                 {/* <span className="required-asterisk">*</span> */}
                 Total Days:
-                <span className="days" >Days</span>
+                <span className="days">Days</span>
               </label>
               <input
                 type="number"
@@ -480,7 +489,13 @@ const CustomerEnquiry = () => {
                 Type Of Vehicle:
                 <span className="required-asterisk">*</span>
               </label>
-              <select className="form-control-cust-inq-input" name="vehicle" id="vehicle" onChange={handleChange} value={formData.vehicle}>
+              <select
+                className="form-control-cust-inq-input"
+                name="vehicle"
+                id="vehicle"
+                onChange={handleChange}
+                value={formData.vehicle}
+              >
                 <option value="">Vehicle</option>
                 <option value="Sedan Car">Sedan Car</option>
                 <option value="Mini Car">Mini Car</option>
@@ -492,12 +507,24 @@ const CustomerEnquiry = () => {
                 <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
                 <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
                 <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
-                <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
-                <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
-                <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
-                <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
-                <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
-                <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
+                <option value="Non-AC Bus 17-Seater">
+                  Non-AC Bus 17-Seater
+                </option>
+                <option value="Non-AC Bus 20-Seater">
+                  Non-AC Bus 20-Seater
+                </option>
+                <option value="Non-AC Bus 32-Seater">
+                  Non-AC Bus 32-Seater
+                </option>
+                <option value="Non-AC Bus 40-Seater">
+                  Non-AC Bus 40-Seater
+                </option>
+                <option value="Non-AC Bus 45-Seater">
+                  Non-AC Bus 45-Seater
+                </option>
+                <option value="Non-AC Bus 49-Seater">
+                  Non-AC Bus 49-Seater
+                </option>
               </select>
             </div>
             <button type="button" className="btn-submit" onClick={handleSubmit}>

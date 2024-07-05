@@ -26,7 +26,10 @@ const AddVendor = () => {
     if (name === "vendorname" && !/^[A-Za-z\s]+$/.test(value)) {
       return;
     }
-    if (name === "companyname" && !/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(value)) {
+    if (
+      name === "companyname" &&
+      !/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(value)
+    ) {
       return;
     }
 
@@ -90,7 +93,9 @@ const AddVendor = () => {
       return;
     }
     if (!/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(formData.companyname)) {
-      alert("Company name must contain letters and spaces, but not only numbers.");
+      alert(
+        "Company name must contain letters and spaces, but not only numbers."
+      );
       return;
     }
     if (!/^\d{10}$/.test(formData.mobileno)) {
@@ -103,7 +108,9 @@ const AddVendor = () => {
       return;
     }
 
-    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)) {
+    if (
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)
+    ) {
       alert("Please enter a valid email address.");
       return;
     }
@@ -140,10 +147,16 @@ const AddVendor = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }} className="text-center mb-4 mt-4">
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginBottom: "8px",
+            }}
+            className="text-center mb-4 mt-4"
+          >
             Add Vendor
           </h2>
 
@@ -212,7 +225,9 @@ const AddVendor = () => {
                   onChange={handleChange}
                   value={formData.mobileno}
                 />
-                {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+                {mobilenoError && (
+                  <p className="error-message">{mobilenoError}</p>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">

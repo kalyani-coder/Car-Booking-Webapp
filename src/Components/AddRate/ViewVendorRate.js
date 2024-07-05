@@ -137,7 +137,6 @@ const ViewVenderRate = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container h-[98vh]">
           <h2

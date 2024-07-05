@@ -49,16 +49,16 @@
   cursor: pointer;
   font-size: 14px;
 }
-.container-vendor-invoice{
-  margin-left: 300px; /* Leave 300px from the left side */
-padding: 20px;
+.container-vendor-invoice {
+  /* margin-left: 300px; Leave 300px from the left side */
+  padding: 20px;
 
-height:100vh;
-width: 100%;
+  height: 100vh;
+  width: 100%;
 }
 
 .filter-dropdown::after {
-  content: '\f078'; /* FontAwesome chevron icon */
+  content: "\f078"; /* FontAwesome chevron icon */
   font-family: FontAwesome;
   position: absolute;
   top: 50%;

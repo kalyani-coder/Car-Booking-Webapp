@@ -27,7 +27,6 @@ const Home = () => {
 
   return (
     <>
-      <Sidebar />
       <h1 className="text-center mt-10 fs-2 fw-bold text-primary dashboard">
         Welcome to Admin Dashboard
       </h1>

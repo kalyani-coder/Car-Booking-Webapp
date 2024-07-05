@@ -9,9 +9,9 @@ function AddPayment() {
   const [customerList, setCustomerList] = useState([]);
 
   const initialFormData = {
-    customerId: '',
-    Cus_Type: '',
-    Cus_name: '',
+    customerId: "",
+    Cus_Type: "",
+    Cus_name: "",
     GST_No: "",
     reporting_Address: "",
     Date: "",
@@ -34,7 +34,7 @@ function AddPayment() {
     extramkm_Amount: 0,
     extrakm_CGST: "",
     extrakm_SGST: "",
-    ratePerHour: 0, 
+    ratePerHour: 0,
     extra_Hours: 0,
     extrahours_CGST: "",
     extrahours_SGST: "",
@@ -63,9 +63,10 @@ function AddPayment() {
   const [errorAlert, setErrorAlert] = useState(null);
   const [customerType, setCustomerType] = useState("");
   const [customers, setCustomers] = useState([]);
-  const [customerDetails, setCustomerDetails] = useState({ gst_no: '', cus_mobile: '' });
-
-  
+  const [customerDetails, setCustomerDetails] = useState({
+    gst_no: "",
+    cus_mobile: "",
+  });
 
   const handleCustomerNameChange = (e) => {
     const selectedCusName = e.target.value;
@@ -86,10 +87,12 @@ function AddPayment() {
 
     if (selectedType) {
       try {
-        const response = await axios.get(`http://localhost:8787/api/add-customers/customer/${selectedType}`);
+        const response = await axios.get(
+          `http://localhost:8787/api/add-customers/customer/${selectedType}`
+        );
         setCustomers(response.data);
       } catch (error) {
-        console.error('Error fetching customers:', error);
+        console.error("Error fetching customers:", error);
       }
     } else {
       setCustomers([]);
@@ -293,8 +296,6 @@ function AddPayment() {
     }));
   };
 
-  
-
   //
   //
   const renderPaymentMethodFields = () => {
@@ -451,12 +452,12 @@ function AddPayment() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
-  
+
     if (!selectedCustomer) {
       window.alert("Please select a customer");
       return;
     }
-  
+
     // Extract and construct the data to submit
     const dataToSubmit = {
       ...formData,
@@ -464,16 +465,19 @@ function AddPayment() {
       cus_name: selectedCustomer.cus_name,
       // Add any other required fields here
     };
-  
+
     try {
-      const response = await fetch("http://localhost:8787/api/customer-payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToSubmit), // Send the form data directly
-      });
-  
+      const response = await fetch(
+        "http://localhost:8787/api/customer-payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataToSubmit), // Send the form data directly
+        }
+      );
+
       if (response.ok) {
         alert("Customer Payment added successfully!", "success");
         setFormData(initialFormData); // Optionally reset the form after successful submission
@@ -492,13 +496,9 @@ function AddPayment() {
       alert("Failed to add data. Please try again.", "danger");
     }
   };
-  
-
-
 
   return (
     <>
-      <Sidebar />
       <div className="container-fluid">
         <div className="form-body">
           <div className="card-1">
@@ -517,50 +517,55 @@ function AddPayment() {
                     </h2>
 
                     <div className="row grid-gap-2">
-                    <div className="col-md">
-                    <div className="form-group">
-                      <label htmlFor="Cus_Type" className="form-label">
-                        Customer Type:
-                        <span className="required-asterisk">*</span>
-                      </label>
-                      <select
-                        className="update-duty-form-control"
-                        name="Cus_Type"
-                        id="Cus_Type"
-                        value={customerType}
-                        onChange={handleCustomerTypeChange}
-                      >
-                        <option value="">Select Customer TYpe</option>
-                        <option value="Corporate">Corporate Customer</option>
-                        <option value="Indivisual">Indivisual Customer</option>
-                      </select>
-                    </div>
-                    </div>
-                    <div className="col-md">
-                    <div className="form-group">
-                      <label htmlFor="Cus_name" className="form-label">
-                        Customer Name / Company Name:
-                        <span className="required-asterisk">*</span>
-                      </label>
-                      <select
-                        className="update-duty-form-control"
-                        name="Cus_name"
-                        id="Cus_name"
-                        onChange={handleCustomerNameChange}
-                      >
-                        <option value="">Select Customer</option>
-                        {customers.map((customer) => (
-                          <option key={customer._id} value={customer.cus_name}>
-                            {customer.cus_name}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="Cus_Type" className="form-label">
+                            Customer Type:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <select
+                            className="update-duty-form-control"
+                            name="Cus_Type"
+                            id="Cus_Type"
+                            value={customerType}
+                            onChange={handleCustomerTypeChange}
+                          >
+                            <option value="">Select Customer TYpe</option>
+                            <option value="Corporate">
+                              Corporate Customer
+                            </option>
+                            <option value="Indivisual">
+                              Indivisual Customer
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md">
+                        <div className="form-group">
+                          <label htmlFor="Cus_name" className="form-label">
+                            Customer Name / Company Name:
+                            <span className="required-asterisk">*</span>
+                          </label>
+                          <select
+                            className="update-duty-form-control"
+                            name="Cus_name"
+                            id="Cus_name"
+                            onChange={handleCustomerNameChange}
+                          >
+                            <option value="">Select Customer</option>
+                            {customers.map((customer) => (
+                              <option
+                                key={customer._id}
+                                value={customer.cus_name}
+                              >
+                                {customer.cus_name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
                     </div>
 
-                    </div>
-                    </div>
-
-                    
                     <div className="row grid-gap-5">
                       <div className="col-md">
                         <div className="form-group">

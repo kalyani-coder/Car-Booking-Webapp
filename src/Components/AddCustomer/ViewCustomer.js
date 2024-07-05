@@ -17,7 +17,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
       </tr>
     </thead>
     <tbody>
-      {customers.map((customer,index) => (
+      {customers.map((customer, index) => (
         <tr key={customer._id}>
           <td>{index + 1}</td>
           <td>{customer.cus_name}</td>
@@ -191,7 +191,6 @@ const ViewCustomer = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="viewcustomer-main-container">
           <h2

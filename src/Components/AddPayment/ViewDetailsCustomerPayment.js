@@ -31,24 +31,23 @@ export default function ViewDetailsCustomerPayment() {
   const handleCancel = () => {
     // Attempt to close the window
     window.close();
-  
+
     // If window.close() didn't work, you can try using the following:
     if (window.opener) {
       // If the window has an opener (likely opened with window.open()), close the opener
       window.opener = null;
-      window.open('', '_self', '');
+      window.open("", "_self", "");
       window.close();
     } else {
       // If there is no opener (likely not opened with window.open()), navigate back in history
       window.history.back();
     }
-  
+
     console.log("Cancel button clicked");
   };
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
           <h1 className="text-2xl font-semibold mb-4">
@@ -69,85 +68,85 @@ export default function ViewDetailsCustomerPayment() {
                   <FaTimes />
                 </button>
                 <p className="mb-2">
-                  <strong>Customer Name:</strong>  {customerPayData.cus_name}
+                  <strong>Customer Name:</strong> {customerPayData.cus_name}
                 </p>
-                <p className="mb-2"p>
-                  <strong>GST No:</strong>  {customerPayData.GST_No}
+                <p className="mb-2" p>
+                  <strong>GST No:</strong> {customerPayData.GST_No}
                 </p>
                 <p className="mb-2">
                   <strong>Reporting Address:</strong>{" "}
-                   {customerPayData.reporting_Address}
+                  {customerPayData.reporting_Address}
                 </p>
                 <p className="mb-2">
-                  <strong>Date:</strong>  {customerPayData.Date}
+                  <strong>Date:</strong> {customerPayData.Date}
                 </p>
                 <p className="mb-2">
                   <strong>Customer Name:</strong>{" "}
-                   {customerPayData.customer_Name}
+                  {customerPayData.customer_Name}
                 </p>
                 <p className="mb-2">
                   <strong>Vehicle Number:</strong>{" "}
-                   {customerPayData.vehicle_Number}
+                  {customerPayData.vehicle_Number}
                 </p>
                 <p className="mb-2">
-                  <strong>Vehicle Type:</strong>  {customerPayData.vehicle_Type}
+                  <strong>Vehicle Type:</strong> {customerPayData.vehicle_Type}
                 </p>
                 <p className="mb-2">
-                  <strong>Quantity:</strong>  {customerPayData.quantity}
+                  <strong>Quantity:</strong> {customerPayData.quantity}
                 </p>
                 <p className="mb-2">
                   <strong>From:</strong> {customerPayData.from}
                 </p>
                 <p className="mb-2">
-                  <strong>To:</strong>  {customerPayData.to}
+                  <strong>To:</strong> {customerPayData.to}
                 </p>
                 <p className="mb-2">
-                  <strong>Closing KM:</strong>  {customerPayData.closing_km}
+                  <strong>Closing KM:</strong> {customerPayData.closing_km}
                 </p>
                 <p className="mb-2">
-                  <strong>Closing Time:</strong> { customerPayData.closing_Time}
+                  <strong>Closing Time:</strong> {customerPayData.closing_Time}
                 </p>
                 <p className="mb-2">
-                  <strong>Starting KM:</strong>  {customerPayData.starting_Km}
+                  <strong>Starting KM:</strong> {customerPayData.starting_Km}
                 </p>
                 <p className="mb-2">
                   <strong>Starting Time:</strong>{" "}
-                   {customerPayData.starting_Time}
+                  {customerPayData.starting_Time}
                 </p>
                 <p className="mb-2">
-                  <strong>Total KM:</strong>  {customerPayData.total_Km}
+                  <strong>Total KM:</strong> {customerPayData.total_Km}
                 </p>
                 <p className="mb-2">
-                  <strong>Total Hour:</strong>  {customerPayData.total_hours}
+                  <strong>Total Hour:</strong> {customerPayData.total_hours}
                 </p>
                 <p className="mb-2">
-                  <strong>Title:</strong>  {customerPayData.title}
+                  <strong>Title:</strong> {customerPayData.title}
                 </p>
                 <p className="mb-2">
-                  <strong>Title Amount:</strong>  {customerPayData.title_Amount}
+                  <strong>Title Amount:</strong> {customerPayData.title_Amount}
                 </p>
                 <p className="mb-2">
-                  <strong>Extra KM:</strong>  {customerPayData.extra_Km}
+                  <strong>Extra KM:</strong> {customerPayData.extra_Km}
                 </p>
                 <p className="mb-2">
                   <strong>ExtraKM Amount:</strong>{" "}
-                   {customerPayData.extramkm_Amount}
+                  {customerPayData.extramkm_Amount}
                 </p>
                 <p className="mb-2">
-                  <strong>Extra Hours:</strong>  {customerPayData.extra_Hours}
+                  <strong>Extra Hours:</strong> {customerPayData.extra_Hours}
                 </p>
                 <p className="mb-2">
                   <strong>ExtraHours Amount:</strong>{" "}
-                   {customerPayData.extrahours_Amount}
+                  {customerPayData.extrahours_Amount}
                 </p>
                 <p className="mb-2">
                   <strong>SGST:</strong> {customerPayData.SGST}
                 </p>
                 <p className="mb-2">
-                  <strong>CGST:</strong>   {customerPayData.CGST}
+                  <strong>CGST:</strong> {customerPayData.CGST}
                 </p>
                 <p className="mb-2">
-                  <strong>Total Amount:</strong>  {customerPayData.total_Amount}
+                  <strong>Total Amount:</strong> {customerPayData.total_Amount}
                 </p>
                 <p className="mb-2">
                   <strong>Advance Amount:</strong>{" "}
@@ -159,7 +158,7 @@ export default function ViewDetailsCustomerPayment() {
                 </p>
                 <p className="mb-2">
                   <strong>Payment Method:</strong>{" "}
-                   {customerPayData.payment_Method}
+                  {customerPayData.payment_Method}
                 </p>
               </div>
             </div>

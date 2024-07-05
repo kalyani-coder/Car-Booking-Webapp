@@ -56,23 +56,23 @@ function TripDetailsReport() {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileName = "trip_details_report.xlsx";
     const ws = XLSX.utils.json_to_sheet(filteredTripDetails);
-    
+
     // Adjust column widths
     ws["!cols"] = [
-      { wpx: 100 }, 
+      { wpx: 100 },
       { wpx: 150 },
-      { wpx: 100 }, 
-      { wpx: 150 }, 
-      { wpx: 100 }, 
-      { wpx: 150 }, 
-      { wpx: 100 }, 
-      { wpx: 150 }, 
-      { wpx: 100 }, 
-      { wpx: 150 }, 
-      { wpx: 100 }, 
-      { wpx: 150 }
+      { wpx: 100 },
+      { wpx: 150 },
+      { wpx: 100 },
+      { wpx: 150 },
+      { wpx: 100 },
+      { wpx: 150 },
+      { wpx: 100 },
+      { wpx: 150 },
+      { wpx: 100 },
+      { wpx: 150 },
     ];
-  
+
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const data = new Blob([excelBuffer], { type: fileType });
@@ -85,7 +85,6 @@ function TripDetailsReport() {
 
   return (
     <>
-      <Sidebar />
       <div className="container-customer-invoice">
         <h2
           style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
@@ -124,15 +123,15 @@ function TripDetailsReport() {
         </button>
 
         <div className="trip-counts-container">
-  {Object.keys(tripCounts).map((vehicle, index) => (
-    <div key={index} className="trip-counts">
-      <span>
-        <strong>{vehicle} :</strong>
-      </span>
-      <span>{tripCounts[vehicle]}</span>
-    </div>
-  ))}
-</div>
+          {Object.keys(tripCounts).map((vehicle, index) => (
+            <div key={index} className="trip-counts">
+              <span>
+                <strong>{vehicle} :</strong>
+              </span>
+              <span>{tripCounts[vehicle]}</span>
+            </div>
+          ))}
+        </div>
 
         <table className="table">
           <thead>

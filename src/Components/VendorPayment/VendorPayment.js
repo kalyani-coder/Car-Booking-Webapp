@@ -54,7 +54,7 @@ function VendorPayment() {
       // Filter to get unique vendors by _id
       const uniqueVendors = [];
       const vendorMap = new Map();
-      data.forEach(vendor => {
+      data.forEach((vendor) => {
         if (!vendorMap.has(vendor.vender_id)) {
           vendorMap.set(vendor.vender_id, true); // set any value to Map
           uniqueVendors.push(vendor);
@@ -118,7 +118,6 @@ function VendorPayment() {
     }
   };
 
-  
   const renderPaymentMethodFields = () => {
     if (formData.payment_Method === "Cheque") {
       return (
@@ -189,7 +188,6 @@ function VendorPayment() {
               }
             />
           </div>
-        
         </>
       );
     } else if (formData.payment_Method === "Bank Transfer(NEFT)") {
@@ -265,7 +263,7 @@ function VendorPayment() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-  
+
     try {
       // Construct postData object with form data
       const postData = {
@@ -293,7 +291,7 @@ function VendorPayment() {
         remaining_Amount: formData.remaining_Amount,
         payment_Method: formData.payment_Method,
       };
-  
+
       // Make POST request to API endpoint
       const response = await fetch("http://localhost:8787/api/vender-payment", {
         method: "POST",
@@ -302,7 +300,7 @@ function VendorPayment() {
         },
         body: JSON.stringify(postData),
       });
-  
+
       // Handle response
       if (response.ok) {
         console.log("Data posted successfully!");
@@ -317,14 +315,16 @@ function VendorPayment() {
       alert("Failed to add data. Please try again.", "danger");
     }
   };
-  
+
   const [vehicleTypes, setVehicleTypes] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   const fetchVehicleTypes = async (vendorId) => {
     console.log("Selected Vendor ID:", vendorId);
     try {
-      const response = await fetch(`http://localhost:8787/api/vender-rate/venderid/${vendorId}`);
+      const response = await fetch(
+        `http://localhost:8787/api/vender-rate/venderid/${vendorId}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch vehicle types");
       }
@@ -342,38 +342,45 @@ function VendorPayment() {
   }, [selectedVendorId]);
 
   const handleVehicleChange = (event) => {
-    const selectedVehicle = vehicleTypes.find(vehicle => vehicle.vehicle === event.target.value);
+    const selectedVehicle = vehicleTypes.find(
+      (vehicle) => vehicle.vehicle === event.target.value
+    );
     if (selectedVehicle) {
-      const total_km = parseFloat(selectedVehicle.km || 0) + parseFloat(selectedVehicle.extra_km || 0);
-      const total_hour = parseFloat(selectedVehicle.hour || 0) + parseFloat(selectedVehicle.extra_hour || 0);
+      const total_km =
+        parseFloat(selectedVehicle.km || 0) +
+        parseFloat(selectedVehicle.extra_km || 0);
+      const total_hour =
+        parseFloat(selectedVehicle.hour || 0) +
+        parseFloat(selectedVehicle.extra_hour || 0);
       // const total_amount = rate * total_km + total_hour_Amt;
       const total_hour_Amt = total_hour * 100;
-      const total_amount = parseFloat(selectedVehicle.rate || 0) * parseFloat(selectedVehicle.total_km || 0) + parseFloat(total_hour_Amt)
-       const tds = total_amount * 0.01;
-       const paid_amount = parseFloat(total_amount || 0) + parseFloat(tds || 0);
+      const total_amount =
+        parseFloat(selectedVehicle.rate || 0) *
+          parseFloat(selectedVehicle.total_km || 0) +
+        parseFloat(total_hour_Amt);
+      const tds = total_amount * 0.01;
+      const paid_amount = parseFloat(total_amount || 0) + parseFloat(tds || 0);
 
       setSelectedVehicle(selectedVehicle);
       setFormData((prevData) => ({
         ...prevData,
-        km: selectedVehicle.km || '',
-        extra_km: selectedVehicle.extra_km || '',
-        GST_No: selectedVehicle.GST_No || '',
+        km: selectedVehicle.km || "",
+        extra_km: selectedVehicle.extra_km || "",
+        GST_No: selectedVehicle.GST_No || "",
         total_km,
-        hour : selectedVehicle.hour || '' ,
-        extra_hour : selectedVehicle.extra_hour || '' ,
+        hour: selectedVehicle.hour || "",
+        extra_hour: selectedVehicle.extra_hour || "",
         total_hour,
-        tds : tds,
-        rate :  selectedVehicle.rate || '' ,
-        total_amount ,
+        tds: tds,
+        rate: selectedVehicle.rate || "",
+        total_amount,
         paid_amount,
-
       }));
     }
   };
 
   return (
     <>
-      <Sidebar />
       <div className="container-fluid">
         <div className="form-body">
           <div className="card-1">
@@ -396,7 +403,6 @@ function VendorPayment() {
                   <form onSubmit={handleSubmit}>
                     <div className="row grid-gap-5">
                       <div className="col-md">
-
                         <div className="form-group">
                           <label htmlFor="vender_Name" className="form-label">
                             Vendor Name:
@@ -419,9 +425,6 @@ function VendorPayment() {
                         </div>
                       </div>
 
-
-
-
                       <div className="form-group">
                         <label htmlFor="vehicletype" className="form-label">
                           Vehicle Type:
@@ -442,10 +445,6 @@ function VendorPayment() {
                         </select>
                       </div>
 
-
-
-
-
                       <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="GST_No" className="form-label">
@@ -458,7 +457,9 @@ function VendorPayment() {
                             id="GST_No"
                             name="GST_No"
                             placeholder="Enter GST No"
-                            value={selectedVehicle ? selectedVehicle.GST_No : ''}
+                            value={
+                              selectedVehicle ? selectedVehicle.GST_No : ""
+                            }
                             onChange={handleChange}
                           />
                         </div>
@@ -495,7 +496,11 @@ function VendorPayment() {
                             id="company_Name"
                             name="company_Name"
                             placeholder="Enter Company Name"
-                            value={selectedVehicle ? selectedVehicle.company_Name : ''}
+                            value={
+                              selectedVehicle
+                                ? selectedVehicle.company_Name
+                                : ""
+                            }
                             onChange={handleChange}
                           />
                         </div>
@@ -512,7 +517,11 @@ function VendorPayment() {
                             id="mobile_Number"
                             name="mobile_Number"
                             placeholder="Enter Mobile Number"
-                            value={selectedVehicle ? selectedVehicle.mobile_Number : ''}
+                            value={
+                              selectedVehicle
+                                ? selectedVehicle.mobile_Number
+                                : ""
+                            }
                             onChange={handleChange}
                           />
                         </div>
@@ -579,8 +588,6 @@ function VendorPayment() {
                           </select>
                         </div>
                       </div> */}
-
-                     
                     </div>
 
                     <div className="row grid-gap-5">
@@ -596,7 +603,9 @@ function VendorPayment() {
                                 className="rate-form-control-payment"
                                 name="title"
                                 id="title"
-                                value={selectedVehicle ? selectedVehicle.title : ''}
+                                value={
+                                  selectedVehicle ? selectedVehicle.title : ""
+                                }
                                 onChange={handleChange}
                               >
                                 <option value="">Duty Type</option>
@@ -627,7 +636,9 @@ function VendorPayment() {
                                 id="rate"
                                 name="rate"
                                 placeholder="rate"
-                                value={selectedVehicle ? selectedVehicle.rate : ''}
+                                value={
+                                  selectedVehicle ? selectedVehicle.rate : ""
+                                }
                                 onChange={handleChange}
                                 required
                               />
@@ -647,7 +658,9 @@ function VendorPayment() {
                             id="address"
                             name="address"
                             placeholder="Enter address"
-                            value={selectedVehicle ? selectedVehicle.address : ''}
+                            value={
+                              selectedVehicle ? selectedVehicle.address : ""
+                            }
                             onChange={handleChange}
                           />
                         </div>
@@ -669,7 +682,9 @@ function VendorPayment() {
                                 id="from"
                                 name="from"
                                 placeholder="from"
-                                value={selectedVehicle ? selectedVehicle.from : ''}
+                                value={
+                                  selectedVehicle ? selectedVehicle.from : ""
+                                }
                                 onChange={handleChange}
                               />
                             </div>
@@ -686,7 +701,9 @@ function VendorPayment() {
                                 id="to"
                                 name="to"
                                 placeholder="to"
-                                value={selectedVehicle ? selectedVehicle.to : ''}
+                                value={
+                                  selectedVehicle ? selectedVehicle.to : ""
+                                }
                                 onChange={handleChange}
                               />
                             </div>
@@ -743,7 +760,11 @@ function VendorPayment() {
                                 id="extra_km"
                                 name="extra_km"
                                 placeholder="extrakm"
-                                value={selectedVehicle ? selectedVehicle.extra_km : ''}
+                                value={
+                                  selectedVehicle
+                                    ? selectedVehicle.extra_km
+                                    : ""
+                                }
                                 onChange={handleChange}
                                 required
                               />
@@ -785,7 +806,9 @@ function VendorPayment() {
                                 id="hour"
                                 name="hour"
                                 placeholder="hour"
-                                value={selectedVehicle ? selectedVehicle.hour : ''}
+                                value={
+                                  selectedVehicle ? selectedVehicle.hour : ""
+                                }
                                 onChange={handleChange}
                                 required
                               />
@@ -806,7 +829,11 @@ function VendorPayment() {
                                 id="extra_hour"
                                 name="extra_hour"
                                 placeholder="Extra Hour"
-                                value={selectedVehicle ? selectedVehicle.extra_hour : ''}
+                                value={
+                                  selectedVehicle
+                                    ? selectedVehicle.extra_hour
+                                    : ""
+                                }
                                 onChange={handleChange}
                                 required
                               />

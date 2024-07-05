@@ -105,7 +105,6 @@ function MonthlyCustomerReport() {
 
   return (
     <>
-      <Sidebar />
       <div className="container-customer-invoice">
         <h2
           style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
@@ -143,7 +142,8 @@ function MonthlyCustomerReport() {
         </div>
 
         <table className="table">
-          <thead>{reportType === "all" && (
+          <thead>
+            {reportType === "all" && (
               <tr>
                 <th>Sr.No.</th>
                 <th>Date</th>
@@ -199,9 +199,9 @@ function MonthlyCustomerReport() {
                 <td>{index + 1}</td> {/* Add Sr. No. column */}
                 {reportType === "all" && (
                   <>
-                  <td>{customer.Date}</td>
-                  <td>{customer.GST_No}</td>
-                  <td></td>
+                    <td>{customer.Date}</td>
+                    <td>{customer.GST_No}</td>
+                    <td></td>
                     <td>{customer.Customer_Name}</td>
                     <td>{customer.vehicle_Type}</td>
                     <td>{customer.CGST}</td>
@@ -215,18 +215,18 @@ function MonthlyCustomerReport() {
                 )}
                 {reportType === "outstanding" && (
                   <>
-                  <td>{customer.Date}</td>
-                  <td>{customer.GST_No}</td>
-                  <td></td>
+                    <td>{customer.Date}</td>
+                    <td>{customer.GST_No}</td>
+                    <td></td>
                     <td>{customer.Customer_Name}</td>
                     <td>{customer.Total_Amount}</td>
                   </>
                 )}
                 {reportType === "gstDetails" && (
                   <>
-                  <td>{customer.Date}</td>
-                  <td>{customer.GST_No}</td>
-                  <td></td>
+                    <td>{customer.Date}</td>
+                    <td>{customer.GST_No}</td>
+                    <td></td>
                     <td>{customer.Customer_Name}</td>
                     <td>{customer.CGST}</td>
                     <td>{customer.SGST}</td>
@@ -236,7 +236,7 @@ function MonthlyCustomerReport() {
                 )}
                 {reportType === "bookingStatistics" && (
                   <>
-                   <td>{customer.Date}</td>
+                    <td>{customer.Date}</td>
                     <td>{customer.GST_No}</td>
                     <td></td>
                     <td>{customer.Company_Name}</td>

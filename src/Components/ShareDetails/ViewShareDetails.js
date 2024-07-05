@@ -3,10 +3,9 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { FaEdit, FaTrash,FaFilePdf, FaTimes } from "react-icons/fa";
+import { FaEdit, FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
 // import ViewShareDetails from './ViewShareDetails.css';
-import img1 from "../../assects/images/shivpushpa_logo.png"
-
+import img1 from "../../assects/images/shivpushpa_logo.png";
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -18,13 +17,10 @@ const ViewShareDetails = () => {
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-
   useEffect(() => {
     const fetchShareDetails = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8787/api/share-details"
-        );
+        const response = await fetch("http://localhost:8787/api/share-details");
         if (!response.ok) {
           throw Error("Network response was not ok");
         }
@@ -56,7 +52,6 @@ const ViewShareDetails = () => {
     filterShareDetails();
   }, [searchText]);
 
-  
   const generateInvoice = (shareDetail) => {
     console.log(shareDetail);
     const downloadConfirmed = window.confirm(
@@ -66,15 +61,15 @@ const ViewShareDetails = () => {
     if (downloadConfirmed) {
       const doc = new jsPDF();
       // Set page dimensions
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-  
-    // Draw border
-    const margin = 10;
-    doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+
+      // Draw border
+      const margin = 10;
+      doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
 
       // Left side details
-      doc.addImage(img1, 'PNG', 15, 15, 45, 32);
+      doc.addImage(img1, "PNG", 15, 15, 45, 32);
       doc.setFontSize(18);
       doc.text("Shivpushpa Travels", 70, 30);
       doc.setFontSize(12);
@@ -82,9 +77,9 @@ const ViewShareDetails = () => {
       doc.text("Mail: travelshivpushpa@gmail.com", 70, 40);
       doc.text(`Date: ${shareDetail.date}`, 70, 45);
 
-       // Title
-    doc.setFontSize(18);
-    doc.text("Share Details", 70 , 20);
+      // Title
+      doc.setFontSize(18);
+      doc.text("Share Details", 70, 20);
 
       // Add space between left and right side details
       doc.text("", 10, 70);
@@ -93,8 +88,7 @@ const ViewShareDetails = () => {
       doc.setFontSize(18);
       // doc.text("Invoice", 150, 20, { className: "uppercase-text" });
       doc.setFontSize(12);
-      // doc.text(`Invoice No: ${invoiceNo}`, 150, 30); 
-      
+      // doc.text(`Invoice No: ${invoiceNo}`, 150, 30);
 
       // Add a line to separate left and right side details
       doc.line(10, 50, pageWidth - 10, 50);
@@ -105,10 +99,9 @@ const ViewShareDetails = () => {
       // Table
       const columns = ["Field", "Value"];
       const rows = [
-        
         ["Customer ID", shareDetail.customerId],
         ["Customer Name", shareDetail.customername],
-        ["Customer Mobile", shareDetail.customermobile], 
+        ["Customer Mobile", shareDetail.customermobile],
         ["Vehicle", shareDetail.vehicle],
         ["Trip Type", shareDetail.triptype],
         ["Subtype", shareDetail.subtype],
@@ -211,7 +204,7 @@ const ViewShareDetails = () => {
         );
         setIsEditing(false);
         // Alert after successful update
-      alert("Share detail updated successfully!");
+        alert("Share detail updated successfully!");
       } else {
         console.error("Error updating share detail:", response.status);
       }
@@ -272,20 +265,19 @@ const ViewShareDetails = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container h-[150vh]">
-        <div className="pl-[40%]">
-        <h2 
-        style={{
-          fontSize: "2rem",
-          fontWeight: "bold",
-          marginBottom: "8px",
-        }}
-      >
-        View Share Details
-      </h2>
-        </div>
+          <div className="pl-[40%]">
+            <h2
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "8px",
+              }}
+            >
+              View Share Details
+            </h2>
+          </div>
           <div className="p-4 space-y-4">
             <input
               type="text"
@@ -301,7 +293,7 @@ const ViewShareDetails = () => {
             <table className="table">
               <thead>
                 <tr>
-                <th>Sr.No.</th>
+                  <th>Sr.No.</th>
                   <th>Customer Name</th>
                   <th>Customer Mobile</th>
                   <th>Vehicle</th>
@@ -312,22 +304,22 @@ const ViewShareDetails = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredShareDetails.map((shareDetail,index) => (
+                {filteredShareDetails.map((shareDetail, index) => (
                   <tr key={shareDetail._id}>
-                  <td>{index + 1}</td>
+                    <td>{index + 1}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.customermobile}</td>
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.pickup}</td>
                     <td>{shareDetail.date}</td>
-                   <td>{shareDetail.drivername}</td>
+                    <td>{shareDetail.drivername}</td>
                     <td>
-                    <button
-                          className="btn btn-primary btn-sm"
-                          onClick={() => handleViewMore(shareDetail._id)}
-                        >
-                          <i className="fas fa-eye"></i>
-                        </button>
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleViewMore(shareDetail._id)}
+                      >
+                        <i className="fas fa-eye"></i>
+                      </button>
                       <button
                         className="btn btn-info btn-sm"
                         onClick={() => handleEditShareDetail(shareDetail)}
@@ -354,149 +346,238 @@ const ViewShareDetails = () => {
           )}
         </div>
       </div>
-      {isEditing && ( 
+      {isEditing && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg w-96" style={{ width: "40%", height: "80vh", overflowY: "scroll" }}>
+          <div
+            className="bg-white p-4 rounded shadow-lg w-96"
+            style={{ width: "40%", height: "80vh", overflowY: "scroll" }}
+          >
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Share Details</h2>
               <button
                 onClick={() => setIsEditing(false)}
-                className="close-icon" 
+                className="close-icon"
               >
                 <FaTimes />
               </button>
             </div>
             <div className="form-container">
-            <h5 className='fw-bold my-2'>Customer Name:</h5>
+              <h5 className="fw-bold my-2">Customer Name:</h5>
               <input
                 type="text"
                 value={editedShareDetail.customername}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, customername: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    customername: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Vehicle:</h5>
+              <h5 className="fw-bold my-2">Vehicle:</h5>
               <select
-                  className="share-details-input"
-                  name="vehicle"
-                  id="vehicle"
-                  onChange={(e) => setEditedShareDetail({ ...editedShareDetail, vehicle: e.target.value })}
-                  value={editedShareDetail.vehicle}
-                >
-                  <option value="">Vehicle</option>
-                  <option value="Sedan Car">Sedan Car</option>
-                  <option value="Mini Car">Mini Car</option>
-                  <option value="SUV Car">SUV Car</option>
-                  <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-                  <option value="AC Bus 17-seater">AC Bus 17-seater</option>
-                  <option value="AC Bus 20-seater">AC Bus 20-seater</option>
-                  <option value="AC Bus 32-seater">AC Bus 32-seater</option>
-                  <option value="AC Bus 35-seater">AC Bus 35-seater</option>
-                  <option value="AC Bus 40-seater">AC Bus 40-seater</option>
-                  <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-                  <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-                  <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-                  <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-                  <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-                  <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-                  <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
-                  className="w-full p-2 mb-2 border border-gray-300 rounded"
-                </select>
-                <h5 className='fw-bold my-2'>Trip Type:</h5>
-                <select
-                  className="share-details-input"
-                  name="triptype"
-                  id="triptype"
-                  onChange={(e) => setEditedShareDetail({ ...editedShareDetail, triptype: e.target.value })}
-                  value={editedShareDetail.triptype}
-                >
-                  <option value="">Trip Type</option>
-                  <option value="One Way Trip">One Way Trip</option>
-                  <option value="Return Trip">Return Trip</option>
-                  className="w-full p-2 mb-2 border border-gray-300 rounded"
-                </select>
-                <h5 className='fw-bold my-2'>Sub Type:</h5>
-                <select
-                  className="share-details-input"
-                  name="subtype"
-                  id="subtype"
-                  onChange={(e) => setEditedShareDetail({ ...editedShareDetail, subtype: e.target.value })}
-                  value={editedShareDetail.subtype}
-                >
-                  <option value="">Sub Type</option>
-                  <option value="Local Trip">Local Trip</option>
-                  <option value="Outstation Trip">Outstation Trip</option>
-                  <option value="Outstation Local Trip">Outstation Local Trip</option>
-                  <option value="Outstation Outstation Trip">Outstation Outstation Trip</option>
-                  className="w-full p-2 mb-2 border border-gray-300 rounded"
-                </select>
-              <h5 className='fw-bold my-2'>Mobile No:</h5>
+                className="share-details-input"
+                name="vehicle"
+                id="vehicle"
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    vehicle: e.target.value,
+                  })
+                }
+                value={editedShareDetail.vehicle}
+              >
+                <option value="">Vehicle</option>
+                <option value="Sedan Car">Sedan Car</option>
+                <option value="Mini Car">Mini Car</option>
+                <option value="SUV Car">SUV Car</option>
+                <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                <option value="Non-AC Bus 17-Seater">
+                  Non-AC Bus 17 Seater
+                </option>
+                <option value="Non-AC Bus 20-Seater">
+                  Non-AC Bus 20 Seater
+                </option>
+                <option value="Non-AC Bus 32-Seater">
+                  Non-AC Bus 32 Seater
+                </option>
+                <option value="Non-AC Bus 40-Seater">
+                  Non-AC Bus 40 Seater
+                </option>
+                <option value="Non-AC Bus 45-Seater">
+                  Non-AC Bus 45 Seater
+                </option>
+                <option value="Non-AC Bus 49-Seater">
+                  Non-AC Bus 49 Seater
+                </option>
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              </select>
+              <h5 className="fw-bold my-2">Trip Type:</h5>
+              <select
+                className="share-details-input"
+                name="triptype"
+                id="triptype"
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    triptype: e.target.value,
+                  })
+                }
+                value={editedShareDetail.triptype}
+              >
+                <option value="">Trip Type</option>
+                <option value="One Way Trip">One Way Trip</option>
+                <option value="Return Trip">Return Trip</option>
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              </select>
+              <h5 className="fw-bold my-2">Sub Type:</h5>
+              <select
+                className="share-details-input"
+                name="subtype"
+                id="subtype"
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    subtype: e.target.value,
+                  })
+                }
+                value={editedShareDetail.subtype}
+              >
+                <option value="">Sub Type</option>
+                <option value="Local Trip">Local Trip</option>
+                <option value="Outstation Trip">Outstation Trip</option>
+                <option value="Outstation Local Trip">
+                  Outstation Local Trip
+                </option>
+                <option value="Outstation Outstation Trip">
+                  Outstation Outstation Trip
+                </option>
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
+              </select>
+              <h5 className="fw-bold my-2">Mobile No:</h5>
               <input
                 type="number"
                 value={editedShareDetail.mobileno}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, mobileno: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    mobileno: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Vehicle Number:</h5>
+              <h5 className="fw-bold my-2">Vehicle Number:</h5>
               <input
-              type="text"
+                type="text"
                 value={editedShareDetail.vehicleno}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, vehicleno: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    vehicleno: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Pickup Location</h5>
+              <h5 className="fw-bold my-2">Pickup Location</h5>
               <input
                 type="text"
                 value={editedShareDetail.pickup}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, pickup: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    pickup: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Date:</h5>
+              <h5 className="fw-bold my-2">Date:</h5>
               <input
                 type="date"
                 value={editedShareDetail.date}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, date: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    date: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
-               <h5 className='fw-bold my-2'>Time:</h5>
+              <h5 className="fw-bold my-2">Time:</h5>
               <input
                 type="time"
                 value={editedShareDetail.time}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, time: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    time: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Dropoff Location</h5>
+              <h5 className="fw-bold my-2">Dropoff Location</h5>
               <input
                 type="text"
                 value={editedShareDetail.Dropoff}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, Dropoff: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    Dropoff: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Date:</h5>
+              <h5 className="fw-bold my-2">Date:</h5>
               <input
                 type="date"
                 value={editedShareDetail.date1}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, date1: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    date1: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
-               <h5 className='fw-bold my-2'>Time:</h5>
+              <h5 className="fw-bold my-2">Time:</h5>
               <input
                 type="time"
                 value={editedShareDetail.time1}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, time1: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    time1: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
-              <h5 className='fw-bold my-2'>Driver Name:</h5>
+              <h5 className="fw-bold my-2">Driver Name:</h5>
               <input
                 type="text"
                 value={editedShareDetail.drivername}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, drivername: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    drivername: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
-               <h5 className='fw-bold my-2'>Driver Mail:</h5>
+              <h5 className="fw-bold my-2">Driver Mail:</h5>
               <input
                 type="text"
                 value={editedShareDetail.drivermail}
-                onChange={(e) => setEditedShareDetail({ ...editedShareDetail, drivermail: e.target.value })}
+                onChange={(e) =>
+                  setEditedShareDetail({
+                    ...editedShareDetail,
+                    drivermail: e.target.value,
+                  })
+                }
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
             </div>
@@ -517,75 +598,73 @@ const ViewShareDetails = () => {
         </div>
       )}
       {/* Display Share Details */}
-   {/* Modal or Overlay for displaying trip details */}
-   {selectedTrip && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div
-                className="bg-white p-4 rounded shadow-lg w-96"
-                style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-2xl font-bold">View Driver Details</h2>
-                  <button className="text-black-500" onClick={handleCloseModal}>
-                    <svg
-                      className="w-6 h-6"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  
-                  <p>
-                    <strong>Customer Name:</strong> {selectedTrip.customername}
-                  </p>
-                  <p>
-                    <strong>Customer Mobile:</strong>{" "}
-                    {selectedTrip.customermobile}
-                  </p>
-                  <p>
-                    <strong>Trip Type:</strong> {selectedTrip.triptype}
-                  </p>
-                  <p>
-                    <strong>Sub Type:</strong> {selectedTrip.subtype}
-                  </p>
-                  <p>
-                    <strong>Pickup:</strong> {selectedTrip.pickup}
-                  </p>
-                  <p>
-                    <strong>Time:</strong> {selectedTrip.time}
-                  </p>
-                  <p>
-                    <strong>Dropoff:</strong> {selectedTrip.Dropoff}
-                  </p>
-                  <p>
-                    <strong>Date:</strong> {selectedTrip.date1}
-                  </p>
-                  <p>
-                    <strong>Time:</strong> {selectedTrip.time1}
-                  </p>
-                  <p>
-                    <strong>Driver Name:</strong> {selectedTrip.drivername}
-                  </p>
-                  <p>
-                    <strong>Driver Mobile:</strong> {selectedTrip.mobileno}
-                  </p>
-                  <p>
-                    <strong>Vehicle Number:</strong> {selectedTrip.vehicleno}
-                  </p>
-                </div>
-              </div>
+      {/* Modal or Overlay for displaying trip details */}
+      {selectedTrip && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div
+            className="bg-white p-4 rounded shadow-lg w-96"
+            style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">View Driver Details</h2>
+              <button className="text-black-500" onClick={handleCloseModal}>
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              </button>
             </div>
-          )}
+            <div className="space-y-2">
+              <p>
+                <strong>Customer Name:</strong> {selectedTrip.customername}
+              </p>
+              <p>
+                <strong>Customer Mobile:</strong> {selectedTrip.customermobile}
+              </p>
+              <p>
+                <strong>Trip Type:</strong> {selectedTrip.triptype}
+              </p>
+              <p>
+                <strong>Sub Type:</strong> {selectedTrip.subtype}
+              </p>
+              <p>
+                <strong>Pickup:</strong> {selectedTrip.pickup}
+              </p>
+              <p>
+                <strong>Time:</strong> {selectedTrip.time}
+              </p>
+              <p>
+                <strong>Dropoff:</strong> {selectedTrip.Dropoff}
+              </p>
+              <p>
+                <strong>Date:</strong> {selectedTrip.date1}
+              </p>
+              <p>
+                <strong>Time:</strong> {selectedTrip.time1}
+              </p>
+              <p>
+                <strong>Driver Name:</strong> {selectedTrip.drivername}
+              </p>
+              <p>
+                <strong>Driver Mobile:</strong> {selectedTrip.mobileno}
+              </p>
+              <p>
+                <strong>Vehicle Number:</strong> {selectedTrip.vehicleno}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -3,12 +3,10 @@ import Sidebar from "../Sidebar/Sidebar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { Table } from "react-bootstrap";
-import { FaEdit, FaTrash, FaTimes,FaFilePdf } from "react-icons/fa";
+import { FaEdit, FaTrash, FaTimes, FaFilePdf } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ViewDriverDetails.css";
-import img1 from "../../assects/images/shivpushpa_logo.png"
-
-
+import img1 from "../../assects/images/shivpushpa_logo.png";
 
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -75,7 +73,7 @@ const ViewStartEndDetails = () => {
           body: JSON.stringify(editedShareDetail),
         }
       );
-  
+
       if (response.ok) {
         setShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
@@ -87,11 +85,11 @@ const ViewStartEndDetails = () => {
             detail._id === editedShareDetail._id ? editedShareDetail : detail
           )
         );
-  
+
         // Reset edit mode and edited detail
         setEditMode(false);
         setEditedShareDetail(null);
-  
+
         // Show success message
         alert("Share detail updated successfully");
         setErrorMessage(""); // Clear any error messages
@@ -104,9 +102,6 @@ const ViewStartEndDetails = () => {
       setErrorMessage("Error updating share detail. Please try again."); // Set error message
     }
   };
-  
-
-  
 
   const handleCloseEdit = () => {
     setEditMode(false);
@@ -114,27 +109,35 @@ const ViewStartEndDetails = () => {
   };
 
   const handleDeleteShareDetail = async (shareDetailId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this share detail?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this share detail?"
+    );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8787/api/getDetails-fromDriver/${shareDetailId}`, {
-          method: 'DELETE',
-        });
-  
+        const response = await fetch(
+          `http://localhost:8787/api/getDetails-fromDriver/${shareDetailId}`,
+          {
+            method: "DELETE",
+          }
+        );
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
-  
-        setShareDetails((prevDetails) => prevDetails.filter((detail) => detail._id !== shareDetailId));
-        setFilteredShareDetails((prevDetails) => prevDetails.filter((detail) => detail._id !== shareDetailId));
-        alert('Share detail deleted successfully');
+
+        setShareDetails((prevDetails) =>
+          prevDetails.filter((detail) => detail._id !== shareDetailId)
+        );
+        setFilteredShareDetails((prevDetails) =>
+          prevDetails.filter((detail) => detail._id !== shareDetailId)
+        );
+        alert("Share detail deleted successfully");
       } catch (error) {
-        console.error('Error deleting share detail:', error);
-        setErrorMessage('Error deleting share detail: ' + error.message);
+        console.error("Error deleting share detail:", error);
+        setErrorMessage("Error deleting share detail: " + error.message);
       }
     }
   };
-  
 
   const fetchShareDetails = async (_id) => {
     try {
@@ -168,62 +171,61 @@ const ViewStartEndDetails = () => {
 
   const generatePDF = (trip) => {
     // Ensure numeric values and calculate total amount
-  const toll = parseFloat(trip.toll) || 0;
-  const allowance = parseFloat(trip.allowance) || 0;
-  const nightstay = parseFloat(trip.nightstay) || 0;
-  const totalAmt = toll + allowance + nightstay;
-   // Format total amount with currency symbol
-   const formattedTotalAmt = `Rs ${totalAmt.toFixed(2)}`;
+    const toll = parseFloat(trip.toll) || 0;
+    const allowance = parseFloat(trip.allowance) || 0;
+    const nightstay = parseFloat(trip.nightstay) || 0;
+    const totalAmt = toll + allowance + nightstay;
+    // Format total amount with currency symbol
+    const formattedTotalAmt = `Rs ${totalAmt.toFixed(2)}`;
 
     const doc = new jsPDF();
-    
+
     // Set page dimensions
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-  
+
     // Draw border
     const margin = 10;
     doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
 
-    doc.addImage(img1, 'PNG', 15, 15, 45, 32);
-    // Header section 
+    doc.addImage(img1, "PNG", 15, 15, 45, 32);
+    // Header section
     doc.setFontSize(18);
     doc.text("Shivpushpa Travels", 70, 30);
     doc.setFontSize(12);
     doc.text("332, Kasba Peth Phadke Haud Chowk, Pune 411 0111", 70, 35);
     doc.text("Mail: travelshivpushpa@gmail.com", 70, 40);
 
-    
     // Title
     doc.setFontSize(18);
-    doc.text("Driver Trip Details", 70 , 20);
-    
+    doc.text("Driver Trip Details", 70, 20);
+
     // Add a line to separate header and body
     doc.line(10, 50, pageWidth - 10, 50);
-    
+
     // Table
     const columns = ["Field", "Value"];
     const rows = [
-      ['Customer Name', trip.customername],
-      ['Customer Mobile', trip.customermobile],
-      ['Driver Name', trip.drivername],
-      ['Driver Mobile', trip.mobileno],
-      ['Vehicle Number', trip.vehicleno],
-      ['Trip Type', trip.triptype],
-      ['Sub Type', trip.subtype],
-      ['Pickup', trip.pickup],
-      ['Time', trip.time],
-      ['Dropoff', trip.Dropoff],
-      ['Drop Date', trip.date1],
-      ['Drop Time', trip.time1],
-      ['Total Days', trip.totalDays],
-      ['Total Hours', trip.totalHours],
-      ['Toll', trip.toll],
-      ['Allowance', trip.allowance],
-      ['Night Stay', trip.nightstay],
+      ["Customer Name", trip.customername],
+      ["Customer Mobile", trip.customermobile],
+      ["Driver Name", trip.drivername],
+      ["Driver Mobile", trip.mobileno],
+      ["Vehicle Number", trip.vehicleno],
+      ["Trip Type", trip.triptype],
+      ["Sub Type", trip.subtype],
+      ["Pickup", trip.pickup],
+      ["Time", trip.time],
+      ["Dropoff", trip.Dropoff],
+      ["Drop Date", trip.date1],
+      ["Drop Time", trip.time1],
+      ["Total Days", trip.totalDays],
+      ["Total Hours", trip.totalHours],
+      ["Toll", trip.toll],
+      ["Allowance", trip.allowance],
+      ["Night Stay", trip.nightstay],
       ["Total Amount", totalAmt.toFixed(2)],
     ];
-    
+
     doc.autoTable({
       startY: 60,
       body: rows,
@@ -237,36 +239,39 @@ const ViewStartEndDetails = () => {
         1: { halign: "left" },
       },
     });
-  
+
     // Add space between the table and the "Bank Details" section
     const tableEndY = doc.autoTable.previous.finalY + 10;
-  
+
     // Bank Details section on the left
     doc.setFontSize(10);
     doc.text("Bank Details:", 15, tableEndY);
     doc.text("Bank Name: The Cosmos Co-operative Bank Ltd", 15, tableEndY + 7);
-    doc.text("Branch Name: Kasba Raviwar Branch, Pune 411 002", 15, tableEndY + 14);
+    doc.text(
+      "Branch Name: Kasba Raviwar Branch, Pune 411 002",
+      15,
+      tableEndY + 14
+    );
     doc.text("Account Number: 015204301220061", 15, tableEndY + 21);
     doc.text("IFSC Code: COSB0000015", 15, tableEndY + 28);
     doc.text("MICR Code: 411164014", 15, tableEndY + 35);
-  
+
     // Signature section
     const signatureStartY = doc.autoTable.previous.finalY + 10;
     doc.setFontSize(12);
     doc.text("For Shivpushpa Travels", pageWidth - 60, signatureStartY);
     doc.text("Authorised Signatory", pageWidth - 60, signatureStartY + 10);
-    
+
     // Save the PDF
     doc.save(`Trip_Details_${trip._id}.pdf`);
   };
-  
 
   return (
     <>
-      <Sidebar />
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h2 className="ml-[37%]"
+          <h2
+            className="ml-[37%]"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -290,11 +295,11 @@ const ViewStartEndDetails = () => {
             <Table>
               <thead>
                 <tr>
-                <th>Sr.No.</th>
+                  <th>Sr.No.</th>
                   <th>Customer Name</th>
-                 <th>Vehicle</th>
-                 <th>Trip Type</th>
-                 <th>Sub Type</th>
+                  <th>Vehicle</th>
+                  <th>Trip Type</th>
+                  <th>Sub Type</th>
                   <th>Date</th>
                   {/* <th>Time</th> */}
                   <th>Drop Location</th>
@@ -307,9 +312,9 @@ const ViewStartEndDetails = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredShareDetails.map((shareDetail,index) => (
+                {filteredShareDetails.map((shareDetail, index) => (
                   <tr key={shareDetail._id}>
-                  <td>{index + 1}</td>
+                    <td>{index + 1}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.triptype}</td>
@@ -322,7 +327,7 @@ const ViewStartEndDetails = () => {
                     {/* <td>{shareDetail.time1}</td> */}
                     {/* <td>{shareDetail.totalDays}</td> */}
                     {/* <td>{shareDetail.totalHours}</td> */}
-                    
+
                     <td>{shareDetail.mobileno}</td>
                     <td>
                       <div className="d-flex justify-content-between">
@@ -599,13 +604,14 @@ const ViewStartEndDetails = () => {
                 </div>
                 <div className="space-y-2">
                   <p>
-                  <p>
-                    <strong>Customer Name:</strong> {selectedTrip.customername}
-                  </p>
-                  <p>
-                    <strong>Customer Mobile:</strong>{" "}
-                    {selectedTrip.customermobile}
-                  </p>
+                    <p>
+                      <strong>Customer Name:</strong>{" "}
+                      {selectedTrip.customername}
+                    </p>
+                    <p>
+                      <strong>Customer Mobile:</strong>{" "}
+                      {selectedTrip.customermobile}
+                    </p>
                     <strong>Driver Name:</strong> {selectedTrip.drivername}
                   </p>
                   <p>

@@ -6,110 +6,103 @@
     padding: 0;
     box-sizing: border-box;
   } */
-  
-  /* Global styles */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(200, 205, 122);
+
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgb(200, 205, 122);
+}
+
+/* Container for the entire page */
+.rate-Add-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 8px;
+  /* margin-left: 300px; */
+  height: auto;
+}
+
+/* Sidebar styles (adjust as needed) */
+/* Add styles for your Sidebar component */
+
+/* Main container styles */
+.rate-main-container {
+  max-width: 960px;
+  width: 100%;
+  /* background-color: #fff; */
+  /* border: 1px solid #ccc; */
+  padding: 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+/* Form group styles */
+.rate-form-group {
+  margin-bottom: 15px;
+}
+
+/* Form label styles */
+.rate-form-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Form input and select styles */
+.form-control-rate-add-input {
+  width: 80%;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+.rate-form-control {
+  width: 360px;
+  height: 43px; /* Make all inputs and selects full width */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin-bottom: 10px; /* Add some space between input fields */
+}
+.rate-add-input {
+  width: 275px;
+}
+
+/* Custom submit button styles */
+.rate-btn-submit {
+  background-color: #004f83;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rate-btn-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 15px;
   }
-  
-  /* Container for the entire page */
-  .rate-Add-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
+
+  .form-control-ven-add-input {
     padding: 8px;
-    margin-left: 300px;
-    height: auto;
-
-  }
-  
-  /* Sidebar styles (adjust as needed) */
-  /* Add styles for your Sidebar component */
-  
-  /* Main container styles */
-  .rate-main-container {
-    max-width: 960px;
-    width: 100%;
-    /* background-color: #fff; */
-    /* border: 1px solid #ccc; */
-    padding: 20px;
-    border-radius: 8px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  }
-  
-  /* Form group styles */
-  .rate-form-group {
-    margin-bottom: 15px;
-  }
-  
-  /* Form label styles */
-  .rate-form-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  /* Form input and select styles */
-  .form-control-rate-add-input {
-    width: 80%;
-    height: 40px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-  }
-  .rate-form-control {
-    width: 360px;
-    height: 43px; /* Make all inputs and selects full width */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    margin-bottom: 10px; /* Add some space between input fields */
-  }
-  .rate-add-input{
-    width: 275px;
-  }
-  
-  
-  /* Custom submit button styles */
-  .rate-btn-submit {
-    background-color: #004F83;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .rate-btn-submit:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive styles for smaller screens */
-  @media (max-width: 768px) {
-    .main-container {
-      padding: 15px;
-    }
-  
-    .form-control-ven-add-input {
-      padding: 8px;
-    }
-  
-    
-  
-    .vendor-btn-submit {
-      padding: 8px 16px;
-    }
   }
 
-
-  .required-asterisk {
-    color: red; /* or any other color */
-    margin-left: 4px; /* adjust the margin as needed */
+  .vendor-btn-submit {
+    padding: 8px 16px;
   }
-  
-  
+}
+
+.required-asterisk {
+  color: red; /* or any other color */
+  margin-left: 4px; /* adjust the margin as needed */
+}

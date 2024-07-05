@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import './ViewVender.css'; // Make sure you have a CSS file for this component
-import { FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
-import { Table, Button, Modal, Form } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import "./ViewVender.css"; // Make sure you have a CSS file for this component
+import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
+import { Table, Button, Modal, Form } from "react-bootstrap";
+import axios from "axios";
 
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedVendor, setEditedVendor] = useState({});
-  const [viewType, setViewType] = useState('table');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [viewType, setViewType] = useState("table");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [filteredVendors, setFilteredVendors] = useState([]);
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await fetch('http://localhost:8787/api/add-venders');
+        const response = await fetch("http://localhost:8787/api/add-venders");
         if (!response.ok) {
-          throw Error('Network response was not ok');
+          throw Error("Network response was not ok");
         }
         const data = await response.json();
         setVendors(data);
         // Initialize filteredVendors with all vendors on first load
         setFilteredVendors(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -37,7 +37,7 @@ const ViewVendor = () => {
   // Update filteredVendors when searchTerm changes
   useEffect(() => {
     const filtered = vendors.filter((vendor) => {
-      const vendorName = vendor.vender_Name || '';
+      const vendorName = vendor.vender_Name || "";
       return vendorName.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredVendors(filtered);
@@ -48,38 +48,48 @@ const ViewVendor = () => {
     setIsEditing(true);
   };
 
-  
-
   const handleDelete = async (vendorId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this vendor?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this vendor?"
+    );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8787/api/add-venders/${vendorId}`, {
-          method: 'DELETE',
-        });
+        const response = await fetch(
+          `http://localhost:8787/api/add-venders/${vendorId}`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
 
-        setVendors((prevCustomers) => prevCustomers.filter((customer) => customer._id !== vendorId));
-        setFilteredVendors((prevCustomers) => prevCustomers.filter((customer) => customer._id !== vendorId));
-        alert('Vendor deleted successfully');
+        setVendors((prevCustomers) =>
+          prevCustomers.filter((customer) => customer._id !== vendorId)
+        );
+        setFilteredVendors((prevCustomers) =>
+          prevCustomers.filter((customer) => customer._id !== vendorId)
+        );
+        alert("Vendor deleted successfully");
       } catch (error) {
-        console.error('Error deleting vendors:', error);
-        alert('Error deleting customer: ' + error.message);
+        console.error("Error deleting vendors:", error);
+        alert("Error deleting customer: " + error.message);
       }
     }
   };
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-venders/${editedVendor._id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedVendor),
-      });
+      const response = await fetch(
+        `http://localhost:8787/api/add-venders/${editedVendor._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editedVendor),
+        }
+      );
 
       if (response.ok) {
         setVendors((prevVendors) =>
@@ -93,26 +103,34 @@ const ViewVendor = () => {
           )
         );
         setIsEditing(false);
-        alert('Vendor data updated successfully');
-        setErrorMessage('');
+        alert("Vendor data updated successfully");
+        setErrorMessage("");
       } else {
-        console.error('Error updating vendor:', response.status);
-        alert('');
-        setErrorMessage('Error updating vendor. Please try again.');
+        console.error("Error updating vendor:", response.status);
+        alert("");
+        setErrorMessage("Error updating vendor. Please try again.");
       }
     } catch (error) {
-      console.error('Error updating vendor:', error);
-      setSuccessMessage('');
-      alert('Error updating vendor. Please try again.');
+      console.error("Error updating vendor:", error);
+      setSuccessMessage("");
+      alert("Error updating vendor. Please try again.");
     }
   };
 
   return (
     <>
-      <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className='text-center'>View Vendors</h2>
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              marginBottom: "1rem",
+            }}
+            className="text-center"
+          >
+            View Vendors
+          </h2>
           <input
             type="search"
             placeholder="Search By Vendor Name"
@@ -124,7 +142,7 @@ const ViewVendor = () => {
           <Table>
             <thead>
               <tr>
-              <th>Sr. No.</th>
+                <th>Sr. No.</th>
                 <th>Vendor Name</th>
                 <th>Company Name</th>
                 <th>GST No</th>
@@ -134,9 +152,9 @@ const ViewVendor = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredVendors.map((vendor,index) => (
+              {filteredVendors.map((vendor, index) => (
                 <tr key={vendor._id}>
-                <td>{index + 1}</td>
+                  <td>{index + 1}</td>
                   <td>{vendor.vender_Name}</td>
                   <td>{vendor.company_Name}</td>
                   <td>{vendor.GST_No}</td>
@@ -144,10 +162,16 @@ const ViewVendor = () => {
                   <td>{vendor.address}</td>
                   <td>
                     <div className="d-flex align-items-center gap-1">
-                      <button className="btn btn-info" onClick={() => handleEditVendor(vendor)}>
+                      <button
+                        className="btn btn-info"
+                        onClick={() => handleEditVendor(vendor)}
+                      >
                         <FaEdit />
                       </button>
-                      <button className="btn btn-danger" onClick={() => handleDelete(vendor._id)}>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete(vendor._id)}
+                      >
                         <FaTrash />
                       </button>
                     </div>
@@ -173,7 +197,12 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.vender_Name}
-                onChange={(e) => setEditedVendor({ ...editedVendor, vender_Name: e.target.value })}
+                onChange={(e) =>
+                  setEditedVendor({
+                    ...editedVendor,
+                    vender_Name: e.target.value,
+                  })
+                }
               />
             </Form.Group>
 
@@ -182,7 +211,12 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.company_Name}
-                onChange={(e) => setEditedVendor({ ...editedVendor, company_Name: e.target.value })}
+                onChange={(e) =>
+                  setEditedVendor({
+                    ...editedVendor,
+                    company_Name: e.target.value,
+                  })
+                }
               />
             </Form.Group>
 
@@ -191,7 +225,9 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.GST_No}
-                onChange={(e) => setEditedVendor({ ...editedVendor, GST_No: e.target.value })}
+                onChange={(e) =>
+                  setEditedVendor({ ...editedVendor, GST_No: e.target.value })
+                }
               />
             </Form.Group>
 
@@ -200,7 +236,12 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.vender_Mobile}
-                onChange={(e) => setEditedVendor({ ...editedVendor, vender_Mobile: e.target.value })}
+                onChange={(e) =>
+                  setEditedVendor({
+                    ...editedVendor,
+                    vender_Mobile: e.target.value,
+                  })
+                }
               />
             </Form.Group>
 
@@ -209,7 +250,12 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.Vender_Email}
-                onChange={(e) => setEditedVendor({ ...editedVendor, Vender_Email: e.target.value })}
+                onChange={(e) =>
+                  setEditedVendor({
+                    ...editedVendor,
+                    Vender_Email: e.target.value,
+                  })
+                }
               />
             </Form.Group>
 
@@ -218,14 +264,22 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.address}
-                onChange={(e) => setEditedVendor({ ...editedVendor, address: e.target.value })}
+                onChange={(e) =>
+                  setEditedVendor({ ...editedVendor, address: e.target.value })
+                }
               />
             </Form.Group>
 
-            <Button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
+            <Button
+              onClick={handleSave}
+              className="px-4 py-2 bg-blue-500 text-white rounded"
+            >
               Save
             </Button>
-            <Button onClick={() => setIsEditing(false)} className="px-4 py-2 ml-2 bg-red-500 text-white rounded">
+            <Button
+              onClick={() => setIsEditing(false)}
+              className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+            >
               Cancel
             </Button>
           </Form>

@@ -2,103 +2,101 @@
 
 /* Overall container */
 .add-payment-container {
-    display: flex;
-    margin-left: 300px; /* Leave 300px on the left for the sidebar */
+  display: flex;
+  /* margin-left: 300px; Leave 300px on the left for the sidebar */
+}
 
-  }
-  
-  /* Sidebar styling (assuming a fixed width of 300px) */
-  /* .sidebar {
+/* Sidebar styling (assuming a fixed width of 300px) */
+/* .sidebar {
     width: 300px;
   } */
-  
-  /* Form body styling */
+
+/* Form body styling */
+.add-payment-form-body {
+  flex: 1; /* Take the remaining space */
+  padding: 20px;
+}
+
+/* Card styling */
+.add-payment-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Content wrapper */
+.add-payment-content-wrapper {
+  display: flex;
+}
+
+/* Form styling */
+.add-payment-form {
+  display: flex;
+  flex-wrap: wrap; /* Allow the form to wrap into multiple lines */
+}
+
+/* Two-column layout */
+.add-payment-column {
+  flex: 1; /* Each column takes half of the available space */
+  padding: 10px;
+}
+
+/* Form field group styling */
+.add-payment-field-group {
+  margin-bottom: 15px;
+}
+
+/* Label styling */
+.add-payment-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Input styling */
+.add-payment-input {
+  width: 300px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.add-payment-form-control {
+  width: 250px;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Button styling */
+.add-payment-btn {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.add-payment-submit {
+  background-color: #004f83;
+  color: #fff;
+  padding: 7px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.add-payment-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
   .add-payment-form-body {
-    flex: 1; /* Take the remaining space */
-    padding: 20px;
+    /* margin-left: 300px; On smaller screens, reset the left margin */
   }
-  
-  /* Card styling */
-  .add-payment-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Content wrapper */
-  .add-payment-content-wrapper {
-    display: flex;
-  }
-  
-  /* Form styling */
-  .add-payment-form {
-    display: flex;
-    flex-wrap: wrap; /* Allow the form to wrap into multiple lines */
-  }
-  
-  /* Two-column layout */
+
   .add-payment-column {
-    flex: 1; /* Each column takes half of the available space */
-    padding: 10px;
+    flex: 100%; /* On smaller screens, the columns should take the full width */
   }
-  
-  /* Form field group styling */
-  .add-payment-field-group {
-    margin-bottom: 15px;
-  }
-  
-  /* Label styling */
-  .add-payment-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  /* Input styling */
-  .add-payment-input {
-    width: 300px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  .add-payment-form-control{
-    width: 250px;
-    padding: 8px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-  }
-  
-  /* Button styling */
-  .add-payment-btn {
-    background-color: #dc3545;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  .add-payment-submit{
-    background-color: #004f83;
-    color: #fff;
-    padding: 7px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  .add-payment-submit:hover{
-    background-color:#0056b3 ;
-  }
-  
-  /* Responsive styling */
-  @media (max-width: 768px) {
-    .add-payment-form-body {
-      margin-left: 0; /* On smaller screens, reset the left margin */
-    }
-  
-    .add-payment-column {
-      flex: 100%; /* On smaller screens, the columns should take the full width */
-    }
-  }
-  
+}

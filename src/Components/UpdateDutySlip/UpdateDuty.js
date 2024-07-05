@@ -272,7 +272,6 @@ const UpdateDuty = () => {
     }
   };
 
-
   const handleSubmit = async (event) => {
     // event.preventDefault();
 
@@ -300,18 +299,22 @@ const UpdateDuty = () => {
       totalamount: totalAmount,
       advanceamount: advanceAmount,
       paymentmethod: paymentMethod,
-      trip_duty_number : setSelectedCustomer.trip_duty_number
+      trip_duty_number: setSelectedCustomer.trip_duty_number,
     };
     // Log the data to be sent
     console.log("Submitting data:", data);
 
     try {
-      const response = await axios.post("http://localhost:8787/api/update-duty", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
+      const response = await axios.post(
+        "http://localhost:8787/api/update-duty",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (response.status === 201) {
         // showAlert("Data added successfully!", "success");
         window.alert("Data added Successfully");
@@ -347,7 +350,6 @@ const UpdateDuty = () => {
       } else {
         alert("Failed to add data. Please try again.", "danger");
       }
-      
     } catch (error) {
       console.error("API request error:", error);
       alert("Failed to add data. Please try again.", "danger");
@@ -356,7 +358,6 @@ const UpdateDuty = () => {
 
   return (
     <>
-      <Sidebar /> {/* Render the Sidebar component */}
       <div className="update-duty-container">
         <div className="update-duty-form">
           <div className="form-group">
@@ -369,7 +370,9 @@ const UpdateDuty = () => {
             >
               Add Duty Slip
             </h2>
-            <h4 className="font-bold text-danger">Duity Slip Number {selectedCustomer.trip_duty_number}</h4>
+            <h4 className="font-bold text-danger">
+              Duity Slip Number {selectedCustomer.trip_duty_number}
+            </h4>
 
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}

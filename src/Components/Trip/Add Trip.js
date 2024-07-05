@@ -58,9 +58,7 @@ const AddTrip = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8787/api/add-customers"
-        );
+        const response = await fetch("http://localhost:8787/api/add-customers");
 
         if (response.ok) {
           const data = await response.json();
@@ -178,7 +176,7 @@ const AddTrip = () => {
         totalHours %= 24;
 
         // Convert totalHours and remainingMinutes to floating point number
-        const totalHoursWithMinutes = totalHours + (remainingMinutes / 60);
+        const totalHoursWithMinutes = totalHours + remainingMinutes / 60;
 
         newData = {
           ...newData,
@@ -192,8 +190,6 @@ const AddTrip = () => {
     setFormData(newData);
     setError(""); // Clear previous errors
   };
-
-
 
   const handleAddPerson = () => {
     if (numberOfPeople < 6) {
@@ -296,8 +292,11 @@ const AddTrip = () => {
 
       if (response.ok) {
         alert("Data added successfully!");
-        // Save Data in localStorage 
-        localStorage.setItem('submittedData', JSON.stringify(dataWithCustomerId));
+        // Save Data in localStorage
+        localStorage.setItem(
+          "submittedData",
+          JSON.stringify(dataWithCustomerId)
+        );
         setFormData(initialFormData);
         setIsSubmitted(true); // Set form submission state to true
       } else {
@@ -309,17 +308,14 @@ const AddTrip = () => {
     }
   };
 
-
-
   // Function to handle sending email
   const handleSendEmail = async () => {
-    const storedData = localStorage.getItem('submittedData');
+    const storedData = localStorage.getItem("submittedData");
 
     if (!storedData) {
       alert("No data available to send email.");
       return;
     }
-
 
     const parsedData = JSON.parse(storedData);
     const {
@@ -354,37 +350,40 @@ const AddTrip = () => {
       hours,
     };
 
-    console.log('Sending email with data:', emailData);
+    console.log("Sending email with data:", emailData);
 
     try {
-      const response = await fetch("http://localhost:8787/api/add-trip/sendemail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ emailData }),
-      });
+      const response = await fetch(
+        "http://localhost:8787/api/add-trip/sendemail",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ emailData }),
+        }
+      );
 
       if (response.ok) {
         alert("Email sent successfully!");
-        localStorage.clear()
+        localStorage.clear();
       }
 
       if (!response.status === 404) {
         alert("No data available to send email.");
         return;
-      }
-
-      else {
+      } else {
         const errorText = await response.text();
-        alert(`Failed to send email. Status: ${response.status}, ${errorText}`, "danger");
+        alert(
+          `Failed to send email. Status: ${response.status}, ${errorText}`,
+          "danger"
+        );
       }
     } catch (error) {
       alert("An error occurred while sending email.", "danger");
       console.error("Error:", error);
     }
   };
-
 
   const handleSendWhatsApp = () => {
     const customerTextMessage = `Hello ${selectedCustomer.cus_name}, your booking is done. Your booking ID is ${formData.customerId}. Your trip type is ${formData.triptype} and your pickup location is ${formData.pickup} and your drop location is ${formData.dropoff}.`;
@@ -421,10 +420,10 @@ const AddTrip = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="add-trip-container">
         <div className="trip-main-container relative left-[6rem] mt-4">
-          <h2 className="text-center relative right-[5rem]"
+          <h2
+            className="text-center relative right-[5rem]"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -666,7 +665,7 @@ const AddTrip = () => {
             <div className="trip-form-group">
               <label htmlFor="hours" className="trip-form-label">
                 Total Hours:
-                <span className="days">   Hours</span>
+                <span className="days"> Hours</span>
               </label>
               <input
                 type="number"

@@ -204,10 +204,10 @@ const ViewTrip = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container mt-4">
-          <h2 className="text-center"
+          <h2
+            className="text-center"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",

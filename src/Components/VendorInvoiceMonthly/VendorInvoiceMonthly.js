@@ -9,7 +9,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 function VendorInvoiceMonthly() {
-
   const [formData, setFormData] = useState({
     vendorId: "",
     vender_Name: "",
@@ -77,7 +76,7 @@ function VendorInvoiceMonthly() {
   const handleVendorChange = async (e) => {
     const vendorId = e.target.value;
     setSelectedVendorId(vendorId);
-    setSelectedDate(""); 
+    setSelectedDate("");
 
     if (vendorId) {
       fetchVendorTrips(vendorId);
@@ -90,11 +89,13 @@ function VendorInvoiceMonthly() {
 
     if (date && selectedVendorId) {
       const selectedDateObj = new Date(date);
-      const month = (selectedDateObj.getMonth() + 1).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }); // Extract and format month with leading zero
+      const month = (selectedDateObj.getMonth() + 1).toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      }); // Extract and format month with leading zero
       fetchVendorTripsByMonth(selectedVendorId, month);
     }
   };
-
 
   const fetchVendorTrips = async (vendorId) => {
     try {
@@ -113,17 +114,21 @@ function VendorInvoiceMonthly() {
 
   const fetchVendorTripsByMonth = async (vendorId, month) => {
     try {
-
       const response = await fetch(
         `http://localhost:8787/api/vender-payment/vender/${vendorId}/month/${month}`
       );
       if (!response.ok) {
-        throw new Error("Failed to fetch vendor details for the selected month");
+        throw new Error(
+          "Failed to fetch vendor details for the selected month"
+        );
       }
       const data = await response.json();
       setSelectedVendorTrips(data);
     } catch (error) {
-      console.error("Error fetching vendor details for the selected month:", error.message);
+      console.error(
+        "Error fetching vendor details for the selected month:",
+        error.message
+      );
     }
   };
 
@@ -134,7 +139,7 @@ function VendorInvoiceMonthly() {
         throw new Error("Failed to fetch vendor details");
       }
       const data = await response.json();
-      const vendor = data.find(v => v.vender_id === vendorId);
+      const vendor = data.find((v) => v.vender_id === vendorId);
       if (!vendor) {
         throw new Error("Vendor not found");
       }
@@ -142,18 +147,13 @@ function VendorInvoiceMonthly() {
         vender_Name: vendor.vender_Name,
         GST_No: vendor.GST_No,
         address: vendor.address,
-        mobile_Number: vendor.mobile_Number
+        mobile_Number: vendor.mobile_Number,
       };
     } catch (error) {
       console.error("Error fetching vendor details:", error.message);
       return null;
     }
   };
-
-
-  
-
-
 
   // Define a function to format the date
   function formatDate(dateString) {
@@ -196,18 +196,20 @@ function VendorInvoiceMonthly() {
     let totalKm = 0;
     let totalAmount = 0;
     let totalTds = 0;
-  
+
     selectedVendorTrips.forEach((trip) => {
       totalKm += trip.km;
       totalAmount += trip.total_amount;
       totalTds += trip.tds;
     });
-  
+
     const subtotal = totalAmount;
     const tds = totalTds;
     const finalAmount = subtotal - tds;
-  
-    const downloadConfirmed = window.confirm("Do you want to download the invoice?");
+
+    const downloadConfirmed = window.confirm(
+      "Do you want to download the invoice?"
+    );
     if (downloadConfirmed) {
       const doc = new jsPDF({
         unit: "mm",
@@ -216,37 +218,37 @@ function VendorInvoiceMonthly() {
         orientation: "portrait",
         height: 800, // Increase the height as needed
       });
-  
+
       // Header Background
       doc.setFillColor(60, 181, 205);
       doc.rect(0, 0, doc.internal.pageSize.getWidth(), 7, "F");
-  
+
       // Header Logo
       const img = new Image();
       img.src = headerlogo;
       doc.addImage(img, "JPEG", 5, 10, 45, 32);
-  
+
       // Header Company Information
       doc.setFontSize(11);
       doc.text(formData.companyName, 65, 15);
       doc.text(formData.companyAddress, 65, 20);
       doc.text(formData.contactno, 65, 25);
       doc.text(formData.mail, 65, 30);
-  
+
       // Invoice Information
       const currentDate = new Date();
       const formattedDate = currentDate.toLocaleDateString();
-  
+
       doc.setFontSize(11);
       doc.text(`Invoice Date: ${formattedDate}`, 65, 35);
-  
+
       // Separator Line
       doc.setDrawColor(0, 0, 255);
       doc.line(10, 45, 200, 45);
-  
+
       // Invoice To Section
       doc.text("INVOICE TO:", 10, 55);
-  
+
       // Vendor Information
       const vendorRows = [
         { label: "Vendor Name", value: vendorDetails.vender_Name, yPos: 62 },
@@ -254,16 +256,16 @@ function VendorInvoiceMonthly() {
         { label: "Vendor GST No", value: vendorDetails.GST_No, yPos: 72 },
         { label: "Contact No", value: vendorDetails.mobile_Number, yPos: 77 },
       ];
-  
+
       vendorRows.forEach((row) => {
         doc.text(`${row.label}: ${row.value}`, 10, row.yPos);
       });
-  
+
       doc.line(10, 80, 200, 80);
-  
+
       const marginLeft = 10;
       const marginTop = 90;
-  
+
       // Prepare trip details data including summary
       const tripDetails = selectedVendorTrips.map((trip) => [
         trip.vehicle_type,
@@ -273,7 +275,7 @@ function VendorInvoiceMonthly() {
         trip.total_amount,
         trip.tds,
       ]);
-  
+
       // Add summary rows to tripDetails array
       tripDetails.push([
         { content: "Subtotal:", styles: { halign: "right" } },
@@ -291,46 +293,57 @@ function VendorInvoiceMonthly() {
         finalAmount.toFixed(2),
         totalTds.toFixed(2),
       ]);
-  
+
       doc.autoTable({
         startY: marginTop,
-        head: [
-          [
-            "DESCRIPTION",
-            "SAC Code",
-            "Kms",
-            "AMOUNT",
-            "TOTAL",
-            "TDS",
-          ],
-        ],
+        head: [["DESCRIPTION", "SAC Code", "Kms", "AMOUNT", "TOTAL", "TDS"]],
         body: tripDetails,
         theme: "grid",
         margin: { left: marginLeft },
       });
-  
-  
+
       doc.text("Bank Details:", 10, doc.autoTable.previous.finalY + 17);
-      doc.text(`Bank Name: ${formData.bankname}`, 10, doc.autoTable.previous.finalY + 24);
-      doc.text(`Branch Name: ${formData.branchname}`, 10, doc.autoTable.previous.finalY + 31);
-      doc.text(`Account Number: ${formData.accountNumber}`, 10, doc.autoTable.previous.finalY + 38);
-      doc.text(`IFSC Code: ${formData.ifsccode}`, 10, doc.autoTable.previous.finalY + 45);
-      doc.text(`MICR Code: ${formData.micrcode}`, 10, doc.autoTable.previous.finalY + 52);
-  
+      doc.text(
+        `Bank Name: ${formData.bankname}`,
+        10,
+        doc.autoTable.previous.finalY + 24
+      );
+      doc.text(
+        `Branch Name: ${formData.branchname}`,
+        10,
+        doc.autoTable.previous.finalY + 31
+      );
+      doc.text(
+        `Account Number: ${formData.accountNumber}`,
+        10,
+        doc.autoTable.previous.finalY + 38
+      );
+      doc.text(
+        `IFSC Code: ${formData.ifsccode}`,
+        10,
+        doc.autoTable.previous.finalY + 45
+      );
+      doc.text(
+        `MICR Code: ${formData.micrcode}`,
+        10,
+        doc.autoTable.previous.finalY + 52
+      );
+
       // Authorised Signatory
-      doc.text("For Shivpushpa Travels", 160, doc.autoTable.previous.finalY + 20);
+      doc.text(
+        "For Shivpushpa Travels",
+        160,
+        doc.autoTable.previous.finalY + 20
+      );
       doc.text("Authorised Signatory", 160, doc.autoTable.previous.finalY + 30);
-  
+
       // Save the PDF
       doc.save(`Invoice_${vendorDetails.vender_Name}.pdf`);
     }
   };
 
-
   return (
     <>
-      <Sidebar />
-
       <div className="container-vendor-invoice-monthly">
         <h2
           style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
@@ -351,7 +364,6 @@ function VendorInvoiceMonthly() {
 
         <div className="form-vendor-invoice">
           <div className="form-row">
-
             <div className="form-group">
               <label htmlFor="vender_Name" className="form-label">
                 Vendor Name:
@@ -391,7 +403,6 @@ function VendorInvoiceMonthly() {
         </div>
 
         <div>
-
           {selectedVendorTrips.length > 0 ? (
             <div>
               <h3>Vendor Trip Details:</h3>

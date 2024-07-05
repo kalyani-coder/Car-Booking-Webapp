@@ -32,7 +32,6 @@ const AddDriver = () => {
       [name]: value,
     }));
 
-  
     if (name === "email") {
       // Validate email
       if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
@@ -81,7 +80,7 @@ const AddDriver = () => {
       ...prevData,
       drivername: cleanedValue,
     }));
-  
+
     // Validate driver name (only text)
     if (!/^[A-Za-z\s]*$/.test(cleanedValue)) {
       setDrivernameError("Driver name must contain only letters and spaces");
@@ -89,9 +88,6 @@ const AddDriver = () => {
       setDrivernameError("");
     }
   };
-  
-
- 
 
   const showAlert = (message, type) => {
     if (type === "success") {
@@ -124,7 +120,9 @@ const AddDriver = () => {
       alert("Driver name must contain only letters and spaces.");
       return;
     }
-    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)) {
+    if (
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)
+    ) {
       alert("Please enter a valid email address.");
       return;
     }
@@ -157,7 +155,10 @@ const AddDriver = () => {
         setFormData(initialFormData); // Clear the form fields
       } else {
         // Display backend error message if available
-        alert(responseData.message || "Failed to add data. Please try again.", "danger");
+        alert(
+          responseData.message || "Failed to add data. Please try again.",
+          "danger"
+        );
       }
     } catch (error) {
       console.error("API request error:", error);
@@ -167,11 +168,19 @@ const AddDriver = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="driver-Add-container">
         <div className="driver-main-container relative left-[8rem] mt-7">
           <div className="driver-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center mr-[10rem]">Add Driver</h2>
+            <h2
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+              }}
+              className="text-center mr-[10rem]"
+            >
+              Add Driver
+            </h2>
             <div className="driver-form-group">
               <label htmlFor="drivername" className="form-label">
                 Driver Name:
@@ -186,7 +195,9 @@ const AddDriver = () => {
                 onChange={handleDriverNameChange}
                 value={formData.drivername}
               />
-              {drivernameError && <p className="error-message">{drivernameError}</p>}
+              {drivernameError && (
+                <p className="error-message">{drivernameError}</p>
+              )}
             </div>
 
             <div className="form-group">
@@ -235,7 +246,9 @@ const AddDriver = () => {
                 onChange={handleChange}
                 value={formData.mobileno}
               />
-              {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+              {mobilenoError && (
+                <p className="error-message">{mobilenoError}</p>
+              )}
             </div>
 
             <div className="form-group">
@@ -252,10 +265,16 @@ const AddDriver = () => {
                 onChange={handleChange2}
                 value={formData.mobileno1}
               />
-              {mobileno1Error && <p className="error-message">{mobileno1Error}</p>}
+              {mobileno1Error && (
+                <p className="error-message">{mobileno1Error}</p>
+              )}
             </div>
 
-            <button type="button" className="driver-btn-submit" onClick={handleSubmit}>
+            <button
+              type="button"
+              className="driver-btn-submit"
+              onClick={handleSubmit}
+            >
               Add
             </button>
           </div>

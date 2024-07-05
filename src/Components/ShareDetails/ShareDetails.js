@@ -1,44 +1,41 @@
-
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import './SharedDetails.css';
+import React, { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
+import "./SharedDetails.css";
 import Alert from "../AddCustomer/Alert";
 
 const ShareDetails = () => {
   const [customers, setCustomers] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState("");
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
   const [selectedCustomerDetails, setSelectedCustomerDetails] = useState({
-    customermobile: '',
-    pickuplocation: '',
-    date: '',
-    time: '',
-    dropofflocation: '',
-    date1: '',
-    time1: '',
-    vehicle: '',
-    triptype: '',
-    subtype: '',
-    drivername: '',
-    mail: '',
-    drivermobileno: '',
-    address: '',
-    vehicleno: '',
+    customermobile: "",
+    pickuplocation: "",
+    date: "",
+    time: "",
+    dropofflocation: "",
+    date1: "",
+    time1: "",
+    vehicle: "",
+    triptype: "",
+    subtype: "",
+    drivername: "",
+    mail: "",
+    drivermobileno: "",
+    address: "",
+    vehicleno: "",
   });
-
-
 
   useEffect(() => {
     // Fetch data from the API endpoint
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8787/api/trip-details');
+        const response = await fetch("http://localhost:8787/api/trip-details");
         const data = await response.json();
         // Update the customers state with the fetched data
         setCustomers(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -47,10 +44,12 @@ const ShareDetails = () => {
 
   const handleCustomerChange = (customerName) => {
     // Find the selected customer details based on the customer name
-    const customerDetails = customers.find((trip) => trip.customername === customerName);
+    const customerDetails = customers.find(
+      (trip) => trip.customername === customerName
+    );
 
     // Log selected customer details to the console
-    console.log('Selected Customer Details:', customerDetails);
+    console.log("Selected Customer Details:", customerDetails);
 
     // Set the selected customer details in the state
     setSelectedCustomerDetails(customerDetails || {});
@@ -67,17 +66,17 @@ const ShareDetails = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      });
     }
   };
 
   const handleSave = async () => {
     try {
       // Make a POST request to the share-details API with the selected customer details
-      const response = await fetch('http://localhost:8787/api/share-details', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8787/api/share-details", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           // Adjust the property names based on your API schema
@@ -101,26 +100,26 @@ const ShareDetails = () => {
       });
 
       if (response.ok) {
-        console.log('Details saved successfully!');
+        console.log("Details saved successfully!");
         alert("Share Details Saved successfully!", "success");
-         // Clear all fields after successful save
-      setSelectedCustomerDetails({
-        customerId: '',
-        customername: '',
-        customermobile: '',
-        vehicle: '',
-        triptype: '',
-        subtype: '',
-        pickuplocation: '',
-        date: '',
-        time: '',
-        dropofflocation: '',
-        date1: '',
-        time1: '',
-        drivername: '',
-        drivermobileno: '',
-        vehicleno: '',
-      });
+        // Clear all fields after successful save
+        setSelectedCustomerDetails({
+          customerId: "",
+          customername: "",
+          customermobile: "",
+          vehicle: "",
+          triptype: "",
+          subtype: "",
+          pickuplocation: "",
+          date: "",
+          time: "",
+          dropofflocation: "",
+          date1: "",
+          time1: "",
+          drivername: "",
+          drivermobileno: "",
+          vehicleno: "",
+        });
       } else {
         alert("Failed to add data. Please try again.", "danger");
       }
@@ -131,11 +130,11 @@ const ShareDetails = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="share-details-container">
         {/* {mobilenoError && <p className="text-red-500">{mobilenoError}</p>} */}
         <div className="share-details-form ml-12">
-          <h2 className='relative  left-[34%]'
+          <h2
+            className="relative  left-[34%]"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -154,9 +153,15 @@ const ShareDetails = () => {
                 <label htmlFor="vehicle" className="share-details-label">
                   Customer Name:
                 </label>
-                <select className="share-details-input" value={selectedCustomer} onChange={(e) => handleCustomerChange(e.target.value)}>
+                <select
+                  className="share-details-input"
+                  value={selectedCustomer}
+                  onChange={(e) => handleCustomerChange(e.target.value)}
+                >
                   {/* Default option */}
-                  <option value="" disabled>Select a customer</option>
+                  <option value="" disabled>
+                    Select a customer
+                  </option>
                   {/* Map over the customers array to populate the dropdown */}
                   {customers.map((customer, index) => (
                     <option key={index} value={customer.customername}>
@@ -177,7 +182,8 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="customermobile"
                   placeholder="Customer Mobile Number"
-                  value={selectedCustomerDetails.customermobile} readOnly
+                  value={selectedCustomerDetails.customermobile}
+                  readOnly
                 />
               </div>
             </div>
@@ -191,7 +197,8 @@ const ShareDetails = () => {
                 </label>
                 <select
                   className="share-details-input"
-                  value={selectedCustomerDetails.vehicle} readOnly
+                  value={selectedCustomerDetails.vehicle}
+                  readOnly
                 >
                   <option value="">Vehicle</option>
                   <option value="Sedan Car">Sedan Car</option>
@@ -236,7 +243,8 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="vehicleno"
                   placeholder="Vehicle Number"
-                  value={selectedCustomerDetails.vehicleno} readOnly
+                  value={selectedCustomerDetails.vehicleno}
+                  readOnly
                 />
               </div>
             </div>
@@ -252,7 +260,8 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="triptype"
                   id="triptype"
-                  value={selectedCustomerDetails.triptype} readOnly
+                  value={selectedCustomerDetails.triptype}
+                  readOnly
                 >
                   <option value="">Trip Type</option>
                   <option value="One Way Trip">One Way Trip</option>
@@ -270,7 +279,8 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="subtype"
                   id="subtype"
-                  value={selectedCustomerDetails.subtype} readOnly
+                  value={selectedCustomerDetails.subtype}
+                  readOnly
                 >
                   <option value="">Sub Type</option>
                   <option value="Local Trip">Local Trip</option>
@@ -296,7 +306,8 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="pickuplocation"
                   placeholder="Pickup Location"
-                  value={selectedCustomerDetails.pickuplocation} readOnly
+                  value={selectedCustomerDetails.pickuplocation}
+                  readOnly
                 />
               </div>
             </div>
@@ -313,7 +324,8 @@ const ShareDetails = () => {
                   type="text"
                   className="share-details-input"
                   placeholder="Enter Dropoff Location"
-                  value={selectedCustomerDetails.dropofflocation} readOnly
+                  value={selectedCustomerDetails.dropofflocation}
+                  readOnly
                 />
               </div>
             </div>
@@ -325,7 +337,12 @@ const ShareDetails = () => {
                 <label htmlFor="date" className="share-details-label">
                   Pickup Date:
                 </label>
-                <input type="date" className="share-details-input" value={selectedCustomerDetails.date} readOnly />
+                <input
+                  type="date"
+                  className="share-details-input"
+                  value={selectedCustomerDetails.date}
+                  readOnly
+                />
               </div>
             </div>
 
@@ -334,7 +351,12 @@ const ShareDetails = () => {
                 <label htmlFor="date1" className="share-details-label">
                   Dropoff Date:
                 </label>
-                <input type="date" className="share-details-input" value={selectedCustomerDetails.date1} readOnly />
+                <input
+                  type="date"
+                  className="share-details-input"
+                  value={selectedCustomerDetails.date1}
+                  readOnly
+                />
               </div>
             </div>
           </div>
@@ -363,7 +385,8 @@ const ShareDetails = () => {
                   type="time"
                   className="share-details-input"
                   name="time1"
-                  value={selectedCustomerDetails.time1} readOnly
+                  value={selectedCustomerDetails.time1}
+                  readOnly
                 />
               </div>
             </div>
@@ -380,7 +403,8 @@ const ShareDetails = () => {
                   className="share-details-input"
                   name="drivername"
                   placeholder="Driver Name"
-                  value={selectedCustomerDetails.drivername} readOnly
+                  value={selectedCustomerDetails.drivername}
+                  readOnly
                 />
               </div>
 
@@ -407,7 +431,6 @@ const ShareDetails = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </>

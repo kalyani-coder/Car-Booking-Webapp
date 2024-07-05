@@ -3,7 +3,7 @@
 /* Style for the container div */
 .update-duty-container {
   padding: 20px;
-     
+
   /* width: 100vw; */
   overflow-x: hidden;
 }
@@ -13,7 +13,7 @@
   display: flex;
   flex-wrap: wrap; /* Allow form items to wrap to the next line on smaller screens */
   gap: 8px;
-  margin-left: 300px; /* Leave 300px from the left side */
+  /* margin-left: 300px; Leave 300px from the left side */
 
   /* padding-left: 20px; */
 }
@@ -55,11 +55,10 @@
 
 /* Hover effect for buttons */
 
-
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .update-duty-container {
-    margin-left: 0; /* Remove the left margin on smaller screens */
+    /* margin-left: 300px; Remove the left margin on smaller screens */
   }
 
   /* Reset width for buttons to full width on smaller screens */

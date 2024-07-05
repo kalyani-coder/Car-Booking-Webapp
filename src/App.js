@@ -8,7 +8,7 @@ import ViewAllocateTrip from "./Components/AllocateTrip/ViewAllocateTrip";
 import UpdateDuty from "./Components/UpdateDutySlip/UpdateDuty";
 import AddPayment from "./Components/AddPayment/AddPayment";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from './Components/Login/LogIn';
+import Login from "./Components/Login/LogIn";
 import Home from "./Components/Home/Home";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import VendorPayment from "./Components/VendorPayment/VendorPayment";
@@ -50,97 +50,213 @@ import CorporateInvoiceMonthly from "./Components/CustomerInvoice/CorporateInvoi
 import ViewMaster from "./Components/Master/ViewMaster";
 import ViewCorporateCustomer from "./Components/AddRate/ViewCorporateCustomer";
 import ViewIndivisualCustomer from "./Components/AddRate/ViewIndivisualCustomer";
-
+import { BrowserRouter } from "react-router-dom";
+import SideNavbar from "./Components/SideBarCardBooking/SideBarCardBooking";
+import { navigation } from "./Components/SideBarCardBooking/NavLink";
+import React, { useState } from "react";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
 function App() {
+  const [isSideNavbarOpen, setIsSideNavbarOpen] = useState(true);
+
+  const toggleSideNavbar = () => {
+    setIsSideNavbarOpen(!isSideNavbarOpen);
+  };
+  const contentMargin = isSideNavbarOpen ? "lg:ml-96 md:ml-20" : "lg:ml-16 16";
+
   return (
     <>
-      {/* <CustomerInquiry/>
-  <ShareDetails/>
-  <Startenddetails /> */}
-      <Router>
-        <Routes>
-          <Route path='/' element={<Login/>}/>
-          {/* <Route path='/signup' element={< Signup/>} /> */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/sharedetails" element={<ShareDetails />} />
-          <Route path="/viewsharedetails" element={<ViewShareDetails />} />
-          <Route path="/startenddetails" element={<Startenddetails />} />
-          <Route path="/allocatetrip" element={<AllocateTrip />} />
-          <Route path="/viewallocatetrip" element={<ViewAllocateTrip />} />
-          <Route path="/updateduty" element={<UpdateDuty />} />
-          <Route path="/viewupdateduty" element={<ViewUpdateDuty />} />
-          <Route path="/addcustomerpayment" element={<AddPayment />} />
-          <Route
-            path="/viewcustomerpayment"
-            element={<ViewCustomerPayment />}
-          />
-          <Route path="/corporatecustomer" element={<CustomerRate />} />
-          {/* <Route path="/viewcorporatecustomer" element={<ViewCustomerRate />} /> */}
-          {/* <Route path='/indivisualcustomerrate'  element={<IndivisualCustomerRate/>}/> */}
-          <Route path="/vendorrate" element={<VendorRate />} />
-          <Route path="/viewvendorrate" element={<ViewVendorRate />} />
-          <Route path="/customerenquiry" element={<CustomerEnquiry />} />
-          <Route path="/sidebar" element={<Sidebar />} />
-          <Route path="/vendorpayment" element={<VendorPayment />} />
-          <Route path="/Viewvendorpayment" element={<ViewVendorPayment />} />
-          <Route path="/customerinvoice" element={<CustomerInvoice />} />
-          <Route path="/vendorinvoice" element={<VendorInvoice />} />
-          <Route
-            path="/customerinvoicemonthly"
-            element={<CustomerInvoiceMonthly />}
-          />
-          <Route
-            path="/vendorinvoicemonthly"
-            element={<VendorInvoiceMonthly />}
-          />
-          <Route path="/addcustomer" element={<AddCustomer />} />
-          <Route path="/master" element={<MasterCorporateCustomer />} />
-          <Route path="/addvendor" element={<AddVendor />} />
-          <Route path="/viewcustomer" element={<ViewCustomer />} />
-          <Route path="/viewvendor" element={<ViewVendor />} />
-          <Route
-            path="/viewcustomerenquiry"
-            element={<ViewCustomerEnquiry />}
-          />
-          <Route path="/addtrip" element={<AddTrip />} />
-          <Route path="/viewtrip" element={<ViewTrip />} />
-          <Route path="/adddriver" element={<AddDriver />} />
-          <Route path="/viewdriver" element={<ViewDriver />} />
-          <Route
-            path="/viewdetailsfromdriver"
-            element={<ViewDriverDetails />}
-          />
-          <Route path="/Customer" element={<Customer />} />
-          {/* <Route
-            path="/viewcorporatecustomer"
-            element={<ViewCorporateCustomr />}
-          /> */}
-          {/* <Route
-            path="/indivisualcustomers"
-            element={<IndivisualCustomers />}
-          /> */}
-          <Route
-            path="/viewvendorpayment/:_id"
-            element={<ViewDetailsPayment />}
-          />
-          <Route
-            path="/viewcustomerpayment/:_id"
-            element={<ViewDetailsCustomerPayment />}
-          />
-          <Route path="/customerreport" element={<CustomerReport />} />
-          <Route
-            path="/monthlycustomerreport"
-            element={<MonthlyCustomerReport />}
-          />
-          <Route path="/tripdetailsreport" element={<TripDetailsReport />} />
-          <Route path="/vendorreport" element={<VendorReport />} />
-          <Route path="/corporatecustomermonthly" element={<CorporateInvoiceMonthly />} />
-          <Route path="/viewmaster" element={<ViewMaster />} />
-          <Route path="/viewcorporatecustomer" element={<ViewCorporateCustomer />} />
-          <Route path="/viewindivisualcustomer" element={<ViewIndivisualCustomer />} />
-        </Routes>
-      </Router>
+      <BrowserRouter>
+        <SideNavbar
+          navigation={navigation}
+          isSideNavbarOpen={isSideNavbarOpen}
+          toggleSideNavbar={toggleSideNavbar}
+          setIsSideNavbarOpen={setIsSideNavbarOpen}
+        />
+        {/* <Sidebar/> */}
+        <div
+          className={`flex-1 overflow-x-hidden ms-14 ${contentMargin} duration-700 `}
+        >
+          <Routes>
+            <Route path="/" element={<Login />} />
+            {/* <Route path="/home" element={<Home />} /> */}
+            <Route
+              path="/home"
+              element={<ProtectedRoute element={<Home />} />}
+            />
+            <Route
+              path="/sharedetails"
+              element={<ProtectedRoute element={<ShareDetails />} />}
+            />
+            <Route
+              path="/viewsharedetails"
+              element={<ProtectedRoute element={<ViewShareDetails />} />}
+            />
+            <Route
+              path="/startenddetails"
+              element={<ProtectedRoute element={<Startenddetails />} />}
+            />
+            <Route
+              path="/allocatetrip"
+              element={<ProtectedRoute element={<AllocateTrip />} />}
+            />
+            <Route
+              path="/viewallocatetrip"
+              element={<ProtectedRoute element={<ViewAllocateTrip />} />}
+            />
+            <Route
+              path="/updateduty"
+              element={<ProtectedRoute element={<UpdateDuty />} />}
+            />
+
+            <Route
+              path="/viewupdateduty"
+              element={<ProtectedRoute element={<ViewUpdateDuty />} />}
+            />
+            <Route
+              path="/addcustomerpayment"
+              element={<ProtectedRoute element={<AddPayment />} />}
+            />
+            <Route
+              path="/viewcustomerpayment"
+              element={<ProtectedRoute element={<ViewCustomerPayment />} />}
+            />
+            <Route
+              path="/corporatecustomer"
+              element={<ProtectedRoute element={<CustomerRate />} />}
+            />
+            <Route
+              path="/vendorrate"
+              element={<ProtectedRoute element={<VendorRate />} />}
+            />
+            <Route
+              path="/viewvendorrate"
+              element={<ProtectedRoute element={<ViewVendorRate />} />}
+            />
+            <Route
+              path="/customerenquiry"
+              element={<ProtectedRoute element={<CustomerEnquiry />} />}
+            />
+            <Route path="/sidebar" element={<Sidebar />} />
+
+            <Route
+              path="/vendorpayment"
+              element={<ProtectedRoute element={<VendorPayment />} />}
+            />
+            <Route
+              path="/Viewvendorpayment"
+              element={<ProtectedRoute element={<ViewVendorPayment />} />}
+            />
+            <Route
+              path="/customerinvoice"
+              element={<ProtectedRoute element={<CustomerInvoice />} />}
+            />
+            <Route
+              path="/vendorinvoice"
+              element={<ProtectedRoute element={<VendorInvoice />} />}
+            />
+            <Route
+              path="/customerinvoicemonthly"
+              element={<ProtectedRoute element={<CustomerInvoiceMonthly />} />}
+            />
+            <Route
+              path="/vendorinvoicemonthly"
+              element={<ProtectedRoute element={<VendorInvoiceMonthly />} />}
+            />
+            <Route
+              path="/addcustomer"
+              element={<ProtectedRoute element={<AddCustomer />} />}
+            />
+            <Route
+              path="/master"
+              element={<ProtectedRoute element={<MasterCorporateCustomer />} />}
+            />
+            <Route
+              path="/addvendor"
+              element={<ProtectedRoute element={<AddVendor />} />}
+            />
+            <Route
+              path="/viewcustomer"
+              element={<ProtectedRoute element={<ViewCustomer />} />}
+            />
+            <Route
+              path="/viewvendor"
+              element={<ProtectedRoute element={<ViewVendor />} />}
+            />
+
+            <Route
+              path="/viewcustomerenquiry"
+              element={<ProtectedRoute element={<ViewCustomerEnquiry />} />}
+            />
+            <Route
+              path="/addtrip"
+              element={<ProtectedRoute element={<AddTrip />} />}
+            />
+            <Route
+              path="/viewtrip"
+              element={<ProtectedRoute element={<ViewTrip />} />}
+            />
+            <Route
+              path="/adddriver"
+              element={<ProtectedRoute element={<AddDriver />} />}
+            />
+            <Route
+              path="/viewdriver"
+              element={<ProtectedRoute element={<ViewDriver />} />}
+            />
+            <Route
+              path="/viewdetailsfromdriver"
+              element={<ProtectedRoute element={<ViewDriverDetails />} />}
+            />
+            <Route
+              path="/Customer"
+              element={<ProtectedRoute element={<Customer />} />}
+            />
+            <Route
+              path="/viewvendorpayment/:_id"
+              element={<ProtectedRoute element={<ViewDetailsPayment />} />}
+            />
+            <Route
+              path="/viewcustomerpayment/:_id"
+              element={
+                <ProtectedRoute element={<ViewDetailsCustomerPayment />} />
+              }
+            />
+            <Route
+              path="/customerreport"
+              element={<ProtectedRoute element={<CustomerReport />} />}
+            />
+            <Route
+              path="/monthlycustomerreport"
+              element={<ProtectedRoute element={<MonthlyCustomerReport />} />}
+            />
+            <Route
+              path="/tripdetailsreport"
+              element={<ProtectedRoute element={<TripDetailsReport />} />}
+            />
+            <Route
+              path="/vendorreport"
+              element={<ProtectedRoute element={<VendorReport />} />}
+            />
+            <Route
+              path="/corporatecustomermonthly"
+              element={<ProtectedRoute element={<CorporateInvoiceMonthly />} />}
+            />
+            <Route
+              path="/viewmaster"
+              element={<ProtectedRoute element={<ViewMaster />} />}
+            />
+            <Route
+              path="/viewcorporatecustomer"
+              element={<ProtectedRoute element={<ViewCorporateCustomer />} />}
+            />
+            <Route
+              path="/viewindivisualcustomer"
+              element={<ProtectedRoute element={<ViewIndivisualCustomer />} />}
+            />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </>
   );
 }

@@ -3,61 +3,61 @@
     height: auto;
     
 } */
-.container-customer-invoice-monthly{
-    margin-left: 300px; /* Leave 300px from the left side */
+.container-customer-invoice-monthly {
+  /* margin-left: 300px; Leave 300px from the left side */
   padding: 20px;
-  
+
   height: 100vh;
 }
-button-customer{
-   color:red;
-   margin-top: 10px;
+button-customer {
+  color: red;
+  margin-top: 10px;
 }
 
-.form-customer-invoice-monthly{
-   display: flex;
-   gap: 5px;
+.form-customer-invoice-monthly {
+  display: flex;
+  gap: 5px;
 }
 .heading {
-   display: flex;
+  display: flex;
 }
-
 
 .to-design {
-    color: rgb(12, 12, 12);
-    /* background-color: white; */
-    margin-top: 15px;
+  color: rgb(12, 12, 12);
+  /* background-color: white; */
+  margin-top: 15px;
 }
 .invoice-table {
-    width: 85%;
-    border-collapse: collapse;
-    margin-top: 20px;
+  width: 85%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.invoice-table th, .invoice-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+.invoice-table th,
+.invoice-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
 .invoice-table th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
-.form-control-customer-invoice-monthly{
-    display: block;
-    width: 400px;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--bs-body-color);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: var(--bs-body-bg);
-    background-clip: padding-box;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    margin-bottom: 5px;
+.form-control-customer-invoice-monthly {
+  display: block;
+  width: 400px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin-bottom: 5px;
 }

@@ -324,7 +324,6 @@ const ViewUpdateDuty = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container">
           <h2
@@ -349,7 +348,7 @@ const ViewUpdateDuty = () => {
             <thead>
               <tr>
                 <th>Sr.No.</th>
-                <th>Customer  Name</th>
+                <th>Customer Name</th>
                 <th>GST No</th>
                 <th>Reporting Address</th>
                 <th>Date</th>
@@ -359,7 +358,7 @@ const ViewUpdateDuty = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredCustomers.map((customer,index) => (
+              {filteredCustomers.map((customer, index) => (
                 <React.Fragment key={customer._id}>
                   <tr>
                     <td>{index + 1}</td>

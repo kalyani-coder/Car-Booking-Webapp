@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Sidebar from '../Sidebar/Sidebar';
+import React, { useState, useEffect } from "react";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Customer = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const initialFormData = {
     customername: "",
-    cus_Id: '',
+    cus_Id: "",
     mobileno: "",
     email: "",
     address: "",
@@ -20,8 +20,8 @@ const Customer = () => {
     totaldays: "",
     totalhours: "",
     vehicle: "",
-    formattedDate1: '',
-    formattedDate2: '',
+    formattedDate1: "",
+    formattedDate2: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -44,7 +44,12 @@ const Customer = () => {
       [name]: value,
     }));
 
-    if (name === 'date1' || name === 'date2' || name === 'time1' || name === 'time2') {
+    if (
+      name === "date1" ||
+      name === "date2" ||
+      name === "time1" ||
+      name === "time2"
+    ) {
       updateTotal();
     }
   };
@@ -62,13 +67,15 @@ const Customer = () => {
       const pickupDateTime = new Date(`${date1}T${time1}`);
       const dropoffDateTime = new Date(`${date2}T${time2}`);
 
-      console.log('Selected Pickup Date and Time:', pickupDateTime);
-      console.log('Selected Dropoff Date and Time:', dropoffDateTime);
+      console.log("Selected Pickup Date and Time:", pickupDateTime);
+      console.log("Selected Dropoff Date and Time:", dropoffDateTime);
 
       const timeDifference = dropoffDateTime - pickupDateTime;
 
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const totalHours = Math.floor(
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
 
       setFormData((prevData) => ({
         ...prevData,
@@ -85,10 +92,12 @@ const Customer = () => {
     if (!isNaN(selectedDate1) && !isNaN(selectedDate2)) {
       const timeDifference = selectedDate2 - selectedDate1;
       const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      const totalHours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const totalHours = Math.floor(
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
 
-      const formattedDate1 = selectedDate1.toLocaleDateString('en-US');
-      const formattedDate2 = selectedDate2.toLocaleDateString('en-US');
+      const formattedDate1 = selectedDate1.toLocaleDateString("en-US");
+      const formattedDate2 = selectedDate2.toLocaleDateString("en-US");
 
       setFormData((prevData) => ({
         ...prevData,
@@ -100,18 +109,16 @@ const Customer = () => {
     } else {
       setFormData((prevData) => ({
         ...prevData,
-        totaldays: '',
-        totalhours: '',
-        formattedDate1: '',
-        formattedDate2: '',
+        totaldays: "",
+        totalhours: "",
+        formattedDate1: "",
+        formattedDate2: "",
       }));
     }
   };
 
   return (
     <>
-      <Sidebar />
-
       <div className="customer-inquiry-container">
         <div className="main-container">
           <div className="form-container">
@@ -231,7 +238,7 @@ const Customer = () => {
                   value={formData.totaldays}
                   readOnly
                 />
-                <span style={{ marginLeft: '5px' }}>Days</span>
+                <span style={{ marginLeft: "5px" }}>Days</span>
               </div>
             </div>
 
@@ -248,7 +255,7 @@ const Customer = () => {
                   value={formData.totalhours}
                   readOnly
                 />
-                <span style={{ marginLeft: '5px' }}>Hours</span>
+                <span style={{ marginLeft: "5px" }}>Hours</span>
               </div>
             </div>
           </div>

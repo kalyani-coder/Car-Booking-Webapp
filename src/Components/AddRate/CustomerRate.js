@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
 import "./AddRate.css";
 
 const CustomerRate = () => {
-  const [customerType, setCustomerType] = useState('');
+  const [customerType, setCustomerType] = useState("");
   const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [customerDetails, setCustomerDetails] = useState({ gst_no: '', cus_mobile: '' });
+  const [customerDetails, setCustomerDetails] = useState({
+    gst_no: "",
+    cus_mobile: "",
+  });
   const [formData, setFormData] = useState({
-    Cus_Type: '',
-    Cus_name : '',
-    type_of_vehicle: '',
-    duty_type: '',
-    rate: '',
-    from: '',
-    to: '',
-    km: '',
-    extra_km: '',
-    hours: '',
-    extra_hours: ''
+    Cus_Type: "",
+    Cus_name: "",
+    type_of_vehicle: "",
+    duty_type: "",
+    rate: "",
+    from: "",
+    to: "",
+    km: "",
+    extra_km: "",
+    hours: "",
+    extra_hours: "",
   });
 
   const initialFormData = {
-    Cus_Type: '',
-    type_of_vehicle: '',
-    duty_type: '',
-    rate: '',
-    from: '',
-    to: '',
-    km: '',
-    extra_km: '',
-    hours: '',
-    extra_hours: ''
+    Cus_Type: "",
+    type_of_vehicle: "",
+    duty_type: "",
+    rate: "",
+    from: "",
+    to: "",
+    km: "",
+    extra_km: "",
+    hours: "",
+    extra_hours: "",
   };
 
   const handleCustomerTypeChange = async (e) => {
@@ -42,10 +45,12 @@ const CustomerRate = () => {
 
     if (selectedType) {
       try {
-        const response = await axios.get(`http://localhost:8787/api/add-customers/customer/${selectedType}`);
+        const response = await axios.get(
+          `http://localhost:8787/api/add-customers/customer/${selectedType}`
+        );
         setCustomers(response.data);
       } catch (error) {
-        console.error('Error fetching customers:', error);
+        console.error("Error fetching customers:", error);
       }
     } else {
       setCustomers([]);
@@ -54,11 +59,13 @@ const CustomerRate = () => {
 
   const handleCustomerNameChange = (e) => {
     const selectedCusName = e.target.value;
-    const customer = customers.find(cust => cust.cus_name === selectedCusName);
+    const customer = customers.find(
+      (cust) => cust.cus_name === selectedCusName
+    );
     setSelectedCustomer(customer || {});
     setCustomerDetails({
-      gst_no: customer?.gst_no || '',
-      cus_mobile: customer?.cus_mobile || ''
+      gst_no: customer?.gst_no || "",
+      cus_mobile: customer?.cus_mobile || "",
     });
   };
 
@@ -77,7 +84,7 @@ const CustomerRate = () => {
 
     const formDataWithCustomer = {
       ...formData,
-      Cus_name : selectedCustomer.cus_name,
+      Cus_name: selectedCustomer.cus_name,
       customerId: selectedCustomer._id,
       gst_no: selectedCustomer.gst_no,
       Cus_Mobile: selectedCustomer.cus_mobile,
@@ -153,11 +160,9 @@ const CustomerRate = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container relative left-[6rem]">
-
             <h2
               style={{
                 fontSize: "2rem",
@@ -168,11 +173,10 @@ const CustomerRate = () => {
               Corporate Customer
             </h2>
 
-
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">
-                   Customer Type:
+                  Customer Type:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
@@ -190,7 +194,7 @@ const CustomerRate = () => {
 
               <div className="form-group">
                 <label htmlFor="Cus_name" className="form-label">
-                   Customer Name/ Company Name:
+                  Customer Name/ Company Name:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
@@ -283,8 +287,6 @@ const CustomerRate = () => {
                   ))}
                 </select>
               </div>
-
-
 
               <div className="d-flex gap-3">
                 <div>
@@ -460,8 +462,6 @@ const CustomerRate = () => {
                 Submit
               </button>
             </form>
-
-
           </div>
         </div>
       </div>

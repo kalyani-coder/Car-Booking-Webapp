@@ -1,49 +1,49 @@
-  /* Main container styles */
-  .viewcustomer-main-container {
-    /* max-width: 960px; */
-    width: 100%;
-    height: 95vh;
-    /* background-color: #fff; */
-    /* border: 1px solid #ccc; */
-    padding: 20px;
-    border-radius: 8px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-    /* margin-bottom: 20px; */
-    /* position: relative;
+/* Main container styles */
+.viewcustomer-main-container {
+  /* max-width: 960px; */
+  width: 100%;
+  height: 95vh;
+  /* background-color: #fff; */
+  /* border: 1px solid #ccc; */
+  padding: 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  /* margin-bottom: 20px; */
+  /* position: relative;
     left: 11%; */
-    /* top: 12%; */
-    margin-top: 1rem;
-  }
+  /* top: 12%; */
+  margin-top: 1rem;
+}
 
 .custom-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-  
-  .custom-card-body {
-    padding: 0;
-  }
-  
-  .custom-card-title {
-    font-size: 1.25rem;
-    margin-bottom: 8px;
-  }
-  
-  .custom-card-subtitle {
-    font-size: 1rem;
-    margin-bottom: 4px;
-  }
-  .viewcus-btn{
-    margin-bottom: 10px !important;
-  }
-  .add-cus-btn{
-    color: white;
-  }
-  /* .shadow-lg {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.custom-card-body {
+  padding: 0;
+}
+
+.custom-card-title {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.custom-card-subtitle {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.viewcus-btn {
+  margin-bottom: 10px !important;
+}
+.add-cus-btn {
+  color: white;
+}
+/* .shadow-lg {
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
     margin-left: 300px;
     width: 50%;
@@ -76,6 +76,22 @@
   align-items: center;
   /* background-color: rgb(200, 205, 122); */
   padding: 8px;
-  margin-left: 300px;
+  /* margin-left: 300px; */
   /* height: 712px; */
+}
+@media (max-width: 768px) {
+  .viewcustomer-main-container {
+    max-width: 100%;
+    /* width: auto; */
+    height: 95vh;
+    /* background-color: #fff; */
+    /* border: 1px solid #ccc; */
+    padding: 20px;
+    border-radius: 8px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* margin-bottom: 20px; */
+    /* top: 12%; */
+    margin-top: 1rem;
+    overflow-x: scroll;
+  }
 }

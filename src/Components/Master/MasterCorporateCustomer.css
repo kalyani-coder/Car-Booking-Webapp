@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+  .add-duty-type-and-add-rate-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+}
+.add-duty-type-and-add-rate-inputs {
+  display: flex;
+  gap: 1em;
+}

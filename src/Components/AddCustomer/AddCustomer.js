@@ -11,17 +11,16 @@ const AddCustomer = () => {
     mobileno: "",
     email: "",
     address: "",
-    Cus_Type : "",
-
+    Cus_Type: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState(""); 
-  const [emailError, setEmailError] = useState(""); 
-  const [gstnoError, setGstnoError] = useState(""); 
+  const [mobilenoError, setMobilenoError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [gstnoError, setGstnoError] = useState("");
   const [errorAlert, setErrorAlert] = useState(null);
 
-  const [selectCusType, setSelectCusType] = useState('');
+  const [selectCusType, setSelectCusType] = useState("");
 
   const handleSelectCustomer = (event) => {
     setSelectCusType(event.target.value);
@@ -99,7 +98,9 @@ const AddCustomer = () => {
       return;
     }
 
-    if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)) {
+    if (
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)
+    ) {
       alert("Please enter a valid email address.");
       return;
     }
@@ -116,7 +117,7 @@ const AddCustomer = () => {
         cus_mobile: formData.mobileno,
         cus_email: formData.email,
         address: formData.address,
-        Cus_Type : formData.Cus_Type,
+        Cus_Type: formData.Cus_Type,
       };
 
       const response = await fetch("http://localhost:8787/api/add-customers", {
@@ -142,11 +143,19 @@ const AddCustomer = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="addcustomer-main-container">
           <div className="customer-form-container">
-            <h2 style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }} className="text-center">Add Customer</h2>
+            <h2
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+              }}
+              className="text-center"
+            >
+              Add Customer
+            </h2>
 
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
@@ -207,7 +216,9 @@ const AddCustomer = () => {
                 onChange={handleChange}
                 value={formData.mobileno}
               />
-              {mobilenoError && <p className="error-message">{mobilenoError}</p>}
+              {mobilenoError && (
+                <p className="error-message">{mobilenoError}</p>
+              )}
             </div>
 
             <div className="form-group">
@@ -244,23 +255,29 @@ const AddCustomer = () => {
 
             <div className="form-group">
               <label htmlFor="Cus_Type" className="form-label">
-                Select Customer Type: 
+                Select Customer Type:
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="form-control-cust-add-input"
+                className="form-control-cust-add-input-cc"
                 id="Cus_Type"
                 name="Cus_Type"
                 onChange={handleChange}
                 value={formData.Cus_Type}
               >
-                <option value="" disabled selected>Select Customer Type</option>
+                <option value="" disabled selected>
+                  Select Customer Type
+                </option>
                 <option value="Indivisual">Indivisual Customer</option>
                 <option value="Corporate">Corporate Customer</option>
               </select>
             </div>
 
-            <button type="button" className="customer-btn-submit" onClick={handleSubmit}>
+            <button
+              type="button"
+              className="customer-btn-submit"
+              onClick={handleSubmit}
+            >
               Add
             </button>
           </div>

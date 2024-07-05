@@ -149,7 +149,7 @@ const ViewAllocateTrip = () => {
           body: JSON.stringify(editedTrip),
         }
       );
-  
+
       if (response.ok) {
         const updatedTrip = await response.json();
         setShareDetails((prevDetails) =>
@@ -172,9 +172,6 @@ const ViewAllocateTrip = () => {
       alert("Error updating trip details. Please try again.");
     }
   };
-  
-  
-  
 
   const handleDelete = (_id) => {
     const confirmed = window.confirm(
@@ -205,7 +202,6 @@ const ViewAllocateTrip = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="share-details-container h-[100vh]">
         <div className="share-details-main-container">
           <h2
@@ -233,7 +229,7 @@ const ViewAllocateTrip = () => {
             <table className="table">
               <thead>
                 <tr>
-                <th>Sr.No.</th>
+                  <th>Sr.No.</th>
                   <th>Customer Name</th>
                   <th>Vehicle</th>
                   <th>Trip Type</th>
@@ -251,7 +247,7 @@ const ViewAllocateTrip = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredShareDetails.map((shareDetail,index) => (
+                {filteredShareDetails.map((shareDetail, index) => (
                   <tr key={shareDetail._id}>
                     <td>{index + 1}</td>
                     <td>{shareDetail.customername}</td>
@@ -290,7 +286,6 @@ const ViewAllocateTrip = () => {
                                   <FaTimes />
                                 </button>
                               </div>
-                             
                               <h5 className="fw-bold my-2">Customer Name:</h5>
                               <input
                                 type="text"
@@ -302,7 +297,10 @@ const ViewAllocateTrip = () => {
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
-                              /> <h5 className="fw-bold my-2">Customer Mobile No:</h5>
+                              />{" "}
+                              <h5 className="fw-bold my-2">
+                                Customer Mobile No:
+                              </h5>
                               <input
                                 type="text"
                                 value={editedTrip.customermobile}
@@ -471,7 +469,6 @@ const ViewAllocateTrip = () => {
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
-
                               <h5 className="fw-bold my-2">Mail:</h5>
                               <input
                                 type="text"

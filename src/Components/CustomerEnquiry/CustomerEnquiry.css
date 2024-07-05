@@ -6,111 +6,109 @@
     padding: 0;
     box-sizing: border-box;
   } */
-  
-  /* Global styles */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(200, 205, 122);
-  }
-  
-  /* Container for the entire page */
-  .customer-inquiry-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-     
-    padding: 8px;
-    margin-left: 300px;
 
-  }
-  
-  /* Sidebar styles (adjust as needed) */
-  /* Add styles for your Sidebar component */
-  
-  /* Main container styles */
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: rgb(200, 205, 122);
+}
+
+/* Container for the entire page */
+.customer-inquiry-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 8px;
+  /* margin-left: 300px; */
+}
+
+/* Sidebar styles (adjust as needed) */
+/* Add styles for your Sidebar component */
+
+/* Main container styles */
+.main-container {
+  max-width: 960px;
+  width: 100%;
+  /* background-color: #fff; */
+  /* border: 1px solid #ccc; */
+  padding: 20px;
+  border-radius: 8px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+/* Form group styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Form label styles */
+.form-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Form input and select styles */
+.form-control-cust-inq-input {
+  width: 80%;
+  height: 43px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+.cust-inq-input {
+  width: 235px;
+  /* height: 40px; */
+}
+.form-control-date,
+.form-control-time,
+.form-control-number {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+/* Custom submit button styles */
+.btn-submit {
+  background-color: #004f83;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
   .main-container {
-    max-width: 960px;
-    width: 100%;
-    /* background-color: #fff; */
-    /* border: 1px solid #ccc; */
-    padding: 20px;
-    border-radius: 8px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    padding: 15px;
   }
-  
-  /* Form group styles */
-  .form-group {
-    margin-bottom: 15px;
+
+  .form-control {
+    padding: 8px;
   }
-  
-  /* Form label styles */
-  .form-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  /* Form input and select styles */
-  .form-control-cust-inq-input {
-    width: 80%;
-    height: 43px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-  }
-  .cust-inq-input{
-    width: 235px;
-    /* height: 40px; */
-  }
+
   .form-control-date,
   .form-control-time,
   .form-control-number {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
+    padding: 8px;
   }
-  
-  /* Custom submit button styles */
-  .btn-submit {
-    background-color: #004f83;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .btn-submit:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive styles for smaller screens */
-  @media (max-width: 768px) {
-    .main-container {
-      padding: 15px;
-    }
-  
-    .form-control {
-      padding: 8px;
-    }
-  
-    .form-control-date,
-    .form-control-time,
-    .form-control-number {
-      padding: 8px;
-    }
-  
-    .btn-submit {
-      padding: 8px 16px;
-    }
-  }
-  .days {
-    color: rgb(12, 12, 12);
-    position: absolute;
-    margin-left: -50px;
-    margin-top: 39px;
-}
 
+  .btn-submit {
+    padding: 8px 16px;
+  }
+}
+.days {
+  color: rgb(12, 12, 12);
+  position: absolute;
+  margin-left: -50px;
+  margin-top: 39px;
+}

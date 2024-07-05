@@ -31,25 +31,23 @@ export default function ViewDetailsPayment() {
   const handleCancel = () => {
     // Attempt to close the window
     window.close();
-  
+
     // If window.close() didn't work, you can try using the following:
     if (window.opener) {
       // If the window has an opener (likely opened with window.open()), close the opener
       window.opener = null;
-      window.open('', '_self', '');
+      window.open("", "_self", "");
       window.close();
     } else {
       // If there is no opener (likely not opened with window.open()), navigate back in history
       window.history.back();
     }
-  
+
     console.log("Cancel button clicked");
   };
 
-  
   return (
     <>
-      <Sidebar />
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
           <h1 className="text-2xl font-semibold mb-4">

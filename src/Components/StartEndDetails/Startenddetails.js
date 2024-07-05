@@ -9,7 +9,7 @@ const StartEndDetails = () => {
     allowance: "",
     nightstay: "",
   });
- 
+
   const [totalDays, setTotalDays] = useState(0);
   const [totalHours, setTotalHours] = useState(0);
   const [customers, setCustomers] = useState([]);
@@ -33,8 +33,8 @@ const StartEndDetails = () => {
     drivermobileno: "",
     address: "",
     vehicleno: "",
-    totalDays:"",
-    totalHours:"",
+    totalDays: "",
+    totalHours: "",
   });
 
   useEffect(() => {
@@ -71,20 +71,34 @@ const StartEndDetails = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Update formData state with the changed field
     setFormData({ ...formData, [name]: value });
-  
+
     // Calculate total days and total hours if relevant fields change
-    if (name === "date" || name === "time" || name === "date1" || name === "time1") {
-      const pickupDateTime = new Date(selectedCustomerDetails.date + "T" + selectedCustomerDetails.time);
-      const dropoffDateTime = new Date(selectedCustomerDetails.date1 + "T" + selectedCustomerDetails.time1);
-  
-      if (!isNaN(pickupDateTime.getTime()) && !isNaN(dropoffDateTime.getTime())) {
+    if (
+      name === "date" ||
+      name === "time" ||
+      name === "date1" ||
+      name === "time1"
+    ) {
+      const pickupDateTime = new Date(
+        selectedCustomerDetails.date + "T" + selectedCustomerDetails.time
+      );
+      const dropoffDateTime = new Date(
+        selectedCustomerDetails.date1 + "T" + selectedCustomerDetails.time1
+      );
+
+      if (
+        !isNaN(pickupDateTime.getTime()) &&
+        !isNaN(dropoffDateTime.getTime())
+      ) {
         const diffTime = Math.abs(dropoffDateTime - pickupDateTime);
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        const diffHours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  
+        const diffHours = Math.floor(
+          (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+
         setTotalDays(diffDays);
         setTotalHours(diffHours);
       } else {
@@ -93,9 +107,7 @@ const StartEndDetails = () => {
       }
     }
   };
-  
-  
-  
+
   const showAlert = (message, type) => {
     if (type === "success") {
       setSuccessAlert({ msg: message, type: type });
@@ -106,10 +118,9 @@ const StartEndDetails = () => {
       setErrorAlert({ msg: message, type: type });
       setTimeout(() => {
         setErrorAlert(null);
-      },);
+      });
     }
   };
-
 
   const handleSave = async () => {
     try {
@@ -139,16 +150,15 @@ const StartEndDetails = () => {
             mobileno: selectedCustomerDetails.mobileno,
             vehicleno: selectedCustomerDetails.vehicleno,
             toll: formData.toll,
-          allowance: formData.allowance,
-          nightstay: formData.nightstay,
-          
+            allowance: formData.allowance,
+            nightstay: formData.nightstay,
           }),
         }
       );
 
       if (response.ok) {
         console.log("Details saved successfully!");
-        alert("Data added successfully!" , "success");
+        alert("Data added successfully!", "success");
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
       }
@@ -159,17 +169,16 @@ const StartEndDetails = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="start-end-details-container">
         <h2
           style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
         >
           Get Start And End Details
         </h2>
-        
+
         {successAlert && <Alert alert={successAlert} />}
-      {errorAlert && <Alert alert={errorAlert} />}
-            
+        {errorAlert && <Alert alert={errorAlert} />}
+
         <div className="start-end-details-form">
           <div className="start-end-details-row">
             <div className="start-end-details-column">
@@ -215,7 +224,6 @@ const StartEndDetails = () => {
                 />
               </div>
             </div>
-           
           </div>
           <div className="start-end-details-row">
             <div className="start-end-details-column">
@@ -338,25 +346,24 @@ const StartEndDetails = () => {
             </div>
             <div className="start-end-details-column">
               <div className="d-flex gap-2">
-                
-                  <div className="form-group">
-                    <label htmlFor="toll" className="form-label">
-                      Total Days:
-                    </label>
-                    <input
-                      className="rate-form-control-Startenddetails"
-                      type="number"
-                      name="totalDays"
-                      placeholder="Enter Total Days"
-                      value={totalDays}
-                      readOnly
-                    />
-                  </div>
-                
+                <div className="form-group">
+                  <label htmlFor="toll" className="form-label">
+                    Total Days:
+                  </label>
+                  <input
+                    className="rate-form-control-Startenddetails"
+                    type="number"
+                    name="totalDays"
+                    placeholder="Enter Total Days"
+                    value={totalDays}
+                    readOnly
+                  />
+                </div>
+
                 <div>
                   <div className="form-group">
                     <label htmlFor="totalDays" className="form-label">
-                    Total  Hours:
+                      Total Hours:
                     </label>
                     <input
                       className="rate-form-control-Startenddetails"
@@ -370,18 +377,13 @@ const StartEndDetails = () => {
                 </div>
               </div>
             </div>
-            
-            
           </div>
-         
-          
 
-          
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="start-end-details-form-group">
                 <label htmlFor="vehicle" className="start-end-details-label">
-                   Type Of Vehicle:
+                  Type Of Vehicle:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
@@ -395,9 +397,9 @@ const StartEndDetails = () => {
               </div>
             </div>
             <div className="start-end-details-column">
-            <div className="start-end-details-form-group">
+              <div className="start-end-details-form-group">
                 <label htmlFor="triptype" className="start-end-details-label">
-                   Trip Type:
+                  Trip Type:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
@@ -437,7 +439,8 @@ const StartEndDetails = () => {
                   Driver Mobile No:
                 </label>
                 <input
-  x                className="start-end-details-input"
+                  x
+                  className="start-end-details-input"
                   type="text"
                   name="mobileNumber"
                   placeholder="Enter Driver Mobile No."
@@ -502,7 +505,7 @@ const StartEndDetails = () => {
           </div>
 
           <div className="start-end-details-button-row">
-          {/* <button
+            {/* <button
               type="button"
               className="customer-btn-submit mx-2"
             >

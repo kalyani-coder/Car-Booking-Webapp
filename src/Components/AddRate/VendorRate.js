@@ -6,7 +6,7 @@ import Alert from "../AddCustomer/Alert";
 
 const VendorRate = () => {
   const initialFormData = {
-    vender_id:"",
+    vender_id: "",
     company_Name: "",
     GST_No: "",
     vender_Name: "",
@@ -18,11 +18,11 @@ const VendorRate = () => {
     km: "",
     extra_km: "",
     extra_hour: "",
-    address: ""
+    address: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState(""); 
+  const [mobilenoError, setMobilenoError] = useState("");
   const [successAlert, setSuccessAlert] = useState(null);
   const [errorAlert, setErrorAlert] = useState(null);
   const [vendorList, setVendorList] = useState([]);
@@ -31,7 +31,9 @@ const VendorRate = () => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const response = await axios.get("http://localhost:8787/api/add-venders");
+        const response = await axios.get(
+          "http://localhost:8787/api/add-venders"
+        );
         setVendorList(response.data);
       } catch (error) {
         console.error("Error fetching vendors:", error);
@@ -60,7 +62,7 @@ const VendorRate = () => {
         hour: "",
         km: "",
         extra_km: "",
-        extra_hour: ""
+        extra_hour: "",
       });
     } else {
       setFormData(initialFormData);
@@ -98,27 +100,22 @@ const VendorRate = () => {
       }
     }
 
-  
     if (mobilenoError) {
       window.alert(mobilenoError);
       return;
     }
 
-   
-
     try {
-      const response = await fetch(
-        "http://localhost:8787/api/vender-rate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+      const response = await fetch("http://localhost:8787/api/vender-rate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (response.ok) {
-        alert("Vender added successfully!" , "success");
+        alert("Vender added successfully!", "success");
         setFormData(initialFormData);
       } else {
         alert("Failed to add data. Please try again.", "danger");
@@ -131,7 +128,6 @@ const VendorRate = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="rate-Add-container">
         <div className="rate-main-container relative left-[6rem] mt-2">
           <div className="rate-form-container">
@@ -144,10 +140,10 @@ const VendorRate = () => {
             >
               Vendor Rate
             </h2>
-            
+
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
-            
+
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="vender_Name" className="form-label">
@@ -261,15 +257,27 @@ const VendorRate = () => {
                   <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
                   <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
                   <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
-                  <option value="Non-AC Bus 17-Seater">Non-AC Bus 17-Seater</option>
-                  <option value="Non-AC Bus 20-Seater">Non-AC Bus 20-Seater</option>
-                  <option value="Non-AC Bus 32-Seater">Non-AC Bus 32-Seater</option>
-                  <option value="Non-AC Bus 40-Seater">Non-AC Bus 40-Seater</option>
-                  <option value="Non-AC Bus 45-Seater">Non-AC Bus 45-Seater</option>
-                  <option value="Non-AC Bus 49-Seater">Non-AC Bus 49-Seater</option>
+                  <option value="Non-AC Bus 17-Seater">
+                    Non-AC Bus 17-Seater
+                  </option>
+                  <option value="Non-AC Bus 20-Seater">
+                    Non-AC Bus 20-Seater
+                  </option>
+                  <option value="Non-AC Bus 32-Seater">
+                    Non-AC Bus 32-Seater
+                  </option>
+                  <option value="Non-AC Bus 40-Seater">
+                    Non-AC Bus 40-Seater
+                  </option>
+                  <option value="Non-AC Bus 45-Seater">
+                    Non-AC Bus 45-Seater
+                  </option>
+                  <option value="Non-AC Bus 49-Seater">
+                    Non-AC Bus 49-Seater
+                  </option>
                 </select>
               </div>
-              
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -285,10 +293,18 @@ const VendorRate = () => {
                       onChange={handleChange}
                     >
                       <option value="">Duty Type</option>
-                      <option value="One Day / 80km">One Day /80km-Local Duty</option>
-                      <option value="One Day / 300km">One Day /300km-Outstation Duty</option>
-                      <option value="440km- Local Airport Transfer">440km-Local Airport Transfer </option>
-                      <option value="Pune-Mumbai Pickup Drop">Pune-Mumbai Pickup Dropoff</option>
+                      <option value="One Day / 80km">
+                        One Day /80km-Local Duty
+                      </option>
+                      <option value="One Day / 300km">
+                        One Day /300km-Outstation Duty
+                      </option>
+                      <option value="440km- Local Airport Transfer">
+                        440km-Local Airport Transfer{" "}
+                      </option>
+                      <option value="Pune-Mumbai Pickup Drop">
+                        Pune-Mumbai Pickup Dropoff
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -308,7 +324,7 @@ const VendorRate = () => {
                       onChange={handleChange}
                       required
                     />
-                  </div>    
+                  </div>
                 </div>
               </div>
               <div className="d-flex gap-3">
@@ -346,7 +362,7 @@ const VendorRate = () => {
                       onChange={handleChange}
                       required
                     />
-                  </div>    
+                  </div>
                 </div>
               </div>
               <div className="d-flex gap-3">
@@ -384,10 +400,10 @@ const VendorRate = () => {
                       onChange={handleChange}
                       required
                     />
-                  </div>    
+                  </div>
                 </div>
               </div>
-              
+
               <div className="d-flex gap-3">
                 <div>
                   <div className="form-group">
@@ -423,7 +439,7 @@ const VendorRate = () => {
                       onChange={handleChange}
                       required
                     />
-                  </div>    
+                  </div>
                 </div>
               </div>
 

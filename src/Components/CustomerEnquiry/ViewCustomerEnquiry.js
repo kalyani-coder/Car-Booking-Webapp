@@ -58,18 +58,18 @@ const ViewCustomerEnquiry = () => {
   const [error, setError] = useState(null);
   const [searchCustomerName, setSearchCustomerName] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [editedCustomer, setEditedCustomer] = useState({
-    customer_name: '',
-    mobileno: '',
-    email: '',
-    address: '',
-    tripe_type: '',
-    sub_type: '',
-    pic_up: '',
-    date1: '',
-    date2: ''
+    customer_name: "",
+    mobileno: "",
+    email: "",
+    address: "",
+    tripe_type: "",
+    sub_type: "",
+    pic_up: "",
+    date1: "",
+    date2: "",
   });
 
   useEffect(() => {
@@ -123,15 +123,15 @@ const ViewCustomerEnquiry = () => {
   const handleCancelEdit = () => {
     setIsEditing(false);
     setEditedCustomer({
-      customer_name: '',
-      mobileno: '',
-      email: '',
-      address: '',
-      tripe_type: '',
-      sub_type: '',
-      pic_up: '',
-      date1: '',
-      date2: ''
+      customer_name: "",
+      mobileno: "",
+      email: "",
+      address: "",
+      tripe_type: "",
+      sub_type: "",
+      pic_up: "",
+      date1: "",
+      date2: "",
     });
   };
 
@@ -188,19 +188,17 @@ const ViewCustomerEnquiry = () => {
 
       setIsEditing(false);
       alert("Customer enquiry updated successfully");
-      setErrorMessage('');
+      setErrorMessage("");
     } catch (error) {
       console.error("Error updating customer enquiry:", error);
-      setSuccessMessage('');
-      setErrorMessage('Error updating customer enquiry. Please try again.');
+      setSuccessMessage("");
+      setErrorMessage("Error updating customer enquiry. Please try again.");
 
       // Revert optimistic update if there is an error
       setCustomers(prevCustomers);
       setFilteredCustomers(prevFilteredCustomers);
     }
   };
-
-  
 
   const handleDelete = async (customerId) => {
     const confirmed = window.confirm(
@@ -233,10 +231,10 @@ const ViewCustomerEnquiry = () => {
 
   return (
     <>
-      <Sidebar />
       <div className="customer-Add-container">
         <div className="customer-main-container h-[100vh] mt-4">
-          <h2 className="text-center"
+          <h2
+            className="text-center"
             style={{
               fontSize: "2rem",
               fontWeight: "bold",
@@ -520,9 +518,9 @@ const ViewCustomerEnquiry = () => {
           )}
           <div className="table-responsive">
             <TableView
-               customers={filteredCustomers}
-            handleEditCustomer={handleEditCustomer}
-            deleteCustomer={handleDelete}
+              customers={filteredCustomers}
+              handleEditCustomer={handleEditCustomer}
+              deleteCustomer={handleDelete}
             />
           </div>
         </div>
