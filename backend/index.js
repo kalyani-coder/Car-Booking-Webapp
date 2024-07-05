@@ -38,6 +38,7 @@ const corporateCustomer = require('./src/routes/CorporateCustomer');
 const indivisualCustomer = require('./src/routes/IndivisualCustomer');
 const newMasterRateSchema = require('./src/routes/MasterforCorporate');
 const gettrip = require("./src/routes/EditTripDetails");
+const getAdmin = require("./src/routes/AdminLoginRoute")
 
 // Define API paths
 apiRouter.use('/customer-enquiry', CustomerEnquiry);
@@ -58,6 +59,7 @@ apiRouter.use('/corporate-customer', corporateCustomer);
 apiRouter.use('/indivisual-customer', indivisualCustomer);
 apiRouter.use('/masterrate', newMasterRateSchema);
 apiRouter.use("/get-trip",gettrip);
+apiRouter.use("/", getAdmin)
 
 mongoose.connect(process.env.LOCAL_MONGODB_URL, {
 }, console.log("Connected to Database"));
