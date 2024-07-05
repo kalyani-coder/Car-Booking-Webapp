@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Check if email and password are correct
-    if (email === 'test@gmail.com' && password === 'test') {
-      // Navigate to another page upon successful login
-      navigate('/home'); // Change '/dashboard' to your desired route
-    } else {
-      // Show alert for invalid credentials
-      alert('Email or password is invalid');
+
+    try {
+      const response = await axios.post('http://localhost:8787/api/admin/login', {
+        email,
+        password
+      });
+
+      // Store the JWT token in local storage
+      localStorage.setItem('token', response.data.token);
+
+      // Navigate to the home page upon successful login
+      navigate('/home');
+    } catch (error) {
+      // Show alert for invalid credentials or other errors
+      alert(error.response?.data?.message || 'An error occurred during login');
     }
   };
 
