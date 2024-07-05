@@ -11,7 +11,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
         <th>Customer Name</th>
         <th>GST No</th>
         <th>Mobile</th>
-        <th>Email</th>
+        {/* <th>Email</th> */}
         <th>Address</th>
         <th>Action</th>
       </tr>
@@ -23,7 +23,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{customer.cus_name}</td>
           <td>{customer.gst_no}</td>
           <td>{customer.cus_mobile}</td>
-          <td>{customer.cus_email}</td>
+          {/* <td>{customer.cus_email}</td> */}
           <td>{customer.address}</td>
           <td>
             <div className="d-flex align-items-center gap-1">
@@ -55,8 +55,7 @@ const ViewCustomer = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState({});
   const [viewType, setViewType] = useState("table");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+ 
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -160,30 +159,18 @@ const ViewCustomer = () => {
         );
         setIsEditing(false);
         alert("Customer data updated successfully");
-        setErrorMessage("");
+        // setErrorMessage("");
       } else {
         console.error("Error updating customer:", response.status);
         alert("Error updating customer. Please try again.");
-        setSuccessMessage("");
-        setErrorMessage("Error updating customer. Please try again.");
+        
+        alert("Error updating customer. Please try again.");
       }
     } catch (error) {
       console.error("Error updating customer:", error);
-      setSuccessMessage("");
-      setErrorMessage("Error updating customer. Please try again.");
+      alert("Error updating customer. Please try again.");
     }
   };
-
-  // Clear success message after a few seconds
-  useEffect(() => {
-    if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000); // Clear the success message after 3 seconds
-
-      return () => clearTimeout(timer); // Clear timeout if component unmounts
-    }
-  }, [successMessage]);
 
   const handleViewTypeChange = (type) => {
     setViewType(type);
@@ -226,7 +213,7 @@ const ViewCustomer = () => {
 
       {isEditing && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg w-96">
+          <div className="bg-white p-4 rounded shadow-lg w-150">
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Customer</h2>
               <button
@@ -282,15 +269,13 @@ const ViewCustomer = () => {
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <h5 className="fw-bold my-2">Address</h5>
-            <input
-              type="text"
+            <textarea
               value={editedCustomer.address}
               onChange={(e) =>
                 setEditedCustomer({
                   ...editedCustomer,
-                  address: e.target.value,
-                })
-              }
+                  address: e.target.value, })}
+                  rows={3}
               className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
             <button
@@ -306,13 +291,6 @@ const ViewCustomer = () => {
               Cancel
             </button>
           </div>
-        </div>
-      )}
-
-      {/* Display success message */}
-      {successMessage && (
-        <div className="alert alert-success fixed bottom-4 right-4">
-          {successMessage}
         </div>
       )}
     </>
