@@ -141,11 +141,12 @@ const AddCustomer = () => {
     }
 
     const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
-    if (!newValidationMessages.gstno && !gstRegex.test(gstno)) {
-      newValidationMessages.gstno =
-        "GST number must be exactly 15 characters, alphanumeric, capital letters.";
+    if (!newValidationMessages.gstno) {
+      if (gstno.length !== 15) {
+        newValidationMessages.gstno = "GST number must be exactly 15 characters long.";
+      } 
     }
-
+    
     if (
       !newValidationMessages.email &&
       !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
@@ -182,7 +183,7 @@ const AddCustomer = () => {
       if (response.ok) {
         console.log("Response:", response);
         alert("Data added successfully!");
-        setFormData(initialFormData); // Clear the form fields
+        setFormData(initialFormData); 
       } else {
         alert("Failed to add data. Please try again.");
       }
@@ -332,7 +333,9 @@ const AddCustomer = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="form-control-cust-add-input-cc"
+                className={`form-control-cust-add-input ${
+                  validationMessages.Cus_Type ? "is-invalid" : ""
+                }`}
                 id="Cus_Type"
                 name="Cus_Type"
                 onChange={handleChange}
@@ -344,6 +347,11 @@ const AddCustomer = () => {
                 <option value="Indivisual">Indivisual Customer</option>
                 <option value="Corporate">Corporate Customer</option>
               </select>
+              {validationMessages.Cus_Type && (
+                <div className="invalid-feedback">
+                  {validationMessages.Cus_Type}
+                </div>
+              )}
             </div>
 
             <button

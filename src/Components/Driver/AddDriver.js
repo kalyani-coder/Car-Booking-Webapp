@@ -18,6 +18,7 @@ const AddDriver = () => {
   const [errorAlert, setErrorAlert] = useState(null);
   const [drivernameError, setDrivernameError] = useState(""); // State for driver name validation error
   const [emailError, setEmailError] = useState("");
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;

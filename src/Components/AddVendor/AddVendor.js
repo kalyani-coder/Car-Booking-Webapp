@@ -14,29 +14,59 @@ const AddVendor = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [mobilenoError, setMobilenoError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [gstnoError, setGstnoError] = useState("");
-  const [successAlert, setSuccessAlert] = useState(null);
-  const [errorAlert, setErrorAlert] = useState(null);
+  const [validationMessages, setValidationMessages] = useState({});
 
+  const validateMobileNumber = (value) => {
+    if (value.length !== 10) {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        mobileno: "Mobile number must be exactly 10 digits",
+      }));
+    } else {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        mobileno: "",
+      }));
+    }
+  };
+
+  const handleAlphaInputChange = (setter) => (event) => {
+    const { value } = event.target;
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      setter(value);
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        vendorname: "",
+      }));
+    } else {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        vendorname: "Vendor name must contain only alphabets.",
+      }));
+    }
+  };
+
+  const handleNumericChange = (e) => {
+    const { name, value } = e.target;
+
+    // Allow only numeric characters and limit to 10 digits
+    if (/^\d{0,10}$/.test(value)) {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+
+      if (name === "mobileno") {
+        validateMobileNumber(value);
+      }
+    }
+  };
+
+  // Handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (name === "vendorname" && !/^[A-Za-z\s]+$/.test(value)) {
-      return;
-    }
-    if (
-      name === "companyname" &&
-      !/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(value)
-    ) {
-      return;
-    }
-
-    if (name === "mobileno" && value.length > 10) {
-      return;
-    }
-
+    // For GST number, limit to 15 characters
     if (name === "gstno" && value.length > 15) {
       return;
     }
@@ -46,74 +76,87 @@ const AddVendor = () => {
       [name]: value,
     }));
 
-    if (name === "mobileno") {
-      if (!/^\d{10}$/.test(value)) {
-        setMobilenoError("Mobile number must be 10 digits");
-      } else {
-        setMobilenoError("");
-      }
+    // Validate GST number (exactly 15 alphanumeric characters)
+    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
+    if (name === "gstno" && !gstRegex.test(value)) {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        gstno:
+          "GST number must be exactly 15 characters, alphanumeric, capital letters",
+      }));
+    } else {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        gstno: "",
+      }));
     }
 
-    if (name === "gstno") {
-      if (!/^[A-Za-z0-9]{15}$/.test(value)) {
-        setGstnoError("GST number must be exactly 15 alphanumeric characters");
-      } else {
-        setGstnoError("");
-      }
-    }
-
-    if (name === "email") {
-      if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
-        setEmailError("Please enter a valid email address");
-      } else {
-        setEmailError("");
-      }
-    }
-  };
-
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      }, 5000);
+    // Validate email address
+    if (
+      name === "email" &&
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)
+    ) {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        email: "Please enter a valid email address",
+      }));
+    } else {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        email: "",
+      }));
     }
   };
 
+  // handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const { vendorname, companyname, gstno, mobileno, email, address } =
+      formData;
 
-    if (!/^[A-Za-z\s]+$/.test(formData.vendorname)) {
-      alert("Vendor name must contain only letters and spaces.");
-      return;
-    }
-    if (!/^[A-Za-z\s]*[A-Za-z][A-Za-z\s]*$/.test(formData.companyname)) {
-      alert(
-        "Company name must contain letters and spaces, but not only numbers."
-      );
-      return;
-    }
-    if (!/^\d{10}$/.test(formData.mobileno)) {
-      alert("Mobile number must be 10 digits.");
-      return;
+    // Required fields validation
+    const requiredFields = [
+      { value: vendorname, field: "vendorname", label: "Vendor Name" },
+      { value: companyname, field: "companyname", label: "Company Name" },
+      { value: gstno, field: "gstno", label: "GST No" },
+      { value: mobileno, field: "mobileno", label: "Mobile No" },
+      { value: email, field: "email", label: "Email" },
+      { value: address, field: "address", label: "Address" },
+    ];
+
+    let newValidationMessages = {};
+
+    requiredFields.forEach(({ value, field, label }) => {
+      if (!value) {
+        newValidationMessages[field] = `Please fill out the ${label}.`;
+      }
+    });
+
+    if (!newValidationMessages.mobileno && !/^\d{10}$/.test(mobileno)) {
+      newValidationMessages.mobileno = "Mobile number must be 10 digits.";
     }
 
-    if (!/^[A-Za-z0-9]{15}$/.test(formData.gstno)) {
-      alert("GST number must be exactly 15 alphanumeric characters.");
-      return;
+    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
+    if (!newValidationMessages.gstno) {
+      if (gstno.length !== 15) {
+        newValidationMessages.gstno = "GST number must be exactly 15 characters long.";
+      }
     }
 
     if (
-      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(formData.email)
+      !newValidationMessages.email &&
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
     ) {
-      alert("Please enter a valid email address.");
+      newValidationMessages.email = "Please enter a valid email address.";
+    }
+
+    if (Object.keys(newValidationMessages).length > 0) {
+      setValidationMessages(newValidationMessages);
+      window.scrollTo(0, 0);
       return;
     }
+
+    setValidationMessages({});
 
     try {
       const requestBody = {
@@ -134,14 +177,15 @@ const AddVendor = () => {
       });
 
       if (response.ok) {
-        alert("Vendor added successfully!", "success");
+        console.log("Response:", response);
+        alert("Vendors added successfully!");
         setFormData(initialFormData);
       } else {
-        showAlert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.");
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "danger");
+      alert("Failed to add data. Please try again.");
     }
   };
 
@@ -159,10 +203,6 @@ const AddVendor = () => {
           >
             Add Vendor
           </h2>
-
-          {successAlert && <Alert alert={successAlert} />}
-          {errorAlert && <Alert alert={errorAlert} />}
-
           <div className="vendor-form-container relative pl-[14%]">
             <form>
               <div className="vendor-form-group">
@@ -171,14 +211,27 @@ const AddVendor = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-ven-add-input"
+                  className={`form-control-ven-add-input ${
+                    validationMessages.vendorname ? "is-invalid" : ""
+                  }`}
                   type="text"
                   id="vendorname"
                   name="vendorname"
                   placeholder="Vendor Name"
-                  onChange={handleChange}
+                  onChange={handleAlphaInputChange((value) =>
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      vendorname: value,
+                    }))
+                  )}
                   value={formData.vendorname}
+                  pattern="[A-Za-z\s]+"
                 />
+                {validationMessages.vendorname && (
+                  <div className="invalid-feedback">
+                    {validationMessages.vendorname}
+                  </div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="companyname" className="form-label">
@@ -186,14 +239,27 @@ const AddVendor = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-ven-add-input"
+                  className={`form-control-ven-add-input ${
+                    validationMessages.companyname ? "is-invalid" : ""
+                  }`}
                   type="text"
                   id="companyname"
                   name="companyname"
                   placeholder="Company Name"
-                  onChange={handleChange}
+                  onChange={handleAlphaInputChange((value) =>
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      companyname: value,
+                    }))
+                  )}
                   value={formData.companyname}
+                  pattern="[A-Za-z\s]+"
                 />
+                {validationMessages.companyname && (
+                  <div className="invalid-feedback">
+                    {validationMessages.companyname}
+                  </div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="gstno" className="form-label">
@@ -201,7 +267,9 @@ const AddVendor = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-ven-add-input"
+                  className={`form-control-ven-add-input ${
+                    validationMessages.gstno ? "is-invalid" : ""
+                  }`}
                   type="text"
                   id="gstno"
                   name="gstno"
@@ -209,7 +277,11 @@ const AddVendor = () => {
                   onChange={handleChange}
                   value={formData.gstno}
                 />
-                {gstnoError && <p className="error-message">{gstnoError}</p>}
+                {validationMessages.gstno && (
+                  <div className="invalid-feedback">
+                    {validationMessages.gstno}
+                  </div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="mobileno" className="form-label">
@@ -217,33 +289,43 @@ const AddVendor = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-ven-add-input"
-                  type="tel"
+                  className={`form-control-ven-add-input ${
+                    validationMessages.mobileno ? "is-invalid" : ""
+                  }`}
+                  type="text"
                   id="mobileno"
                   name="mobileno"
-                  placeholder="Mobile No."
-                  onChange={handleChange}
+                  placeholder="Mobile Number"
+                  onChange={handleNumericChange}
                   value={formData.mobileno}
                 />
-                {mobilenoError && (
-                  <p className="error-message">{mobilenoError}</p>
+                {validationMessages.mobileno && (
+                  <div className="invalid-feedback">
+                    {validationMessages.mobileno}
+                  </div>
                 )}
               </div>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
-                  Email Id:
+                  Email:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-ven-add-input"
-                  type="email"
+                  className={`form-control-ven-add-input ${
+                    validationMessages.email ? "is-invalid" : ""
+                  }`}
+                  type="text"
                   id="email"
                   name="email"
                   placeholder="Email"
                   onChange={handleChange}
                   value={formData.email}
                 />
-                {emailError && <p className="error-message">{emailError}</p>}
+                {validationMessages.email && (
+                  <div className="invalid-feedback">
+                    {validationMessages.email}
+                  </div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="address" className="form-label">
@@ -251,7 +333,9 @@ const AddVendor = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-ven-add-input"
+                  className={`form-control-ven-add-input ${
+                    validationMessages.address ? "is-invalid" : ""
+                  }`}
                   type="text"
                   id="address"
                   name="address"
@@ -259,16 +343,21 @@ const AddVendor = () => {
                   onChange={handleChange}
                   value={formData.address}
                 />
+                {validationMessages.address && (
+                  <div className="invalid-feedback">
+                    {validationMessages.address}
+                  </div>
+                )}
               </div>
-
               <button
-                type="submit"
-                className="vendor-btn-submit"
+                className="customer-btn-submit"
+                type="button"
                 onClick={handleSubmit}
               >
                 Add
               </button>
             </form>
+            <Alert validationMessages={validationMessages} />
           </div>
         </div>
       </div>
