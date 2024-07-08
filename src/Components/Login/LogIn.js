@@ -12,7 +12,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://carbooking.ssdpune.org/api/admin/login",
+        "http://localhost:8787/api/admin/login",
         {
           email,
           password,
@@ -32,7 +32,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="flex justify-center min-h-screen bg-gray-100">
+      <div className="flex justify-center min-h-screen ">
         <div className="login-screen rounded-4 px-8 py-6 mx-4 text-left bg-white shadow-lg md:w-1/3 lg:w-1/3 sm:w-1/3 h-3/4 mt-28">
           <div className="flex justify-center">{/* Your SVG code */}</div>
           <h3 className="text-2xl font-bold text-center">Login In</h3>
