@@ -3,7 +3,6 @@ const router = express.Router()
 const AdminSchema = require("../models/AdminLogin")
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'carbooking'
-const bcrypt = require('bcrypt')
 
 router.get("/admin", async (req, res) => {
     try {
