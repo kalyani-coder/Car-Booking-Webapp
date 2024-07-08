@@ -3,7 +3,6 @@ const router = express.Router()
 const AdminSchema = require("../models/AdminLogin")
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'carbooking'
-const bcrypt = require('bcrypt')
 
 router.get("/admin", async (req, res) => {
     try {
@@ -26,11 +25,11 @@ router.post('/admin/register', async (req, res) => {
 
     try {
         // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // const hashedPassword = await bcrypt.hash(password, 10);
 
         const admin = new AdminSchema({
             email,
-            password: hashedPassword,
+            password,
             name,
             
         });
@@ -63,9 +62,8 @@ router.post('/admin/login', async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
-        // Compare the password
-        const isMatch = await bcrypt.compare(password, admin.password);
-        if (!isMatch) {
+         // Compare the password (without bcrypt) bcoz server not able to install bcrypt dependency
+         if (password !== admin.password) {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
@@ -73,7 +71,6 @@ router.post('/admin/login', async (req, res) => {
         const token = jwt.sign(
             { id: admin._id, email: admin.email },
             JWT_SECRET,
-            { expiresIn: '1h' }
         );
 
         res.status(200).json({ message: 'Login successful', token });
