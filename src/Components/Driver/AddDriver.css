@@ -86,6 +86,8 @@ body {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin: auto;
+  width: 7em;
   margin-bottom: 45px;
 }
 
