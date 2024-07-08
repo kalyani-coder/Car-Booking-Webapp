@@ -10,24 +10,28 @@ const initialFormData = {
 
 const MasterCorporateCustomer = () => {
   const [formData, setFormData] = useState(initialFormData);
-  const [successMessage, setSuccessMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
-  const [successAlert, setSuccessAlert] = useState(null);
-  const [errorAlert, setErrorAlert] = useState(null);
+  const [validationMessages, setValidationMessages] = useState({});
 
-  const showAlert = (message, type) => {
-    if (type === "success") {
-      setSuccessAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setSuccessAlert(null);
-      }, 5000);
-    } else if (type === "error") {
-      setErrorAlert({ msg: message, type: type });
-      setTimeout(() => {
-        setErrorAlert(null);
-      });
+  const handleAlphaInputChange = (setter) => (event) => {
+    const { value } = event.target;
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      setter(value);
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        customername: "",
+      }));
+    } else {
+      setValidationMessages((prevMessages) => ({
+        ...prevMessages,
+        customername: "Customer name must contain only alphabets.",
+      }));
     }
   };
+
+  
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,15 +55,15 @@ const MasterCorporateCustomer = () => {
       });
 
       if (response.ok) {
-        showAlert("Data added successfully!", "success");
+        alert("Data added successfully!", "success");
         setFormData(initialFormData);
       } else {
-        showAlert("Failed to add data. Please try again.", "error");
+        alert("Failed to add data. Please try again.", "error");
         console.error("Error posting data:", response.statusText);
       }
     } catch (error) {
       console.error("API request error:", error);
-      showAlert("Failed to add data. Please try again.", "error");
+      alert("Failed to add data. Please try again.", "error");
     }
   };
 
@@ -70,17 +74,7 @@ const MasterCorporateCustomer = () => {
           <div className="rate-form-container">
             <h2
               className="text-center"
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "1rem",
-              }}
-            >
-              Master
-            </h2>
-
-            {successAlert && <Alert alert={successAlert} />}
-            {errorAlert && <Alert alert={errorAlert} />}
+              style={{fontSize: "2rem",fontWeight: "bold",marginBottom: "1rem",}}>Master</h2>
             {/* Form */}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -94,11 +88,20 @@ const MasterCorporateCustomer = () => {
                   id="add_vehicle"
                   name="add_vehicle"
                   placeholder="Add Vehicle"
-                  onChange={(e) =>
-                    setFormData({ ...formData, add_vehicle: e.target.value })
-                  }
-                  value={formData.add_vehicle}
+                  onChange={handleAlphaInputChange((value) =>
+                  setFormData((prevData) => ({
+                    ...prevData,
+                    add_vehicle: value,
+                  }))
+                )}
+                value={formData.add_vehicle}
+                pattern="[A-Za-z\s]+"
                 />
+                {validationMessages.add_vehicle && (
+                <div className="invalid-feedback">
+                  {validationMessages.add_vehicle}
+                </div>
+              )}
               </div>
               <div className="add-duty-type-and-add-rate-inputs">
                 <div className="w-full">
