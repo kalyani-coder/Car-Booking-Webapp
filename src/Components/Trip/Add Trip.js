@@ -421,7 +421,7 @@ const AddTrip = () => {
   return (
     <>
       <div className="add-trip-container">
-        <div className="trip-main-container relative left-[6rem] mt-4">
+        <div className="trip-main-container relative mt-4">
           <h2
             className="text-center relative right-[5rem]"
             style={{
@@ -458,7 +458,12 @@ const AddTrip = () => {
                 <option value="">Select Customer</option>
                 {customerList?.length > 0 ? (
                   customerList.map((customer) => (
-                    <option key={customer._id} value={customer.cus_name}>
+                    <option
+                      key={customer._id}
+                      value={customer.cus_name}
+                      className="sjkdbvkdbbjsbkdjb"
+                      style={{ width: "5em" }}
+                    >
                       {customer.cus_name}
                     </option>
                   ))
@@ -548,7 +553,7 @@ const AddTrip = () => {
               </select>
             </div>
             <div>
-              <div>
+              <div className="py-4">
                 {renderRows()}
                 {numberOfPeople < 6 && (
                   <button className="trip-btn-submit" onClick={handleAddPerson}>
@@ -558,7 +563,7 @@ const AddTrip = () => {
               </div>
             </div>
 
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 pick-up-location-date-flex-section">
               <div>
                 <div className="trip-form-group">
                   <label htmlFor="pickup" className="trip-form-label">
@@ -603,7 +608,7 @@ const AddTrip = () => {
                 </div>
               </div>
             </div>
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 pick-up-location-date-flex-section">
               <div>
                 <div className="trip-form-group">
                   <label htmlFor="dropoff" className="trip-form-label">
@@ -719,7 +724,7 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <div className="d-flex gap-3 mt-3">
+            <div className="d-flex gap-3 mt-3 pick-up-location-date-flex-section">
               <button
                 type="button"
                 className="trip-btn-submit"

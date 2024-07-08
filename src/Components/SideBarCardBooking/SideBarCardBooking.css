@@ -1,0 +1,15 @@
+.ugwuibduiisbd {
+  position: sticky;
+  top: 0;
+  /* background-color: red; */
+  padding: 0;
+  width: 100%;
+  z-index: 1;
+  justify-content: end;
+}
+
+@media (max-width: 1024px) {
+  .responsvie-side-bar-section {
+    /* width: 26rem; */
+  }
+}

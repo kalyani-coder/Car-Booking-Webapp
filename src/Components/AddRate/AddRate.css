@@ -60,7 +60,7 @@ body {
   outline: none;
 }
 .rate-form-control {
-  width: 360px;
+  width: 100%;
   height: 43px; /* Make all inputs and selects full width */
   padding: 10px;
   border: 1px solid #ccc;

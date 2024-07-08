@@ -67,7 +67,7 @@ body {
   } */
 
 .form-control-cust-add-input {
-  width: 80%;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -124,6 +124,13 @@ body {
   }
   #jbdksbhdbhksvhj {
     font-size: 10px;
+  }
+  .customer-main-container {
+    width: 100%;
+    height: auto;
+  }
+  .customer-main-container {
+    overflow-x: scroll;
   }
 }
 /* .customer-main-container{

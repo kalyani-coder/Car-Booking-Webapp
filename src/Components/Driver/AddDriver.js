@@ -169,7 +169,7 @@ const AddDriver = () => {
   return (
     <>
       <div className="driver-Add-container">
-        <div className="driver-main-container relative left-[8rem] mt-7">
+        <div className="driver-main-container relative mt-7 ">
           <div className="driver-form-container">
             <h2
               style={{
@@ -177,7 +177,7 @@ const AddDriver = () => {
                 fontWeight: "bold",
                 marginBottom: "1rem",
               }}
-              className="text-center mr-[10rem]"
+              className="text-center  text-center"
             >
               Add Driver
             </h2>
@@ -200,7 +200,7 @@ const AddDriver = () => {
               )}
             </div>
 
-            <div className="form-group">
+            <div className="driver-form-group">
               <label htmlFor="email" className="form-label">
                 Email Id:
               </label>
@@ -216,7 +216,7 @@ const AddDriver = () => {
               {emailError && <p className="error-message">{emailError}</p>}
             </div>
 
-            <div className="form-group">
+            <div className="driver-form-group">
               <label htmlFor="address" className="form-label">
                 Address:
                 <span className="required-asterisk">*</span>
@@ -232,7 +232,7 @@ const AddDriver = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="driver-form-group">
               <label htmlFor="mobileno" className="form-label">
                 Mobile No:
                 <span className="required-asterisk">*</span>
@@ -251,7 +251,7 @@ const AddDriver = () => {
               )}
             </div>
 
-            <div className="form-group">
+            <div className="driver-form-group">
               <label htmlFor="mobileno1" className="form-label">
                 Alternate Mobile No:
                 <span className="required-asterisk">*</span>

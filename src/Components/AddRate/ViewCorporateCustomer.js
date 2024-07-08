@@ -160,11 +160,12 @@ const ViewCorporateCustomer = () => {
               fontWeight: "bold",
               marginBottom: "8px",
             }}
+            className="View-Corporate-Customer-Rate"
           >
             View Corporate Customer Rate
           </h2>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 search-box-and-individual-customer-btn">
             <div className="flex-grow-0 flex-shrink-0 w-10/12 search-bar">
               <input
                 type="text"
@@ -174,7 +175,7 @@ const ViewCorporateCustomer = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex-grow-0 flex-shrink-0 w-2/12">
+            <div className="flex-grow-0 flex-shrink-0 w-2/12 Indivisual-Customer-btn-cc--cc">
               <button className="btn btn-primary w-full">
                 <Link
                   to="/viewindivisualcustomer"

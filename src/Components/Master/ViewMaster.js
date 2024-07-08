@@ -169,7 +169,9 @@ const ViewMaster = () => {
             <tbody className="">
               {data.map((item, index) => (
                 <tr key={index} className="p-2 border-b border-gray-200">
-                  <td className="p-2 border-b border-gray-200">{index + 1}</td>
+                  <td className="p-2 border-b border-gray-200 w-[60px] text-center">
+                    {index + 1}
+                  </td>
                   <td className="p-2 border-b border-gray-200">
                     {item.add_vehicle}
                   </td>

@@ -112,5 +112,26 @@ body {
 
   .trip-btn-submit {
     padding: 8px 16px;
+    width: 100%;
+  }
+  .form-control-add-trip-input {
+    width: 100%;
+    height: 42px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    /* font-size: 12px; */
+  }
+  .pick-up-location-date-flex-section {
+    flex-direction: column;
+    padding-top: 1em;
+  }
+  .add-trip-input {
+    width: 100%;
+  }
+  .sjkdbvkdbbjsbkdjb {
+    width: 50%;
+    font-size: 15px;
   }
 }
