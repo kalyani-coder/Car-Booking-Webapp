@@ -71,12 +71,7 @@ const Login = () => {
               </div>
             </div>
           </form>
-          {/* <div className="mt-6 text-grey-dark">
-            <span className="mr-2">Don't have an account?</span>
-            <Link to='/register' className="text-teal-600 hover:underline font-bold">
-              Register
-            </Link>
-          </div> */}
+         
         </div>
       </div>
     </>
