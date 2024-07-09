@@ -202,7 +202,7 @@ router.get('/customer/:customerId', async (req, res) => {
 
 router.post("/sendemail", async (req, res) => {
     const { emailData } = req.body;
-    console.log("emailData" , emailData)
+    // console.log("emailData" , emailData)
   
     if (!emailData || !emailData.email) {
       return res.status(400).json({ message: "Email data or email is missing" });
@@ -212,8 +212,8 @@ router.post("/sendemail", async (req, res) => {
   }
     try {
       const transporter = nodemailer.createTransport({
-        host: "live.smtp.mailtrap.io",
-        port: 25,
+        host: "bulk.smtp.mailtrap.io",
+        port: 587,
         auth: {
           user: "api",
           pass: "3f4ebe0e1af80798535216a662822105"
