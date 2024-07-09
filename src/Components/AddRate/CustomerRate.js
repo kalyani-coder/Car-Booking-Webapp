@@ -71,9 +71,33 @@ const CustomerRate = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  
+    // Validate input based on field name
+    if (name === "from" || name === "to") {
+      // Allow only alphabets and spaces
+      if (/^[A-Za-z\s]*$/.test(value)) {
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      }
+    } else if (name === "km" || name === "extra_km" || name === "hours" || name === "extra_hours") {
+      // Allow only numbers
+      if (/^\d*$/.test(value)) {
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      }
+    } else {
+      // For other fields, accept any input
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
