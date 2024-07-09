@@ -130,14 +130,8 @@ const VendorRate = () => {
     <>
       <div className="rate-Add-container">
         <div className="rate-main-container relative left-[6rem] mt-2">
-          <div className="rate-form-container">
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "2rem",
-              }}
-            >
+          <div className="rate-form-container-vender-rate-cc">
+            <h2 className="View-Corporate-Customer-Rate font-bold">
               Vendor Rate
             </h2>
 
@@ -151,7 +145,7 @@ const VendorRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
-                  className="form-control-add-trip-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   id="vender_Name"
                   name="vender_Name"
                   onChange={handleVendorChange}
@@ -176,7 +170,7 @@ const VendorRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   type="text"
                   id="company_Name"
                   name="company_Name"
@@ -192,7 +186,7 @@ const VendorRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   type="text"
                   id="GST_No"
                   name="GST_No"
@@ -208,7 +202,7 @@ const VendorRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   type="text"
                   id="mobile_Number"
                   name="mobile_Number"
@@ -225,7 +219,7 @@ const VendorRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   type="text"
                   id="address"
                   name="address"
@@ -240,7 +234,7 @@ const VendorRate = () => {
                   Type Of Vehicle:
                 </label>
                 <select
-                  className="form-control-add-trip-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   name="vehicle"
                   id="vehicle"
                   onChange={handleChange}
@@ -278,7 +272,7 @@ const VendorRate = () => {
                 </select>
               </div>
 
-              <div className="d-flex gap-3">
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div>
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">
@@ -327,7 +321,7 @@ const VendorRate = () => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex gap-3">
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div>
                   <div className="form-group">
                     <label htmlFor="from" className="form-label">
@@ -365,7 +359,7 @@ const VendorRate = () => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex gap-3">
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div>
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
@@ -404,7 +398,7 @@ const VendorRate = () => {
                 </div>
               </div>
 
-              <div className="d-flex gap-3">
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div>
                   <div className="form-group">
                     <label htmlFor="hour" className="form-label">

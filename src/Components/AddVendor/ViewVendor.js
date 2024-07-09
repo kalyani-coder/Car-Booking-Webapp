@@ -121,17 +121,10 @@ const ViewVendor = () => {
     <>
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "1rem",
-            }}
-            className="text-center"
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Vendors
           </h2>
-          <input
+          <inputVendors
             type="search"
             placeholder="Search By Vendor Name"
             value={searchTerm}

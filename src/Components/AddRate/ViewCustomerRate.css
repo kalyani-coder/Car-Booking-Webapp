@@ -28,7 +28,7 @@
 }
 .View-Corporate-Customer-Rate {
   font-size: 2rem;
-
+  text-align: center;
   margin-bottom: 8px;
 }
 /* style={{
@@ -69,5 +69,8 @@
   .Search-by-Corporate-Customer-Name {
     font-size: 10px;
     height: 4em;
+  }
+  .search-bar > input {
+    text-align: center;
   }
 }

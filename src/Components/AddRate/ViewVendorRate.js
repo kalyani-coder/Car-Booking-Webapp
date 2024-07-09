@@ -139,13 +139,7 @@ const ViewVenderRate = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container h-[98vh]">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Vendor Rate
           </h2>
 

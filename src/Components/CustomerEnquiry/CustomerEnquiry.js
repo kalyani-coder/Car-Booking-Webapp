@@ -222,18 +222,11 @@ const CustomerEnquiry = () => {
   return (
     <>
       <div className="customer-inquiry-container">
-        <div className="main-container relative left-[6rem] mt-4">
-          <div className="form-container">
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "2rem",
-              }}
-            >
+        <div className="main-container relative mt-4">
+          <div className="rate-form-container-vender-rate-cc">
+            <h2 className="View-Corporate-Customer-Rate font-bold">
               Add Customer Enquiry
             </h2>
-
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
 
@@ -244,7 +237,7 @@ const CustomerEnquiry = () => {
               </label>
 
               <select
-                className="form-control-add-trip-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 id="customername"
                 name="customername"
                 onChange={(e) => {
@@ -272,7 +265,7 @@ const CustomerEnquiry = () => {
                 Mobile No:
               </label>
               <input
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 type="text"
                 id="mobileno"
                 name="mobileno"
@@ -286,7 +279,7 @@ const CustomerEnquiry = () => {
                 Email Id:
               </label>
               <input
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 type="text"
                 id="email"
                 name="email"
@@ -300,7 +293,7 @@ const CustomerEnquiry = () => {
                 Address:
               </label>
               <input
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 type="text"
                 id="address"
                 name="address"
@@ -316,7 +309,7 @@ const CustomerEnquiry = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 id="tripe_type"
                 name="tripe_type"
                 onChange={handleChange}
@@ -333,7 +326,7 @@ const CustomerEnquiry = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 id="sub_type"
                 name="sub_type"
                 onChange={handleChange}
@@ -462,7 +455,7 @@ const CustomerEnquiry = () => {
               </label>
               <input
                 type="number"
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 name="totalDays"
                 // placeholder="Total Days"
                 onChange={handleChange}
@@ -477,7 +470,7 @@ const CustomerEnquiry = () => {
               </label>
               <input
                 type="number"
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 name="totalHours"
                 // placeholder="Total Days"
                 onChange={handleChange}
@@ -490,7 +483,7 @@ const CustomerEnquiry = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="form-control-cust-inq-input"
+                className="form-control-add-trip-input-vender-rate-page"
                 name="vehicle"
                 id="vehicle"
                 onChange={handleChange}

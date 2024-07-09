@@ -88,7 +88,8 @@ const AddVendor = () => {
       } else {
         setValidationMessages((prevMessages) => ({
           ...prevMessages,
-          gstno: "GST number must be exactly 15 characters, alphanumeric, capital letters",
+          gstno:
+            "GST number must be exactly 15 characters, alphanumeric, capital letters",
         }));
       }
     } else {
@@ -97,7 +98,6 @@ const AddVendor = () => {
         [name]: value,
       }));
     }
-
 
     // Validate email address
     if (
@@ -147,7 +147,8 @@ const AddVendor = () => {
     const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
     if (!newValidationMessages.gstno) {
       if (gstno.length !== 15) {
-        newValidationMessages.gstno = "GST number must be exactly 15 characters long.";
+        newValidationMessages.gstno =
+          "GST number must be exactly 15 characters long.";
       }
     }
 
