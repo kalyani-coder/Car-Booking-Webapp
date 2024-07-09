@@ -63,33 +63,41 @@ const AddVendor = () => {
   };
 
   // Handle form input changes
+  // Handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // For GST number, limit to 15 characters
-    if (name === "gstno" && value.length > 15) {
-      return;
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    // Validate GST number (exactly 15 alphanumeric characters)
-    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
-    if (name === "gstno" && !gstRegex.test(value)) {
-      setValidationMessages((prevMessages) => ({
-        ...prevMessages,
-        gstno:
-          "GST number must be exactly 15 characters, alphanumeric, capital letters",
+    // Convert GST number to uppercase
+    if (name === "gstno") {
+      const upperValue = value.toUpperCase();
+      if (upperValue.length > 15) {
+        return;
+      }
+      setFormData((prevData) => ({
+        ...prevData,
+        gstno: upperValue,
       }));
+
+      // Validate GST number (exactly 15 alphanumeric characters)
+      const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/;
+      if (upperValue.length === 15 && gstRegex.test(upperValue)) {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          gstno: "",
+        }));
+      } else {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          gstno: "GST number must be exactly 15 characters, alphanumeric, capital letters",
+        }));
+      }
     } else {
-      setValidationMessages((prevMessages) => ({
-        ...prevMessages,
-        gstno: "",
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
       }));
     }
+
 
     // Validate email address
     if (

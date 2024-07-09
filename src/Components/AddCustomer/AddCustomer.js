@@ -21,7 +21,7 @@ const AddCustomer = () => {
   };
 
   const validateMobileNumber = (value) => {
-    if (value.length !== 10) {
+    if (value.length > 10) {
       setValidationMessages((prevMessages) => ({
         ...prevMessages,
         mobileno: "Mobile number must be exactly 10 digits",
@@ -70,28 +70,34 @@ const AddCustomer = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // For GST number, limit to 15 characters
-    if (name === "gstno" && value.length > 15) {
-      return;
-    }
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    // Validate GST number (exactly 15 alphanumeric characters)
-    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
-    if (name === "gstno" && !gstRegex.test(value)) {
-      setValidationMessages((prevMessages) => ({
-        ...prevMessages,
-        gstno:
-          "GST number must be exactly 15 characters, alphanumeric, capital letters",
+    // Convert GST number to uppercase
+    if (name === "gstno") {
+      const upperValue = value.toUpperCase();
+      if (upperValue.length > 15) {
+        return;
+      }
+      setFormData((prevData) => ({
+        ...prevData,
+        gstno: upperValue,
       }));
+
+      // Validate GST number (exactly 15 alphanumeric characters)
+      const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/;
+      if (upperValue.length === 15 && gstRegex.test(upperValue)) {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          gstno: "",
+        }));
+      } else {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          gstno: "GST number must be exactly 15 characters, alphanumeric, capital letters",
+        }));
+      }
     } else {
-      setValidationMessages((prevMessages) => ({
-        ...prevMessages,
-        gstno: "",
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
       }));
     }
 
@@ -140,13 +146,13 @@ const AddCustomer = () => {
       newValidationMessages.mobileno = "Mobile number must be 10 digits.";
     }
 
-    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
+    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/;
     if (!newValidationMessages.gstno) {
-      if (gstno.length !== 15) {
-        newValidationMessages.gstno = "GST number must be exactly 15 characters long.";
-      } 
+      if (gstno.length !== 15 || !gstRegex.test(gstno)) {
+        newValidationMessages.gstno = "GST number must be exactly 15 characters long and follow the format.";
+      }
     }
-    
+
     if (
       !newValidationMessages.email &&
       !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
@@ -183,7 +189,7 @@ const AddCustomer = () => {
       if (response.ok) {
         console.log("Response:", response);
         alert("Data added successfully!");
-        setFormData(initialFormData); 
+        setFormData(initialFormData);
       } else {
         alert("Failed to add data. Please try again.");
       }

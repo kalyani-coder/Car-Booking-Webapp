@@ -98,7 +98,7 @@ const ViewCustomer = () => {
   }, [searchQuery, customers]);
   const validateCustomerName = (name) => /^[A-Za-z\s]+$/.test(name);
   const validateGSTNumber = (gstNo) =>
-     /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/.test(gstNo);
+     /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/.test(gstNo);
   const validateMobileNumber = (mobileNo) => /^\d{10}$/.test(mobileNo);
   const validateEmail = (email) =>
     /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
@@ -148,7 +148,7 @@ const ViewCustomer = () => {
     }
 
     if (!validateGSTNumber(editedCustomer.gst_no)) {
-      validationErrors.gst_no = "GST number must be proper.";
+      validationErrors.gst_no = "GST number must be exactly 15 characters, alphanumeric, capital letters.";
     }
   
     if (!validateMobileNumber(editedCustomer.cus_mobile)) {
