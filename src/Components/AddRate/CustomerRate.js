@@ -162,13 +162,14 @@ const CustomerRate = () => {
     <>
       <div className="rate-Add-container">
         <div className="rate-main-container">
-          <div className="rate-form-container relative left-[6rem]">
+          <div className="rate-form-container relative ">
             <h2
               style={{
                 fontSize: "2rem",
                 fontWeight: "bold",
                 marginBottom: "1rem",
               }}
+              className="text-center"
             >
               Corporate Customer
             </h2>
@@ -180,7 +181,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
-                  className="form-control-cust-add-input"
+                  className="form-control-rate-add-input"
                   name="Cus_Type"
                   id="Cus_Type"
                   value={customerType}
@@ -234,7 +235,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-cust-add-input"
+                  className="form-control-rate-add-input"
                   type="tel"
                   id="Cus_Mobile"
                   name="Cus_Mobile"
@@ -250,7 +251,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
-                  className="form-control-cust-add-input"
+                  className="form-control-rate-add-input"
                   name="type_of_vehicle"
                   id="type_of_vehicle"
                   onChange={handleChange}
@@ -288,7 +289,7 @@ const CustomerRate = () => {
                 </select>
               </div>
 
-              <div className="d-flex gap-3">
+              <div className="responsive-flex-column-required d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="duty_type" className="form-label">
@@ -347,7 +348,7 @@ const CustomerRate = () => {
                 </div>
               </div>
 
-              <div className="d-flex gap-3">
+              <div className="responsive-flex-column-required d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="from" className="form-label">
@@ -384,7 +385,7 @@ const CustomerRate = () => {
                 </div>
               </div>
 
-              <div className="d-flex gap-3">
+              <div className="responsive-flex-column-required d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
@@ -421,7 +422,7 @@ const CustomerRate = () => {
                 </div>
               </div>
 
-              <div className="d-flex gap-3">
+              <div className="responsive-flex-column-required d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="hours" className="form-label">

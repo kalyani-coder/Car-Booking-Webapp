@@ -26,6 +26,16 @@
 .add-viewcus-btn {
   color: white;
 }
+.View-Corporate-Customer-Rate {
+  font-size: 2rem;
+
+  margin-bottom: 8px;
+}
+/* style={{
+  fontSize: "2rem",
+  fontWeight: "bold",
+  marginBottom: "8px",
+}} */
 
 @media (max-width: 768px) {
   .search-box-and-individual-customer-btn {
@@ -47,8 +57,17 @@
   }
   .View-Corporate-Customer-Rate {
     text-align: center;
+    font-size: 23px;
+    padding: 1em 0;
+    font-weight: 500;
   }
   .Indivisual-Customer-btn-cc--cc {
-    width: 60%;
+    width: 80%;
+    padding: 1em 0;
+    margin-right: 1em;
+  }
+  .Search-by-Corporate-Customer-Name {
+    font-size: 10px;
+    height: 4em;
   }
 }

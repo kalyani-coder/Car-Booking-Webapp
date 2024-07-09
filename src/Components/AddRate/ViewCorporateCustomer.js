@@ -154,14 +154,7 @@ const ViewCorporateCustomer = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container h-[98vh]">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-            className="View-Corporate-Customer-Rate"
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Corporate Customer Rate
           </h2>
 
@@ -170,12 +163,15 @@ const ViewCorporateCustomer = () => {
               <input
                 type="text"
                 placeholder="Search by Corporate Customer Name"
-                className="w-full p-2 rounded border"
+                className="w-full p-2 rounded border Search-by-Corporate-Customer-Name"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex-grow-0 flex-shrink-0 w-2/12 Indivisual-Customer-btn-cc--cc">
+            <div
+              className="flex-grow-0 flex-shrink-0 w-2/12 Indivisual-Customer-btn-cc--cc "
+              style={{ marginLeft: "0" }}
+            >
               <button className="btn btn-primary w-full">
                 <Link
                   to="/viewindivisualcustomer"

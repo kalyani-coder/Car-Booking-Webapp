@@ -91,7 +91,8 @@ const AddCustomer = () => {
       } else {
         setValidationMessages((prevMessages) => ({
           ...prevMessages,
-          gstno: "GST number must be exactly 15 characters, alphanumeric, capital letters",
+          gstno:
+            "GST number must be exactly 15 characters, alphanumeric, capital letters",
         }));
       }
     } else {
@@ -149,7 +150,8 @@ const AddCustomer = () => {
     const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/;
     if (!newValidationMessages.gstno) {
       if (gstno.length !== 15 || !gstRegex.test(gstno)) {
-        newValidationMessages.gstno = "GST number must be exactly 15 characters long and follow the format.";
+        newValidationMessages.gstno =
+          "GST number must be exactly 15 characters long and follow the format.";
       }
     }
 
@@ -203,7 +205,7 @@ const AddCustomer = () => {
     <>
       <div className="customer-Add-container">
         <div className="addcustomer-main-container">
-          <div className="customer-form-container">
+          <div className="width-set-for-form-groupt-cc--dd">
             <h2
               style={{
                 fontSize: "2rem",

@@ -156,7 +156,7 @@ const ViewDriver = () => {
               fontWeight: "bold",
               marginBottom: "1rem",
             }}
-            className="text-center mr-[4rem]"
+            className="text-center mr-[4rem] view-driver-text-center-responsive"
           >
             View Drivers
           </h2>
