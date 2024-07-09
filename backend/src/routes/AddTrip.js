@@ -15,7 +15,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-
 router.post('/', async (req, res) => {
     try {
         console.log(req.body);
@@ -54,107 +53,6 @@ router.post('/', async (req, res) => {
         }
     }
 });
-
-
-// const transporter = nodemailer.createTransport({
-//     host: "live.smtp.mailtrap.io",
-//     port: 25,
-//     auth: {
-//         user: "api",
-//         pass: "3f4ebe0e1af80798535216a662822105"
-//     }
-// });
-
-
-
-// const transporter = nodemailer.createTransport({
-//             host: "live.smtp.mailtrap.io",
-//             port: 25,
-//             auth: {
-//               user: "api",
-//               pass: "3f4ebe0e1af80798535216a662822105"
-//             }
-//           });
-  
-//   router.post('/', async (req, res) => {
-//       try {
-//           console.log(req.body);
-  
-//           // Find the highest trip_duty_number in the database
-//           const latestTrip = await AddTrip.findOne().sort({ trip_duty_number: -1 }).exec();
-//           let newTripDutyNumber = 1; // Default value if no trips exist yet
-  
-//           if (latestTrip && latestTrip.trip_duty_number) {
-//               newTripDutyNumber = latestTrip.trip_duty_number + 1;
-//           }
-  
-//           // Create a new instance of AddTrip with the incremented trip_duty_number
-//           const addTripData = new AddTrip({
-//               ...req.body,
-//               trip_duty_number: newTripDutyNumber
-//           });
-  
-//           // Save the data to the database
-//           await addTripData.save();
-  
-//           // Extract the email address from the request body
-//           const email = addTripData.email;
-  
-//           // Send email with the trip details
-//           const mailOptions = {
-//               from: '<mailtrap@ssdpune.org>', // Adjust sender's email
-//               to: email,
-//               subject: 'Trip Information',
-//               text: `
-//               Trip Details:
-//               Booking Id: ${addTripData._id}
-//               Customer Id: ${addTripData.customerId}
-//               Customer Name: ${addTripData.customername}
-//               Mobile No: ${addTripData.mobileno}
-//               Email: ${addTripData.email}
-//               Address: ${addTripData.address}
-//               Trip Type: ${addTripData.triptype}
-//               Sub Type: ${addTripData.subtype}
-//               Pick Up: ${addTripData.pickup}
-//               Drop Off: ${addTripData.dropoff}
-//               Date: ${addTripData.date}
-//               Time: ${addTripData.time}
-//               Date1: ${addTripData.date1}
-//               Time1: ${addTripData.time1}
-//               Total Days: ${addTripData.totaldays}
-//               Hours: ${addTripData.hours}
-//               Vehicle: ${addTripData.vehicle}
-//             `
-//           };
-  
-//           transporter.sendMail(mailOptions, (error, info) => {
-//               if (error) {
-//                   console.error('Error sending email:', error);
-//               } else {
-//                   console.log('Email sent:', info.response);
-//               }
-//           });
-  
-//           // Return the created data in the response
-//           res.status(201).json(addTripData);
-//       } catch (error) {
-//           // Check if the error is a Mongoose validation error
-//           if (error.name === 'ValidationError') {
-//               const validationErrors = {};
-//               for (const key in error.errors) {
-//                   validationErrors[key] = error.errors[key].message;
-//               }
-//               res.status(400).json({ validationErrors });
-//           } else {
-//               // Handle other types of errors
-//               console.error(error);
-//               res.status(500).json({ error: 'Internal server error' });
-//           }
-//       }
-//   });
-
-
-
 
 router.delete('/:id', async (req, res) => {
     try {
@@ -195,8 +93,6 @@ router.get('/customer/:customerId', async (req, res) => {
         res.status(500).json(error);
     }
 });
-
-
 
 // Send email on the SMTP server 
 
@@ -271,8 +167,6 @@ router.post("/sendemail", async (req, res) => {
       res.status(500).json({ error: "Something went wrong" });
     }
   });
-
-
 
 
 module.exports = router;
