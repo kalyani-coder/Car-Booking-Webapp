@@ -270,21 +270,14 @@ const ViewStartEndDetails = () => {
     <>
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h2
-            className="ml-[37%]"
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
             View Driver Trip Details
           </h2>
-          <div className="p-4 space-y-4 ml-10%">
+          <div className="py-4 space-y-4 ">
             <input
               type="text"
               placeholder="Search by date or driver name"
-              className="w-full p-2 rounded border"
+              className="w-full p-2 rounded border Search-by-date-or-driver-name"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />

@@ -190,7 +190,10 @@ const AddCustomer = () => {
 
       if (response.ok) {
         console.log("Response:", response);
-        const customerTypeMessage = Cus_Type === "Corporate" ? "Corporate customer added successfully!" : "Individual customer added successfully!";
+        const customerTypeMessage =
+          Cus_Type === "Corporate"
+            ? "Corporate customer added successfully!"
+            : "Individual customer added successfully!";
         alert(customerTypeMessage);
         setFormData(initialFormData);
       } else {

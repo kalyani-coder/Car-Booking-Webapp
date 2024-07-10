@@ -243,11 +243,11 @@ const UpdateDuty = () => {
         );
       default:
         return (
-          <div className="mb-3">
+          <div className="mb-3 ">
             <label className="form-label">Transaction ID:</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control w-[500px] update-duty-form-control"
               value={formData.transactionId}
               onChange={(e) =>
                 setFormData({ ...formData, transactionId: e.target.value })
@@ -358,33 +358,26 @@ const UpdateDuty = () => {
 
   return (
     <>
+      <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4 text-center">
+        Add Duty Slip
+      </h2>
+      <h4 className="font-bold text-danger text-center">
+        Duity Slip Number {selectedCustomer.trip_duty_number}
+      </h4>
       <div className="update-duty-container">
         <div className="update-duty-form">
           <div className="form-group">
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "8px",
-              }}
-            >
-              Add Duty Slip
-            </h2>
-            <h4 className="font-bold text-danger">
-              Duity Slip Number {selectedCustomer.trip_duty_number}
-            </h4>
-
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
 
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 {" "}
                 <label htmlFor="companyname" className="update-duty-form-label">
                   Company Name:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="companyname"
                   name="companyname"
@@ -398,7 +391,7 @@ const UpdateDuty = () => {
                   GST No:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="gstno"
                   name="gstno"
@@ -407,7 +400,7 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label
                   htmlFor="reportingaddress"
@@ -416,7 +409,7 @@ const UpdateDuty = () => {
                   Reporting Address:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="reportingaddress"
                   name="reportingaddress"
@@ -429,7 +422,7 @@ const UpdateDuty = () => {
                   Date:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="date"
                   id="date"
                   name="date"
@@ -437,13 +430,13 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label htmlFor="name" className="update-duty-form-label">
                   Customer Name:
                 </label>
                 <select
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   id="customername"
                   name="customername"
                   onChange={(e) => {
@@ -471,7 +464,7 @@ const UpdateDuty = () => {
                   Vehicle:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="vehicle"
                   id="vehicle"
                   name="vehicle"
@@ -481,7 +474,7 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label
                   htmlFor="vehiclenumber"
@@ -490,7 +483,7 @@ const UpdateDuty = () => {
                   Vehicle Number:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="vehiclenumber"
                   name="vehiclenumber"
@@ -503,7 +496,7 @@ const UpdateDuty = () => {
                   Rate:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="number"
                   id="rate"
                   name="rate"
@@ -512,13 +505,13 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label htmlFor="from" className="update-duty-form-label">
                   From:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="from"
                   name="from"
@@ -532,7 +525,7 @@ const UpdateDuty = () => {
                   To:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="to"
                   name="to"
@@ -543,14 +536,14 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            {/* <div className="d-flex gap-5">
+            {/* <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 {" "}
                 <label htmlFor="title" className="update-duty-form-label">
                   Duty Type:
                 </label>
                 <select
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   name="title"
                   id="title"
                   onChange={handleChange}
@@ -577,7 +570,7 @@ const UpdateDuty = () => {
                   Amount:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="amount1"
                   name="amount1"
@@ -587,7 +580,7 @@ const UpdateDuty = () => {
                 />
               </div>
             </div> */}
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label
                   htmlFor="startingtime"
@@ -596,7 +589,7 @@ const UpdateDuty = () => {
                   Starting Time:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="time"
                   id="startingtime"
                   name="startingtime"
@@ -609,7 +602,7 @@ const UpdateDuty = () => {
                   Closing Time:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="time"
                   id="closingtime"
                   name="closingtime"
@@ -620,13 +613,13 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label htmlFor="startingkm" className="update-duty-form-label">
                   Starting Kms:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="startingkm"
                   name="startingkm"
@@ -640,7 +633,7 @@ const UpdateDuty = () => {
                   Closing Kms:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="closingkm"
                   name="closingkm"
@@ -650,13 +643,13 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label htmlFor="totalhour" className="update-duty-form-label">
                   Total Hours:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="totalhour"
                   name="totalhour"
@@ -669,7 +662,7 @@ const UpdateDuty = () => {
                   Total Kms:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="totalkm"
                   name="totalkm"
@@ -678,13 +671,13 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label htmlFor="extrahour" className="update-duty-form-label">
                   Extra Hour:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="extrahour"
                   name="extrahour"
@@ -697,7 +690,7 @@ const UpdateDuty = () => {
                   Extra Hours Amount:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="extrahourasamount"
                   name="extrahoursamount"
@@ -707,14 +700,14 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 {" "}
                 <label htmlFor="extrakm" className="update-duty-form-label">
                   Extra KMS:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="extrakm"
                   name="extrakm"
@@ -727,7 +720,7 @@ const UpdateDuty = () => {
                   Extra KMS Amount:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="text"
                   id="extrakmamount"
                   name="extrakmamount"
@@ -737,13 +730,13 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="d-flex gap-5">
+            <div className="responsive-flex-column-required d-flex justify-between">
               <div>
                 <label htmlFor="totalamount" className="update-duty-form-label">
                   Total Amount:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="number"
                   id="totalamount"
                   name="totalamount"
@@ -759,7 +752,7 @@ const UpdateDuty = () => {
                   Advance Amount:
                 </label>
                 <input
-                  className="update-duty-form-control"
+                  className="update-duty-form-control form-control"
                   type="number"
                   id="advanceamount"
                   name="advanceamount"
@@ -774,7 +767,7 @@ const UpdateDuty = () => {
                 Payment Method:
               </label>
               <select
-                className="update-duty-form-control"
+                className="update-duty-form-control form-control"
                 name="paymentmethod"
                 id="paymentmethod"
                 onChange={(e) => setPaymentMethod(e.target.value)}

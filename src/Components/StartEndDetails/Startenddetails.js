@@ -169,13 +169,10 @@ const StartEndDetails = () => {
 
   return (
     <>
+      <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+        Get Start And End Details
+      </h2>
       <div className="start-end-details-container">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "8px" }}
-        >
-          Get Start And End Details
-        </h2>
-
         {successAlert && <Alert alert={successAlert} />}
         {errorAlert && <Alert alert={errorAlert} />}
 
@@ -227,7 +224,7 @@ const StartEndDetails = () => {
           </div>
           <div className="start-end-details-row">
             <div className="start-end-details-column">
-              <div className="d-flex gap-3">
+              <div className="responsive-flex-column-required d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="pickup" className="form-label">
@@ -296,7 +293,7 @@ const StartEndDetails = () => {
           </div>
           <div className="start-end-details-row">
             <div className="start-end-details-column">
-              <div className="d-flex gap-3">
+              <div className="responsive-flex-column-required d-flex gap-3">
                 <div>
                   <div className="form-group">
                     <label htmlFor="dropoff" className="form-label">
@@ -345,7 +342,7 @@ const StartEndDetails = () => {
               </div>
             </div>
             <div className="start-end-details-column">
-              <div className="d-flex gap-2">
+              <div className="responsive-flex-column-required d-flex gap-2">
                 <div className="form-group">
                   <label htmlFor="toll" className="form-label">
                     Total Days:
@@ -469,7 +466,7 @@ const StartEndDetails = () => {
               </div>
             </div>
             <div className="start-end-details-column">
-              <div className="d-flex gap-2">
+              <div className="responsive-flex-column-required d-flex gap-2">
                 <div>
                   <div className="form-group">
                     <label htmlFor="toll" className="form-label">

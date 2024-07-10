@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./ViewShareDetails.css"
+import "./ViewShareDetails.css";
 import Sidebar from "../Sidebar/Sidebar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -266,27 +266,21 @@ const ViewShareDetails = () => {
   return (
     <>
       <div className="share-details-container">
+        <div className="">
+          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+            View Share Details
+          </h2>
+        </div>
+        <div className="p-4 space-y-4">
+          <input
+            type="text"
+            placeholder="Search by date or driver name"
+            className="w-full p-2 rounded border Search-by-date-or-driver-name"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
         <div className="share-details-main-container h-[150vh]">
-          <div className="pl-[40%]">
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "8px",
-              }}
-            >
-              View Share Details
-            </h2>
-          </div>
-          <div className="p-4 space-y-4">
-            <input
-              type="text"
-              placeholder="Search by date or driver name"
-              className="w-full p-2 rounded border"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
           {error ? (
             <p>Error: {error}</p>
           ) : (

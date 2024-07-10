@@ -2,8 +2,8 @@
 
 /* Container styles */
 .share-details-container {
-  display: flex;
-  padding: 20px;
+  /* display: flex;
+  padding: 20px; */
 }
 
 /* Form styles */
@@ -67,7 +67,6 @@
   font-size: 14px;
 }
 
-
 /* Calendar icon styles */
 .date-picker-container {
   display: flex;
@@ -92,4 +91,13 @@
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .share-details-main-container {
+    overflow-x: scroll;
+  }
+  .Search-by-date-or-driver-name {
+    text-align: center;
+  }
 }

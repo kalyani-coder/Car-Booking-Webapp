@@ -2,8 +2,13 @@
 
 /* Style for the container div */
 .update-duty-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  width: 69em;
+  flex-direction: column;
+  justify-content: center;
   padding: 20px;
-
   /* width: 100vw; */
   overflow-x: hidden;
 }
@@ -11,11 +16,10 @@
 /* Style for the form div */
 .update-duty-form {
   display: flex;
-  flex-wrap: wrap; /* Allow form items to wrap to the next line on smaller screens */
-  gap: 8px;
-  /* margin-left: 300px; Leave 300px from the left side */
 
-  /* padding-left: 20px; */
+  width: 100%;
+  justify-content: center;
+  margin: auto;
 }
 
 /* Style for each row in the form */
@@ -48,23 +52,28 @@
   /* justify-content: space-between; */
   margin-top: 20px;
   gap: 30px;
-  margin-left: 325px;
 }
 
-/* Style for Save and Print buttons */
-
-/* Hover effect for buttons */
-
-/* Media query for smaller screens */
 @media (max-width: 768px) {
   .update-duty-container {
-    /* margin-left: 300px; Remove the left margin on smaller screens */
+    display: flex;
+    margin: auto;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    padding-left: 27px;
   }
-
   /* Reset width for buttons to full width on smaller screens */
   .btn-save,
   .btn-print {
     width: 100%;
     margin-bottom: 10px; /* Add some space between buttons on smaller screens */
+  }
+  .update-duty-form-control {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
   }
 }
