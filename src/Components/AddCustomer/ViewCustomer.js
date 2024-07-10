@@ -142,11 +142,11 @@ const ViewCustomer = () => {
 
   const handleSave = async () => {
     let validationErrors = {};
-
+  
     if (!validateCustomerName(editedCustomer.cus_name)) {
       validationErrors.cus_name = "Customer name must contain only alphabets.";
     }
-
+  
     if (!validateGSTNumber(editedCustomer.gst_no)) {
       validationErrors.gst_no = "GST number must be exactly 15 characters, alphanumeric, capital letters.";
     }
@@ -154,20 +154,20 @@ const ViewCustomer = () => {
     if (!validateMobileNumber(editedCustomer.cus_mobile)) {
       validationErrors.cus_mobile = "Mobile number must be exactly 10 digits.";
     }
-
+  
     if (!validateEmail(editedCustomer.cus_email)) {
       validationErrors.cus_email = "Please enter a valid email address.";
     }
-
+  
     if (!validateAddress(editedCustomer.address)) {
       validationErrors.address = "Please enter an address.";
     }
-
+  
     if (Object.keys(validationErrors).length > 0) {
       setValidationMessages(validationErrors);
       return;
     }
-
+  
     try {
       const response = await fetch(
         `http://localhost:8787/api/add-customers/${editedCustomer._id}`,
@@ -179,7 +179,7 @@ const ViewCustomer = () => {
           body: JSON.stringify(editedCustomer),
         }
       );
-
+  
       if (response.ok) {
         setCustomers((prevCustomers) =>
           prevCustomers.map((customer) =>
@@ -192,12 +192,10 @@ const ViewCustomer = () => {
           )
         );
         setIsEditing(false);
+        setValidationMessages({}); // Clear validation messages on success
         alert("Customer data updated successfully");
-        // setErrorMessage("");
       } else {
         console.error("Error updating customer:", response.status);
-        alert("Error updating customer. Please try again.");
-
         alert("Error updating customer. Please try again.");
       }
     } catch (error) {
@@ -205,6 +203,8 @@ const ViewCustomer = () => {
       alert("Error updating customer. Please try again.");
     }
   };
+  
+  
 
   const handleViewTypeChange = (type) => {
     setViewType(type);
