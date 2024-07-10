@@ -182,14 +182,11 @@ function AllocateTrip() {
 
   return (
     <>
+      <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+        Allocate Trip Details
+      </h2>
       <div className="trip-details-container">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold" }}
-          className="relative left-[22rem] mt-2 mb-2"
-        >
-          Allocate Trip Details
-        </h2>
-        <div className="d-flex gap-3" style={{ borderTop: "3px dashed black" }}>
+        <div className="responsive-flex-column-required d-flex gap-4 allocate-trip-column-sections-margin-set-auto">
           <div className="trip-details-section mt-4">
             {error && <p className="text-red-500">{error}</p>}
             <h2 className="trip-details-heading">Trip Details</h2>
@@ -219,7 +216,7 @@ function AllocateTrip() {
                   ))}
                 </select>
 
-                <div className="d-flex gap-3">
+                <div className="responsive-flex-column-required d-flex gap-3">
                   <div>
                     <label htmlFor="pickup" className="trip-details-label">
                       Pickup Location:
@@ -265,7 +262,7 @@ function AllocateTrip() {
                   </div>
                 </div>
 
-                <div className="d-flex gap-3">
+                <div className="responsive-flex-column-required d-flex gap-3">
                   <div>
                     <label className="trip-details-label">
                       Dropoff Location:
@@ -485,18 +482,17 @@ function AllocateTrip() {
             </div>
           </div>
         </div>
-
-        <div className="custom-button-container text-center">
-          <button
-            className="custom-btn custom-allocate-btn"
-            onClick={handleAllocateTrip}
-          >
-            Allocate
-          </button>
-          {/* <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
+      </div>
+      <div className="custom-button-container text-center">
+        <button
+          className="custom-btn custom-allocate-btn"
+          onClick={handleAllocateTrip}
+        >
+          Allocate
+        </button>
+        {/* <button className="custom-btn custom-generate-btn" onClick={handleShareClick}>
             Share
           </button> */}
-        </div>
       </div>
     </>
   );

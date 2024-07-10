@@ -97,6 +97,11 @@ body {
 .rate-form-container-vender-rate-cc {
   width: 80%;
 }
+
+/* .corporate-customer-form-section-width-set-cc {
+  width: 80%;
+  margin: auto;
+} */
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .main-container {

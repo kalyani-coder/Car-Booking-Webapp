@@ -2,13 +2,6 @@
 
 /* Container for the entire page */
 .trip-details-container {
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  justify-content: space-between;
-  padding: 20px;
-  /* margin-left: 300px; */
-
-  /* height: 150vh; */
 }
 
 /* Styling for Trip Details Section */
@@ -22,7 +15,6 @@
 .driver-details-section {
   flex: 1; /* Take up all available space */
   width: 100%; /* Full width on small screens */
-  margin-left: 20px;
 }
 
 /* Styling for Headings */
@@ -32,6 +24,7 @@
   margin-bottom: 10px;
   font-size: 1.5rem;
   font-weight: bold;
+  text-align: center;
 }
 
 /* Styling for Forms */
@@ -39,6 +32,7 @@
 .driver-details-form {
   display: flex;
   flex-wrap: wrap; /* Allow form fields to wrap to the next line */
+  width: 100%;
 }
 
 /* Styling for Form Labels */
@@ -65,6 +59,7 @@
 /* Styling for Buttons */
 .custom-button-container {
   margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
 }
@@ -99,7 +94,20 @@
   color: red; /* or any other color */
   margin-left: 4px; /* adjust the margin as needed */
 }
-
+.allocate-trip-column-sections-margin-set-auto {
+  border-top: 3px dashed black;
+  width: 69em;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.aaaaaa {
+  margin-top: -22px;
+  color: black;
+  font-size: 35px;
+  margin-bottom: 28px;
+  margin-left: 343px;
+}
 @media (max-width: 768px) {
   .trip-details-container {
     display: flex;
@@ -107,14 +115,22 @@
     justify-content: space-between;
     padding: 20px;
     margin-left: 10px;
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
-}
-
-.aaaaaa {
-  margin-top: -22px;
-  color: black;
-  font-size: 35px;
-  margin-bottom: 28px;
-  margin-left: 343px;
+  .allocate-trip-column-sections-margin-set-auto {
+    border-top: 3px dashed black;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    flex-direction: column;
+  }
+  /* Styling for Buttons */
+  .custom-button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 1em 0;
+  }
 }

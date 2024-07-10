@@ -109,6 +109,7 @@ body {
 
   .customer-btn-submit {
     padding: 8px 16px;
+    width: 100%;
   }
 
   .customer-form-container {

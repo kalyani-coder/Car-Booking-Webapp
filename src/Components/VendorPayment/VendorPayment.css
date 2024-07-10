@@ -1,43 +1,36 @@
-.card-1{
-     
-    width:90%;
-    margin:auto;
+.card-1 {
+  width: 90%;
+  margin: auto;
 }
-.form-body{
-    height:auto;
-    margin-left: 180px;
-
-
+.form-body {
+  height: auto;
+  margin-left: 180px;
 }
-.container-fluid{
-     
-    
-
+.container-fluid {
 }
-.rate-form-control-payment{
-    width: 250px;
-    height: 43px;
+.rate-form-control-payment {
+  width: 250px;
+  height: 43px;
 }
 .customer-btn-submit {
-    background-color: #004f83;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 45px;
-  }
-  
-  .customer-btn-submit:hover {
-    background-color: #0056b3;
-  }
-#btn1{
-    margin-left: 26%;
+  background-color: #004f83;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 45px;
+}
 
+.customer-btn-submit:hover {
+  background-color: #0056b3;
 }
-#btn2{
-    margin-left: 2%;
+#btn1 {
+  margin-left: 26%;
 }
-#btn3{
-    margin-left: 2%;
+#btn2 {
+  margin-left: 2%;
+}
+#btn3 {
+  margin-left: 2%;
 }

@@ -111,14 +111,19 @@ const AddDriver = () => {
     });
 
     if (!newValidationMessages.mobileno && !/^\d{10}$/.test(mobileno)) {
-      newValidationMessages.mobileno = "Mobile number must be exactly 10 digits.";
+      newValidationMessages.mobileno =
+        "Mobile number must be exactly 10 digits.";
     }
 
     if (!newValidationMessages.mobileno1 && !/^\d{10}$/.test(mobileno1)) {
-      newValidationMessages.mobileno1 = "Alternate mobile number must be exactly 10 digits.";
+      newValidationMessages.mobileno1 =
+        "Alternate mobile number must be exactly 10 digits.";
     }
 
-    if (!newValidationMessages.email && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) {
+    if (
+      !newValidationMessages.email &&
+      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
+    ) {
       newValidationMessages.email = "Please enter a valid email address.";
     }
 
@@ -162,10 +167,16 @@ const AddDriver = () => {
   return (
     <>
       <div className="driver-Add-container">
-        <Sidebar />
         <div className="driver-main-container">
           <div className="driver-form-container">
-            <h2 className="text-center" style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}>
+            <h2
+              className="text-center"
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+              }}
+            >
               Add Driver
             </h2>
             <div className="driver-form-group">
@@ -174,7 +185,9 @@ const AddDriver = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <input
-                className={`form-control-dri-add-input ${validationMessages.drivername ? "is-invalid" : ""}`}
+                className={`form-control-dri-add-input ${
+                  validationMessages.drivername ? "is-invalid" : ""
+                }`}
                 type="text"
                 id="drivername"
                 name="drivername"
@@ -194,7 +207,9 @@ const AddDriver = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <input
-                className={`form-control-dri-add-input ${validationMessages.email ? "is-invalid" : ""}`}
+                className={`form-control-dri-add-input ${
+                  validationMessages.email ? "is-invalid" : ""
+                }`}
                 type="email"
                 id="email"
                 name="email"
@@ -214,7 +229,9 @@ const AddDriver = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <input
-                className={`form-control-dri-add-input ${validationMessages.address ? "is-invalid" : ""}`}
+                className={`form-control-dri-add-input ${
+                  validationMessages.address ? "is-invalid" : ""
+                }`}
                 type="text"
                 id="address"
                 name="address"
@@ -234,7 +251,9 @@ const AddDriver = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <input
-                className={`form-control-dri-add-input ${validationMessages.mobileno ? "is-invalid" : ""}`}
+                className={`form-control-dri-add-input ${
+                  validationMessages.mobileno ? "is-invalid" : ""
+                }`}
                 type="tel"
                 id="mobileno"
                 name="mobileno"
@@ -254,7 +273,9 @@ const AddDriver = () => {
                 <span className="required-asterisk">*</span>
               </label>
               <input
-                className={`form-control-dri-add-input ${validationMessages.mobileno1 ? "is-invalid" : ""}`}
+                className={`form-control-dri-add-input ${
+                  validationMessages.mobileno1 ? "is-invalid" : ""
+                }`}
                 type="tel"
                 id="mobileno1"
                 name="mobileno1"
