@@ -11,7 +11,6 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
         <th>Customer Name</th>
         <th>GST No</th>
         <th>Mobile</th>
-        {/* <th>Email</th> */}
         <th>Address</th>
         <th>Action</th>
       </tr>
@@ -23,7 +22,6 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{customer.cus_name}</td>
           <td>{customer.gst_no}</td>
           <td>{customer.cus_mobile}</td>
-          {/* <td>{customer.cus_email}</td> */}
           <td>{customer.address}</td>
           <td>
             <div className="d-flex align-items-center gap-1">
@@ -55,7 +53,6 @@ const ViewCustomer = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedCustomer, setEditedCustomer] = useState({});
   const [viewType, setViewType] = useState("table");
-  const [validationMessages, setValidationMessages] = useState({});
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -96,13 +93,6 @@ const ViewCustomer = () => {
   useEffect(() => {
     filterCustomers();
   }, [searchQuery, customers]);
-  const validateCustomerName = (name) => /^[A-Za-z\s]+$/.test(name);
-  const validateGSTNumber = (gstNo) =>
-     /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/.test(gstNo);
-  const validateMobileNumber = (mobileNo) => /^\d{10}$/.test(mobileNo);
-  const validateEmail = (email) =>
-    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email);
-  const validateAddress = (address) => address.length > 0; // You can adjust this validation as needed
 
   const deleteCustomer = async (customerId) => {
     const confirmed = window.confirm(
@@ -139,35 +129,9 @@ const ViewCustomer = () => {
     setEditedCustomer(customer);
     setIsEditing(true);
   };
+  
 
   const handleSave = async () => {
-    let validationErrors = {};
-  
-    if (!validateCustomerName(editedCustomer.cus_name)) {
-      validationErrors.cus_name = "Customer name must contain only alphabets.";
-    }
-  
-    if (!validateGSTNumber(editedCustomer.gst_no)) {
-      validationErrors.gst_no = "GST number must be exactly 15 characters, alphanumeric, capital letters.";
-    }
-  
-    if (!validateMobileNumber(editedCustomer.cus_mobile)) {
-      validationErrors.cus_mobile = "Mobile number must be exactly 10 digits.";
-    }
-  
-    if (!validateEmail(editedCustomer.cus_email)) {
-      validationErrors.cus_email = "Please enter a valid email address.";
-    }
-  
-    if (!validateAddress(editedCustomer.address)) {
-      validationErrors.address = "Please enter an address.";
-    }
-  
-    if (Object.keys(validationErrors).length > 0) {
-      setValidationMessages(validationErrors);
-      return;
-    }
-  
     try {
       const response = await fetch(
         `http://localhost:8787/api/add-customers/${editedCustomer._id}`,
@@ -179,7 +143,7 @@ const ViewCustomer = () => {
           body: JSON.stringify(editedCustomer),
         }
       );
-  
+
       if (response.ok) {
         setCustomers((prevCustomers) =>
           prevCustomers.map((customer) =>
@@ -192,7 +156,6 @@ const ViewCustomer = () => {
           )
         );
         setIsEditing(false);
-        setValidationMessages({}); // Clear validation messages on success
         alert("Customer data updated successfully");
       } else {
         console.error("Error updating customer:", response.status);
@@ -203,8 +166,6 @@ const ViewCustomer = () => {
       alert("Error updating customer. Please try again.");
     }
   };
-  
-  
 
   const handleViewTypeChange = (type) => {
     setViewType(type);
@@ -268,15 +229,8 @@ const ViewCustomer = () => {
                   cus_name: e.target.value,
                 })
               }
-              className={`w-full p-2 mb-2 border border-gray-300 rounded ${
-                validationMessages.cus_name ? "is-invalid" : ""
-              }`}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.cus_name && (
-              <div className="invalid-feedback">
-                {validationMessages.cus_name}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">GST No</h5>
             <input
@@ -285,16 +239,9 @@ const ViewCustomer = () => {
               onChange={(e) =>
                 setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })
               }
-               maxLength="15"
-              className={`w-full p-2 mb-2 border border-gray-300 rounded ${
-                validationMessages.gst_no ? "is-invalid" : ""
-              }`}
+              maxLength="15"
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.gst_no && (
-              <div className="invalid-feedback">
-                {validationMessages.gst_no}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">Customer Mobile</h5>
             <input
@@ -307,15 +254,8 @@ const ViewCustomer = () => {
                 })
               }
               maxLength="10"
-              className={`w-full p-2 mb-2 border border-gray-300 rounded ${
-                validationMessages.cus_mobile ? "is-invalid" : ""
-              }`}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.cus_mobile && (
-              <div className="invalid-feedback">
-                {validationMessages.cus_mobile}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">Customer Email</h5>
             <input
@@ -327,15 +267,8 @@ const ViewCustomer = () => {
                   cus_email: e.target.value,
                 })
               }
-              className={`w-full p-2 mb-2 border border-gray-300 rounded ${
-                validationMessages.cus_email ? "is-invalid" : ""
-              }`}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.cus_email && (
-              <div className="invalid-feedback">
-                {validationMessages.cus_email}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">Address</h5>
             <textarea
@@ -347,15 +280,8 @@ const ViewCustomer = () => {
                 })
               }
               rows={3}
-              className={`w-full p-2 mb-2 border border-gray-300 rounded ${
-                validationMessages.address ? "is-invalid" : ""
-              }`}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.address && (
-              <div className="invalid-feedback">
-                {validationMessages.address}
-              </div>
-            )}
 
             <button
               onClick={handleSave}

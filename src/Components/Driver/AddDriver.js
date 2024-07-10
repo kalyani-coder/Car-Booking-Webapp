@@ -90,51 +90,45 @@ const AddDriver = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     const { drivername, email, address, mobileno, mobileno1 } = formData;
-
-    // Required fields validation
+  
+    // Required fields validation (excluding email)
     const requiredFields = [
       { value: drivername, field: "drivername", label: "Driver Name" },
-      { value: email, field: "email", label: "Email" },
       { value: address, field: "address", label: "Address" },
       { value: mobileno, field: "mobileno", label: "Mobile No" },
       { value: mobileno1, field: "mobileno1", label: "Alternate Mobile No" },
     ];
-
+  
     let newValidationMessages = {};
-
+  
     requiredFields.forEach(({ value, field, label }) => {
       if (!value) {
         newValidationMessages[field] = `Please fill out the ${label}.`;
       }
     });
-
+  
     if (!newValidationMessages.mobileno && !/^\d{10}$/.test(mobileno)) {
-      newValidationMessages.mobileno =
-        "Mobile number must be exactly 10 digits.";
+      newValidationMessages.mobileno = "Mobile number must be exactly 10 digits.";
     }
-
+  
     if (!newValidationMessages.mobileno1 && !/^\d{10}$/.test(mobileno1)) {
-      newValidationMessages.mobileno1 =
-        "Alternate mobile number must be exactly 10 digits.";
+      newValidationMessages.mobileno1 = "Alternate mobile number must be exactly 10 digits.";
     }
-
-    if (
-      !newValidationMessages.email &&
-      !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)
-    ) {
+  
+    if (email && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) {
       newValidationMessages.email = "Please enter a valid email address.";
     }
-
+  
     if (Object.keys(newValidationMessages).length > 0) {
       setValidationMessages(newValidationMessages);
       window.scrollTo(0, 0);
       return;
     }
-
+  
     setValidationMessages({});
-
+  
     try {
       const requestBody = {
         driver_Name: drivername,
@@ -143,7 +137,7 @@ const AddDriver = () => {
         driver_Mo1: mobileno,
         driver_Mo2: mobileno1,
       };
-
+  
       const response = await fetch("http://localhost:8787/api/add-drivers", {
         method: "POST",
         headers: {
@@ -151,7 +145,7 @@ const AddDriver = () => {
         },
         body: JSON.stringify(requestBody),
       });
-
+  
       if (response.ok) {
         alert("Driver added successfully!");
         setFormData(initialFormData);
@@ -163,6 +157,7 @@ const AddDriver = () => {
       alert("Failed to add data. Please try again.");
     }
   };
+  
 
   return (
     <>
@@ -204,12 +199,9 @@ const AddDriver = () => {
             <div className="driver-form-group">
               <label htmlFor="email" className="form-label">
                 Email Id:
-                <span className="required-asterisk">*</span>
               </label>
               <input
-                className={`form-control-dri-add-input ${
-                  validationMessages.email ? "is-invalid" : ""
-                }`}
+                className={`form-control-dri-add-input }`}
                 type="email"
                 id="email"
                 name="email"
@@ -217,11 +209,6 @@ const AddDriver = () => {
                 onChange={handleChange}
                 value={formData.email}
               />
-              {validationMessages.email && (
-                <div className="invalid-feedback">
-                  {validationMessages.email}
-                </div>
-              )}
             </div>
             <div className="driver-form-group">
               <label htmlFor="address" className="form-label">

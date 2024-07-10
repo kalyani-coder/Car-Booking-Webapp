@@ -34,17 +34,24 @@ const MasterCorporateCustomer = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validation checks
+  
+    let newValidationMessages = {};
+  
     if (formData.add_vehicle.trim() === "") {
-      alert("Add Vehicle is required.", "error");
-      return;
+      newValidationMessages.add_vehicle = "Add Vehicle is required.";
     }
     if (formData.add_rate.trim() === "") {
-      alert("Add Rate is required.", "error");
-      return;
+      newValidationMessages.add_rate = "Add Rate is required.";
     }
-
+  
+    if (Object.keys(newValidationMessages).length > 0) {
+      setValidationMessages(newValidationMessages);
+      window.scrollTo(0, 0); // Scroll to the top if there are validation errors
+      return;
+    } else {
+      setValidationMessages({});
+    }
+  
     try {
       const response = await fetch("http://localhost:8787/api/masterrate", {
         method: "POST",
@@ -53,9 +60,9 @@ const MasterCorporateCustomer = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
-        alert("Data added successfully!", "success");
+        alert("Master added successfully!", "success");
         setFormData(initialFormData);
       } else {
         alert("Failed to add data. Please try again.", "error");
@@ -66,6 +73,7 @@ const MasterCorporateCustomer = () => {
       alert("Failed to add data. Please try again.", "error");
     }
   };
+  
 
   return (
     <>
@@ -83,7 +91,9 @@ const MasterCorporateCustomer = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-cust-add-input"
+                  className={`form-control-cust-add-input ${
+                  validationMessages.add_vehicle ? "is-invalid" : ""
+                }`}
                   type="text"
                   id="add_vehicle"
                   name="add_vehicle"
@@ -130,7 +140,9 @@ const MasterCorporateCustomer = () => {
                     <span className="required-asterisk">*</span>
                   </label>
                   <input
-                    className="rate-form-control"
+                    className={`rate-form-control ${
+                  validationMessages.add_rate ? "is-invalid" : ""
+                }`}
                     type="number"
                     id="add_rate"
                     name="add_rate"
@@ -140,6 +152,11 @@ const MasterCorporateCustomer = () => {
                       setFormData({ ...formData, add_rate: e.target.value })
                     }
                   />
+                  {validationMessages.add_rate && (
+                <div className="invalid-feedback">
+                  {validationMessages.add_rate}
+                </div>
+              )}
                 </div>
               </div>
 

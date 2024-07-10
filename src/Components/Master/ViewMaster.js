@@ -12,8 +12,7 @@ const ViewMaster = () => {
     add_duty_type: "",
     add_rate: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  
 
   useEffect(() => {
     fetch("http://localhost:8787/api/masterrate")
@@ -68,16 +67,12 @@ const ViewMaster = () => {
         );
 
         setIsEditing(false);
-        // setSuccessMessage('Master data updated successfully');
-        setErrorMessage("");
-
         // Assuming you want to display an alert or toast for success
         alert("Master data updated successfully");
       } else {
         const errorResponse = await response.text(); // Log server response text
         console.error("Error updating master:", response.status, errorResponse);
-        setErrorMessage("Error updating master. Please try again.");
-        setSuccessMessage("");
+        alert("Error updating master. Please try again.");
 
         // Revert the optimistic update if server update fails
         setData((prevData) =>
@@ -91,7 +86,6 @@ const ViewMaster = () => {
     } catch (error) {
       console.error("Error updating master:", error);
       // setErrorMessage('Error updating master. Please try again.');
-      setSuccessMessage("");
 
       // Revert the optimistic update if an exception occurs
       setData((prevData) =>
@@ -127,11 +121,11 @@ const ViewMaster = () => {
             response.status,
             errorResponse
           );
-          setErrorMessage("Error deleting master. Please try again.");
+          alert("Error deleting master. Please try again.");
         }
       } catch (error) {
         console.error("Error deleting master:", error);
-        setErrorMessage("Error deleting master: " + error.message);
+        alert("Error deleting master: " + error.message);
       }
     }
   };
@@ -260,12 +254,6 @@ const ViewMaster = () => {
             >
               Cancel
             </button>
-            {errorMessage && (
-              <p className="text-red-500 mt-2">{errorMessage}</p>
-            )}
-            {successMessage && (
-              <p className="text-green-500 mt-2">{successMessage}</p>
-            )}
           </div>
         </div>
       )}
