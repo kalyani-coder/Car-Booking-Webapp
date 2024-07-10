@@ -204,14 +204,7 @@ const ViewAllocateTrip = () => {
     <>
       <div className="share-details-container h-[100vh]">
         <div className="share-details-main-container">
-          <h2
-            className="text-center mt-2"
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Allocate Trips
           </h2>
           <div className="p-4 space-y-4">

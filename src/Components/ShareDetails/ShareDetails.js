@@ -130,20 +130,12 @@ const ShareDetails = () => {
 
   return (
     <>
+      <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+        Share Trip Details
+      </h2>
       <div className="share-details-container">
         {/* {mobilenoError && <p className="text-red-500">{mobilenoError}</p>} */}
-        <div className="share-details-form ml-12">
-          <h2
-            className="relative  left-[34%]"
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
-            Share Details
-          </h2>
-
+        <div className="share-details-form">
           {successAlert && <Alert alert={successAlert} />}
           {errorAlert && <Alert alert={errorAlert} />}
 
@@ -407,14 +399,6 @@ const ShareDetails = () => {
                   readOnly
                 />
               </div>
-
-              <button
-                type="button"
-                className="customer-btn-submit"
-                onClick={handleSave}
-              >
-                Save
-              </button>
             </div>
 
             <div className="share-details-column">
@@ -431,6 +415,13 @@ const ShareDetails = () => {
               </div>
             </div>
           </div>
+          <button
+            type="button"
+            className="customer-btn-submit"
+            onClick={handleSave}
+          >
+            Save
+          </button>
         </div>
       </div>
     </>

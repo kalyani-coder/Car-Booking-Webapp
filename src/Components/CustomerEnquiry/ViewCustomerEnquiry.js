@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa"; // Import icons
-
+import "./CustomerEnquiry.css";
 const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
     <thead>
@@ -233,17 +233,10 @@ const ViewCustomerEnquiry = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container h-[100vh] mt-4">
-          <h2
-            className="text-center"
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              // marginBottom: "10rem",
-            }}
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Customer Enquiry
           </h2>
-          <div className="search-bar p-4 space-y-4">
+          <div className="search-bar-view-customer-enquiry ">
             <input
               type="text"
               placeholder="Search by Customer Name"

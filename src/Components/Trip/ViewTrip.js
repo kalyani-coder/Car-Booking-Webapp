@@ -206,16 +206,7 @@ const ViewTrip = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container mt-4">
-          <h2
-            className="text-center"
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
-            View Trips
-          </h2>
+          <h2 className="View-Corporate-Customer-Rate font-bold">View Trips</h2>
           {/* Other JSX code */}
           {selectedTrip && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
@@ -321,7 +312,7 @@ const ViewTrip = () => {
               </div>
             </div>
           )}
-          <div className="p-4 space-y-4">
+          <div className="search-bar-view-customer-enquiry">
             <input
               type="text"
               placeholder="Search by Customer Name"

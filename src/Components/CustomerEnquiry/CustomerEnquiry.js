@@ -343,7 +343,7 @@ const CustomerEnquiry = () => {
                 </option>
               </select>
             </div>
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 responsive-flex-column-required">
               <div>
                 <div className="form-group">
                   <label htmlFor="pic_up" className="form-label">
@@ -395,7 +395,7 @@ const CustomerEnquiry = () => {
                 </div>
               </div>
             </div>
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 responsive-flex-column-required">
               <div>
                 <div className="form-group">
                   <label htmlFor="drop_of" className="form-label">

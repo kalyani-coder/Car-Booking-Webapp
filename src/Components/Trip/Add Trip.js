@@ -422,16 +422,7 @@ const AddTrip = () => {
     <>
       <div className="add-trip-container">
         <div className="trip-main-container relative mt-4">
-          <h2
-            className="text-center relative right-[5rem]"
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "2rem",
-            }}
-          >
-            Add Trip
-          </h2>
+          <h2 className="View-Corporate-Customer-Rate font-bold">Add Trip</h2>
 
           {successAlert && <Alert alert={successAlert} />}
           {errorAlert && <Alert alert={errorAlert} />}

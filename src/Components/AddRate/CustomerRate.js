@@ -191,7 +191,7 @@ const CustomerRate = () => {
     <>
       <div className="rate-Add-container">
         <div className="rate-main-container">
-          <div className="rate-form-container relative ">
+          <div className="rate-form-container-vender-rate-cc relative ">
             <h2
               style={{
                 fontSize: "2rem",
@@ -203,14 +203,17 @@ const CustomerRate = () => {
               Corporate Customer
             </h2>
 
-            <form onSubmit={handleSubmit}>
+            <form
+              onSubmit={handleSubmit}
+              className="corporate-customer-form-section-width-set-cc"
+            >
               <div className="form-group">
                 <label htmlFor="Cus_Type" className="form-label">
                   Customer Type:
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   name="Cus_Type"
                   id="Cus_Type"
                   value={customerType}
@@ -228,7 +231,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   name="Cus_name"
                   id="Cus_name"
                   onChange={handleCustomerNameChange}
@@ -248,7 +251,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   type="text"
                   id="gst_no"
                   name="gst_no"
@@ -264,7 +267,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   type="tel"
                   id="Cus_Mobile"
                   name="Cus_Mobile"
@@ -280,7 +283,7 @@ const CustomerRate = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <select
-                  className="form-control-rate-add-input"
+                  className="form-control-add-trip-input-vender-rate-page"
                   name="type_of_vehicle"
                   id="type_of_vehicle"
                   onChange={handleChange}
@@ -326,7 +329,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <select
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       name="duty_type"
                       id="duty_type"
                       onChange={handleChange}
@@ -360,7 +363,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <select
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       name="rate"
                       id="rate"
                       onChange={handleChange}
@@ -385,7 +388,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       type="text"
                       id="from"
                       name="from"
@@ -402,7 +405,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       type="text"
                       id="to"
                       name="to"
@@ -422,7 +425,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       type="km"
                       id="km"
                       name="km"
@@ -439,7 +442,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       type="number"
                       id="extra_km"
                       name="extra_km"
@@ -459,7 +462,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       type="number"
                       id="hours"
                       name="hours"
@@ -476,7 +479,7 @@ const CustomerRate = () => {
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
-                      className="rate-form-control"
+                      className="form-control-add-trip-input-vender-rate-page"
                       type="number"
                       id="extra_hours"
                       name="extra_hours"
