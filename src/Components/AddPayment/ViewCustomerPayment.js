@@ -6,7 +6,7 @@ import { FaFilePdf } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import headerlogo from "../../assects/images/shivpushpa_logo.png";
 import Customer from "./../CustomerEnquiry/Customer";
-
+import "./ViewCustomerPayment.css";
 const ViewCustomerPayment = () => {
   const [customers, setcustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -282,13 +282,15 @@ const ViewCustomerPayment = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h1 className="text-2xl font-semibold mb-4">View Customer Payment</h1>
+          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+            View Customer Payment
+          </h2>
           <input
             type="search"
             placeholder="Search By Customer Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
+            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4  Search-By-Customer-Name"
           />
           <table className="table">
             <thead>

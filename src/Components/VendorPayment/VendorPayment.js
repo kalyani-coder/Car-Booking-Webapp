@@ -381,162 +381,141 @@ function VendorPayment() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="form-body">
-          <div className="card-1">
-            <div className="row justify-content-center">
-              <div className="col-md-10">
-                <div className="card-body mt-5">
-                  <h2
-                    style={{
-                      fontSize: "2rem",
-                      fontWeight: "bold",
-                      marginBottom: "8px",
-                    }}
+      <div className="main-container-vendor-payment-section">
+        <div className="mt-5">
+          <h1 className="text-2xl font-semibold mb-4 text-center">
+            Add Vendor Payment
+          </h1>
+          {successAlert && <Alert alert={successAlert} />}
+          {errorAlert && <Alert alert={errorAlert} />}
+
+          <form onSubmit={handleSubmit}>
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="vender_Name" className="form-label">
+                    Vendor Name:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <select
+                    className="update-duty-form-control form-control"
+                    name="vender_Name"
+                    id="vender_Name"
+                    value={selectedVendorId}
+                    onChange={handleVendorChange}
                   >
-                    Add Vendor Payment
-                  </h2>
+                    <option value="">Select Vendor</option>
+                    {vendors.map((vendor) => (
+                      <option key={vendor._id} value={vendor.vender_id}>
+                        {vendor.vender_Name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-                  {successAlert && <Alert alert={successAlert} />}
-                  {errorAlert && <Alert alert={errorAlert} />}
+              <div className="form-group">
+                <label htmlFor="vehicletype" className="form-label">
+                  Vehicle Type:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <select
+                  className="update-duty-form-control form-control"
+                  name="vehicletype"
+                  id="vehicletype"
+                  onChange={handleVehicleChange}
+                >
+                  <option value="">Select Vehicle Type</option>
+                  {vehicleTypes.map((vehicle, index) => (
+                    <option key={index} value={vehicle.vehicle}>
+                      {vehicle.vehicle}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-                  <form onSubmit={handleSubmit}>
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="vender_Name" className="form-label">
-                            Vendor Name:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <select
-                            className="update-duty-form-control"
-                            name="vender_Name"
-                            id="vender_Name"
-                            value={selectedVendorId}
-                            onChange={handleVendorChange}
-                          >
-                            <option value="">Select Vendor</option>
-                            {vendors.map((vendor) => (
-                              <option key={vendor._id} value={vendor.vender_id}>
-                                {vendor.vender_Name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="GST_No" className="form-label">
+                    GST No:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="update-duty-form-control form-control"
+                    id="GST_No"
+                    name="GST_No"
+                    placeholder="Enter GST No"
+                    value={selectedVehicle ? selectedVehicle.GST_No : ""}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="vehicleno" class="form-label">
+                    Vehicle No:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="string"
+                    className="update-duty-form-control form-control"
+                    name="vehicle_no"
+                    placeholder="Vehicle Number"
+                    onChange={handleChange}
+                    value={formData.vehicle_no}
+                  />
+                </div>
+              </div>
+            </div>
 
-                      <div className="form-group">
-                        <label htmlFor="vehicletype" className="form-label">
-                          Vehicle Type:
-                          <span className="required-asterisk">*</span>
-                        </label>
-                        <select
-                          className="update-duty-form-control"
-                          name="vehicletype"
-                          id="vehicletype"
-                          onChange={handleVehicleChange}
-                        >
-                          <option value="">Select Vehicle Type</option>
-                          {vehicleTypes.map((vehicle, index) => (
-                            <option key={index} value={vehicle.vehicle}>
-                              {vehicle.vehicle}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="company_Name" class="form-label">
+                    Company Name:
+                    <span className="required-asterisk">*</span>
+                  </label>
 
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="GST_No" className="form-label">
-                            GST No:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="update-duty-form-control"
-                            id="GST_No"
-                            name="GST_No"
-                            placeholder="Enter GST No"
-                            value={
-                              selectedVehicle ? selectedVehicle.GST_No : ""
-                            }
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="vehicleno" class="form-label">
-                            Vehicle No:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="string"
-                            className="update-duty-form-control"
-                            name="vehicle_no"
-                            placeholder="Vehicle Number"
-                            onChange={handleChange}
-                            value={formData.vehicle_no}
-                          />
-                        </div>
-                      </div>
-                    </div>
+                  <input
+                    type="text"
+                    className="update-duty-form-control form-control"
+                    id="company_Name"
+                    name="company_Name"
+                    placeholder="Enter Company Name"
+                    value={selectedVehicle ? selectedVehicle.company_Name : ""}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="mobile_Number" class="form-label">
+                    Vendor Mobile Number:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="update-duty-form-control form-control"
+                    id="mobile_Number"
+                    name="mobile_Number"
+                    placeholder="Enter Mobile Number"
+                    value={selectedVehicle ? selectedVehicle.mobile_Number : ""}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
 
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="company_Name" class="form-label">
-                            Company Name:
-                            <span className="required-asterisk">*</span>
-                          </label>
-
-                          <input
-                            type="text"
-                            className="update-duty-form-control"
-                            id="company_Name"
-                            name="company_Name"
-                            placeholder="Enter Company Name"
-                            value={
-                              selectedVehicle
-                                ? selectedVehicle.company_Name
-                                : ""
-                            }
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="mobile_Number" class="form-label">
-                            Vendor Mobile Number:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="update-duty-form-control"
-                            id="mobile_Number"
-                            name="mobile_Number"
-                            placeholder="Enter Mobile Number"
-                            value={
-                              selectedVehicle
-                                ? selectedVehicle.mobile_Number
-                                : ""
-                            }
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
-                      {/* <div className="col-md">
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              {/* <div className="col-md">
                         <div className="form-group">
                           <label htmlFor="vehicle" class="form-label">
                             Type Of Vehicle:
                             <span className="required-asterisk">*</span>
                           </label>
                           <select
-                            className="update-duty-form-control mb-2"
+                            className="update-duty-form-control form-control mb-2"
                             name="vehicle"
                             id="vehicle"
                             value={selectedVehicle ? selectedVehicle.vehicle : ''}
@@ -588,422 +567,394 @@ function VendorPayment() {
                           </select>
                         </div>
                       </div> */}
+            </div>
+
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="title" className="form-label">
+                        Duty Type:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <select
+                        className="update-duty-form-control form-control"
+                        name="title"
+                        id="title"
+                        value={selectedVehicle ? selectedVehicle.title : ""}
+                        onChange={handleChange}
+                      >
+                        <option value="">Duty Type</option>
+                        <option value="One Day / 80km">
+                          One Day /80km-Local Duty
+                        </option>
+                        <option value="One Day / 300km">
+                          One Day /300km-Outstation Duty
+                        </option>
+                        <option value="440km- Local Airport Transfer">
+                          440km-Local Airport Transfer{" "}
+                        </option>
+                        <option value="Pune-Mumbai Pickup Drop">
+                          Pune-Mumbai Pickup Dropoff
+                        </option>
+                      </select>
                     </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="d-flex gap-3">
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="title" className="form-label">
-                                Duty Type:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <select
-                                className="rate-form-control-payment"
-                                name="title"
-                                id="title"
-                                value={
-                                  selectedVehicle ? selectedVehicle.title : ""
-                                }
-                                onChange={handleChange}
-                              >
-                                <option value="">Duty Type</option>
-                                <option value="One Day / 80km">
-                                  One Day /80km-Local Duty
-                                </option>
-                                <option value="One Day / 300km">
-                                  One Day /300km-Outstation Duty
-                                </option>
-                                <option value="440km- Local Airport Transfer">
-                                  440km-Local Airport Transfer{" "}
-                                </option>
-                                <option value="Pune-Mumbai Pickup Drop">
-                                  Pune-Mumbai Pickup Dropoff
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="rate" className="form-label">
-                                Rate:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="number"
-                                id="rate"
-                                name="rate"
-                                placeholder="rate"
-                                value={
-                                  selectedVehicle ? selectedVehicle.rate : ""
-                                }
-                                onChange={handleChange}
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="address" class="form-label">
-                            Vendor Address:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            className="update-duty-form-control"
-                            id="address"
-                            name="address"
-                            placeholder="Enter address"
-                            value={
-                              selectedVehicle ? selectedVehicle.address : ""
-                            }
-                            onChange={handleChange}
-                          />
-                        </div>
-                      </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="rate" className="form-label">
+                        Rate:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="number"
+                        id="rate"
+                        name="rate"
+                        placeholder="rate"
+                        value={selectedVehicle ? selectedVehicle.rate : ""}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="d-flex gap-3">
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="from" className="form-label">
-                                From:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="text"
-                                id="from"
-                                name="from"
-                                placeholder="from"
-                                value={
-                                  selectedVehicle ? selectedVehicle.from : ""
-                                }
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="to" className="form-label">
-                                To:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="text"
-                                id="to"
-                                name="to"
-                                placeholder="to"
-                                value={
-                                  selectedVehicle ? selectedVehicle.to : ""
-                                }
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="date" class="form-label">
-                            Payment Date:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="date"
-                            className="update-duty-form-control"
-                            name="date"
-                            onChange={handleChange}
-                            value={formData.date}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="d-flex gap-3">
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="km" className="form-label">
-                                KM:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="number"
-                                id="km"
-                                name="km"
-                                placeholder="km"
-                                value={formData.km}
-                                onChange={handleChange}
-                                required
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="extra_km" className="form-label">
-                                (Rate Per Km)Extra KM:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="number"
-                                id="extra_km"
-                                name="extra_km"
-                                placeholder="extrakm"
-                                value={
-                                  selectedVehicle
-                                    ? selectedVehicle.extra_km
-                                    : ""
-                                }
-                                onChange={handleChange}
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="total_km" class="form-label">
-                            Total Kms:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="total_km"
-                            name="total_km"
-                            placeholder="Enter Total KM"
-                            value={formData.total_km}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="d-flex gap-3">
-                          <div>
-                            <div className="form-group">
-                              <label htmlFor="hour" className="form-label">
-                                Hour:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="number"
-                                id="hour"
-                                name="hour"
-                                placeholder="hour"
-                                value={
-                                  selectedVehicle ? selectedVehicle.hour : ""
-                                }
-                                onChange={handleChange}
-                                required
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="form-group">
-                              <label
-                                htmlFor="extra_hour"
-                                className="form-label"
-                              >
-                                (Rate Per Hour)Extra Hour:
-                                <span className="required-asterisk">*</span>
-                              </label>
-                              <input
-                                className="rate-form-control-payment"
-                                type="number"
-                                id="extra_hour"
-                                name="extra_hour"
-                                placeholder="Extra Hour"
-                                value={
-                                  selectedVehicle
-                                    ? selectedVehicle.extra_hour
-                                    : ""
-                                }
-                                onChange={handleChange}
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="total_hour" className="form-label">
-                            Total Hours:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="total_hour"
-                            name="total_hour"
-                            placeholder="Enter Total Hour"
-                            value={formData.total_hour}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="tds" class="form-label">
-                            TDS 1%:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="tds"
-                            name="tds"
-                            placeholder="TDS 1% Amount"
-                            value={formData.tds}
-                            onChange={handleChange}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="total_Amount" class="form-label">
-                            Paid Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="paid_amount"
-                            name="paid_amount"
-                            placeholder="Enter Paid Amount"
-                            value={formData.paid_amount}
-                            onChange={handleChange}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row grid-gap-5">
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="payment" className="form-label">
-                            Payment:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <select
-                            className="update-duty-form-control"
-                            id="payment"
-                            name="payment"
-                            value={formData.payment}
-                            onChange={handleChange}
-                          >
-                            <option value="">Select Payment</option>
-                            <option value="Partial">Partial</option>
-                            <option value="Full Payment">Full Payment</option>
-                          </select>
-                        </div>
-
-                        {formData.payment === "Partial" && (
-                          <div className="form-group">
-                            <label
-                              htmlFor="remaining_Amount"
-                              className="form-label"
-                            >
-                              Remaining Amount:
-                              <span className="required-asterisk">*</span>
-                            </label>
-                            <input
-                              type="number"
-                              className="update-duty-form-control"
-                              id="remaining_Amount"
-                              name="remaining_Amount"
-                              placeholder="Enter Remaining Amount"
-                              value={formData.remaining_Amount}
-                              onChange={handleChange}
-                            />
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-md">
-                        <div className="form-group">
-                          <label htmlFor="total_amount" class="form-label">
-                            Total Pay Amount:
-                            <span className="required-asterisk">*</span>
-                          </label>
-                          <input
-                            type="number"
-                            className="update-duty-form-control"
-                            id="total_amount"
-                            name="total_amount"
-                            placeholder="Total Amount"
-                            value={formData.total_amount}
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md">
-                      <div className="form-group">
-                        <label for="paymentmethod" className="form-label">
-                          Payment Method:
-                          <span className="required-asterisk">*</span>
-                        </label>
-                        <select
-                          className="update-duty-form-control"
-                          name="payment_Method"
-                          id="payment_Method"
-                          onChange={handleChange}
-                          value={formData.payment_Method}
-                        >
-                          <option value="">Payment Method</option>
-                          <option value="Cash">Cash</option>
-                          <option value="Cheque">Cheque</option>
-                          <option value="UPI / Wallet Payment">
-                            UPI /Wallet Payment
-                          </option>
-                          <option value="Bank Transfer(NEFT)">
-                            Bank Transfer(NEFT )
-                          </option>
-                        </select>
-
-                        {/* Render payment method specific fields */}
-                        {renderPaymentMethodFields()}
-                      </div>
-                    </div>
-
-                    <div className="row grid-gap-5">
-                      <div className="col-md"></div>
-
-                      <div className="row grid-gap-5">
-                        <div className="col-md"></div>
-                      </div>
-                    </div>
-
-                    <br />
-                    <button className="customer-btn-submit" type="submit">
-                      Save
-                    </button>
-                  </form>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="address" class="form-label">
+                    Vendor Address:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="update-duty-form-control form-control"
+                    id="address"
+                    name="address"
+                    placeholder="Enter address"
+                    value={selectedVehicle ? selectedVehicle.address : ""}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </div>
-          </div>
+
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="from" className="form-label">
+                        From:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="text"
+                        id="from"
+                        name="from"
+                        placeholder="from"
+                        value={selectedVehicle ? selectedVehicle.from : ""}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="to" className="form-label">
+                        To:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="text"
+                        id="to"
+                        name="to"
+                        placeholder="to"
+                        value={selectedVehicle ? selectedVehicle.to : ""}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="date" class="form-label">
+                    Payment Date:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    className="update-duty-form-control form-control"
+                    name="date"
+                    onChange={handleChange}
+                    value={formData.date}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="km" className="form-label">
+                        KM:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="number"
+                        id="km"
+                        name="km"
+                        placeholder="km"
+                        value={formData.km}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="extra_km" className="form-label">
+                        (Rate Per Km)Extra KM:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="number"
+                        id="extra_km"
+                        name="extra_km"
+                        placeholder="extrakm"
+                        value={selectedVehicle ? selectedVehicle.extra_km : ""}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="total_km" class="form-label">
+                    Total Kms:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="update-duty-form-control form-control"
+                    id="total_km"
+                    name="total_km"
+                    placeholder="Enter Total KM"
+                    value={formData.total_km}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="hour" className="form-label">
+                        Hour:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="number"
+                        id="hour"
+                        name="hour"
+                        placeholder="hour"
+                        value={selectedVehicle ? selectedVehicle.hour : ""}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label htmlFor="extra_hour" className="form-label">
+                        (Rate Per Hour)Extra Hour:
+                        <span className="required-asterisk">*</span>
+                      </label>
+                      <input
+                        className="update-duty-form-control form-control"
+                        type="number"
+                        id="extra_hour"
+                        name="extra_hour"
+                        placeholder="Extra Hour"
+                        value={
+                          selectedVehicle ? selectedVehicle.extra_hour : ""
+                        }
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="total_hour" className="form-label">
+                    Total Hours:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="update-duty-form-control form-control"
+                    id="total_hour"
+                    name="total_hour"
+                    placeholder="Enter Total Hour"
+                    value={formData.total_hour}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="tds" class="form-label">
+                    TDS 1%:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="update-duty-form-control form-control"
+                    id="tds"
+                    name="tds"
+                    placeholder="TDS 1% Amount"
+                    value={formData.tds}
+                    onChange={handleChange}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="total_Amount" class="form-label">
+                    Paid Amount:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="update-duty-form-control form-control"
+                    id="paid_amount"
+                    name="paid_amount"
+                    placeholder="Enter Paid Amount"
+                    value={formData.paid_amount}
+                    onChange={handleChange}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="payment" className="form-label">
+                    Payment:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <select
+                    className="update-duty-form-control form-control"
+                    id="payment"
+                    name="payment"
+                    value={formData.payment}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Payment</option>
+                    <option value="Partial">Partial</option>
+                    <option value="Full Payment">Full Payment</option>
+                  </select>
+                </div>
+
+                {formData.payment === "Partial" && (
+                  <div className="form-group">
+                    <label htmlFor="remaining_Amount" className="form-label">
+                      Remaining Amount:
+                      <span className="required-asterisk">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="update-duty-form-control form-control"
+                      id="remaining_Amount"
+                      name="remaining_Amount"
+                      placeholder="Enter Remaining Amount"
+                      value={formData.remaining_Amount}
+                      onChange={handleChange}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <label htmlFor="total_amount" class="form-label">
+                    Total Pay Amount:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="update-duty-form-control form-control"
+                    id="total_amount"
+                    name="total_amount"
+                    placeholder="Total Amount"
+                    value={formData.total_amount}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md">
+              <div className="form-group">
+                <label for="paymentmethod" className="form-label">
+                  Payment Method:
+                  <span className="required-asterisk">*</span>
+                </label>
+                <select
+                  className="update-duty-form-control form-control"
+                  name="payment_Method"
+                  id="payment_Method"
+                  onChange={handleChange}
+                  value={formData.payment_Method}
+                >
+                  <option value="">Payment Method</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Cheque">Cheque</option>
+                  <option value="UPI / Wallet Payment">
+                    UPI /Wallet Payment
+                  </option>
+                  <option value="Bank Transfer(NEFT)">
+                    Bank Transfer(NEFT )
+                  </option>
+                </select>
+
+                {/* Render payment method specific fields */}
+                {renderPaymentMethodFields()}
+              </div>
+            </div>
+
+            <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+              <div className="col-md"></div>
+
+              <div className="main-container-div-for-vender-payment-section responsive-flex-column-required">
+                <div className="col-md"></div>
+              </div>
+            </div>
+
+            <br />
+            <button className="customer-btn-submit" type="submit">
+              Save
+            </button>
+          </form>
         </div>
       </div>
     </>

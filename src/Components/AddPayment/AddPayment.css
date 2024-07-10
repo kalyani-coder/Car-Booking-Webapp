@@ -61,7 +61,7 @@
   border-radius: 4px;
 }
 .add-payment-form-control {
-  width: 250px;
+  /* width: 300px; */
   padding: 8px;
   box-sizing: border-box;
   margin-bottom: 10px;
@@ -85,11 +85,27 @@
   border-radius: 4px;
   cursor: pointer;
   margin-right: 10px;
+  display: flex;
+  justify-content: center;
 }
 .add-payment-submit:hover {
   background-color: #0056b3;
 }
+.main-container-form-add-payment {
+  padding: 10px;
+  padding-left: 20px;
+}
 
+.width-set-for-form-add-payment-cc {
+  width: 63em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+.contain-inputs-for-add-payment-zero-gap {
+  gap: 1em;
+}
 /* Responsive styling */
 @media (max-width: 768px) {
   .add-payment-form-body {
@@ -98,5 +114,12 @@
 
   .add-payment-column {
     flex: 100%; /* On smaller screens, the columns should take the full width */
+  }
+  .width-set-for-form-add-payment-cc {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
   }
 }

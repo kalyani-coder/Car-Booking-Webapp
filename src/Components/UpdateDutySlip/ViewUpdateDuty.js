@@ -326,15 +326,10 @@ const ViewUpdateDuty = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
             View Duty Slip
           </h2>
+
           <div className="search-bar">
             <input
               type="text"

@@ -34,3 +34,20 @@
 #btn3 {
   margin-left: 2%;
 }
+.main-container-vendor-payment-section {
+  width: 63em;
+  margin: auto;
+}
+
+.main-container-div-for-vender-payment-section {
+  display: flex;
+  gap: 1em;
+}
+@media (max-width: 768px) {
+  .main-container-vendor-payment-section {
+    width: 100%;
+    margin: auto;
+    padding: 1em;
+    padding-left: 23px;
+  }
+}
