@@ -267,13 +267,13 @@ function CustomerInvoice() {
         </h2>
 
         <div className="form-row">
-          <div className="form-group col-6">
+          <div className="form-group col-6 main-input-container-corporat-invoice-page">
             <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
             </label>
             {/* Dropdown to select a customer */}
             <select
-              className="form-control-cust-inq-input"
+              className="form-control-cust-inq-input-corp-invoice-monthly"
               id="customername"
               name="customerName"
               onChange={(e) => {
@@ -292,12 +292,12 @@ function CustomerInvoice() {
               ))}
             </select>
           </div>
-          <div className="form-group col-6">
+          <div className="form-group col-6 main-input-container-corporat-invoice-page">
             <label htmlFor="vendorAddress" className="form-label">
               Kind Attn:
             </label>
             <input
-              className="form-control-vendor-invoice w-[80%] p-2 mt-2"
+              className="form-control-cust-inq-input-corp-invoice-monthly w-[80%] p-2"
               type="text"
               placeholder="Kind Attn"
               name="kind_attn"
@@ -431,10 +431,14 @@ function CustomerInvoice() {
               </table>
             </div>
           )}
-
-          <button className="btn btn-danger mt-2" onClick={handleGenerate}>
-            Generate
-          </button>
+          <div className="flex justify-center">
+            <button
+              className="btn btn-danger mt-2 flex justify-center"
+              onClick={handleGenerate}
+            >
+              Generate
+            </button>
+          </div>
         </div>
       </div>
     </>

@@ -106,10 +106,7 @@ function MonthlyCustomerReport() {
   return (
     <>
       <div className="container-customer-invoice">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
-          className="text-center"
-        >
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Customer Report
         </h2>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
@@ -132,14 +129,14 @@ function MonthlyCustomerReport() {
             <option value="bookingStatistics">Booking Statistics Report</option>
           </select>
           <i className="fas fa-filter ml-3"></i>
-          <button
-            className="rate-btn-submit ml-3"
-            onClick={downloadExcel}
-            style={{ marginBottom: "20px" }}
-          >
-            Export to Excel
-          </button>
         </div>
+        <button
+          className="rate-btn-submit ml-3 m-auto"
+          onClick={downloadExcel}
+          style={{ marginBottom: "20px" }}
+        >
+          Export to Excel
+        </button>
 
         <table className="table">
           <thead>

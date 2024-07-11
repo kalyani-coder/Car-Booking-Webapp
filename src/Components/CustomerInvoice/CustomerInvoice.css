@@ -4,13 +4,11 @@
     
 } */
 .container-customer-invoice {
-  /* margin-left: 300px; Leave 300px from the left side */
   padding: 20px;
+  width: 69em;
+  margin: auto;
 }
-/* button-customer{
-   color:red;
-   margin-top: 10px;
-} */
+
 .cibtn {
   background-color: rgb(247, 126, 126);
   color: white;
@@ -62,4 +60,19 @@
   border-radius: var(--bs-border-radius);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   margin-bottom: 5px;
+}
+
+.form-control-cust-inq-input-corp-invoice-monthly {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .container-customer-invoice {
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+  }
+  .main-input-container-corporat-invoice-page {
+    width: 100%;
+  }
 }

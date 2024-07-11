@@ -345,13 +345,9 @@ function VendorInvoiceMonthly() {
   return (
     <>
       <div className="container-vendor-invoice-monthly">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
-          className="text-center mt-[1rem]"
-        >
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Vendor Monthly Invoice
         </h2>
-
         <h2
           style={{
             fontSize: "1.5rem",
@@ -370,7 +366,7 @@ function VendorInvoiceMonthly() {
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="update-duty-form-control"
+                className="form-control-cust-inq-input-corp-invoice-monthly"
                 name="vender_Name"
                 id="vender_Name"
                 value={selectedVendorId}
@@ -476,10 +472,15 @@ function VendorInvoiceMonthly() {
                 {selectedDate && `and date ${selectedDate}.`}
               </p>
             )
-          )}
-          <button className="btn btn-danger mt-2" onClick={handleGenerate}>
-            Generate
-          </button>
+          )}{" "}
+          <div className="flex justify-center">
+            <button
+              className="btn btn-danger mt-2 flex justify-center"
+              onClick={handleGenerate}
+            >
+              Generate
+            </button>
+          </div>
         </div>
       </div>
     </>

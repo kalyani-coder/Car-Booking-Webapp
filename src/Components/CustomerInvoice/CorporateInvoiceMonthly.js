@@ -304,13 +304,9 @@ function CorporateInvoiceMonthly() {
   return (
     <div>
       <div className="container-customer-invoice">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
-          className="text-center mt-[1rem]"
-        >
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Corporate Customer Invoice
         </h2>
-
         <h2
           style={{
             fontSize: "1.5rem",
@@ -322,12 +318,12 @@ function CorporateInvoiceMonthly() {
         </h2>
 
         <div className="form-row">
-          <div className="grid-gap-2 col-6">
+          <div className="grid-gap-2 col-6 main-input-container-corporat-invoice-page">
             <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:
             </label>
             <select
-              className="form-control-cust-inq-input"
+              className="form-control-cust-inq-input-corp-invoice-monthly "
               id="customername"
               name="customerName"
               onChange={(e) => {
@@ -346,26 +342,26 @@ function CorporateInvoiceMonthly() {
               ))}
             </select>
           </div>
-          <div className="form-group col-6">
+          <div className="form-group col-6 main-input-container-corporat-invoice-page">
             <label htmlFor="kind_attn" className="form-label">
               Kind Attn:
             </label>
             <input
               type="text"
-              className="form-control-cust-inq-input"
+              className="form-control-cust-inq-input-corp-invoice-monthly "
               name="kind_attn"
               placeholder="Kind Attn"
               value={formData.kind_attn}
               onChange={handleChange}
             />
           </div>
-          <div className="form-group col-6">
+          <div className="form-group col-6 main-input-container-corporat-invoice-page">
             <label htmlFor="invoiceDate" className="form-label">
               Invoice Date:
             </label>
             <input
               type="date"
-              className="form-control-cust-inq-input"
+              className="form-control-cust-inq-input-corp-invoice-monthly "
               name="invoiceDate"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
@@ -465,9 +461,10 @@ function CorporateInvoiceMonthly() {
               </table>
             </div>
           )}
-
+        </div>
+        <div className="flex justify-center">
           <button
-            className="btn btn-danger mt-2"
+            className="btn btn-danger mt-2 flex justify-center"
             onClick={handleGenerateInvoice}
           >
             Generate

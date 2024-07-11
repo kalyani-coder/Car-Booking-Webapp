@@ -383,9 +383,9 @@ function VendorPayment() {
     <>
       <div className="main-container-vendor-payment-section">
         <div className="mt-5">
-          <h1 className="text-2xl font-semibold mb-4 text-center">
+          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
             Add Vendor Payment
-          </h1>
+          </h2>
           {successAlert && <Alert alert={successAlert} />}
           {errorAlert && <Alert alert={errorAlert} />}
 

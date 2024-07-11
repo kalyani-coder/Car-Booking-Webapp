@@ -66,11 +66,11 @@ router.patch("/:id", async (req, res) => {
       VenderpaymentId,
       req.body,
       {
-        new: true, 
+        new: true,
         runValidators: true,
       }
     );
-    if(!UpdatedVenderpayment){
+    if (!UpdatedVenderpayment) {
       return res.status(400).json({ message: "failed to update" });
     }
     res.status(201).json({ message: "Customer Enquiry Successfully updated " });
@@ -87,9 +87,7 @@ router.delete("/:id", async (req, res) => {
     const deletedCustomeEnquiry = await NewVenderpayment.findByIdAndDelete(
       VenderpaymentId
     );
-    res
-      .status(201)
-      .json({ message: " Vendor Payment Successfully Deleted " });
+    res.status(201).json({ message: " Vendor Payment Successfully Deleted " });
   } catch (e) {
     res.status(404).json({ message: "Can not found", e });
   }
@@ -137,44 +135,51 @@ router.get("/vender/:vender_id", async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-}); 
+});
 
-router.get('/vender/:vender_id/month/:month', async (req, res) => {
+router.get("/vender/:vender_id/month/:month", async (req, res) => {
   try {
     const { vender_id, month } = req.params;
 
     // Ensure month is a valid number between 1 and 12
     const numericMonth = parseInt(month);
     if (isNaN(numericMonth) || numericMonth < 1 || numericMonth > 12) {
-      return res.status(400).json({ message: 'Invalid month number. Please provide a number between 1 and 12.' });
+      return res
+        .status(400)
+        .json({
+          message:
+            "Invalid month number. Please provide a number between 1 and 12.",
+        });
     }
 
     // Format month as two digits
-    const formattedMonth = numericMonth < 10 ? `0${numericMonth}` : `${numericMonth}`;
+    const formattedMonth =
+      numericMonth < 10 ? `0${numericMonth}` : `${numericMonth}`;
 
     // Construct regex to match dates in DD-MM-YYYY format
     const regexPattern = new RegExp(`^..-${formattedMonth}-`);
 
     // Find payments matching vendor_id and month
     const venderPayments = await NewVenderpayment.find({ vender_id })
-      .where('current_Date')
+      .where("current_Date")
       .regex(regexPattern);
 
     if (venderPayments.length === 0) {
       return res
         .status(404)
-        .json({ message: `Payments not found for vendor ID ${vender_id} in month ${month}` });
+        .json({
+          message: `Payments not found for vendor ID ${vender_id} in month ${month}`,
+        });
     }
 
     res.status(200).json(venderPayments);
   } catch (error) {
-    console.error('Error fetching payments:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error("Error fetching payments:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
-
-// Get By VendorId and VehicleType 
+// Get By VendorId and VehicleType
 // router.get('/vendor/:vendorId/vehicle/:vehicleType', async (req, res) => {
 //   try {
 //     const { vendorId, vehicleType } = req.params;
@@ -198,7 +203,6 @@ router.get('/vender/:vender_id/month/:month', async (req, res) => {
 //   }
 // });
 
-
 // router.get("/vendor/:vendorId/date/:getByDate" , async(req, res) => {
 //   try{
 
@@ -214,6 +218,4 @@ router.get('/vender/:vender_id/month/:month', async (req, res) => {
 //   }
 // })
 
-
 module.exports = router;
-

@@ -50,9 +50,9 @@ export default function ViewDetailsPayment() {
     <>
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h1 className="text-2xl font-semibold mb-4">
+          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
             Vendor Payment Details
-          </h1>
+          </h2>
           <input
             type="search"
             placeholder="Search By Vendor Name"

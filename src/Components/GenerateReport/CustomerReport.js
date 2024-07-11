@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Sidebar from "../Sidebar/Sidebar";
 import * as XLSX from "xlsx";
-
+import "./TripDetailsReport.css";
 function CustomerReport() {
   const [formData, setFormData] = useState({
     tripid: "",
@@ -150,17 +150,13 @@ function CustomerReport() {
 
   return (
     <>
-      <div className="container-customer-invoice">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
-          className="text-center"
-        >
+      <div className="container-vendor-invoice-monthly">
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Customer Report By Date
         </h2>
-
         <div className="form-vendor-invoice">
-          <div className="grid-gap-2 col-6">
-            <div className="form-group">
+          <div className="grid-gap-2 col-6 m-auto main-input-container-corporat-invoice-page">
+            <div className="form-groupx">
               {/* Date picker to select a date */}
               <label htmlFor="Date" className="form-label">
                 Select Date:
@@ -259,10 +255,14 @@ function CustomerReport() {
               </table>
             </div>
           )}
-
-          <button className="btn btn-primary mt-2" onClick={exportToExcel}>
-            Export to Excel
-          </button>
+          <div className="flex justify-center">
+            <button
+              className="btn btn-primary mt-2 flex justify-center"
+              onClick={exportToExcel}
+            >
+              Export to Excel
+            </button>
+          </div>
         </div>
       </div>
     </>

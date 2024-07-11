@@ -6,7 +6,8 @@
 .container-vendor-invoice-monthly {
   /* margin-left: 300px; Leave 300px from the left side */
   padding: 20px;
-
+  width: 50em;
+  margin: auto;
   height: 100vh;
 }
 button-vendor {
@@ -86,4 +87,20 @@ button-vendor {
 
 .form-control-cust-inq-input {
   width: 80%; /* Make the input take the full width of its parent */
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-direction: column;
+  }
+  .container-vendor-invoice-monthly {
+    /* margin-left: 300px; Leave 300px from the left side */
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+    height: 100vh;
+  }
 }
