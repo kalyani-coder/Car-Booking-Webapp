@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../Sidebar/Sidebar";
 import "./ViewDriver.css"; // Make sure you have a CSS file for this component
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa"; // Import icons
 
@@ -52,7 +51,7 @@ const ViewDriver = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedDriver, setEditedDriver] = useState({});
-  const [error, setError] = useState({});
+  const [validationMessages, setValidationMessages] = useState({});
 
   useEffect(() => {
     const fetchDrivers = async () => {
@@ -70,18 +69,6 @@ const ViewDriver = () => {
 
     fetchDrivers();
   }, []);
-
-  const filteredDrivers = drivers.filter((driver) => {
-    const driverName = driver.driver_Name || "";
-    const Email = driver.driver_Email || "";
-    const Address = driver.address || "";
-    const MobileNo1 = driver.driver_Mo1 || "";
-    const MobileNo2 = driver.driver_Mo2 || "";
-    return (
-      driverName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      Email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
 
   const handleSave = async () => {
     try {
@@ -141,9 +128,31 @@ const ViewDriver = () => {
         alert("Driver deleted successfully");
       } catch (error) {
         console.error("Error deleting driver:", error);
-        setError("Error deleting driver: " + error.message);
+        // Handle error state or logging here
       }
     }
+  };
+
+  // Validation functions
+  const handleAlphaInputChange = (callback) => (event) => {
+    const value = event.target.value;
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      callback(value);
+    }
+  };
+
+  const handleNumericChange = (callback) => (event) => {
+    const value = event.target.value;
+    // Validate only numeric characters
+    if (/^\d*$/.test(value)) {
+      callback(value);
+    }
+  };
+
+  const validateEmail = (email) => {
+    // Regular expression to validate email format
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(email);
   };
 
   return (
@@ -169,7 +178,7 @@ const ViewDriver = () => {
           />
           <div className="table-responsive">
             <TableView
-              drivers={filteredDrivers}
+              drivers={drivers}
               handleEditDriver={handleEditDriver}
               handleDeleteDriver={handleDeleteDriver}
             />
@@ -194,61 +203,111 @@ const ViewDriver = () => {
               <input
                 type="text"
                 value={editedDriver.driver_Name}
-                onChange={(e) =>
+                onChange={handleAlphaInputChange((value) =>
                   setEditedDriver({
                     ...editedDriver,
-                    driver_Name: e.target.value,
+                    driver_Name: value,
                   })
-                }
-                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                )}
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.driver_Name
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.driver_Name && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.driver_Name}
+                </div>
+              )}
+
               <h5 className="fw-bold">Email</h5>
               <input
                 type="text"
                 value={editedDriver.driver_Email}
-                onChange={(e) =>
+                onChange={(e) => {
+                  const { value } = e.target;
                   setEditedDriver({
                     ...editedDriver,
-                    driver_Email: e.target.value,
-                  })
-                }
-                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                    driver_Email: value,
+                  });
+
+                  // Validate email format
+                  if (!validateEmail(value)) {
+                    setValidationMessages((prevMessages) => ({
+                      ...prevMessages,
+                      driver_Email: "Please enter a valid email address",
+                    }));
+                  } else {
+                    setValidationMessages((prevMessages) => ({
+                      ...prevMessages,
+                      driver_Email: "",
+                    }));
+                  }
+                }}
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.driver_Email
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.driver_Email && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.driver_Email}
+                </div>
+              )}
+
               <h5 className="fw-bold">Address</h5>
               <textarea
                 value={editedDriver.address}
                 onChange={(e) =>
-                  setEditedDriver({ ...editedDriver, address: e.target.value })
+                  setEditedDriver({
+                    ...editedDriver,
+                    address: e.target.value,
+                  })
                 }
                 rows="4"
                 className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
+
               <h5 className="fw-bold">Mobile No</h5>
               <input
                 type="text"
                 value={editedDriver.driver_Mo1}
-                onChange={(e) =>
+                onChange={handleNumericChange((value) =>
                   setEditedDriver({
                     ...editedDriver,
-                    driver_Mo1: e.target.value,
+                    driver_Mo1: value,
                   })
-                }
-                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                )}
+                maxLength="10"
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.driver_Mo1
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.driver_Mo1 && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.driver_Mo1}
+                </div>
+              )}
+
               <h5 className="fw-bold">Alternate Mobile No</h5>
               <input
                 type="text"
                 value={editedDriver.driver_Mo2}
-                onChange={(e) =>
+                onChange={handleNumericChange((value) =>
                   setEditedDriver({
                     ...editedDriver,
-                    driver_Mo2: e.target.value,
+                    driver_Mo2: value,
                   })
-                }
-                className="w-full p-2 mb-4 border border-gray-300 rounded"
+                )}
+                maxLength="10"
+                className="w-full p-2 mb-2 border border-gray-300 rounded"
               />
             </div>
-            {/* <div className="button-container"> */}
+
             <button
               onClick={handleSave}
               className="px-4 py-2 bg-blue-500 text-white rounded"
@@ -261,7 +320,6 @@ const ViewDriver = () => {
             >
               Cancel
             </button>
-            {/* </div> */}
           </div>
         </div>
       )}

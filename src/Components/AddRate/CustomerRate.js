@@ -24,6 +24,7 @@ const CustomerRate = () => {
     hours: "",
     extra_hours: "",
   });
+  const [mobilenoError, setMobilenoError] = useState("");
 
   const initialFormData = {
     Cus_Type: "",
@@ -71,9 +72,9 @@ const CustomerRate = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     // Validate input based on field name
-    if (name === "from" || name === "to") {
+    if (name === "from" || name === "to" || name === "add_vehicle") {
       // Allow only alphabets and spaces
       if (/^[A-Za-z\s]*$/.test(value)) {
         setFormData({
@@ -85,7 +86,8 @@ const CustomerRate = () => {
       name === "km" ||
       name === "extra_km" ||
       name === "hours" ||
-      name === "extra_hours"
+      name === "extra_hours" ||
+      name === "rate"
     ) {
       // Allow only numbers
       if (/^\d*$/.test(value)) {
@@ -101,10 +103,34 @@ const CustomerRate = () => {
         [name]: value,
       });
     }
+  
+    // Additional validation for mobile_Number
+    if (name === "mobile_Number") {
+      if (!/^\d{10}$/.test(value)) {
+        setMobilenoError("Mobile number must be 10 digits");
+      } else {
+        setMobilenoError("");
+      }
+    }
   };
+  
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+
+     // Validation: Check if all required fields are filled
+  if (
+    !formData.type_of_vehicle ||
+    !formData.duty_type ||
+    !formData.rate ||
+    !formData.km ||
+    !formData.extra_km ||
+    !formData.hours ||
+    !formData.extra_hours
+  ) {
+    alert("Please all fields required.");
+    return;
+  }
 
     if (!selectedCustomer) {
       window.alert("Please select a customer");

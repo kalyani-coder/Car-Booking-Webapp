@@ -114,6 +114,45 @@ const CustomerEnquiry = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+     // Validate all fields are filled
+  const {
+    customername,
+    mobileno,
+    email,
+    tripe_type,
+    sub_type,
+    pic_up,
+    date1,
+    date2,
+    time1,
+    drop_of,
+    time2,
+    vehicle,
+    totalDays,
+    totalHours,
+    address,
+  } = formData;
+
+  if (
+    !customername ||
+    !mobileno ||
+    !email ||
+    !tripe_type ||
+    !sub_type ||
+    !pic_up ||
+    !date1 ||
+    !date2 ||
+    !time1 ||
+    !drop_of ||
+    !time2 ||
+    !vehicle ||
+    !totalDays ||
+    !totalHours ||
+    !address
+  ) {
+    alert("All fields are required.");
+    return;
+  }
 
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",

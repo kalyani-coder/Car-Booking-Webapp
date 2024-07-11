@@ -91,7 +91,7 @@ const VendorRate = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     for (const key in formData) {
       if (formData[key] === "") {

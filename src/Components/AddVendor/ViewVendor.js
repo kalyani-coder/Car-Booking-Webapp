@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../Sidebar/Sidebar";
-import "./ViewVender.css"; // Make sure you have a CSS file for this component
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { Table, Button, Modal, Form } from "react-bootstrap";
-import axios from "axios";
+import "./ViewVender.css"; 
 
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedVendor, setEditedVendor] = useState({});
-  const [viewType, setViewType] = useState("table");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [validationMessages, setValidationMessages] = useState({});
   const [filteredVendors, setFilteredVendors] = useState([]);
 
   useEffect(() => {
@@ -24,7 +20,6 @@ const ViewVendor = () => {
         }
         const data = await response.json();
         setVendors(data);
-        // Initialize filteredVendors with all vendors on first load
         setFilteredVendors(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -34,14 +29,13 @@ const ViewVendor = () => {
     fetchVendors();
   }, []);
 
-  // Update filteredVendors when searchTerm changes
   useEffect(() => {
     const filtered = vendors.filter((vendor) => {
       const vendorName = vendor.vender_Name || "";
       return vendorName.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredVendors(filtered);
-  }, [searchTerm, vendors]); // Include vendors as a dependency here
+  }, [searchTerm, vendors]);
 
   const handleEditVendor = (vendor) => {
     setEditedVendor(vendor);
@@ -65,19 +59,20 @@ const ViewVendor = () => {
           throw new Error("Network response was not ok");
         }
 
-        setVendors((prevCustomers) =>
-          prevCustomers.filter((customer) => customer._id !== vendorId)
+        setVendors((prevVendors) =>
+          prevVendors.filter((vendor) => vendor._id !== vendorId)
         );
-        setFilteredVendors((prevCustomers) =>
-          prevCustomers.filter((customer) => customer._id !== vendorId)
+        setFilteredVendors((prevVendors) =>
+          prevVendors.filter((vendor) => vendor._id !== vendorId)
         );
         alert("Vendor deleted successfully");
       } catch (error) {
-        console.error("Error deleting vendors:", error);
-        alert("Error deleting customer: " + error.message);
+        console.error("Error deleting vendor:", error);
+        alert("Error deleting vendor: " + error.message);
       }
     }
   };
+
   const handleSave = async () => {
     try {
       const response = await fetch(
@@ -104,17 +99,63 @@ const ViewVendor = () => {
         );
         setIsEditing(false);
         alert("Vendor data updated successfully");
-        setErrorMessage("");
       } else {
         console.error("Error updating vendor:", response.status);
-        alert("");
-        setErrorMessage("Error updating vendor. Please try again.");
+        alert("Error updating vendor. Please try again.");
       }
     } catch (error) {
       console.error("Error updating vendor:", error);
-      setSuccessMessage("");
       alert("Error updating vendor. Please try again.");
     }
+  };
+
+  // Validation functions
+  const handleAlphaInputChange = (callback) => (event) => {
+    const value = event.target.value;
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      callback(value);
+    }
+  };
+
+  const handleGstInputChange = (callback) => (event) => {
+    const value = event.target.value.toUpperCase();
+    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/;
+
+    if (value.length <= 15) {
+      callback(value);
+      if (value.length === 15 && gstRegex.test(value)) {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          GST_No: "",
+        }));
+      } else {
+        setValidationMessages((prevMessages) => ({
+          ...prevMessages,
+          GST_No:
+            "GST number must be exactly 15 characters, alphanumeric, capital letters",
+        }));
+      }
+    }
+  };
+
+  const handleNumericChange = (e) => {
+    const { name, value } = e.target;
+
+    if (/^\d{0,10}$/.test(value)) {
+      setEditedVendor({
+        ...editedVendor,
+        [name]: value,
+      });
+
+      if (name === "vender_Mobile") {
+        setValidationMessages(value); // You should define the validateMobileNumber function
+      }
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(email);
   };
 
   return (
@@ -190,13 +231,23 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.vender_Name}
-                onChange={(e) =>
+                onChange={handleAlphaInputChange((value) =>
                   setEditedVendor({
                     ...editedVendor,
-                    vender_Name: e.target.value,
+                    vender_Name: value,
                   })
-                }
+                )}
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.vender_Name
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.vender_Name && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.vender_Name}
+                </div>
+              )}
             </Form.Group>
 
             <Form.Group controlId="formCompanyName" className="my-2">
@@ -204,13 +255,23 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.company_Name}
-                onChange={(e) =>
+                onChange={handleAlphaInputChange((value) =>
                   setEditedVendor({
                     ...editedVendor,
-                    company_Name: e.target.value,
+                    company_Name: value,
                   })
-                }
+                )}
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.company_Name
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.company_Name && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.company_Name}
+                </div>
+              )}
             </Form.Group>
 
             <Form.Group controlId="formGSTNo" className="my-2">
@@ -218,73 +279,85 @@ const ViewVendor = () => {
               <Form.Control
                 type="text"
                 value={editedVendor.GST_No}
-                onChange={(e) =>
-                  setEditedVendor({ ...editedVendor, GST_No: e.target.value })
-                }
+                onChange={handleGstInputChange((value) =>
+                  setEditedVendor({
+                    ...editedVendor,
+                    GST_No: value,
+                  })
+                )}
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.GST_No
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.GST_No && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.GST_No}
+                </div>
+              )}
             </Form.Group>
 
             <Form.Group controlId="formMobile" className="my-2">
               <Form.Label>Mobile</Form.Label>
               <Form.Control
                 type="text"
+                name="vender_Mobile"
                 value={editedVendor.vender_Mobile}
-                onChange={(e) =>
-                  setEditedVendor({
-                    ...editedVendor,
-                    vender_Mobile: e.target.value,
-                  })
-                }
+                onChange={handleNumericChange}
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.vender_Mobile
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
-            </Form.Group>
-
-            <Form.Group controlId="formEmail" className="my-2">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="text"
-                value={editedVendor.Vender_Email}
-                onChange={(e) =>
-                  setEditedVendor({
-                    ...editedVendor,
-                    Vender_Email: e.target.value,
-                  })
-                }
-              />
+              {validationMessages.vender_Mobile && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.vender_Mobile}
+                </div>
+              )}
             </Form.Group>
 
             <Form.Group controlId="formAddress" className="my-2">
               <Form.Label>Address</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
+                rows={3}
                 value={editedVendor.address}
                 onChange={(e) =>
-                  setEditedVendor({ ...editedVendor, address: e.target.value })
+                  setEditedVendor({
+                    ...editedVendor,
+                    address: e.target.value,
+                  })
                 }
+                className={`w-full p-2 mb-2 border ${
+                  validationMessages.address
+                    ? "border-red-500"
+                    : "border-gray-300"
+                } rounded`}
               />
+              {validationMessages.address && (
+                <div className="text-red-500 mt-1">
+                  {validationMessages.address}
+                </div>
+              )}
             </Form.Group>
 
-            <Button
+            <button
               onClick={handleSave}
               className="px-4 py-2 bg-blue-500 text-white rounded"
             >
               Save
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={() => setIsEditing(false)}
               className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
             >
               Cancel
-            </Button>
+            </button>
           </Form>
         </Modal.Body>
       </Modal>
-
-      {/* Display success message */}
-      {successMessage && (
-        <div className="alert alert-success fixed bottom-4 right-4">
-          {successMessage}
-        </div>
-      )}
     </>
   );
 };

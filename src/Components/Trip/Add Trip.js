@@ -291,7 +291,7 @@ const AddTrip = () => {
       });
 
       if (response.ok) {
-        alert("Data added successfully!");
+        alert("Add trip successfully!");
         // Save Data in localStorage
         localStorage.setItem(
           "submittedData",
