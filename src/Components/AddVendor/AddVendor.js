@@ -144,7 +144,7 @@ const AddVendor = () => {
       newValidationMessages.mobileno = "Mobile number must be 10 digits.";
     }
 
-    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}[1-9A-Z]{1}Z\d{1}$/;
+    const gstRegex = /^\d{2}[A-Z]{5}\d{4}[A-Z][A-Z\d]Z[A-Z\d]$/;
     if (!newValidationMessages.gstno) {
       if (gstno.length !== 15) {
         newValidationMessages.gstno =
@@ -187,7 +187,7 @@ const AddVendor = () => {
 
       if (response.ok) {
         console.log("Response:", response);
-        alert("Vendors added successfully!");
+        alert("Vendor added successfully!");
         setFormData(initialFormData);
       } else {
         alert("Failed to add data. Please try again.");

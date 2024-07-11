@@ -130,6 +130,7 @@ const ViewCustomer = () => {
     setEditedCustomer(customer);
     setIsEditing(true);
   };
+  //validation
   const handleAlphaInputChange = (callback) => (event) => {
     const value = event.target.value;
     if (/^[A-Za-z\s]*$/.test(value)) {

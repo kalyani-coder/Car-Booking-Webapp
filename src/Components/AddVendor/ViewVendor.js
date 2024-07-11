@@ -124,7 +124,7 @@ const ViewVendor = () => {
           <h2 className="View-Corporate-Customer-Rate font-bold">
             View Vendors
           </h2>
-          <inputVendors
+          <input
             type="search"
             placeholder="Search By Vendor Name"
             value={searchTerm}
