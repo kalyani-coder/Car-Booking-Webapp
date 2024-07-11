@@ -123,13 +123,9 @@ function VendorReport() {
   return (
     <>
       <div className="container-vendor-invoice">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
-          className="ml-[30%] mt-[1rem]"
-        >
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Vendor Report
         </h2>
-
         <div className="grid-container">
           <div className="filters">
             <div className="filter-input">
@@ -200,47 +196,49 @@ function VendorReport() {
             </button>
           </div>
         </div>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Sr. No.</th>
-              <th>Vendor Name</th>
-              <th>GST No</th>
-              <th>Invoice Number</th>
-              <th>Mobile Number</th>
-              <th>Company Name</th>
-              <th>Vehicle Type</th>
-              <th>Amount</th>
-              <th>TDS</th>
-              <th>Payables Amount</th>
-              {/* <th>Paid Amount</th>
+        <div className="responsive-table-vendor-report--cc-overflow">
+          {" "}
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th>Vendor Name</th>
+                <th>GST No</th>
+                <th>Invoice Number</th>
+                <th>Mobile Number</th>
+                <th>Company Name</th>
+                <th>Vehicle Type</th>
+                <th>Amount</th>
+                <th>TDS</th>
+                <th>Payables Amount</th>
+                {/* <th>Paid Amount</th>
               <th>Remaining Amount</th> */}
-              <th>Payment</th>
-              {/* <th>Payment Method</th> */}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredVendors.map((vendor, index) => (
-              <tr key={vendor._id}>
-                <td>{index + 1}</td>
-                <td>{vendor.vender_Name}</td>
-                <td>{vendor.GST_No}</td>
-                <td></td>
-                <td>{vendor.mobile_Number}</td>
-                <td>{vendor.company_Name}</td>
-                <td>{vendor.vehicle_type}</td>
-                <td>{vendor.total_Amount}</td>
-                <td>{vendor.tds}</td>
-                <td>{vendor.amount}</td>
-                {/* <td>{vendor.paid_Amount}</td>
-                <td>{vendor.remaining_Amount}</td> */}
-                <td>{vendor.payment}</td>
-                {/* <td>{vendor.payment_Method}</td> */}
+                <th>Payment</th>
+                {/* <th>Payment Method</th> */}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredVendors.map((vendor, index) => (
+                <tr key={vendor._id}>
+                  <td>{index + 1}</td>
+                  <td>{vendor.vender_Name}</td>
+                  <td>{vendor.GST_No}</td>
+                  <td></td>
+                  <td>{vendor.mobile_Number}</td>
+                  <td>{vendor.company_Name}</td>
+                  <td>{vendor.vehicle_type}</td>
+                  <td>{vendor.total_Amount}</td>
+                  <td>{vendor.tds}</td>
+                  <td>{vendor.amount}</td>
+                  {/* <td>{vendor.paid_Amount}</td>
+                <td>{vendor.remaining_Amount}</td> */}
+                  <td>{vendor.payment}</td>
+                  {/* <td>{vendor.payment_Method}</td> */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

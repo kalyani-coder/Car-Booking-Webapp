@@ -210,17 +210,9 @@ const AddCustomer = () => {
       <div className="customer-Add-container">
         <div className="addcustomer-main-container">
           <div className="width-set-for-form-groupt-cc--dd">
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "1rem",
-              }}
-              className="text-center"
-            >
+            <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
               Add Customer
             </h2>
-
             <div className="customer-form-group">
               <label htmlFor="customername" className="form-label">
                 Customer Name / Company Name:

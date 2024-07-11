@@ -107,10 +107,10 @@ function MonthlyCustomerReport() {
     <>
       <div className="container-customer-invoice">
         <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
-          Customer Report
+          Monthly Customer Report
         </h2>
         <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <label htmlFor="reportType" style={{ marginRight: "10px" }}>
+          <label htmlFor="reportType" style={{ margin: "10px" }}>
             Select Report Type:
           </label>
           <select

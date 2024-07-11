@@ -341,10 +341,10 @@ const ViewShareDetails = () => {
         </div>
       </div>
       {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
           <div
-            className="bg-white p-4 rounded shadow-lg w-96"
-            style={{ width: "40%", height: "80vh", overflowY: "scroll" }}
+            className="bg-white p-4 rounded shadow-lg w-96 main-div-for-modal-container-for-all-inputs-cc"
+            style={{ height: "80vh", overflowY: "scroll" }}
           >
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Share Details</h2>

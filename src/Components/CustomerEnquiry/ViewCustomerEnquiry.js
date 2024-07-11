@@ -246,11 +246,10 @@ const ViewCustomerEnquiry = () => {
             />
           </div>
           {isEditing && editedCustomer && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
               <div
-                className="bg-white p-4 rounded shadow-lg w-96"
+                className="bg-white p-4 rounded shadow-lg w-96 main-div-for-modal-container-for-all-inputs-cc"
                 style={{
-                  width: "40%",
                   height: "80vh",
                   overflowY: "scroll",
                 }}

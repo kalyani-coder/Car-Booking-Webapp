@@ -154,8 +154,8 @@ const ViewVenderRate = () => {
           </div>
 
           {isEditing && editedItem && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-4 rounded shadow-lg w-96 overflow-y-auto max-h-[80vh]">
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
+              <div className="bg-white p-4 rounded shadow-lg w-96 overflow-y-auto max-h-[80vh] main-div-for-modal-container-for-all-inputs-cc">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-2xl font-bold">Edit Vendor Rate</h2>
                   <button onClick={handleCancelEdit} className="close-icon">

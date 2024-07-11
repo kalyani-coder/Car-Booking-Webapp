@@ -1,5 +1,11 @@
-.trip-details-input {
+.trip-details-input-trip-details-report-page {
   max-width: 200px; /* Adjust the width as needed */
+  flex: 1; /* Take up equal width */
+  padding: 8px;
+
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 .trip-counts-container {
   display: grid;
@@ -27,5 +33,25 @@
     flex-direction: column;
     text-align: center;
     padding: 3em 0;
+  }
+  .trip-details-input-trip-details-report-page {
+    max-width: 100%;
+    flex: 1 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 40px;
+  }
+  .btn-Export-to-Excel-trip-details {
+  }
+  .section-for-input-and-btn-for-trip-details-page {
+    flex-direction: column;
+  }
+  .trip-counts-container {
+    display: flex;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    flex-direction: column;
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-
+import "./AddTrip.css";
 const ViewTrip = () => {
   const [trips, setTrips] = useState([]);
   const [filteredTrips, setFilteredTrips] = useState([]);
@@ -209,10 +209,10 @@ const ViewTrip = () => {
           <h2 className="View-Corporate-Customer-Rate font-bold">View Trips</h2>
           {/* Other JSX code */}
           {selectedTrip && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
               <div
-                className="bg-white p-4 rounded shadow-lg w-96"
-                style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
+                className="bg-white p-4 rounded shadow-lg main-div-for-modal-container-for-all-inputs-cc"
+                style={{ overflowY: "auto" }}
               >
                 <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Trip Details</h2>
@@ -351,11 +351,10 @@ const ViewTrip = () => {
                     <td>{trip.pickup}</td>
                     <td>
                       {editedTrip && editedTrip._id === trip._id ? (
-                        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+                        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
                           <div
-                            className="bg-white p-4 rounded shadow-lg w-96"
+                            className="bg-white p-4 rounded shadow-lg w-96 main-div-for-modal-container-for-all-inputs-cc"
                             style={{
-                              width: "40%",
                               height: "80vh",
                               overflowY: "scroll",
                             }}

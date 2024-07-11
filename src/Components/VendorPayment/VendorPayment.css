@@ -50,4 +50,7 @@
     padding: 1em;
     padding-left: 23px;
   }
+  .view-vendor-payment-table-overflow-y-cc {
+    overflow-y: scroll;
+  }
 }

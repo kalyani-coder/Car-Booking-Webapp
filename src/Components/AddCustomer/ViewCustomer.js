@@ -222,17 +222,9 @@ const ViewCustomer = () => {
     <>
       <div className="customer-Add-container">
         <div className="viewcustomer-main-container">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "1rem",
-            }}
-            className="text-center"
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Customer
           </h2>
-
           <div className="search-bar">
             <input
               type="text"
@@ -254,8 +246,11 @@ const ViewCustomer = () => {
       </div>
 
       {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg w-150">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index ">
+          <div
+            className="bg-white p-4 rounded shadow-lg main-div-for-modal-container-for-all-inputs-cc"
+            style={{ overflowY: "auto" }}
+          >
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Customer</h2>
               <button

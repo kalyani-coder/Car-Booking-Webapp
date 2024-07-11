@@ -231,70 +231,72 @@ const ViewVendorPayment = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Sr. No.</th>
-                <th>Vendor Name</th>
-                <th>Company Name</th>
-                <th>Vehicle Type</th>
-                <th>Mobile Number</th>
-                <th>Payment</th>
-                {/* <th>Amount</th> */}
-                <th>Tds 1 %</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredVendors.map((vendor, index) => (
-                <React.Fragment key={vendor._id}>
-                  <tr>
-                    <td>{index + 1}</td>
-                    <td>{vendor.vender_Name}</td>
-                    <td>{vendor.company_Name}</td>
-                    <td>{vendor.vehicle_type}</td>
-                    <td>{vendor.mobile_Number}</td>
-                    <td>{vendor.payment}</td>
-                    {/* <td>{vendor.amount}</td> */}
-                    <td>{vendor.tds}</td>
-                    <td>
-                      <Link
-                        className="btn btn-primary btn-sm ml-2"
-                        to={`/ViewVendorPayment/${vendor._id}`}
-                      >
-                        <i className="fas fa-eye"></i>
-                      </Link>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleVendorsDelete(vendor._id)}
-                      >
-                        <FaTrash />
-                      </button>
-                      <button
-                        className="btn btn-info"
-                        onClick={() => handleGenerateInvoice(vendor)}
-                      >
-                        <FaFilePdf />
-                      </button>
-                    </td>
-                  </tr>
-
-                  {selectedVendor === vendor && (
+          <div className="view-vendor-payment-table-overflow-y-cc">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Vendor Name</th>
+                  <th>Company Name</th>
+                  <th>Vehicle Type</th>
+                  <th>Mobile Number</th>
+                  <th>Payment</th>
+                  {/* <th>Amount</th> */}
+                  <th>Tds 1 %</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredVendors.map((vendor, index) => (
+                  <React.Fragment key={vendor._id}>
                     <tr>
+                      <td>{index + 1}</td>
+                      <td>{vendor.vender_Name}</td>
+                      <td>{vendor.company_Name}</td>
+                      <td>{vendor.vehicle_type}</td>
+                      <td>{vendor.mobile_Number}</td>
+                      <td>{vendor.payment}</td>
+                      {/* <td>{vendor.amount}</td> */}
+                      <td>{vendor.tds}</td>
                       <td>
+                        <Link
+                          className="btn btn-primary btn-sm ml-2"
+                          to={`/ViewVendorPayment/${vendor._id}`}
+                        >
+                          <i className="fas fa-eye"></i>
+                        </Link>
                         <button
-                          className="btn btn-primary"
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleVendorsDelete(vendor._id)}
+                        >
+                          <FaTrash />
+                        </button>
+                        <button
+                          className="btn btn-info"
                           onClick={() => handleGenerateInvoice(vendor)}
                         >
                           <FaFilePdf />
                         </button>
                       </td>
                     </tr>
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
+
+                    {selectedVendor === vendor && (
+                      <tr>
+                        <td>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => handleGenerateInvoice(vendor)}
+                          >
+                            <FaFilePdf />
+                          </button>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>

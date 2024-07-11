@@ -86,41 +86,43 @@ function TripDetailsReport() {
   return (
     <>
       <div className="container-customer-invoice">
-        <h2
-          style={{ fontSize: "2rem", fontWeight: "bold", marginBottom: "1rem" }}
-          className="text-center"
-        >
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Trip Details Report
         </h2>
-        <select
-          className="trip-details-input"
-          name="vehicle"
-          id="vehicle"
-          value={selectedVehicle}
-          onChange={(e) => handleFieldChange("vehicle", e.target.value)}
-        >
-          <option value="">Vehicle</option>
-          <option value="Sedan Car">Sedan Car</option>
-          <option value="Mini Car">Mini Car</option>
-          <option value="SUV Car">SUV Car</option>
-          <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-          <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
-          <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
-          <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
-          <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
-          <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
-          <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
-          <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
-          <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
-          <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
-          <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
-          <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
-          <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
-        </select>
+        <div className="flex gap-4 section-for-input-and-btn-for-trip-details-page">
+          <select
+            className="trip-details-input-trip-details-report-page"
+            name="vehicle"
+            id="vehicle"
+            value={selectedVehicle}
+            onChange={(e) => handleFieldChange("vehicle", e.target.value)}
+          >
+            <option value="">Vehicle</option>
+            <option value="Sedan Car">Sedan Car</option>
+            <option value="Mini Car">Mini Car</option>
+            <option value="SUV Car">SUV Car</option>
+            <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+            <option value="AC Bus 17-Seater">AC Bus 17-Seater</option>
+            <option value="AC Bus 20-Seater">AC Bus 20-Seater</option>
+            <option value="AC Bus 32-Seater">AC Bus 32-Seater</option>
+            <option value="AC Bus 35-Seater">AC Bus 35-Seater</option>
+            <option value="AC Bus 40-Seater">AC Bus 40-Seater</option>
+            <option value="AC Bus 45-Seater">AC Bus 45-Seater</option>
+            <option value="Non-AC Bus 17-Seater">Non-AC Bus 17 Seater</option>
+            <option value="Non-AC Bus 20-Seater">Non-AC Bus 20 Seater</option>
+            <option value="Non-AC Bus 32-Seater">Non-AC Bus 32 Seater</option>
+            <option value="Non-AC Bus 40-Seater">Non-AC Bus 40 Seater</option>
+            <option value="Non-AC Bus 45-Seater">Non-AC Bus 45 Seater</option>
+            <option value="Non-AC Bus 49-Seater">Non-AC Bus 49 Seater</option>
+          </select>
 
-        <button className="btn btn-primary mt-2 ml-2" onClick={exportToExcel}>
-          Export to Excel
-        </button>
+          <button
+            className="btn btn-primary h-10 btn-Export-to-Excel-trip-details"
+            onClick={exportToExcel}
+          >
+            Export to Excel
+          </button>
+        </div>
 
         <div className="trip-counts-container">
           {Object.keys(tripCounts).map((vehicle, index) => (

@@ -94,4 +94,11 @@
     margin-top: 1rem;
     overflow-x: scroll;
   }
+  .modal-main-container-section-z-index {
+    z-index: 9999;
+  }
+  .main-div-for-modal-container-for-all-inputs-cc {
+    width: 100%;
+    margin: 1em;
+  }
 }

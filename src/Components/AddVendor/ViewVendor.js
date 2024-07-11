@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import { Table, Button, Modal, Form } from "react-bootstrap";
-import "./ViewVender.css"; 
+import "./ViewVender.css";
 
 const ViewVendor = () => {
   const [vendors, setVendors] = useState([]);
@@ -172,48 +172,49 @@ const ViewVendor = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
-
-          <Table>
-            <thead>
-              <tr>
-                <th>Sr. No.</th>
-                <th>Vendor Name</th>
-                <th>Company Name</th>
-                <th>GST No</th>
-                <th>Mobile</th>
-                <th>Address</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredVendors.map((vendor, index) => (
-                <tr key={vendor._id}>
-                  <td>{index + 1}</td>
-                  <td>{vendor.vender_Name}</td>
-                  <td>{vendor.company_Name}</td>
-                  <td>{vendor.GST_No}</td>
-                  <td>{vendor.vender_Mobile}</td>
-                  <td>{vendor.address}</td>
-                  <td>
-                    <div className="d-flex align-items-center gap-1">
-                      <button
-                        className="btn btn-info"
-                        onClick={() => handleEditVendor(vendor)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleDelete(vendor._id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </td>
+          <div className="responsive-over-flow-x-scroll-table">
+            <Table>
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Vendor Name</th>
+                  <th>Company Name</th>
+                  <th>GST No</th>
+                  <th>Mobile</th>
+                  <th>Address</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {filteredVendors.map((vendor, index) => (
+                  <tr key={vendor._id}>
+                    <td>{index + 1}</td>
+                    <td>{vendor.vender_Name}</td>
+                    <td>{vendor.company_Name}</td>
+                    <td>{vendor.GST_No}</td>
+                    <td>{vendor.vender_Mobile}</td>
+                    <td>{vendor.address}</td>
+                    <td>
+                      <div className="d-flex align-items-center gap-1">
+                        <button
+                          className="btn btn-info"
+                          onClick={() => handleEditVendor(vendor)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(vendor._id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </div>
 

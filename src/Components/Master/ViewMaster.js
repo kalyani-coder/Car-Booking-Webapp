@@ -37,7 +37,8 @@ const ViewMaster = () => {
 
     // Vehicle validation (text only)
     if (!/^[A-Za-z\s]+$/.test(editedMaster.add_vehicle)) {
-      messages.add_vehicle = "Vehicle name must contain only letters and spaces.";
+      messages.add_vehicle =
+        "Vehicle name must contain only letters and spaces.";
       isValid = false;
     }
 
@@ -62,7 +63,7 @@ const ViewMaster = () => {
       if (!editedMaster._id) {
         throw new Error("No _id field found on editedMaster");
       }
-  
+
       // Validate required fields
       if (!editedMaster.add_vehicle.trim()) {
         alert("Vehicle name is required.");
@@ -72,14 +73,14 @@ const ViewMaster = () => {
         alert("Rate is required.");
         return;
       }
-  
+
       // Optimistically update the local state immediately
       setData((prevData) =>
         prevData.map((master) =>
           master._id === editedMaster._id ? editedMaster : master
         )
       );
-  
+
       const response = await fetch(
         `http://localhost:8787/api/masterrate/${editedMaster._id}`,
         {
@@ -90,24 +91,24 @@ const ViewMaster = () => {
           body: JSON.stringify(editedMaster),
         }
       );
-  
+
       if (response.ok) {
         const updatedMaster = await response.json();
-  
+
         // Update local state with the server's response to ensure consistency
         setData((prevData) =>
           prevData.map((master) =>
             master._id === updatedMaster._id ? updatedMaster : master
           )
         );
-  
+
         setIsEditing(false);
         alert("Master data updated successfully");
       } else {
         const errorResponse = await response.text(); // Log server response text
         console.error("Error updating master:", response.status, errorResponse);
         alert("Error updating master. Please try again.");
-  
+
         // Revert the optimistic update if server update fails
         setData((prevData) =>
           prevData.map((master) =>
@@ -120,7 +121,7 @@ const ViewMaster = () => {
     } catch (error) {
       console.error("Error updating master:", error);
       // setErrorMessage('Error updating master. Please try again.');
-  
+
       // Revert the optimistic update if an exception occurs
       setData((prevData) =>
         prevData.map((master) =>
@@ -131,7 +132,6 @@ const ViewMaster = () => {
       );
     }
   };
-  
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm(
@@ -164,14 +164,14 @@ const ViewMaster = () => {
       }
     }
   };
-// validation text 
+  // validation text
   const handleVehicleInputChange = (e) => {
     const value = e.target.value;
     if (/^[A-Za-z\s]*$/.test(value)) {
       setEditedMaster({ ...editedMaster, add_vehicle: value });
     }
   };
-// numbers only
+  // numbers only
   const handleRateInputChange = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
@@ -247,8 +247,8 @@ const ViewMaster = () => {
         </div>
       </div>
       {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded shadow-lg w-96">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
+          <div className="bg-white p-4 rounded shadow-lg w-96 main-div-for-modal-container-for-all-inputs-cc">
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Master</h2>
               <button
@@ -333,7 +333,10 @@ const ViewMaster = () => {
               >
                 Save
               </button>
-              <button className="btn btn-secondary" onClick={() => setIsEditing(false)}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => setIsEditing(false)}
+              >
                 Cancel
               </button>
             </div>
