@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import * as XLSX from "xlsx";
-
+import "./TripDetailsReport.css";
 function MonthlyCustomerReport() {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
@@ -137,115 +137,118 @@ function MonthlyCustomerReport() {
         >
           Export to Excel
         </button>
-
-        <table className="table">
-          <thead>
-            {reportType === "all" && (
-              <tr>
-                <th>Sr.No.</th>
-                <th>Date</th>
-                <th>GST No.</th>
-                <th>Invoice No.</th>
-                <th>Customer Name</th>
-                <th>Vehicle Type</th>
-                <th>CGST</th>
-                <th>SGST</th>
-                <th>Total Amount</th>
-                <th>Count</th> {/* Add count column */}
-              </tr>
-            )}
-            {reportType === "outstanding" && (
-              <tr>
-                <th>Sr.No.</th>
-                <th>Date</th>
-                <th>GST No.</th>
-                <th>Invoice No.</th>
-                <th>Customer Name</th>
-                <th>Receivables Amount</th>
-              </tr>
-            )}
-            {reportType === "gstDetails" && (
-              <tr>
-                <th>Sr.No.</th>
-                <th>Date</th>
-                <th>GST No.</th>
-                <th>Invoice No.</th>
-                <th>Customer Name</th>
-                <th>CGST</th>
-                <th>SGST</th>
-                <th>Total GST</th>
-                <th>Total Amount</th>
-              </tr>
-            )}
-            {reportType === "bookingStatistics" && (
-              <tr>
-                <th>Sr.No.</th>
-                <th>Date</th>
-                <th>GST No.</th>
-                <th>Invoice No.</th>
-                <th>Company Name</th>
-                <th>Customer Name</th>
-                <th>Vehicle Type</th>
-                <th>Quantity</th>
-              </tr>
-            )}
-          </thead>
-          <tbody>
-            {filteredCustomers.map((customer, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td> {/* Add Sr. No. column */}
-                {reportType === "all" && (
-                  <>
-                    <td>{customer.Date}</td>
-                    <td>{customer.GST_No}</td>
-                    <td></td>
-                    <td>{customer.Customer_Name}</td>
-                    <td>{customer.vehicle_Type}</td>
-                    <td>{customer.CGST}</td>
-                    <td>{customer.SGST}</td>
-                    <td>{customer.Total_Amount}</td>
-                    <td>
-                      {/* Display count of vehicle type */}
-                      <span>{countVehicleTypes()[customer.vehicle_Type]}</span>
-                    </td>
-                  </>
-                )}
-                {reportType === "outstanding" && (
-                  <>
-                    <td>{customer.Date}</td>
-                    <td>{customer.GST_No}</td>
-                    <td></td>
-                    <td>{customer.Customer_Name}</td>
-                    <td>{customer.Total_Amount}</td>
-                  </>
-                )}
-                {reportType === "gstDetails" && (
-                  <>
-                    <td>{customer.Date}</td>
-                    <td>{customer.GST_No}</td>
-                    <td></td>
-                    <td>{customer.Customer_Name}</td>
-                    <td>{customer.CGST}</td>
-                    <td>{customer.SGST}</td>
-                    <td>{customer.Total_GST}</td>
-                    <td>{customer.Total_Amount}</td>
-                  </>
-                )}
-                {reportType === "bookingStatistics" && (
-                  <>
-                    <td>{customer.Date}</td>
-                    <td>{customer.GST_No}</td>
-                    <td></td>
-                    <td>{customer.Company_Name}</td>
-                    <td>{customer.customer_Name}</td>
-                    <td>{customer.Vehicle_Type}</td>
-                    <td>{customer.Quantity}</td>
-                  </>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="table-for-monthly-customer-report-page">
+          <table className="table">
+            <thead>
+              {reportType === "all" && (
+                <tr>
+                  <th>Sr.No.</th>
+                  <th>Date</th>
+                  <th>GST No.</th>
+                  <th>Invoice No.</th>
+                  <th>Customer Name</th>
+                  <th>Vehicle Type</th>
+                  <th>CGST</th>
+                  <th>SGST</th>
+                  <th>Total Amount</th>
+                  <th>Count</th> {/* Add count column */}
+                </tr>
+              )}
+              {reportType === "outstanding" && (
+                <tr>
+                  <th>Sr.No.</th>
+                  <th>Date</th>
+                  <th>GST No.</th>
+                  <th>Invoice No.</th>
+                  <th>Customer Name</th>
+                  <th>Receivables Amount</th>
+                </tr>
+              )}
+              {reportType === "gstDetails" && (
+                <tr>
+                  <th>Sr.No.</th>
+                  <th>Date</th>
+                  <th>GST No.</th>
+                  <th>Invoice No.</th>
+                  <th>Customer Name</th>
+                  <th>CGST</th>
+                  <th>SGST</th>
+                  <th>Total GST</th>
+                  <th>Total Amount</th>
+                </tr>
+              )}
+              {reportType === "bookingStatistics" && (
+                <tr>
+                  <th>Sr.No.</th>
+                  <th>Date</th>
+                  <th>GST No.</th>
+                  <th>Invoice No.</th>
+                  <th>Company Name</th>
+                  <th>Customer Name</th>
+                  <th>Vehicle Type</th>
+                  <th>Quantity</th>
+                </tr>
+              )}
+            </thead>
+            <tbody>
+              {filteredCustomers.map((customer, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td> {/* Add Sr. No. column */}
+                  {reportType === "all" && (
+                    <>
+                      <td>{customer.Date}</td>
+                      <td>{customer.GST_No}</td>
+                      <td></td>
+                      <td>{customer.Customer_Name}</td>
+                      <td>{customer.vehicle_Type}</td>
+                      <td>{customer.CGST}</td>
+                      <td>{customer.SGST}</td>
+                      <td>{customer.Total_Amount}</td>
+                      <td>
+                        {/* Display count of vehicle type */}
+                        <span>
+                          {countVehicleTypes()[customer.vehicle_Type]}
+                        </span>
+                      </td>
+                    </>
+                  )}
+                  {reportType === "outstanding" && (
+                    <>
+                      <td>{customer.Date}</td>
+                      <td>{customer.GST_No}</td>
+                      <td></td>
+                      <td>{customer.Customer_Name}</td>
+                      <td>{customer.Total_Amount}</td>
+                    </>
+                  )}
+                  {reportType === "gstDetails" && (
+                    <>
+                      <td>{customer.Date}</td>
+                      <td>{customer.GST_No}</td>
+                      <td></td>
+                      <td>{customer.Customer_Name}</td>
+                      <td>{customer.CGST}</td>
+                      <td>{customer.SGST}</td>
+                      <td>{customer.Total_GST}</td>
+                      <td>{customer.Total_Amount}</td>
+                    </>
+                  )}
+                  {reportType === "bookingStatistics" && (
+                    <>
+                      <td>{customer.Date}</td>
+                      <td>{customer.GST_No}</td>
+                      <td></td>
+                      <td>{customer.Company_Name}</td>
+                      <td>{customer.customer_Name}</td>
+                      <td>{customer.Vehicle_Type}</td>
+                      <td>{customer.Quantity}</td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
