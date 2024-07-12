@@ -25,6 +25,7 @@
 
   padding: 1em 0;
 }
+
 @media (max-width: 768px) {
   .form-groupx {
     margin: auto;
@@ -59,5 +60,8 @@
   }
   .table-for-monthly-customer-report-page {
     overflow-x: scroll;
+  }
+  .table-for-monthly-customer-report-page-width-set-cc {
+    width: 74em;
   }
 }

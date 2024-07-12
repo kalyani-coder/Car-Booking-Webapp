@@ -131,19 +131,19 @@ function MonthlyCustomerReport() {
           <i className="fas fa-filter ml-3"></i>
         </div>
         <button
-          className="rate-btn-submit ml-3 m-auto"
+          className="rate-btn-submit ml-3 m-auto flex"
           onClick={downloadExcel}
           style={{ marginBottom: "20px" }}
         >
           Export to Excel
         </button>
         <div className="table-for-monthly-customer-report-page">
-          <table className="table">
+          <table className="table table-for-monthly-customer-report-page-width-set-cc">
             <thead>
               {reportType === "all" && (
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Date</th>
+                  <th className="w-32">Date</th>
                   <th>GST No.</th>
                   <th>Invoice No.</th>
                   <th>Customer Name</th>

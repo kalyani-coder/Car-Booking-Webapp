@@ -65,7 +65,9 @@ export const SideNavbar = ({
   return (
     <>
       <div
-        className={`bg-[#000D27] h-[100%] ${isSideNavbarOpen ? "w-80" : "w-16"}
+        className={`bg-[#000D27] h-[100%] ${
+          isSideNavbarOpen ? "w-[22.5rem]" : "w-16"
+        }
        duration-700 z-[1000] overflow-y-scroll hide-scrollbar responsvie-side-bar-section`}
         style={{ position: "fixed" }}
       >

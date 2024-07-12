@@ -20,7 +20,8 @@ body {
   align-items: center;
 
   padding: 8px;
-  /* margin-left: 300px; */
+  margin: auto;
+  width: 69em;
   height: auto;
 }
 
@@ -96,6 +97,7 @@ body {
 }
 .rate-form-container-vender-rate-cc {
   width: 80%;
+  margin: auto;
 }
 
 /* .corporate-customer-form-section-width-set-cc {
