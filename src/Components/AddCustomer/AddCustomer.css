@@ -19,9 +19,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding: 8px;
-  /* margin-left: 300px; */
+  margin: auto;
+  width: 69em;
 }
 
 /* Sidebar styles (adjust as needed) */
@@ -29,20 +29,11 @@ body {
 
 /* Main container styles */
 .addcustomer-main-container {
-  /* max-width: 960px; */
-  width: 80%;
+  width: 100%;
   height: 95vh;
-  /* background-color: #fff; */
-  /* border: 1px solid #ccc; */
   padding: 20px;
   border-radius: 8px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  /* margin-bottom: 20px; */
-  position: relative;
-  /* left: 11%; */
-  /* top: 12%; */
-  /* padding-left: 13%; */
-  margin-top: 5rem;
+  /* position: relative; */
 }
 
 /* Form group styles */
@@ -67,6 +58,7 @@ body {
 }
 .width-set-for-form-groupt-cc--dd {
   width: 80%;
+  margin: auto;
 }
 .cust-add-input {
   width: 275px;
