@@ -126,10 +126,7 @@ const ViewCustomer = () => {
     }
   };
 
-  const handleEditCustomer = (customer) => {
-    setEditedCustomer(customer);
-    setIsEditing(true);
-  };
+ 
   //validation
   const handleAlphaInputChange = (callback) => (event) => {
     const value = event.target.value;
@@ -177,6 +174,10 @@ const ViewCustomer = () => {
     // Regular expression to validate email format
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     return emailRegex.test(email);
+  };
+  const handleEditCustomer = (customer) => {
+    setEditedCustomer(customer);
+    setIsEditing(true);
   };
   const handleSave = async () => {
     try {
