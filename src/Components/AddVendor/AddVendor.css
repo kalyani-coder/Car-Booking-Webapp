@@ -18,9 +18,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   padding: 8px;
-  /* margin-left: 300px; */
+  margin: auto;
+  width: 69em;
 }
 
 /* Sidebar styles (adjust as needed) */
@@ -30,12 +30,11 @@ body {
 .vendor-main-container {
   /* max-width: 960px; */
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
   /* background-color: #fff; */
   /* border: 1px solid #ccc; */
   padding: 20px;
   border-radius: 8px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 /* Form group styles */
@@ -89,5 +88,24 @@ body {
 
   .vendor-btn-submit {
     padding: 8px 16px;
+  }
+  .vendor-Add-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    margin: auto;
+    width: 100%;
+  }
+  .vendor-form-container {
+    padding: 0;
+  }
+  .form-control-ven-add-input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
   }
 }
