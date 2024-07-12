@@ -129,7 +129,7 @@ const VendorRate = () => {
   return (
     <>
       <div className="rate-Add-container">
-        <div className="rate-main-container relative left-[6rem] mt-2">
+        <div className="rate-main-container relative mt-2">
           <div className="rate-form-container-vender-rate-cc">
             <h2 className="View-Corporate-Customer-Rate font-bold">
               Vendor Rate
@@ -273,7 +273,7 @@ const VendorRate = () => {
               </div>
 
               <div className="d-flex gap-3 responsive-flex-column-required">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="title" className="form-label">
                       Duty Type:
@@ -302,7 +302,7 @@ const VendorRate = () => {
                     </select>
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="rate" className="form-label">
                       Rate:
@@ -322,7 +322,7 @@ const VendorRate = () => {
                 </div>
               </div>
               <div className="d-flex gap-3 responsive-flex-column-required">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="from" className="form-label">
                       From:
@@ -340,7 +340,7 @@ const VendorRate = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="rate" className="form-label">
                       To:
@@ -360,7 +360,7 @@ const VendorRate = () => {
                 </div>
               </div>
               <div className="d-flex gap-3 responsive-flex-column-required">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
                       KM:
@@ -378,7 +378,7 @@ const VendorRate = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_km" className="form-label">
                       Rate Per KM(Extra KM):
@@ -399,7 +399,7 @@ const VendorRate = () => {
               </div>
 
               <div className="d-flex gap-3 responsive-flex-column-required">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="hour" className="form-label">
                       Hour:
@@ -417,7 +417,7 @@ const VendorRate = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_hour" className="form-label">
                       Rate Per Hour(Extra Hour):
@@ -436,11 +436,12 @@ const VendorRate = () => {
                   </div>
                 </div>
               </div>
-
+            </form>
+            <div className="flex m-auto justify-center">
               <button type="submit" className="rate-btn-submit">
                 Save
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

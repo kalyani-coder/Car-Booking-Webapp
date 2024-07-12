@@ -72,7 +72,7 @@ const CustomerRate = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Validate input based on field name
     if (name === "from" || name === "to" || name === "add_vehicle") {
       // Allow only alphabets and spaces
@@ -103,7 +103,7 @@ const CustomerRate = () => {
         [name]: value,
       });
     }
-  
+
     // Additional validation for mobile_Number
     if (name === "mobile_Number") {
       if (!/^\d{10}$/.test(value)) {
@@ -113,24 +113,23 @@ const CustomerRate = () => {
       }
     }
   };
-  
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
 
-     // Validation: Check if all required fields are filled
-  if (
-    !formData.type_of_vehicle ||
-    !formData.duty_type ||
-    !formData.rate ||
-    !formData.km ||
-    !formData.extra_km ||
-    !formData.hours ||
-    !formData.extra_hours
-  ) {
-    alert("Please all fields required.");
-    return;
-  }
+    // Validation: Check if all required fields are filled
+    if (
+      !formData.type_of_vehicle ||
+      !formData.duty_type ||
+      !formData.rate ||
+      !formData.km ||
+      !formData.extra_km ||
+      !formData.hours ||
+      !formData.extra_hours
+    ) {
+      alert("Please all fields required.");
+      return;
+    }
 
     if (!selectedCustomer) {
       window.alert("Please select a customer");
@@ -218,17 +217,9 @@ const CustomerRate = () => {
       <div className="rate-Add-container">
         <div className="rate-main-container">
           <div className="rate-form-container-vender-rate-cc relative ">
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "bold",
-                marginBottom: "1rem",
-              }}
-              className="text-center"
-            >
+            <h2 className="View-Corporate-Customer-Rate font-bold">
               Corporate Customer
             </h2>
-
             <form
               onSubmit={handleSubmit}
               className="corporate-customer-form-section-width-set-cc"
@@ -348,7 +339,7 @@ const CustomerRate = () => {
               </div>
 
               <div className="responsive-flex-column-required d-flex gap-3">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="duty_type" className="form-label">
                       Add Duty Type:
@@ -382,7 +373,7 @@ const CustomerRate = () => {
                     </select>
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="rate" className="form-label">
                       Add Rate:
@@ -407,7 +398,7 @@ const CustomerRate = () => {
               </div>
 
               <div className="responsive-flex-column-required d-flex gap-3">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="from" className="form-label">
                       From:
@@ -424,7 +415,7 @@ const CustomerRate = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="to" className="form-label">
                       To:
@@ -444,7 +435,7 @@ const CustomerRate = () => {
               </div>
 
               <div className="responsive-flex-column-required d-flex gap-3">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
                       KM:
@@ -461,7 +452,7 @@ const CustomerRate = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_km" className="form-label">
                       (Rate Per Km) Extra KM:
@@ -481,7 +472,7 @@ const CustomerRate = () => {
               </div>
 
               <div className="responsive-flex-column-required d-flex gap-3">
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="hours" className="form-label">
                       Hour:
@@ -498,7 +489,7 @@ const CustomerRate = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_hours" className="form-label">
                       (Rate Per Hour) Extra Hour:
@@ -516,10 +507,11 @@ const CustomerRate = () => {
                   </div>
                 </div>
               </div>
-
-              <button type="submit" className="rate-btn-submit">
-                Submit
-              </button>
+              <div className="m-auto">
+                <button type="submit" className="rate-btn-submit flex">
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </div>

@@ -100,10 +100,11 @@ body {
   margin: auto;
 }
 
-/* .corporate-customer-form-section-width-set-cc {
-  width: 80%;
-  margin: auto;
-} */
+.corporate-customer-form-section-width-set-cc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .main-container {
@@ -147,6 +148,18 @@ body {
     padding: 20px;
     border-radius: 8px;
     left: 0;
+  }
+  .rate-Add-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    margin: auto;
+    width: 100%;
+    height: auto;
+  }
+  .res-width-100-percent {
+    width: 100%;
   }
 }
 
