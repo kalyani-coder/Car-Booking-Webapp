@@ -134,6 +134,14 @@ body {
   .width-set-for-form-groupt-cc--dd {
     width: 100%;
   }
+  .customer-Add-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    margin: auto;
+    width: 100%;
+  }
 }
 
 .required-asterisk {
