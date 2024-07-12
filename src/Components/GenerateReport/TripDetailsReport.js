@@ -134,36 +134,37 @@ function TripDetailsReport() {
             </div>
           ))}
         </div>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Sr. No.</th>
-              {/* <th>Trip ID</th> */}
-              <th>Date</th>
-              <th>Vehicle</th>
-              <th>Customer Name</th>
-              <th>Trip Type</th>
-              <th>Sub Type</th>
-              <th>Pickup Location</th>
-              <th>Dropoff Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredTripDetails.map((trip, index) => (
-              <tr key={trip.id}>
-                <td>{index + 1}</td>
-                <td>{trip.date}</td>
-                <td>{trip.vehicle}</td>
-                <td>{trip.customername}</td>
-                <td>{trip.triptype}</td>
-                <td>{trip.subtype}</td>
-                <td>{trip.pickuplocation}</td>
-                <td>{trip.dropofflocation}</td>
+        <div className="trip-details-responsive-table-overflow-y-scrolling-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                {/* <th>Trip ID</th> */}
+                <th>Date</th>
+                <th>Vehicle</th>
+                <th>Customer Name</th>
+                <th>Trip Type</th>
+                <th>Sub Type</th>
+                <th>Pickup Location</th>
+                <th>Dropoff Location</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredTripDetails.map((trip, index) => (
+                <tr key={trip.id}>
+                  <td>{index + 1}</td>
+                  <td>{trip.date}</td>
+                  <td>{trip.vehicle}</td>
+                  <td>{trip.customername}</td>
+                  <td>{trip.triptype}</td>
+                  <td>{trip.subtype}</td>
+                  <td>{trip.pickuplocation}</td>
+                  <td>{trip.dropofflocation}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

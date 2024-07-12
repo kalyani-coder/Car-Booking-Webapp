@@ -187,14 +187,7 @@ const ViewMaster = () => {
     <>
       <div className="customer-Add-container ">
         <div className="customer-main-container h-[98vh] p-2 mt-4">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-            className="text-center"
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Master
           </h2>
           <table className="w-[120vh] bg-white border-collapse">

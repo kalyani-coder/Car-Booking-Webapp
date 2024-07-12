@@ -7,7 +7,7 @@ import { FaEdit, FaTrash, FaTimes, FaFilePdf } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ViewDriverDetails.css";
 import img1 from "../../assects/images/shivpushpa_logo.png";
-
+import "./ViewDriverDetails.css";
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
   const [filteredShareDetails, setFilteredShareDetails] = useState([]);
@@ -571,10 +571,10 @@ const ViewStartEndDetails = () => {
 
           {/* Modal or Overlay for displaying trip details */}
           {selectedTrip && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
               <div
-                className="bg-white p-4 rounded shadow-lg w-96"
-                style={{ width: "50%", maxHeight: "80vh", overflowY: "auto" }}
+                className="bg-white p-4 rounded shadow-lg w-96 main-div-for-modal-container-for-all-inputs-cc"
+                style={{ maxHeight: "80vh", overflowY: "auto" }}
               >
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-2xl font-bold">View Driver Details</h2>

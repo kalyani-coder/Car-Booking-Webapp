@@ -62,7 +62,7 @@ function App() {
   const toggleSideNavbar = () => {
     setIsSideNavbarOpen(!isSideNavbarOpen);
   };
-  const contentMargin = isSideNavbarOpen ? "lg:ml-96 md:ml-20" : "lg:ml-16 16";
+  const contentMargin = isSideNavbarOpen ? "lg:ml-80 md:ml-20" : "lg:ml-16 16";
 
   return (
     <>

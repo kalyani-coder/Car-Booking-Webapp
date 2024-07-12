@@ -159,14 +159,7 @@ const ViewDriver = () => {
     <>
       <div className="driver-Add-container">
         <div className="driver-main-container">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "1rem",
-            }}
-            className="text-center mr-[4rem] view-driver-text-center-responsive"
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Drivers
           </h2>
           <input
