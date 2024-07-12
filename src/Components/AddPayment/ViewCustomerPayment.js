@@ -316,10 +316,10 @@ const ViewCustomerPayment = () => {
 
                   <td>
                     <Link
-                      className="btn btn-info ml-2"
+                      className="btn btn-primary ml-2"
                       to={`/ViewCustomerPayment/${customer._id}`}
                     >
-                      View More
+                    <i className="fas fa-eye"></i>
                     </Link>
                     <button
                       className="btn btn-info"
