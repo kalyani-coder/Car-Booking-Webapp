@@ -189,7 +189,7 @@ const AddCustomer = () => {
       });
 
       if (response.ok) {
-        console.log("Response:", response);
+        // console.log("Response:", response);
         const customerTypeMessage =
           Cus_Type === "Corporate"
             ? "Corporate customer added successfully!"

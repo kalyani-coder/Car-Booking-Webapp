@@ -106,10 +106,10 @@ router.patch("/:id", async (req, res) => {
     );
 
     if (!UpdatedAddVenders) {
-      return res.status(404).json({ message: "Vendor not found" });
+      return res.status(404).json({ message: "Customer not found" });
     }
 
-    res.status(200).json({ message: "Vendor successfully updated", data: UpdatedAddVenders });
+    res.status(200).json({ message: "Customer successfully updated", data: UpdatedAddVenders });
   } catch (e) {
     if (e.name === 'ValidationError') {
       const errorMessages = Object.values(e.errors).map(err => err.message);
@@ -119,6 +119,7 @@ router.patch("/:id", async (req, res) => {
     }
   }
 });
+
 
 // DELETE METHOD
 router.delete("/:id", async (req, res) => {
