@@ -44,18 +44,54 @@ router.get("/:id", async (req, res) => {
 });
 
 // POST METHOD
+// router.post("/", async (req, res) => {
+//   try {
+//     const AddVenders = new NewAddCustomer(req.body);
+//     await AddVenders.save();
+//     res.status(201).json({ message: "Data posted successfully" });
+//   } catch (e) {
+//     console.error(e);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
 router.post("/", async (req, res) => {
   try {
-    const AddVenders = new NewAddCustomer(req.body);
-    await AddVenders.save();
+    const addVender = new NewAddCustomer(req.body);
+    await addVender.save();
     res.status(201).json({ message: "Data posted successfully" });
   } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Internal Server Error" });
+    if (e.name === 'ValidationError') {
+      const errorMessages = Object.values(e.errors).map(err => err.message);
+      res.status(400).json({ message: errorMessages.join(', ') });
+    } else {
+      console.error(e);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 });
 
+
 // PATCH METHOD
+// router.patch("/:id", async (req, res) => {
+//   const AddVendersId = req.params.id;
+
+//   try {
+//     const UpdatedAddVenders = await NewAddCustomer.findByIdAndUpdate(
+//       AddVendersId,
+//       req.body,
+//       {
+//         new: true,
+//         runValidators: true,
+//       }
+//     );
+//     res.status(201).json({ message: "venders Successfully updated " });
+//   } catch (e) {
+//     res.status(404).json({ message: "Can not patch venders" });
+//   }
+// });
+
+
 router.patch("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
 
@@ -68,9 +104,19 @@ router.patch("/:id", async (req, res) => {
         runValidators: true,
       }
     );
-    res.status(201).json({ message: "venders Successfully updated " });
+
+    if (!UpdatedAddVenders) {
+      return res.status(404).json({ message: "Vendor not found" });
+    }
+
+    res.status(200).json({ message: "Vendor successfully updated", data: UpdatedAddVenders });
   } catch (e) {
-    res.status(404).json({ message: "Can not patch venders" });
+    if (e.name === 'ValidationError') {
+      const errorMessages = Object.values(e.errors).map(err => err.message);
+      res.status(400).json({ message: errorMessages.join(', ') });
+    } else {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 });
 

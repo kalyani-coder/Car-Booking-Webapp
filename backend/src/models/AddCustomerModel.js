@@ -22,7 +22,11 @@ const newAddCustomerSchema = new mongoose.Schema({
   company_name: String,
   gst_no: String,
   cus_mobile: Number,
-  cus_email: String,
+  cus_email: {
+    type: String,
+    required: [true, "Email is required"],
+    match: [/\S+@\S+\.\S+/, "Please enter a valid email address"],
+  },
   address: String,
   Cus_Type : {
     type : String,
