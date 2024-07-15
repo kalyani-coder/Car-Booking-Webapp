@@ -73,7 +73,8 @@ const ViewVendor = () => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (event) => {
+    event.preventDefault();
     try {
       const response = await fetch(
         `http://localhost:8787/api/add-venders/${editedVendor._id}`,
@@ -85,6 +86,8 @@ const ViewVendor = () => {
           body: JSON.stringify(editedVendor),
         }
       );
+
+      const responseData = await response.json(); // Parse the JSON response
 
       if (response.ok) {
         setVendors((prevVendors) =>
@@ -98,10 +101,10 @@ const ViewVendor = () => {
           )
         );
         setIsEditing(false);
-        alert("Vendor data updated successfully");
+        alert(responseData.message); // Display success message
       } else {
         console.error("Error updating vendor:", response.status);
-        alert("Error updating vendor. Please try again.");
+        alert(responseData.message); // Display error message
       }
     } catch (error) {
       console.error("Error updating vendor:", error);
@@ -226,7 +229,7 @@ const ViewVendor = () => {
           </div>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSave}>
             <Form.Group controlId="formVendorName" className="my-2">
               <Form.Label>Vendor Name</Form.Label>
               <Form.Control
@@ -238,17 +241,8 @@ const ViewVendor = () => {
                     vender_Name: value,
                   })
                 )}
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.vender_Name
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.vender_Name && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.vender_Name}
-                </div>
-              )}
             </Form.Group>
 
             <Form.Group controlId="formCompanyName" className="my-2">
@@ -262,17 +256,8 @@ const ViewVendor = () => {
                     company_Name: value,
                   })
                 )}
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.company_Name
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.company_Name && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.company_Name}
-                </div>
-              )}
             </Form.Group>
 
             <Form.Group controlId="formGSTNo" className="my-2">
@@ -286,17 +271,8 @@ const ViewVendor = () => {
                     GST_No: value,
                   })
                 )}
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.GST_No
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.GST_No && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.GST_No}
-                </div>
-              )}
             </Form.Group>
 
             <Form.Group controlId="formMobile" className="my-2">
@@ -306,17 +282,23 @@ const ViewVendor = () => {
                 name="vender_Mobile"
                 value={editedVendor.vender_Mobile}
                 onChange={handleNumericChange}
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.vender_Mobile
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.vender_Mobile && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.vender_Mobile}
-                </div>
-              )}
+            </Form.Group>
+            <Form.Group controlId="formMobile" className="my-2">
+              <Form.Label>Email Id</Form.Label>
+              <Form.Control
+                type="text"
+                name="Vender_Email"
+                value={editedVendor.Vender_Email}
+                onChange={(e) =>
+                  setEditedVendor({
+                    ...editedVendor,
+                    Vender_Email: e.target.value,
+                  })
+                }
+                className={`w-full p-2 mb-2 border`}
+              />
             </Form.Group>
 
             <Form.Group controlId="formAddress" className="my-2">
@@ -331,26 +313,18 @@ const ViewVendor = () => {
                     address: e.target.value,
                   })
                 }
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.address
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.address && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.address}
-                </div>
-              )}
             </Form.Group>
 
             <button
-              onClick={handleSave}
+              type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded"
             >
               Save
             </button>
             <button
+              type="button"
               onClick={() => setIsEditing(false)}
               className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
             >

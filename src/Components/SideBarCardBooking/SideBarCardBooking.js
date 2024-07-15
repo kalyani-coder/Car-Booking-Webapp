@@ -65,7 +65,7 @@ export const SideNavbar = ({
   return (
     <>
       <div
-        className={`bg-[#000D27] h-[100%] ${
+        className={`bg-[rgb(0,13,39)] h-[100%] ${
           isSideNavbarOpen ? "w-[22.5rem]" : "w-16"
         }
        duration-700 z-[1000] overflow-y-scroll hide-scrollbar responsvie-side-bar-section`}
