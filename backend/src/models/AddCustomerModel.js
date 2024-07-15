@@ -47,7 +47,7 @@ const newAddCustomerSchema = new mongoose.Schema({
   cus_email: {
     type: String,
     required: [true, "Email is required"],
-    match: [/\S+@\S+\.\S+/, "Please enter a valid email address"]
+    match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?<!\.)$/, "Please enter a valid email address"]
   },
   address: {
     type: String,
