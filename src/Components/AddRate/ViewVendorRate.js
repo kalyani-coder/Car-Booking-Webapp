@@ -332,6 +332,7 @@ const ViewVenderRate = () => {
                       <td>{customerRate.title}</td>
                       <td>{customerRate.rate}</td>
                       <td>
+                      <div className="d-flex align-items-center gap-1">
                         <button
                           className="btn btn-info"
                           onClick={() => handleEdit(customerRate._id)}
@@ -344,6 +345,7 @@ const ViewVenderRate = () => {
                         >
                           <FaTrash />
                         </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

@@ -163,7 +163,7 @@ const ViewIndivisualCustomer = () => {
           </h2>
 
           <div className="flex items-center space-x-4">
-            <div className="flex-grow-0 flex-shrink-0 w-10/12 search-bar">
+            <div className="flex-grow-0 flex-shrink-0 w-8/12 search-bar">
               <input
                 type="text"
                 placeholder="Search by Indivisual  Customer Name"
@@ -172,7 +172,7 @@ const ViewIndivisualCustomer = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex-grow-0 flex-shrink-0 w-2/12">
+            <div className="flex-grow-0 flex-shrink-0 w-3/12">
               <button className="btn btn-primary w-full">
                 <Link
                   to="/viewcorporatecustomer"
@@ -382,6 +382,7 @@ const ViewIndivisualCustomer = () => {
                       <td>{customerRate.from}</td>
                       <td>{customerRate.to}</td>
                       <td>
+                      <div className="d-flex align-items-center gap-1">
                         <button
                           className="btn btn-info"
                           onClick={() => handleEdit(customerRate._id)}
@@ -394,6 +395,7 @@ const ViewIndivisualCustomer = () => {
                         >
                           <FaTrash />
                         </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

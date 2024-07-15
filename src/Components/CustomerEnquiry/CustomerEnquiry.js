@@ -113,7 +113,7 @@ const CustomerEnquiry = () => {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
      // Validate all fields are filled
   const {
     customername,
@@ -266,8 +266,6 @@ const CustomerEnquiry = () => {
             <h2 className="View-Corporate-Customer-Rate font-bold">
               Add Customer Enquiry
             </h2>
-            {successAlert && <Alert alert={successAlert} />}
-            {errorAlert && <Alert alert={errorAlert} />}
 
             <div className="form-group">
               <label htmlFor="customername" className="form-label">

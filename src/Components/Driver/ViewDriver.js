@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./ViewDriver.css"; // Make sure you have a CSS file for this component
-import { FaEdit, FaTrash, FaTimes } from "react-icons/fa"; // Import icons
+import "./ViewDriver.css";
+import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 
 const TableView = ({ drivers, handleEditDriver, handleDeleteDriver }) => (
   <table className="table">
@@ -48,6 +48,7 @@ const TableView = ({ drivers, handleEditDriver, handleDeleteDriver }) => (
 
 const ViewDriver = () => {
   const [drivers, setDrivers] = useState([]);
+  const [filteredDrivers, setFilteredDrivers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editedDriver, setEditedDriver] = useState({});
@@ -62,6 +63,7 @@ const ViewDriver = () => {
         }
         const data = await response.json();
         setDrivers(data);
+        setFilteredDrivers(data); // Initialize filteredDrivers with all drivers
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -155,10 +157,23 @@ const ViewDriver = () => {
     return emailRegex.test(email);
   };
 
+  // Filter drivers based on searchTerm
+  const filterDrivers = () => {
+    const filteredData = drivers.filter((driver) =>
+      driver.driver_Name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredDrivers(filteredData);
+  };
+
+  // useEffect to update filteredDrivers when searchTerm changes
+  useEffect(() => {
+    filterDrivers();
+  }, [searchTerm, drivers]);
+
   return (
     <>
-      <div className="driver-Add-container">
-        <div className="driver-main-container">
+      <div className="customer-Add-container">
+        <div className="viewcustomer-main-container">
           <h2 className="View-Corporate-Customer-Rate font-bold">
             View Drivers
           </h2>

@@ -127,7 +127,7 @@ const CustomerRate = () => {
       !formData.hours ||
       !formData.extra_hours
     ) {
-      alert("Please all fields required.");
+      alert("all fields required.");
       return;
     }
 
@@ -415,6 +415,7 @@ const CustomerRate = () => {
                     />
                   </div>
                 </div>
+                
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="to" className="form-label">

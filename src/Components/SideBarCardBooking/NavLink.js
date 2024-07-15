@@ -38,7 +38,7 @@ export const navigation = [
   ],
   [
     { name: "Master", link: "/", icon: <AiOutlineUserAdd /> },
-    { name: "Master", link: "/master" },
+    { name: "Add Master", link: "/master" },
     { name: "View Master", link: "/viewmaster" },
   ],
   [
@@ -55,7 +55,7 @@ export const navigation = [
     { name: "Rate", link: "/", icon: <MdPriceCheck /> },
     { name: "Corporate Customer Rate", link: "/corporatecustomer" },
     { name: "View Corporate Customer Rate", link: "/viewcorporatecustomer" },
-    { name: "View Vendor", link: "/vendorrate" },
+    { name: "Vendor Rate", link: "/vendorrate" },
     { name: "View Vendor Rate", link: "/viewvendorrate" },
   ],
   [

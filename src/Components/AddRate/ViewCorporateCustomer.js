@@ -158,8 +158,8 @@ const ViewCorporateCustomer = () => {
             View Corporate Customer Rate
           </h2>
 
-          <div className="flex items-center space-x-4 search-box-and-individual-customer-btn">
-            <div className="flex-grow-0 flex-shrink-0 w-10/12 search-bar">
+          <div className="flex items-center space-x-4">
+            <div className="flex-grow-0 flex-shrink-0 w-8/12 search-bar">
               <input
                 type="text"
                 placeholder="Search by Corporate Customer Name"
@@ -169,8 +169,8 @@ const ViewCorporateCustomer = () => {
               />
             </div>
             <div
-              className="flex-grow-0 flex-shrink-0 w-2/12 Indivisual-Customer-btn-cc--cc "
-              style={{ marginLeft: "0" }}
+              className="flex-grow-0 flex-shrink-0 w-3/12"
+              
             >
               <button className="btn btn-primary w-full">
                 <Link
@@ -381,6 +381,7 @@ const ViewCorporateCustomer = () => {
                       <td>{customerRate.from}</td>
                       <td>{customerRate.to}</td>
                       <td>
+                      <div className="d-flex align-items-center gap-1">
                         <button
                           className="btn btn-info"
                           onClick={() => handleEdit(customerRate._id)}
@@ -393,6 +394,7 @@ const ViewCorporateCustomer = () => {
                         >
                           <FaTrash />
                         </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
