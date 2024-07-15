@@ -35,45 +35,48 @@ router.get('/:id' , async(req, res) => {
 
 // POST ROUTE 
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const { driver_Name, driver_Mo1, address } = req.body;
-
-        if (!driver_Name) {
-            return res.status(400).json({ message: Driver.schema.paths.driver_Name.options.required[1] });
-        }
-        if (!address) {
-            return res.status(400).json({ message: Driver.schema.paths.address.options.required[1] });
-        }
-        if (!driver_Mo1) {
-            return res.status(400).json({ message: Driver.schema.paths.driver_Mo1.options.required[1] });
-        }
-
-        const addDriver = new Driver(req.body);
-        const saveDriver = await addDriver.save();
-        res.status(201).json({ message: "Driver Saved Successfully" });
+      const newDriver = new Driver(req.body);
+      const savedDriver = await newDriver.save();
+      res.status(201).json({ message: "Driver added successfully" });
     } catch (e) {
+      if (e.name === 'ValidationError') {
+        const errorMessages = Object.values(e.errors).map(err => err.message);
+        res.status(400).json({ message: errorMessages.join(', ') });
+      } else {
         console.error(e);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ message: "Internal Server Error" });
+      }
     }
-});
+  });
 
 
 // PATCH METHOD 
-router.patch('/:id' , async(req, res) => {
-
-    const AddVendersId = req.params.id
-    
-    try{
-        const UpdatedAddVenders = await Driver.findByIdAndUpdate(AddVendersId , req.body ,{
-            new : true
-        })
-        res.status(201).json({message : "Driver Successfully updated "})
-
-    }catch(e){
-        res.status(404).json({message : "Can not patch Driver"})
+router.patch('/:id', async (req, res) => {
+    const driverId = req.params.id;
+  
+    try {
+      const updatedDriver = await Driver.findByIdAndUpdate(driverId, req.body, {
+        new: true,
+        runValidators: true,
+      });
+  
+      if (!updatedDriver) {
+        return res.status(404).json({ message: "Driver Id not found" });
+      }
+  
+      res.status(200).json({ message: "Driver successfully updated", data: updatedDriver });
+    } catch (e) {
+      if (e.name === 'ValidationError') {
+        const errorMessages = Object.values(e.errors).map(err => err.message);
+        res.status(400).json({ message: errorMessages.join(', ') });
+      } else {
+        console.error(e);
+        res.status(500).json({ message: "Internal Server Error" });
+      }
     }
-})
+  });
 
 
 

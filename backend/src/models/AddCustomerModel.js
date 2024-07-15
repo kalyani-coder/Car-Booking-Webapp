@@ -22,7 +22,7 @@ const newAddCustomerSchema = new mongoose.Schema({
     type: String,
     required: [true, "Customer name is required"],
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return /^[a-zA-Z\s]+$/.test(v); // Only letters and spaces
       },
       message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
@@ -38,7 +38,7 @@ const newAddCustomerSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Customer mobile number is required"],
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return /^[0-9]{10}$/.test(v.toString()); // Exactly 10 digits
       },
       message: props => `${props.value} is not a valid mobile number! Only 10 digits are allowed.`
@@ -47,12 +47,12 @@ const newAddCustomerSchema = new mongoose.Schema({
   cus_email: {
     type: String,
     required: [true, "Email is required"],
-    match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?<!\.)$/, "Please enter a valid email address"]
+    match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in)$/, "Please enter a valid email address ending with .com or .in"]
   },
   address: {
     type: String,
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return v.length >= 20 || v.length === 0; // At least 20 characters or empty
       },
       message: props => `Address must be at least 20 characters long`
