@@ -48,11 +48,17 @@ import ViewMaster from "./Components/Master/ViewMaster";
 import ViewCorporateCustomer from "./Components/AddRate/ViewCorporateCustomer";
 import ViewIndivisualCustomer from "./Components/AddRate/ViewIndivisualCustomer";
 import PublicRoute from "./Components/ProtectedRoute/PublicRoute";
+import PageNotFound from "./Components/PageNotFound/PageNotFound";
+import ErrorLayout from "./Components/PageNotFound/ErrorLayout";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PublicRoute element={<Login />} restrictedPath="/home" />} />
+        <Route
+          path="/"
+          element={<PublicRoute element={<Login />} restrictedPath="/home" />}
+        />
         <Route path="/*" element={<AppLayout />}>
           <Route path="home" element={<ProtectedRoute element={<Home />} />} />
           <Route
@@ -221,6 +227,10 @@ function App() {
             path="viewindivisualcustomer"
             element={<ProtectedRoute element={<ViewIndivisualCustomer />} />}
           />
+        </Route>
+        {/* Fallback route for undefined paths */}
+        <Route path="*" element={<ErrorLayout />}>
+          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
