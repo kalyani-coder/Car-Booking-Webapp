@@ -370,8 +370,8 @@ const UpdateDuty = () => {
             {successAlert && <Alert alert={successAlert} />}
             {errorAlert && <Alert alert={errorAlert} />}
 
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="companyname" className="update-duty-form-label">
                   Company Name:
@@ -385,7 +385,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="gstno" className="update-duty-form-label">
                   GST No:
@@ -400,8 +400,8 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label
                   htmlFor="reportingaddress"
                   className="update-duty-form-label"
@@ -417,7 +417,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setReportingAddress(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="date" className="update-duty-form-label">
                   Date:
                 </label>
@@ -430,8 +430,8 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="name" className="update-duty-form-label">
                   Customer Name:
                 </label>
@@ -459,7 +459,7 @@ const UpdateDuty = () => {
                   )}
                 </select>
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="rate" className="update-duty-form-label">
                   Vehicle:
                 </label>
@@ -474,8 +474,8 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label
                   htmlFor="vehiclenumber"
                   className="update-duty-form-label"
@@ -491,7 +491,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setVehicleNumber(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="rate" className="update-duty-form-label">
                   Rate:
                 </label>
@@ -505,8 +505,8 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="from" className="update-duty-form-label">
                   From:
                 </label>
@@ -520,7 +520,7 @@ const UpdateDuty = () => {
                   value={selectedCustomer.pickup}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="To" className="update-duty-form-label">
                   To:
                 </label>
@@ -536,8 +536,8 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            {/* <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            {/* <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="title" className="update-duty-form-label">
                   Duty Type:
@@ -564,7 +564,7 @@ const UpdateDuty = () => {
                   </option>
                 </select>
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="amount1" className="update-duty-form-label">
                   Amount:
@@ -580,8 +580,8 @@ const UpdateDuty = () => {
                 />
               </div>
             </div> */}
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label
                   htmlFor="startingtime"
                   className="update-duty-form-label"
@@ -597,7 +597,7 @@ const UpdateDuty = () => {
                   value={selectedCustomer.time}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="closingtime" className="update-duty-form-label">
                   Closing Time:
                 </label>
@@ -613,8 +613,8 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="startingkm" className="update-duty-form-label">
                   Starting Kms:
                 </label>
@@ -627,7 +627,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setStartingKms(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="closingkm" className="update-duty-form-label">
                   Closing Kms:
@@ -643,8 +643,8 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="totalhour" className="update-duty-form-label">
                   Total Hours:
                 </label>
@@ -657,7 +657,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setHour(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="totalkm" className="update-duty-form-label">
                   Total Kms:
                 </label>
@@ -671,8 +671,8 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="extrahour" className="update-duty-form-label">
                   Extra Hour:
                 </label>
@@ -685,7 +685,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setExtraHour(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="totalamount" className="update-duty-form-label">
                   Extra Hours Amount:
                 </label>
@@ -700,8 +700,8 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="extrakm" className="update-duty-form-label">
                   Extra KMS:
@@ -715,7 +715,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setExtraKm(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="amount2" className="update-duty-form-label">
                   Extra KMS Amount:
                 </label>
@@ -730,8 +730,8 @@ const UpdateDuty = () => {
               </div>
             </div>
 
-            <div className="responsive-flex-column-required d-flex justify-between">
-              <div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between ">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="totalamount" className="update-duty-form-label">
                   Total Amount:
                 </label>
@@ -744,7 +744,7 @@ const UpdateDuty = () => {
                   onChange={(e) => setTotalAmount(e.target.value)}
                 />
               </div>
-              <div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label
                   htmlFor="advanceamount"
                   className="update-duty-form-label"

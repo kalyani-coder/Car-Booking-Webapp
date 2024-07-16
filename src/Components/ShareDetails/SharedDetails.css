@@ -1,7 +1,7 @@
 /* SharedDetails.css */
 
 .share-details-container {
-  width: 100%;
+  width: 67em;
   /* max-width: 800px; */
   display: flex;
   /* flex-wrap: wrap; */

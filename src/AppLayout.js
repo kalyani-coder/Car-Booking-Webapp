@@ -10,7 +10,9 @@ const AppLayout = () => {
     setIsSideNavbarOpen(!isSideNavbarOpen);
   };
 
-  const contentMargin = isSideNavbarOpen ? "lg:ml-80 md:ml-20" : "lg:ml-16 16";
+  const contentMargin = isSideNavbarOpen
+    ? "lg:ml-[22.5rem] md:ml-20"
+    : "lg:ml-16 16";
 
   return (
     <>

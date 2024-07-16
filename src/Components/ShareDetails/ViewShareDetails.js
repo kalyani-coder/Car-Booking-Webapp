@@ -280,7 +280,7 @@ const ViewShareDetails = () => {
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <div className="share-details-main-container h-[150vh]">
+        <div className="share-details-main-container">
           {error ? (
             <p>Error: {error}</p>
           ) : (

@@ -1,4 +1,5 @@
 .customer-main-container {
+  width: 65em;
 }
 
 @media (max-width: 768px) {
