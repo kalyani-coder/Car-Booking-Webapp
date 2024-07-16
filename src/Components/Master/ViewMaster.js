@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-
+import "./MasterCorporateCustomer.css";
 const ViewMaster = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -186,11 +186,11 @@ const ViewMaster = () => {
   return (
     <>
       <div className="customer-Add-container ">
-        <div className="customer-main-container h-[98vh] p-2 mt-4">
-          <h2 className="View-Corporate-Customer-Rate font-bold">
-            View Master
-          </h2>
-          <table className="w-[120vh] bg-white border-collapse">
+        <h2 className="View-Corporate-Customer-Rate font-bold pt-4">
+          View Master
+        </h2>
+        <div className="customer-main-container p-2 mt-4 width-set-for-view-master-page-contains-table">
+          <table className="bg-white border-collapse width-set-for-view-master-page-contains-table">
             <thead className="p-2 border-b-2 border-gray-300">
               <tr className="p-2">
                 <th className="p-2 border-b-2 border-gray-300">Sr. No.</th>

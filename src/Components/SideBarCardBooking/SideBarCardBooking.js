@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { DropdownIcon } from "./NavLink";
 import "./SideBarCardBooking.css";
+import carbookinglogo from "../../assects/images/shivpushpa_logo.png";
 // Component to render nested navigation items
 const DropdownMenu = ({
   subNavigation,
@@ -71,19 +72,28 @@ export const SideNavbar = ({
        duration-700 z-[1000] overflow-y-scroll hide-scrollbar responsvie-side-bar-section`}
         style={{ position: "fixed" }}
       >
-        <div className="py-2 flex gap-7 ugwuibduiisbd bg-slate-500">
-          <div className="text-white w-4">
-            <HiMenuAlt3
-              size={26}
-              className="cursor-pointer "
-              onClick={toggleSideNavbar}
+        <div className="py-2 flex gap-7 section-for-nav-link--collapsible-hamberger bg-slate-500">
+          {isSideNavbarOpen && (
+            <img
+              src={carbookinglogo} // Add your logo image URL here
+              alt="Logo"
+              className="logo-image-car-booking-main"
             />
+          )}
+          <div className="flex items-center justify-center">
+            <div className="text-white w-4">
+              <HiMenuAlt3
+                size={26}
+                className="cursor-pointer "
+                onClick={toggleSideNavbar}
+              />
+            </div>
+            <div
+              className={`whitespace-pre duration-300 ${
+                !isSideNavbarOpen && "opacity-0 translate-x-28 overflow-hidden"
+              }`}
+            ></div>
           </div>
-          <div
-            className={`whitespace-pre duration-300 ${
-              !isSideNavbarOpen && "opacity-0 translate-x-28 overflow-hidden"
-            }`}
-          ></div>
         </div>
         <div className="mt-4 flex flex-col gap-4 relative pl-4">
           {navigation.map((nav, i) => (

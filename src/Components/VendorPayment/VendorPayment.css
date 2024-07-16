@@ -38,7 +38,12 @@
   width: 63em;
   margin: auto;
 }
-
+.btn-flx-col-for-table-data-download-invoice-view-vendor-payment-section {
+  display: flex;
+  height: 5em;
+  align-items: center;
+  gap: 10px;
+}
 .main-container-div-for-vender-payment-section {
   display: flex;
   gap: 1em;
@@ -52,5 +57,12 @@
   }
   .view-vendor-payment-table-overflow-y-cc {
     overflow-y: scroll;
+  }
+  .btn-flx-col-for-table-data-download-invoice-view-vendor-payment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: auto;
   }
 }

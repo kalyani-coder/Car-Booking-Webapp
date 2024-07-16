@@ -117,16 +117,9 @@ const ViewCustomerRate = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container h-[98vh]">
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              marginBottom: "8px",
-            }}
-          >
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Customer List
           </h2>
-
           <div class="dropdown">
             <a
               class="btn btn-secondary dropdown-toggle"

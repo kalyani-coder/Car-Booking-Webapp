@@ -281,17 +281,17 @@ const ViewCustomerPayment = () => {
   return (
     <>
       <div className="customer-Add-container">
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+          View Customer Payment
+        </h2>
+        <input
+          type="search"
+          placeholder="Search By Customer Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full py-2 px-4 border rounded-lg shadow-md mb-4  Search-By-Customer-Name"
+        />
         <div className="customer-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
-            View Customer Payment
-          </h2>
-          <input
-            type="search"
-            placeholder="Search By Customer Name"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4  Search-By-Customer-Name"
-          />
           <table className="table">
             <thead>
               <tr>
@@ -301,7 +301,7 @@ const ViewCustomerPayment = () => {
                 <th>GST No</th>
                 <th>reporting_Address</th>
                 <th>Date</th>
-                <th></th>
+                <th>Download Invoice</th>
               </tr>
             </thead>
             <tbody>
@@ -314,12 +314,12 @@ const ViewCustomerPayment = () => {
                   <td>{customer.reporting_Address}</td>
                   <td>{customer.Date}</td>
 
-                  <td>
+                  <td className="btn-flx-col-for-table-data-download-invoice">
                     <Link
                       className="btn btn-primary ml-2"
                       to={`/ViewCustomerPayment/${customer._id}`}
                     >
-                    <i className="fas fa-eye"></i>
+                      <i className="fas fa-eye"></i>
                     </Link>
                     <button
                       className="btn btn-info"

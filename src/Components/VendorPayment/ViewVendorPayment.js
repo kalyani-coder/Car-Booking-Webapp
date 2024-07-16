@@ -5,7 +5,7 @@ import "jspdf-autotable";
 import { FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import headerlogo from "../../assects/images/shivpushpa_logo.png";
-
+import "./VendorPayment.css";
 const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -258,9 +258,9 @@ const ViewVendorPayment = () => {
                       <td>{vendor.payment}</td>
                       {/* <td>{vendor.amount}</td> */}
                       <td>{vendor.tds}</td>
-                      <td>
+                      <td className="btn-flx-col-for-table-data-download-invoice-view-vendor-payment-section">
                         <Link
-                          className="btn btn-primary btn-sm ml-2"
+                          className="btn btn-primary btn-sm "
                           to={`/ViewVendorPayment/${vendor._id}`}
                         >
                           <i className="fas fa-eye"></i>

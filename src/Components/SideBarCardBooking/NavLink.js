@@ -1,5 +1,5 @@
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { BiUserVoice } from "react-icons/bi";
+import { BiHome, BiUserVoice } from "react-icons/bi";
 import { MdDriveEta } from "react-icons/md";
 import { MdPriceCheck } from "react-icons/md";
 import { AiOutlineCheckCircle } from "react-icons/ai";
@@ -9,9 +9,9 @@ import { BsFillShareFill } from "react-icons/bs";
 import { CgDetailsMore } from "react-icons/cg";
 import { MdUpdate } from "react-icons/md";
 import { AiFillBank } from "react-icons/ai";
-import { FaFileInvoiceDollar } from "react-icons/fa";
+import { FaFileInvoiceDollar, FaRegUser } from "react-icons/fa";
 import { AiOutlineFilePdf } from "react-icons/ai";
-import { CiLogout } from "react-icons/ci";
+import { CiLogout, CiUser } from "react-icons/ci";
 
 export const DropdownIcon = (
   <svg
@@ -30,9 +30,9 @@ export const DropdownIcon = (
   </svg>
 );
 export const navigation = [
-  { name: "Home", link: "/home", icon: <AiOutlineUserAdd /> },
+  { name: "Home", link: "/home", icon: <BiHome /> },
   [
-    { name: "Customers", link: "/", icon: <AiOutlineUserAdd /> },
+    { name: "Customers", link: "/", icon: <FaRegUser /> },
     { name: "Add Customer", link: "/addcustomer" },
     { name: "View Customer", link: "/viewcustomer" },
   ],

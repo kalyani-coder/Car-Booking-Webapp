@@ -1,11 +1,15 @@
-.ugwuibduiisbd {
+.section-for-nav-link--collapsible-hamberger {
   position: sticky;
   top: 0;
-  /* background-color: red; */
+  height: 62px;
   padding: 0;
   width: 100%;
   z-index: 1;
-  justify-content: end;
+  justify-content: space-around;
+}
+.logo-image-car-booking-main {
+  width: 171px;
+  height: 47px;
 }
 
 @media (max-width: 1024px) {
