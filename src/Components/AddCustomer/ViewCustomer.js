@@ -126,7 +126,7 @@ const ViewCustomer = () => {
     }
   };
 
- 
+
   //validation
   const handleAlphaInputChange = (callback) => (event) => {
     const value = event.target.value;
@@ -179,6 +179,9 @@ const ViewCustomer = () => {
     setEditedCustomer(customer);
     setIsEditing(true);
   };
+
+
+
   const handleSave = async () => {
     try {
       const response = await fetch(
@@ -193,21 +196,23 @@ const ViewCustomer = () => {
       );
 
       if (response.ok) {
+        const updatedCustomer = await response.json();
         setCustomers((prevCustomers) =>
           prevCustomers.map((customer) =>
-            customer._id === editedCustomer._id ? editedCustomer : customer
+            customer._id === editedCustomer._id ? updatedCustomer.data : customer
           )
         );
         setFilteredCustomers((prevCustomers) =>
           prevCustomers.map((customer) =>
-            customer._id === editedCustomer._id ? editedCustomer : customer
+            customer._id === editedCustomer._id ? updatedCustomer.data : customer
           )
         );
         setIsEditing(false);
         alert("Customer data updated successfully");
       } else {
-        console.error("Error updating customer:", response.status);
-        alert("Error updating customer. Please try again.");
+        const errorData = await response.json();
+        // console.error("Message:", errorData.message);
+        alert(`Message: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Error updating customer:", error);
@@ -247,17 +252,14 @@ const ViewCustomer = () => {
       </div>
 
       {isEditing && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index ">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
           <div
             className="bg-white p-4 rounded shadow-lg main-div-for-modal-container-for-all-inputs-cc"
             style={{ overflowY: "auto" }}
           >
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Customer</h2>
-              <button
-                onClick={() => setIsEditing(false)}
-                className="close-icon"
-              >
+              <button onClick={() => setIsEditing(false)} className="close-icon">
                 <FaTimes />
               </button>
             </div>
@@ -266,100 +268,54 @@ const ViewCustomer = () => {
             <input
               type="text"
               value={editedCustomer.cus_name}
-              onChange={handleAlphaInputChange((value) =>
+              onChange={(e) =>
                 setEditedCustomer({
                   ...editedCustomer,
-                  cus_name: value,
+                  cus_name: e.target.value,
                 })
-              )}
-              className={`w-full p-2 mb-2 border ${
-                validationMessages.cus_name
-                  ? "border-red-500"
-                  : "border-gray-300"
-              } rounded`}
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
               placeholder="Customer Name"
-              pattern="[A-Za-z\s]+"
             />
-            {validationMessages.cus_name && (
-              <div className="text-red-500 mt-1">
-                {validationMessages.cus_name}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">GST No</h5>
             <input
               type="text"
               value={editedCustomer.gst_no}
-              onChange={handleGstInputChange}
-              maxLength="15"
-              className={`w-full p-2 mb-2 border ${
-                validationMessages.gst_no ? "border-red-500" : "border-gray-300"
-              } rounded`}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  gst_no: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.gst_no && (
-              <div className="text-red-500 mt-1">
-                {validationMessages.gst_no}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">Customer Mobile</h5>
             <input
               type="text"
               value={editedCustomer.cus_mobile}
-              onChange={handleNumericChange}
-              maxLength="10"
-              className={`w-full p-2 mb-2 border ${
-                validationMessages.cus_mobile
-                  ? "border-red-500"
-                  : "border-gray-300"
-              } rounded`}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_mobile: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.cus_mobile && (
-              <div className="text-red-500 mt-1">
-                {validationMessages.cus_mobile}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">Customer Email</h5>
-            <h5 className="fw-bold my-2">Email Id</h5>
             <input
               type="text"
               value={editedCustomer.cus_email}
-              onChange={(e) => {
-                const { value } = e.target;
+              onChange={(e) =>
                 setEditedCustomer({
                   ...editedCustomer,
-                  cus_email: value,
-                });
-
-                // Validate email format
-                if (
-                  !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(
-                    value
-                  )
-                ) {
-                  setValidationMessages((prevMessages) => ({
-                    ...prevMessages,
-                    cus_email: "Please enter a valid email address",
-                  }));
-                } else {
-                  setValidationMessages((prevMessages) => ({
-                    ...prevMessages,
-                    cus_email: "",
-                  }));
-                }
-              }}
-              className={`w-full p-2 mb-2 border ${
-                validationMessages.cus_email
-                  ? "border-red-500"
-                  : "border-gray-300"
-              } rounded`}
+                  cus_email: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
             />
-            {validationMessages.cus_email && (
-              <div className="text-red-500 mt-1">
-                {validationMessages.cus_email}
-              </div>
-            )}
 
             <h5 className="fw-bold my-2">Address</h5>
             <textarea
@@ -389,6 +345,7 @@ const ViewCustomer = () => {
           </div>
         </div>
       )}
+
     </>
   );
 };
