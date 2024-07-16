@@ -96,19 +96,55 @@ router.post("/", async (req, res) => {
 });
 
 // PATCH METHOD
+
+
+const allowedFields = [
+  "customerId",
+  "Cus_Type",
+  "Cus_name",
+  "company_name",
+  "gst_no",
+  "Cus_Mobile",
+  "Cus_Email",
+  "address",
+  "type_of_vehicle",
+  "rate_per_km",
+  "duty_type",
+  "rate",
+  "km",
+  "extra_km",
+  "hours",
+  "extra_hours",
+  "date",
+  "from",
+  "to"
+];
+
+// Function to filter request body
+function filterFields(data, allowedFields) {
+  return Object.keys(data).reduce((filtered, key) => {
+    if (allowedFields.includes(key)) {
+      filtered[key] = data[key];
+    }
+    return filtered;
+  }, {});
+}
+
 router.patch("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
+  const filteredBody = filterFields(req.body, allowedFields);
 
   try {
     const UpdatedAddVenders = await CorporateCustomer.findByIdAndUpdate(
       AddVendersId,
-      req.body,
+      filteredBody,
       {
         new: true,
+        runValidators: true  // Ensure validators are run on update
       }
     );
     res.status(201).json({ message: "Corporate Customer Successfully updated " });
-  }  catch (e) {
+  } catch (e) {
     if (e.name === 'ValidationError') {
       const errorMessages = Object.values(e.errors).map(err => err.message);
       res.status(400).json({ message: errorMessages.join(', ') });
@@ -117,7 +153,6 @@ router.patch("/:id", async (req, res) => {
     }
   }
 });
-
 // DELETE METHOD
 router.delete("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
