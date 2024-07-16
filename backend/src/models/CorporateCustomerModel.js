@@ -18,7 +18,7 @@ const CorporateCustomerSchema = new mongoose.Schema({
         required: [true, "Customer name is required"],
         validate: {
           validator: function (v) {
-            return /^[a-zA-Z\s]+$/.test(v); // Only letters and spaces
+            return /^[a-zA-Z\s]+$/.test(v);
           },
           message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
         }
