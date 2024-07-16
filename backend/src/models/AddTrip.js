@@ -8,10 +8,40 @@ const PersonSchema = new mongoose.Schema({
 
 const AddTripSchema = new mongoose.Schema({
     customerId: String,
-    customername: String,
-    mobileno: Number,
-    email: String,
-    address: String,
+    customername: {
+        type: String,
+        required: [true, "Customer name is required"],
+        validate: {
+          validator: function (v) {
+            return /^[a-zA-Z\s]+$/.test(v); // Only letters and spaces
+          },
+          message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
+        }
+      },
+    mobileno: {
+        type: Number,
+        required: [true, "Customer mobile number is required"],
+        validate: {
+          validator: function (v) {
+            return /^[0-9]{10}$/.test(v.toString()); // Exactly 10 digits
+          },
+          message: props => `${props.value} is not a valid mobile number! Only 10 digits are allowed.`
+        }
+      },
+    email:{
+        type: String,
+        required: [true, "Email is required"],
+        match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in)$/, "Please enter a valid email address ending with .com or .in"]
+      },
+    address: {
+        type: String,
+        validate: {
+          validator: function (v) {
+            return v.length >= 20 || v.length === 0; // At least 20 characters or empty
+          },
+          message: props => `Address must be at least 20 characters long`
+        }
+      },
     triptype: String,
     subtype: String,
     pickup: String,
