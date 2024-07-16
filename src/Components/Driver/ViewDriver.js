@@ -85,6 +85,8 @@ const ViewDriver = () => {
         }
       );
 
+      const responseData = await response.json();
+
       if (response.ok) {
         setDrivers((prevDrivers) =>
           prevDrivers.map((driver) =>
@@ -92,10 +94,10 @@ const ViewDriver = () => {
           )
         );
         setIsEditing(false);
-        alert("Driver information updated successfully");
+        alert(responseData.message || "Driver updated successfully");
       } else {
-        console.error("Error updating driver:", response.status);
-        alert("Error updating driver. Please try again.");
+        console.error("Error updating driver:", response.status, responseData.message);
+        alert(`Error updating driver: ${responseData.message}`);
       }
     } catch (error) {
       console.error("Error updating driver:", error);
@@ -217,18 +219,8 @@ const ViewDriver = () => {
                     driver_Name: value,
                   })
                 )}
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.driver_Name
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.driver_Name && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.driver_Name}
-                </div>
-              )}
-
               <h5 className="fw-bold">Email</h5>
               <input
                 type="text"
@@ -239,32 +231,9 @@ const ViewDriver = () => {
                     ...editedDriver,
                     driver_Email: value,
                   });
-
-                  // Validate email format
-                  if (!validateEmail(value)) {
-                    setValidationMessages((prevMessages) => ({
-                      ...prevMessages,
-                      driver_Email: "Please enter a valid email address",
-                    }));
-                  } else {
-                    setValidationMessages((prevMessages) => ({
-                      ...prevMessages,
-                      driver_Email: "",
-                    }));
-                  }
                 }}
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.driver_Email
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.driver_Email && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.driver_Email}
-                </div>
-              )}
-
               <h5 className="fw-bold">Address</h5>
               <textarea
                 value={editedDriver.address}
@@ -289,18 +258,8 @@ const ViewDriver = () => {
                   })
                 )}
                 maxLength="10"
-                className={`w-full p-2 mb-2 border ${
-                  validationMessages.driver_Mo1
-                    ? "border-red-500"
-                    : "border-gray-300"
-                } rounded`}
+                className={`w-full p-2 mb-2 border`}
               />
-              {validationMessages.driver_Mo1 && (
-                <div className="text-red-500 mt-1">
-                  {validationMessages.driver_Mo1}
-                </div>
-              )}
-
               <h5 className="fw-bold">Alternate Mobile No</h5>
               <input
                 type="text"
