@@ -35,12 +35,6 @@ const AddTripSchema = new mongoose.Schema({
       },
     address: {
         type: String,
-        validate: {
-          validator: function (v) {
-            return v.length >= 20 || v.length === 0; // At least 20 characters or empty
-          },
-          message: props => `Address must be at least 20 characters long`
-        }
       },
     triptype: String,
     subtype: String,

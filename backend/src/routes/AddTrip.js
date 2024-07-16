@@ -17,8 +17,6 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        // console.log(req.body);
-
         // Find the highest trip_duty_number in the database
         const latestTrip = await AddTrip.findOne().sort({ trip_duty_number: -1 }).exec();
         let newTripDutyNumber = 1; // Default value if no trips exist yet
@@ -41,13 +39,15 @@ router.post('/', async (req, res) => {
     } catch (e) {
         if (e.name === 'ValidationError') {
             const errorMessages = Object.values(e.errors).map(err => err.message);
+            console.error("Validation error:", errorMessages.join(', '));
             res.status(400).json({ message: errorMessages.join(', ') });
         } else {
-            console.error(e);
+            console.error("Internal Server Error:", e);
             res.status(500).json({ message: "Internal Server Error" });
         }
     }
 });
+
 
 
 router.patch("/:id", async (req, res) => {

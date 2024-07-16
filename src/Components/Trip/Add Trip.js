@@ -259,54 +259,58 @@ const AddTrip = () => {
     }
   };
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!selectedCustomer || !selectedCustomer._id) {
-      alert("Please select a customer before adding a trip.", "danger");
-      return;
+        alert("Please select a customer before adding a trip.");
+        return;
     }
 
     // Validate mobile numbers for each person
     for (let i = 1; i <= numberOfPeople; i++) {
-      const mobileNumber = formData[`Mobile_Number_${i}`];
-      if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
-        alert(`Mobile number for Person ${i} must be 10 digits.`, "danger");
-        return;
-      }
+        const mobileNumber = formData[`Mobile_Number_${i}`];
+        if (mobileNumber && !/^\d{10}$/.test(mobileNumber)) {
+            window.alert(`Mobile number for Person ${i} must be 10 digits.`);
+            return;
+        }
     }
 
     const dataWithCustomerId = {
-      ...formData,
-      customerId: selectedCustomer._id,
+        ...formData,
+        customerId: selectedCustomer._id,
     };
 
     try {
-      const response = await fetch("http://localhost:8787/api/add-trip", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataWithCustomerId),
-      });
+        const response = await fetch("http://localhost:8787/api/add-trip", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dataWithCustomerId),
+        });
 
-      if (response.ok) {
-        alert("Add trip successfully!");
-        // Save Data in localStorage
-        localStorage.setItem(
-          "submittedData",
-          JSON.stringify(dataWithCustomerId)
-        );
-        setFormData(initialFormData);
-        setIsSubmitted(true); // Set form submission state to true
-      } else {
-        alert("Failed to add data!");
-      }
+        const result = await response.json();
+        console.log("Response status:", response.status);
+        console.log("Response data:", result);
+
+        if (response.ok) {
+          window.alert("Add trip successfully!");
+            // Save Data in localStorage
+            localStorage.setItem("submittedData", JSON.stringify(dataWithCustomerId));
+            setFormData(initialFormData);
+            setIsSubmitted(true); // Set form submission state to true
+        } else {
+            console.error("Failed to add data:", result.message);
+            window.alert(`Failed to add data: ${result.message}`);
+        }
     } catch (error) {
-      alert("An error occurred while adding data!", "danger");
-      console.error("Error:", error);
+      window.alert("An error occurred while adding data!");
+        console.error("Error:", error);
     }
-  };
+};
+
 
   // Function to handle sending email
   const handleSendEmail = async () => {
@@ -423,7 +427,7 @@ const AddTrip = () => {
       <div className="add-trip-container">
         <div className="trip-main-container relative mt-4">
           <h2 className="View-Corporate-Customer-Rate font-bold">Add Trip</h2>
-
+         
           {successAlert && <Alert alert={successAlert} />}
           {errorAlert && <Alert alert={errorAlert} />}
 
@@ -543,8 +547,8 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <div>
-              <div className="py-4">
+            <div className="flex justify-center">
+              <div className="py-4 ">
                 {renderRows()}
                 {numberOfPeople < 6 && (
                   <button className="trip-btn-submit" onClick={handleAddPerson}>
@@ -715,7 +719,7 @@ const AddTrip = () => {
                 </option>
               </select>
             </div>
-            <div className="d-flex gap-3 mt-3 pick-up-location-date-flex-section">
+            <div className="d-flex gap-3 mt-3 pick-up-location-date-flex-section justify-center">
               <button
                 type="button"
                 className="trip-btn-submit"
