@@ -47,7 +47,7 @@ import CorporateInvoiceMonthly from "./Components/CustomerInvoice/CorporateInvoi
 import ViewMaster from "./Components/Master/ViewMaster";
 import ViewCorporateCustomer from "./Components/AddRate/ViewCorporateCustomer";
 import ViewIndivisualCustomer from "./Components/AddRate/ViewIndivisualCustomer";
-import PublicRoute from "./Components/ProtectedRoute/PublicRoute"
+import PublicRoute from "./Components/ProtectedRoute/PublicRoute";
 function App() {
   return (
     <BrowserRouter>
