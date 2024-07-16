@@ -52,8 +52,8 @@ body {
 }
 
 /* Form input and select styles */
-.form-control-cust-inq-input-corp-invoice-monthly {
-  width: 80%;
+.form-control-cust-inq-input-corp-invoice-monthly-cc {
+  width: 100%;
   height: 43px;
   padding: 10px;
   border: 1px solid #ccc;
