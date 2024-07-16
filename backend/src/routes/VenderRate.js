@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
   try {
     const AddVenders = await newRateSchemaVender.findById(AddVendersId);
     if (!AddVenders) {
-      return res.status(404).json({ message: "venders Not found" });
+      return res.status(404).json({ message: "venders Rate Not found" });
     }
     res.json(AddVenders);
   } catch (e) {
@@ -50,7 +50,7 @@ router.patch("/:id", async (req, res) => {
         new: true,
       }
     );
-    res.status(201).json({ message: "venders Successfully updated " });
+    res.status(201).json({ message: "venders Rate Successfully updated " });
   } catch (e) {
     res.status(404).json({ message: "Can not patch venders" });
   }
@@ -64,7 +64,7 @@ router.delete("/:id", async (req, res) => {
     const deletedCustomeEnquiry = await newRateSchemaVender.findByIdAndDelete(
       AddVendersId
     );
-    res.status(201).json({ message: "venders Successfully Deleted " });
+    res.status(201).json({ message: "venders Rate Successfully Deleted " });
   } catch (e) {
     res.status(404).json({ message: "Can not found", e });
   }

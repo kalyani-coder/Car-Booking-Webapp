@@ -23,7 +23,7 @@ router.get('/:id' , async(req, res) => {
 
             const AddVenders = await CorporateCustomer.findById(AddVendersId)
             if(!AddVenders){
-                return res.status(404).json({message : "venders Not found"})
+                return res.status(404).json({message : "Indivisual Customer Not found"})
             }
             res.json(AddVenders)
 
@@ -39,7 +39,7 @@ router.post('/' , async(req, res) => {
     try{
         const AddVenders = new CorporateCustomer(req.body)
         await AddVenders.save()
-        res.status(201).json({message : "Data post Successfully"})
+        res.status(201).json({message : "Indivisual Customer Added Successfully"})
 
     }catch(e){
         res.status(404).json({message : "Can not post venders"})
@@ -55,7 +55,7 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedAddVenders = await CorporateCustomer.findByIdAndUpdate(AddVendersId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "venders Successfully updated "})
+        res.status(201).json({message : "Indivisual Customer Successfully updated "})
 
     }catch(e){
         res.status(404).json({message : "Can not patch venders"})
@@ -69,7 +69,7 @@ router.delete('/:id' , async(req, res) => {
 
     try{
         const deletedCustomeEnquiry = await CorporateCustomer.findByIdAndDelete(AddVendersId)
-        res.status(201).json({message : "venders Successfully Deleted "})
+        res.status(201).json({message : "Indivisual Customer Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})
     }

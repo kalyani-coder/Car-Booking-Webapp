@@ -23,12 +23,12 @@ router.get('/:id' , async(req, res) => {
 
             const shareDetails = await newShareDetailsSchema.findById(shareDetailsId)
             if(!shareDetails){
-                return res.status(404).json({message : "Customer Not found"})
+                return res.status(404).json({message : "Details Not found"})
             }
             res.json(shareDetails)
 
         }catch(e){
-            res.status(404).json({message : "Customer Enquiry Not Found"})
+            res.status(404).json({message : "Details Not Found"})
         }
     
 })
@@ -55,7 +55,7 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedshareDetails = await newShareDetailsSchema.findByIdAndUpdate(shareDetailsId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "Customer Enquiry Successfully updated "})
+        res.status(201).json({message : "Details Successfully updated "})
 
     }catch(e){
         res.status(404).json({message : "Can not patch Customer enquiry"})
@@ -69,7 +69,7 @@ router.delete('/:id' , async(req, res) => {
 
     try{
         const deletedCustomeEnquiry = await newShareDetailsSchema.findByIdAndDelete(shareDetailsId)
-        res.status(201).json({message : " Customer Enquiry Successfully Deleted "})
+        res.status(201).json({message : " Details Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})
     }

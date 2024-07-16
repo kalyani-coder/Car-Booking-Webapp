@@ -10,7 +10,7 @@ router.get('/' , async(req , res) => {
         res.status(201).json(AddVenders)
 
     }catch(e){
-        res.status(404).json({message : "Can not get venders"})
+        res.status(404).json({message : "Can not get Driver"})
     }
 })
 
@@ -28,7 +28,7 @@ router.get('/:id' , async(req, res) => {
             res.json(AddVenders)
 
         }catch(e){
-            res.status(404).json({message : "venders Not Found"})
+            res.status(404).json({message : "Driver Not Found"})
         }
     
 })

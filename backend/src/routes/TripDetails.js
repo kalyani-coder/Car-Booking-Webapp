@@ -52,12 +52,12 @@ router.get('/:id' , async(req, res) => {
 
             const tripDetails = await newTripDetailsSchema.findById(tripDetailsId)
             if(!tripDetails){
-                return res.status(404).json({message : "Customer Not found"})
+                return res.status(404).json({message : "Trip Details Not found"})
             }
             res.json(tripDetails)
 
         }catch(e){
-            res.status(404).json({message : "Customer Enquiry Not Found"})
+            res.status(404).json({message : "Trip Details Not Found"})
         }
     
 })
@@ -84,7 +84,7 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedtripDetails = await newTripDetailsSchema.findByIdAndUpdate(tripDetailsId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "post trip details successfully "})
+        res.status(201).json({message : " Trip details successfully Added"})
 
     }catch(e){
         res.status(404).json({message : "Can not patch trip details"})
@@ -98,7 +98,7 @@ router.delete('/:id' , async(req, res) => {
 
     try{
         const deletedCustomeEnquiry = await newTripDetailsSchema.findByIdAndDelete(tripDetailsId)
-        res.status(201).json({message : " Customer Enquiry Successfully Deleted "})
+        res.status(201).json({message : " Trip details Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})
     }

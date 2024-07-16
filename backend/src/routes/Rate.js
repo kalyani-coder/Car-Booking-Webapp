@@ -23,12 +23,12 @@ router.get('/:id' , async(req, res) => {
 
             const rateSchema = await newRateSchema.findById(rateSchemaId)
             if(!rateSchema){
-                return res.status(404).json({message : "venders Not found"})
+                return res.status(404).json({message : "Rate Not found"})
             }
             res.json(rateSchema)
 
         }catch(e){
-            res.status(404).json({message : "venders Not Found"})
+            res.status(404).json({message : "Rate Not Found"})
         }
     
 })
@@ -38,7 +38,7 @@ router.post('/' , async(req, res) => {
     try{
         const rate = new newRateSchema(req.body)
         await rate.save()
-        res.status(201).json({message : "Data post Success"})
+        res.status(201).json({message : "Rate Successfully Added"})
     }catch(e){
         res.status(404).json({message : "Internal server error "})
     }
@@ -53,7 +53,7 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedrateSchema = await newRateSchema.findByIdAndUpdate(rateSchemaId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "venders Successfully updated "})
+        res.status(201).json({message : "Rate Successfully updated "})
 
     }catch(e){
         res.status(404).json({message : "Can not patch venders"})
@@ -67,7 +67,7 @@ router.delete('/:id' , async(req, res) => {
 
     try{
         const deletedCustomeEnquiry = await newRateSchema.findByIdAndDelete(rateSchemaId)
-        res.status(201).json({message : "venders Successfully Deleted "})
+        res.status(201).json({message : "Rate Successfully Deleted "})
     }catch(e){
         res.status(404).json({message : "Can not found" , e})
     }

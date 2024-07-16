@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     const Venderpayment = await NewVenderpayment.find();
     res.status(201).json(Venderpayment);
   } catch (e) {
-    res.status(404).json({ message: "Can not get customer" });
+    res.status(404).json({ message: "Can not get Vendor Payment" });
   }
 });
 
@@ -19,11 +19,11 @@ router.get("/:id", async (req, res) => {
   try {
     const Venderpayment = await NewVenderpayment.findById(VenderpaymentId);
     if (!Venderpayment) {
-      return res.status(404).json({ message: "Customer Not found" });
+      return res.status(404).json({ message: "Vendor Payment Not found" });
     }
     res.json(Venderpayment);
   } catch (e) {
-    res.status(404).json({ message: "Customer Enquiry Not Found" });
+    res.status(404).json({ message: "Vendor Payment Not Found" });
   }
 });
 
@@ -48,9 +48,9 @@ router.post("/", async (req, res) => {
   try {
     const Venderpayment = new NewVenderpayment(req.body);
     const newVenderpayment = await Venderpayment.save();
-    res.status(201).json({ message: "Data post Successfully" });
+    res.status(201).json({ message: "Vendor Payment Successfully Added" });
   } catch (e) {
-    res.status(404).json({ message: "Can not post customer enquiry" });
+    res.status(404).json({ message: "Can not post Vendor Payment" });
   }
 });
 
@@ -73,9 +73,9 @@ router.patch("/:id", async (req, res) => {
     if (!UpdatedVenderpayment) {
       return res.status(400).json({ message: "failed to update" });
     }
-    res.status(201).json({ message: "Customer Enquiry Successfully updated " });
+    res.status(201).json({ message: "Vendor Payment Successfully updated " });
   } catch (e) {
-    res.status(404).json({ message: "Can not patch Customer enquiry" });
+    res.status(404).json({ message: "Can not patch Vendor Payment" });
   }
 });
 
@@ -178,44 +178,5 @@ router.get("/vender/:vender_id/month/:month", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
-// Get By VendorId and VehicleType
-// router.get('/vendor/:vendorId/vehicle/:vehicleType', async (req, res) => {
-//   try {
-//     const { vendorId, vehicleType } = req.params;
-
-//     // Normalize vehicleType to handle case sensitivity and encoded spaces
-//     const normalizedVehicleType = decodeURIComponent(vehicleType).toLowerCase();
-
-//     const data = await NewVenderpayment.find({
-//       vender_id: vendorId,
-//       vehicle_type: { $regex: new RegExp(normalizedVehicleType, 'i') } // Case insensitive regex match
-//     });
-
-//     if (data.length === 0) {
-//       return res.status(404).json({ message: 'No data found for the specified vendor ID and vehicle type' });
-//     }
-
-//     res.status(200).json(data);
-//   } catch (e) {
-//     console.error('Error:', e);
-//     res.status(500).json({ message: 'Internal server error', error: e.message });
-//   }
-// });
-
-// router.get("/vendor/:vendorId/date/:getByDate" , async(req, res) => {
-//   try{
-
-//     const {vendorId, getByDate} = req.params
-//     const data = await NewVenderpayment.find({vender_id : vendorId, current_Date : getByDate})
-
-//     if(data.length === 0){
-//       return res.status(404).json({message : "Data not fetch by vendor id and date"})
-//     }
-//     res.status(201).json(data)
-//   }catch(e){
-//     res.status(500).json({message : "Internal server error"})
-//   }
-// })
 
 module.exports = router;

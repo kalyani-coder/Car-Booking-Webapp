@@ -60,7 +60,7 @@ router.delete('/:id', async (req, res) => {
         if (!deletedTrip) {
             return res.status(404).json({ message: 'Document not found' });
         }
-        res.status(200).json({ message: 'Document deleted successfully' });
+        res.status(200).json({ message: 'Trip deleted successfully' });
     } catch (error) {
         res.status(500).json(error);
     }

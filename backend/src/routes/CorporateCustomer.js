@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
     const AddVenders = await CorporateCustomer.find();
     res.status(201).json(AddVenders);
   } catch (e) {
-    res.status(404).json({ message: "Can not get venders" });
+    res.status(404).json({ message: "Can not get Corporate Customer" });
   }
 });
 
@@ -76,11 +76,11 @@ router.get("/:id", async (req, res) => {
   try {
     const AddVenders = await CorporateCustomer.findById(AddVendersId);
     if (!AddVenders) {
-      return res.status(404).json({ message: "venders Not found" });
+      return res.status(404).json({ message: "Corporate Customer Not found" });
     }
     res.json(AddVenders);
   } catch (e) {
-    res.status(404).json({ message: "venders Not Found" });
+    res.status(404).json({ message: "Corporate Customer Not Found" });
   }
 });
 
@@ -89,7 +89,7 @@ router.post("/", async (req, res) => {
   try {
     const AddVenders = new CorporateCustomer(req.body);
     await AddVenders.save();
-    res.status(201).json({ message: "Data post Successfully" });
+    res.status(201).json({ message: "Corporate Customer Added Successfully" });
   } catch (e) {
     res.status(404).json({ message: "Can not post venders" });
   }
@@ -107,7 +107,7 @@ router.patch("/:id", async (req, res) => {
         new: true,
       }
     );
-    res.status(201).json({ message: "venders Successfully updated " });
+    res.status(201).json({ message: "Corporate Customer Successfully updated " });
   }  catch (e) {
     if (e.name === 'ValidationError') {
       const errorMessages = Object.values(e.errors).map(err => err.message);
@@ -126,7 +126,7 @@ router.delete("/:id", async (req, res) => {
     const deletedCustomeEnquiry = await CorporateCustomer.findByIdAndDelete(
       AddVendersId
     );
-    res.status(201).json({ message: "venders Successfully Deleted " });
+    res.status(201).json({ message: "Corporate Customer Successfully Deleted " });
   } catch (e) {
     res.status(404).json({ message: "Can not found", e });
   }
