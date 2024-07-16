@@ -83,7 +83,9 @@ const ViewIndivisualCustomer = () => {
           body: JSON.stringify(editedItem),
         }
       );
-
+  
+      const responseData = await response.json();
+  
       if (response.ok) {
         setCustomerRates((prevRates) =>
           prevRates.map((customerRate) =>
@@ -91,20 +93,21 @@ const ViewIndivisualCustomer = () => {
           )
         );
         setIsEditing(false);
-
+  
         // Remove the edited item from localStorage
         localStorage.removeItem("editedItem");
-        alert("Indivisual Cutomer rate updated successfully");
+        alert(responseData.message || "Individual Customer rate updated successfully");
       } else {
-        console.error("Error updating vendor rate:", response.status);
-        alert("Error updating vendor rate. Please try again.");
+        console.error("Error updating individual customer rate:", response.status);
+        alert(responseData.message || "Error updating individual customer rate. Please try again.");
       }
     } catch (error) {
-      console.error("Error updating vendor rate:", error);
-      setError("Error updating vendor rate: " + error.message);
-      alert("Error updating vendor rate. Please try again.");
+      console.error("Error updating individual customer rate:", error);
+      setError("Error updating individual customer rate: " + error.message);
+      alert("Error updating individual customer rate. Please try again.");
     }
   };
+  
 
   const handleCancelEdit = () => {
     setEditedItem(null);
@@ -151,7 +154,7 @@ const ViewIndivisualCustomer = () => {
   return (
     <>
       <div className="customer-Add-container">
-        <div className="customer-main-container h-[98vh]">
+        <div className="customer-main-container">
           <h2
             style={{
               fontSize: "2rem",

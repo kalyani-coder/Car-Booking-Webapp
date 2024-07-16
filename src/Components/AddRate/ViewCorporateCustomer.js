@@ -4,6 +4,7 @@ import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import "./ViewCustomerRate.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import IndivisualCustomers from './../ViewCustomers/IndivisualCustomers';
 
 const ViewCorporateCustomer = () => {
   const [customerRates, setCustomerRates] = useState([]);
@@ -85,7 +86,9 @@ const ViewCorporateCustomer = () => {
           body: JSON.stringify(editedItem),
         }
       );
-
+  
+      const responseData = await response.json();
+  
       if (response.ok) {
         setCustomerRates((prevRates) =>
           prevRates.map((customerRate) =>
@@ -93,13 +96,13 @@ const ViewCorporateCustomer = () => {
           )
         );
         setIsEditing(false);
-
+  
         // Remove the edited item from localStorage
         localStorage.removeItem("editedItem");
-        alert("Corporate Cutomer rate updated successfully");
+        alert(responseData.message || "Corporate Customer rate updated successfully");
       } else {
         console.error("Error updating vendor rate:", response.status);
-        alert("Error updating vendor rate. Please try again.");
+        alert(responseData.message || "Error updating vendor rate. Please try again.");
       }
     } catch (error) {
       console.error("Error updating vendor rate:", error);
@@ -107,6 +110,7 @@ const ViewCorporateCustomer = () => {
       alert("Error updating vendor rate. Please try again.");
     }
   };
+  
 
   const handleCancelEdit = () => {
     setEditedItem(null);
@@ -153,25 +157,22 @@ const ViewCorporateCustomer = () => {
   return (
     <>
       <div className="customer-Add-container">
-        <div className="customer-main-container h-[98vh]">
+        <div className="customer-main-container">
           <h2 className="View-Corporate-Customer-Rate font-bold">
             View Corporate Customer Rate
           </h2>
 
           <div className="flex items-center space-x-4">
             <div className="flex-grow-0 flex-shrink-0 w-8/12 search-bar">
-              <input
+            <input
                 type="text"
-                placeholder="Search by Corporate Customer Name"
-                className="w-full p-2 rounded border Search-by-Corporate-Customer-Name"
+                placeholder="Search by  Customer Name"
+                className="w-full p-2 rounded border"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div
-              className="flex-grow-0 flex-shrink-0 w-3/12"
-              
-            >
+            <div className="flex-grow-0 flex-shrink-0 w-3/12">
               <button className="btn btn-primary w-full">
                 <Link
                   to="/viewindivisualcustomer"

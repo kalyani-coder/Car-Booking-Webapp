@@ -71,6 +71,16 @@ const ViewDriver = () => {
 
     fetchDrivers();
   }, []);
+  useEffect(() => {
+    if (searchTerm === "") {
+      setFilteredDrivers(drivers);
+    } else {
+      const filteredData = drivers.filter((driver) =>
+        driver.driver_Name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredDrivers(filteredData);
+    }
+  }, [searchTerm, drivers]);
 
   const handleSave = async () => {
     try {
@@ -159,19 +169,7 @@ const ViewDriver = () => {
     return emailRegex.test(email);
   };
 
-  // Filter drivers based on searchTerm
-  const filterDrivers = () => {
-    const filteredData = drivers.filter((driver) =>
-      driver.driver_Name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredDrivers(filteredData);
-  };
-
-  // useEffect to update filteredDrivers when searchTerm changes
-  useEffect(() => {
-    filterDrivers();
-  }, [searchTerm, drivers]);
-
+  
   return (
     <>
       <div className="customer-Add-container">
@@ -182,9 +180,9 @@ const ViewDriver = () => {
           <input
             type="search"
             placeholder="Search By Driver Name"
+            className="w-full p-2 rounded border"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
           />
           <div className="table-responsive">
             <TableView

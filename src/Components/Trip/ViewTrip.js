@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-
+import axios from "axios"
 
 const ViewTrip = () => {
   const [trips, setTrips] = useState([]);
@@ -66,36 +66,31 @@ const ViewTrip = () => {
   };
 
   const handleEdit = (trip) => {
-    setEditedTrip({ trip }); 
-    setIsEditing(true); 
+    setEditedTrip({ ...trip });
+    setIsEditing(true);
   };
-
-  const handleSaveEdit = async () => {
+  const handleSaveEdit = async (tripId, updatedTripData) => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-trip/${editedTrip._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(editedTrip),
-      });
-
-      if (response.ok) {
-        setTrips((prevTrips) => prevTrips.map((trip) => (trip._id === editedTrip._id ? editedTrip : trip)));
-        setIsEditing(false);
-        setSuccessMessage("Trip updated successfully.");
-        setErrorMessage("");
-      } else {
-        console.error("Error updating trip:", response.status);
-        setSuccessMessage("");
-        setErrorMessage("Error updating trip. Please try again.");
+      const response = await axios.patch(`http://localhost:8787/api/add-trip/${tripId}`, updatedTripData);
+  
+      // Check for successful response
+      if (response.status === 200) {
+        console.log('Trip successfully updated', response.data);
+        alert('Trip successfully updated');
       }
     } catch (error) {
-      console.error("Error updating trip:", error);
-      setSuccessMessage("");
-      setErrorMessage("Error updating trip. Please try again.");
+      if (error.response && error.response.status === 400) {
+        // Handle validation errors
+        console.error('Validation Error:', error.response.data.message);
+        alert('Validation Error: ' + error.response.data.message);
+      } else {
+        // Handle other errors
+        console.error('Error:', error.message);
+        alert('An error occurred while updating the trip');
+      }
     }
-  };
+  };;
+  
 
   const fetchTripDetails = async (tripId) => {
     try {
