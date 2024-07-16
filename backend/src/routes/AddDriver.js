@@ -14,6 +14,23 @@ router.get('/' , async(req , res) => {
     }
 })
 
+// New route to search for a driver by name
+router.get('/search/:name', async (req, res) => {
+  const driverName = req.params.name;
+  try {
+      // Create a case-insensitive regex pattern for partial match
+      const regex = new RegExp(driverName, 'i');
+      const drivers = await Driver.find({ driver_Name: { $regex: regex } });
+      if (drivers.length === 0) {
+          return res.status(404).json({ message: "No drivers found with this name" });
+      }
+      res.status(200).json(drivers);
+  } catch (e) {
+      res.status(500).json({ message: "Error searching for drivers" });
+  }
+});
+
+
 // GET BY ID 
 router.get('/:id' , async(req, res) => {
 
