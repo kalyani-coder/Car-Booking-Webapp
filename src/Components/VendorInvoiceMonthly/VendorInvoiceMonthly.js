@@ -366,7 +366,7 @@ function VendorInvoiceMonthly() {
                 <span className="required-asterisk">*</span>
               </label>
               <select
-                className="form-control-cust-inq-input-corp-invoice-monthly"
+                className="form-control-cust-inq-input-corp-invoice-monthly-cc"
                 name="vender_Name"
                 id="vender_Name"
                 value={selectedVendorId}
