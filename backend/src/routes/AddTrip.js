@@ -52,31 +52,31 @@ router.post('/', async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
     const AddTripId = req.params.id;
-  
+
     try {
-      const UpdatedTrip = await AddTrip.findByIdAndUpdate(
-        AddTripId,
-        req.body,
-        {
-          new: true,
-          runValidators: true,
+        const UpdatedTrip = await AddTrip.findByIdAndUpdate(
+            AddTripId,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
+
+        if (!UpdatedTrip) {
+            return res.status(404).json({ message: "Trip not found" });
         }
-      );
-  
-      if (!UpdatedTrip) {
-        return res.status(404).json({ message: "Trip not found" });
-      }
-  
-      res.status(200).json({ message: "Trip successfully updated", data: UpdatedAddVenders });
+
+        res.status(200).json({ message: "Trip successfully updated", data: UpdatedAddVenders });
     } catch (e) {
-      if (e.name === 'ValidationError') {
-        const errorMessages = Object.values(e.errors).map(err => err.message);
-        res.status(400).json({ message: errorMessages.join(', ') });
-      } else {
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+        if (e.name === 'ValidationError') {
+            const errorMessages = Object.values(e.errors).map(err => err.message);
+            res.status(400).json({ message: errorMessages.join(', ') });
+        } else {
+            res.status(500).json({ message: "Internal Server Error" });
+        }
     }
-  });
+});
 
 router.delete('/:id', async (req, res) => {
     try {
