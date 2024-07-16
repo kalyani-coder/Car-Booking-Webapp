@@ -52,7 +52,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<PublicRoute element={<Login />} restrictedPath="/home" />} />
         <Route path="/*" element={<AppLayout />}>
           <Route path="home" element={<ProtectedRoute element={<Home />} />} />
           <Route
