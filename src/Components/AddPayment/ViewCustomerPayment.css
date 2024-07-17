@@ -1,9 +1,15 @@
 .customer-main-container {
-  width: 65em;
+  width: 68em;
 }
 
 @media (max-width: 768px) {
   .Search-By-Customer-Name {
     text-align: center;
+  }
+  .btn-flx-col-for-table-data-download-invoice {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 }

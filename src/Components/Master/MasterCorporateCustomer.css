@@ -4,8 +4,15 @@
     flex-direction: column;
     gap: 1em;
   }
+  .width-set-for-view-master-page-contains-table {
+    width: 57em;
+  }
 }
 .add-duty-type-and-add-rate-inputs {
   display: flex;
   gap: 1em;
+}
+
+.width-set-for-view-master-page-contains-table {
+  width: 100%;
 }

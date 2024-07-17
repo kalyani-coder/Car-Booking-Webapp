@@ -232,7 +232,7 @@ const ViewCustomerEnquiry = () => {
   return (
     <>
       <div className="customer-Add-container">
-        <div className="customer-main-container h-[100vh] mt-4">
+        <div className="customer-main-container mt-4">
           <h2 className="View-Corporate-Customer-Rate font-bold">
             View Customer Enquiry
           </h2>
