@@ -37,8 +37,26 @@ const indivisualCustomerSchema = new mongoose.Schema({
     extra_km: String,
     hours: String,
     extra_hours: String,
-    from: String,
-    to: String,
+    from: {
+        type: String,
+        required: [true, "Pickup Location is required"],
+        validate: {
+            validator: function (v) {
+                return /^[a-zA-Z\s]+$/.test(v);
+            },
+            message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
+        }
+    },
+    to: {
+        type: String,
+        required: [true, "Drop off location is required"],
+        validate: {
+            validator: function (v) {
+                return /^[a-zA-Z\s]+$/.test(v);
+            },
+            message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
+        }
+    },
 });
 
 const NewindivisualCustomer = mongoose.model('indivisual-Customer' , indivisualCustomerSchema)
