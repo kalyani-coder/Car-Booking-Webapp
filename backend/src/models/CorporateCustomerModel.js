@@ -23,16 +23,7 @@ const CorporateCustomerSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
     }
   },
-  company_name: {
-    type: String,
-    required: [true, "Company name is required"],
-    validate: {
-      validator: function (v) {
-        return /^[a-zA-Z\s]+$/.test(v); // Only letters and spaces
-      },
-      message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
-    }
-  },
+ 
   gst_no: {
     type: String,
     required: [true, "GST number is required"],
@@ -48,11 +39,7 @@ const CorporateCustomerSchema = new mongoose.Schema({
       message: props => `${props.value} is not a valid mobile number! Only 10 digits are allowed.`
     }
   },
-  Cus_Email: {
-    type: String,
-    required: [true, "Email is required"],
-    match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in)$/, "Please enter a valid email address ending with .com or .in"]
-  },
+
   address: String,
   type_of_vehicle: String,
   rate_per_km: String,

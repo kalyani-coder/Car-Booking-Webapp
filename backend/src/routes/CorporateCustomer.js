@@ -91,7 +91,12 @@ router.post("/", async (req, res) => {
     await AddVenders.save();
     res.status(201).json({ message: "Corporate Customer Added Successfully" });
   } catch (e) {
-    res.status(404).json({ message: "Can not post venders" });
+    if (e.name === 'ValidationError') {
+      const errorMessages = Object.values(e.errors).map(err => err.message);
+      res.status(400).json({ message: errorMessages.join(', ') });
+    } else {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 });
 
