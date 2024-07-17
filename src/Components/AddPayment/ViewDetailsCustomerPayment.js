@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
 import { FaTimes } from "react-icons/fa"; // Import icons
@@ -8,6 +8,8 @@ export default function ViewDetailsCustomerPayment() {
   const custPayId = useParams();
   const [customerPayData, setCustomerPayData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
 
   const fetchData = async () => {
     const id = custPayId._id;
@@ -29,21 +31,8 @@ export default function ViewDetailsCustomerPayment() {
   console.log(customerPayData);
 
   const handleCancel = () => {
-    // Attempt to close the window
-    window.close();
-
-    // If window.close() didn't work, you can try using the following:
-    if (window.opener) {
-      // If the window has an opener (likely opened with window.open()), close the opener
-      window.opener = null;
-      window.open("", "_self", "");
-      window.close();
-    } else {
-      // If there is no opener (likely not opened with window.open()), navigate back in history
-      window.history.back();
-    }
-
-    console.log("Cancel button clicked");
+    // Navigate back to the viewvendorpayment page
+    navigate("/viewcustomerpayment");
   };
 
   return (
@@ -53,14 +42,6 @@ export default function ViewDetailsCustomerPayment() {
           <h1 className="text-2xl font-semibold mb-4">
             Customer Payment Details
           </h1>
-          <input
-            type="search"
-            placeholder="Search By Customer Name"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
-          />
-
           {customerPayData && (
             <div className="card">
               <div className="card-body">

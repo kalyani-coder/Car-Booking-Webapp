@@ -301,7 +301,7 @@ const ViewCustomerPayment = () => {
                 <th>GST No</th>
                 <th>reporting_Address</th>
                 <th>Date</th>
-                <th>Download Invoice</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
