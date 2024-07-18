@@ -28,6 +28,7 @@ const CustomerRate = () => {
 
   const initialFormData = {
     Cus_Type: "",
+    Cus_name: "",
     type_of_vehicle: "",
     duty_type: "",
     rate: "",
@@ -38,6 +39,7 @@ const CustomerRate = () => {
     hours: "",
     extra_hours: "",
   };
+ 
 
   const handleCustomerTypeChange = async (e) => {
     const selectedType = e.target.value;
@@ -115,8 +117,8 @@ const CustomerRate = () => {
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-
+    e.preventDefault();
+  
     // Validation: Check if all required fields are filled
     if (
       !formData.type_of_vehicle ||
@@ -127,15 +129,15 @@ const CustomerRate = () => {
       !formData.hours ||
       !formData.extra_hours
     ) {
-      alert("all fields required.");
+      alert("All fields required.");
       return;
     }
-
+  
     if (!selectedCustomer) {
       window.alert("Please select a customer");
       return;
     }
-
+  
     const formDataWithCustomer = {
       ...formData,
       Cus_name: selectedCustomer.cus_name,
@@ -151,7 +153,7 @@ const CustomerRate = () => {
       hours: formData.hours,
       extra_hours: formData.extra_hours,
     };
-
+  
     let apiEndpoint = "";
     let customerType = "";
     if (formData.Cus_Type === "Corporate") {
@@ -165,7 +167,7 @@ const CustomerRate = () => {
       window.alert("Invalid customer type");
       return;
     }
-
+  
     try {
       const response = await fetch(apiEndpoint, {
         method: "POST",
@@ -174,12 +176,31 @@ const CustomerRate = () => {
         },
         body: JSON.stringify(formDataWithCustomer),
       });
-
+  
       if (response.ok) {
         console.log("Customer data added successfully");
-        alert(`${customerType} customer data added successfully!`, "success");
-        setFormData(initialFormData);
+        alert(`${customerType} customer Rate added successfully!`, "success");
+        setFormData({
+          Cus_Type: "",
+          Cus_name: "",
+          gst_no: "",
+          cus_mobile: "",
+          type_of_vehicle: "",
+          duty_type: "",
+          from: "",
+          to: "",
+          rate: "",
+          km: "",
+          extra_km: "",
+          hours: "",
+          extra_hours: "",
+        });
+        setCustomerType(""); // Clear the customer type
         setSelectedCustomer(null);
+        setCustomerDetails({
+          gst_no: "",
+          cus_mobile: "",
+        });
       } else {
         alert("Failed to add data. Please try again.", "danger");
       }
@@ -187,7 +208,7 @@ const CustomerRate = () => {
       alert("Failed to add data. Please try again.", "danger");
     }
   };
-
+  
   const [vehicleList, setVehicleList] = useState([]);
   const [dutyTypeList, setDutyTypeList] = useState([]);
   const [rateList, setRateList] = useState([]);
@@ -209,8 +230,10 @@ const CustomerRate = () => {
       }
     };
 
-    fetchVehicleDetails();
-  }, []);
+    if (customerType === "Corporate") {
+      fetchVehicleDetails();
+    }
+  }, [customerType]);
 
   return (
     <>
@@ -280,124 +303,221 @@ const CustomerRate = () => {
 
               <div className="form-group">
                 <label htmlFor="Cus_Mobile" className="form-label">
-                  Mobile No:
+                  Mobile Number:
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="form-control-add-trip-input-vender-rate-page"
-                  type="tel"
-                  id="Cus_Mobile"
+                  type="text"
+                  id="cus_mobile"
                   name="Cus_Mobile"
-                  placeholder="Mobile No."
+                  placeholder="Mobile Number"
                   value={customerDetails.cus_mobile}
                   readOnly
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="type_of_vehicle" className="form-label">
-                  Add Type Of Vehicle:
-                  <span className="required-asterisk">*</span>
-                </label>
-                <select
-                  className="form-control-add-trip-input-vender-rate-page"
-                  name="type_of_vehicle"
-                  id="type_of_vehicle"
-                  onChange={handleChange}
-                  value={formData.type_of_vehicle}
-                >
-                  <option value="">Vehicle</option>
-                  <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
-                  <option value="AC Bus 17-seater">AC Bus 17-seater</option>
-                  <option value="AC Bus 20-seater">AC Bus 20-seater</option>
-                  <option value="AC Bus 32-seater">AC Bus 32-seater</option>
-                  <option value="AC Bus 35-seater">AC Bus 35-seater</option>
-                  <option value="AC Bus 40-seater">AC Bus 40-seater</option>
-                  <option value="AC Bus 45-seater">AC Bus 45-seater</option>
-                  <option value="Non-AC Bus 17-Seater">
-                    Non-AC Bus 17 Seater
-                  </option>
-                  <option value="Non-AC Bus 20-Seater">
-                    Non-AC Bus 20 Seater
-                  </option>
-                  <option value="Non-AC Bus 32-Seater">
-                    Non-AC Bus 32 Seater
-                  </option>
-                  <option value="Non-AC Bus 40-Seater">
-                    Non-AC Bus 40 Seater
-                  </option>
-                  <option value="Non-AC Bus 45-Seater">
-                    Non-AC Bus 45 Seater
-                  </option>
-                  <option value="Non-AC Bus 49-Seater"></option>
-                  {vehicleList.map((vehicle, index) => (
-                    <option key={index} value={vehicle}>
-                      {vehicle}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="responsive-flex-column-required d-flex gap-3">
-                <div className="w-[50%] res-width-100-percent">
+              {customerType === "Corporate" && (
+                <>
                   <div className="form-group">
-                    <label htmlFor="duty_type" className="form-label">
-                      Add Duty Type:
+                    <label htmlFor="type_of_vehicle" className="form-label">
+                      Type of Vehicle:
                       <span className="required-asterisk">*</span>
                     </label>
                     <select
                       className="form-control-add-trip-input-vender-rate-page"
-                      name="duty_type"
-                      id="duty_type"
+                      id="type_of_vehicle"
+                      name="type_of_vehicle"
+                      value={formData.type_of_vehicle}
                       onChange={handleChange}
-                      value={formData.duty_type}
                     >
-                      <option value="">Duty Type</option>
-                      <option value="One Day / 80km">
-                        One Day /80km-Local Duty
+                      <option value="">Select Vehicle</option>
+                      <option value="">Vehicle</option>
+                      <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                      <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                      <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                      <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                      <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                      <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                      <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                      <option value="Non-AC Bus 17-Seater">
+                        Non-AC Bus 17 Seater
                       </option>
-                      <option value="One Day / 300km">
-                        One Day /300km-Outstation Duty
+                      <option value="Non-AC Bus 20-Seater">
+                        Non-AC Bus 20 Seater
                       </option>
-                      <option value="440km- Local Airport Transfer">
-                        440km-Local Airport Transfer
+                      <option value="Non-AC Bus 32-Seater">
+                        Non-AC Bus 32 Seater
                       </option>
-                      <option value="Pune-Mumbai Pickup Drop">
-                        Pune-Mumbai Pickup Dropoff
+                      <option value="Non-AC Bus 40-Seater">
+                        Non-AC Bus 40 Seater
                       </option>
-                      {dutyTypeList.map((dutyType, index) => (
-                        <option key={index} value={dutyType}>
-                          {dutyType}
+                      <option value="Non-AC Bus 45-Seater">
+                        Non-AC Bus 45 Seater
+                      </option>
+                      <option value="Non-AC Bus 49-Seater"></option>
+                      {vehicleList.map((vehicle, index) => (
+                        <option key={index} value={vehicle}>
+                          {vehicle}
                         </option>
                       ))}
                     </select>
                   </div>
-                </div>
-                <div className="w-[50%] res-width-100-percent">
+                  <div className="d-flex gap-3 responsive-flex-column-required">
+                    <div className="w-[50%] res-width-100-percent">
+                      <div className="form-group">
+                        <label htmlFor="duty_type" className="form-label">
+                          Duty Type:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <select
+                          className="form-control-add-trip-input-vender-rate-page"
+                          id="duty_type"
+                          name="duty_type"
+                          value={formData.duty_type}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select Duty Type</option>
+                          <option value="One Day / 80km">
+                            One Day /80km-Local Duty
+                          </option>
+                          <option value="One Day / 300km">
+                            One Day /300km-Outstation Duty
+                          </option>
+                          <option value="440km- Local Airport Transfer">
+                            440km-Local Airport Transfer
+                          </option>
+                          <option value="Pune-Mumbai Pickup Drop">
+                            Pune-Mumbai Pickup Dropoff
+                          </option>
+                          {dutyTypeList.map((duty, index) => (
+                            <option key={index} value={duty}>
+                              {duty}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="w-[50%] res-width-100-percent">
+                      <div className="form-group">
+                        <label htmlFor="rate" className="form-label">
+                          Rate:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <select
+                          className="form-control-add-trip-input-vender-rate-page"
+                          id="rate"
+                          name="rate"
+                          value={formData.rate}
+                          onChange={handleChange}
+                        >
+                          <option value="">Select Rate</option>
+                          {rateList.map((rate, index) => (
+                            <option key={index} value={rate}>
+                              {rate}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {customerType === "Indivisual" && (
+                <>
                   <div className="form-group">
-                    <label htmlFor="rate" className="form-label">
-                      Add Rate:
+                    <label htmlFor="type_of_vehicle" className="form-label">
+                      Type of Vehicle:
                       <span className="required-asterisk">*</span>
                     </label>
                     <select
                       className="form-control-add-trip-input-vender-rate-page"
-                      name="rate"
-                      id="rate"
+                      name="type_of_vehicle"
+                      id="type_of_vehicle"
                       onChange={handleChange}
-                      value={formData.rate}
+                      value={formData.type_of_vehicle}
                     >
-                      <option value="">Rate</option>
-                      {rateList.map((rate, index) => (
-                        <option key={index} value={rate}>
-                          {rate}
-                        </option>
-                      ))}
+                      <option value="">Vehicle</option>
+                      <option value="Sedan Car">Sedan Car</option>
+                      <option value="Mini Car">Mini Car</option>
+                      <option value="SUV Car">SUV Car</option>
+                      <option value="Ac Bus 13-Seater">AC Bus 13-Seater</option>
+                      <option value="AC Bus 17-seater">AC Bus 17-seater</option>
+                      <option value="AC Bus 20-seater">AC Bus 20-seater</option>
+                      <option value="AC Bus 32-seater">AC Bus 32-seater</option>
+                      <option value="AC Bus 35-seater">AC Bus 35-seater</option>
+                      <option value="AC Bus 40-seater">AC Bus 40-seater</option>
+                      <option value="AC Bus 45-seater">AC Bus 45-seater</option>
+                      <option value="Non-AC Bus 17-Seater">
+                        Non-AC Bus 17 Seater
+                      </option>
+                      <option value="Non-AC Bus 20-Seater">
+                        Non-AC Bus 20 Seater
+                      </option>
+                      <option value="Non-AC Bus 32-Seater">
+                        Non-AC Bus 32 Seater
+                      </option>
+                      <option value="Non-AC Bus 40-Seater">
+                        Non-AC Bus 40 Seater
+                      </option>
+                      <option value="Non-AC Bus 45-Seater">
+                        Non-AC Bus 45 Seater
+                      </option>
+                      <option value="Non-AC Bus 49-Seater"></option>
                     </select>
                   </div>
-                </div>
-              </div>
-
-              <div className="responsive-flex-column-required d-flex gap-3">
+                  <div className="d-flex gap-3 responsive-flex-column-required">
+                    <div className="w-[50%] res-width-100-percent">
+                      <div className="form-group">
+                        <label htmlFor="duty_type" className="form-label">
+                          Duty Type:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <select
+                          className="form-control-add-trip-input-vender-rate-page"
+                          name="duty_type"
+                          id="duty_type"
+                          onChange={handleChange}
+                          value={formData.duty_type}
+                        >
+                          <option value="">Duty Type</option>
+                          <option value="One Day / 80km">
+                            One Day /80km-Local Duty
+                          </option>
+                          <option value="One Day / 300km">
+                            One Day /300km-Outstation Duty
+                          </option>
+                          <option value="440km- Local Airport Transfer">
+                            440km-Local Airport Transfer
+                          </option>
+                          <option value="Pune-Mumbai Pickup Drop">
+                            Pune-Mumbai Pickup Dropoff
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="w-[50%] res-width-100-percent">
+                      <div className="form-group">
+                        <label htmlFor="rate" className="form-label">
+                          Rate:
+                          <span className="required-asterisk">*</span>
+                        </label>
+                        <input
+                          className="form-control-add-trip-input-vender-rate-page"
+                          type="text"
+                          id="rate"
+                          name="rate"
+                          placeholder="Enter rate"
+                          value={formData.rate}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="from" className="form-label">
@@ -409,13 +529,12 @@ const CustomerRate = () => {
                       type="text"
                       id="from"
                       name="from"
-                      placeholder="from"
+                      placeholder="From"
                       value={formData.from}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
-                
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="to" className="form-label">
@@ -427,15 +546,14 @@ const CustomerRate = () => {
                       type="text"
                       id="to"
                       name="to"
-                      placeholder="to"
+                      placeholder="To"
                       value={formData.to}
                       onChange={handleChange}
                     />
                   </div>
                 </div>
               </div>
-
-              <div className="responsive-flex-column-required d-flex gap-3">
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="km" className="form-label">
@@ -444,10 +562,10 @@ const CustomerRate = () => {
                     </label>
                     <input
                       className="form-control-add-trip-input-vender-rate-page"
-                      type="km"
+                      type="text"
                       id="km"
                       name="km"
-                      placeholder="km"
+                      placeholder="KM"
                       value={formData.km}
                       onChange={handleChange}
                     />
@@ -456,12 +574,12 @@ const CustomerRate = () => {
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_km" className="form-label">
-                      (Rate Per Km) Extra KM:
+                      Extra KM:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="form-control-add-trip-input-vender-rate-page"
-                      type="number"
+                      type="text"
                       id="extra_km"
                       name="extra_km"
                       placeholder="Extra KM"
@@ -471,20 +589,19 @@ const CustomerRate = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="responsive-flex-column-required d-flex gap-3">
+              <div className="d-flex gap-3 responsive-flex-column-required">
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="hours" className="form-label">
-                      Hour:
+                      Hours:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="form-control-add-trip-input-vender-rate-page"
-                      type="number"
+                      type="text"
                       id="hours"
                       name="hours"
-                      placeholder="hours"
+                      placeholder="Hours"
                       value={formData.hours}
                       onChange={handleChange}
                     />
@@ -493,15 +610,15 @@ const CustomerRate = () => {
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_hours" className="form-label">
-                      (Rate Per Hour) Extra Hour:
+                      Extra Hours:
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
                       className="form-control-add-trip-input-vender-rate-page"
-                      type="number"
+                      type="text"
                       id="extra_hours"
                       name="extra_hours"
-                      placeholder="Extra hours"
+                      placeholder="Extra Hours"
                       value={formData.extra_hours}
                       onChange={handleChange}
                     />

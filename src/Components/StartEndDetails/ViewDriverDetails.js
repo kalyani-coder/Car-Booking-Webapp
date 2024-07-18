@@ -8,6 +8,8 @@ import { Modal, Button, Form } from "react-bootstrap";
 import "./ViewDriverDetails.css";
 import img1 from "../../assects/images/shivpushpa_logo.png";
 import "./ViewDriverDetails.css";
+
+
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
   const [filteredShareDetails, setFilteredShareDetails] = useState([]);

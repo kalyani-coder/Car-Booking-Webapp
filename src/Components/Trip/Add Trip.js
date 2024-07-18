@@ -509,6 +509,8 @@ const AddTrip = () => {
                 value={formData.address}
               />
             </div>
+            <div className="d-flex gap-3 responsive-flex-column-required">
+            <div className="w-[50%] res-width-100-percent">
             <div className="trip-form-group">
               <label htmlFor="triptype" className="trip-form-label">
                 Trip Type:
@@ -525,6 +527,8 @@ const AddTrip = () => {
                 <option value="Return Trip">Return Trip</option>
               </select>
             </div>
+            </div>
+            <div className="w-[50%] res-width-100-percent">
             <div className="trip-form-group">
               <label htmlFor="subtype" className="trip-form-label">
                 Sub Type:
@@ -546,6 +550,8 @@ const AddTrip = () => {
                   Outstation Outstation Trip
                 </option>
               </select>
+            </div>
+            </div>
             </div>
             <div className="flex justify-center">
               <div className="py-4 ">
@@ -648,6 +654,8 @@ const AddTrip = () => {
                 </div>
               </div>
             </div>
+            <div className="d-flex gap-3 responsive-flex-column-required">
+            <div className="w-[50%] res-width-100-percent">
             <div className="trip-form-group">
               <label htmlFor="totaldays" className="trip-form-label">
                 Total Days:
@@ -662,6 +670,8 @@ const AddTrip = () => {
                 value={formData.totaldays}
               />
             </div>
+            </div>
+            <div className="w-[50%] res-width-100-percent">
             <div className="trip-form-group">
               <label htmlFor="hours" className="trip-form-label">
                 Total Hours:
@@ -675,6 +685,8 @@ const AddTrip = () => {
                 onChange={handleChange}
                 value={formData.hours}
               />
+            </div>
+            </div>
             </div>
 
             <div className="trip-form-group">

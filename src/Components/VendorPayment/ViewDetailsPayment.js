@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate  } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../Sidebar/Sidebar";
-import { FaTimes } from "react-icons/fa"; // Import icons
+import { FaTimes } from "react-icons/fa"; 
 
-export default function ViewDetailsPayment() {
+
+const ViewDetailsPayment = () =>{ 
   const venPayId = useParams();
   const [vendorPayData, setVendorPayData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const id = venPayId._id;
@@ -29,21 +31,8 @@ export default function ViewDetailsPayment() {
   console.log(vendorPayData);
 
   const handleCancel = () => {
-    // Attempt to close the window
-    window.close();
-
-    // If window.close() didn't work, you can try using the following:
-    if (window.opener) {
-      // If the window has an opener (likely opened with window.open()), close the opener
-      window.opener = null;
-      window.open("", "_self", "");
-      window.close();
-    } else {
-      // If there is no opener (likely not opened with window.open()), navigate back in history
-      window.history.back();
-    }
-
-    console.log("Cancel button clicked");
+    // Navigate back to the viewvendorpayment page
+    navigate("/viewvendorpayment");
   };
 
   return (
@@ -53,14 +42,6 @@ export default function ViewDetailsPayment() {
           <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
             Vendor Payment Details
           </h2>
-          <input
-            type="search"
-            placeholder="Search By Vendor Name"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
-          />
-
           {vendorPayData && (
             <div className="card">
               <div className="card-body">
@@ -110,3 +91,4 @@ export default function ViewDetailsPayment() {
     </>
   );
 }
+export default ViewDetailsPayment;

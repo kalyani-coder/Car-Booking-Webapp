@@ -339,7 +339,8 @@ const CustomerEnquiry = () => {
                 value={formData.address}
               />
             </div>
-
+            <div className="d-flex gap-3 responsive-flex-column-required">
+            <div className="w-[50%] res-width-100-percent">
             <div className="form-group">
               <label htmlFor="triptype" className="form-label">
                 Trip Type:
@@ -357,6 +358,8 @@ const CustomerEnquiry = () => {
                 <option value="Return Trip">Return Trip</option>
               </select>
             </div>
+            </div>
+            <div className="w-[50%] res-width-100-percent">
             <div className="form-group">
               <label htmlFor="sub_type" className="form-label">
                 Sub Type:
@@ -379,6 +382,8 @@ const CustomerEnquiry = () => {
                   Outstation Outstation Trip
                 </option>
               </select>
+            </div>
+            </div>
             </div>
             <div className="d-flex gap-3 responsive-flex-column-required">
               <div>
@@ -483,7 +488,8 @@ const CustomerEnquiry = () => {
                 </div>
               </div>
             </div>
-
+            <div className="d-flex gap-3 responsive-flex-column-required">
+            <div className="w-[50%] res-width-100-percent">
             <div className="form-group">
               <label htmlFor="totalDays" className="form-label">
                 {/* <span className="required-asterisk">*</span> */}
@@ -499,11 +505,11 @@ const CustomerEnquiry = () => {
                 value={formData.totalDays}
               />
             </div>
+            </div>
+            <div className="w-[50%] res-width-100-percent">
             <div className="form-group">
               <label htmlFor="totalHours" className="form-label">
-                {/* <span className="required-asterisk">*</span> */}
                 Total Hours:
-                {/* <span className="days" >  Hours</span> */}
               </label>
               <input
                 type="number"
@@ -513,6 +519,8 @@ const CustomerEnquiry = () => {
                 onChange={handleChange}
                 value={formData.totalHours}
               />
+            </div>
+            </div>
             </div>
             <div className="form-group">
               <label htmlFor="vehicle" className="form-label">
