@@ -1,7 +1,7 @@
 /* StartEndDetails.css */
 
 .start-end-details-container {
-  padding: 20px;
+  padding: 5px;
 }
 
 .start-end-details-form {
@@ -58,7 +58,8 @@
 
 .startenddetails-input {
   /* width: 200px; */
-  height: 43px;
+  /* height: 43px; */
+  border-radius: 3px;
 }
 .rate-form-control-Startenddetails {
   width: 275px;
@@ -70,7 +71,9 @@
   box-sizing: border-box;
   margin-bottom: 10px;
 }
-
+.width-setfor-nght-stay-and-toll-park-inputs {
+  width: 50%;
+}
 /* Responsive Styles */
 @media (max-width: 600px) {
   .start-end-details-column {
@@ -109,5 +112,8 @@
   .start-end-details-container {
     padding: 20px;
     padding-left: 27px;
+  }
+  .width-setfor-nght-stay-and-toll-park-inputs {
+    width: 100%;
   }
 }

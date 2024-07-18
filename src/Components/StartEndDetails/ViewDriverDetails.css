@@ -9,6 +9,10 @@
 .close-icon:focus {
   outline: none;
 }
+.View-Driver-Trip-Details-search-input-box {
+  width: 50%;
+  margin: auto;
+}
 
 @media (max-width: 768px) {
   .Search-by-date-or-driver-name {
@@ -21,5 +25,15 @@
   .main-div-for-modal-container-for-all-inputs-cc {
     width: 100%;
     margin: 1em;
+  }
+  .View-Driver-Trip-Details-search-input-box {
+    width: 100%;
+    margin: auto;
+    padding: 0 1em;
+  }
+  .btn-for-view-drive-details-flex {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
   }
 }

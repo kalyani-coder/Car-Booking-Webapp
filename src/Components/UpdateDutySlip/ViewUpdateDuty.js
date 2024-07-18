@@ -325,20 +325,19 @@ const ViewUpdateDuty = () => {
   return (
     <>
       <div className="customer-Add-container">
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+          View Duty Slip
+        </h2>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search by Customer Name / Company Name"
+            className="w-full p-2 rounded border"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <div className="customer-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
-            View Duty Slip
-          </h2>
-
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search by Customer Name / Company Name"
-              className="w-full p-2 rounded border"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
           <table className="table">
             <thead>
               <tr>

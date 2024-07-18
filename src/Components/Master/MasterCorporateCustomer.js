@@ -29,21 +29,18 @@ const MasterCorporateCustomer = () => {
     }
   };
 
-  
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     let newValidationMessages = {};
-  
+
     if (formData.add_vehicle.trim() === "") {
       newValidationMessages.add_vehicle = "Add Vehicle is required.";
     }
     if (formData.add_rate.trim() === "") {
       newValidationMessages.add_rate = "Add Rate is required.";
     }
-  
+
     if (Object.keys(newValidationMessages).length > 0) {
       setValidationMessages(newValidationMessages);
       window.scrollTo(0, 0); // Scroll to the top if there are validation errors
@@ -51,7 +48,7 @@ const MasterCorporateCustomer = () => {
     } else {
       setValidationMessages({});
     }
-  
+
     try {
       const response = await fetch("http://localhost:8787/api/masterrate", {
         method: "POST",
@@ -60,7 +57,7 @@ const MasterCorporateCustomer = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         alert("Master added successfully!", "success");
         setFormData(initialFormData);
@@ -73,7 +70,6 @@ const MasterCorporateCustomer = () => {
       alert("Failed to add data. Please try again.", "error");
     }
   };
-  
 
   return (
     <>
@@ -82,7 +78,14 @@ const MasterCorporateCustomer = () => {
           <div className="rate-form-container">
             <h2
               className="text-center"
-              style={{fontSize: "2rem",fontWeight: "bold",marginBottom: "1rem",}}>Master</h2>
+              style={{
+                fontSize: "2rem",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+              }}
+            >
+              Master
+            </h2>
             {/* Form */}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -92,26 +95,26 @@ const MasterCorporateCustomer = () => {
                 </label>
                 <input
                   className={`form-control-cust-add-input ${
-                  validationMessages.add_vehicle ? "is-invalid" : ""
-                }`}
+                    validationMessages.add_vehicle ? "is-invalid" : ""
+                  }`}
                   type="text"
                   id="add_vehicle"
                   name="add_vehicle"
                   placeholder="Add Vehicle"
                   onChange={handleAlphaInputChange((value) =>
-                  setFormData((prevData) => ({
-                    ...prevData,
-                    add_vehicle: value,
-                  }))
-                )}
-                value={formData.add_vehicle}
-                pattern="[A-Za-z\s]+"
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      add_vehicle: value,
+                    }))
+                  )}
+                  value={formData.add_vehicle}
+                  pattern="[A-Za-z\s]+"
                 />
                 {validationMessages.add_vehicle && (
-                <div className="invalid-feedback">
-                  {validationMessages.add_vehicle}
-                </div>
-              )}
+                  <div className="invalid-feedback">
+                    {validationMessages.add_vehicle}
+                  </div>
+                )}
               </div>
               <div className="add-duty-type-and-add-rate-inputs">
                 <div className="w-full">
@@ -141,8 +144,8 @@ const MasterCorporateCustomer = () => {
                   </label>
                   <input
                     className={`rate-form-control ${
-                  validationMessages.add_rate ? "is-invalid" : ""
-                }`}
+                      validationMessages.add_rate ? "is-invalid" : ""
+                    }`}
                     type="number"
                     id="add_rate"
                     name="add_rate"
@@ -153,16 +156,17 @@ const MasterCorporateCustomer = () => {
                     }
                   />
                   {validationMessages.add_rate && (
-                <div className="invalid-feedback">
-                  {validationMessages.add_rate}
-                </div>
-              )}
+                    <div className="invalid-feedback">
+                      {validationMessages.add_rate}
+                    </div>
+                  )}
                 </div>
               </div>
-
-              <button type="submit" className="rate-btn-submit">
-                Save
-              </button>
+              <div className="flex justify-center py-4">
+                <button type="submit" className="rate-btn-submit">
+                  Save
+                </button>
+              </div>
             </form>
           </div>
         </div>

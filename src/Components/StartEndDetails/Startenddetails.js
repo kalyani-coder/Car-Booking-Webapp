@@ -180,7 +180,7 @@ const StartEndDetails = () => {
           <div className="start-end-details-row">
             <div className="start-end-details-column">
               <div className="share-details-form-group">
-                <label htmlFor="vehicle" className="share-details-label">
+                <label htmlFor="vehicle" className="start-end-details-label">
                   Customer Name:
                 </label>
                 <select
@@ -212,7 +212,7 @@ const StartEndDetails = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="start-end-details-input"
+                  className="share-details-input"
                   type="number"
                   name="customermobile"
                   placeholder="Enter Customer Mobile No."
@@ -283,7 +283,7 @@ const StartEndDetails = () => {
                 </label>
                 <input
                   type="text"
-                  className="start-end-details-input"
+                  className="share-details-input"
                   placeholder="Subtype"
                   value={selectedCustomerDetails.subtype}
                   readOnly
@@ -348,7 +348,7 @@ const StartEndDetails = () => {
                     Total Days:
                   </label>
                   <input
-                    className="rate-form-control-Startenddetails"
+                    className="share-details-input"
                     type="number"
                     name="totalDays"
                     placeholder="Enter Total Days"
@@ -363,7 +363,7 @@ const StartEndDetails = () => {
                       Total Hours:
                     </label>
                     <input
-                      className="rate-form-control-Startenddetails"
+                      className="share-details-input"
                       type="number"
                       name="totalDays"
                       // placeholder="Enter Total Hours "
@@ -384,7 +384,7 @@ const StartEndDetails = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="start-end-details-input"
+                  className="share-details-input"
                   type="text"
                   name="vehicle"
                   placeholder="Enter Vehicle"
@@ -400,7 +400,7 @@ const StartEndDetails = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="start-end-details-input"
+                  className="share-details-input"
                   type="text"
                   name="triptype"
                   placeholder="Enter Trip Type"
@@ -418,7 +418,7 @@ const StartEndDetails = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="start-end-details-input"
+                  className="share-details-input"
                   type="text"
                   name="drivername"
                   placeholder="Enter Driver Name"
@@ -437,7 +437,7 @@ const StartEndDetails = () => {
                 </label>
                 <input
                   x
-                  className="start-end-details-input"
+                  className="share-details-input"
                   type="text"
                   name="mobileNumber"
                   placeholder="Enter Driver Mobile No."
@@ -456,7 +456,7 @@ const StartEndDetails = () => {
                   <span className="required-asterisk">*</span>
                 </label>
                 <input
-                  className="start-end-details-input"
+                  className="share-details-input"
                   type="text"
                   name="allowance"
                   placeholder="Enter Allowance"
@@ -467,13 +467,13 @@ const StartEndDetails = () => {
             </div>
             <div className="start-end-details-column">
               <div className="responsive-flex-column-required d-flex gap-2">
-                <div>
+                <div className="width-setfor-nght-stay-and-toll-park-inputs">
                   <div className="form-group">
                     <label htmlFor="toll" className="form-label">
                       Toll Parking:
                     </label>
                     <input
-                      className="rate-form-control-Startenddetails"
+                      className="share-details-input"
                       type="number"
                       name="toll"
                       placeholder="Enter Toll Parking"
@@ -482,13 +482,13 @@ const StartEndDetails = () => {
                     />
                   </div>
                 </div>
-                <div>
+                <div className="width-setfor-nght-stay-and-toll-park-inputs">
                   <div className="form-group">
                     <label htmlFor="nightstay" className="form-label">
                       Night Stay:
                     </label>
                     <input
-                      className="rate-form-control-Startenddetails"
+                      className="share-details-input"
                       type="number"
                       name="nightstay"
                       placeholder="Enter Night Stay"

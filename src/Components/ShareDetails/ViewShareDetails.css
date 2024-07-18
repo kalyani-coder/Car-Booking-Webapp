@@ -100,4 +100,9 @@
   .Search-by-date-or-driver-name {
     text-align: center;
   }
+  .btn-view-share-details-flex-wrap-for-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
