@@ -416,7 +416,7 @@ function CustomerInvoice() {
                           (customer) =>
                             customer.customerId === selectedCustomer.customerId
                         )
-                        .reduce((total, trip) => total + trip.SGST, 0)}
+                        .reduce((total, trip) => total, 0)}
                     </td>
                     <td>
                       {customerList
@@ -424,7 +424,7 @@ function CustomerInvoice() {
                           (customer) =>
                             customer.customerId === selectedCustomer.customerId
                         )
-                        .reduce((total, trip) => total + trip.CGST, 0)}
+                        .reduce((total, trip) => total, 0)}
                     </td>
                   </tr>
                 </tbody>
