@@ -273,7 +273,7 @@ function CustomerInvoice() {
             </label>
             {/* Dropdown to select a customer */}
             <select
-              className="form-control-cust-inq-input-corp-invoice-monthly"
+              className="form-control-cust-inq-input-corp-invoice-monthly w-[80%] p-2"
               id="customername"
               name="customerName"
               onChange={(e) => {

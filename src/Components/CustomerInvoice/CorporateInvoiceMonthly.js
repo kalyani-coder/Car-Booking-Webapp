@@ -323,7 +323,7 @@ function CorporateInvoiceMonthly() {
               Customer Name:
             </label>
             <select
-              className="form-control-cust-inq-input-corp-invoice-monthly "
+              className="form-control-cust-inq-input-corp-invoice-monthly w-[80%] p-2"
               id="customername"
               name="customerName"
               onChange={(e) => {
@@ -348,7 +348,7 @@ function CorporateInvoiceMonthly() {
             </label>
             <input
               type="text"
-              className="form-control-cust-inq-input-corp-invoice-monthly "
+              className="form-control-cust-inq-input-corp-invoice-monthly w-[80%] p-2"
               name="kind_attn"
               placeholder="Kind Attn"
               value={formData.kind_attn}
@@ -361,7 +361,7 @@ function CorporateInvoiceMonthly() {
             </label>
             <input
               type="date"
-              className="form-control-cust-inq-input-corp-invoice-monthly "
+              className="form-control-cust-inq-input-corp-invoice-monthly w-[80%] p-2"
               name="invoiceDate"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
@@ -446,13 +446,13 @@ function CorporateInvoiceMonthly() {
                     </td>
                     <td>
                       {customerData.reduce(
-                        (total, trip) => total + trip.SGST,
+                        (total, trip) => total,
                         0
                       )}
                     </td>
                     <td>
                       {customerData.reduce(
-                        (total, trip) => total + trip.CGST,
+                        (total, trip) => total,
                         0
                       )}
                     </td>
