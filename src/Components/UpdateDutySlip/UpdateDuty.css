@@ -59,6 +59,9 @@
 .gap-for-div-section-container-label-and-input-add-duty-slip {
   gap: 2em;
 }
+.container-btns-view-update-duty-slip > button {
+  margin-right: 0;
+}
 @media (max-width: 768px) {
   .update-duty-container {
     display: flex;
@@ -86,5 +89,11 @@
   }
   .gap-for-div-section-container-label-and-input-add-duty-slip {
     gap: 0;
+  }
+  .container-btns-view-update-duty-slip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
   }
 }

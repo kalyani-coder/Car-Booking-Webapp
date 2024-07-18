@@ -374,25 +374,27 @@ const ViewUpdateDuty = () => {
                         </button>
                       ) : (
                         <>
-                          <button
-                            className="btn btn-primary"
-                            onClick={() => toggleShowDetails(customer._id)}
-                          >
-                            <i className="fas fa-eye"></i>
-                          </button>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleDelete(customer._id)}
-                          >
-                            <FaTrash />
-                          </button>
+                          <div className="flex items-center container-btns-view-update-duty-slip">
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => toggleShowDetails(customer._id)}
+                            >
+                              <i className="fas fa-eye"></i>
+                            </button>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleDelete(customer._id)}
+                            >
+                              <FaTrash />
+                            </button>
 
-                          <button
-                            className="btn btn-info"
-                            onClick={() => generateTripDutySlip(customer._id)}
-                          >
-                            <FaFilePdf />
-                          </button>
+                            <button
+                              className="btn btn-info"
+                              onClick={() => generateTripDutySlip(customer._id)}
+                            >
+                              <FaFilePdf />
+                            </button>
+                          </div>
                         </>
                       )}
                     </td>

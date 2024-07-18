@@ -1,4 +1,10 @@
-.dashboard{
-    margin-top: 100px;
-    margin-bottom: 50px;
+.dashboard {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+@media (max-width: 768px) {
+  .overflow-scroll-fr-home-table-bar-chart {
+    overflow-x: scroll;
+  }
 }
