@@ -424,7 +424,7 @@ const CustomerRate = () => {
                 </>
               )}
 
-              {customerType === "Indivisual" && (
+              {customerType === "Individual" && (
                 <>
                   <div className="form-group">
                     <label htmlFor="type_of_vehicle" className="form-label">

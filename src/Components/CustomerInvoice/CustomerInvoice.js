@@ -3,7 +3,6 @@ import "./CustomerInvoice.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
-import Customer from "./../CustomerEnquiry/Customer";
 import headerlogo from "../../assects/images/shivpushpa_logo.png";
 
 function CustomerInvoice() {
