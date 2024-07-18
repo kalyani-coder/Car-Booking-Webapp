@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
-const PersonSchema = new mongoose.Schema({
-    name: String,
-    mobile: Number,
-    vehicleNo: String,
-});
+
 
 const AddTripSchema = new mongoose.Schema({
     customerId: String,

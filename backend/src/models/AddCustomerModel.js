@@ -1,20 +1,4 @@
 
-// const mongoose = require('mongoose')
-
-// const AddCustomerSchema = new mongoose.Schema({
-
-//    Cus_name : String,
-//    company_name : String,
-//    gst_no :String,
-//    Cus_Mobile : String,
-//    Cus_Email : String,
-//    address : String,
-
-// })
-
-// const NewAddCustomer = mongoose.model('AddCustomer' , AddCustomerSchema)
-
-// module.exports = NewAddCustomer
 const mongoose = require('mongoose');
 
 const newAddCustomerSchema = new mongoose.Schema({
@@ -51,12 +35,7 @@ const newAddCustomerSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    validate: {
-      validator: function (v) {
-        return v.length >= 20 || v.length === 0; // At least 20 characters or empty
-      },
-      message: props => `Address must be at least 20 characters long`
-    }
+    maxLength: [50, 'Address cannot be more than 50 characters']
   },
   Cus_Type: {
     type: String,

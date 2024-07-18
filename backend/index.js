@@ -21,7 +21,6 @@ const apiRouter = express.Router();
 
 // Handle routes here
 const CustomerEnquiry = require('./src/routes/CustomerEnquiry');
-const user = require('./src/routes/User');
 const ShareDetails = require('./src/routes/ShareDetails');
 const TripDetails = require('./src/routes/TripDetails');
 const UpdateDuty = require('./src/routes/UpdateDuty');
@@ -42,7 +41,6 @@ const getAdmin = require("./src/routes/AdminLoginRoute")
 
 // Define API paths
 apiRouter.use('/customer-enquiry', CustomerEnquiry);
-apiRouter.use('/users', user);
 apiRouter.use('/share-details', ShareDetails);
 apiRouter.use('/trip-details', TripDetails);
 apiRouter.use('/update-duty', UpdateDuty);

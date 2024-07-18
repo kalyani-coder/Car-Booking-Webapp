@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
   try {
     const AddVenders = new NewAddVenders(req.body);
     const newAddVenders = await AddVenders.save();
-    res.status(201).json({ message: "Data posted successfully" });
+    res.status(201).json({ message: "Vendors Added successfully" });
   } catch (e) {
     if (e.name === 'ValidationError') {
       // Extract error messages from Mongoose validation errors

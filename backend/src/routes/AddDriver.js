@@ -40,7 +40,7 @@ router.get('/:id' , async(req, res) => {
 
             const AddVenders = await Driver.findById(AddVendersId)
             if(!AddVenders){
-                return res.status(404).json({message : "venders Not found"})
+                return res.status(404).json({message : "Driver Not found"})
             }
             res.json(AddVenders)
 
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
         res.status(400).json({ message: errorMessages.join(', ') });
       } else {
         console.error(e);
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Something went wronge" });
       }
     }
   });

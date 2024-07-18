@@ -39,6 +39,7 @@ const AddVendersSchema = new mongoose.Schema({
       },
       address: {
         type: String,
+        maxLength :[50, "Address can not bee more that 50 charectors"]
       }
 
 })

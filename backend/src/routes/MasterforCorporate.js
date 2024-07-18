@@ -9,19 +9,36 @@ router.get("/", async (req, res) => {
     const tripDetails = await newMasterRateSchema.find();
     res.status(201).json(tripDetails);
   } catch (e) {
-    res.status(404).json({ message: "Can not get customer" });
+    res.status(404).json({ message: "Can not get master details" });
   }
 });
 
 router.post("/", async (req, res) => {
+  const { add_vehicle, add_duty_type, add_rate } = req.body;
+
+  // Check for missing fields
+  if (!add_vehicle || !add_duty_type || add_rate === undefined) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
   try {
-    const tripDetails = new newMasterRateSchema(req.body); // Use 'new' to create a new instance
-    await tripDetails.save(); // Save the instance
-    res.status(201).json({ message: "Data posted successfully" });
+    const existingVehicle = await newMasterRateSchema.findOne({add_vehicle})
+    if(existingVehicle){
+      return res.status(404).json({message : "Vehicle Alredy Exists"})
+    }
+    const newRate = new newMasterRateSchema(req.body);
+    await newRate.save();
+
+    res.status(201).json({ message: "Master Rate Added successfully" });
+
   } catch (e) {
-    res
-      .status(404)
-      .json({ message: "Cannot post trip details", error: e.message });
+    if (e.name === 'ValidationError') {
+      const errorMessages = Object.values(e.errors).map(err => err.message);
+      res.status(400).json({ message: errorMessages.join(', ') });
+    } else {
+      console.error(e);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 });
 
@@ -37,9 +54,9 @@ router.patch("/:id", async (req, res) => {
         runValidators: true,
       }
     );
-    res.status(201).json({ message: "post trip details successfully " });
+    res.status(201).json({ message: "Master Rate Updated successfully " });
   } catch (e) {
-    res.status(404).json({ message: "Can not patch trip details" });
+    res.status(404).json({ message: "Can not patch Master Rate" });
   }
 });
 
@@ -53,7 +70,7 @@ router.delete("/:id", async (req, res) => {
     );
     res
       .status(201)
-      .json({ message: " Customer Enquiry Successfully Deleted " });
+      .json({ message: "master Rate Successfully Deleted " });
   } catch (e) {
     res.status(404).json({ message: "Can not found", e });
   }

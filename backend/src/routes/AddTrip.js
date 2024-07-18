@@ -16,26 +16,31 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+    const {
+        customername,
+        mobileno,
+        email,
+    } = req.body
+
+    if (!customername || !mobileno || !email){
+      return res.status(400).json({message : "Some Fields Are Required"})
+    }
     try {
         // Find the highest trip_duty_number in the database
         const latestTrip = await AddTrip.findOne().sort({ trip_duty_number: -1 }).exec();
-        let newTripDutyNumber = 1; // Default value if no trips exist yet
-
+        let newTripDutyNumber = 1;
         if (latestTrip && latestTrip.trip_duty_number) {
             newTripDutyNumber = latestTrip.trip_duty_number + 1;
         }
 
-        // Create a new instance of AddTrip with the incremented trip_duty_number
         const addTripData = new AddTrip({
             ...req.body,
             trip_duty_number: newTripDutyNumber
         });
 
-        // Save the data to the database
         await addTripData.save();
+        res.status(201).json({message : "Trip Added Successfully"});
 
-        // Return the created data in the response
-        res.status(201).json(addTripData);
     } catch (e) {
         if (e.name === 'ValidationError') {
             const errorMessages = Object.values(e.errors).map(err => err.message);
@@ -47,7 +52,6 @@ router.post('/', async (req, res) => {
         }
     }
 });
-
 
 
 router.patch("/:id", async (req, res) => {
@@ -64,10 +68,10 @@ router.patch("/:id", async (req, res) => {
         );
 
         if (!UpdatedTrip) {
-            return res.status(404).json({ message: "Trip not found" });
+            return res.status(404).json({ message: "Customer Trip not found" });
         }
 
-        res.status(200).json({ message: "Trip successfully updated", data: UpdatedAddVenders });
+        res.status(200).json({ message: "Customer Trip successfully updated"});
     } catch (e) {
         if (e.name === 'ValidationError') {
             const errorMessages = Object.values(e.errors).map(err => err.message);
@@ -82,9 +86,9 @@ router.delete('/:id', async (req, res) => {
     try {
         const deletedTrip = await AddTrip.findByIdAndDelete(req.params.id);
         if (!deletedTrip) {
-            return res.status(404).json({ message: 'Document not found' });
+            return res.status(404).json({ message: 'Customer Trip not found' });
         }
-        res.status(200).json({ message: 'Trip deleted successfully' });
+        res.status(200).json({ message: 'Customer Trip deleted successfully' });
     } catch (error) {
         res.status(500).json(error);
     }
@@ -122,7 +126,6 @@ router.get('/customer/:customerId', async (req, res) => {
 
 router.post("/sendemail", async (req, res) => {
     const { emailData } = req.body;
-    // console.log("emailData" , emailData)
 
     if (!emailData || !emailData.email) {
         return res.status(400).json({ message: "Email data or email is missing" });
@@ -183,7 +186,6 @@ router.post("/sendemail", async (req, res) => {
         };
 
         await transporter.sendMail(mailOptions);
-        console.log('Email sent to', email);
 
         res.status(200).json({ message: "Email sent successfully" });
     } catch (error) {

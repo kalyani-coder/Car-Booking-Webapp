@@ -43,23 +43,36 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// POST METHOD
-// router.post("/", async (req, res) => {
-//   try {
-//     const AddVenders = new NewAddCustomer(req.body);
-//     await AddVenders.save();
-//     res.status(201).json({ message: "Data posted successfully" });
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
-
+// POST METHOD 
 router.post("/", async (req, res) => {
+  const { cus_name, gst_no, cus_mobile, cus_email, address, Cus_Type } = req.body;
+
+  // Check for missing fields
+  if (!cus_name || !gst_no || !cus_mobile || !cus_email || !address || !Cus_Type) {
+    return res.status(400).json({ message: "All Fields Are Required" });
+  }
+
   try {
-    const addVender = new NewAddCustomer(req.body);
-    await addVender.save();
-    res.status(201).json({ message: "Data posted successfully" });
+    // Check the email alredy exist 
+    const existingCustomer = await NewAddCustomer.findOne({cus_email})
+    if(existingCustomer){
+      return res.status(404).json({message : "Email Alredy Exists"})
+    }
+    const addCustomer = new NewAddCustomer(req.body);
+    await addCustomer.save();
+
+    let successMessage;
+
+    if (Cus_Type === "Corporate") {
+      successMessage = "Corporate customer added successfully";
+    } else if (Cus_Type === "Individual") {
+      successMessage = "Individual customer added successfully";
+    } else {
+      successMessage = "Customer added successfully";
+    }
+
+    res.status(201).json({ message: successMessage });
+
   } catch (e) {
     if (e.name === 'ValidationError') {
       const errorMessages = Object.values(e.errors).map(err => err.message);
@@ -71,29 +84,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-
-// PATCH METHOD
-// router.patch("/:id", async (req, res) => {
-//   const AddVendersId = req.params.id;
-
-//   try {
-//     const UpdatedAddVenders = await NewAddCustomer.findByIdAndUpdate(
-//       AddVendersId,
-//       req.body,
-//       {
-//         new: true,
-//         runValidators: true,
-//       }
-//     );
-//     res.status(201).json({ message: "venders Successfully updated " });
-//   } catch (e) {
-//     res.status(404).json({ message: "Can not patch venders" });
-//   }
-// });
-
-
+// PATCH METHOD 
 router.patch("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
+  const {Cus_Type} = req.body
+  let successMessage ;
 
   try {
     const UpdatedAddVenders = await NewAddCustomer.findByIdAndUpdate(
@@ -108,8 +103,17 @@ router.patch("/:id", async (req, res) => {
     if (!UpdatedAddVenders) {
       return res.status(404).json({ message: "Customer not found" });
     }
+    if(Cus_Type === "Individual"){
+      successMessage = "Individual Customer Updated Successfully"
+    }
+    else if(Cus_Type === "Corporate"){
+      successMessage = "Corporate Customer Updated Successfully"
+    }
+    else{
+      successMessage = "Customer Updated Successsfully"
+    }
 
-    res.status(200).json({ message: "Customer successfully updated", data: UpdatedAddVenders });
+    res.status(200).json({ message: successMessage});
   } catch (e) {
     if (e.name === 'ValidationError') {
       const errorMessages = Object.values(e.errors).map(err => err.message);
@@ -124,10 +128,19 @@ router.patch("/:id", async (req, res) => {
 // DELETE METHOD
 router.delete("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
+  const {Cus_Type} = req.body
+  let successMessage;
   try {
     const deletedcustomer = await NewAddCustomer.findByIdAndDelete(AddVendersId);
+    if(Cus_Type === "Corporate"){
+      successMessage = "Corporate Customer Deleted Successfully"
+    }else if(Cus_Type === "Individual"){
+      successMessage = "Individual Customer Deleted Successfully"
+    }else{
+      successMessage = "customer deleted successfully"
+    }
    
-    res.status(200).json({ message: "customer deleted successfully" });
+    res.status(200).json({ message: successMessage });
   } catch (error) {
     console.error("Error deleting customer:", error);
     res.status(500).json({ message: "Internal Server Error" });

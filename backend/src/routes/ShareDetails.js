@@ -10,7 +10,7 @@ router.get('/' , async(req , res) => {
         res.status(201).json(shareDetailsget)
 
     }catch(e){
-        res.status(404).json({message : "Can not get customer"})
+        res.status(404).json({message : "Can not get Details"})
     }
 })
 
@@ -39,10 +39,10 @@ router.post('/' , async(req, res) => {
     try{
         const shareDetailspost = new newShareDetailsSchema(req.body)
         await shareDetailspost.save()
-        res.status(201).json({message : "Data post Successfully"})
+        res.status(201).json({message : "Details Added Successfully"})
 
     }catch(e){
-        res.status(404).json({message : "Can not post customer enquiry",e})
+        res.status(404).json({message : "Can not post details",e})
     }
 })
 
@@ -58,7 +58,7 @@ router.patch('/:id' , async(req, res) => {
         res.status(201).json({message : "Details Successfully updated "})
 
     }catch(e){
-        res.status(404).json({message : "Can not patch Customer enquiry"})
+        res.status(404).json({message : "Can not patch Details"})
     }
 })
 

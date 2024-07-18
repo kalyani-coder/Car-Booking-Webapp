@@ -52,7 +52,7 @@ router.patch("/:id", async (req, res) => {
     );
     res.status(201).json({ message: "venders Rate Successfully updated " });
   } catch (e) {
-    res.status(404).json({ message: "Can not patch venders" });
+    res.status(404).json({ message: "Can not patch venders Rate" });
   }
 });
 
