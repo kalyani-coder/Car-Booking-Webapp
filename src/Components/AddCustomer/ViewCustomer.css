@@ -79,6 +79,12 @@
   /* margin-left: 300px; */
   /* height: 712px; */
 }
+
+.width-set-for-all-view-pages-carbooking-search-box {
+  display: flex;
+  margin: auto;
+  width: 50%;
+}
 @media (max-width: 768px) {
   .viewcustomer-main-container {
     max-width: 100%;
@@ -100,5 +106,9 @@
   .main-div-for-modal-container-for-all-inputs-cc {
     width: 100%;
     margin: 1em;
+  }
+  .width-set-for-all-view-pages-carbooking-search-box {
+    display: flex;
+    width: 100%;
   }
 }

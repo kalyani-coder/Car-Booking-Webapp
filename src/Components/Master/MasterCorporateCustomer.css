@@ -7,6 +7,10 @@
   .width-set-for-view-master-page-contains-table {
     width: 57em;
   }
+  .view-mster-btns-for-edit-and-delete {
+    flex-direction: column;
+    display: flex;
+  }
 }
 .add-duty-type-and-add-rate-inputs {
   display: flex;

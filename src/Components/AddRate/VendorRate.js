@@ -92,7 +92,7 @@ const VendorRate = () => {
 
   const handleSubmit = async (e) => {
     // e.preventDefault(); // Prevent default form submission behavior
-  
+
     // Check if any form field is empty
     for (const key in formData) {
       if (formData[key] === "") {
@@ -100,13 +100,13 @@ const VendorRate = () => {
         return;
       }
     }
-  
+
     // Check additional validations like mobilenoError
     if (mobilenoError) {
       window.alert(mobilenoError);
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:8787/api/vender-rate", {
         method: "POST",
@@ -117,7 +117,6 @@ const VendorRate = () => {
       });
       console.log("Response:", response); // Check response object
 
-  
       if (response.ok) {
         alert("Vendor added successfully!");
         setFormData(initialFormData); // Clear form data after successful submission
@@ -129,8 +128,6 @@ const VendorRate = () => {
       alert("Failed to add data. Please try again.");
     }
   };
-  
-  
 
   return (
     <>
@@ -444,7 +441,7 @@ const VendorRate = () => {
               </div>
             </form>
             <div className="flex m-auto justify-center">
-              <button type="submit" onClick={handleSubmit} className="rate-btn-submit">
+              <button type="submit" className="customer-btn-submit">
                 Save
               </button>
             </div>

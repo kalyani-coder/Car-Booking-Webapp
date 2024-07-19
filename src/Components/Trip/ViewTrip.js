@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-import axios from "axios"
+import axios from "axios";
 
 const ViewTrip = () => {
   const [trips, setTrips] = useState([]);
@@ -35,7 +35,9 @@ const ViewTrip = () => {
   useEffect(() => {
     const filterTrips = () => {
       const filteredData = trips.filter((trip) =>
-        trip.customername.toLowerCase().includes(searchCustomerName.toLowerCase())
+        trip.customername
+          .toLowerCase()
+          .includes(searchCustomerName.toLowerCase())
       );
       setFilteredTrips(filteredData);
     };
@@ -44,18 +46,25 @@ const ViewTrip = () => {
   }, [searchCustomerName, trips]);
 
   const handleDelete = async (tripId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this trip?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this trip?"
+    );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8787/api/add-trip/${tripId}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `http://localhost:8787/api/add-trip/${tripId}`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
 
-        setFilteredTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== tripId));
+        setFilteredTrips((prevTrips) =>
+          prevTrips.filter((trip) => trip._id !== tripId)
+        );
         setSuccessMessage("Trip deleted successfully.");
         setErrorMessage("");
       } catch (error) {
@@ -71,30 +80,34 @@ const ViewTrip = () => {
   };
   const handleSaveEdit = async (tripId, updatedTripData) => {
     try {
-      const response = await axios.patch(`http://localhost:8787/api/add-trip/${tripId}`, updatedTripData);
-  
+      const response = await axios.patch(
+        `http://localhost:8787/api/add-trip/${tripId}`,
+        updatedTripData
+      );
+
       // Check for successful response
       if (response.status === 200) {
-        console.log('Trip successfully updated', response.data);
-        alert('Trip successfully updated');
+        console.log("Trip successfully updated", response.data);
+        alert("Trip successfully updated");
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
         // Handle validation errors
-        console.error('Validation Error:', error.response.data.message);
-        alert('Validation Error: ' + error.response.data.message);
+        console.error("Validation Error:", error.response.data.message);
+        alert("Validation Error: " + error.response.data.message);
       } else {
         // Handle other errors
-        console.error('Error:', error.message);
-        alert('An error occurred while updating the trip');
+        console.error("Error:", error.message);
+        alert("An error occurred while updating the trip");
       }
     }
   };
-  
 
   const fetchTripDetails = async (tripId) => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-trip/${tripId}`);
+      const response = await fetch(
+        `http://localhost:8787/api/add-trip/${tripId}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -121,7 +134,7 @@ const ViewTrip = () => {
             <input
               type="text"
               placeholder="Search by Customer Name"
-              className="w-full p-2 rounded border"
+              className=" p-2 rounded border width-set-for-all-view-pages-carbooking-search-box"
               value={searchCustomerName}
               onChange={(e) => setSearchCustomerName(e.target.value)}
             />
@@ -182,7 +195,7 @@ const ViewTrip = () => {
           {/* Modal for Selected Trip Details */}
           {selectedTrip && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
-            <div
+              <div
                 className="bg-white p-4 rounded shadow-lg w-96 main-div-for-modal-container-for-all-inputs-cc"
                 style={{
                   height: "80vh",
@@ -587,7 +600,7 @@ const ViewTrip = () => {
                         Save
                       </button>
                       <button
-                       onClick={() => setIsEditing(false)}
+                        onClick={() => setIsEditing(false)}
                         className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
                       >
                         Cancel

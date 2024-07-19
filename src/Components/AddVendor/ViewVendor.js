@@ -173,7 +173,7 @@ const ViewVendor = () => {
             placeholder="Search By Vendor Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
+            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4 width-set-for-all-view-pages-carbooking-search-box"
           />
           <div className="responsive-over-flow-x-scroll-table">
             <Table>

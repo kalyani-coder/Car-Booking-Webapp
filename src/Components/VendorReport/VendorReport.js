@@ -122,11 +122,11 @@ function VendorReport() {
 
   return (
     <>
-      <div className="container-vendor-invoice">
+      <div className="container-vendor-invoice-main-cc">
         <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Vendor Report
         </h2>
-        <div className="grid-container">
+        <div className="filterss-and-filter-dropdown-with-export-btn0-vendor-report-page">
           <div className="filters">
             <div className="filter-input">
               <input

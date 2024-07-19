@@ -281,7 +281,7 @@ const ViewCustomerPayment = () => {
   return (
     <>
       <div className="customer-Add-container">
-        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+        <h2 className="View-Corporate-Customer-Rate font-bold py-4">
           View Customer Payment
         </h2>
         <input
@@ -289,7 +289,7 @@ const ViewCustomerPayment = () => {
           placeholder="Search By Customer Name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full py-2 px-4 border rounded-lg shadow-md mb-4  Search-By-Customer-Name"
+          className="width-set-for-all-view-pages-carbooking-search-box py-2 px-4 border rounded-lg shadow-md mb-4  Search-By-Customer-Name"
         />
         <div className="customer-main-container">
           <table className="table">

@@ -9,10 +9,6 @@
 .close-icon:focus {
   outline: none;
 }
-.View-Driver-Trip-Details-search-input-box {
-  width: 50%;
-  margin: auto;
-}
 
 @media (max-width: 768px) {
   .Search-by-date-or-driver-name {

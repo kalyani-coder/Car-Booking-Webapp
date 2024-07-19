@@ -4,7 +4,7 @@ import { FaEdit, FaSave, FaTrash, FaFilePdf } from "react-icons/fa";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Customer from "./../CustomerEnquiry/Customer";
-
+import "./UpdateDuty.css";
 const ViewUpdateDuty = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
@@ -324,19 +324,21 @@ const ViewUpdateDuty = () => {
 
   return (
     <>
-      <div className="customer-Add-container">
-        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+      <div className="p-4">
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4">
           View Duty Slip
         </h2>
-        <div className="search-bar">
+        <div className="width-set-for-view-update-duty-input-div-section">
           <input
             type="text"
             placeholder="Search by Customer Name / Company Name"
-            className="w-full p-2 rounded border"
+            className="width-set-for-all-view-pages-carbooking-search-box p-2 rounded border"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
+      </div>
+      <div className="customer-Add-container">
         <div className="customer-main-container">
           <table className="table">
             <thead>

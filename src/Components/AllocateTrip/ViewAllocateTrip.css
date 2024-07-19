@@ -30,7 +30,7 @@
 .view-allocate-trip-details-container {
   width: 67em;
   /* max-width: 800px; */
-  display: flex;
+
   /* flex-wrap: wrap; */
   padding: 20px;
   /* height: 150vh; */
@@ -41,3 +41,18 @@
 /* Add the following styles to your ViewAllocateTrip.css file */
 
 /* Add any additional styling as needed */
+
+@media (max-width: 768px) {
+  .view-allocate-trip-details-container {
+    width: 100%;
+    /* max-width: 800px; */
+    display: flex;
+    /* flex-wrap: wrap; */
+    padding: 20px;
+    flex-direction: column;
+    /* height: 150vh; */
+    justify-content: center;
+    /* flex-direction: column; */
+    margin: auto;
+  }
+}

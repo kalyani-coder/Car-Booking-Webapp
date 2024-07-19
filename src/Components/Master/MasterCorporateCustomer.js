@@ -163,7 +163,7 @@ const MasterCorporateCustomer = () => {
                 </div>
               </div>
               <div className="flex justify-center py-4">
-                <button type="submit" className="rate-btn-submit">
+                <button type="button" className="customer-btn-submit">
                   Save
                 </button>
               </div>

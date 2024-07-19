@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -221,7 +221,7 @@ const ViewVendorPayment = () => {
     <>
       <div className="vendor-Add-container">
         <div className="vendor-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+          <h2 className="View-Corporate-Customer-Rate font-bold py-4">
             View Vendor Payment
           </h2>
           <input
@@ -229,7 +229,7 @@ const ViewVendorPayment = () => {
             placeholder="Search By Vendor Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full py-2 px-4 border rounded-lg shadow-md mb-4"
+            className="width-set-for-all-view-pages-carbooking-search-box py-2 px-4 border rounded-lg shadow-md mb-4"
           />
           <div className="view-vendor-payment-table-overflow-y-cc">
             <table className="table">

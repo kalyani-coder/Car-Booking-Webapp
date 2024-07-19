@@ -8,9 +8,9 @@
   box-sizing: border-box;
 }
 .trip-counts-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Two columns */
-  gap: 10px; /* Adjust gap between cells as needed */
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 0;
 }
 
 .trip-counts {
@@ -25,7 +25,12 @@
 
   padding: 1em 0;
 }
+.div-contains-labl-dropdown-and-the-export-to-excel-button-monthly-customer-report {
+  text-align: center;
+  margin-bottom: 20px;
 
+  display: flex;
+}
 @media (max-width: 768px) {
   .form-groupx {
     margin: auto;
@@ -63,5 +68,12 @@
   }
   .table-for-monthly-customer-report-page-width-set-cc {
     width: 74em;
+  }
+  .div-contains-labl-dropdown-and-the-export-to-excel-button-monthly-customer-report {
+    text-align: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 1em;
+    display: flex;
   }
 }

@@ -109,7 +109,7 @@ function MonthlyCustomerReport() {
         <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Monthly Customer Report
         </h2>
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <div className="flex items-center div-contains-labl-dropdown-and-the-export-to-excel-button-monthly-customer-report">
           <label htmlFor="reportType" style={{ margin: "10px" }}>
             Select Report Type:
           </label>
@@ -129,14 +129,14 @@ function MonthlyCustomerReport() {
             <option value="bookingStatistics">Booking Statistics Report</option>
           </select>
           <i className="fas fa-filter ml-3"></i>
+          <button
+            className="rate-btn-submit ml-3 m-auto flex"
+            onClick={downloadExcel}
+            style={{ marginBottom: "20px" }}
+          >
+            Export to Excel
+          </button>
         </div>
-        <button
-          className="rate-btn-submit ml-3 m-auto flex"
-          onClick={downloadExcel}
-          style={{ marginBottom: "20px" }}
-        >
-          Export to Excel
-        </button>
         <div className="table-for-monthly-customer-report-page">
           <table className="table table-for-monthly-customer-report-page-width-set-cc">
             <thead>

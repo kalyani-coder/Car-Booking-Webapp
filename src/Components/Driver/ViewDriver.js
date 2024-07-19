@@ -106,7 +106,11 @@ const ViewDriver = () => {
         setIsEditing(false);
         alert(responseData.message || "Driver updated successfully");
       } else {
-        console.error("Error updating driver:", response.status, responseData.message);
+        console.error(
+          "Error updating driver:",
+          response.status,
+          responseData.message
+        );
         alert(`Error updating driver: ${responseData.message}`);
       }
     } catch (error) {
@@ -169,21 +173,22 @@ const ViewDriver = () => {
     return emailRegex.test(email);
   };
 
-  
   return (
     <>
       <div className="customer-Add-container">
         <div className="viewcustomer-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold">
+          <h2 className="View-Corporate-Customer-Rate font-bold ">
             View Drivers
           </h2>
-          <input
-            type="search"
-            placeholder="Search By Driver Name"
-            className="w-full p-2 rounded border"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <div className="py-4">
+            <input
+              type="search"
+              placeholder="Search By Driver Name"
+              className="p-2 rounded border width-set-for-all-view-pages-carbooking-search-box"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
           <div className="table-responsive">
             <TableView
               drivers={drivers}

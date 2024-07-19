@@ -126,7 +126,6 @@ const ViewCustomer = () => {
     }
   };
 
-
   //validation
   const handleAlphaInputChange = (callback) => (event) => {
     const value = event.target.value;
@@ -180,8 +179,6 @@ const ViewCustomer = () => {
     setIsEditing(true);
   };
 
-
-
   const handleSave = async () => {
     try {
       const response = await fetch(
@@ -199,12 +196,16 @@ const ViewCustomer = () => {
         const updatedCustomer = await response.json();
         setCustomers((prevCustomers) =>
           prevCustomers.map((customer) =>
-            customer._id === editedCustomer._id ? updatedCustomer.data : customer
+            customer._id === editedCustomer._id
+              ? updatedCustomer.data
+              : customer
           )
         );
         setFilteredCustomers((prevCustomers) =>
           prevCustomers.map((customer) =>
-            customer._id === editedCustomer._id ? updatedCustomer.data : customer
+            customer._id === editedCustomer._id
+              ? updatedCustomer.data
+              : customer
           )
         );
         setIsEditing(false);
@@ -228,14 +229,14 @@ const ViewCustomer = () => {
     <>
       <div className="customer-Add-container">
         <div className="viewcustomer-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold">
+          <h2 className="View-Corporate-Customer-Rate font-bold ">
             View Customer
           </h2>
-          <div className="search-bar">
+          <div className="search-bar py-4">
             <input
               type="text"
               placeholder="Search by Customer Name / Company Name"
-              className="w-full p-2 rounded border"
+              className="w-full p-2 rounded border width-set-for-all-view-pages-carbooking-search-box"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -259,7 +260,10 @@ const ViewCustomer = () => {
           >
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-2xl font-bold">Edit Customer</h2>
-              <button onClick={() => setIsEditing(false)} className="close-icon">
+              <button
+                onClick={() => setIsEditing(false)}
+                className="close-icon"
+              >
                 <FaTimes />
               </button>
             </div>
@@ -345,7 +349,6 @@ const ViewCustomer = () => {
           </div>
         </div>
       )}
-
     </>
   );
 };

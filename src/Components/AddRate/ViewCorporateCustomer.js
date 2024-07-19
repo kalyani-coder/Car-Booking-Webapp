@@ -4,7 +4,7 @@ import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import "./ViewCustomerRate.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import IndivisualCustomers from './../ViewCustomers/IndivisualCustomers';
+import IndivisualCustomers from "./../ViewCustomers/IndivisualCustomers";
 
 const ViewCorporateCustomer = () => {
   const [customerRates, setCustomerRates] = useState([]);
@@ -86,9 +86,9 @@ const ViewCorporateCustomer = () => {
           body: JSON.stringify(editedItem),
         }
       );
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         setCustomerRates((prevRates) =>
           prevRates.map((customerRate) =>
@@ -96,13 +96,18 @@ const ViewCorporateCustomer = () => {
           )
         );
         setIsEditing(false);
-  
+
         // Remove the edited item from localStorage
         localStorage.removeItem("editedItem");
-        alert(responseData.message || "Corporate Customer rate updated successfully");
+        alert(
+          responseData.message || "Corporate Customer rate updated successfully"
+        );
       } else {
         console.error("Error updating vendor rate:", response.status);
-        alert(responseData.message || "Error updating vendor rate. Please try again.");
+        alert(
+          responseData.message ||
+            "Error updating vendor rate. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error updating vendor rate:", error);
@@ -110,7 +115,6 @@ const ViewCorporateCustomer = () => {
       alert("Error updating vendor rate. Please try again.");
     }
   };
-  
 
   const handleCancelEdit = () => {
     setEditedItem(null);
@@ -158,13 +162,12 @@ const ViewCorporateCustomer = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold">
+          <h2 className="View-Corporate-Customer-Rate font-bold py-4">
             View Corporate Customer Rate
           </h2>
-
           <div className="flex items-center space-x-4">
-            <div className="flex-grow-0 flex-shrink-0 w-8/12 search-bar">
-            <input
+            <div className="flex-grow-0 flex-shrink-0 w-8/12 search-bar ">
+              <input
                 type="text"
                 placeholder="Search by  Customer Name"
                 className="w-full p-2 rounded border"
@@ -382,19 +385,19 @@ const ViewCorporateCustomer = () => {
                       <td>{customerRate.from}</td>
                       <td>{customerRate.to}</td>
                       <td>
-                      <div className="d-flex align-items-center gap-1">
-                        <button
-                          className="btn btn-info"
-                          onClick={() => handleEdit(customerRate._id)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDelete(customerRate._id)}
-                        >
-                          <FaTrash />
-                        </button>
+                        <div className="d-flex align-items-center gap-1">
+                          <button
+                            className="btn btn-info"
+                            onClick={() => handleEdit(customerRate._id)}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(customerRate._id)}
+                          >
+                            <FaTrash />
+                          </button>
                         </div>
                       </td>
                     </tr>

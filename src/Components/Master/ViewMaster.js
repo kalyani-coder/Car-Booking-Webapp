@@ -197,7 +197,7 @@ const ViewMaster = () => {
                 <th className="p-2 border-b-2 border-gray-300">Vehicle</th>
                 <th className="border-b-2 border-gray-300">Duty Type</th>
                 <th className="p-2 border-b-2 border-gray-300">Rate</th>
-                <th className="p-2 relative left-16 border-b-2 border-gray-300">
+                <th className="p-2 text-center border-b-2 border-gray-300">
                   Action
                 </th>
               </tr>
@@ -218,7 +218,7 @@ const ViewMaster = () => {
                     {item.add_rate}
                   </td>
                   <td className="p-2 border-b border-gray-200">
-                    <div className="d-flex align-items-center gap-4 relative left-10">
+                    <div className="d-flex align-items-center justify-center gap-4 relative view-mster-btns-for-edit-and-delete">
                       <button
                         className="btn btn-info"
                         onClick={() => handleEdit(item)}

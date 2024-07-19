@@ -68,6 +68,10 @@
   width: 50%;
   margin: auto;
 }
+.width-set-for-view-update-duty-input-div-section {
+  width: 69em;
+  margin: auto;
+}
 @media (max-width: 768px) {
   .update-duty-container {
     display: flex;
@@ -104,5 +108,8 @@
   }
   .View-Driver-Trip-Details-search-input-box {
     padding: 1em 1em;
+  }
+  .width-set-for-view-update-duty-input-div-section {
+    width: 100%;
   }
 }

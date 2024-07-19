@@ -139,15 +139,14 @@ const ViewVenderRate = () => {
     <>
       <div className="customer-Add-container">
         <div className="customer-main-container h-[98vh]">
-          <h2 className="View-Corporate-Customer-Rate font-bold">
+          <h2 className="View-Corporate-Customer-Rate font-bold py-4">
             View Vendor Rate
           </h2>
-
-          <div className="search-bar">
+          <div className="search-bar py-2">
             <input
               type="text"
               placeholder="Search by Vendor Name "
-              className="w-full p-2 rounded border"
+              className="w-full p-2 rounded border width-set-for-all-view-pages-carbooking-search-box"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -332,19 +331,19 @@ const ViewVenderRate = () => {
                       <td>{customerRate.title}</td>
                       <td>{customerRate.rate}</td>
                       <td>
-                      <div className="d-flex align-items-center gap-1">
-                        <button
-                          className="btn btn-info"
-                          onClick={() => handleEdit(customerRate._id)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDelete(customerRate._id)}
-                        >
-                          <FaTrash />
-                        </button>
+                        <div className="d-flex align-items-center gap-1">
+                          <button
+                            className="btn btn-info"
+                            onClick={() => handleEdit(customerRate._id)}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(customerRate._id)}
+                          >
+                            <FaTrash />
+                          </button>
                         </div>
                       </td>
                     </tr>

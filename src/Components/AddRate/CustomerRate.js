@@ -39,7 +39,6 @@ const CustomerRate = () => {
     hours: "",
     extra_hours: "",
   };
- 
 
   const handleCustomerTypeChange = async (e) => {
     const selectedType = e.target.value;
@@ -118,7 +117,7 @@ const CustomerRate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Validation: Check if all required fields are filled
     if (
       !formData.type_of_vehicle ||
@@ -132,12 +131,12 @@ const CustomerRate = () => {
       alert("All fields required.");
       return;
     }
-  
+
     if (!selectedCustomer) {
       window.alert("Please select a customer");
       return;
     }
-  
+
     const formDataWithCustomer = {
       ...formData,
       Cus_name: selectedCustomer.cus_name,
@@ -153,7 +152,7 @@ const CustomerRate = () => {
       hours: formData.hours,
       extra_hours: formData.extra_hours,
     };
-  
+
     let apiEndpoint = "";
     let customerType = "";
     if (formData.Cus_Type === "Corporate") {
@@ -167,7 +166,7 @@ const CustomerRate = () => {
       window.alert("Invalid customer type");
       return;
     }
-  
+
     try {
       const response = await fetch(apiEndpoint, {
         method: "POST",
@@ -176,7 +175,7 @@ const CustomerRate = () => {
         },
         body: JSON.stringify(formDataWithCustomer),
       });
-  
+
       if (response.ok) {
         console.log("Customer data added successfully");
         alert(`${customerType} customer Rate added successfully!`, "success");
@@ -208,7 +207,7 @@ const CustomerRate = () => {
       alert("Failed to add data. Please try again.", "danger");
     }
   };
-  
+
   const [vehicleList, setVehicleList] = useState([]);
   const [dutyTypeList, setDutyTypeList] = useState([]);
   const [rateList, setRateList] = useState([]);
@@ -626,7 +625,7 @@ const CustomerRate = () => {
                 </div>
               </div>
               <div className="m-auto">
-                <button type="submit" className="rate-btn-submit flex">
+                <button type="submit" className="customer-btn-submit">
                   Submit
                 </button>
               </div>

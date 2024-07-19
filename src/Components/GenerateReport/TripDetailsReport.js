@@ -89,7 +89,7 @@ function TripDetailsReport() {
         <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
           Trip Details Report
         </h2>
-        <div className="flex gap-4 section-for-input-and-btn-for-trip-details-page">
+        <div className="flex gap-4 justify-center section-for-input-and-btn-for-trip-details-page p-4">
           <select
             className="trip-details-input-trip-details-report-page"
             name="vehicle"
@@ -128,7 +128,9 @@ function TripDetailsReport() {
           {Object.keys(tripCounts).map((vehicle, index) => (
             <div key={index} className="trip-counts">
               <span>
-                <strong>{vehicle} :</strong>
+                <strong>
+                  {vehicle} : {` `}
+                </strong>
               </span>
               <span>{tripCounts[vehicle]}</span>
             </div>

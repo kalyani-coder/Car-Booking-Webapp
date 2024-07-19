@@ -268,19 +268,21 @@ const ViewStartEndDetails = () => {
 
   return (
     <>
-      <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
-        View Driver Trip Details
-      </h2>
-      <div className="py-4 space-y-4  m-auto View-Driver-Trip-Details-search-input-box ">
-        <input
-          type="text"
-          placeholder="Search by date or driver name"
-          className="w-full p-2 rounded border Search-by-date-or-driver-name"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-      </div>
       <div className="share-details-container">
+        <div className="">
+          <h2 className="View-Corporate-Customer-Rate font-bold py-4">
+            View Driver Trip Details
+          </h2>
+          <div className="py-2">
+            <input
+              type="text"
+              placeholder="Search by date or driver name"
+              className="width-set-for-all-view-pages-carbooking-search-box p-2 rounded border Search-by-date-or-driver-name"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
+        </div>
         <div className="share-details-main-container">
           {error ? (
             <p>Error: {error}</p>
@@ -360,10 +362,11 @@ const ViewStartEndDetails = () => {
             </Table>
           )}
           {/* Edit View Driver Details */}
+
           <Modal
             show={editMode}
             onHide={handleCloseEdit}
-            dialogClassName="modal-lg"
+            dialogClassName="modal-lg "
           >
             <Modal.Header className="d-flex justify-content-between align-items-center">
               <Modal.Title>Edit Driver Trip Detail</Modal.Title>
@@ -551,21 +554,22 @@ const ViewStartEndDetails = () => {
                 </Form.Group>
               </Form>
             </Modal.Body>
-            <Modal.Footer>
-              <Button
-                className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
-                onClick={handleCloseEdit}
-              >
-                Cancel
-              </Button>
+            <div className="flex items-center p-4">
               <Button
                 className="px-4 py-2 bg-blue-500 text-white rounded"
                 onClick={handleSaveShareDetail}
               >
                 Save
               </Button>
-            </Modal.Footer>
+              <Button
+                className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+                onClick={handleCloseEdit}
+              >
+                Cancel
+              </Button>
+            </div>
           </Modal>
+
           {/* View DriverDetails */}
           {errorMessage && <p>{errorMessage}</p>}
 

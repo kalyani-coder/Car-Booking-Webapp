@@ -388,7 +388,7 @@ function VendorInvoiceMonthly() {
                 </label>
                 <input
                   type="date"
-                  className="form-control-cust-inq-input"
+                  className="form-control-cust-inq-input-corp-invoice-monthly-cc "
                   name="invoiceDate"
                   value={selectedDate}
                   onChange={handleDateChange}
@@ -456,10 +456,7 @@ function VendorInvoiceMonthly() {
                         )}
                     </td>
                     <td>
-                      {selectedVendorTrips.reduce(
-                        (total, trip) => total,
-                        0
-                      )}
+                      {selectedVendorTrips.reduce((total, trip) => total, 0)}
                     </td>
                   </tr>
                 </tbody>

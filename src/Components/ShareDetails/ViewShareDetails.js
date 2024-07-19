@@ -267,15 +267,15 @@ const ViewShareDetails = () => {
     <>
       <div className="share-details-container">
         <div className="">
-          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+          <h2 className="View-Corporate-Customer-Rate font-bold">
             View Share Details
           </h2>
         </div>
-        <div className="p-4 space-y-4">
+        <div className="py-4">
           <input
             type="text"
             placeholder="Search by date or driver name"
-            className="w-full p-2 rounded border Search-by-date-or-driver-name"
+            className="width-set-for-all-view-pages-carbooking-search-box p-2 rounded border Search-by-date-or-driver-name"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
