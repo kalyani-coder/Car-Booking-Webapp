@@ -38,10 +38,10 @@
   /* flex-direction: column; */
   margin: auto;
 }
-/* Add the following styles to your ViewAllocateTrip.css file */
-
-/* Add any additional styling as needed */
-
+.share-details-main-container {
+  display: grid;
+  justify-content: center;
+}
 @media (max-width: 768px) {
   .view-allocate-trip-details-container {
     width: 100%;
@@ -54,5 +54,8 @@
     justify-content: center;
     /* flex-direction: column; */
     margin: auto;
+  }
+  .share-details-main-container {
+    display: block;
   }
 }

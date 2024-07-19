@@ -149,11 +149,11 @@ const ViewAllocateTrip = () => {
           body: JSON.stringify(editedTrip),
         }
       );
-  
+
       // Log response for debugging
       const result = await response.json();
       console.log("API Response:", result);
-  
+
       if (response.ok) {
         // Update UI with new trip details
         setShareDetails((prevDetails) =>
@@ -168,16 +168,19 @@ const ViewAllocateTrip = () => {
         );
         alert(result.message || "Trip details successfully updated!");
       } else {
-        console.error("Error updating trip details:", result.message || response.statusText);
-        alert(result.message || "Error updating trip details. Please try again.");
+        console.error(
+          "Error updating trip details:",
+          result.message || response.statusText
+        );
+        alert(
+          result.message || "Error updating trip details. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error updating trip details:", error);
       alert("Error updating trip details. Please try again.");
     }
   };
-  
-  
 
   const handleDelete = (_id) => {
     const confirmed = window.confirm(

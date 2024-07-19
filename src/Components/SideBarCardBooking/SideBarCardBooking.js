@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { DropdownIcon } from "./NavLink";
 import "./SideBarCardBooking.css";
@@ -11,6 +11,7 @@ const DropdownMenu = ({
   setIsSideNavbarOpen,
   setOpenDropdown,
 }) => {
+  const location = useLocation();
   return (
     <div
       className={`transition-all duration-1000 pl-2 flex flex-col pt-2 gap-[10px] ${
@@ -21,9 +22,9 @@ const DropdownMenu = ({
         <Link
           to={subNav.link}
           key={index}
-          className={
-            "group flex items-center my-1 duration-300 text-base gap-7 font-medium p-2 py-6 rounded-md text-white hover:bg-slate-500 hover:text-[#040430] "
-          }
+          className={`group flex items-center my-1 duration-300 text-base gap-7 font-medium p-2 py-6 rounded-md text-white hover:bg-slate-500 hover:text-[#040430] ${
+            location.pathname === subNav.link ? "bg-slate-600" : ""
+          }`}
           onClick={() => {
             setIsSideNavbarOpen(false);
             setOpenDropdown(null);
@@ -52,6 +53,7 @@ export const SideNavbar = ({
   setIsSideNavbarOpen,
 }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const location = useLocation();
 
   const handleDropdownClick = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
@@ -156,7 +158,9 @@ export const SideNavbar = ({
                 <Link
                   to={nav.link}
                   key={i}
-                  className="group flex items-center duration-300 text-base gap-7 font-medium p-2 rounded-md text-white hover:bg-slate-500 hover:text-[#040430] w-[384px]"
+                  className={`group flex items-center duration-300 text-base gap-7 font-medium p-2 rounded-md text-white hover:bg-slate-500 hover:text-[#040430] w-[384px] ${
+                    location.pathname === nav.link ? "bg-slate-600" : ""
+                  }`}
                   onClick={() => setIsSideNavbarOpen(false)}
                 >
                   <div className="justify-start duration-300 p-0 m-0">
