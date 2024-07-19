@@ -3,7 +3,6 @@ import "./CustomerInvoice.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
-import Customer from "./../CustomerEnquiry/Customer";
 import headerlogo from "../../assects/images/shivpushpa_logo.png";
 
 function CustomerInvoice() {
@@ -273,7 +272,7 @@ function CustomerInvoice() {
             </label>
             {/* Dropdown to select a customer */}
             <select
-              className="form-control-cust-inq-input-corp-invoice-monthly"
+              className="form-control-cust-inq-input-corp-invoice-monthly w-[80%] p-2"
               id="customername"
               name="customerName"
               onChange={(e) => {
@@ -416,7 +415,7 @@ function CustomerInvoice() {
                           (customer) =>
                             customer.customerId === selectedCustomer.customerId
                         )
-                        .reduce((total, trip) => total + trip.SGST, 0)}
+                        .reduce((total, trip) => total, 0)}
                     </td>
                     <td>
                       {customerList
@@ -424,7 +423,7 @@ function CustomerInvoice() {
                           (customer) =>
                             customer.customerId === selectedCustomer.customerId
                         )
-                        .reduce((total, trip) => total + trip.CGST, 0)}
+                        .reduce((total, trip) => total, 0)}
                     </td>
                   </tr>
                 </tbody>

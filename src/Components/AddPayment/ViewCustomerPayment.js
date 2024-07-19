@@ -314,9 +314,9 @@ const ViewCustomerPayment = () => {
                   <td>{customer.reporting_Address}</td>
                   <td>{customer.Date}</td>
 
-                  <td className="btn-flx-col-for-table-data-download-invoice">
+                  <td className="btn-flx-col-for-table-data-download-invoice-view-vendor-payment-section">
                     <Link
-                      className="btn btn-primary ml-2"
+                      className="btn btn-primary btn-sm "
                       to={`/ViewCustomerPayment/${customer._id}`}
                     >
                       <i className="fas fa-eye"></i>

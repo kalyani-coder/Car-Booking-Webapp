@@ -7,8 +7,6 @@ import { FaEdit, FaTrash, FaTimes, FaFilePdf } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ViewDriverDetails.css";
 import img1 from "../../assects/images/shivpushpa_logo.png";
-import "./ViewDriverDetails.css";
-
 
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);
@@ -270,20 +268,20 @@ const ViewStartEndDetails = () => {
 
   return (
     <>
+      <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+        View Driver Trip Details
+      </h2>
+      <div className="py-4 space-y-4  m-auto View-Driver-Trip-Details-search-input-box ">
+        <input
+          type="text"
+          placeholder="Search by date or driver name"
+          className="w-full p-2 rounded border Search-by-date-or-driver-name"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </div>
       <div className="share-details-container">
         <div className="share-details-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
-            View Driver Trip Details
-          </h2>
-          <div className="py-4 space-y-4 ">
-            <input
-              type="text"
-              placeholder="Search by date or driver name"
-              className="w-full p-2 rounded border Search-by-date-or-driver-name"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
           {error ? (
             <p>Error: {error}</p>
           ) : (
@@ -325,7 +323,7 @@ const ViewStartEndDetails = () => {
 
                     <td>{shareDetail.mobileno}</td>
                     <td>
-                      <div className="d-flex justify-content-between">
+                      <div className="d-flex justify-content-between gap-3 btn-for-view-drive-details-flex">
                         <button
                           className="btn btn-primary btn-sm"
                           onClick={() =>

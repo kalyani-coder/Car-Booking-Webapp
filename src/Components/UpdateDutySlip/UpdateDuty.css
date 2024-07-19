@@ -59,6 +59,15 @@
 .gap-for-div-section-container-label-and-input-add-duty-slip {
   gap: 2em;
 }
+.container-btns-view-update-duty-slip {
+  display: flex;
+
+  gap: 1em;
+}
+.View-update-duty-Trip-Details-search-input-box {
+  width: 50%;
+  margin: auto;
+}
 @media (max-width: 768px) {
   .update-duty-container {
     display: flex;
@@ -86,5 +95,14 @@
   }
   .gap-for-div-section-container-label-and-input-add-duty-slip {
     gap: 0;
+  }
+  .container-btns-view-update-duty-slip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+  }
+  .View-Driver-Trip-Details-search-input-box {
+    padding: 1em 1em;
   }
 }

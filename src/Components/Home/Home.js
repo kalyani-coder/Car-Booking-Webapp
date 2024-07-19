@@ -10,7 +10,7 @@ import {
   Legend,
 } from "recharts";
 import PieChart from "../Piechart/Piechart";
-
+import "./Home.css";
 const Home = () => {
   // Sample data for customers and vendors
   const data = [
@@ -31,7 +31,7 @@ const Home = () => {
         Welcome to Admin Dashboard
       </h1>
       <div className="flex ml-15 justify-center mt-10">
-        <div className="flex justify-start w-full max-w-3xl">
+        <div className="flex justify-start w-full max-w-3xl overflow-scroll-fr-home-table-bar-chart">
           {/* <div className="w-1/2 mr-4">
             <PieChart data={newdata} />
           </div> */}

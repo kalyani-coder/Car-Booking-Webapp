@@ -308,30 +308,32 @@ const ViewShareDetails = () => {
                     <td>{shareDetail.date}</td>
                     <td>{shareDetail.drivername}</td>
                     <td>
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleViewMore(shareDetail._id)}
-                      >
-                        <i className="fas fa-eye"></i>
-                      </button>
-                      <button
-                        className="btn btn-info btn-sm"
-                        onClick={() => handleEditShareDetail(shareDetail)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDeleteShareDetail(shareDetail)}
-                      >
-                        <FaTrash />
-                      </button>
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => generateInvoice(shareDetail)}
-                      >
-                        <FaFilePdf />
-                      </button>
+                      <div className="flex gap-4 btn-view-share-details-flex-wrap-for-page flex-wrap">
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleViewMore(shareDetail._id)}
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
+                        <button
+                          className="btn btn-info btn-sm"
+                          onClick={() => handleEditShareDetail(shareDetail)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDeleteShareDetail(shareDetail)}
+                        >
+                          <FaTrash />
+                        </button>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => generateInvoice(shareDetail)}
+                        >
+                          <FaFilePdf />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

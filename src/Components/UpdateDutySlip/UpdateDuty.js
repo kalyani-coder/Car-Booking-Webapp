@@ -247,7 +247,7 @@ const UpdateDuty = () => {
             <label className="form-label">Transaction ID:</label>
             <input
               type="text"
-              className="form-control w-[500px] update-duty-form-control"
+              className="form-control w-[100%] update-duty-form-control"
               value={formData.transactionId}
               onChange={(e) =>
                 setFormData({ ...formData, transactionId: e.target.value })
@@ -702,7 +702,6 @@ const UpdateDuty = () => {
 
             <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                {" "}
                 <label htmlFor="extrakm" className="update-duty-form-label">
                   Extra KMS:
                 </label>

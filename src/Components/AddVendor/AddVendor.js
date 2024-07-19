@@ -358,16 +358,16 @@ const AddVendor = () => {
                   </div>
                 )}
               </div>
-              <button
-                className="customer-btn-submit"
-                type="button"
-                onClick={handleSubmit}
-              >
-                Add
-              </button>
             </form>
             <Alert validationMessages={validationMessages} />
           </div>
+          <button
+            className="customer-btn-submit"
+            type="button"
+            onClick={handleSubmit}
+          >
+            Add
+          </button>
         </div>
       </div>
     </>

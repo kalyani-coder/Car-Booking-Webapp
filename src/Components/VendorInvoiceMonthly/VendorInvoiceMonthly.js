@@ -457,7 +457,7 @@ function VendorInvoiceMonthly() {
                     </td>
                     <td>
                       {selectedVendorTrips.reduce(
-                        (total, trip) => total + trip.tds,
+                        (total, trip) => total,
                         0
                       )}
                     </td>

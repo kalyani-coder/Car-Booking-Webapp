@@ -159,9 +159,9 @@ const CustomerRate = () => {
     if (formData.Cus_Type === "Corporate") {
       apiEndpoint = "http://localhost:8787/api/corporate-customer";
       customerType = "Corporate";
-    } else if (formData.Cus_Type === "Indivisual") {
+    } else if (formData.Cus_Type === "Individual") {
       apiEndpoint = "http://localhost:8787/api/indivisual-customer";
-      customerType = "Indivisual";
+      customerType = "Individual";
     } else {
       console.log("Invalid customer type");
       window.alert("Invalid customer type");
@@ -261,7 +261,7 @@ const CustomerRate = () => {
                 >
                   <option value="">Customer</option>
                   <option value="Corporate">Corporate Customer</option>
-                  <option value="Indivisual">Indivisual Customer</option>
+                  <option value="Individual">Individual Customer</option>
                 </select>
               </div>
 
@@ -424,7 +424,7 @@ const CustomerRate = () => {
                 </>
               )}
 
-              {customerType === "Indivisual" && (
+              {customerType === "Individual" && (
                 <>
                   <div className="form-group">
                     <label htmlFor="type_of_vehicle" className="form-label">

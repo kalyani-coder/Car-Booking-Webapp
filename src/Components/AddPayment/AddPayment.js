@@ -524,9 +524,7 @@ function AddPayment() {
                         >
                           <option value="">Select Customer TYpe</option>
                           <option value="Corporate">Corporate Customer</option>
-                          <option value="Indivisual">
-                            Indivisual Customer
-                          </option>
+                          <option value="Individual">Individual Customer</option>
                         </select>
                       </div>
                     </div>

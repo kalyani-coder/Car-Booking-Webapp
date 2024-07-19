@@ -325,20 +325,19 @@ const ViewUpdateDuty = () => {
   return (
     <>
       <div className="customer-Add-container">
+        <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
+          View Duty Slip
+        </h2>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search by Customer Name / Company Name"
+            className="w-full p-2 rounded border"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <div className="customer-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4">
-            View Duty Slip
-          </h2>
-
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Search by Customer Name / Company Name"
-              className="w-full p-2 rounded border"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
           <table className="table">
             <thead>
               <tr>
@@ -374,25 +373,27 @@ const ViewUpdateDuty = () => {
                         </button>
                       ) : (
                         <>
-                          <button
-                            className="btn btn-primary"
-                            onClick={() => toggleShowDetails(customer._id)}
-                          >
-                            <i className="fas fa-eye"></i>
-                          </button>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleDelete(customer._id)}
-                          >
-                            <FaTrash />
-                          </button>
+                          <div className="flex items-center container-btns-view-update-duty-slip">
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => toggleShowDetails(customer._id)}
+                            >
+                              <i className="fas fa-eye"></i>
+                            </button>
+                            <button
+                              className="btn btn-danger"
+                              onClick={() => handleDelete(customer._id)}
+                            >
+                              <FaTrash />
+                            </button>
 
-                          <button
-                            className="btn btn-info"
-                            onClick={() => generateTripDutySlip(customer._id)}
-                          >
-                            <FaFilePdf />
-                          </button>
+                            <button
+                              className="btn btn-info"
+                              onClick={() => generateTripDutySlip(customer._id)}
+                            >
+                              <FaFilePdf />
+                            </button>
+                          </div>
                         </>
                       )}
                     </td>

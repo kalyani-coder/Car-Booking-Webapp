@@ -1,33 +1,43 @@
 /* ViewVendor.css */
 
 .custom-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
-  
-  .custom-card-body {
-    padding: 0;
-  }
-  
-  .custom-card-title {
-    font-size: 1.25rem;
-    margin-bottom: 8px;
-  }
-  
-  .custom-card-subtitle {
-    font-size: 1rem;
-    margin-bottom: 4px;
-  }
-  .vendorbutton{
-    margin-bottom: 0px !important;
-    padding-bottom: 0px;
-  }
-  /* Add the following styles to your ViewAllocateTrip.css file */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
 
+.custom-card-body {
+  padding: 0;
+}
 
+.custom-card-title {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.custom-card-subtitle {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.vendorbutton {
+  margin-bottom: 0px !important;
+  padding-bottom: 0px;
+}
+
+.view-allocate-trip-details-container {
+  width: 67em;
+  /* max-width: 800px; */
+  display: flex;
+  /* flex-wrap: wrap; */
+  padding: 20px;
+  /* height: 150vh; */
+  justify-content: center;
+  /* flex-direction: column; */
+  margin: auto;
+}
+/* Add the following styles to your ViewAllocateTrip.css file */
 
 /* Add any additional styling as needed */

@@ -565,7 +565,7 @@ const CustomerEnquiry = () => {
                 </option>
               </select>
             </div>
-            <button type="button" className="btn-submit" onClick={handleSubmit}>
+            <button type="button" className="customer-btn-submit" onClick={handleSubmit}>
               Submit
             </button>
           </div>
