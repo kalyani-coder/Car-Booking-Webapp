@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import axios from "axios";
+import axios from "axios";
 
 const ViewTrip = () => {
   const [trips, setTrips] = useState([]);
@@ -65,11 +66,15 @@ const ViewTrip = () => {
         setFilteredTrips((prevTrips) =>
           prevTrips.filter((trip) => trip._id !== tripId)
         );
+        alert("Trip deleted successfully.");
+        setFilteredTrips((prevTrips) =>
+          prevTrips.filter((trip) => trip._id !== tripId)
+        );
         setSuccessMessage("Trip deleted successfully.");
         setErrorMessage("");
       } catch (error) {
         console.error("Error deleting trip:", error);
-        setErrorMessage("Error deleting trip: " + error.message);
+        alert("Error deleting trip: " + error.message);
       }
     }
   };
@@ -78,24 +83,40 @@ const ViewTrip = () => {
     setEditedTrip({ ...trip });
     setIsEditing(true);
   };
-  const handleSaveEdit = async (tripId, updatedTripData) => {
+
+  const handleSaveEdit = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:8787/api/add-trip/${tripId}`,
-        updatedTripData
+        `http://localhost:8787/api/add-trip/${editedTrip._id}`,
+        editedTrip
       );
 
-      // Check for successful response
       if (response.status === 200) {
+        setTrips((prevTrips) =>
+          prevTrips.map((trip) =>
+            trip._id === editedTrip._id ? editedTrip : trip
+          )
+        );
+        setFilteredTrips((prevTrips) =>
+          prevTrips.map((trip) =>
+            trip._id === editedTrip._id ? editedTrip : trip
+          )
+        );
+        alert("Trip updated successfully.");
+        setIsEditing(false);
         console.log("Trip successfully updated", response.data);
         alert("Trip successfully updated");
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
+        console.error("Validation Error:", error.response.data.message);
+        alert("Validation Error: " + error.response.data.message);
         // Handle validation errors
         console.error("Validation Error:", error.response.data.message);
         alert("Validation Error: " + error.response.data.message);
       } else {
+        console.error("Error:", error.message);
+        alert("An error occurred while updating the trip");
         // Handle other errors
         console.error("Error:", error.message);
         alert("An error occurred while updating the trip");
@@ -121,6 +142,9 @@ const ViewTrip = () => {
 
   const handleCloseModal = () => {
     setSelectedTrip(null);
+    setIsEditing(false);
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   return (
@@ -129,7 +153,6 @@ const ViewTrip = () => {
         <div className="customer-main-container mt-4">
           <h2 className="View-Corporate-Customer-Rate font-bold">View Trips</h2>
 
-          {/* Search Bar */}
           <div className="search-bar-view-customer-enquiry">
             <input
               type="text"
@@ -140,10 +163,10 @@ const ViewTrip = () => {
             />
           </div>
 
-          {/* Error Handling */}
           {error && <p>Error: {error}</p>}
+          {successMessage && <p className="text-green-500">{successMessage}</p>}
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-          {/* Table of Trips */}
           <table className="table">
             <thead>
               <tr>
@@ -192,7 +215,6 @@ const ViewTrip = () => {
             </tbody>
           </table>
 
-          {/* Modal for Selected Trip Details */}
           {selectedTrip && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
               <div
@@ -258,42 +280,42 @@ const ViewTrip = () => {
                     <strong>Person 1:</strong> {selectedTrip.Person_1}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number 1:</strong>{" "}
+                    <strong>Mobile Number:</strong>{" "}
                     {selectedTrip.Mobile_Number_1}
                   </p>
                   <p className="mb-2">
                     <strong>Person 2:</strong> {selectedTrip.Person_2}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number 2:</strong>{" "}
+                    <strong>Mobile Number:</strong>{" "}
                     {selectedTrip.Mobile_Number_2}
                   </p>
                   <p className="mb-2">
                     <strong>Person 3:</strong> {selectedTrip.Person_3}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number 3:</strong>{" "}
+                    <strong>Mobile Number:</strong>{" "}
                     {selectedTrip.Mobile_Number_3}
                   </p>
                   <p className="mb-2">
                     <strong>Person 4:</strong> {selectedTrip.Person_4}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number 4:</strong>{" "}
+                    <strong>Mobile Number:</strong>{" "}
                     {selectedTrip.Mobile_Number_4}
                   </p>
                   <p className="mb-2">
                     <strong>Person 5:</strong> {selectedTrip.Person_5}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number 5:</strong>{" "}
+                    <strong>Mobile Number:</strong>{" "}
                     {selectedTrip.Mobile_Number_5}
                   </p>
                   <p className="mb-2">
                     <strong>Person 6:</strong> {selectedTrip.Person_6}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number 6:</strong>{" "}
+                    <strong>Mobile Number:</strong>{" "}
                     {selectedTrip.Mobile_Number_6}
                   </p>
                 </div>
@@ -301,7 +323,6 @@ const ViewTrip = () => {
             </div>
           )}
 
-          {/* Modal for Editing Trip */}
           {isEditing && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
               <div
@@ -311,15 +332,173 @@ const ViewTrip = () => {
                   overflowY: "scroll",
                 }}
               >
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center">
                   <h2 className="text-2xl font-bold">Edit Trip</h2>
-                  <button
-                    className="text-black-500"
-                    onClick={() => setIsEditing(false)}
-                  >
+                  <button className="text-black-500" onClick={handleCloseModal}>
                     <FaTimes />
                   </button>
                 </div>
+                <div className="mt-4">
+                  <h5 className="fw-bold my-2">Customer Name:</h5>
+                  <input
+                    type="text"
+                    placeholder="Customer Name"
+                    value={editedTrip.customername}
+                    onChange={(e) =>
+                      setEditedTrip({
+                        ...editedTrip,
+                        customername: e.target.value,
+                      })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Mobile No:</h5>
+                  <input
+                    type="text"
+                    placeholder="Mobile No"
+                    value={editedTrip.mobileno}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, mobileno: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Email:</h5>
+                  <input
+                    type="text"
+                    placeholder="email"
+                    value={editedTrip.email}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, email: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Address:</h5>
+                  <input
+                    type="text"
+                    placeholder="email"
+                    value={editedTrip.address}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, address: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Trip Type:</h5>
+                  <input
+                    type="text"
+                    placeholder="email"
+                    value={editedTrip.triptype}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, triptype: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Sub Type:</h5>
+                  <input
+                    type="text"
+                    placeholder="email"
+                    value={editedTrip.subtype}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, subtype: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Pickup Location:</h5>
+                  <input
+                    type="text"
+                    value={editedTrip.pickup}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, pickup: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Date:</h5>
+                  <input
+                    type="date"
+                    value={editedTrip.date}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, date: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Time:</h5>
+                  <input
+                    type="time"
+                    value={editedTrip.time}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, time: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Dropoff Location:</h5>
+                  <input
+                    type="text"
+                    value={editedTrip.dropoff}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, dropoff: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Date:</h5>
+                  <input
+                    type="date"
+                    value={editedTrip.date1}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, date1: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Time:</h5>
+                  <input
+                    type="time"
+                    value={editedTrip.time1}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, time1: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Total Days:</h5>
+                  <input
+                    type="text"
+                    value={editedTrip.totaldays}
+                    onChange={(e) =>
+                      setEditedTrip({
+                        ...editedTrip,
+                        totaldays: e.target.value,
+                      })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Total Hours:</h5>
+                  <input
+                    type="text"
+                    value={editedTrip.hours}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, hours: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                  <h5 className="fw-bold my-2">Vehicle:</h5>
+                  <input
+                    type="text"
+                    value={editedTrip.vehicle}
+                    onChange={(e) =>
+                      setEditedTrip({ ...editedTrip, vehicle: e.target.value })
+                    }
+                    className="w-full p-2 mb-2 border border-gray-300 rounded"
+                  />
+                </div>
+                <button
+                  className="px-4 py-2 bg-blue-500 text-white rounded"
+                  onClick={handleSaveEdit}
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setIsEditing(false)}
+                  className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+                >
+                  Cancel
+                </button>
                 {editedTrip && (
                   <>
                     <h5 className="fw-bold my-2">Customer Name:</h5>
