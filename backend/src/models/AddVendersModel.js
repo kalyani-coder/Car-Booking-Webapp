@@ -35,7 +35,7 @@ const AddVendersSchema = new mongoose.Schema({
       Vender_Email: {
         type: String,
         required: [true, "Email is required"],
-        match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in)$/, "Please enter a valid email address ending with .com or .in"]
+        match: [/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org)$/, "Please enter a valid email address ending with .com .in or .org"]
       },
       address: {
         type: String,
