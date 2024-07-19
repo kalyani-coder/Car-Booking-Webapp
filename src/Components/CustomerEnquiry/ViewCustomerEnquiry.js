@@ -138,7 +138,7 @@ const ViewCustomerEnquiry = () => {
   const handleSaveEditCustomer = async () => {
     const prevCustomers = [...customers];
     const prevFilteredCustomers = [...filteredCustomers];
-
+  
     // Optimistically update the UI
     setCustomers((prevCustomers) =>
       prevCustomers.map((customer) =>
@@ -150,10 +150,10 @@ const ViewCustomerEnquiry = () => {
         customer._id === editedCustomer._id ? editedCustomer : customer
       )
     );
-
+  
     try {
       console.log("Edited Customer Data:", editedCustomer);
-
+  
       const response = await fetch(
         `http://localhost:8787/api/customer-enquiry/${editedCustomer._id}`,
         {
@@ -164,41 +164,43 @@ const ViewCustomerEnquiry = () => {
           body: JSON.stringify(editedCustomer),
         }
       );
-
+  
+      const result = await response.json();
+  
       if (!response.ok) {
         console.error("Response Status:", response.status);
-        console.error("Response Text:", await response.text());
-        throw new Error("Network response was not ok");
+        console.error("Response Message:", result.message || response.statusText);
+        throw new Error(result.message || "Network response was not ok");
       }
-
-      const updatedCustomer = await response.json();
-      console.log("Updated Customer Data:", updatedCustomer);
-
+  
+      console.log("Updated Customer Data:", result);
+  
       // Confirm the update
       setCustomers((prevCustomers) =>
         prevCustomers.map((customer) =>
-          customer._id === updatedCustomer._id ? updatedCustomer : customer
+          customer._id === result._id ? result : customer
         )
       );
       setFilteredCustomers((prevCustomers) =>
         prevCustomers.map((customer) =>
-          customer._id === updatedCustomer._id ? updatedCustomer : customer
+          customer._id === result._id ? result : customer
         )
       );
-
+  
       setIsEditing(false);
-      alert("Customer enquiry updated successfully");
+      alert(result.message || "Customer enquiry updated successfully");
       setErrorMessage("");
     } catch (error) {
       console.error("Error updating customer enquiry:", error);
       setSuccessMessage("");
-      setErrorMessage("Error updating customer enquiry. Please try again.");
-
+      alert(error.message || "Error updating customer enquiry. Please try again.");
+  
       // Revert optimistic update if there is an error
       setCustomers(prevCustomers);
       setFilteredCustomers(prevFilteredCustomers);
     }
   };
+  
 
   const handleDelete = async (customerId) => {
     const confirmed = window.confirm(
@@ -236,11 +238,11 @@ const ViewCustomerEnquiry = () => {
           <h2 className="View-Corporate-Customer-Rate font-bold">
             View Customer Enquiry
           </h2>
-          <div className="search-bar-view-customer-enquiry ">
+          <div className="search-bar-view-customer-enquiry py-2">
             <input
               type="text"
               placeholder="Search by Customer Name"
-              className="w-full p-2 rounded border"
+              className=" p-2 rounded border width-set-for-all-view-pages-carbooking-search-box"
               value={searchCustomerName}
               onChange={(e) => setSearchCustomerName(e.target.value)}
             />

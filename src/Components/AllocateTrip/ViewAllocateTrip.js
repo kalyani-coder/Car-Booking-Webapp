@@ -149,29 +149,35 @@ const ViewAllocateTrip = () => {
           body: JSON.stringify(editedTrip),
         }
       );
-
+  
+      // Log response for debugging
+      const result = await response.json();
+      console.log("API Response:", result);
+  
       if (response.ok) {
-        const updatedTrip = await response.json();
+        // Update UI with new trip details
         setShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
-            detail._id === editingId ? updatedTrip : detail
+            detail._id === editingId._id ? result : detail
           )
         );
         setFilteredShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
-            detail._id === editingId ? updatedTrip : detail
+            detail._id === editingId._id ? result : detail
           )
         );
-        alert("Trip details successfully updated!");
+        alert(result.message || "Trip details successfully updated!");
       } else {
-        console.error("Error updating trip details:", response.status);
-        alert("Error updating trip details. Please try again.");
+        console.error("Error updating trip details:", result.message || response.statusText);
+        alert(result.message || "Error updating trip details. Please try again.");
       }
     } catch (error) {
       console.error("Error updating trip details:", error);
       alert("Error updating trip details. Please try again.");
     }
   };
+  
+  
 
   const handleDelete = (_id) => {
     const confirmed = window.confirm(
@@ -202,20 +208,20 @@ const ViewAllocateTrip = () => {
 
   return (
     <>
-      <div className="view-allocate-trip-details-container h-[100vh]">
+      <div className="view-allocate-trip-details-container">
+        <h2 className="View-Corporate-Customer-Rate font-bold">
+          View Allocate Trips
+        </h2>
+        <div className="py-4 space-y-4">
+          <input
+            type="text"
+            placeholder="Search by date or driver name"
+            className="p-2 rounded border width-set-for-all-view-pages-carbooking-search-box"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
         <div className="share-details-main-container">
-          <h2 className="View-Corporate-Customer-Rate font-bold">
-            View Allocate Trips
-          </h2>
-          <div className="p-4 space-y-4">
-            <input
-              type="text"
-              placeholder="Search by date or driver name"
-              className="w-full p-2 rounded border"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
           {error ? (
             <p>Error: {error}</p>
           ) : (
@@ -228,13 +234,8 @@ const ViewAllocateTrip = () => {
                   <th>Trip Type</th>
                   <th>Subtype</th>
                   <th>Pickup</th>
-                  {/* <th>Date</th>
-                  <th>Time</th> */}
                   <th>Dropoff</th>
-                  {/* <th>Date1</th>
-                  <th>Time1</th> */}
                   <th>Driver Name</th>
-                  {/* <th>Driver Email</th> */}
                   <th>Mobile No</th>
                   <th>Actions</th>
                 </tr>
@@ -248,13 +249,8 @@ const ViewAllocateTrip = () => {
                     <td>{shareDetail.triptype}</td>
                     <td>{shareDetail.subtype}</td>
                     <td>{shareDetail.pickuplocation}</td>
-                    {/* <td>{shareDetail.date}</td>
-                    <td>{shareDetail.time}</td> */}
                     <td>{shareDetail.dropofflocation}</td>
-                    {/* <td>{shareDetail.date1}</td>
-                    <td>{shareDetail.time1}</td> */}
                     <td>{shareDetail.drivername}</td>
-                    {/* <td>{shareDetail.mail}</td> */}
                     <td>{shareDetail.customermobile}</td>
                     <td>
                       {editingId === shareDetail._id ? (
@@ -379,84 +375,49 @@ const ViewAllocateTrip = () => {
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
                               />
                               <h5 className="fw-bold my-2">Type of Vehicle:</h5>
-                              <select
-                                className="form-control-add-trip-input"
-                                name="vehicle"
-                                id="vehicle"
+                              <input
+                                type="text"
+                                value={editedTrip.vehicle}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
                                     vehicle: e.target.value,
                                   })
                                 }
-                                value={editedTrip.vehicle}
-                              >
-                                <option value="">Vehicle</option>
-                                {vehicleDetails.map((vehicle) => (
-                                  <option
-                                    key={vehicle._id}
-                                    value={vehicle.vehicleType}
-                                  >
-                                    {vehicle.vehicleType}
-                                  </option>
-                                ))}
-                              </select>
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
                               <h5 className="fw-bold my-2">Trip Type:</h5>
-                              <select
-                                className="share-details-input"
-                                name="triptype"
-                                id="triptype"
+                              <input
+                                type="text"
+                                value={editedTrip.triptype}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
                                     triptype: e.target.value,
                                   })
                                 }
-                                value={editedTrip.triptype}
-                              >
-                                <option value="">Trip Type</option>
-                                <option value="One Way Trip">
-                                  One Way Trip
-                                </option>
-                                <option value="Return Trip">Return Trip</option>
-                                className="w-full p-2 mb-2 border
-                                border-gray-300 rounded"
-                              </select>
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
                               <h5 className="fw-bold my-2">Sub Type:</h5>
-                              <select
-                                className="share-details-input"
-                                name="subtype"
-                                id="subtype"
+                              <input
+                                type="text"
+                                value={editedTrip.subtype}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
                                     subtype: e.target.value,
                                   })
                                 }
-                                value={editedTrip.subtype}
-                              >
-                                <option value="">Sub Type</option>
-                                <option value="Local Trip">Local Trip</option>
-                                <option value="Outstation Trip">
-                                  Outstation Trip
-                                </option>
-                                <option value="Outstation Local Trip">
-                                  Outstation Local Trip
-                                </option>
-                                <option value="Outstation Outstation Trip">
-                                  Outstation Outstation Trip
-                                </option>
-                                className="w-full p-2 mb-2 border
-                                border-gray-300 rounded"
-                              </select>
+                                className="w-full p-2 mb-2 border border-gray-300 rounded"
+                              />
                               <h5 className="fw-bold my-2">Driver Name:</h5>
                               <input
                                 type="text"
-                                value={editedTrip.address}
+                                value={editedTrip.drivername}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    address: e.target.value,
+                                    drivername: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"
@@ -476,11 +437,11 @@ const ViewAllocateTrip = () => {
                               <h5 className="fw-bold my-2">Mobile No:</h5>
                               <input
                                 type="number"
-                                value={editedTrip.mobileno}
+                                value={editedTrip.drivermobileno}
                                 onChange={(e) =>
                                   setEditedTrip({
                                     ...editedTrip,
-                                    mobileno: e.target.value,
+                                    drivermobileno: e.target.value,
                                   })
                                 }
                                 className="w-full p-2 mb-2 border border-gray-300 rounded"

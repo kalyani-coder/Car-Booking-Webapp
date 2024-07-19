@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const ShareDetailsSchema = new mongoose.Schema({
         customerId : String,
         customername : String, 
-        cus_Name: String,
+        // cus_Name: String,
         customermobile: Number,
         vehicle: String,
         triptype: String,

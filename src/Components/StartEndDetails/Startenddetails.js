@@ -59,15 +59,40 @@ const StartEndDetails = () => {
     const customerDetails = customers.find(
       (trip) => trip.customername === customerName
     );
-
+  
     // Log selected customer details to the console
     console.log("Selected Customer Name:", customerName);
     console.log("Selected Customer Details:", customerDetails);
-
+  
     // Set the selected customer details in the state
     setSelectedCustomerDetails(customerDetails || {});
     setSelectedCustomer(customerName);
+  
+    // Recalculate total days and hours based on the new customer details
+    if (customerDetails) {
+      const pickupDateTime = new Date(
+        `${customerDetails.date}T${customerDetails.time}`
+      );
+      const dropoffDateTime = new Date(
+        `${customerDetails.date1}T${customerDetails.time1}`
+      );
+  
+      if (
+        !isNaN(pickupDateTime.getTime()) &&
+        !isNaN(dropoffDateTime.getTime())
+      ) {
+        const diffTime = Math.abs(dropoffDateTime - pickupDateTime);
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffHours = Math.floor(
+          (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+  
+        setTotalDays(diffDays);
+        setTotalHours(diffHours);
+      }
+    }
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
