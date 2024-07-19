@@ -89,7 +89,7 @@ const ViewTrip = () => {
         alert('An error occurred while updating the trip');
       }
     }
-  };;
+  };
   
 
   const fetchTripDetails = async (tripId) => {
