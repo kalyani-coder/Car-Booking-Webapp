@@ -50,6 +50,10 @@ import ViewIndivisualCustomer from "./Components/AddRate/ViewIndivisualCustomer"
 import PublicRoute from "./Components/ProtectedRoute/PublicRoute";
 import PageNotFound from "./Components/PageNotFound/PageNotFound";
 import ErrorLayout from "./Components/PageNotFound/ErrorLayout";
+import LandingPageHome from "./Components/LandingPage/LandingPageScreen/LandingPageHome/LandingPageHome";
+import About from "./Components/LandingPage/Pages/About/About";
+import Contact from "./Components/LandingPage/Pages/Contact/Contact";
+import Blog from "./Components/LandingPage/Pages/Blog/Blog";
 
 function App() {
   return (
@@ -57,8 +61,21 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<PublicRoute element={<Login />} restrictedPath="/home" />}
+          element={
+            <PublicRoute element={<LandingPageHome />} restrictedPath="/home" />
+          }
         />
+        {/* Landing Page Routes */}
+        <Route
+          path="landingpage"
+          element={<ProtectedRoute element={<LandingPageHome />} />}
+        />
+        <Route path="about" element={<About />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="blogs" element={<Blog />} />
+
+        {/* App Layout */}
+
         <Route path="/*" element={<AppLayout />}>
           <Route path="home" element={<ProtectedRoute element={<Home />} />} />
           <Route

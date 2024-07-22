@@ -1,0 +1,134 @@
+/* .navbar-main-container{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+} */
+.navbar-main-container {
+  width: 85em;
+  margin: auto;
+}
+.navbar {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-menu-logo {
+  display: flex;
+  gap: 15px;
+  align-items: baseline;
+}
+
+.navbar h1 {
+  width: 150px;
+  color: #49557e;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  color: #49557e;
+  font-size: 18px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navbar-right img {
+  cursor: pointer;
+}
+
+.navbar li {
+  cursor: pointer;
+}
+.navbar a {
+  text-decoration: none;
+  color: #49557e;
+  font-size: 18px;
+}
+
+.navbar button {
+  background: transparent;
+  font-size: 16px;
+  color: #49557e;
+  border: 1px solid #13b8a7;
+  padding: 10px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.navbar button:hover {
+  background-color: #6acfc5;
+  color: white;
+}
+
+.navbar .active {
+  padding-bottom: 2px;
+  border-bottom: 2px solid #49557e;
+}
+.hamburger-menu {
+  display: none;
+}
+.logo-for-car-booking-landing-page {
+  width: 9em;
+  height: 3em;
+}
+@media (max-width: 1050px) {
+  .navbar-menu,
+  .navbar a {
+    gap: 20px;
+    font-size: 17px;
+  }
+
+  .navbar button {
+    padding: 8px 25px;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar-menu,
+  .navbar a {
+    gap: 15px;
+    font-size: 16px;
+  }
+
+  .navbar button {
+    padding: 5px 16px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 750px) {
+  .navbar-menu {
+    display: none;
+  }
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+  }
+
+  .navbar button {
+    padding: 4px 14px;
+  }
+}
+@media (max-width: 768px) {
+  .logo-for-car-booking-landing-page {
+    display: none;
+  }
+  .navbar-main-container {
+    width: 100%;
+    margin: auto;
+  }
+  .navbar {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
