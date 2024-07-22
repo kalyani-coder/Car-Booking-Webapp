@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import Alert from "../AddCustomer/Alert";
 import "./MasterCorporateCustomer.css";
+
 const initialFormData = {
   add_vehicle: "",
   add_duty_type: "",
@@ -59,15 +60,15 @@ const MasterCorporateCustomer = () => {
       });
 
       if (response.ok) {
-        alert("Master added successfully!", "success");
+        alert("Master added successfully!"); // Removed "success" argument
         setFormData(initialFormData);
       } else {
-        alert("Failed to add data. Please try again.", "error");
+        alert("Failed to add data. Please try again."); // Removed "error" argument
         console.error("Error posting data:", response.statusText);
       }
     } catch (error) {
       console.error("API request error:", error);
-      alert("Failed to add data. Please try again.", "error");
+      alert("Failed to add data. Please try again."); // Removed "error" argument
     }
   };
 
@@ -163,7 +164,7 @@ const MasterCorporateCustomer = () => {
                 </div>
               </div>
               <div className="flex justify-center py-4">
-                <button type="button" className="customer-btn-submit">
+                <button type="submit" className="customer-btn-submit">
                   Save
                 </button>
               </div>

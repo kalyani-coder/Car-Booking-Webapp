@@ -71,6 +71,8 @@ const ViewDriver = () => {
 
     fetchDrivers();
   }, []);
+
+  // Apply search filter whenever the search term or drivers list changes
   useEffect(() => {
     if (searchTerm === "") {
       setFilteredDrivers(drivers);
@@ -191,7 +193,7 @@ const ViewDriver = () => {
           </div>
           <div className="table-responsive">
             <TableView
-              drivers={drivers}
+              drivers={filteredDrivers} // Pass filteredDrivers to TableView
               handleEditDriver={handleEditDriver}
               handleDeleteDriver={handleDeleteDriver}
             />
