@@ -4,7 +4,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { FaFilePdf } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import headerlogo from "../../Assets/images/shivpushpa_logo.png";
 import Customer from "./../CustomerEnquiry/Customer";
 import "./ViewCustomerPayment.css";
 const ViewCustomerPayment = () => {

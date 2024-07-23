@@ -4,7 +4,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import headerlogo from "../../Assets/images/shivpushpa_logo.png";
 import "./VendorPayment.css";
 const ViewVendorPayment = () => {
   const [vendors, setVendors] = useState([]);

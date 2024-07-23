@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { FaEdit, FaTrash, FaFilePdf, FaTimes } from "react-icons/fa";
 // import ViewShareDetails from './ViewShareDetails.css';
-import img1 from "../../assects/images/shivpushpa_logo.png";
+import img1 from "../../Assets/images/shivpushpa_logo.png";
 
 const ViewShareDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);

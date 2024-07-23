@@ -3,7 +3,7 @@ import "./VendorInvoiceMonthly.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
-import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import headerlogo from "../../Assets/images/shivpushpa_logo.png";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";

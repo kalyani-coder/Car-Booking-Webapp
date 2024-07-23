@@ -6,7 +6,7 @@ import { RiMenu2Line } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import Sidebar from "../Sidebar/Sidebar";
-import carbookinglogo from "../../../../assects/images/shivpushpa_logo.png";
+import carbookinglogo from "../../../../Assets/images/shivpushpa_logo.png";
 const Navbar = () => {
   const [menu, setMenu] = useState("home");
   const [showSidebar, setShowSidebar] = useState(false);

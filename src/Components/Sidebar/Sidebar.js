@@ -16,7 +16,7 @@ import { MdUpdate } from "react-icons/md";
 import { AiFillBank } from "react-icons/ai";
 import { FaFileInvoiceDollar } from "react-icons/fa";
 import { AiOutlineFilePdf } from "react-icons/ai";
-import logoImage from "../../assects/images/shivpushpa_logo.png";
+import logoImage from "../../Assets/images/shivpushpa_logo.png";
 // import IndivisualCustomerRate from './../AddRate/IndivisualCustomerRate';
 
 const Sidebar = () => {

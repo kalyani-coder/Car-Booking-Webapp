@@ -3,7 +3,7 @@ import "./CustomerInvoice.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Sidebar from "../Sidebar/Sidebar";
-import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import headerlogo from "../../Assets/images/shivpushpa_logo.png";
 
 function CustomerInvoice() {
   const [formData, setFormData] = useState({

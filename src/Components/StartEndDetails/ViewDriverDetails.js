@@ -6,7 +6,7 @@ import { Table } from "react-bootstrap";
 import { FaEdit, FaTrash, FaTimes, FaFilePdf } from "react-icons/fa";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ViewDriverDetails.css";
-import img1 from "../../assects/images/shivpushpa_logo.png";
+import img1 from "../../Assets/images/shivpushpa_logo.png";
 
 const ViewStartEndDetails = () => {
   const [shareDetails, setShareDetails] = useState([]);

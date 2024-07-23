@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { DropdownIcon } from "./NavLink";
 import "./SideBarCardBooking.css";
-import carbookinglogo from "../../assects/images/shivpushpa_logo.png";
+import carbookinglogo from "../../Assets/images/shivpushpa_logo.png";
 // Component to render nested navigation items
 const DropdownMenu = ({
   subNavigation,

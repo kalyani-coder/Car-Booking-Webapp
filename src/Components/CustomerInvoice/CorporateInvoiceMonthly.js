@@ -5,7 +5,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import headerlogo from "../../assects/images/shivpushpa_logo.png";
+import headerlogo from "../../Assets/images/shivpushpa_logo.png";
 import numberToWords from "number-to-words";
 
 function CorporateInvoiceMonthly() {
@@ -444,18 +444,8 @@ function CorporateInvoiceMonthly() {
                         0
                       )}
                     </td>
-                    <td>
-                      {customerData.reduce(
-                        (total, trip) => total,
-                        0
-                      )}
-                    </td>
-                    <td>
-                      {customerData.reduce(
-                        (total, trip) => total,
-                        0
-                      )}
-                    </td>
+                    <td>{customerData.reduce((total, trip) => total, 0)}</td>
+                    <td>{customerData.reduce((total, trip) => total, 0)}</td>
                   </tr>
                 </tbody>
               </table>
