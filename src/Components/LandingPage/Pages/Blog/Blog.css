@@ -42,4 +42,9 @@
     margin: auto;
     padding: 1em;
   }
+  .blog-container-heading h2 {
+    font-size: 40px;
+    color: #49557e;
+    text-align: center;
+  }
 }

@@ -86,6 +86,7 @@
     margin: auto;
     margin-bottom: 50px;
     padding-bottom: 50px;
+    text-align: center;
   }
   .about-content {
     width: 100%;
@@ -96,6 +97,7 @@
   }
   .about-content p {
     font-size: 20px;
+    padding: 2em 0;
   }
 
   .about-img img {

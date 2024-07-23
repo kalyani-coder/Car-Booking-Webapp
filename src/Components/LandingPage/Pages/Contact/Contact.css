@@ -4,10 +4,11 @@
     
 } */
 .contact-us {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  padding-top: 10vh;
+  padding-bottom: 50px;
   width: 72em;
   margin: auto;
+  height: 79vh;
 }
 .contact-us-content {
   display: flex;
