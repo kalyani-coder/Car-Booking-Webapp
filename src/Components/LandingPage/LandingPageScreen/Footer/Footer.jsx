@@ -26,7 +26,7 @@ const Footer = () => {
             <Link to="/">Home</Link>
             <Link to="/about">About Us</Link>
             <Link to="/contact">Contact Us</Link>
-            <Link to="/blog">Blog</Link>
+            <Link to="/blogs">Blog</Link>
           </ul>
         </div>
         <div className="footer-content-right">
