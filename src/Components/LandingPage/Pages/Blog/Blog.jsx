@@ -5,9 +5,9 @@ import blogImg3 from "../../Images/blogImg3.svg";
 import blogImg4 from "../../Images/blogImg4.svg";
 import heroImg from "../../Images/heroImg.svg";
 import BlogItem from "./../../LandingPageScreen/BlogItem/BlogItem";
-import "./Blog.css";
 import Navbar from "../../LandingPageScreen/Navbar/Navbar";
 import Footer from "../../LandingPageScreen/Footer/Footer";
+import "./Blog.css";
 
 const cardData = [
   {

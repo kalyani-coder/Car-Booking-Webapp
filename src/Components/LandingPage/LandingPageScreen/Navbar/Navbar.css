@@ -4,14 +4,17 @@
     z-index: 1;
 } */
 .navbar-main-container {
-  width: 85em;
+  /* width: 85em; */
   margin: auto;
+  display: flex;
+  justify-content: center;
 }
 .navbar {
   padding: 20px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 85em;
 }
 
 .navbar-menu-logo {
@@ -79,7 +82,7 @@
   width: 9em;
   height: 3em;
 }
-@media (max-width: 1050px) {
+@media (max-width: 1024px) {
   .navbar-menu,
   .navbar a {
     gap: 20px;
@@ -118,8 +121,11 @@
   }
 }
 @media (max-width: 768px) {
-  .logo-for-car-booking-landing-page {
-    display: none;
+  .section-logo-for-car-booking-landing-page {
+    display: block;
+  }
+  .about-container {
+    height: 100%;
   }
   .navbar-main-container {
     width: 100%;
@@ -140,5 +146,15 @@
     /* z-index: 9999; */
     background-color: #c8cd7a;
     width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
   }
 }

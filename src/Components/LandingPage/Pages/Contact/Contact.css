@@ -99,3 +99,13 @@
 .contact-us-right {
   animation: swipeLeft 1s ease;
 }
+
+@media (min-width: 1024px) {
+  .contact-us {
+    /* padding-top: 10vh; */
+    padding-bottom: 50px;
+    width: 80%;
+    margin: auto;
+    /* height: 79vh; */
+  }
+}

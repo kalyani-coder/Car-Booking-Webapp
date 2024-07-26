@@ -48,3 +48,11 @@
     text-align: center;
   }
 }
+@media (min-width: 1024px) {
+  .blog-main-container {
+    margin-top: 50px;
+    animation: fadeIn 2.5s;
+    width: 80%;
+    margin: auto;
+  }
+}

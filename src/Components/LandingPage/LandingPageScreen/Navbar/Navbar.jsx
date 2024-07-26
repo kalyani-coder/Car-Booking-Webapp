@@ -25,7 +25,7 @@ const Navbar = () => {
         <></>
       )}
 
-      <div className="navbar-main-container ">
+      <div className="navbar-main-container">
         <div className="navbar">
           <div className="navbar-menu-logo">
             <div className="hamburger-menu">

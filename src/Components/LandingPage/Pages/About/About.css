@@ -88,6 +88,7 @@
     padding-bottom: 50px;
     text-align: center;
     margin-top: 6em;
+    height: 100%;
   }
   .about-content {
     width: 100%;
@@ -149,5 +150,12 @@
   }
   to {
     margin-right: 0px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-main-container {
+    width: 80%;
+    margin: auto;
   }
 }
