@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import "./ViewCustomer.css";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
-import axios from "axios"
+import axios from "axios";
 
 const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
@@ -180,29 +180,29 @@ const ViewCustomer = () => {
     setIsEditing(true);
   };
 
-  
-  
   const handleViewTypeChange = (type) => {
     setViewType(type);
   };
 
   const handleSave = async () => {
-    
     try {
-      const response = await axios.patch(`http://localhost:8787/api/add-customers/${editedCustomer._id}`, editedCustomer);
+      const response = await axios.patch(
+        `http://localhost:8787/api/add-customers/${editedCustomer._id}`,
+        editedCustomer
+      );
       setIsEditing(false);
+      window.alert("Customer updated successfully!"); // Show success message
       // Optionally refresh customer data here
     } catch (err) {
-      if (err.response && err.response.data){
+      if (err.response && err.response.data) {
         window.alert(err.response.data.message);
       } else {
-        window.alert('An error occurred while updating the customer.');
+        window.alert("An error occurred while updating the customer.");
       }
     } finally {
-      console.log("error updating customer")
+      console.log("error updating customer");
     }
   };
-
 
   return (
     <>
@@ -232,87 +232,102 @@ const ViewCustomer = () => {
       </div>
 
       {isEditing && (
-      <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
-        <div
-          className="bg-white p-4 rounded shadow-lg main-div-for-modal-container-for-all-inputs-cc"
-          style={{ overflowY: "auto" }}
-        >
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-2xl font-bold">Edit Customer</h2>
-            <button onClick={() => setIsEditing(false)} className="close-icon">
-              <FaTimes />
-            </button>
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
+          <div
+            className="bg-white p-4 rounded shadow-lg main-div-for-modal-container-for-all-inputs-cc"
+            style={{ overflowY: "auto" }}
+          >
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-2xl font-bold">Edit Customer</h2>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="close-icon"
+              >
+                <FaTimes />
+              </button>
+            </div>
+
+            <h5 className="fw-bold my-2">Customer Name / Company Name</h5>
+            <input
+              type="text"
+              value={editedCustomer.cus_name}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_name: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+              placeholder="Customer Name"
+            />
+
+            <h5 className="fw-bold my-2">GST No</h5>
+            <input
+              type="text"
+              value={editedCustomer.gst_no}
+              onChange={(e) =>
+                setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+
+            <h5 className="fw-bold my-2">Customer Mobile</h5>
+            <input
+              type="text"
+              value={editedCustomer.cus_mobile}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_mobile: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+
+            <h5 className="fw-bold my-2">Customer Email</h5>
+            <input
+              type="text"
+              value={editedCustomer.cus_email}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  cus_email: e.target.value,
+                })
+              }
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+
+            <h5 className="fw-bold my-2">Address</h5>
+            <textarea
+              value={editedCustomer.address}
+              onChange={(e) =>
+                setEditedCustomer({
+                  ...editedCustomer,
+                  address: e.target.value,
+                })
+              }
+              rows={3}
+              className="w-full p-2 mb-2 border border-gray-300 rounded"
+            />
+
+            <div className="flex justify-end">
+              <button
+                onClick={handleSave}
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Save
+              </button>
+
+              <button
+                onClick={() => setIsEditing(false)}
+                className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-
-          <h5 className="fw-bold my-2">Customer Name / Company Name</h5>
-          <input
-            type="text"
-            value={editedCustomer.cus_name}
-            onChange={(e) =>
-              setEditedCustomer({ ...editedCustomer, cus_name: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-            placeholder="Customer Name"
-          />
-
-          <h5 className="fw-bold my-2">GST No</h5>
-          <input
-            type="text"
-            value={editedCustomer.gst_no}
-            onChange={(e) =>
-              setEditedCustomer({ ...editedCustomer, gst_no: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-
-          <h5 className="fw-bold my-2">Customer Mobile</h5>
-          <input
-            type="text"
-            value={editedCustomer.cus_mobile}
-            onChange={(e) =>
-              setEditedCustomer({ ...editedCustomer, cus_mobile: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-
-          <h5 className="fw-bold my-2">Customer Email</h5>
-          <input
-            type="text"
-            value={editedCustomer.cus_email}
-            onChange={(e) =>
-              setEditedCustomer({ ...editedCustomer, cus_email: e.target.value })
-            }
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-
-          <h5 className="fw-bold my-2">Address</h5>
-          <textarea
-            value={editedCustomer.address}
-            onChange={(e) =>
-              setEditedCustomer({ ...editedCustomer, address: e.target.value })
-            }
-            rows={3}
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-          />
-
-          <div className="flex justify-end">
-            <button
-              onClick={handleSave}
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >Save
-            </button>
-
-            <button
-              onClick={() => setIsEditing(false)}
-              className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
-            >
-              Cancel
-            </button>
-          </div>
-          
         </div>
-      </div>
-    )}
+      )}
     </>
   );
 };

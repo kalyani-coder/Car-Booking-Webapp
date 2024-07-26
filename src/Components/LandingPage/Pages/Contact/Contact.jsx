@@ -8,9 +8,9 @@ const Contact = () => {
       <Navbar />
 
       <div className="contact-us">
-        <h4>Contact Us</h4>
-        <hr />
         <div className="contact-us-content">
+          <h4>Contact Us</h4>
+          <hr />
           <div className="contact-us-left">
             <h5>Investor Queries and Grievances</h5>
             <h6>Laksh Gundale</h6>

@@ -78,7 +78,7 @@
     animation: swipeLeft 1s;
   }
 }
-@media (max-width: 650px) {
+@media (max-width: 768px) {
   .about-container {
     flex-direction: column;
     width: 100%;
@@ -87,6 +87,7 @@
     margin-bottom: 50px;
     padding-bottom: 50px;
     text-align: center;
+    margin-top: 6em;
   }
   .about-content {
     width: 100%;

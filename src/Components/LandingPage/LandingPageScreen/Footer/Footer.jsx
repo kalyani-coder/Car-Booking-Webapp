@@ -1,11 +1,21 @@
 import React from "react";
-import "./Footer.css";
 import { TiSocialFacebook } from "react-icons/ti";
 import { SlSocialInstagram } from "react-icons/sl";
 import { SlSocialTwitter } from "react-icons/sl";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import "./Footer.css";
 
 const Footer = () => {
+  const location = useLocation();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  React.useEffect(() => {
+    scrollToTop();
+  }, [location]);
+
   return (
     <div className="footer">
       <div className="footer-content">
@@ -23,10 +33,18 @@ const Footer = () => {
         <div className="footer-content-center">
           <h2>COMPANY</h2>
           <ul>
-            <Link to="/">Home</Link>
-            <Link to="/about">About Us</Link>
-            <Link to="/contact">Contact Us</Link>
-            <Link to="/blogs">Blog</Link>
+            <Link to="/" onClick={scrollToTop}>
+              Home
+            </Link>
+            <Link to="/about" onClick={scrollToTop}>
+              About Us
+            </Link>
+            <Link to="/contact" onClick={scrollToTop}>
+              Contact Us
+            </Link>
+            <Link to="/blogs" onClick={scrollToTop}>
+              Blog
+            </Link>
           </ul>
         </div>
         <div className="footer-content-right">

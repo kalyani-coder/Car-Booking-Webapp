@@ -4,11 +4,11 @@
     
 } */
 .contact-us {
-  padding-top: 10vh;
+  /* padding-top: 10vh; */
   padding-bottom: 50px;
   width: 72em;
   margin: auto;
-  height: 79vh;
+  /* height: 79vh; */
 }
 .contact-us-content {
   display: flex;
@@ -17,12 +17,13 @@
   margin-top: 50px;
   margin-bottom: 50px;
   animation: swipeBtm 1s;
+  flex-direction: column;
 }
 .contact-us h4 {
   font-size: 48px;
   font-weight: 700;
   color: #49557e;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 .contact-us hr {
@@ -58,6 +59,8 @@
   .contact-us-content {
     flex-direction: column;
     text-align: center;
+    gap: 26px;
+    margin-top: 6em;
   }
   .contact-us h4 {
     font-size: 32px;
@@ -67,6 +70,9 @@
   .contact-us {
     width: 100%;
     padding: 1em;
+  }
+  .blog-container-heading {
+    margin-top: 6em;
   }
 }
 

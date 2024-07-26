@@ -12,22 +12,38 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       <div className="sidebar">
         <div className="sidebar-content">
           <ul>
-            <Link to="/" onClick={() => setShowSidebar(!showSidebar)}>
+            <Link
+              className="list-of-navigation-sidebar-cc"
+              to="/"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
               <IoHomeSharp
                 size={22}
                 onClick={() => setShowSidebar(!showSidebar)}
               />
               Home
             </Link>
-            <Link to="/about" onClick={() => setShowSidebar(!showSidebar)}>
+            <Link
+              className="list-of-navigation-sidebar-cc"
+              to="/about"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
               <TiInfoLarge size={22} />
               About Us
             </Link>
-            <Link to="/contact" onClick={() => setShowSidebar(!showSidebar)}>
+            <Link
+              className="list-of-navigation-sidebar-cc"
+              to="/contact"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
               <IoIosContact size={22} />
               Contact Us
             </Link>
-            <Link to="/blogs" onClick={() => setShowSidebar(!showSidebar)}>
+            <Link
+              className="list-of-navigation-sidebar-cc"
+              to="/blogs"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
               <MdOutlineMenuBook size={22} />
               Blog
             </Link>
