@@ -3,6 +3,7 @@ import { TiSocialFacebook } from "react-icons/ti";
 import { SlSocialInstagram } from "react-icons/sl";
 import { SlSocialTwitter } from "react-icons/sl";
 import { Link, useLocation } from "react-router-dom";
+import companylogofooter from "../../../../Assets/images/shivpushpa_logo-footer.png";
 import "./Footer.css";
 
 const Footer = () => {
@@ -28,6 +29,9 @@ const Footer = () => {
             <TiSocialFacebook size={25} />
             <SlSocialInstagram size={25} />
             <SlSocialTwitter size={25} />
+          </div>
+          <div className="footer-social-logo-section">
+            <img src={companylogofooter} alt="company logo footer" />
           </div>
         </div>
         <div className="footer-content-center">

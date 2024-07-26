@@ -14,7 +14,7 @@
   display: flex;
   justify-content: space-around;
   gap: 50px;
-  margin-top: 50px;
+  margin-top: 6em;
   margin-bottom: 50px;
   animation: swipeBtm 1s;
   flex-direction: column;
@@ -24,6 +24,7 @@
   font-weight: 700;
   color: #49557e;
   /* margin-bottom: 50px; */
+  padding-top: 1em;
 }
 
 .contact-us hr {
@@ -54,7 +55,9 @@
 .contact-us .email {
   color: #13b8a7;
 }
-
+.blog-container-heading {
+  margin-top: 6em;
+}
 @media (max-width: 768px) {
   .contact-us-content {
     flex-direction: column;
@@ -73,6 +76,23 @@
   }
   .blog-container-heading {
     margin-top: 6em;
+  }
+  .contact-us h5 {
+    font-size: 17px;
+    color: #1c1c1c;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .contact-us h6 {
+    font-size: 15px;
+    color: #1c1c1c;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .contact-us p {
+    font-size: 14px;
+    color: #828282;
+    margin-bottom: 4px;
   }
 }
 

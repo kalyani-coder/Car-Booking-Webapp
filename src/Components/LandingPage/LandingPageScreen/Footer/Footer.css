@@ -111,4 +111,8 @@
   .footer-copyright {
     text-align: center;
   }
+  .footer-social-logo-section {
+    display: flex;
+    justify-content: center;
+  }
 }

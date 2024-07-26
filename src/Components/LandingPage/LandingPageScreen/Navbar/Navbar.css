@@ -15,6 +15,7 @@
   justify-content: space-between;
   align-items: center;
   width: 85em;
+  box-shadow: 0px 0px 28px -9px rgba(0, 0, 0, 0.75);
 }
 
 .navbar-menu-logo {
@@ -80,7 +81,7 @@
 }
 .logo-for-car-booking-landing-page {
   width: 9em;
-  height: 3em;
+  height: 3.5em;
 }
 @media (max-width: 1024px) {
   .navbar-menu,
@@ -151,14 +152,7 @@
 
 @media (min-width: 1024px) {
   .navbar {
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 95%;
-  }
-  .navbar {
-    padding: 10px;
+    padding: 10px 32px 10px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;

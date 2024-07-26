@@ -57,10 +57,6 @@
 }
 
 @media (max-width: 850px) {
-  .about-buttons button {
-    padding: 8px 16px;
-    font-size: 15px;
-  }
 }
 @media (max-width: 768px) {
   .about-main-container {
@@ -98,13 +94,17 @@
     font-weight: 500;
   }
   .about-content p {
-    font-size: 20px;
+    font-size: 14px;
     padding: 2em 0;
   }
 
   .about-img img {
     width: 100%;
     margin: auto;
+  }
+  .about-buttons button {
+    padding: 8px 16px;
+    font-size: 11px;
   }
   /* .about-buttons button{
         padding: 6px 16px;
