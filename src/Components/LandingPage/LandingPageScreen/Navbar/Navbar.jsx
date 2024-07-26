@@ -1,5 +1,4 @@
 import React from "react";
-import "./Navbar.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RiMenu2Line } from "react-icons/ri";
@@ -7,6 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import Sidebar from "../Sidebar/Sidebar";
 import carbookinglogo from "../../../../Assets/images/shivpushpa_logo.png";
+import "./Navbar.css";
 const Navbar = () => {
   const [menu, setMenu] = useState("home");
   const [showSidebar, setShowSidebar] = useState(false);
