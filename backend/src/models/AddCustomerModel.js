@@ -35,7 +35,7 @@ const newAddCustomerSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    maxLength: [50, 'Address cannot be more than 50 characters']
+    maxLength: [100, 'Address cannot be more than 50 characters']
   },
   Cus_Type: {
     type: String,
