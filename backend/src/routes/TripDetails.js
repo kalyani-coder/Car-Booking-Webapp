@@ -68,11 +68,17 @@ router.post("/", async (req, res) => {
     try {
         const tripDetails = new newTripDetailsSchema(req.body); // Use 'new' to create a new instance
         await tripDetails.save(); // Save the instance
-        res.status(201).json({ message: "Data posted successfully" });
+        res.status(201).json({ message: "Trip details successfully Added" });
     } catch (e) {
-        res.status(404).json({ message: "Cannot post trip details", error: e.message });
-    }
-});
+        if (e.name === 'ValidationError') {
+          const errorMessages = Object.values(e.errors).map(err => err.message);
+          res.status(400).json({ message: errorMessages.join(', ') });
+        } else {
+          console.error(e);
+          res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+    });
 
 
 // PATCH METHOD 
@@ -82,14 +88,21 @@ router.patch('/:id' , async(req, res) => {
     
     try{
         const UpdatedtripDetails = await newTripDetailsSchema.findByIdAndUpdate(tripDetailsId , req.body ,{
-            new : true
+            new : true,
+            runValidators: true,
         })
-        res.status(201).json({message : " Trip details successfully Added"})
+        res.status(201).json({message : " Trip details successfully Updated"})
 
-    }catch(e){
-        res.status(404).json({message : "Can not patch trip details"})
-    }
-})
+    }catch (e) {
+        if (e.name === 'ValidationError') {
+          const errorMessages = Object.values(e.errors).map(err => err.message);
+          res.status(400).json({ message: errorMessages.join(', ') });
+        } else {
+          res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+    });
+
 
 // DELETE METHOD
 router.delete('/:id' , async(req, res) => {
