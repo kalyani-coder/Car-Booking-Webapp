@@ -104,3 +104,17 @@ button-vendor {
     height: 100vh;
   }
 }
+
+@media (max-width: 1024px) {
+  .container-vendor-invoice-monthly {
+    padding: 20px;
+    width: 80%;
+    margin: auto;
+    height: 100vh;
+  }
+  .form-label {
+    display: block;
+    margin-bottom: 5px; /* Adjust the spacing between the label and input */
+    font-size: 13px;
+  }
+}

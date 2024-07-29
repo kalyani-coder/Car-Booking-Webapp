@@ -82,3 +82,19 @@
     width: 100%;
   }
 }
+
+@media (max-width: 1024px) {
+  .container-customer-invoice {
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+  }
+  .main-input-container-corporat-invoice-page {
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+  }
+  .container-for-corporate-customer-monthly-invoice-page-responsive-cc {
+    flex-direction: column;
+  }
+}

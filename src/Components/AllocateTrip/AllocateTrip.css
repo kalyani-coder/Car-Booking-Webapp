@@ -134,3 +134,14 @@
     padding: 1em 0;
   }
 }
+
+@media (max-width: 1024px) {
+  .allocate-trip-column-sections-margin-set-auto {
+    border-top: 3px dashed black;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    flex-direction: column;
+  }
+}

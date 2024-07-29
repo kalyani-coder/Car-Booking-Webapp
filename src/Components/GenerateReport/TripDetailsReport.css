@@ -77,3 +77,27 @@
     display: flex;
   }
 }
+
+@media (max-width: 1024px) {
+  .table-for-monthly-customer-report-page {
+    overflow-x: scroll;
+  }
+  .div-contains-labl-dropdown-and-the-export-to-excel-button-monthly-customer-report {
+    text-align: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 1em;
+    display: flex;
+  }
+  .trip-counts-container {
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 1em 0;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .trip-details-responsive-table-overflow-y-scrolling-responsive {
+    overflow-y: scroll;
+  }
+}

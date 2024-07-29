@@ -165,23 +165,23 @@ const ViewCorporateCustomer = () => {
           <h2 className="View-Corporate-Customer-Rate font-bold py-4">
             View Corporate Customer Rate
           </h2>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 search-input-and-btn-for-individual-customer-cc">
             <div className="flex-grow-0 flex-shrink-0 w-8/12 search-bar ">
               <input
                 type="text"
-                placeholder="Search by  Customer Name"
+                placeholder="Search by Customer Name"
                 className="w-full p-2 rounded border"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <div className="flex-grow-0 flex-shrink-0 w-3/12">
+            <div className="flex-grow-0 flex-shrink-0">
               <button className="btn btn-primary w-full">
                 <Link
                   to="/viewindivisualcustomer"
                   className="text-white text-decoration-none"
                 >
-                  Indivisual Customer
+                  Individual Customer
                 </Link>
               </button>
             </div>

@@ -17,3 +17,12 @@
     /* width: 26rem; */
   }
 }
+
+/* @media (max-width: 425px) and (min-width: 320px) {
+  .responsvie-side-bar-section {
+    width: 100%;
+  }
+  .section-for-nav-link--collapsible-hamberger {
+    width: 100%;
+  }
+} */

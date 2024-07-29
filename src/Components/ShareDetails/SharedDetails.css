@@ -88,3 +88,17 @@
     padding-left: 26px;
   }
 }
+
+@media (max-width: 1024px) {
+  .share-details-container {
+    width: 100%;
+    /* max-width: 800px; */
+    display: flex;
+    /* flex-wrap: wrap; */
+    padding: 20px;
+    /* height: 150vh; */
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+  }
+}

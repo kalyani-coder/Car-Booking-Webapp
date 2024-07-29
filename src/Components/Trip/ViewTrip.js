@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaTimes } from "react-icons/fa";
 import axios from "axios";
+import "./AddTrip.css";
 
 const ViewTrip = () => {
   const [trips, setTrips] = useState([]);
@@ -35,7 +36,9 @@ const ViewTrip = () => {
   useEffect(() => {
     const filterTrips = () => {
       const filteredData = trips.filter((trip) =>
-        trip.customername.toLowerCase().includes(searchCustomerName.toLowerCase())
+        trip.customername
+          .toLowerCase()
+          .includes(searchCustomerName.toLowerCase())
       );
       setFilteredTrips(filteredData);
     };
@@ -44,18 +47,25 @@ const ViewTrip = () => {
   }, [searchCustomerName, trips]);
 
   const handleDelete = async (tripId) => {
-    const confirmed = window.confirm("Are you sure you want to delete this trip?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this trip?"
+    );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:8787/api/add-trip/${tripId}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `http://localhost:8787/api/add-trip/${tripId}`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
 
-        setFilteredTrips((prevTrips) => prevTrips.filter((trip) => trip._id !== tripId));
+        setFilteredTrips((prevTrips) =>
+          prevTrips.filter((trip) => trip._id !== tripId)
+        );
         alert("Trip deleted successfully.");
         setErrorMessage("");
       } catch (error) {
@@ -104,7 +114,9 @@ const ViewTrip = () => {
 
   const fetchTripDetails = async (tripId) => {
     try {
-      const response = await fetch(`http://localhost:8787/api/add-trip/${tripId}`);
+      const response = await fetch(
+        `http://localhost:8787/api/add-trip/${tripId}`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -125,7 +137,7 @@ const ViewTrip = () => {
 
   return (
     <>
-     <div className="customer-Add-container">
+      <div className="customer-Add-container">
         <div className="customer-main-container mt-4">
           <h2 className="View-Corporate-Customer-Rate font-bold">View Trips</h2>
 
@@ -142,54 +154,55 @@ const ViewTrip = () => {
           {error && <p>Error: {error}</p>}
           {successMessage && <p className="text-green-500">{successMessage}</p>}
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Sr. No.</th>
-                <th>Customer Name</th>
-                <th>Mobile No</th>
-                <th>Trip Type</th>
-                <th>Sub Type</th>
-                <th>Pickup</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTrips.map((trip, index) => (
-                <tr key={trip._id}>
-                  <td>{index + 1}</td>
-                  <td>{trip.customername}</td>
-                  <td>{trip.mobileno}</td>
-                  <td>{trip.triptype}</td>
-                  <td>{trip.subtype}</td>
-                  <td>{trip.pickup}</td>
-                  <td>
-                    <div className="d-flex align-items-center gap-2">
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => fetchTripDetails(trip._id)}
-                      >
-                        <i className="fas fa-eye"></i>
-                      </button>
-                      <button
-                        className="btn btn-info"
-                        onClick={() => handleEdit(trip)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleDelete(trip._id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </td>
+          <div className="view-trip-table-container-div-cc">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Customer Name</th>
+                  <th>Mobile No</th>
+                  <th>Trip Type</th>
+                  <th>Sub Type</th>
+                  <th>Pickup</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredTrips.map((trip, index) => (
+                  <tr key={trip._id}>
+                    <td>{index + 1}</td>
+                    <td>{trip.customername}</td>
+                    <td>{trip.mobileno}</td>
+                    <td>{trip.triptype}</td>
+                    <td>{trip.subtype}</td>
+                    <td>{trip.pickup}</td>
+                    <td>
+                      <div className="d-flex align-items-center gap-2">
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => fetchTripDetails(trip._id)}
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
+                        <button
+                          className="btn btn-info"
+                          onClick={() => handleEdit(trip)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(trip._id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {selectedTrip && (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 modal-main-container-section-z-index">
@@ -256,40 +269,44 @@ const ViewTrip = () => {
                     <strong>Person 1:</strong> {selectedTrip.Person_1}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number:</strong> {selectedTrip.Mobile_Number_1}
+                    <strong>Mobile Number:</strong>{" "}
+                    {selectedTrip.Mobile_Number_1}
                   </p>
                   <p className="mb-2">
                     <strong>Person 2:</strong> {selectedTrip.Person_2}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number:</strong> {selectedTrip.Mobile_Number_2}
+                    <strong>Mobile Number:</strong>{" "}
+                    {selectedTrip.Mobile_Number_2}
                   </p>
                   <p className="mb-2">
                     <strong>Person 3:</strong> {selectedTrip.Person_3}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number:</strong> {selectedTrip.Mobile_Number_3}
+                    <strong>Mobile Number:</strong>{" "}
+                    {selectedTrip.Mobile_Number_3}
                   </p>
                   <p className="mb-2">
                     <strong>Person 4:</strong> {selectedTrip.Person_4}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number:</strong> {selectedTrip.Mobile_Number_4}
+                    <strong>Mobile Number:</strong>{" "}
+                    {selectedTrip.Mobile_Number_4}
                   </p>
                   <p className="mb-2">
                     <strong>Person 5:</strong> {selectedTrip.Person_5}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number:</strong> {selectedTrip.Mobile_Number_5}
-                  </p><p className="mb-2">
+                    <strong>Mobile Number:</strong>{" "}
+                    {selectedTrip.Mobile_Number_5}
+                  </p>
+                  <p className="mb-2">
                     <strong>Person 6:</strong> {selectedTrip.Person_6}
                   </p>
                   <p className="mb-2">
-                    <strong>Mobile Number:</strong> {selectedTrip.Mobile_Number_6}
+                    <strong>Mobile Number:</strong>{" "}
+                    {selectedTrip.Mobile_Number_6}
                   </p>
-                  
-                 
-                  
                 </div>
               </div>
             </div>
@@ -311,13 +328,16 @@ const ViewTrip = () => {
                   </button>
                 </div>
                 <div className="mt-4">
-                <h5 className="fw-bold my-2">Customer Name:</h5>
+                  <h5 className="fw-bold my-2">Customer Name:</h5>
                   <input
                     type="text"
                     placeholder="Customer Name"
                     value={editedTrip.customername}
                     onChange={(e) =>
-                      setEditedTrip({ ...editedTrip, customername: e.target.value })
+                      setEditedTrip({
+                        ...editedTrip,
+                        customername: e.target.value,
+                      })
                     }
                     className="w-full p-2 mb-2 border border-gray-300 rounded"
                   />
@@ -406,7 +426,8 @@ const ViewTrip = () => {
                       setEditedTrip({ ...editedTrip, dropoff: e.target.value })
                     }
                     className="w-full p-2 mb-2 border border-gray-300 rounded"
-                  /><h5 className="fw-bold my-2">Date:</h5>
+                  />
+                  <h5 className="fw-bold my-2">Date:</h5>
                   <input
                     type="date"
                     value={editedTrip.date1}
@@ -429,7 +450,10 @@ const ViewTrip = () => {
                     type="text"
                     value={editedTrip.totaldays}
                     onChange={(e) =>
-                      setEditedTrip({ ...editedTrip, totaldays: e.target.value })
+                      setEditedTrip({
+                        ...editedTrip,
+                        totaldays: e.target.value,
+                      })
                     }
                     className="w-full p-2 mb-2 border border-gray-300 rounded"
                   />
@@ -452,15 +476,18 @@ const ViewTrip = () => {
                     className="w-full p-2 mb-2 border border-gray-300 rounded"
                   />
                 </div>
-                <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleSaveEdit}>
+                <button
+                  className="px-4 py-2 bg-blue-500 text-white rounded"
+                  onClick={handleSaveEdit}
+                >
                   Save
                 </button>
                 <button
-              onClick={() => setIsEditing(false)}
-              className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
-            >
-              Cancel
-            </button>
+                  onClick={() => setIsEditing(false)}
+                  className="px-4 py-2 ml-2 bg-red-500 text-white rounded"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           )}

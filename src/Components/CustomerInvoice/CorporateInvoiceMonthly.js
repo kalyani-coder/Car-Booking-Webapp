@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import headerlogo from "../../Assets/images/shivpushpa_logo.png";
 import numberToWords from "number-to-words";
+import "./CustomerInvoice.css";
 
 function CorporateInvoiceMonthly() {
   const [formData, setFormData] = useState({
@@ -317,7 +318,7 @@ function CorporateInvoiceMonthly() {
           Invoice To :
         </h2>
 
-        <div className="form-row">
+        <div className="form-row container-for-corporate-customer-monthly-invoice-page-responsive-cc">
           <div className="grid-gap-2 col-6 main-input-container-corporat-invoice-page">
             <label htmlFor="vendorName" className="form-label mb-2">
               Customer Name:

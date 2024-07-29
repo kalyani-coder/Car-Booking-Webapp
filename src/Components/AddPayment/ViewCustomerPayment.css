@@ -13,3 +13,9 @@
     gap: 8px;
   }
 }
+@media (max-width: 1024px) {
+  .customer-main-container {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}

@@ -98,7 +98,7 @@
     /* margin-bottom: 20px; */
     /* top: 12%; */
     margin-top: 1rem;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
   }
   .modal-main-container-section-z-index {
     z-index: 9999;
@@ -110,5 +110,14 @@
   .width-set-for-all-view-pages-carbooking-search-box {
     display: flex;
     width: 100%;
+  }
+  .table-view-for-view-customer-cc {
+    overflow-x: scroll;
+  }
+}
+
+@media (max-width: 1024px) {
+  .table-view-for-view-customer-cc {
+    overflow-x: scroll;
   }
 }

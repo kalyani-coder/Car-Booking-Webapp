@@ -128,3 +128,25 @@ body {
   margin-left: -50px;
   margin-top: 39px;
 }
+
+@media (max-width: 1024px) {
+  .customer-inquiry-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    /* margin-left: 300px; */
+    width: 80%;
+    margin: auto;
+  }
+  .responsive-flex-column-required-1024-pxl {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 13px;
+  }
+}

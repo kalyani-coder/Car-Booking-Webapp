@@ -74,4 +74,18 @@
   .search-bar > input {
     text-align: center;
   }
+  .search-input-and-btn-for-individual-customer-cc {
+    flex-direction: column;
+    gap: 0.8em;
+  }
+}
+
+@media (max-width: 1024px) {
+  .table-view {
+    overflow-x: scroll;
+  }
+  .search-input-and-btn-for-individual-customer-cc {
+    flex-direction: column;
+    gap: 0.8em;
+  }
 }

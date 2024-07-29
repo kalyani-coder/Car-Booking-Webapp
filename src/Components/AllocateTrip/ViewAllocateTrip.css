@@ -59,3 +59,21 @@
     display: block;
   }
 }
+@media (max-width: 1024px) {
+  .view-allocate-trip-details-container {
+    width: 100%;
+    /* max-width: 800px; */
+    display: flex;
+    /* flex-wrap: wrap; */
+    padding: 20px;
+    flex-direction: column;
+    /* height: 150vh; */
+    justify-content: center;
+    /* flex-direction: column; */
+    margin: auto;
+  }
+  .share-details-main-container {
+    display: block;
+    overflow-x: scroll;
+  }
+}

@@ -167,3 +167,15 @@ body {
   color: red; /* or any other color */
   margin-left: 4px; /* adjust the margin as needed */
 }
+
+@media (max-width: 1024px) {
+  .rate-Add-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    margin: auto;
+    width: 80%;
+    height: auto;
+  }
+}

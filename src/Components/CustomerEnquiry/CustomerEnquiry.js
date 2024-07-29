@@ -114,45 +114,45 @@ const CustomerEnquiry = () => {
 
   const handleSubmit = async (event) => {
     // event.preventDefault();
-     // Validate all fields are filled
-  const {
-    customername,
-    mobileno,
-    email,
-    tripe_type,
-    sub_type,
-    pic_up,
-    date1,
-    date2,
-    time1,
-    drop_of,
-    time2,
-    vehicle,
-    totalDays,
-    totalHours,
-    address,
-  } = formData;
+    // Validate all fields are filled
+    const {
+      customername,
+      mobileno,
+      email,
+      tripe_type,
+      sub_type,
+      pic_up,
+      date1,
+      date2,
+      time1,
+      drop_of,
+      time2,
+      vehicle,
+      totalDays,
+      totalHours,
+      address,
+    } = formData;
 
-  if (
-    !customername ||
-    !mobileno ||
-    !email ||
-    !tripe_type ||
-    !sub_type ||
-    !pic_up ||
-    !date1 ||
-    !date2 ||
-    !time1 ||
-    !drop_of ||
-    !time2 ||
-    !vehicle ||
-    !totalDays ||
-    !totalHours ||
-    !address
-  ) {
-    alert("All fields are required.");
-    return;
-  }
+    if (
+      !customername ||
+      !mobileno ||
+      !email ||
+      !tripe_type ||
+      !sub_type ||
+      !pic_up ||
+      !date1 ||
+      !date2 ||
+      !time1 ||
+      !drop_of ||
+      !time2 ||
+      !vehicle ||
+      !totalDays ||
+      !totalHours ||
+      !address
+    ) {
+      alert("All fields are required.");
+      return;
+    }
 
     const apiData = {
       customer_id: selectedCustomer ? selectedCustomer._id : "",
@@ -340,52 +340,52 @@ const CustomerEnquiry = () => {
               />
             </div>
             <div className="d-flex gap-3 responsive-flex-column-required">
-            <div className="w-[50%] res-width-100-percent">
-            <div className="form-group">
-              <label htmlFor="triptype" className="form-label">
-                Trip Type:
-                <span className="required-asterisk">*</span>
-              </label>
-              <select
-                className="form-control-add-trip-input-vender-rate-page"
-                id="tripe_type"
-                name="tripe_type"
-                onChange={handleChange}
-                value={formData.tripe_type}
-              >
-                <option value="">Trip Type</option>
-                <option value="One Way Trip">One Way Trip</option>
-                <option value="Return Trip">Return Trip</option>
-              </select>
+              <div className="w-[50%] res-width-100-percent">
+                <div className="form-group">
+                  <label htmlFor="triptype" className="form-label">
+                    Trip Type:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <select
+                    className="form-control-add-trip-input-vender-rate-page"
+                    id="tripe_type"
+                    name="tripe_type"
+                    onChange={handleChange}
+                    value={formData.tripe_type}
+                  >
+                    <option value="">Trip Type</option>
+                    <option value="One Way Trip">One Way Trip</option>
+                    <option value="Return Trip">Return Trip</option>
+                  </select>
+                </div>
+              </div>
+              <div className="w-[50%] res-width-100-percent">
+                <div className="form-group">
+                  <label htmlFor="sub_type" className="form-label">
+                    Sub Type:
+                    <span className="required-asterisk">*</span>
+                  </label>
+                  <select
+                    className="form-control-add-trip-input-vender-rate-page"
+                    id="sub_type"
+                    name="sub_type"
+                    onChange={handleChange}
+                    value={formData.sub_type}
+                  >
+                    <option value="">Sub Type</option>
+                    <option value="Local Trip">Local Trip</option>
+                    <option value="Outstation Trip">Outstation Trip</option>
+                    <option value="Outstation Local Trip">
+                      Outstation Local Trip
+                    </option>
+                    <option value="Outstation Outstation Trip">
+                      Outstation Outstation Trip
+                    </option>
+                  </select>
+                </div>
+              </div>
             </div>
-            </div>
-            <div className="w-[50%] res-width-100-percent">
-            <div className="form-group">
-              <label htmlFor="sub_type" className="form-label">
-                Sub Type:
-                <span className="required-asterisk">*</span>
-              </label>
-              <select
-                className="form-control-add-trip-input-vender-rate-page"
-                id="sub_type"
-                name="sub_type"
-                onChange={handleChange}
-                value={formData.sub_type}
-              >
-                <option value="">Sub Type</option>
-                <option value="Local Trip">Local Trip</option>
-                <option value="Outstation Trip">Outstation Trip</option>
-                <option value="Outstation Local Trip">
-                  Outstation Local Trip
-                </option>
-                <option value="Outstation Outstation Trip">
-                  Outstation Outstation Trip
-                </option>
-              </select>
-            </div>
-            </div>
-            </div>
-            <div className="d-flex gap-3 responsive-flex-column-required">
+            <div className="d-flex gap-3 responsive-flex-column-required responsive-flex-column-required-1024-pxl">
               <div>
                 <div className="form-group">
                   <label htmlFor="pic_up" className="form-label">
@@ -437,7 +437,7 @@ const CustomerEnquiry = () => {
                 </div>
               </div>
             </div>
-            <div className="d-flex gap-3 responsive-flex-column-required">
+            <div className="d-flex gap-3 responsive-flex-column-required responsive-flex-column-required-1024-pxl">
               <div>
                 <div className="form-group">
                   <label htmlFor="drop_of" className="form-label">
@@ -489,38 +489,38 @@ const CustomerEnquiry = () => {
               </div>
             </div>
             <div className="d-flex gap-3 responsive-flex-column-required">
-            <div className="w-[50%] res-width-100-percent">
-            <div className="form-group">
-              <label htmlFor="totalDays" className="form-label">
-                {/* <span className="required-asterisk">*</span> */}
-                Total Days:
-                <span className="days">Days</span>
-              </label>
-              <input
-                type="number"
-                className="form-control-add-trip-input-vender-rate-page"
-                name="totalDays"
-                // placeholder="Total Days"
-                onChange={handleChange}
-                value={formData.totalDays}
-              />
-            </div>
-            </div>
-            <div className="w-[50%] res-width-100-percent">
-            <div className="form-group">
-              <label htmlFor="totalHours" className="form-label">
-                Total Hours:
-              </label>
-              <input
-                type="number"
-                className="form-control-add-trip-input-vender-rate-page"
-                name="totalHours"
-                // placeholder="Total Days"
-                onChange={handleChange}
-                value={formData.totalHours}
-              />
-            </div>
-            </div>
+              <div className="w-[50%] res-width-100-percent">
+                <div className="form-group">
+                  <label htmlFor="totalDays" className="form-label">
+                    {/* <span className="required-asterisk">*</span> */}
+                    Total Days:
+                    <span className="days">Days</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control-add-trip-input-vender-rate-page"
+                    name="totalDays"
+                    // placeholder="Total Days"
+                    onChange={handleChange}
+                    value={formData.totalDays}
+                  />
+                </div>
+              </div>
+              <div className="w-[50%] res-width-100-percent">
+                <div className="form-group">
+                  <label htmlFor="totalHours" className="form-label">
+                    Total Hours:
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control-add-trip-input-vender-rate-page"
+                    name="totalHours"
+                    // placeholder="Total Days"
+                    onChange={handleChange}
+                    value={formData.totalHours}
+                  />
+                </div>
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="vehicle" className="form-label">
@@ -565,7 +565,11 @@ const CustomerEnquiry = () => {
                 </option>
               </select>
             </div>
-            <button type="button" className="customer-btn-submit" onClick={handleSubmit}>
+            <button
+              type="button"
+              className="customer-btn-submit"
+              onClick={handleSubmit}
+            >
               Submit
             </button>
           </div>

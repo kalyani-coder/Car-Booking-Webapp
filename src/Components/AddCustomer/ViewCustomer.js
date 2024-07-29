@@ -25,7 +25,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
           <td>{customer.cus_mobile}</td>
           <td>{customer.address}</td>
           <td>
-            <div className="d-flex align-items-center gap-1">
+            <div className="d-flex align-items-center gap-1 ">
               <button
                 className="btn btn-info"
                 onClick={() => handleEditCustomer(customer)}
@@ -220,14 +220,15 @@ const ViewCustomer = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-
-          {viewType === "table" && (
-            <TableView
-              customers={filteredCustomers}
-              handleEditCustomer={handleEditCustomer}
-              deleteCustomer={deleteCustomer}
-            />
-          )}
+          <div className="table-view-for-view-customer-cc">
+            {viewType === "table" && (
+              <TableView
+                customers={filteredCustomers}
+                handleEditCustomer={handleEditCustomer}
+                deleteCustomer={deleteCustomer}
+              />
+            )}
+          </div>
         </div>
       </div>
 

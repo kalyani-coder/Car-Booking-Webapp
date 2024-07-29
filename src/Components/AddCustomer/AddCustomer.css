@@ -82,7 +82,10 @@ body {
 .customer-btn-submit:hover {
   background-color: #0056b3;
 }
-
+.required-asterisk {
+  color: red; /* or any other color */
+  margin-left: 4px; /* adjust the margin as needed */
+}
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .main-container {
@@ -144,7 +147,13 @@ body {
   }
 }
 
-.required-asterisk {
-  color: red; /* or any other color */
-  margin-left: 4px; /* adjust the margin as needed */
+@media (max-width: 1024px) {
+  .customer-Add-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    margin: auto;
+    width: 100%;
+  }
 }

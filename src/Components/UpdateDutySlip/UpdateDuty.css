@@ -113,3 +113,16 @@
     width: 100%;
   }
 }
+
+@media (max-width: 1024px) {
+  .update-duty-container {
+    display: flex;
+    margin: auto;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    /* width: 100vw; */
+    overflow-x: hidden;
+  }
+}

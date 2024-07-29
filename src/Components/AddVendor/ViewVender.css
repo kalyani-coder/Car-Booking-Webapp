@@ -29,6 +29,11 @@
 
 @media (max-width: 768px) {
   .responsive-over-flow-x-scroll-table {
-    overflow-x: scroll;
+    overflow-y: scroll;
+  }
+}
+@media (max-width: 1024px) {
+  .responsive-over-flow-x-scroll-table {
+    overflow-y: scroll;
   }
 }
