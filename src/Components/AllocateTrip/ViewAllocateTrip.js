@@ -122,13 +122,14 @@ const ViewAllocateTrip = () => {
 
   const handleEdit = (_id) => {
     setEditingId(_id);
-
+  
     fetch(`http://localhost:8787/api/trip-details/${_id}`)
       .then((response) => response.json())
       .then((data) => {
         setEditedTrip(data);
       })
       .catch((error) => {
+        console.error("Error fetching trip details for editing:", error);
         setError("Error fetching trip details for editing: " + error.message);
       });
   };
@@ -140,7 +141,7 @@ const ViewAllocateTrip = () => {
   const handleSaveEdit = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8787/api/trip-details/${editingId._id}`,
+        `http://localhost:8787/api/trip-details/${editingId}`,
         {
           method: "PATCH",
           headers: {
@@ -149,21 +150,19 @@ const ViewAllocateTrip = () => {
           body: JSON.stringify(editedTrip),
         }
       );
-
-      // Log response for debugging
+  
       const result = await response.json();
-      console.log("API Response:", result);
-
+  
       if (response.ok) {
         // Update UI with new trip details
         setShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
-            detail._id === editingId._id ? result : detail
+            detail._id === editingId ? result.data : detail
           )
         );
         setFilteredShareDetails((prevDetails) =>
           prevDetails.map((detail) =>
-            detail._id === editingId._id ? result : detail
+            detail._id === editingId ? result.data : detail
           )
         );
         alert(result.message || "Trip details successfully updated!");
@@ -181,7 +180,7 @@ const ViewAllocateTrip = () => {
       alert("Error updating trip details. Please try again.");
     }
   };
-
+  
   const handleDelete = (_id) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this trip?"

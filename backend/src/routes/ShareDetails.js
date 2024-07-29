@@ -41,10 +41,16 @@ router.post('/' , async(req, res) => {
         await shareDetailspost.save()
         res.status(201).json({message : "Details Added Successfully"})
 
-    }catch(e){
-        res.status(404).json({message : "Can not post details",e})
-    }
-})
+    }catch (e) {
+        if (e.name === 'ValidationError') {
+          const errorMessages = Object.values(e.errors).map(err => err.message);
+          res.status(400).json({ message: errorMessages.join(', ') });
+        } else {
+          console.error(e);
+          res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+    });
 
 // PATCH METHOD 
 router.patch('/:id' , async(req, res) => {
@@ -53,14 +59,21 @@ router.patch('/:id' , async(req, res) => {
     
     try{
         const UpdatedshareDetails = await newShareDetailsSchema.findByIdAndUpdate(shareDetailsId , req.body ,{
-            new : true
+            new : true,
+            runValidators : true
         })
         res.status(201).json({message : "Details Successfully updated "})
 
-    }catch(e){
-        res.status(404).json({message : "Can not patch Details"})
-    }
-})
+    }catch (e) {
+        if (e.name === 'ValidationError') {
+          const errorMessages = Object.values(e.errors).map(err => err.message);
+          res.status(400).json({ message: errorMessages.join(', ') });
+        } else {
+          console.error(e);
+          res.status(500).json({ message: "Internal Server Error" });
+        }
+      }
+    });
 
 // DELETE METHOD
 router.delete('/:id' , async(req, res) => {
