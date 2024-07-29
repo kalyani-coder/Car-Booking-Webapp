@@ -8,7 +8,7 @@
   padding-bottom: 50px;
   width: 72em;
   margin: auto;
-  /* height: 79vh; */
+  height: 100vh;
 }
 .contact-us-content {
   display: flex;
@@ -17,14 +17,14 @@
   margin-top: 6em;
   margin-bottom: 50px;
   animation: swipeBtm 1s;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 .contact-us h4 {
   font-size: 48px;
   font-weight: 700;
   color: #49557e;
   /* margin-bottom: 50px; */
-  padding-top: 1em;
+  padding-top: 3em;
 }
 
 .contact-us hr {
