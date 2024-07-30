@@ -20,9 +20,12 @@
   /* flex-direction: column; */
 }
 .contact-us h4 {
-  font-size: 48px;
-  font-weight: 700;
+  font-size: 50px;
   color: #49557e;
+  letter-spacing: -3px;
+  line-height: 55px;
+  word-spacing: 4px;
+  font-family: system-ui;
   /* margin-bottom: 50px; */
   padding-top: 3em;
 }

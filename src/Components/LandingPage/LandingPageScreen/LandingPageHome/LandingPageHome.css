@@ -15,11 +15,21 @@
   animation: swipeRight 1s;
 }
 .landing-content h1 {
-  font-size: max(3vw, 25px);
+  font-size: 44px;
+  color: #49557e;
+  letter-spacing: -3px;
+  line-height: 55px;
+  word-spacing: 4px;
+  font-family: system-ui;
   margin-bottom: 20px;
 }
 .landing-content p {
   font-size: 20px;
+  color: #49557e;
+  /* letter-spacing: px; */
+  /* line-height: 55px; */
+  word-spacing: 4px;
+  font-family: system-ui;
 }
 .landing-img {
   width: 40%;

@@ -31,7 +31,9 @@ const Footer = () => {
             <SlSocialTwitter size={25} />
           </div>
           <div className="footer-social-logo-section">
-            <img src={companylogofooter} alt="company logo footer" />
+            <Link to="/landingpage">
+              <img src={companylogofooter} alt="company logo footer" />{" "}
+            </Link>
           </div>
         </div>
         <div className="footer-content-center">

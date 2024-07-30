@@ -7,6 +7,7 @@ import LoginPopUp from "../LoginPopUp/LoginPopUp";
 import Sidebar from "../Sidebar/Sidebar";
 import carbookinglogo from "../../../../Assets/images/shivpushpa_logo_new.png";
 import "./Navbar.css";
+
 const Navbar = () => {
   const [menu, setMenu] = useState("home");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -45,11 +46,13 @@ const Navbar = () => {
               )}
             </div>
             <div className="section-logo-for-car-booking-landing-page">
-              <img
-                src={carbookinglogo}
-                alt=""
-                className="logo-for-car-booking-landing-page"
-              />
+              <Link to="/landingpage">
+                <img
+                  src={carbookinglogo}
+                  alt=""
+                  className="logo-for-car-booking-landing-page"
+                />
+              </Link>
             </div>
           </div>
           <ul className="navbar-menu">
