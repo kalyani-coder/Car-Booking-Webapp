@@ -573,7 +573,7 @@ const CustomerRate = () => {
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_km" className="form-label">
-                      Extra KM:
+                    Rate Per KM(Extra KM):
                       <span className="required-asterisk">*</span>
                     </label>
                     <input
@@ -609,7 +609,7 @@ const CustomerRate = () => {
                 <div className="w-[50%] res-width-100-percent">
                   <div className="form-group">
                     <label htmlFor="extra_hours" className="form-label">
-                      Extra Hours:
+                    Rate Per Hour(Extra Hour):
                       <span className="required-asterisk">*</span>
                     </label>
                     <input

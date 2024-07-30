@@ -259,7 +259,7 @@ const ViewCorporateCustomer = () => {
                       type="text"
                       value={editedItem.to || ""}
                       onChange={(e) =>
-                        setEditedItem({ ...editedItem, from: e.target.value })
+                        setEditedItem({ ...editedItem, to: e.target.value })
                       }
                       className="w-full p-2 border border-gray-300 rounded"
                     />
