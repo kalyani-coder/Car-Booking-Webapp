@@ -439,12 +439,16 @@ const VendorRate = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex m-auto justify-center">
-                <button type="submit" className="customer-btn-submit">
-                  Save
-                </button>
-              </div>
             </form>
+            <div className="flex m-auto justify-center">
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="rate-btn-submit"
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </div>
