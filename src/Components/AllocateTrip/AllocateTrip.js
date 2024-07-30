@@ -131,6 +131,9 @@ function AllocateTrip() {
       .then((response) => {
         // Handle success
         alert(response.data.message || "Allocate Trip added successfully!");
+         // Reset form fields
+         setTripDetails(initialTripDetails);
+         setSelectedCustomer(null);
       })
       .catch((error) => {
         // Handle error
