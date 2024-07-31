@@ -165,7 +165,7 @@ const ViewAllocateTrip = () => {
             detail._id === editingId ? result.data : detail
           )
         );
-        alert(result.message || "Trip details successfully updated!");
+        alert(result.message || "Allocate Trip successfully updated!");
       } else {
         console.error(
           "Error updating trip details:",

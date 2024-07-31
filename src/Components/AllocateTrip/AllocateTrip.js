@@ -115,6 +115,24 @@ function AllocateTrip() {
 
 
   const handleAllocateTrip = () => {
+    // Check for required fields
+    const requiredFields = {
+      selectedCustomer: selectedCustomer?._id,
+      customername: selectedCustomer?.customername,
+      customermobile: tripDetails.mobileno,
+      pickuplocation: tripDetails.pickup,
+      dropofflocation: tripDetails.dropoff,
+    };
+  
+    const missingFields = Object.keys(requiredFields).filter(
+      (field) => !requiredFields[field]
+    );
+  
+    if (missingFields.length > 0) {
+      alert(`fill the required fields`);
+      return;
+    }
+  
     // Construct payload object
     const payload = {
       customerId: selectedCustomer?._id,
@@ -131,9 +149,9 @@ function AllocateTrip() {
       .then((response) => {
         // Handle success
         alert(response.data.message || "Allocate Trip added successfully!");
-         // Reset form fields
-         setTripDetails(initialTripDetails);
-         setSelectedCustomer(null);
+        // Reset form fields
+        setTripDetails(initialTripDetails);
+        setSelectedCustomer(null);
       })
       .catch((error) => {
         // Handle error
@@ -144,6 +162,7 @@ function AllocateTrip() {
         }
       });
   };
+  
 
   return (
     <>
