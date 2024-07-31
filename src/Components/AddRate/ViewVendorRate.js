@@ -161,7 +161,7 @@ const ViewVenderRate = () => {
                     <FaTimes />
                   </button>
                 </div>
-                <h5>Vendor Name</h5>
+                <h5 className="fw-bold my-2">Vendor Name</h5>
                 <input
                   type="text"
                   value={editedItem.vender_Name}
@@ -173,7 +173,7 @@ const ViewVenderRate = () => {
                   }
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
-                <h5>Company Name</h5>
+                <h5 className="fw-bold my-2">Company Name</h5>
                 <input
                   type="text"
                   value={editedItem.company_Name}
@@ -185,7 +185,7 @@ const ViewVenderRate = () => {
                   }
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
-                <h5>GST No</h5>
+                <h5 className="fw-bold my-2">GST No</h5>
                 <input
                   type="text"
                   value={editedItem.GST_No}
@@ -195,7 +195,7 @@ const ViewVenderRate = () => {
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
-                <h5>Mobile Number</h5>
+                <h5 className="fw-bold my-2">Mobile Number</h5>
                 <input
                   type="text"
                   value={editedItem.mobile_Number}
@@ -208,7 +208,7 @@ const ViewVenderRate = () => {
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
-                <h5>Duty Type</h5>
+                <h5 className="fw-bold my-2">Duty Type</h5>
                 <input
                   type="text"
                   id="title"
@@ -219,7 +219,7 @@ const ViewVenderRate = () => {
                   className="form-control"
                 />
 
-                <h5>Rate</h5>
+                <h5 className="fw-bold my-2">Rate</h5>
                 <input
                   type="text"
                   value={editedItem.rate}
@@ -229,7 +229,7 @@ const ViewVenderRate = () => {
                   className="w-full p-2 mb-2 border border-gray-300 rounded"
                 />
 
-                <h5>KM</h5>
+                <h5 className="fw-bold my-2">KM</h5>
                 <input
                   className="rate-form-control"
                   type="number"
@@ -243,7 +243,7 @@ const ViewVenderRate = () => {
                   required
                 />
 
-                <h5>Extra KM</h5>
+                <h5 className="fw-bold my-2">Extra KM</h5>
                 <input
                   className="rate-form-control"
                   type="number"
@@ -254,10 +254,9 @@ const ViewVenderRate = () => {
                   onChange={(e) =>
                     setEditedItem({ ...editedItem, extra_km: e.target.value })
                   }
-                  required
                 />
 
-                <h5>Hour</h5>
+                <h5 className="fw-bold my-2">Hour</h5>
                 <input
                   className="rate-form-control"
                   type="number"
@@ -271,7 +270,7 @@ const ViewVenderRate = () => {
                   required
                 />
 
-                <h5>Extra Hour</h5>
+                <h5 className="fw-bold my-2">Extra Hour</h5>
                 <input
                   className="rate-form-control"
                   type="number"
@@ -282,7 +281,6 @@ const ViewVenderRate = () => {
                   onChange={(e) =>
                     setEditedItem({ ...editedItem, extra_hour: e.target.value })
                   }
-                  required
                 />
 
                 <button

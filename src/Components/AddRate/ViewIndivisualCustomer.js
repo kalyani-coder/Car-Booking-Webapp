@@ -203,7 +203,7 @@ const ViewIndivisualCustomer = () => {
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <h5 className="font-medium">Customer Name</h5>
+                    <h5  className="fw-bold my-2">Customer Name</h5>
                     <input
                       type="text"
                       value={editedItem.Cus_name}
@@ -218,7 +218,7 @@ const ViewIndivisualCustomer = () => {
                   </div>
 
                   <div>
-                    <h5 className="font-medium">GST No</h5>
+                    <h5  className="fw-bold my-2">GST No</h5>
                     <input
                       type="text"
                       value={editedItem.gst_no}
@@ -229,7 +229,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">Mobile Number</h5>
+                    <h5  className="fw-bold my-2">Mobile Number</h5>
                     <input
                       type="text"
                       value={editedItem.Cus_Mobile}
@@ -243,7 +243,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">From</h5>
+                    <h5  className="fw-bold my-2">From</h5>
                     <input
                       type="text"
                       value={editedItem.from || ""}
@@ -254,7 +254,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">To</h5>
+                    <h5  className="fw-bold my-2">To</h5>
                     <input
                       type="text"
                       value={editedItem.to || ""}
@@ -265,7 +265,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">Duty Type</h5>
+                    <h5  className="fw-bold my-2">Duty Type</h5>
                     <input
                       type="text"
                       value={editedItem.duty_type || ""}
@@ -279,7 +279,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">Rate</h5>
+                    <h5  className="fw-bold my-2">Rate</h5>
                     <input
                       type="text"
                       value={editedItem.rate}
@@ -290,7 +290,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">KM</h5>
+                    <h5  className="fw-bold my-2">KM</h5>
                     <input
                       type="number"
                       value={editedItem.km || ""}
@@ -301,7 +301,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">Extra KM</h5>
+                    <h5  className="fw-bold my-2">Extra KM</h5>
                     <input
                       type="number"
                       value={editedItem.extra_km || ""}
@@ -315,7 +315,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">Hour</h5>
+                    <h5  className="fw-bold my-2">Hour</h5>
                     <input
                       type="number"
                       value={editedItem.hours || ""}
@@ -326,7 +326,7 @@ const ViewIndivisualCustomer = () => {
                     />
                   </div>
                   <div>
-                    <h5 className="font-medium">Extra Hour</h5>
+                    <h5  className="fw-bold my-2">Extra Hour</h5>
                     <input
                       type="number"
                       value={editedItem.extra_hours || ""}
