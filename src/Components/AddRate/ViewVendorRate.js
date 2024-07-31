@@ -93,7 +93,10 @@ const ViewVenderRate = () => {
         alert(responseData.message || "Vendor rate updated successfully");
       } else {
         console.error("Error updating vendor rate:", response.status);
-        alert(responseData.message || "Error updating vendor rate. Please try again.");
+        alert(
+          responseData.message ||
+            "Error updating vendor rate. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error updating vendor rate:", error);
@@ -140,7 +143,7 @@ const ViewVenderRate = () => {
   return (
     <>
       <div className="customer-Add-container">
-        <div className="customer-main-container h-[98vh]">
+        <div className="customer-main-container">
           <h2 className="View-Corporate-Customer-Rate font-bold py-4">
             View Vendor Rate
           </h2>
@@ -231,7 +234,7 @@ const ViewVenderRate = () => {
                   }
                   className="form-control"
                 />
-                 <h5 className="fw-bold my-2">To</h5>
+                <h5 className="fw-bold my-2">To</h5>
                 <input
                   type="text"
                   id="to"
