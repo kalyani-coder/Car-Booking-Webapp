@@ -48,13 +48,25 @@ router.patch("/:id", async (req, res) => {
       req.body,
       {
         new: true,
+        runValidators: true,
       }
     );
-    res.status(201).json({ message: "venders Rate Successfully updated " });
+
+    if (!UpdatedAddVenders) {
+      return res.status(404).json({ message: "Vendor not found" });
+    }
+
+    res.status(200).json({ message: "Vendor rate successfully updated" });
   } catch (e) {
-    res.status(404).json({ message: "Can not patch venders Rate" });
+    if (e.name === 'ValidationError') {
+      const errorMessages = Object.values(e.errors).map(err => err.message);
+      res.status(400).json({ message: errorMessages.join(', ') });
+    } else {
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 });
+
 
 // DELETE METHOD
 router.delete("/:id", async (req, res) => {

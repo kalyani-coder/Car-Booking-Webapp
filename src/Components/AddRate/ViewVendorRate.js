@@ -78,6 +78,8 @@ const ViewVenderRate = () => {
         }
       );
 
+      const responseData = await response.json();
+
       if (response.ok) {
         setCustomerRates((prevRates) =>
           prevRates.map((customerRate) =>
@@ -88,10 +90,10 @@ const ViewVenderRate = () => {
 
         // Remove the edited item from localStorage
         localStorage.removeItem("editedItem");
-        alert("Vendor rate updated successfully");
+        alert(responseData.message || "Vendor rate updated successfully");
       } else {
         console.error("Error updating vendor rate:", response.status);
-        alert("Error updating vendor rate. Please try again.");
+        alert(responseData.message || "Error updating vendor rate. Please try again.");
       }
     } catch (error) {
       console.error("Error updating vendor rate:", error);
@@ -219,6 +221,26 @@ const ViewVenderRate = () => {
                   className="form-control"
                 />
 
+                <h5 className="fw-bold my-2">From</h5>
+                <input
+                  type="text"
+                  id="from"
+                  value={editedItem.from || ""}
+                  onChange={(e) =>
+                    setEditedItem({ ...editedItem, from: e.target.value })
+                  }
+                  className="form-control"
+                />
+                 <h5 className="fw-bold my-2">To</h5>
+                <input
+                  type="text"
+                  id="to"
+                  value={editedItem.to || ""}
+                  onChange={(e) =>
+                    setEditedItem({ ...editedItem, to: e.target.value })
+                  }
+                  className="form-control"
+                />
                 <h5 className="fw-bold my-2">Rate</h5>
                 <input
                   type="text"
