@@ -16,6 +16,7 @@
 .trip-counts {
   /* border: 1px solid #ccc; Optional: Add border for each cell */
   padding: 10px; /* Optional: Add padding for each cell */
+  text-align: center;
 }
 .form-groupx {
   margin: auto;

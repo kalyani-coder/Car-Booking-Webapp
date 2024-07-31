@@ -179,14 +179,6 @@ function VendorReport() {
                   Non-AC Bus 49 Seater
                 </option>
               </select>
-              {selectedVehicle && (
-                <div className="trip-counts">
-                  <span className="mb-3">
-                    <strong>Vehicle Type: {selectedVehicle}:</strong>{" "}
-                  </span>
-                  <span>{tripCounts[selectedVehicle] || 0}</span>
-                </div>
-              )}
             </div>
           </div>
 
@@ -196,6 +188,14 @@ function VendorReport() {
             </button>
           </div>
         </div>
+        {selectedVehicle && (
+          <div className="trip-counts">
+            <span className="mb-3">
+              <strong>Vehicle Type: {selectedVehicle}:</strong>{" "}
+            </span>
+            <span>{tripCounts[selectedVehicle] || 0}</span>
+          </div>
+        )}
         <div className="responsive-table-vendor-report--cc-overflow">
           {" "}
           <table className="table">

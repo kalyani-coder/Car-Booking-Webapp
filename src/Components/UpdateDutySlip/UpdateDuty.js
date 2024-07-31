@@ -361,9 +361,9 @@ const UpdateDuty = () => {
       <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4 text-center">
         Add Duty Slip
       </h2>
-      {/* <h4 className="font-bold text-danger text-center">
+      <h4 className="font-bold text-danger text-center">
         Duity Slip Number {selectedCustomer.trip_duty_number}
-      </h4> */}
+      </h4>
       <div className="update-duty-container">
         <div className="update-duty-form">
           <div className="form-group">
@@ -371,12 +371,72 @@ const UpdateDuty = () => {
             {errorAlert && <Alert alert={errorAlert} />}
 
             <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
-            <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
+                {" "}
+                <label htmlFor="companyname" className="update-duty-form-label">
+                  Company Name:
+                </label>
+                <input
+                  className="update-duty-form-control form-control"
+                  type="text"
+                  id="companyname"
+                  name="companyname"
+                  placeholder="Company Name"
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
+              </div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
+                {" "}
+                <label htmlFor="gstno" className="update-duty-form-label">
+                  GST No:
+                </label>
+                <input
+                  className="update-duty-form-control form-control"
+                  type="text"
+                  id="gstno"
+                  name="gstno"
+                  placeholder="GST No."
+                  onChange={(e) => setGstNo(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
+                <label
+                  htmlFor="reportingaddress"
+                  className="update-duty-form-label"
+                >
+                  Reporting Address:
+                </label>
+                <input
+                  className="update-duty-form-control form-control"
+                  type="text"
+                  id="reportingaddress"
+                  name="reportingaddress"
+                  placeholder="Reporting Address"
+                  onChange={(e) => setReportingAddress(e.target.value)}
+                />
+              </div>
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
+                <label htmlFor="date" className="update-duty-form-label">
+                  Date:
+                </label>
+                <input
+                  className="update-duty-form-control form-control"
+                  type="date"
+                  id="date"
+                  name="date"
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
+              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="name" className="update-duty-form-label">
                   Customer Name:
                 </label>
                 <select
-                  className="form-control-add-trip-input-vender-rate-page"
+                  className="update-duty-form-control form-control"
                   id="customername"
                   name="customername"
                   onChange={(e) => {
@@ -413,69 +473,7 @@ const UpdateDuty = () => {
                   value={selectedCustomer.vehicle}
                 />
               </div>
-              
             </div>
-            <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
-              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                <label
-                  htmlFor="reportingaddress"
-                  className="update-duty-form-label"
-                >
-                  Reporting Address:
-                </label>
-                <input
-                  className="update-duty-form-control form-control"
-                  type="text"
-                  id="reportingaddress"
-                  name="reportingaddress"
-                  placeholder="Reporting Address"
-                  onChange={(e) => setReportingAddress(e.target.value)}
-                />
-              </div>
-              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                <label htmlFor="date" className="update-duty-form-label">
-                  Date:
-                </label>
-                <input
-                  className="update-duty-form-control form-control"
-                  type="date"
-                  id="date"
-                  name="date"
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </div>
-              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                {" "}
-                <label htmlFor="gstno" className="update-duty-form-label">
-                  Duty Slip Number:
-                </label>
-                <input
-                  className="update-duty-form-control form-control"
-                  type="text"
-                  id="gstno"
-                  name="gstno"
-                  placeholder="Duty Slip Number"
-                  onChange={handleChange}
-                  value={selectedCustomer.trip_duty_number}
-                />
-              </div>
-            </div>
-            {/* <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
-              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                <label htmlFor="rate" className="update-duty-form-label">
-                  Vehicle:
-                </label>
-                <input
-                  className="update-duty-form-control form-control"
-                  type="vehicle"
-                  id="vehicle"
-                  name="vehicle"
-                  // placeholder="vehicle"
-                  onChange={handleChange}
-                  value={selectedCustomer.vehicle}
-                />
-              </div>
-            </div> */}
             <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label
