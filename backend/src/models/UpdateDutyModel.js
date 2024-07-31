@@ -6,7 +6,7 @@ const UpdateDutySchema = new mongoose.Schema({
 
        
     companyname: String,
-    gstno: String,
+    // gstno: String,
     reportingaddress: String, 
     date: String,
     name: String,

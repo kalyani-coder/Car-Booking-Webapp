@@ -8,7 +8,7 @@ const UpdateDuty = () => {
   // Initial form data state
   const initialFormData = {
     companyname: "",
-    gstno: "",
+    // gstno: "",
     reportingaddress: "",
     date: "",
     name: "",
@@ -277,7 +277,7 @@ const UpdateDuty = () => {
 
     const data = {
       companyname: companyName,
-      gstno: gstNo,
+      // gstno: gstNo,
       reportingaddress: reportingAddress,
       date: date,
       name: selectedCustomer.customername,
@@ -299,7 +299,7 @@ const UpdateDuty = () => {
       totalamount: totalAmount,
       advanceamount: advanceAmount,
       paymentmethod: paymentMethod,
-      trip_duty_number: setSelectedCustomer.trip_duty_number,
+      trip_duty_number: selectedCustomer.trip_duty_number,
     };
     // Log the data to be sent
     console.log("Submitting data:", data);
@@ -317,7 +317,7 @@ const UpdateDuty = () => {
 
       if (response.status === 201) {
         // showAlert("Data added successfully!", "success");
-        window.alert("Data added Successfully");
+        window.alert("Duty Trip added Successfully");
         // Reset all form fields to their initial state
         setCompanyName("");
         setGstNo("");
@@ -387,16 +387,17 @@ const UpdateDuty = () => {
               </div>
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
-                <label htmlFor="gstno" className="update-duty-form-label">
-                  GST No:
+                <label htmlFor="Duty_slip_number" className="update-duty-form-label">
+                  Duty Slip Number:
                 </label>
                 <input
                   className="update-duty-form-control form-control"
                   type="text"
-                  id="gstno"
-                  name="gstno"
-                  placeholder="GST No."
-                  onChange={(e) => setGstNo(e.target.value)}
+                  id="trip_duty_number"
+                  name="trip_duty_number"
+                  placeholder="trip_duty_number"
+                  onChange={handleChange}
+                  value={selectedCustomer.trip_duty_number}
                 />
               </div>
             </div>
@@ -436,7 +437,7 @@ const UpdateDuty = () => {
                   Customer Name:
                 </label>
                 <select
-                  className="update-duty-form-control form-control"
+                  className="form-control-add-trip-input-vender-rate-page"
                   id="customername"
                   name="customername"
                   onChange={(e) => {

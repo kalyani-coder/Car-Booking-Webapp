@@ -147,12 +147,7 @@ const ViewUpdateDuty = () => {
 const extraSpace = 80; // Adjust this value to provide more space if needed
 doc.text("Vehicle No.:", startX + labelWidth + valueWidth + extraSpace, startY);
 doc.text(formData.vehiclenumber, startX + labelWidth + valueWidth + extraSpace + labelWidth, startY);
-
-      //  doc.text("Vehicle No.:", startX + labelWidth + valueWidth, startY);
-      //  doc.text(formData.vehiclenumber, startX + labelWidth + valueWidth + labelWidth, startY);
-
       
-
       // Move to the next line for the second row
       startY += rowSpacing;
 
@@ -326,11 +321,9 @@ doc.text(formData.vehiclenumber, startX + labelWidth + valueWidth + extraSpace +
             <thead>
               <tr>
                 <th>Sr.No.</th>
+                <th>Company Name</th>
                 <th>Customer Name</th>
-                <th>GST No</th>
-                <th>Reporting Address</th>
                 <th>Date</th>
-                {/* <th>Customer Name</th> */}
                 <th>Vehicle</th>
                 <th>Actions</th>
               </tr>
@@ -341,10 +334,8 @@ doc.text(formData.vehiclenumber, startX + labelWidth + valueWidth + extraSpace +
                   <tr>
                     <td>{index + 1}</td>
                     <td>{customer.companyname}</td>
-                    <td>{customer.gstno}</td>
-                    <td>{customer.reportingaddress}</td>
+                    <td>{customer.name}</td>
                     <td>{customer.date}</td>
-                    {/* <td>{customer.name}</td> */}
                     <td>{customer.vehicle}</td>
                     <td>
                       {editingCustomer &&
@@ -387,9 +378,6 @@ doc.text(formData.vehiclenumber, startX + labelWidth + valueWidth + extraSpace +
                       <td colSpan="7" className="mb-4">
                         <p className="mb-2">
                           <strong>Company Name:</strong> {customer.companyname}
-                        </p>
-                        <p className="mb-2">
-                          <strong>GST No:</strong> {customer.gstno}
                         </p>
                         <p className="mb-2">
                           <strong>Reporting Address:</strong>{" "}
