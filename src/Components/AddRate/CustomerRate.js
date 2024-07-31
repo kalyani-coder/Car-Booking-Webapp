@@ -178,7 +178,7 @@ const CustomerRate = () => {
 
       if (response.ok) {
         console.log("Customer data added successfully");
-        alert(`${customerType} customer Rate added successfully!`, "success");
+        alert(`${customerType} customer Rate added successfully!`);
         setFormData({
           Cus_Type: "",
           Cus_name: "",
