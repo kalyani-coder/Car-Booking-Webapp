@@ -361,9 +361,9 @@ const UpdateDuty = () => {
       <h2 className="View-Corporate-Customer-Rate font-bold p-4 my-4 text-center">
         Add Duty Slip
       </h2>
-      <h4 className="font-bold text-danger text-center">
+      {/* <h4 className="font-bold text-danger text-center">
         Duity Slip Number {selectedCustomer.trip_duty_number}
-      </h4>
+      </h4> */}
       <div className="update-duty-container">
         <div className="update-duty-form">
           <div className="form-group">
@@ -395,7 +395,7 @@ const UpdateDuty = () => {
                   type="text"
                   id="trip_duty_number"
                   name="trip_duty_number"
-                  placeholder="trip_duty_number"
+                  placeholder=""
                   onChange={handleChange}
                   value={selectedCustomer.trip_duty_number}
                 />
