@@ -273,11 +273,50 @@ const UpdateDuty = () => {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-
+    event.preventDefault();
+  
+    // Check for required fields and show specific messages for companyName, from, and to fields
+    if (!companyName) {
+      alert('Please fill the company name');
+      return;
+    }
+  
+    if (!selectedCustomer?.pickup) {
+      alert('Please fill the pickup location');
+      return;
+    }
+  
+    if (!selectedCustomer?.dropoff) {
+      alert('Please fill the dropoff location');
+      return;
+    }
+  
+    // Check for other required fields
+    const requiredFields = {
+      reportingAddress: reportingAddress,
+      date: date,
+      customername: selectedCustomer?.customername,
+      vehicle: selectedCustomer?.vehicle,
+      vehicleNumber: vehicleNumber,
+      startingKms: startingKms,
+      closingKms: closingKms,
+      hour: hour,
+      tripDutyNumber: selectedCustomer?.trip_duty_number,
+      totalamount: setTotalAmount,
+    };
+  
+    const missingFields = Object.keys(requiredFields).filter(
+      (field) => !requiredFields[field]
+    );
+  
+    if (missingFields.length > 0) {
+      alert('Please fill the required fields');
+      return;
+    }
+  
+    // Construct data object
     const data = {
       companyname: companyName,
-      // gstno: gstNo,
       reportingaddress: reportingAddress,
       date: date,
       name: selectedCustomer.customername,
@@ -301,9 +340,7 @@ const UpdateDuty = () => {
       paymentmethod: paymentMethod,
       trip_duty_number: selectedCustomer.trip_duty_number,
     };
-    // Log the data to be sent
-    console.log("Submitting data:", data);
-
+  
     try {
       const response = await axios.post(
         "http://localhost:8787/api/update-duty",
@@ -314,47 +351,85 @@ const UpdateDuty = () => {
           },
         }
       );
-
+  
       if (response.status === 201) {
-        // showAlert("Data added successfully!", "success");
-        window.alert("Duty Trip added Successfully");
-        // Reset all form fields to their initial state
-        setCompanyName("");
-        setGstNo("");
-        setReportingAddress("");
-        setDate("");
-        setVehicleNumber("");
-        setRate("");
-        setStartingKms("");
-        setClosingKms("");
-        setHour("");
-        setTotalKm("");
-        setExtraHour("");
-        setExtraKm("");
-        setExtraHourAmount("");
-        setExtraKmAmount("");
-        setTotalAmount("");
-        setAdvanceAmount("");
-        setPaymentMethod("");
-        setFormData({
-          chequeNo: "",
-          ifscCode: "",
-          TransactionNumber: "",
-          upiId: "",
-          cashReceiver: "",
-          neftnumber: "",
-          accountnumber: "",
-          branchname: "",
-          transactionId: "",
-        });
+        alert(response.data.message);
+        // Reset form fields
+        resetForm();
       } else {
-        alert("Failed to add data. Please try again.", "danger");
+        alert("Failed to add data. Please try again.");
       }
     } catch (error) {
-      console.error("API request error:", error);
-      alert("Failed to add data. Please try again.", "danger");
+      if (error.response && error.response.status === 422) {
+        const errors = error.response.data.errors;
+        const errorMessages = errors.join('\n');
+        alert(`Validation Error:\n${errorMessages}`);
+      } else {
+        console.error("API request error:", error);
+        alert("Failed to add data. Please try again.");
+      }
     }
   };
+  
+  const resetForm = () => {
+    const initialFormData = {
+      companyname: "",
+      reportingaddress: "",
+      date: "",
+      name: "",
+      vehicle: "",
+      vehiclenumber: "",
+      rate: "",
+      from: "",
+      to: "",
+      title: "",
+      amount: "",
+      startingtime: "",
+      closingtime: "",
+      startingkm: "",
+      closingkm: "",
+      totalhour: "",
+      totalkm: "",
+      extrahour: "",
+      extrahoursamount: "",
+      extrakm: "",
+      amount1: "",
+      extrakmamount: "",
+      subtotalamount: "",
+      sgst: "",
+      cgst: "",
+      totalamount: "",
+      advanceamount: "",
+      paymentmethod: "",
+      chequeNo: "",
+      ifscCode: "",
+      upiId: "",
+      cashReceiver: "",
+      transactionId: "",
+      TransactionNumber: "",
+      tripDutyNumber: "",
+    };
+  
+    setCompanyName(initialFormData.companyname);
+    setReportingAddress(initialFormData.reportingaddress);
+    setDate(initialFormData.date);
+    setSelectedCustomer({});
+    setVehicleNumber(initialFormData.vehiclenumber);
+    setRate(initialFormData.rate);
+    setStartingKms(initialFormData.startingkm);
+    setClosingKms(initialFormData.closingkm);
+    setHour(initialFormData.totalhour);
+    setTotalKm(initialFormData.totalkm);
+    setExtraHour(initialFormData.extrahour);
+    setExtraHourAmount(initialFormData.extrahoursamount);
+    setExtraKm(initialFormData.extrakm);
+    setExtraKmAmount(initialFormData.extrakmamount);
+    setTotalAmount(initialFormData.totalamount);
+    setAdvanceAmount(initialFormData.advanceamount);
+    setPaymentMethod(initialFormData.paymentmethod);
+  };
+  
+  
 
   return (
     <>
@@ -367,14 +442,12 @@ const UpdateDuty = () => {
       <div className="update-duty-container">
         <div className="update-duty-form">
           <div className="form-group">
-            {successAlert && <Alert alert={successAlert} />}
-            {errorAlert && <Alert alert={errorAlert} />}
-
             <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 {" "}
                 <label htmlFor="companyname" className="update-duty-form-label">
                   Company Name:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -389,6 +462,7 @@ const UpdateDuty = () => {
                 {" "}
                 <label htmlFor="Duty_slip_number" className="update-duty-form-label">
                   Duty Slip Number:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -408,6 +482,7 @@ const UpdateDuty = () => {
                   className="update-duty-form-label"
                 >
                   Reporting Address:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -435,6 +510,7 @@ const UpdateDuty = () => {
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="name" className="update-duty-form-label">
                   Customer Name:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <select
                   className="form-control-add-trip-input-vender-rate-page"
@@ -463,6 +539,7 @@ const UpdateDuty = () => {
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="rate" className="update-duty-form-label">
                   Vehicle:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -482,6 +559,7 @@ const UpdateDuty = () => {
                   className="update-duty-form-label"
                 >
                   Vehicle Number:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -510,6 +588,7 @@ const UpdateDuty = () => {
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="from" className="update-duty-form-label">
                   From:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -524,6 +603,7 @@ const UpdateDuty = () => {
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="To" className="update-duty-form-label">
                   To:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -536,51 +616,6 @@ const UpdateDuty = () => {
                 />
               </div>
             </div>
-
-            {/* <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
-              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                {" "}
-                <label htmlFor="title" className="update-duty-form-label">
-                  Duty Type:
-                </label>
-                <select
-                  className="update-duty-form-control form-control"
-                  name="title"
-                  id="title"
-                  onChange={handleChange}
-                  value={formData.title}
-                >
-                  <option value="">Duty Type</option>
-                  <option value="One Day / 80km">
-                    One Day /80km-Local Duty
-                  </option>
-                  <option value="One Day / 300km">
-                    One Day /300km-Outstation Duty
-                  </option>
-                  <option value="440km- Local Airport Transfer">
-                    440km-Local Airport Transfer
-                  </option>
-                  <option value="Pune-Mumbai Pickup Drop">
-                    Pune-Mumbai Pickup Dropoff{" "}
-                  </option>
-                </select>
-              </div>
-              <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                {" "}
-                <label htmlFor="amount1" className="update-duty-form-label">
-                  Amount:
-                </label>
-                <input
-                  className="update-duty-form-control form-control"
-                  type="text"
-                  id="amount1"
-                  name="amount1"
-                  placeholder="Amount"
-                  onChange={handleChange}
-                  value={formData.amount1}
-                />
-              </div>
-            </div> */}
             <div className="responsive-flex-column-required gap-for-div-section-container-label-and-input-add-duty-slip d-flex justify-between">
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label
@@ -618,6 +653,7 @@ const UpdateDuty = () => {
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="startingkm" className="update-duty-form-label">
                   Starting Kms:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -632,6 +668,7 @@ const UpdateDuty = () => {
                 {" "}
                 <label htmlFor="closingkm" className="update-duty-form-label">
                   Closing Kms:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"
@@ -687,7 +724,7 @@ const UpdateDuty = () => {
                 />
               </div>
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
-                <label htmlFor="totalamount" className="update-duty-form-label">
+                <label htmlFor="extrahourasamount" className="update-duty-form-label">
                   Extra Hours Amount:
                 </label>
                 <input
@@ -734,6 +771,7 @@ const UpdateDuty = () => {
               <div className="width-set-for-the-div-section-container-label-and-input-add-duty-slip">
                 <label htmlFor="totalamount" className="update-duty-form-label">
                   Total Amount:
+                  <span className="required-asterisk">*</span>
                 </label>
                 <input
                   className="update-duty-form-control form-control"

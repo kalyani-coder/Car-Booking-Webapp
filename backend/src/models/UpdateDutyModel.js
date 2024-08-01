@@ -5,15 +5,44 @@ const mongoose = require('mongoose');
 const UpdateDutySchema = new mongoose.Schema({
 
        
-    companyname: String,
+    companyname: {
+        type: String,
+        required: [true, "Company name is required"],
+        validate: {
+            validator: function (v) {
+                return /^[a-zA-Z\s]+$/.test(v);
+            },
+            message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
+        }
+    },
     // gstno: String,
     reportingaddress: String, 
     date: String,
     name: String,
     vehicle: String,
     vehiclenumber: String,
-    from:String,
-    to:String,
+    from: {
+        type: String,
+        required: [true, "Pickup Location is required"],
+        validate: {
+            validator: function (v) {
+                return /^[a-zA-Z\s]+$/.test(v);
+            },
+            message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
+        }
+    },
+    to: {
+        type: String,
+        required: [true, "Drop off location is required"],
+        validate: {
+            validator: function (v) {
+                return /^[a-zA-Z\s]+$/.test(v);
+            },
+            message: props => `${props.value} is not a valid name! Only letters and spaces are allowed.`
+        }
+    },
+    date: String
+,
     closingkm:String,
     closingtime:String,
     startingkm:String,

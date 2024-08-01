@@ -34,17 +34,20 @@ router.get('/:id' , async(req, res) => {
 })
 
 // POST METHOD 
-router.post('/' , async(req, res) => {
-
-    try{
-        const UpdateDuty = new newUpdateDutySchema(req.body)
-        const newUpdateDuty = await UpdateDuty.save()
-        res.status(201).json({message : "Duty Added Successfully"})
-
-    }catch(e){
-        res.status(404).json({message : "Can not Duty enquiry"})
+router.post('/', async (req, res) => {
+    try {
+      const UpdateDuty = new newUpdateDutySchema(req.body);
+      await UpdateDuty.save();
+      res.status(201).json({ message: "Duty Slip Added Successfully" });
+    } catch (e) {
+      if (e.name === 'ValidationError') {
+        const errorMessages = Object.values(e.errors).map(err => err.message);
+        res.status(400).json({ message: errorMessages.join(', ') });
+      } else {
+        res.status(500).json({ message: "Internal Server Error" });
+      }
     }
-})
+  });
 
 // PATCH METHOD 
 router.patch('/:id' , async(req, res) => {
@@ -55,13 +58,19 @@ router.patch('/:id' , async(req, res) => {
         const UpdatedUpdateDuty = await newUpdateDutySchema.findByIdAndUpdate(UpdateDutyId , req.body ,{
             new : true
         })
-        res.status(201).json({message : "Duty Successfully updated "})
-
-    }catch(e){
-        res.status(404).json({message : "Can not patch Duty"})
-    }
-})
-
+        if (!UpdatedUpdateDuty) {
+            return res.status(404).json({ message: "Duty not found" });
+          }
+          res.status(200).json({ message: "Duty Successfully updated" });
+        } catch (e) {
+          if (e.name === 'ValidationError') {
+            const errorMessages = Object.values(e.errors).map(err => err.message);
+            res.status(400).json({ message: errorMessages.join(', ') });
+          } else {
+            res.status(500).json({ message: "Internal Server Error" });
+          }
+        }
+      });
 // DELETE METHOD
 router.delete('/:id' , async(req, res) => {
 
