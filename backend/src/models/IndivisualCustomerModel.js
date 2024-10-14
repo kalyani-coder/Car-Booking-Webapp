@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const indivisualCustomerSchema = new mongoose.Schema({
     customerId: String,
+    Customer_Number : Number,
     Cus_Type: String,
     Cus_name: {
         type: String,

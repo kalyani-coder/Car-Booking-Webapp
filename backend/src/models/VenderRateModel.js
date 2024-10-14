@@ -3,6 +3,7 @@
 const mongoose = require('mongoose')
 
 const venderRateSchema = new mongoose.Schema({
+    Customer_Number : Number,
     company_Name : {
         type: String,
         required: [true, "Company name is required"],

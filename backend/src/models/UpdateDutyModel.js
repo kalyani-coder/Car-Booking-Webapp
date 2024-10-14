@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const UpdateDutySchema = new mongoose.Schema({
 
-       
+     Customer_Number : Number,  
     companyname: {
         type: String,
         required: [true, "Company name is required"],

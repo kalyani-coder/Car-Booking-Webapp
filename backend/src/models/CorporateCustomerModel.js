@@ -51,7 +51,8 @@ const CorporateCustomerSchema = new mongoose.Schema({
   extra_hours: String,
   date: { type: String, default: getCurrentDate },
   from: String,
-  to: String
+  to: String,
+  Customer_Number : Number,
 });
 
 CorporateCustomerSchema.pre('save', function (next) {

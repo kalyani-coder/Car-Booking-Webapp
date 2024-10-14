@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const TripDetailsSchema = new mongoose.Schema({
 
-       
+       Customer_Number : Number,
     customerId : String,
     customername :{
         type: String,

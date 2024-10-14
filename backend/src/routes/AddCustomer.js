@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // get by customer number 
-router.get("/customernumber/:Customer_Number", async (req, res) => {
+router.get("/:Customer_Number", async (req, res) => {
   const { Customer_Number } = req.params;
 
   try {

@@ -52,6 +52,7 @@ const getDetailsFromDriverSchema = new mongoose.Schema({
     nightstay : {type : String,
         default : ""
     },
+    Customer_Number : Number,
 
 
 })

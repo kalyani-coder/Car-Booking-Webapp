@@ -24,7 +24,7 @@ const VenderPaymentSchema = new mongoose.Schema({
   // paid_Amount:Number,
   // remaining_Amount : Number,
   // payment_Method : String,
-  
+  Customer_Number : Number,
   company_Name: String,
   GST_No: String,
   vender_Name: String,

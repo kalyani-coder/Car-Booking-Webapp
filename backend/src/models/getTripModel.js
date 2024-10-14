@@ -20,6 +20,7 @@ const getTripSchema = new mongoose.Schema({
   vehicleno: String,
   currentDate: Date,
   image: String,
+  Customer_Number : Number,
 });
 
 // Define the static method to get data by date

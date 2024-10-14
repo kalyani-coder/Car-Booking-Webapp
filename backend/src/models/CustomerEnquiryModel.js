@@ -45,7 +45,8 @@ const CustomerSchema = new mongoose.Schema({
     },
     time2: String,
     totalDays: String,
-    totalHours: String
+    totalHours: String,
+    Customer_Number : Number,
 
 
 })

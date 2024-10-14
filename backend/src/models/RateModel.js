@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 
 const rateSchema = new mongoose.Schema({
     company_Name :String,
+    Customer_Number : Number,
     GST_No : {
         type: String,
         required: [true, "GST number is required"],

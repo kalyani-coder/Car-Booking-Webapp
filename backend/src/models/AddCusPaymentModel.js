@@ -48,6 +48,7 @@ const AddPaymentSchema = new mongoose.Schema({
   cashReceiver : String,
   transactionId : String,
   TransactionNumber : String,
+  Customer_Number : Number,
 
 });
 

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const ShareDetailsSchema = new mongoose.Schema({
         customerId : String,
+        Customer_Number : Number,
         customername : {
                 type: String,
                 required: [true, "Customer name is required"],
