@@ -9,6 +9,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
     <thead>
       <tr>
         <th>Sr. No.</th>
+        <th>Cust. No.</th>
         <th>Customer Name</th>
         <th>GST No</th>
         <th>Mobile</th>
@@ -20,6 +21,7 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
       {customers.map((customer, index) => (
         <tr key={customer._id}>
           <td>{index + 1}</td>
+          <td>{customer.Customer_Number}</td>
           <td>{customer.cus_name}</td>
           <td>{customer.gst_no}</td>
           <td>{customer.cus_mobile}</td>

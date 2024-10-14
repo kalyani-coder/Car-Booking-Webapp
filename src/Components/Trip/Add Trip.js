@@ -99,6 +99,7 @@ const AddTrip = () => {
         totaldays: "",
         hours: "",
         vehicle: "",
+        Customer_Number:selectedCustomer.Customer_Number
       });
     }
   }, [selectedCustomer]);

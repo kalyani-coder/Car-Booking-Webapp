@@ -231,9 +231,10 @@ const ViewAllocateTrip = () => {
               <thead>
                 <tr>
                   <th>Sr.No.</th>
+                  <th>Cust. No.</th>
                   <th>Customer Name</th>
                   <th>Vehicle</th>
-                  <th>Trip Type</th>
+                  {/* <th>Trip Type</th> */}
                   <th>Subtype</th>
                   <th>Pickup</th>
                   <th>Dropoff</th>
@@ -246,9 +247,10 @@ const ViewAllocateTrip = () => {
                 {filteredShareDetails.map((shareDetail, index) => (
                   <tr key={shareDetail._id}>
                     <td>{index + 1}</td>
+                    <td>{shareDetail.Customer_Number}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.vehicle}</td>
-                    <td>{shareDetail.triptype}</td>
+                    {/* <td>{shareDetail.triptype}</td> */}
                     <td>{shareDetail.subtype}</td>
                     <td>{shareDetail.pickuplocation}</td>
                     <td>{shareDetail.dropofflocation}</td>

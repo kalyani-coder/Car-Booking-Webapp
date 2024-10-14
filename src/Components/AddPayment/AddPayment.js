@@ -463,6 +463,7 @@ function AddPayment() {
       ...formData,
       cus_id: selectedCustomer._id,
       cus_name: selectedCustomer.cus_name,
+      Customer_Number: selectedCustomer.Customer_Number
       // Add any other required fields here
     };
 

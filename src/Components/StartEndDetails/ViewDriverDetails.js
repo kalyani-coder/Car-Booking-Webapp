@@ -291,6 +291,7 @@ const ViewStartEndDetails = () => {
               <thead>
                 <tr>
                   <th>Sr.No.</th>
+                  <th>Cust.No.</th>
                   <th>Customer Name</th>
                   <th>Vehicle</th>
                   <th>Trip Type</th>
@@ -302,7 +303,7 @@ const ViewStartEndDetails = () => {
                   {/* <th>Time</th> */}
                   {/* <th>Total Days</th> */}
                   {/* <th>Total Hours</th> */}
-                  <th>Mobile No</th>
+                  {/* <th>Mobile No</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -310,6 +311,7 @@ const ViewStartEndDetails = () => {
                 {filteredShareDetails.map((shareDetail, index) => (
                   <tr key={shareDetail._id}>
                     <td>{index + 1}</td>
+                    <td>{shareDetail.Customer_Number}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.vehicle}</td>
                     <td>{shareDetail.triptype}</td>
@@ -323,7 +325,7 @@ const ViewStartEndDetails = () => {
                     {/* <td>{shareDetail.totalDays}</td> */}
                     {/* <td>{shareDetail.totalHours}</td> */}
 
-                    <td>{shareDetail.mobileno}</td>
+                    {/* <td>{shareDetail.mobileno}</td> */}
                     <td>
                       <div className="d-flex justify-content-between gap-3 btn-for-view-drive-details-flex">
                         <button

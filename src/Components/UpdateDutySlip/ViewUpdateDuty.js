@@ -89,7 +89,7 @@ const ViewUpdateDuty = () => {
   
         // Right side details
         const rightDetails = [
-          ["Duty Slip No:", formData.trip_duty_number],
+          ["Duty Slip No:", selectedCustomer.trip_duty_number],
           ["Date:", formData.date],
         ];
   

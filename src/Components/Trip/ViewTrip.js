@@ -159,6 +159,7 @@ const ViewTrip = () => {
               <thead>
                 <tr>
                   <th>Sr. No.</th>
+                  <th>Cust. No.</th>
                   <th>Customer Name</th>
                   <th>Mobile No</th>
                   <th>Trip Type</th>
@@ -171,6 +172,7 @@ const ViewTrip = () => {
                 {filteredTrips.map((trip, index) => (
                   <tr key={trip._id}>
                     <td>{index + 1}</td>
+                    <td>{trip.Customer_Number}</td>
                     <td>{trip.customername}</td>
                     <td>{trip.mobileno}</td>
                     <td>{trip.triptype}</td>

@@ -96,6 +96,7 @@ const ShareDetails = () => {
           drivername: selectedCustomerDetails.drivername,
           mobileno: selectedCustomerDetails.drivermobileno,
           vehicleno: selectedCustomerDetails.vehicleno,
+          Customer_Number: selectedCustomerDetails.Customer_Number
         }),
       });
 

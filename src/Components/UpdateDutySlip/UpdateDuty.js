@@ -44,6 +44,7 @@ const UpdateDuty = () => {
     transactionId: "",
     TransactionNumber: "",
     tripDutyNumber: "",
+    Customer_Number:""
   };
 
   // const [formData, setFormData] = useState(initialFormData);
@@ -339,6 +340,7 @@ const UpdateDuty = () => {
       advanceamount: advanceAmount,
       paymentmethod: paymentMethod,
       trip_duty_number: selectedCustomer.trip_duty_number,
+      Customer_Number: selectedCustomer.Customer_Number
     };
   
     try {

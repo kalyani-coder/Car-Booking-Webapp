@@ -75,6 +75,7 @@ function AllocateTrip() {
         triptype: selectedCustomer.triptype || "",
         subtype: selectedCustomer.subtype || "",
         vehicle: selectedCustomer.vehicle || "",
+        Customer_Number:selectedCustomer.Customer_Number
       });
     }
   }, [selectedCustomer]);
@@ -141,6 +142,7 @@ function AllocateTrip() {
       pickuplocation: tripDetails.pickup,
       dropofflocation: tripDetails.dropoff,
       ...tripDetails,
+      Customer_Number: selectedCustomer.Customer_Number
     };
   
     // Make POST request to API endpoint

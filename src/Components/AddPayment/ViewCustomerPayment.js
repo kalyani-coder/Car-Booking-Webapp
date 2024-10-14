@@ -296,6 +296,7 @@ const ViewCustomerPayment = () => {
             <thead>
               <tr>
                 <th>Sr.No.</th>
+                <th>Cust.No.</th>
                 <th>Customer Name</th>
                 {/* <th>Company Name</th> */}
                 <th>GST No</th>
@@ -308,6 +309,7 @@ const ViewCustomerPayment = () => {
               {filteredCustomers.map((customer, index) => (
                 <tr key={customer._id}>
                   <td>{index + 1}</td>
+                  <td>{customer.Customer_Number}</td>
                   <td>{customer.cus_name}</td>
                   {/* <td>{customer.company_Name}</td> */}
                   <td>{customer.GST_No}</td>

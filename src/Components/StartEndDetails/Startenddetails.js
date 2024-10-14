@@ -176,13 +176,39 @@ const StartEndDetails = () => {
             toll: formData.toll,
             allowance: formData.allowance,
             nightstay: formData.nightstay,
+            Customer_Number: selectedCustomerDetails.Customer_Number
           }),
         }
       );
 
       if (response.ok) {
         console.log("Details saved successfully!");
-        alert("Data added successfully!", "success");
+        alert("Details added successfully!", "success");
+        // Clear all fields after successful save
+      setSelectedCustomerDetails({
+        customerId: '',
+        customername: '',
+        customermobile: '',
+        vehicle: '',
+        triptype: '',
+        subtype: '',
+        pickup: '',
+        date: '',
+        time: '',
+        Dropoff: '',
+        date1: '',
+        time1: '',
+        drivername: '',
+        mobileno: '',
+        vehicleno: '',
+        Customer_Number: ''
+      });
+
+      setFormData({
+        toll: '',
+        allowance: '',
+        nightstay: ''
+      });
       } else {
         showAlert("Failed to add data. Please try again.", "danger");
       }

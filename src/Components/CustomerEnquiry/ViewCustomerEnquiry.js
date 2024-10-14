@@ -6,12 +6,13 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
   <table className="table">
     <thead>
       <tr>
-        <th>Sr No</th>
+        <th>Sr. No.</th>
+        <th>Cust No.</th>
         <th>Customer Name</th>
         <th>Mobile No.</th>
         {/* <th>Email</th> */}
         <th>Address</th>
-        <th>Trip Type</th>
+        {/* <th>Trip Type</th> */}
         <th>Sub Type</th>
         <th>Pickup Location</th>
         <th>Dropff Location</th>
@@ -22,11 +23,12 @@ const TableView = ({ customers, handleEditCustomer, deleteCustomer }) => (
       {customers.map((customer, index) => (
         <tr key={customer._id}>
           <td>{index + 1}</td>
+          <td>{customer.Customer_Number}</td>
           <td>{customer.customer_name}</td>
           <td>{customer.mobileno}</td>
           {/* <td>{customer.email}</td> */}
           <td>{customer.address}</td>
-          <td>{customer.tripe_type}</td>
+          {/* <td>{customer.tripe_type}</td> */}
           <td>{customer.sub_type}</td>
           <td>{customer.pic_up}</td>
           <td>{customer.drop_of}</td>

@@ -288,9 +288,10 @@ const ViewShareDetails = () => {
               <thead>
                 <tr>
                   <th>Sr.No.</th>
+                  <th>Cust. No.</th>
                   <th>Customer Name</th>
                   <th>Customer Mobile</th>
-                  <th>Vehicle</th>
+                  {/* <th>Vehicle</th> */}
                   <th>Pickup</th>
                   <th>Pickup Date</th>
                   <th>Driver Name</th>
@@ -301,9 +302,10 @@ const ViewShareDetails = () => {
                 {filteredShareDetails.map((shareDetail, index) => (
                   <tr key={shareDetail._id}>
                     <td>{index + 1}</td>
+                    <td>{shareDetail.Customer_Number}</td>
                     <td>{shareDetail.customername}</td>
                     <td>{shareDetail.customermobile}</td>
-                    <td>{shareDetail.vehicle}</td>
+                    {/* <td>{shareDetail.vehicle}</td> */}
                     <td>{shareDetail.pickup}</td>
                     <td>{shareDetail.date}</td>
                     <td>{shareDetail.drivername}</td>

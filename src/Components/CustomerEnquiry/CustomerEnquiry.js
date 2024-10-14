@@ -171,6 +171,7 @@ const CustomerEnquiry = () => {
       totalDays: formData.totalDays,
       totalHours: formData.totalHours,
       address: formData.address,
+      Customer_Number: selectedCustomer.Customer_Number
     };
 
     try {
