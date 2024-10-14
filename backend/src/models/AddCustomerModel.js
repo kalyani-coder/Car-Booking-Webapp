@@ -40,7 +40,11 @@ const newAddCustomerSchema = new mongoose.Schema({
   Cus_Type: {
     type: String,
     required: [true, "Customer type is required"]
-  }
+  },
+  Customer_Number: {
+    type: Number,
+    unique: true
+  },
 });
 
 

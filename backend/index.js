@@ -40,15 +40,15 @@ const gettrip = require("./src/routes/EditTripDetails");
 const getAdmin = require("./src/routes/AdminLoginRoute")
 
 // Define API paths
+apiRouter.use('/add-customers', AddCustomers);
 apiRouter.use('/customer-enquiry', CustomerEnquiry);
-apiRouter.use('/share-details', ShareDetails);
+apiRouter.use('/add-trip', addTrip);
 apiRouter.use('/trip-details', TripDetails);
+apiRouter.use('/share-details', ShareDetails);
 apiRouter.use('/update-duty', UpdateDuty);
 apiRouter.use('/getDetails-fromDriver', NewGetDetailsFromDriver);
 apiRouter.use('/customer-payment', newCustomerPayment);
 apiRouter.use('/add-venders', AddVenders);
-apiRouter.use('/add-customers', AddCustomers);
-apiRouter.use('/add-trip', addTrip);
 apiRouter.use('/vender-payment', VenderPayment);
 apiRouter.use('/customer-rate', rateSchema);
 apiRouter.use('/vender-rate', venderRate);

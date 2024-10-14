@@ -1,7 +1,31 @@
 const express = require("express");
 
 const NewAddCustomer = require("../models/AddCustomerModel");
+const Counter = require('../models/CounterSchema');  // for customer unic number
 const router = express.Router();
+
+
+// get by customer number 
+router.get("/customernumber/:Customer_Number", async (req, res) => {
+  const { Customer_Number } = req.params;
+
+  try {
+    // Find the customer by Customer_Number
+    const customer = await NewAddCustomer.findOne({ Customer_Number });
+
+    // Check if customer exists
+    if (!customer) {
+      return res.status(404).json({ message: `Customer with number ${Customer_Number} not found` });
+    }
+
+    // Return the customer data
+    res.status(200).json(customer);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 
 // GET METHOD
 router.get("/", async (req, res) => {
@@ -53,16 +77,28 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // Check the email alredy exist 
-    const existingCustomer = await NewAddCustomer.findOne({cus_email})
-    if(existingCustomer){
-      return res.status(404).json({message : "Email Alredy Exists"})
+    // Check if the email already exists
+    const existingCustomer = await NewAddCustomer.findOne({ cus_email });
+    if (existingCustomer) {
+      return res.status(404).json({ message: "Email Already Exists" });
     }
-    const addCustomer = new NewAddCustomer(req.body);
-    await addCustomer.save();
+
+    // Get the next customer number
+    const counter = await Counter.findOneAndUpdate(
+      { id: 'customer_number' },
+      { $inc: { seq: 1 } },  // Increment the sequence by 1
+      { new: true, upsert: true }  // Create a new counter if it doesn't exist
+    );
+
+    // Create a new customer with a unique customer number
+    const newCustomer = new NewAddCustomer({
+      ...req.body,
+      Customer_Number: counter.seq  // Assign the incremented customer number
+    });
+
+    await newCustomer.save();
 
     let successMessage;
-
     if (Cus_Type === "Corporate") {
       successMessage = "Corporate customer added successfully";
     } else if (Cus_Type === "Individual") {
@@ -83,7 +119,6 @@ router.post("/", async (req, res) => {
     }
   }
 });
-
 // PATCH METHOD 
 router.patch("/:id", async (req, res) => {
   const AddVendersId = req.params.id;
